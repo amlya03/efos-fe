@@ -56,15 +56,55 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="program">
+            <div class="d-flex">
+              <span>programewasasadwda</span>
+              <!-- <span jhiTranslate="betaNewEfosApp.book.contoh">program</span> -->
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="katagori">
+            <div class="d-flex">
+              <span>programewasasadwda</span>
+              <!-- <span jhiTranslate="betaNewEfosApp.book.contoh">katagori</span> -->
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="appreakapalah">
+            <div class="d-flex">
+              <span>programewasasadwda</span>
+              <!-- <span jhiTranslate="betaNewEfosApp.book.contoh">katagori</span> -->
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="namaanalis">
+            <div class="d-flex">
+              <span>programewasasadwda</span>
+              <!-- <span jhiTranslate="betaNewEfosApp.book.contoh">katagori</span> -->
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="slaanalis">
+            <div class="d-flex">
+              <span>programewasasadwda</span>
+              <!-- <span jhiTranslate="betaNewEfosApp.book.contoh">katagori</span> -->
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let book of books; trackBy: trackId" data-cy="entityTable">
           <td>
-            <!-- <a [routerLink]="['/book', book.id, 'view']">{{ book.id }}</a> -->
+            <a [routerLink]="['/book', book.id, 'view']">{{ book.id }}</a>
           </td>
-          <td>{{ book.code }}</td>
+          <td>{{ book.agama }}</td>
+          <td>{{ book.app_no_de }}</td>
+          <td>{{ book.nama }}</td>
+          <td>{{ book.program_pembiayaan }}</td>
+          <td>{{ book.kategori_pekerjaan }}</td>
+          <td>{{ book.nama }}</td>
           <td>{{ book.nama }}</td>
           <td>{{ book.nama }}</td>
           <td class="text-end">
