@@ -1,1 +1,0 @@
-org.springframework.test.context.ContextCustomizerFactory = co.id.megasyariah.efo.config.TestContainersSpringContextCustomizerFactory

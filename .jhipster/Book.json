@@ -1,0 +1,23 @@
+{
+  "changelogDate": "20220908014913",
+  "fields": [
+    {
+      "fieldName": "contoh",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nama",
+      "fieldType": "String",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "kelas",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Book",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

@@ -1,0 +1,26 @@
+{
+  "betaNewEfosApp": {
+    "book": {
+      "home": {
+        "title": "Books",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Buat Book baru",
+        "createOrEditLabel": "Buat atau edit Book",
+        "notFound": "No Books found"
+      },
+      "created": "Book dengan id {{ param }} telah dibuat",
+      "updated": "Book dengan id {{ param }} telah diperbaharui",
+      "deleted": "Book dengan id {{ param }} telah dihapus",
+      "delete": {
+        "question": "Apakah anda yakin ingin menghapus Book {{ id }}?"
+      },
+      "detail": {
+        "title": "Book"
+      },
+      "id": "ID",
+      "contoh": "Contoh",
+      "nama": "Nama",
+      "kelas": "Kelas"
+    }
+  }
+}
