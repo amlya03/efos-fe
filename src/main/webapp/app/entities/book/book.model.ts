@@ -1,8 +1,4 @@
 export interface IBook {
-  code: number | null;
-  message: string | null;
-  result: any;
-
   id: number;
   // contoh?: string | null;
   nama?: string | null;
