@@ -1,14 +1,59 @@
+<div class="row form-material">
+  <div class="col-md-6">
+    <label class="m-t-5">No Aplikasi</label>
+    <input id="input_noapp" type="text" class="form-control" placeholder="Masukan Nomor Aplikasi" />
+    <p></p>
+    <label class="m-t-5">Kategori Pekerjaan</label>
+    <div class="form-group">
+      <select id="selectCari" class="form-control">
+        <option selected value="">Pilih Pencarian Berdasarkan Kategori Pekerjaan</option>
+        <option id="fix" value="0">Fix Income</option>
+        <option id="non" value="1">Non-Fix Income</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label class="m-t-5">Nama Nasabah</label>
+    <input id="input_nama" type="search" class="form-control" placeholder="Masukan Nama Nasabah" aria-controls="example" />
+    <p></p>
+    <label class="m-t-5">Fasilitas</label>
+    <div class="form-group">
+      <select id="selectFasilitas" class="form-control">
+        <option selected value="">Pilih Pencarian Berdasarkan Fasilitas</option>
+        <option value="PPR">PPR</option>
+        <option value="PTA">PTA</option>
+        <option value="KTM">KTM</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-4 m-b-30"></div>
+  <div class="col-md-5 m-b-30">
+    <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button
+      id="btn_cari"
+      type="submit"
+      class="btn btn-dark"
+    >
+      Cari Data
+    </button>
+    <button id="btn_clear" class="btn btn-info" onclick="clearinput()">Clear Data</button>
+  </div>
+</div>
 <div>
-  <h2 id="page-heading" data-cy="BookHeading">
-    <span jhiTranslate="betaNewEfosApp.book.home.title">Books</span>
-
-    <div class="d-flex justify-content-end">
+  <br />
+  <h2
+    id="page-heading"
+    data-cy="BookHeading"
+    style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #cf6cc9 33%, #ee609c 66%, #fff 100%)"
+  >
+    <h3 style="color: #fff; text-align: center">Daftar Aplikasi Data Verification Assigment on Process</h3>
+    <!-- <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="betaNewEfosApp.book.home.refreshListLabel">Refresh list</span>
       </button>
 
-      <!-- <button
+      <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-book"
@@ -16,8 +61,8 @@
       >
         <fa-icon icon="plus"></fa-icon>
         <span jhiTranslate="betaNewEfosApp.book.home.createLabel"> Create a new Book </span>
-      </button> -->
-    </div>
+      </button>
+    </div> -->
   </h2>
 
   <jhi-alert-error></jhi-alert-error>
@@ -40,53 +85,39 @@
           </th>
           <th scope="col" jhiSortBy="contoh">
             <div class="d-flex">
-              <span jhiTranslate="betaNewEfosApp.book.contoh">Contoh</span>
+              <span>Nomor Aplikasi</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="nama">
             <div class="d-flex">
-              <span jhiTranslate="betaNewEfosApp.book.nama">Nama</span>
+              <span jhiTranslate="betaNewEfosApp.book.nama">Nama Pemohon</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="kelas">
             <div class="d-flex">
-              <span jhiTranslate="betaNewEfosApp.book.kelas">Kelas</span>
+              <span>Program</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="program">
             <div class="d-flex">
-              <span>programewasasadwda</span>
+              <span>Tipe Pekerjaan</span>
               <!-- <span jhiTranslate="betaNewEfosApp.book.contoh">program</span> -->
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="katagori">
             <div class="d-flex">
-              <span>programewasasadwda</span>
+              <span>Aprasial</span>
               <!-- <span jhiTranslate="betaNewEfosApp.book.contoh">katagori</span> -->
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="appreakapalah">
             <div class="d-flex">
-              <span>programewasasadwda</span>
-              <!-- <span jhiTranslate="betaNewEfosApp.book.contoh">katagori</span> -->
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="namaanalis">
-            <div class="d-flex">
-              <span>programewasasadwda</span>
-              <!-- <span jhiTranslate="betaNewEfosApp.book.contoh">katagori</span> -->
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="slaanalis">
-            <div class="d-flex">
-              <span>programewasasadwda</span>
+              <span>Verification</span>
               <!-- <span jhiTranslate="betaNewEfosApp.book.contoh">katagori</span> -->
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
@@ -99,14 +130,12 @@
           <td>
             <a [routerLink]="['/book', book.id, 'view']">{{ book.id }}</a>
           </td>
-          <td>{{ book.agama }}</td>
+          <td>{{ book.id }}</td>
           <td>{{ book.app_no_de }}</td>
           <td>{{ book.nama }}</td>
-          <td>{{ book.program_pembiayaan }}</td>
           <td>{{ book.kategori_pekerjaan }}</td>
-          <td>{{ book.nama }}</td>
-          <td>{{ book.nama }}</td>
-          <td>{{ book.nama }}</td>
+          <td>{{ book.status_aplikasi }}</td>
+          <td>{{ book.status_aplikasi_desc }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button type="submit" [routerLink]="['/book', book.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

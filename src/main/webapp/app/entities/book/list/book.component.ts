@@ -10,7 +10,7 @@ import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/co
 import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
 import { EntityArrayResponseType, BookService } from '../service/book.service';
 import { BookDeleteDialogComponent } from '../delete/book-delete-dialog.component';
-import { ApiResponse } from '../ApiResponse';
+// import { ApiResponse } from '../ApiResponse';
 
 @Component({
   selector: 'jhi-book',
@@ -90,7 +90,7 @@ export class BookComponent implements OnInit {
 
   protected onResponseSuccess(response: EntityArrayResponseType): void {
     this.fillComponentAttributesFromResponseHeader(response.headers);
-    const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body.result);
+    const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body!.result);
     //  const cekresultnay = this.cekresult(dataFromBody);
     this.books = dataFromBody;
   }
