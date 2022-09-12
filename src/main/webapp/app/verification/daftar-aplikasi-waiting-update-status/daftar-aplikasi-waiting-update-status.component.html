@@ -1,0 +1,41 @@
+<div class="row form-material">
+  <div class="col-md-6">
+    <label class="m-t-5">No Aplikasi</label>
+    <input id="input_noapp" type="text" class="form-control" placeholder="Masukan Nomor Aplikasi" />
+    <p></p>
+    <label class="m-t-5">Kategori Pekerjaan</label>
+    <div class="form-group">
+      <select id="selectCari" class="form-control">
+        <option selected value="">Pilih Pencarian Berdasarkan Kategori Pekerjaan</option>
+        <option id="fix" value="0">Fix Income</option>
+        <option id="non" value="1">Non-Fix Income</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label class="m-t-5">Nama Nasabah</label>
+    <input id="input_nama" type="search" class="form-control" placeholder="Masukan Nama Nasabah" aria-controls="example" />
+    <p></p>
+    <label class="m-t-5">Fasilitas</label>
+    <div class="form-group">
+      <select id="selectFasilitas" class="form-control">
+        <option selected value="">Pilih Pencarian Berdasarkan Fasilitas</option>
+        <option value="PPR">PPR</option>
+        <option value="PTA">PTA</option>
+        <option value="KTM">KTM</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-4 m-b-30"></div>
+  <div class="col-md-5 m-b-30">
+    <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button
+      id="btn_cari"
+      type="submit"
+      class="btn btn-dark"
+    >
+      Cari Data
+    </button>
+    <button id="btn_clear" class="btn btn-info" onclick="clearinput()">Clear Data</button>
+  </div>
+</div>

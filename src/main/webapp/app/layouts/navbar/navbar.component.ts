@@ -24,6 +24,10 @@ export class NavbarComponent implements OnInit {
   version = '';
   account: Account | null = null;
   entitiesNavbarItems: any[] = [];
+  isDisabled = true;
+  isDisabled2 = false;
+  isDisabled3 = false;
+  element = false;
 
   constructor(
     private loginService: LoginService,
@@ -71,5 +75,26 @@ export class NavbarComponent implements OnInit {
 
   toggleNavbar(): void {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
+  }
+  disable(): void {
+    this.isDisabled = true;
+    this.isDisabled2 = false;
+    this.isDisabled3 = false;
+  }
+  disable2(): void {
+    this.isDisabled2 = !this.isDisabled2;
+    this.isDisabled = false;
+    this.isDisabled3 = false;
+  }
+  disable3(): void {
+    this.isDisabled3 = !this.isDisabled3;
+    this.isDisabled2 = false;
+    this.isDisabled = false;
+  }
+  showData(): void {
+    this.element = true;
+  }
+  hideData(): void {
+    this.element = false;
   }
 }

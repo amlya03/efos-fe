@@ -1,4 +1,4 @@
-<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-dark">
+<nav data-cy="navbar" class="navbar navbar-light navbar-expand-md bg-light">
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
@@ -21,7 +21,7 @@
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
+          <a class="nav-link" routerLink="/" (click)="hideData()">
             <span>
               &nbsp;&nbsp;&nbsp;<fa-icon icon="home"></fa-icon>
               <p jhiTranslate="global.menu.home">Home</p>
@@ -41,6 +41,7 @@
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
             (click)="collapseNavbar()"
+            (click)="showData()"
           >
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="cogs"></fa-icon>
             <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
@@ -49,6 +50,7 @@
         </li>
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
         <li
+          hidden
           *ngSwitchCase="true"
           ngbDropdown
           class="nav-item dropdown pointer"
@@ -63,7 +65,7 @@
             </span>
           </a>
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-            <!-- <li>
+            <li>
               <a
                 class="dropdown-item"
                 routerLink="book"
@@ -74,7 +76,7 @@
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span jhiTranslate="global.menu.entities.book">Book</span>
               </a>
-            </li> -->
+            </li>
             <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
           </ul>
         </li>
@@ -228,3 +230,25 @@
     </div>
   </div>
 </nav>
+<div id="nk-sidebar" *ngIf="element == true">
+  <a routerLink="book" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="disable()" [class.active]="isDisabled"
+    ><span> Daftar Aplikasi Waiting Assigment</span></a
+  >
+  <!--(click)="openIt(item.name)">{{item.name}}</button>--->
+  <a
+    routerLink="daftar-aplikasi-on-process"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    [class.active]="isDisabled2"
+    (click)="disable2()"
+    ><span>Daftar Aplikasi On Process</span></a
+  >
+  <a
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    routerLink="daftar-aplikasi-waiting-update-status"
+    [class.active]="isDisabled3"
+    (click)="disable3()"
+    ><span>Daftar Aplikasi Waiting Update Satatus</span></a
+  >
+</div>
