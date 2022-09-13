@@ -24,10 +24,12 @@ export class NavbarComponent implements OnInit {
   version = '';
   account: Account | null = null;
   entitiesNavbarItems: any[] = [];
-  isDisabled = true;
-  isDisabled2 = false;
-  isDisabled3 = false;
+  aktifWa = true;
+  AktifOp = false;
+  aktifWu = false;
   element = false;
+  navVerif = false;
+  navHome = true;
 
   constructor(
     private loginService: LoginService,
@@ -77,24 +79,37 @@ export class NavbarComponent implements OnInit {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
   }
   disable(): void {
-    this.isDisabled = true;
-    this.isDisabled2 = false;
-    this.isDisabled3 = false;
+    this.aktifWa = true;
+    this.AktifOp = false;
+    this.aktifWu = false;
+    this.navVerif = true;
+    this.navHome = false;
   }
   disable2(): void {
-    this.isDisabled2 = !this.isDisabled2;
-    this.isDisabled = false;
-    this.isDisabled3 = false;
+    this.AktifOp = !this.AktifOp;
+    this.aktifWa = false;
+    this.aktifWu = false;
+    this.navVerif = true;
+    this.navHome = false;
   }
   disable3(): void {
-    this.isDisabled3 = !this.isDisabled3;
-    this.isDisabled2 = false;
-    this.isDisabled = false;
+    this.aktifWu = !this.aktifWu;
+    this.AktifOp = false;
+    this.aktifWa = false;
+    this.navVerif = true;
+    this.navHome = false;
   }
   showData(): void {
     this.element = true;
+    this.aktifWa = true;
+    this.AktifOp = false;
+    this.aktifWu = false;
+    this.navVerif = true;
+    this.navHome = false;
   }
   hideData(): void {
     this.element = false;
+    this.navHome = true;
+    this.navVerif = false;
   }
 }

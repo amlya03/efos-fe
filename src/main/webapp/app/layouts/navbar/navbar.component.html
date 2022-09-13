@@ -21,7 +21,7 @@
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a class="nav-link" routerLink="/" (click)="hideData()">
+          <a class="nav-link" routerLink="/" [class.active]="navHome" (click)="hideData()">
             <span>
               &nbsp;&nbsp;&nbsp;<fa-icon icon="home"></fa-icon>
               <p jhiTranslate="global.menu.home">Home</p>
@@ -35,14 +35,7 @@
               <p>Verification</p>
             </span>
           </a> -->
-          <a
-            class="nav-link"
-            routerLink="book"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            (click)="collapseNavbar()"
-            (click)="showData()"
-          >
+          <a class="nav-link" routerLink="book" (click)="collapseNavbar()" (click)="showData()" [class.active]="navVerif">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="cogs"></fa-icon>
             <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
             <p>Verification</p>
@@ -231,23 +224,27 @@
   </div>
 </nav>
 <div id="nk-sidebar" *ngIf="element == true">
-  <a routerLink="book" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="disable()" [class.active]="isDisabled"
+  <a
+    routerLink="daftar-aplikasi-waiting-assigment"
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    [class.active]="aktifWa"
+    (click)="disable()"
     ><span> Daftar Aplikasi Waiting Assigment</span></a
   >
-  <!--(click)="openIt(item.name)">{{item.name}}</button>--->
   <a
     routerLink="daftar-aplikasi-on-process"
-    routerLinkActive="active"
+    [routerLinkActive]="'active'"
     [routerLinkActiveOptions]="{ exact: true }"
-    [class.active]="isDisabled2"
+    [class.active]="AktifOp"
     (click)="disable2()"
     ><span>Daftar Aplikasi On Process</span></a
   >
   <a
-    routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }"
     routerLink="daftar-aplikasi-waiting-update-status"
-    [class.active]="isDisabled3"
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    [class.active]="aktifWu"
     (click)="disable3()"
     ><span>Daftar Aplikasi Waiting Update Satatus</span></a
   >

@@ -1,0 +1,23 @@
+<h1>Contoh Fetch data dari depan</h1>
+<div class="container">
+  <div class="card m-5 p-3">
+    <div class="card-body">
+      <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+        <thead>
+          <tr *ngFor="let daWa of daWa">
+            <td>{{ daWa.id }}</td>
+            <td>{{ daWa.title }}</td>
+            <td>{{ daWa.body }}</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let daWa of daWa">
+            <td>{{ daWa.id }}</td>
+            <td>{{ daWa.title }}</td>
+            <td>{{ daWa.body }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

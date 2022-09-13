@@ -27,7 +27,8 @@ import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 import { DaftarAplikasiOnProcessComponent } from './verification/daftar-aplikasi-on-process/daftar-aplikasi-on-process.component';
 import { DaftarAplikasiWaitingUpdateStatusComponent } from './verification/daftar-aplikasi-waiting-update-status/daftar-aplikasi-waiting-update-status.component';
-//import { VerificationComponent } from './verification/verification.component';
+import { DaftarAplikasiWaitingAssigmentComponent } from './verification/daftar-aplikasi-waiting-assigment/daftar-aplikasi-waiting-assigment.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { DaftarAplikasiWaitingUpdateStatusComponent } from './verification/dafta
     HttpClientModule,
     NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-', caseSensitive: true }),
     TranslationModule,
+    DataTablesModule,
   ],
   providers: [
     Title,
@@ -57,6 +59,7 @@ import { DaftarAplikasiWaitingUpdateStatusComponent } from './verification/dafta
     FooterComponent,
     DaftarAplikasiOnProcessComponent,
     DaftarAplikasiWaitingUpdateStatusComponent,
+    DaftarAplikasiWaitingAssigmentComponent,
   ],
   bootstrap: [MainComponent],
 })
