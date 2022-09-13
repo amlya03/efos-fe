@@ -5,16 +5,21 @@
       <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
         <thead>
           <tr *ngFor="let daWa of daWa">
-            <td>{{ daWa.id }}</td>
-            <td>{{ daWa.title }}</td>
-            <td>{{ daWa.body }}</td>
+            <td>{{ daWa.app_no_de }}</td>
+            <td>{{ daWa.nama }}</td>
+            <td>{{ daWa.kategori_pekerjaan }}</td>
+            <td>{{ daWa.status_aplikasi }}</td>
+            <td>{{ daWa.status_aplikasi_desc }}</td>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let daWa of daWa">
             <td>{{ daWa.id }}</td>
-            <td>{{ daWa.title }}</td>
-            <td>{{ daWa.body }}</td>
+            <td>{{ daWa.app_no_de }}</td>
+            <td>{{ daWa.nama }}</td>
+            <td>{{ daWa.kategori_pekerjaan }}</td>
+            <td>{{ daWa.status_aplikasi }}</td>
+            <td>{{ daWa.status_aplikasi_desc }}</td>
           </tr>
         </tbody>
       </table>
