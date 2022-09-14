@@ -1,28 +1,104 @@
-<h1>Contoh Fetch data dari depan</h1>
-<div class="container">
-  <div class="card m-5 p-3">
-    <div class="card-body">
-      <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-        <thead>
-          <tr *ngFor="let daWa of daWa">
-            <td>{{ daWa.app_no_de }}</td>
-            <td>{{ daWa.nama }}</td>
-            <td>{{ daWa.kategori_pekerjaan }}</td>
-            <td>{{ daWa.status_aplikasi }}</td>
-            <td>{{ daWa.status_aplikasi_desc }}</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let daWa of daWa">
-            <td>{{ daWa.id }}</td>
-            <td>{{ daWa.app_no_de }}</td>
-            <td>{{ daWa.nama }}</td>
-            <td>{{ daWa.kategori_pekerjaan }}</td>
-            <td>{{ daWa.status_aplikasi }}</td>
-            <td>{{ daWa.status_aplikasi_desc }}</td>
-          </tr>
-        </tbody>
-      </table>
+<div class="row form-material">
+  <div class="col-md-6">
+    <label class="m-t-5">No Aplikasi</label>
+    <input id="input_noapp" type="text" class="form-control" placeholder="Masukan Nomor Aplikasi" />
+    <p></p>
+    <label class="m-t-5">Kategori Pekerjaan</label>
+    <div class="form-group">
+      <select id="selectCari" class="form-control">
+        <option selected value="">Pilih Pencarian Berdasarkan Kategori Pekerjaan</option>
+        <option id="fix" value="0">Fix Income</option>
+        <option id="non" value="1">Non-Fix Income</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label class="m-t-5">Nama Nasabah</label>
+    <input
+      id="input_nama"
+      type="text"
+      class="form-control"
+      placeholder="Masukan Nama Nasabah"
+      aria-controls="example"
+      [(ngModel)]="filterTerm"
+    />
+    <p></p>
+    <label class="m-t-5">Fasilitas</label>
+    <div class="form-group">
+      <select id="selectFasilitas" class="form-control">
+        <option selected value="">Pilih Pencarian Berdasarkan Fasilitas</option>
+        <option value="PPR">PPR</option>
+        <option value="PTA">PTA</option>
+        <option value="KTM">KTM</option>
+      </select>
+    </div>
+  </div>
+  <div class="col" style="text-align: center">
+    <br />
+    <button (click)="cariButton()" type="button" class="btn btn-dark">Cari Data</button>
+    <button id="btn_clear" class="btn btn-info" onclick="clearinput()">Clear Data</button>
+  </div>
+  <p></p>
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #cf6cc9 33%, #ee609c 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Daftar Aplikasi Data Verification Assigment on Process</h3>
+  </div>
+  <p></p>
+  <div class="table-responsive table-entities">
+    <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+      <thead style="background-color: grey">
+        <tr>
+          <th scope="col" style="text-align: center; color: #fff">
+            <span>No</span>
+          </th>
+          <th scope="col" style="text-align: center; color: #fff">
+            <span>Nomor Aplikasi</span>
+          </th>
+          <th scope="col" style="text-align: center; color: #fff">
+            <span>Nama Pemohon</span>
+          </th>
+          <th scope="col" style="text-align: center; color: #fff">
+            <span>Program</span>
+          </th>
+          <th scope="col" style="text-align: center; color: #fff">
+            <span>Tipe Pekerjaan</span>
+          </th>
+          <th scope="col" style="text-align: center; color: #fff">
+            <span>Verification</span>
+          </th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let daWa of daWa | filter: filterTerm; index as i">
+          <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+          <!-- <td style="text-align: center;" scope="col">{{ daWa.id }}</td> -->
+          <td style="text-align: center" scope="col">{{ daWa.app_no_de }}</td>
+          <td style="text-align: center" scope="col">{{ daWa.nama }}</td>
+          <td style="text-align: center" scope="col">{{ daWa.program_pembiayaan }}</td>
+          <td style="text-align: center" scope="col">{{ daWa.kategori_pekerjaan }}</td>
+          <td style="text-align: center" scope="col">{{ daWa.status_aplikasi_desc }}</td>
+          <td><input type="checkbox" /></td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="button" class="btn btn-outline-info">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Detail</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row" style="text-align: center">
+    <div ngbDropdown class="d-inline-block">
+      <label>Assigment to :</label>
+      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Pilih</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button class="dropdown-item" *ngFor="let daWaAprisal of daWaAprisal">{{ daWaAprisal.nama }}</button>
+      </div>
     </div>
   </div>
 </div>

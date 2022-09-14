@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import locale from '@angular/common/locales/en';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import dayjs from 'dayjs/esm';
 import { NgbDateAdapter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -29,6 +29,9 @@ import { DaftarAplikasiOnProcessComponent } from './verification/daftar-aplikasi
 import { DaftarAplikasiWaitingUpdateStatusComponent } from './verification/daftar-aplikasi-waiting-update-status/daftar-aplikasi-waiting-update-status.component';
 import { DaftarAplikasiWaitingAssigmentComponent } from './verification/daftar-aplikasi-waiting-assigment/daftar-aplikasi-waiting-assigment.component';
 import { DataTablesModule } from 'angular-datatables';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   imports: [
@@ -43,6 +46,10 @@ import { DataTablesModule } from 'angular-datatables';
     NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-', caseSensitive: true }),
     TranslationModule,
     DataTablesModule,
+    NgbModule,
+    FontAwesomeModule,
+    FormsModule,
+    Ng2SearchPipeModule,
   ],
   providers: [
     Title,
@@ -61,7 +68,12 @@ import { DataTablesModule } from 'angular-datatables';
     DaftarAplikasiWaitingUpdateStatusComponent,
     DaftarAplikasiWaitingAssigmentComponent,
   ],
-  bootstrap: [MainComponent],
+  bootstrap: [
+    MainComponent,
+    DaftarAplikasiWaitingAssigmentComponent,
+    DaftarAplikasiOnProcessComponent,
+    DaftarAplikasiWaitingUpdateStatusComponent,
+  ],
 })
 export class AppModule {
   constructor(applicationConfigService: ApplicationConfigService, iconLibrary: FaIconLibrary, dpConfig: NgbDatepickerConfig) {

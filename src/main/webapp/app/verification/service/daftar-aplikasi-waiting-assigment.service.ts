@@ -13,17 +13,21 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   providedIn: 'root',
 })
 export class DaftarAplikasiWaitingAssigmentService {
-  // constructor(private http: HttpClient) {}
-
-  // public getDaWa(): Observable<ApiResponseDa[]> {
-  //   return this.http.get<ApiResponseDa[]>('http://jsonplaceholder.typicode.com/posts');
-  // }
-
+  protected resourceUrlAprisal = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-verif/list_appraisal_process'
+  );
+  // protected resourceUrlAprisal = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-verif/list_appraisal_process');
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-verif/list_app_verif');
+  // protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_app_verif');
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   getDaWa(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     return this.http.get<ApiResponse>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  getDaWaAprisal(req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    return this.http.get<ApiResponse>(this.resourceUrlAprisal, { params: options, observe: 'response' });
   }
 }

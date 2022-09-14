@@ -35,7 +35,13 @@
               <p>Verification</p>
             </span>
           </a> -->
-          <a class="nav-link" routerLink="book" (click)="collapseNavbar()" (click)="showData()" [class.active]="navVerif">
+          <a
+            class="nav-link"
+            routerLink="daftar-aplikasi-waiting-assigment"
+            (click)="collapseNavbar()"
+            (click)="showData()"
+            [class.active]="navVerif"
+          >
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="cogs"></fa-icon>
             <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
             <p>Verification</p>
@@ -43,7 +49,6 @@
         </li>
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
         <li
-          hidden
           *ngSwitchCase="true"
           ngbDropdown
           class="nav-item dropdown pointer"
