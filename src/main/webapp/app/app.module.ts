@@ -32,6 +32,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -50,6 +51,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     FontAwesomeModule,
     FormsModule,
     Ng2SearchPipeModule,
+    NgxPaginationModule,
   ],
   providers: [
     Title,

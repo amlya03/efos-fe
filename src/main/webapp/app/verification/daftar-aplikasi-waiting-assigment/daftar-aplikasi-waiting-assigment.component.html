@@ -1,11 +1,11 @@
 <div class="row form-material">
   <div class="col-md-6">
     <label class="m-t-5">No Aplikasi</label>
-    <input id="input_noapp" type="text" class="form-control" placeholder="Masukan Nomor Aplikasi" />
+    <input #noAplikasi type="text" class="form-control" placeholder="Masukan Nomor Aplikasi" />
     <p></p>
     <label class="m-t-5">Kategori Pekerjaan</label>
     <div class="form-group">
-      <select id="selectCari" class="form-control">
+      <select #kategori class="form-control">
         <option selected value="">Pilih Pencarian Berdasarkan Kategori Pekerjaan</option>
         <option id="fix" value="0">Fix Income</option>
         <option id="non" value="1">Non-Fix Income</option>
@@ -14,18 +14,11 @@
   </div>
   <div class="col-md-6">
     <label class="m-t-5">Nama Nasabah</label>
-    <input
-      id="input_nama"
-      type="text"
-      class="form-control"
-      placeholder="Masukan Nama Nasabah"
-      aria-controls="example"
-      [(ngModel)]="filterTerm"
-    />
+    <input #namaNasabah type="text" class="form-control" placeholder="Masukan Nama Nasabah" aria-controls="example" />
     <p></p>
     <label class="m-t-5">Fasilitas</label>
     <div class="form-group">
-      <select id="selectFasilitas" class="form-control">
+      <select #fasilitas class="form-control">
         <option selected value="">Pilih Pencarian Berdasarkan Fasilitas</option>
         <option value="PPR">PPR</option>
         <option value="PTA">PTA</option>
@@ -35,14 +28,26 @@
   </div>
   <div class="col" style="text-align: center">
     <br />
-    <button (click)="cariButton()" type="button" class="btn btn-dark">Cari Data</button>
-    <button id="btn_clear" class="btn btn-info" onclick="clearinput()">Clear Data</button>
+    <button
+      [(ngModel)]="filterTerm"
+      (click)="cariButton(fasilitas.value, kategori.value, namaNasabah.value, noAplikasi.value)"
+      class="btn btn-dark"
+    >
+      Cari Data
+    </button>
+    <button class="btn btn-info" (click)="noAplikasi.value = ''; namaNasabah.value = ''; fasilitas.value = ''; kategori.value = ''">
+      Clear Data
+    </button>
   </div>
   <p></p>
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #cf6cc9 33%, #ee609c 66%, #fff 100%)">
     <h3 style="color: #fff; text-align: center">Daftar Aplikasi Data Verification Assigment on Process</h3>
   </div>
   <p></p>
+  <div>
+    <button class="btn btn-info" style="float: right" (click)="pilihSemuaCheck()">Pilih Semua</button>
+    <input type="checkbox" checked (change)="('buatCheck')" />
+  </div>
   <div class="table-responsive table-entities">
     <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
       <thead style="background-color: grey">
@@ -70,7 +75,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let daWa of daWa | filter: filterTerm; index as i">
+        <tr *ngFor="let daWa of daWa | filter: filterTerm | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; index as i">
           <td style="text-align: center" scope="col">{{ i + 1 }}</td>
           <!-- <td style="text-align: center;" scope="col">{{ daWa.id }}</td> -->
           <td style="text-align: center" scope="col">{{ daWa.app_no_de }}</td>
@@ -78,7 +83,11 @@
           <td style="text-align: center" scope="col">{{ daWa.program_pembiayaan }}</td>
           <td style="text-align: center" scope="col">{{ daWa.kategori_pekerjaan }}</td>
           <td style="text-align: center" scope="col">{{ daWa.status_aplikasi_desc }}</td>
-          <td><input type="checkbox" /></td>
+          <td>
+            <input type="checkbox" [(ngModel)]="daWa.isSelected" name="list_name" value="{{ daWa.id }}" (change)="isAllSelected()" />{{
+              daWa.value
+            }}
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button type="button" class="btn btn-outline-info">
@@ -90,15 +99,42 @@
         </tr>
       </tbody>
     </table>
+    <pagination-controls (pageChange)="pageChangeEvent($event)" style="text-align: center"></pagination-controls>
   </div>
 
   <div class="row" style="text-align: center">
-    <div ngbDropdown class="d-inline-block">
+    <div class="input-group">
       <label>Assigment to :</label>
-      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Pilih</button>
-      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button class="dropdown-item" *ngFor="let daWaAprisal of daWaAprisal">{{ daWaAprisal.nama }}</button>
+      <select class="custom-select">
+        <option *ngFor="let daWaAprisal of daWaAprisal">{{ daWaAprisal.nama }}</option>
+      </select>
+      <div class="input-group-append">
+        <button class="btn btn-info">Assign</button>
       </div>
+    </div>
+  </div>
+  <!-- <button (click)="simpleAlert()">Simple Alert</button>
+  <button (click)="alertWithSuccess()">Alert with Success</button>
+  <button (click)="confirmBox()">Confirm Box</button>
+  <button (click)="dropdownAlert()">testt</button> -->
+
+  <div class="row">
+    <div class="col-md-6">
+      <ul class="list-group">
+        <li class="list-group-item">
+          <input type="checkbox" [(ngModel)]="isMasterSel" name="list_name" value="h1" (change)="checkUncheckAll()" />
+          <strong>Select All / Unselect All</strong>
+        </li>
+      </ul>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let item of categoryList">
+          <input type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value="{{ item.id }}" (change)="isAllSelected()" />
+          {{ item.value }}
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <code>{{ checkedCategoryList }}</code>
     </div>
   </div>
 </div>
