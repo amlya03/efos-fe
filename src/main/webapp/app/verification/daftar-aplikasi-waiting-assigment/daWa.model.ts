@@ -7,4 +7,5 @@ export interface daWaModel {
   kategori_pekerjaan?: string | null;
   status_aplikasi_desc?: string | null;
   status_aplikasi?: string | null;
+  customer_created_date?: string | null;
 }
