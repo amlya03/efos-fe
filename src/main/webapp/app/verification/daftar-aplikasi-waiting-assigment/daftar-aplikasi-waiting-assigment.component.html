@@ -39,7 +39,7 @@
     </button>
   </div>
   <p></p>
-  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #cf6cc9 33%, #ee609c 66%, #fff 100%)">
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
     <h3 style="color: #fff; text-align: center">Daftar Aplikasi Data Verification Assigment on Process</h3>
   </div>
   <p></p>
@@ -71,7 +71,7 @@
         <td style="text-align: center">{{ daWa.kategori_pekerjaan }}</td>
         <td hidden>{{ daWa.kategori_pekerjaan === 'Fix Income' }}</td>
         <td style="text-align: center">{{ daWa.status_aplikasi_desc }}</td>
-        <td style="text-align: center"><input (change)="getProoduct($event, daWa.app_no_de, daWa.id)" type="checkbox" /></td>
+        <td style="text-align: center"><input (change)="getProoduct($event, daWa.app_no_de, daWa.status_aplikasi)" type="checkbox" /></td>
         <td style="text-align: center">
           <button type="button" class="btn btn-outline-secondary"><fa-icon icon="ellipsis"></fa-icon><br />Detail</button>
         </td>
@@ -81,11 +81,12 @@
   <p></p>
   <div class="input-group" style="justify-content: center">
     <strong>Assigment to :</strong> &nbsp;
-    <select class="custom-select">
-      <option *ngFor="let daWaAprisal of daWaAprisal">{{ daWaAprisal.nama }}</option>
+    <select class="custom-select" [(ngModel)]="kirimAssign">
+      <option>Pilih Data</option>
+      <option *ngFor="let daWaAprisal of daWaAprisal">{{ daWaAprisal }}</option>
     </select>
     <div class="input-group-append">
-      <button class="btn btn-info">Assign</button>
+      <button type="button" (click)="postAssign()" class="btn btn-info">Assign</button>
     </div>
   </div>
   <!-- <button (click)="simpleAlert()">Simple Alert</button>

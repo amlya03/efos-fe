@@ -11,7 +11,7 @@ export type EntityArrayResponseDaWuS = HttpResponse<ApiResponse>;
 })
 export class DaftarAplikasiWaitingUpdateStatusService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-verif/list_app_analisa_review'
+    'http://10.20.34.110:8805/api/v1/efos-verif/list_app_analisa_review'
   );
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
   getDaWuS(req?: any): Observable<EntityArrayResponseDaWuS> {

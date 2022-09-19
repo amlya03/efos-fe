@@ -5,4 +5,5 @@ export interface daWaModelAprisal {
   cabang: number;
   start_date?: string | null;
   sla?: string | null;
+  created_by?: string | null;
 }

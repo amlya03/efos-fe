@@ -24,9 +24,6 @@ export class NavbarComponent implements OnInit {
   version = '';
   account: Account | null = null;
   entitiesNavbarItems: any[] = [];
-  aktifWa = true;
-  AktifOp = false;
-  aktifWu = false;
   element = false;
   navVerif = false;
   navHome = true;
@@ -78,32 +75,8 @@ export class NavbarComponent implements OnInit {
   toggleNavbar(): void {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
   }
-  disable(): void {
-    this.aktifWa = true;
-    this.AktifOp = false;
-    this.aktifWu = false;
-    this.navVerif = true;
-    this.navHome = false;
-  }
-  disable2(): void {
-    this.AktifOp = !this.AktifOp;
-    this.aktifWa = false;
-    this.aktifWu = false;
-    this.navVerif = true;
-    this.navHome = false;
-  }
-  disable3(): void {
-    this.aktifWu = !this.aktifWu;
-    this.AktifOp = false;
-    this.aktifWa = false;
-    this.navVerif = true;
-    this.navHome = false;
-  }
   showData(): void {
     this.element = true;
-    this.aktifWa = true;
-    this.AktifOp = false;
-    this.aktifWu = false;
     this.navVerif = true;
     this.navHome = false;
   }

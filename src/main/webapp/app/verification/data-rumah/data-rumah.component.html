@@ -1,0 +1,411 @@
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Data Rumah</h3>
+</div>
+<form [formGroup]="dataRumahForm" (ngSubmit)="onSubmit()">
+  <div class="row form-material">
+    <!-- ////Colom ke 1\\\\\ -->
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tanggal Verification</label>
+        <div class="col-sm-8">
+          <input
+            class="form-control"
+            type="date"
+            formControlName="tanggal_verification"
+            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.tanggal_verification.errors }"
+            id="tanggal_verification"
+            name="tanggal_verification"
+            onchange="submitBday()"
+          />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Hubungan dengan pemberi Keterangan</label>
+        <div class="col-sm-8">
+          <select name="hubungan_dengen_pemberi_keterangan" id="hubungan_dengen_pemberi_keterangan" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">No Customer</label>
+        <div class="col-sm-8">
+          <input
+            type="text"
+            formControlName="no_customer"
+            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.no_customer.errors }"
+            class="form-control"
+            id="no_customer"
+            name="no_customer"
+            placeholder=""
+          />
+          <div *ngIf="submitted && dataRumahForm.controls.no_customer.errors" class="text-danger">
+            <div *ngIf="submitted && dataRumahForm.controls.no_customer.errors.required">Nomor Tidak Boleh Kosong</div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">No Aplikasi</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="no_aplikasi" name="no_aplikasi" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">No HP</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Nama</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Alamat Rumah</label>
+        <div class="col-sm-8">
+          <textarea name="alamat_rumah" id="alamat_rumah" cols="49" rows="2"></textarea>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">RT / RW</label>
+        <div class="col">
+          <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="" />
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Provinsi</label>
+        <div class="col-sm-8">
+          <select name="provinsi" id="provinsi" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kota</label>
+        <div class="col-sm-8">
+          <select name="kota" id="kota" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kecamatan</label>
+        <div class="col-sm-8">
+          <select name="kecamatan" id="kecamatan" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kelurahan</label>
+        <div class="col-sm-8">
+          <select name="kelurahan" id="kelurahan" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kode Pos</label>
+        <div class="col-sm-8">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon2" />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">Cari Data</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ////Colom ke 2\\\\\ -->
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
+        <div class="col-sm-8">
+          <input class="form-control" type="date" id="tanggal_lahir" name="tanggal_lahir" onchange="submitBday()" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Pendidikan</label>
+        <div class="col-sm-8">
+          <select name="pedidikan" id="pedidikan" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Status Menikah</label>
+        <div class="col-sm-8">
+          <select name="status_menikah" id="status_menikah" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Nama Pasangan</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="tanggal_pemeriksa" name="tanggal_pemeriksa" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Pekerjaan Pasangan</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="nama_pemeriksa" name="nama_pemeriksa" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Nama Ibu Kandung</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="nama_pemeriksa" name="nama_pemeriksa" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Jumlah Tanggunan</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="jumlah_tanggunan" name="jumlah_tanggunan" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Karakter Calon Nasabah</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="Karakter_nasabah" name="Karakter_nasabah" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Fasilitas Pembiayaan</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="fasilitas_pembiayaan" name="fasilitas_pembiayaan" placeholder="" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <p></p>
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Data Rumah yang Dihuni Pemohon</h3>
+  </div>
+  <div class="row form-material">
+    <!-- ////Colom ke 1\\\\\ -->
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Status Rumah</label>
+        <div class="col-sm-8">
+          <select name="status_rumah" id="status_rumah" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Cek Ke</label>
+        <div class="col-sm-8">
+          <div class="col">
+            <input type="checkbox" id="sertifikat" name="sertifikat" />Sertifikat &nbsp;&nbsp;
+            <input type="checkbox" id="rekening" name="rekening" />Rekening Listrik &nbsp;&nbsp;
+            <input type="checkbox" id="rekening" name="rekening" />Akta Jual Beli
+          </div>
+          <div class="col">
+            <input type="checkbox" id="rekening_listrik" name="rekening_listrik" />Rekening Listrik &nbsp;&nbsp;
+            <input type="checkbox" id="rekening_telepon" name="rekening_telepon" />Rekening Telepon
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Rumah Dihuni</label>
+        <div class="col-sm-8">
+          <select name="rumah_dihuni" id="rumah_dihuni" class="form-control">
+            <option value="Ya">Ya</option>
+            <option value="Tidak">Tidak</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Lama Menetap</label>
+        <div class="col">
+          <input type="text" class="form-control" id="lama_menetap_tahun" name="lama_menetap_tahun" placeholder="" />
+          <label>Tahun</label>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" id="lama_menetap_bulan" name="lama_menetap_bulan" placeholder="" />
+          <label>Bulan</label>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Jenis Bangunan</label>
+        <div class="col-sm-8">
+          <select name="jenis_bangunan" id="jenis_bangunan" class="form-control">
+            <option value="Ya">Ya</option>
+            <option value="Tidak">Tidak</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Lokasi Perumahan</label>
+        <div class="col-sm-8">
+          <select name="lokasi_perumahan" id="lokasi_perumahan" class="form-control">
+            <option value="Ya">Ya</option>
+            <option value="Tidak">Tidak</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">fasilitas Listrik</label>
+        <div class="col-sm-8">
+          <select name="fasilitas_listrik" id="fasilitas_listrik" class="form-control">
+            <option value="Ya">Ya</option>
+            <option value="Tidak">Tidak</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Isi Rumah</label>
+        <div class="col">
+          <input type="checkbox" id="isi_rumah_mobil" name="isi_rumah_mobil" />Mobil &nbsp;&nbsp;
+          <input type="checkbox" id="isi_rumah_motor" name="isi_rumah_motor" />Motor &nbsp;&nbsp;
+          <input type="checkbox" id="isi_rumah_tv" name="isi_rumah_tv" />TV
+        </div>
+        <div class="col">
+          <input type="checkbox" id="isi_rumah_sofa" name="isi_rumah_sofa" />Sofa &nbsp;&nbsp;
+          <input type="checkbox" id="isi_rumah_perabot_lainnya" name="isi_rumah_perabot_lainnya" />Perabot Lainnya
+        </div>
+      </div>
+    </div>
+    <!-- ////Colom ke 2\\\\\ -->
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kondisi Lingkungan</label>
+        <div class="col-sm-8">
+          <select name="kondisi_lingkungan" id="kondisi_lingkungan" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Akses Jalan Ke Rumah Tingal</label>
+        <div class="col-sm-8">
+          <select name="akses_jalan_ke_rumah_tinggal" id="akses_jalan_ke_rumah_tinggal" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Luas Tanah</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="luas_tanah" name="luas_tanah" placeholder="" />
+          <label>m2</label>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Luas Bangunan</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="luas_bangunan" name="luas_bangunan" placeholder="" />
+          <label>m2</label>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Garasi</label>
+        <div class="col-sm-8">
+          <input type="radio" id="garasi_ya" name="garasi" class="custom-control-input" />
+          <label class="custom-control-label">Ada</label>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="radio" id="garasi_tidak" name="garasi" class="custom-control-input" />
+          <label class="custom-control-label">Tidak</label>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Car Port</label>
+        <div class="col-sm-8">
+          <input type="radio" id="car_port_ya" name="car_port" class="custom-control-input" />
+          <label class="custom-control-label">Ada</label>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="radio" id="car_port_tidak" name="car_port" class="custom-control-input" />
+          <label class="custom-control-label">Tidak</label>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kendaraan</label>
+        <div class="col-sm-8">
+          <input type="radio" id="kendaraan_ya" name="kendaraan" class="custom-control-input" />
+          <label class="custom-control-label">Ada</label>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="radio" id="kendaraan_tidak" name="kendaraan" class="custom-control-input" />
+          <label class="custom-control-label">Tidak</label>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Jumlah Kendaraan</label>
+        <div class="col-sm-8">
+          <input type="number" class="form-control" id="jumlah_kendaraan" name="jumlah_kendaraan" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kondisi Kendaraan</label>
+        <div class="col-sm-8">
+          <input type="radio" id="kondisi_kendaraan_ya" name="kondisi_kendaraan" class="custom-control-input" />
+          <label class="custom-control-label">Baik</label>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="radio" id="kondisi_kendaraan_tidak" name="kondisi_kendaraan" class="custom-control-input" />
+          <label class="custom-control-label">Tidak Baik</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p></p>
+  <div class="row form-material">
+    <label class="col-sm-3 col-form-label">Kesimpulan Hasil Investigasi</label>
+    <div class="col-sm-9">
+      <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
+      <ngx-editor [editor]="editor" [(ngModel)]="html" [disabled]="false" [placeholder]="'Tulis Disini. . .'"> </ngx-editor>
+    </div>
+  </div>
+  <p></p>
+  <div class="row">
+    <div class="col" style="text-align: center">
+      <button class="btn btn-info">Simpan Data</button>
+    </div>
+  </div>
+</form>

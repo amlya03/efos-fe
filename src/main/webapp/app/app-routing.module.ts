@@ -11,6 +11,13 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
 import { DaftarAplikasiWaitingAssigmentComponent } from './verification/daftar-aplikasi-waiting-assigment/daftar-aplikasi-waiting-assigment.component';
 import { DaftarAplikasiOnProcessComponent } from './verification/daftar-aplikasi-on-process/daftar-aplikasi-on-process.component';
 import { DaftarAplikasiWaitingUpdateStatusComponent } from './verification/daftar-aplikasi-waiting-update-status/daftar-aplikasi-waiting-update-status.component';
+import { DataCalonNasabahComponent } from './verification/data-calon-nasabah/data-calon-nasabah.component';
+import { DataKantorComponent } from './verification/data-kantor/data-kantor.component';
+import { DataRumahComponent } from './verification/data-rumah/data-rumah.component';
+import { StukturPembiayaanComponent } from './verification/stuktur-pembiayaan/stuktur-pembiayaan.component';
+import { MutasiRekeningComponent } from './verification/mutasi-rekening/mutasi-rekening.component';
+import { ChecklistDocumentComponent } from './verification/checklist-document/checklist-document.component';
+import { SuratPersetujuanComponent } from './verification/surat-persetujuan/surat-persetujuan.component';
 
 @NgModule({
   imports: [
@@ -43,6 +50,34 @@ import { DaftarAplikasiWaitingUpdateStatusComponent } from './verification/dafta
         {
           path: 'daftar-aplikasi-waiting-update-status',
           component: DaftarAplikasiWaitingUpdateStatusComponent,
+        },
+        {
+          path: 'data-calon-nasabah',
+          component: DataCalonNasabahComponent,
+        },
+        {
+          path: 'data-kantor',
+          component: DataKantorComponent,
+        },
+        {
+          path: 'data-rumah',
+          component: DataRumahComponent,
+        },
+        {
+          path: 'mutasi-rekening',
+          component: MutasiRekeningComponent,
+        },
+        {
+          path: 'sturktur-pembiayaan',
+          component: StukturPembiayaanComponent,
+        },
+        {
+          path: 'checklist-document',
+          component: ChecklistDocumentComponent,
+        },
+        {
+          path: 'surat-persetujuan',
+          component: SuratPersetujuanComponent,
         },
         {
           path: '',

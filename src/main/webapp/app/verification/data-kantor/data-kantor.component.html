@@ -1,0 +1,222 @@
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Data Kantor</h3>
+</div>
+<form>
+  <div class="row form-material">
+    <!-- ////Colom ke 1\\\\\ -->
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tanggal Verification</label>
+        <div class="col-sm-8">
+          <input class="form-control" type="date" id="tanggal_verification" name="tanggal_verification" onchange="submitBday()" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Waktu Verification</label>
+        <div class="col-sm-8">
+          <input class="form-control" type="date" id="waktu_verification" name="waktu_verification" onchange="submitBday()" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">No Telepon</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="no_telepon" name="no_telepon" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Fax</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="fax" name="fax" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Pemberi Keterangan</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="pemberi_keterangan" name="pemberi_keterangan" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Hubungan Pemohon dengan Pemberi Keterangan</label>
+        <div class="col-sm-8">
+          <select name="hungungan_pemohon_dengan_pemberi_keterangan" id="hungungan_pemohon_dengan_pemberi_keterangan" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Nama Perusahaan</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="nama_perusahaan" name="nama_perusahaan" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Alamat Perusahaan</label>
+        <div class="col-sm-8">
+          <textarea name="alamat_perusahaan" id="alamat_perusahaan" cols="49" rows="2"></textarea>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Provinsi</label>
+        <div class="col-sm-8">
+          <select name="provinsi" id="provinsi" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kota</label>
+        <div class="col-sm-8">
+          <select name="kota" id="kota" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kecamatan</label>
+        <div class="col-sm-8">
+          <select name="kecamatan" id="kecamatan" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kelurahan</label>
+        <div class="col-sm-8">
+          <select name="kelurahan" id="kelurahan" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">RT / RW</label>
+        <div class="col">
+          <input type="text" class="form-control" id="rt" name="rt" placeholder="" />
+          <label>RT</label>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" id="rw" name="rw" placeholder="" />
+          <label>RW</label>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kode Pos</label>
+        <div class="col-sm-8">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon2" />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">Cari Data</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ////Colom ke 2\\\\\ -->
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Lama Bekerja</label>
+        <div class="col">
+          <input type="text" class="form-control" id="lama_bekerja_tahun" name="lama_bekerja_tahun" placeholder="" />
+          <label>RT</label>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" id="lama_bekerja_bulan" name="lama_bekerja_bulan" placeholder="" />
+          <label>RW</label>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Bidang Usaha</label>
+        <div class="col-sm-8">
+          <select name="bidang_usaha" id="bidang_usaha" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Sektor_ekonomi</label>
+        <div class="col-sm-8">
+          <select name="sektor_ekonomi" id="sektor_ekonomi" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tipe Pekerjaan</label>
+        <div class="col-sm-8">
+          <select name="tipe_pekerjaan" id="tipe_pekerjaan" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Status Kepegawaian</label>
+        <div class="col-sm-8">
+          <select name="status_kepegawaian" id="status_kepegawaian" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Bagian / Divisi</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="bagian_atau_divisi" name="bagian_atau_divisi" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Jumlah Tanggunan</label>
+        <div class="col-sm-8">
+          <select name="status_kepegawaian" id="status_kepegawaian" class="form-control">
+            <option value="">Pilih Data</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Usia Pensiun</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="usia_pensiun" name="usia_pensiun" placeholder="" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Aspek Syariah</label>
+        <div class="col-sm-8">
+          <input type="radio" id="tidak_sesuai_syariah" name="aspek_syariah" class="custom-control-input" />
+          <label class="custom-control-label">Objek yang dibiayai tidak sesuai aspek Syariah</label>
+          <br />
+          <input type="radio" id="sesuai_syariah" name="aspek_syariah" class="custom-control-input" />
+          <label class="custom-control-label">Objek Sesuai aspek Syariah</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p></p>
+  <p></p>
+  <div class="row form-material">
+    <label class="col-sm-3 col-form-label">Kesimpulan Hasil Investigasi</label>
+    <div class="col-sm-9">
+      <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
+      <ngx-editor [editor]="editor" [(ngModel)]="html" [disabled]="false" [placeholder]="'Tulis Disini. . .'"> </ngx-editor>
+    </div>
+  </div>
+  <p></p>
+  <button class="btn btn-info" style="float: right">Simpan Data</button>
+</form>

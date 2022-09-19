@@ -30,9 +30,17 @@ import { DaftarAplikasiWaitingUpdateStatusComponent } from './verification/dafta
 import { DaftarAplikasiWaitingAssigmentComponent } from './verification/daftar-aplikasi-waiting-assigment/daftar-aplikasi-waiting-assigment.component';
 import { DataTablesModule } from 'angular-datatables';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { DataCalonNasabahComponent } from './verification/data-calon-nasabah/data-calon-nasabah.component';
+import { DataRumahComponent } from './verification/data-rumah/data-rumah.component';
+import { DataKantorComponent } from './verification/data-kantor/data-kantor.component';
+import { MutasiRekeningComponent } from './verification/mutasi-rekening/mutasi-rekening.component';
+import { SuratPersetujuanComponent } from './verification/surat-persetujuan/surat-persetujuan.component';
+import { NgxEditorModule } from 'ngx-editor';
+import { StukturPembiayaanComponent } from './verification/stuktur-pembiayaan/stuktur-pembiayaan.component';
+import { ChecklistDocumentComponent } from './verification/checklist-document/checklist-document.component';
 
 @NgModule({
   imports: [
@@ -52,6 +60,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FormsModule,
     Ng2SearchPipeModule,
     NgxPaginationModule,
+    NgxEditorModule,
+    ReactiveFormsModule,
   ],
   providers: [
     Title,
@@ -69,12 +79,22 @@ import { NgxPaginationModule } from 'ngx-pagination';
     DaftarAplikasiOnProcessComponent,
     DaftarAplikasiWaitingUpdateStatusComponent,
     DaftarAplikasiWaitingAssigmentComponent,
+    DataCalonNasabahComponent,
+    DataRumahComponent,
+    DataKantorComponent,
+    MutasiRekeningComponent,
+    SuratPersetujuanComponent,
+    StukturPembiayaanComponent,
+    ChecklistDocumentComponent,
   ],
   bootstrap: [
     MainComponent,
     DaftarAplikasiWaitingAssigmentComponent,
     DaftarAplikasiOnProcessComponent,
     DaftarAplikasiWaitingUpdateStatusComponent,
+    DataCalonNasabahComponent,
+    DataRumahComponent,
+    DataKantorComponent,
   ],
 })
 export class AppModule {

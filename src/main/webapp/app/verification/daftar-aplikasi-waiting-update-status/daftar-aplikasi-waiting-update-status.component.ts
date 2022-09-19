@@ -69,7 +69,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit {
     } else {
       const index = this.kirimDe.findIndex(list => list === product);
       this.kirimDe.splice(index, 1);
-      console.warn(statusAplikasi);
+      alert(statusAplikasi);
     }
     console.warn(this.kirimDe);
   }
@@ -83,6 +83,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit {
         .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_status_tracking', {
           app_no_de: this.kirimDe[i],
           status_aplikasi: this.kirimStatusAplikasi[i],
+          created_by: '199183174',
         })
         .subscribe({});
     }
@@ -92,12 +93,14 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit {
   postForward(): void {
     this.kirimDe;
     for (let i = 0; i < this.kirimDe.length; i++) {
-      // alert(this.kirimDe[i]);
-      // alert(this.kirimStatusAplikasi[i])
+      alert(this.kirimDe[i]);
+      alert(this.kirimStatusAplikasi[i]);
+      alert('created_by: 199183174 hardcode');
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_status_reject', {
+        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_status_back_analis', {
           app_no_de: this.kirimDe[i],
           status_aplikasi: this.kirimStatusAplikasi[i],
+          created_by: '199183174',
         })
         .subscribe({});
     }
@@ -122,6 +125,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit {
             .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_status_reject', {
               app_no_de: this.kirimDe[i],
               status_aplikasi: this.kirimStatusAplikasi[i],
+              created_by: '199183174',
             })
             .subscribe({});
         }

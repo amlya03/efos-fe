@@ -7,4 +7,5 @@ export interface daWuS {
   analis_verifikasi?: string | null;
   status_aplikasi_desc?: string | null;
   status_aplikasi?: string | null;
+  created_by?: string | null;
 }

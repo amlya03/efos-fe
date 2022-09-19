@@ -8,4 +8,5 @@ export interface daOp {
   sla: number;
   app_no_de?: string | null;
   analis_verifikasi?: string | null;
+  created_by?: string | null;
 }

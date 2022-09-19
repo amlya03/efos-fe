@@ -4,7 +4,6 @@
       <span class="logo-img"></span>
       <!-- <span jhiTranslate="global.title" class="navbar-title">BetaNewEfos</span>
       <span class="navbar-version">{{ version }}</span> -->
-      <span>EFOS</span>
     </a>
     <a
       class="navbar-toggler d-lg-none"
@@ -19,7 +18,7 @@
       <fa-icon icon="bars"></fa-icon>
     </a>
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
-      <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav">
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="/" [class.active]="navHome" (click)="hideData()">
             <span>
@@ -28,13 +27,7 @@
             </span>
           </a>
         </li>
-        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <!-- <a class="nav-link" routerLink="/" (click)="login()">
-            <span>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="cogs"></fa-icon>
-              <p>Verification</p>
-            </span>
-          </a> -->
+        <li id="verificationNav" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a
             class="nav-link"
             routerLink="daftar-aplikasi-waiting-assigment"
@@ -42,7 +35,7 @@
             (click)="showData()"
             [class.active]="navVerif"
           >
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="cogs"></fa-icon>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="users-cog"></fa-icon>
             <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
             <p>Verification</p>
           </a>
@@ -164,7 +157,14 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
+          <a
+            class="nav-link dropdown-toggle"
+            [routerLink]="'login'"
+            ngbDropdownToggle
+            href="javascript:void(0);"
+            id="account-menu"
+            data-cy="accountMenu"
+          >
             <span *ngIf="!account?.imageUrl">
               <fa-icon icon="user"></fa-icon>
               <span jhiTranslate="global.menu.account.main">Account</span>
@@ -226,31 +226,65 @@
         </li>
       </ul>
     </div>
+    <a>
+      <span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="user"></fa-icon>
+        <br />
+        <span>Account</span>
+      </span>
+    </a>
   </div>
 </nav>
-<div id="nk-sidebar" *ngIf="element == true">
+<nav class="nav nav-pills nav-justified" id="nk-sidebar" *ngIf="element == true">
   <a
+    class="nav-item nav-link"
     routerLink="daftar-aplikasi-waiting-assigment"
     [routerLinkActive]="'active'"
     [routerLinkActiveOptions]="{ exact: true }"
-    [class.active]="aktifWa"
-    (click)="disable()"
-    ><span> Daftar Aplikasi Waiting Assigment</span></a
   >
+    <h6>Daftar Aplikasi Waiting Assigment</h6>
+  </a>
   <a
+    class="nav-item nav-link"
     routerLink="daftar-aplikasi-on-process"
     [routerLinkActive]="'active'"
     [routerLinkActiveOptions]="{ exact: true }"
-    [class.active]="AktifOp"
-    (click)="disable2()"
-    ><span>Daftar Aplikasi On Process</span></a
   >
+    <h6>Daftar Aplikasi On Process</h6>
+  </a>
   <a
+    class="nav-item nav-link"
     routerLink="daftar-aplikasi-waiting-update-status"
     [routerLinkActive]="'active'"
     [routerLinkActiveOptions]="{ exact: true }"
-    [class.active]="aktifWu"
-    (click)="disable3()"
-    ><span>Daftar Aplikasi Waiting Update Satatus</span></a
   >
-</div>
+    <h6>Daftar Aplikasi Waiting Update Satatus</h6>
+  </a>
+  <a class="nav-item nav-link" routerLink="data-calon-nasabah" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+    <h6>Data Calon Nasabah</h6>
+  </a>
+  <a class="nav-item nav-link" routerLink="data-kantor" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+    <h6>Data Kantor</h6>
+  </a>
+  <a class="nav-item nav-link" routerLink="data-rumah" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+    <h6>Data Rumah</h6>
+  </a>
+  <a class="nav-item nav-link" routerLink="mutasi-rekening" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+    <h6>Mutasi Rekening</h6>
+  </a>
+  <a class="nav-item nav-link" routerLink="sturktur-pembiayaan" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+    <h6>Struktur Pembiayaan</h6>
+  </a>
+  <a class="nav-item nav-link" routerLink="checklist-document" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+    <h6>Checklist Document</h6>
+  </a>
+  <a
+    hidden
+    class="nav-item nav-link"
+    routerLink="surat-persetujuan"
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <h6>Surat Persetujuan</h6>
+  </a>
+</nav>
