@@ -3,10 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import {
-  DaftarAplikasiWaitingUpdateStatusService,
-  EntityArrayResponseDaWuS,
-} from '../service/daftar-aplikasi-waiting-update-status.service';
+import { ServiceVerificationService } from '../service/service-verification.service';
 import { daWuS } from './daWuS.model';
 
 @Component({
@@ -29,7 +26,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit {
   updateStatusDaWuS: Array<number> = [];
 
   constructor(
-    protected daWusService: DaftarAplikasiWaitingUpdateStatusService,
+    protected daWusService: ServiceVerificationService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected http: HttpClient,
@@ -41,13 +38,11 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit {
   }
 
   load(): void {
-    this.daWusService.getDaWuS().subscribe({
-      next: (res: EntityArrayResponseDaWuS) => {
-        // console.log(res.body?.result);
-        // console.warn('tabel', res);
-        this.daWuS = res.body?.result;
-        this.onResponseSuccess(res);
-      },
+    this.daWusService.getDaWuS().subscribe(data => {
+      console.warn(data);
+      if (data.code === 200) {
+        this.daWuS = data.result;
+      }
     });
   }
   // serach datatable
@@ -61,15 +56,15 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit {
     $('#dataTables-example').DataTable().columns().search('').draw();
   }
   // get value table
-  getProoduct(isSelected: any, product: any, statusAplikasi: any): void {
+  getProoduct(isSelected: any, appNoDe: any, statusAplikasi: any): void {
     const checked = isSelected.target.checked;
     if (checked) {
-      this.kirimDe.push(product);
+      this.kirimDe.push(appNoDe);
       this.kirimStatusAplikasi.push(statusAplikasi);
     } else {
-      const index = this.kirimDe.findIndex(list => list === product);
+      const index = this.kirimDe.findIndex(list => list === appNoDe);
       this.kirimDe.splice(index, 1);
-      alert(statusAplikasi);
+      // alert(statusAplikasi);
     }
     console.warn(this.kirimDe);
   }
@@ -93,9 +88,9 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit {
   postForward(): void {
     this.kirimDe;
     for (let i = 0; i < this.kirimDe.length; i++) {
-      alert(this.kirimDe[i]);
-      alert(this.kirimStatusAplikasi[i]);
-      alert('created_by: 199183174 hardcode');
+      // alert(this.kirimDe[i]);
+      // alert(this.kirimStatusAplikasi[i]);
+      // alert('created_by: 199183174 hardcode');
       this.http
         .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_status_back_analis', {
           app_no_de: this.kirimDe[i],

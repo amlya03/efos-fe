@@ -1,35 +1,79 @@
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Daftar Calon Nasabah</h3>
 </div>
-<form>
+<form [formGroup]="dataCalonNasabahForm" (ngSubmit)="onSubmit()">
   <div class="row form-material">
     <!-- ////Colom ke 1\\\\\ -->
     <div class="col-md-6">
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Nasabah</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="nama" name="nama" placeholder="" />
+          <input
+            type="text"
+            class="form-control"
+            id="nama"
+            name="nama"
+            placeholder=""
+            formControlName="nama"
+            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.nama.errors }"
+          />
+          <div *ngIf="submitted && dataCalonNasabahForm.controls.nama.errors" class="text-danger">
+            <div *ngIf="submitted && dataCalonNasabahForm.controls.nama.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Perusahaan</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="nama_perusahaan" name="nama_perusahaan" placeholder="" />
+          <input
+            type="text"
+            class="form-control"
+            id="nama_perusahaan"
+            name="nama_perusahaan"
+            placeholder=""
+            formControlName="nama_perusahaan"
+            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.nama_perusahaan.errors }"
+          />
+          <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_perusahaan.errors" class="text-danger">
+            <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_perusahaan.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Alamat Perusahaan</label>
         <div class="col-sm-8">
-          <textarea name="alamat_perusahaan" id="alamat_perusahaan" cols="49" rows="3"></textarea>
+          <textarea
+            name="alamat_perusahaan"
+            id="alamat_perusahaan"
+            cols="49"
+            rows="4"
+            formControlName="alamat_perusahaan"
+            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.alamat_perusahaan.errors }"
+          >
+          </textarea>
+          <div *ngIf="submitted && dataCalonNasabahForm.controls.alamat_perusahaan.errors" class="text-danger">
+            <div *ngIf="submitted && dataCalonNasabahForm.controls.alamat_perusahaan.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">No Telepon Perusahaan</label>
         <div class="col-sm-8">
-          <input type="number" class="form-control" id="no_telepon_perusahaan" name="no_telepon_perusahaan" placeholder="" />
+          <input
+            type="number"
+            class="form-control"
+            id="no_telepon_perusahaan"
+            name="no_telepon_perusahaan"
+            placeholder=""
+            formControlName="no_telepon_perusahaan"
+            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.no_telepon_perusahaan.errors }"
+          />
+          <div *ngIf="submitted && dataCalonNasabahForm.controls.no_telepon_perusahaan.errors" class="text-danger">
+            <div *ngIf="submitted && dataCalonNasabahForm.controls.no_telepon_perusahaan.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
     </div>
@@ -38,172 +82,225 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama yang Dihubungi</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="nama_yang_dihubungi" name="nama_yang_dihubungi" placeholder="" />
+          <input
+            type="text"
+            class="form-control"
+            id="nama_yang_dihubungi"
+            name="nama_yang_dihubungi"
+            placeholder=""
+            formControlName="nama_yang_dihubungi"
+            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.nama_yang_dihubungi.errors }"
+          />
+          <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_yang_dihubungi.errors" class="text-danger">
+            <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_yang_dihubungi.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jabatan yang Dihubungi</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="jabatan_yang_dihubungi" name="jabatan_yang_dihubungi" placeholder="" />
+          <input
+            type="text"
+            class="form-control"
+            id="jabatan_yang_dihubungi"
+            name="jabatan_yang_dihubungi"
+            placeholder=""
+            formControlName="jabatan_yang_dihubungi"
+            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.jabatan_yang_dihubungi.errors }"
+          />
+          <div *ngIf="submitted && dataCalonNasabahForm.controls.jabatan_yang_dihubungi.errors" class="text-danger">
+            <div *ngIf="submitted && dataCalonNasabahForm.controls.jabatan_yang_dihubungi.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tanggal Permintaan</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="tanggal_permintaan" name="tanggal_permintaan" placeholder="" />
+          <input
+            type="text"
+            class="form-control"
+            id="tanggal_permintaan"
+            name="tanggal_permintaan"
+            placeholder=""
+            formControlName="tanggal_permintaan"
+            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.tanggal_permintaan.errors }"
+          />
+          <div *ngIf="submitted && dataCalonNasabahForm.controls.tanggal_permintaan.errors" class="text-danger">
+            <div *ngIf="submitted && dataCalonNasabahForm.controls.tanggal_permintaan.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tanggal Pemeriksa</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="tanggal_pemeriksa" name="tanggal_pemeriksa" placeholder="" />
+          <input
+            type="text"
+            class="form-control"
+            id="tanggal_pemeriksa"
+            name="tanggal_pemeriksa"
+            placeholder=""
+            formControlName="tanggal_pemeriksa"
+            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.tanggal_pemeriksa.errors }"
+          />
+          <div *ngIf="submitted && dataCalonNasabahForm.controls.tanggal_pemeriksa.errors" class="text-danger">
+            <div *ngIf="submitted && dataCalonNasabahForm.controls.tanggal_pemeriksa.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Pemeriksa</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="nama_pemeriksa" name="nama_pemeriksa" placeholder="" />
+          <input
+            type="text"
+            class="form-control"
+            id="nama_pemeriksa"
+            name="nama_pemeriksa"
+            placeholder=""
+            formControlName="nama_pemeriksa"
+            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.nama_perusahaan.errors }"
+          />
+          <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_pemeriksa.errors" class="text-danger">
+            <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_pemeriksa.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</form>
-<p></p>
-<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pemohon)</h3>
-</div>
-<p></p>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">NIK</th>
-      <th scope="col">Nama Bank</th>
-      <th scope="col">Jenis Fasilitas</th>
-      <th scope="col">Kolektibilitas</th>
-      <th scope="col">Outstanding</th>
-      <th scope="col">Plafound</th>
-      <th scope="col">Tanggal Mulai</th>
-      <th scope="col">Tanggal Berakhir</th>
-      <th scope="col">Status</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td><input type="checkbox" name="" id="" /></td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td><input type="checkbox" name="" id="" /></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td><input type="checkbox" name="" id="" /></td>
-    </tr>
-  </tbody>
-</table>
-<p></p>
-<button class="btn btn-info">Lihat Slik</button>
-<p></p>
-<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pasangan)</h3>
-</div>
-<p></p>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">NIK</th>
-      <th scope="col">Nama Bank</th>
-      <th scope="col">Jenis Fasilitas</th>
-      <th scope="col">Kolektibilitas</th>
-      <th scope="col">Outstanding</th>
-      <th scope="col">Plafound</th>
-      <th scope="col">Tanggal Mulai</th>
-      <th scope="col">Tanggal Berakhir</th>
-      <th scope="col">Status</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td><input type="checkbox" name="" id="" /></td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td><input type="checkbox" name="" id="" /></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td><input type="checkbox" name="" id="" /></td>
-    </tr>
-  </tbody>
-</table>
-<p></p>
-<button class="btn btn-info">Lihat Slik</button>
-<p></p>
-<form>
+  <p></p>
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pemohon)</h3>
+  </div>
+  <p></p>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">NIK</th>
+        <th scope="col">Nama Bank</th>
+        <th scope="col">Jenis Fasilitas</th>
+        <th scope="col">Kolektibilitas</th>
+        <th scope="col">Outstanding</th>
+        <th scope="col">Plafound</th>
+        <th scope="col">Tanggal Mulai</th>
+        <th scope="col">Tanggal Berakhir</th>
+        <th scope="col">Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td><input type="checkbox" name="" id="" /></td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+        <td><input type="checkbox" name="" id="" /></td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+        <td><input type="checkbox" name="" id="" /></td>
+      </tr>
+    </tbody>
+  </table>
+  <p></p>
+  <button class="btn btn-info" type="button">Lihat Slik</button>
+  <p></p>
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pasangan)</h3>
+  </div>
+  <p></p>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">NIK</th>
+        <th scope="col">Nama Bank</th>
+        <th scope="col">Jenis Fasilitas</th>
+        <th scope="col">Kolektibilitas</th>
+        <th scope="col">Outstanding</th>
+        <th scope="col">Plafound</th>
+        <th scope="col">Tanggal Mulai</th>
+        <th scope="col">Tanggal Berakhir</th>
+        <th scope="col">Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td><input type="checkbox" name="" id="" /></td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+        <td><input type="checkbox" name="" id="" /></td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+        <td><input type="checkbox" name="" id="" /></td>
+      </tr>
+    </tbody>
+  </table>
+  <p></p>
+  <button class="btn btn-info" type="button">Lihat Slik</button>
+  <p></p>
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
     <h3 style="color: #fff; text-align: center">Data Keuangan Nasabah</h3>
   </div>
@@ -585,5 +682,9 @@
   </div>
   <p></p>
   <p></p>
-  <button class="btn btn-info" style="float: right">Simpan Data</button>
+  <div class="row">
+    <div class="col" style="text-align: center">
+      <button type="submit" class="btn btn-info">Simpan Data</button>
+    </div>
+  </div>
 </form>

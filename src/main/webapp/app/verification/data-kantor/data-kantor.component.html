@@ -1,124 +1,286 @@
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Data Kantor</h3>
 </div>
-<form>
+<form [formGroup]="dataKantorForm" (ngSubmit)="onSubmit()">
   <div class="row form-material">
     <!-- ////Colom ke 1\\\\\ -->
     <div class="col">
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tanggal Verification</label>
         <div class="col-sm-8">
-          <input class="form-control" type="date" id="tanggal_verification" name="tanggal_verification" onchange="submitBday()" />
+          <input
+            class="form-control"
+            type="date"
+            formControlName="tanggal_verification"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.tanggal_verification.errors }"
+            id="tanggal_verification"
+            name="tanggal_verification"
+            onchange="submitBday()"
+          />
+          <div *ngIf="submitted && dataKantorForm.controls.tanggal_verification.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.tanggal_verification.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Waktu Verification</label>
         <div class="col-sm-8">
-          <input class="form-control" type="date" id="waktu_verification" name="waktu_verification" onchange="submitBday()" />
+          <input
+            class="form-control"
+            type="time"
+            id="waktu_verification"
+            name="waktu_verification"
+            onchange="submitBday()"
+            formControlName="waktu_verification"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.waktu_verification.errors }"
+          />
+          <div *ngIf="submitted && dataKantorForm.controls.waktu_verification.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.waktu_verification.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">No Telepon</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="no_telepon" name="no_telepon" placeholder="" />
+          <input
+            type="text"
+            class="form-control"
+            id="no_telepon"
+            name="no_telepon"
+            placeholder=""
+            formControlName="no_telepon"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.no_telepon.errors }"
+          />
+          <div *ngIf="submitted && dataKantorForm.controls.no_telepon.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.no_telepon.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Fax</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="fax" name="fax" placeholder="" />
+          <input
+            type="text"
+            class="form-control"
+            id="fax"
+            name="fax"
+            placeholder=""
+            formControlName="fax"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.fax.errors }"
+          />
+          <div *ngIf="submitted && dataKantorForm.controls.fax.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.fax.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Pemberi Keterangan</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="pemberi_keterangan" name="pemberi_keterangan" placeholder="" />
+          <input
+            type="text"
+            class="form-control"
+            id="pemberi_keterangan"
+            name="pemberi_keterangan"
+            placeholder=""
+            formControlName="pemberi_keterangan"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.pemberi_keterangan.errors }"
+          />
+          <div *ngIf="submitted && dataKantorForm.controls.pemberi_keterangan.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.pemberi_keterangan.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Hubungan Pemohon dengan Pemberi Keterangan</label>
         <div class="col-sm-8">
-          <select name="hungungan_pemohon_dengan_pemberi_keterangan" id="hungungan_pemohon_dengan_pemberi_keterangan" class="form-control">
+          <select
+            name="hungungan_pemohon_dengan_pemberi_keterangan"
+            id="hungungan_pemohon_dengan_pemberi_keterangan"
+            class="form-control"
+            formControlName="hungungan_pemohon_dengan_pemberi_keterangan"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.hungungan_pemohon_dengan_pemberi_keterangan.errors }"
+          >
             <option value="">Pilih Data</option>
+            <option *ngFor="let refHubunganAgunan of refHubunganAgunan" value="{{ refHubunganAgunan.deskripsi }}">
+              {{ refHubunganAgunan.deskripsi }}
+            </option>
           </select>
+          <div *ngIf="submitted && dataKantorForm.controls.hungungan_pemohon_dengan_pemberi_keterangan.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.hungungan_pemohon_dengan_pemberi_keterangan.errors.required">
+              Tidak Boleh Kosong
+            </div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Perusahaan</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="nama_perusahaan" name="nama_perusahaan" placeholder="" />
+          <input
+            type="text"
+            class="form-control"
+            id="nama_perusahaan"
+            name="nama_perusahaan"
+            placeholder=""
+            formControlName="nama_perusahaan"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.nama_perusahaan.errors }"
+          />
+          <div *ngIf="submitted && dataKantorForm.controls.nama_perusahaan.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.nama_perusahaan.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Alamat Perusahaan</label>
         <div class="col-sm-8">
-          <textarea name="alamat_perusahaan" id="alamat_perusahaan" cols="49" rows="2"></textarea>
+          <textarea
+            name="alamat_perusahaan"
+            id="alamat_perusahaan"
+            cols="49"
+            rows="2"
+            formControlName="alamat_perusahaan"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.alamat_perusahaan.errors }"
+          >
+          </textarea>
+          <div *ngIf="submitted && dataKantorForm.controls.alamat_perusahaan.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.alamat_perusahaan.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Provinsi</label>
         <div class="col-sm-8">
-          <select name="provinsi" id="provinsi" class="form-control">
+          <select
+            name="provinsi"
+            id="provinsi"
+            class="form-control"
+            formControlName="provinsi"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.provinsi.errors }"
+          >
             <option value="">Pilih Data</option>
           </select>
+          <div *ngIf="submitted && dataKantorForm.controls.provinsi.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.provinsi.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kota</label>
         <div class="col-sm-8">
-          <select name="kota" id="kota" class="form-control">
+          <select
+            name="kota"
+            id="kota"
+            class="form-control"
+            formControlName="kota"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.kota.errors }"
+          >
             <option value="">Pilih Data</option>
           </select>
+          <div *ngIf="submitted && dataKantorForm.controls.kota.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.kota.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kecamatan</label>
         <div class="col-sm-8">
-          <select name="kecamatan" id="kecamatan" class="form-control">
+          <select
+            name="kecamatan"
+            id="kecamatan"
+            class="form-control"
+            formControlName="kecamatan"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.kecamatan.errors }"
+          >
             <option value="">Pilih Data</option>
           </select>
+          <div *ngIf="submitted && dataKantorForm.controls.kecamatan.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.kecamatan.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kelurahan</label>
         <div class="col-sm-8">
-          <select name="kelurahan" id="kelurahan" class="form-control">
+          <select
+            name="kelurahan"
+            id="kelurahan"
+            class="form-control"
+            formControlName="kelurahan"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.kelurahan.errors }"
+          >
             <option value="">Pilih Data</option>
           </select>
+          <div *ngIf="submitted && dataKantorForm.controls.kelurahan.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.kelurahan.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">RT / RW</label>
         <div class="col">
-          <input type="text" class="form-control" id="rt" name="rt" placeholder="" />
-          <label>RT</label>
+          <input
+            type="text"
+            class="form-control"
+            id="rt"
+            name="rt"
+            placeholder=""
+            formControlName="rt"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.rt.errors }"
+          />
+          <div *ngIf="submitted && dataKantorForm.controls.rt.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.rt.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
+        <div class="col"><label>RT</label></div>
         <div class="col">
-          <input type="text" class="form-control" id="rw" name="rw" placeholder="" />
-          <label>RW</label>
+          <input
+            type="text"
+            class="form-control"
+            id="rw"
+            name="rw"
+            placeholder=""
+            formControlName="rw"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.rw.errors }"
+          />
+          <div *ngIf="submitted && dataKantorForm.controls.rw.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.rw.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
+        <div class="col"><label>RW</label></div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kode Pos</label>
         <div class="col-sm-8">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon2" />
+            <input
+              type="text"
+              class="form-control"
+              placeholder=""
+              aria-label=""
+              aria-describedby="basic-addon2"
+              id="kode_pos"
+              name="kode_pos"
+              formControlName="kode_pos"
+              [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.kode_pos.errors }"
+            />
             <div class="input-group-append">
               <button class="btn btn-outline-secondary" type="button">Cari Data</button>
             </div>
+          </div>
+          <div *ngIf="submitted && dataKantorForm.controls.kode_pos.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.kode_pos.errors.required">Tidak Boleh Kosong</div>
           </div>
         </div>
       </div>
@@ -128,78 +290,233 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Lama Bekerja</label>
         <div class="col">
-          <input type="text" class="form-control" id="lama_bekerja_tahun" name="lama_bekerja_tahun" placeholder="" />
-          <label>RT</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lama_bekerja_tahun"
+            name="lama_bekerja_tahun"
+            placeholder=""
+            formControlName="lama_bekerja_tahun"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.lama_bekerja_tahun.errors }"
+          />
+          <div *ngIf="submitted && dataKantorForm.controls.lama_bekerja_tahun.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.lama_bekerja_tahun.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
+        <div class="col"><label>Tahun</label></div>
         <div class="col">
-          <input type="text" class="form-control" id="lama_bekerja_bulan" name="lama_bekerja_bulan" placeholder="" />
-          <label>RW</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lama_bekerja_bulan"
+            name="lama_bekerja_bulan"
+            placeholder=""
+            formControlName="lama_bekerja_bulan"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.lama_bekerja_bulan.errors }"
+          />
+          <div *ngIf="submitted && dataKantorForm.controls.lama_bekerja_bulan.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.lama_bekerja_bulan.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
+        <div class="col"><label>Bulan</label></div>
       </div>
+      <br />
+      <!-- NON FIX INCOME -->
+      <div class="form-group row" hidden>
+        <label class="col-sm-4 col-form-label">Lama Beroperasi</label>
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            id="lama_beroperasi_tahun"
+            name="lama_beroperasi_tahun"
+            placeholder=""
+            formControlName="lama_beroperasi_tahun"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.lama_beroperasi_tahun.errors }"
+          />
+          <div *ngIf="submitted && dataKantorForm.controls.lama_beroperasi_tahun.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.lama_beroperasi_tahun.errors.required">Tidak Boleh Kosong</div>
+          </div>
+        </div>
+        <div class="col"><label>Tahun</label></div>
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            id="lama_beroperasi_bulan"
+            name="lama_beroperasi_bulan"
+            placeholder=""
+            formControlName="lama_beroperasi_bulan"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.lama_beroperasi_bulan.errors }"
+          />
+          <div *ngIf="submitted && dataKantorForm.controls.lama_beroperasi_bulan.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.lama_beroperasi_bulan.errors.required">Tidak Boleh Kosong</div>
+          </div>
+        </div>
+        <div class="col"><label>Bulan</label></div>
+      </div>
+      <!-- NON FIX INCOME -->
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Bidang Usaha</label>
         <div class="col-sm-8">
-          <select name="bidang_usaha" id="bidang_usaha" class="form-control">
+          <select
+            name="bidang_usaha"
+            id="bidang_usaha"
+            class="form-control"
+            formControlName="bidang_usaha"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.bidang_usaha.errors }"
+          >
             <option value="">Pilih Data</option>
           </select>
+          <div *ngIf="submitted && dataKantorForm.controls.bidang_usaha.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.bidang_usaha.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Sektor_ekonomi</label>
+        <label class="col-sm-4 col-form-label">Sektor Ekonomi</label>
         <div class="col-sm-8">
-          <select name="sektor_ekonomi" id="sektor_ekonomi" class="form-control">
+          <select
+            name="sektor_ekonomi"
+            id="sektor_ekonomi"
+            class="form-control"
+            formControlName="sektor_ekonomi"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.sektor_ekonomi.errors }"
+          >
             <option value="">Pilih Data</option>
           </select>
+          <div *ngIf="submitted && dataKantorForm.controls.sektor_ekonomi.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.sektor_ekonomi.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tipe Pekerjaan</label>
         <div class="col-sm-8">
-          <select name="tipe_pekerjaan" id="tipe_pekerjaan" class="form-control">
+          <select
+            name="tipe_pekerjaan"
+            id="tipe_pekerjaan"
+            class="form-control"
+            formControlName="tipe_pekerjaan"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.tipe_pekerjaan.errors }"
+          >
             <option value="">Pilih Data</option>
           </select>
+          <div *ngIf="submitted && dataKantorForm.controls.tipe_pekerjaan.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.tipe_pekerjaan.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
+      <!-- HIDE Jika NON FIX INCOME -->
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Status Kepegawaian</label>
         <div class="col-sm-8">
-          <select name="status_kepegawaian" id="status_kepegawaian" class="form-control">
+          <select
+            name="status_kepegawaian"
+            id="status_kepegawaian"
+            class="form-control"
+            formControlName="status_kepegawaian"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.status_kepegawaian.errors }"
+          >
             <option value="">Pilih Data</option>
+            <option value="Pegawai Tetap">Pegawai Tetap</option>
+            <option value="Pegawai Kontrak">Pegawai Kontrak</option>
           </select>
+          <div *ngIf="submitted && dataKantorForm.controls.status_kepegawaian.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.status_kepegawaian.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Bagian / Divisi</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="bagian_atau_divisi" name="bagian_atau_divisi" placeholder="" />
+          <input
+            type="text"
+            class="form-control"
+            id="bagian_atau_divisi"
+            name="bagian_atau_divisi"
+            placeholder=""
+            formControlName="bagian_atau_divisi"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.bagian_atau_divisi.errors }"
+          />
+          <div *ngIf="submitted && dataKantorForm.controls.bagian_atau_divisi.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.bagian_atau_divisi.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Jumlah Tanggunan</label>
+        <label class="col-sm-4 col-form-label">Posisi / Jabatan</label>
         <div class="col-sm-8">
-          <select name="status_kepegawaian" id="status_kepegawaian" class="form-control">
+          <select
+            id="posisi"
+            name="posisi"
+            class="form-control"
+            formControlName="posisi"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.posisi.errors }"
+          >
             <option value="">Pilih Data</option>
+            <option *ngFor="let refJabatan of refJabatan" value="{{ refJabatan.jabatan_deskripsi }}">
+              {{ refJabatan.jabatan_deskripsi }}
+            </option>
           </select>
+          <div *ngIf="submitted && dataKantorForm.controls.posisi.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.posisi.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
+      <!-- HIDE Jika NON FIX INCOME -->
+      <br />
+      <!-- SHOW Jika NON FIX INCOME -->
+      <div class="form-group row" hidden>
+        <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
+        <div class="col-sm-8">
+          <select
+            id="jumlah_karyawan"
+            name="jumlah_karyawan"
+            class="form-control"
+            formControlName="jumlah_karyawan"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.jumlah_karyawan.errors }"
+          >
+            <option value="">Pilih Data</option>
+            <option *ngFor="let refJumlahKaryawan of refJumlahKaryawan" value="{{ refJumlahKaryawan.deskripsi }}">
+              {{ refJumlahKaryawan.deskripsi }}
+            </option>
+          </select>
+          <div *ngIf="submitted && dataKantorForm.controls.jumlah_karyawan.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.jumlah_karyawan.errors.required">Tidak Boleh Kosong</div>
+          </div>
+        </div>
+      </div>
+      <!-- SHOW Jika NON FIX INCOME -->
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Usia Pensiun</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="usia_pensiun" name="usia_pensiun" placeholder="" />
+          <input
+            type="text"
+            class="form-control"
+            id="usia_pensiun"
+            name="usia_pensiun"
+            placeholder=""
+            formControlName="usia_pensiun"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.usia_pensiun.errors }"
+          />
+          <div *ngIf="submitted && dataKantorForm.controls.usia_pensiun.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.usia_pensiun.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Aspek Syariah</label>
         <div class="col-sm-8">
-          <input type="radio" id="tidak_sesuai_syariah" name="aspek_syariah" class="custom-control-input" />
+          <input type="radio" id="tidak_sesuai_syariah" name="aspek_syariah" class="custom-control-input" checked />
           <label class="custom-control-label">Objek yang dibiayai tidak sesuai aspek Syariah</label>
           <br />
           <input type="radio" id="sesuai_syariah" name="aspek_syariah" class="custom-control-input" />
@@ -214,9 +531,26 @@
     <label class="col-sm-3 col-form-label">Kesimpulan Hasil Investigasi</label>
     <div class="col-sm-9">
       <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
-      <ngx-editor [editor]="editor" [(ngModel)]="html" [disabled]="false" [placeholder]="'Tulis Disini. . .'"> </ngx-editor>
+      <ngx-editor
+        [editor]="editor"
+        [(ngModel)]="html"
+        [disabled]="false"
+        [placeholder]="'Tulis Disini. . .'"
+        id="kesimpulan_hasil_investigasi"
+        name="kesimpulan_hasil_investigasi"
+        formControlName="kesimpulan_hasil_investigasi"
+        [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.kesimpulan_hasil_investigasi.errors }"
+      >
+      </ngx-editor>
+      <div *ngIf="submitted && dataKantorForm.controls.kesimpulan_hasil_investigasi.errors" class="text-danger">
+        <div *ngIf="submitted && dataKantorForm.controls.kesimpulan_hasil_investigasi.errors.required">Tidak Boleh Kosong</div>
+      </div>
     </div>
   </div>
   <p></p>
-  <button class="btn btn-info" style="float: right">Simpan Data</button>
+  <div class="row">
+    <div class="col" style="text-align: center">
+      <button class="btn btn-info">Simpan Data</button>
+    </div>
+  </div>
 </form>

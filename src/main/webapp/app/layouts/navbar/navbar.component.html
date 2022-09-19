@@ -35,13 +35,13 @@
             (click)="showData()"
             [class.active]="navVerif"
           >
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="users-cog"></fa-icon>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="user-check"></fa-icon>
             <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
             <p>Verification</p>
           </a>
         </li>
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-        <li
+        <!-- <li
           *ngSwitchCase="true"
           ngbDropdown
           class="nav-item dropdown pointer"
@@ -68,9 +68,9 @@
                 <span jhiTranslate="global.menu.entities.book">Book</span>
               </a>
             </li>
-            <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
           </ul>
-        </li>
+        </li> -->
+        <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         <li
           *jhiHasAnyAuthority="'ROLE_ADMIN'"
           ngbDropdown
@@ -81,8 +81,8 @@
         >
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
             <span>
-              <fa-icon icon="users-cog"></fa-icon>
-              <span jhiTranslate="global.menu.admin.main">Administration</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="users-cog"></fa-icon>
+              <p jhiTranslate="global.menu.admin.main">Administration</p>
             </span>
           </a>
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
@@ -134,8 +134,8 @@
         <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
             <span>
-              <fa-icon icon="flag"></fa-icon>
-              <span jhiTranslate="global.menu.language">Language</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="flag"></fa-icon>
+              <p jhiTranslate="global.menu.language">Language</p>
             </span>
           </a>
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
@@ -157,7 +157,7 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <a
+          <!-- <a
             class="nav-link dropdown-toggle"
             [routerLink]="'login'"
             ngbDropdownToggle
@@ -172,7 +172,7 @@
             <span *ngIf="account?.imageUrl">
               <img [src]="account!.imageUrl" class="profile-image rounded-circle" alt="Avatar" />
             </span>
-          </a>
+          </a> -->
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
             <li *ngSwitchCase="true">
               <a
@@ -226,11 +226,10 @@
         </li>
       </ul>
     </div>
-    <a>
-      <span>
+    <a class="nav-link" [routerLink]="'login'" id="account-menu" data-cy="accountMenu">
+      <span *ngIf="!account?.imageUrl">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="user"></fa-icon>
-        <br />
-        <span>Account</span>
+        <p jhiTranslate="global.menu.account.main">Account</p>
       </span>
     </a>
   </div>

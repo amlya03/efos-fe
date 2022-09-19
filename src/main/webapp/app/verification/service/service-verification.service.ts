@@ -16,7 +16,7 @@ export class ServiceVerificationService {
 
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected allDataOnProcess = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-verif/list_appraisal_process'
+    'http://10.20.34.110:8805/api/v1/efos-verif/list_appraisal_process'
   );
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -25,6 +25,36 @@ export class ServiceVerificationService {
     'http://10.20.34.110:8805/api/v1/efos-verif/list_app_analisa_review'
   );
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////// REFF \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  // ////////////////////// Ref Hubungan Angunan /////////////////////////////
+  protected refHubunganAgunan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_hubungan_agunan'
+  );
+  // ////////////////////// Ref Hubungan Angunan /////////////////////////////
+
+  // ////////////////////// Ref Jabatan /////////////////////////////
+  protected refJabatan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_jabatan');
+  // ////////////////////// Ref Jabatan /////////////////////////////
+
+  // ////////////////////// Ref Jumlah Karyawan /////////////////////////////
+  protected refJumlahKaryawan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_jumlah_karyawan'
+  );
+  // ////////////////////// Ref Jumlah Karyawan /////////////////////////////
+
+  // ////////////////////// Ref Hubungan Emergency /////////////////////////////
+  protected refHubunganEmergency = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_hubungan_emergency'
+  );
+  // ////////////////////// Ref Hubungan Emergency /////////////////////////////
+
+  // ////////////////////// Ref Hubungan Emergency /////////////////////////////
+  protected refStatusPerkawinan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_status_perkawinan'
+  );
+  // ////////////////////// Ref Hubungan Emergency /////////////////////////////
+  // ////////////////////// REFF \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -55,4 +85,36 @@ export class ServiceVerificationService {
     return this.http.get<ApiResponse>(this.allDataWaitingUpdateStatus);
   }
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ///////////////////// REF ////////////////////////////////////////////////
+  // ////////////////////// Ref Hubungan Agunan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getHubunganAgunan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refHubunganAgunan);
+  }
+  // ////////////////////// Ref Hubungan Agunan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////// Ref Jabatan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getJabatan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refJabatan);
+  }
+  // ////////////////////// Ref Jabatan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////// Ref Jumlah Karyawan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getJumlahKaryawan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refJumlahKaryawan);
+  }
+  // ////////////////////// Ref Jumlah Karyawan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getHubunganEmergency(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refHubunganEmergency);
+  }
+  // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getStatusPerkawinan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refStatusPerkawinan);
+  }
+  // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  // ///////////////////// REF ////////////////////////////////////////////////
 }

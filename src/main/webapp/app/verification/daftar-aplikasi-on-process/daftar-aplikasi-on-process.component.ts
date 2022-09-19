@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DaftarAplikasiOnProcessService, EntityArrayResponseDaOp } from '../service/daftar-aplikasi-on-process.service';
+import { ServiceVerificationService } from '../service/service-verification.service';
 import { daOp } from './daOp.model';
 declare let $: any;
 @Component({
@@ -22,7 +22,7 @@ export class DaftarAplikasiOnProcessComponent implements OnInit {
   kirimDe: Array<number> = [];
 
   constructor(
-    protected daOpService: DaftarAplikasiOnProcessService,
+    protected daOpService: ServiceVerificationService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected modalService: NgbModal
@@ -32,13 +32,11 @@ export class DaftarAplikasiOnProcessComponent implements OnInit {
     this.load();
   }
   load(): void {
-    this.daOpService.getDaOp().subscribe({
-      next: (res: EntityArrayResponseDaOp) => {
-        // console.log(res.body?.result);
-        // console.warn('tabel', res);
-        this.daOp = res.body?.result;
-        this.onResponseSuccess(res);
-      },
+    this.daOpService.getDaOp().subscribe(data => {
+      console.warn(data);
+      if (data.code === 200) {
+        this.daOp = data.result;
+      }
     });
   }
   cariButton(listFasilitas: string, listKategori: string, inputNamaNasabah: string, inputNoAplikasi: string): void {
