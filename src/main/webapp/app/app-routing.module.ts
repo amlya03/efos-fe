@@ -18,6 +18,16 @@ import { StukturPembiayaanComponent } from './verification/stuktur-pembiayaan/st
 import { MutasiRekeningComponent } from './verification/mutasi-rekening/mutasi-rekening.component';
 import { ChecklistDocumentComponent } from './verification/checklist-document/checklist-document.component';
 import { SuratPersetujuanComponent } from './verification/surat-persetujuan/surat-persetujuan.component';
+import { DataEntryComponent } from './data-entry/data-entry.component';
+import { JobInfoComponent } from './data-entry/job-info/job-info.component';
+import { DataPasanganComponent } from './data-entry/data-pasangan/data-pasangan.component';
+import { PekerjaanPasanganComponent } from './data-entry/pekerjaan-pasangan/pekerjaan-pasangan.component';
+import { CollateralComponent } from './data-entry/collateral/collateral.component';
+import { EmergencyContactComponent } from './data-entry/emergency-contact/emergency-contact.component';
+import { CallReportComponent } from './data-entry/call-report/call-report.component';
+import { CallReportNonComponent } from './data-entry/call-report-non/call-report-non.component';
+import { MemoComponent } from './data-entry/memo/memo.component';
+import { StrukturPembiayaanComponent } from './data-entry/struktur-pembiayaan/struktur-pembiayaan.component';
 
 @NgModule({
   imports: [
@@ -78,6 +88,46 @@ import { SuratPersetujuanComponent } from './verification/surat-persetujuan/sura
         {
           path: 'surat-persetujuan',
           component: SuratPersetujuanComponent,
+        },
+        {
+          path: 'data-entry',
+          component: DataEntryComponent,
+        },
+        {
+          path: 'job-info',
+          component: JobInfoComponent,
+        },
+        {
+          path: 'data-pasangan',
+          component: DataPasanganComponent,
+        },
+        {
+          path: 'pekerjaan-pasangan',
+          component: PekerjaanPasanganComponent,
+        },
+        {
+          path: 'collateral',
+          component: CollateralComponent,
+        },
+        {
+          path: 'struktur-pembiayaan',
+          component: StrukturPembiayaanComponent,
+        },
+        {
+          path: 'emergency-contact',
+          component: EmergencyContactComponent,
+        },
+        {
+          path: 'call-report',
+          component: CallReportComponent,
+        },
+        {
+          path: 'call-report-non',
+          component: CallReportNonComponent,
+        },
+        {
+          path: 'memo',
+          component: MemoComponent,
         },
         {
           path: '',

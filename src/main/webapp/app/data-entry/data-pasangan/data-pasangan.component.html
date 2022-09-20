@@ -1,0 +1,820 @@
+<html>
+  <style>
+    .hidden_ktp_dataPasangan {
+      display: none;
+    }
+    .show-hidden_ktp_dataPasangan {
+      display: block;
+    }
+
+    .hidden_alamat_ktp_pasanganSama {
+      display: none;
+    }
+    .show-hidden_alamat_ktp_pasanganSama {
+      display: block;
+    }
+    .hidden_alamat_ktp_pasanganTidakSama {
+      display: block;
+    }
+    .show-hidden_alamat_ktp_pasanganTidakSama {
+      display: none;
+    }
+  </style>
+  <body>
+    <!--*******************
+        Preloader start
+    ********************-->
+
+    <!--*******************
+        Preloader end
+    ********************-->
+    <!--**********************************
+            Content body start
+        ***********************************-->
+    <div class="content-body">
+      <div class="container-fluid">
+        <form
+          id="data_entry_form"
+          method="post"
+          action="<?php echo site_url('data_entry/postUpdatepasangan'); ?>"
+          onsubmit="return validateForm()"
+          required
+        >
+          <div class="card">
+            <h4 class="card card-body gradient-9" style="text-align: center">Data Pasangan</h4>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <div class="form-group row">
+                    <tr *ngFor="let daWa of daWa">
+                      <label class="col-sm-3 col-form-label">Nama Lengkap<span class="text-danger">*</span></label>
+                      <div class="col-sm-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Nama Lengkap"
+                          name="nama_pasangan"
+                          id="nama_pasangan"
+                          value="{{ daWa.nama_pasangan }}"
+                        />
+                        <input
+                          type="hidden"
+                          id="WADUH"
+                          name="WADUH"
+                          value="<?=$this->session->userdata('GROUP_NAME');?>"
+                          class="form-control"
+                        />
+                        <input type="hidden" id="id" name="id" value="<?=$id?>" class="form-control" />
+                        <input type="hidden" id="curef_id" name="curef_id" value="<?=$curef?>" class="form-control" />
+                      </div>
+                      <div class="col-sm-9">
+                        <input
+                          id="app_no_de"
+                          name="app_no_de"
+                          type="hidden"
+                          class="form-control"
+                          placeholder="app_no_de"
+                          value=" "
+                          readonly
+                        />
+                      </div>
+                    </tr>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select class="form-control" id="jenis_kelamin_pasangan" name="jenis_kelamin_pasangan">
+                          <option>{{ daWa.jenis_kelamin_pasangan }}</option>
+                          <option value="Laki-laki">Laki - laki</option>
+                          <option value="Perempuan">Perempuan</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hidden_alamat_ktp_pasanganTidakSama">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
+                      <div class="col-sm-9">
+                        <textarea class="form-control h-150px" rows="6" id="comment" name="alamat_ktp_pasangan" id="alamat_ktp_pasangan">{{
+                          daWa.alamat_ktp_pasangan
+                        }}</textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select class="form-control" id="provinsi_pasangan" name="provinsi_pasangan">
+                          <option>{{ daWa.provinsi_pasangan }}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select class="form-control" id="kabkota_pasangan" name="kabkota_pasangan">
+                          <option>{{ daWa.kabkota_pasangan }}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select class="form-control" id="kecamatan_pasangan" name="kecamatan_pasangan">
+                          <option>{{ daWa.kecamatan_pasangan }}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select class="form-control" id="kelurahan_pasangan" name="kelurahan_pasangan">
+                          <option>{{ daWa.kelurahan_pasangan }}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="input-group mb-3">
+                        <input
+                          type="tel"
+                          onkeypress="return onlyNumberKey(event)"
+                          maxlength="8"
+                          class="form-control"
+                          id="kode_pos_pasangan"
+                          name="kode_pos_pasangan"
+                          value="{{ daWa.kode_pos_pasangan }}"
+                        />
+                        <div class="input-group-append">
+                          <button
+                            id="btnkdphilang"
+                            onclick="buatisi()"
+                            class="btn btn-outline-dark"
+                            type="button"
+                            value="{{ daWa.kode_pos_pasangan }}"
+                          >
+                            Cari Data
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">RT / RW<span class="text-danger">*</span></label>
+                    <div class="col">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        maxlength="3"
+                        class="form-control"
+                        placeholder="RT"
+                        id="rt_pasangan"
+                        name="rt_pasangan"
+                        value="{{ daWa.rt_pasangan }} "
+                      />
+                    </div>
+                    <h2>/</h2>
+                    <div class="col">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder="RW"
+                        maxlength="3"
+                        id="rw_pasangan"
+                        name="rw_pasangan"
+                        value="{{ daWa.rw_pasangan }} "
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <input
+                        class="form-control"
+                        type="date"
+                        id="tanggal_lahir_pasangan"
+                        name="tanggal_lahir_pasangan"
+                        value="{{ daWa.tanggal_lahir_pasangan }}"
+                      />
+                      <!-- <input class="form-control"onchange="submitBday()" type="date" id="tanggal_lahir_pasangan" name="tanggal_lahir_pasangan" value="{{ daWa.tanggal_lahir_pasangan }} ">
+                                            <input type="hidden" id="umur_pasangan" name="umur_pasangan" class="form-control"value=" {{ daWa.umur_pasangan }}" > -->
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kewarganegaraan<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select class="form-control" id="kewarganegaraan_pasangan" name="kewarganegaraan_pasangan">
+                          <option>{{ daWa.kewarganegaraan_pasangan }}</option>
+                          <option>WNI</option>
+                          <option>WNA</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Pendidikan<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select class="form-control" name="pendidikan_pasangan" id="pendidikan_pasangan">
+                          <option>{{ daWa.pendidikan_pasangan }}</option>
+                          <option>SMA</option>
+                          <option>D3</option>
+                          <option>S1</option>
+                          <option>S2</option>
+                          <option>S3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Email<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <!-- <?=$email_pasangan?>" -->
+                      <input
+                        type="email"
+                        class="form-control"
+                        placeholder="Email"
+                        name="email_pasangan"
+                        id="email_pasangan"
+                        value=" {{ daWa.email_pasangan }}"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">No Handphone<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        maxlength="12"
+                        pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
+                        class="form-control"
+                        placeholder="No Handphone"
+                        name="no_handphone_pasangan"
+                        id="no_handphone_pasangan"
+                        value="{{ daWa.no_handphone_pasangan }} "
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">No KTP<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        maxlength="16"
+                        class="form-control"
+                        placeholder="No KTP"
+                        name="no_ktp_pasangan"
+                        id="no_ktp_pasangan"
+                        value=" {{ daWa.no_ktp_pasangan }}"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <input
+                        class="form-control"
+                        type="date"
+                        id="tanggal_terbit_ktp_pasangan"
+                        value="{{ daWa.tanggal_terbit_ktp_pasangan }}"
+                        name="tanggal_terbit_ktp_pasangan"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
+                    <div class="col-sm-4">
+                      <!-- <label for="chkYes">
+                                                <input type="text" hidden id="expKTP" value="<?=$status_ktp_pasangan?>">
+                                                <input type="radio" value="fix" id="chkYes" name="checkTidak" <?php if($status_ktp_pasangan == "fix")echo 'checked'?>/> Ya
+                                            </label>
+                                            <label for="chkNo">
+                                                <input type="radio" value="non" id="chkNo" name="checkTidak" <?php if($status_ktp_pasangan == "non")echo 'checked'?>/> Tidak
+                                            </label> -->
+                    </div>
+                  </div>
+                  <div class="hidden_ktp_dataPasangan">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Tanggal Expired KTP<span class="text-danger">*</span></label>
+                      <div class="col-sm-9">
+                        <input
+                          class="form-control"
+                          type="date"
+                          id="tanggal_exp_ktp_pasangan"
+                          value="{{ daWa.tanggal_exp_ktp_pasangan }} "
+                          name="tanggal_exp_ktp_pasangan"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">NPWP<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder="NPWP"
+                        maxlength="16"
+                        name="npwp_pasangan"
+                        id="npwp_pasangan"
+                        value=" {{ daWa.npwp_pasangan }}"
+                      />
+                    </div>
+                  </div>
+                  <button type="submit" id="btn" name="simpandata" value="simpandata" class="btn btn-dark" style="float: right">
+                    Simpan Data
+                  </button>
+                  <button
+                    type="submit"
+                    id="selanjutnya"
+                    (click)="goto('0')"
+                    name="selanjutnya"
+                    value="selanjutnya"
+                    class="btn btn-warning"
+                    style="float: right"
+                  >
+                    Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- #/ container -->
+    </div>
+    <!--**********************************
+            Content body end
+        ***********************************-->
+
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/common/common.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/custom.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/settings.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/gleek.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/styleSwitcher.js"></script>
+
+    <!-- validasi Data Pasangan -->
+    <script>
+      function validateForm() {
+        var a = document.forms['data_entry_form']['nama_pasangan'].value;
+        if (a == null || a == '') {
+          document.getElementById('nama_pasangan').focus();
+          alert('Nama Lengkap Harus diisi');
+          return false;
+        }
+        var b = document.forms['data_entry_form']['jenis_kelamin_pasangan'].value;
+        if (b == '' || b == null) {
+          document.getElementById('jenis_kelamin_pasangan').focus();
+          alert('Jenis Kelamin Harus diisi');
+          return false;
+        }
+        var c = document.forms['data_entry_form']['alamat_ktp_pasangan'].value;
+        if (c == '' || c == null) {
+          document.getElementById('alamat_ktp_pasangan').focus();
+          alert('Alamat Harus diisi');
+          return false;
+        }
+        var e = document.forms['data_entry_form']['provinsi_pasangan'].value;
+        if (e == '' || e == null) {
+          document.getElementById('provinsi_pasangan').focus();
+          alert('Provinsi Harus diisi');
+          return false;
+        }
+        var f = document.forms['data_entry_form']['kabkota_pasangan'].value;
+        if (f == '' || f == null) {
+          document.getElementById('kabkota_pasangan').focus();
+          alert('Kota Harus diisi');
+          return false;
+        }
+        var g = document.forms['data_entry_form']['kelurahan_pasangan'].value;
+        if (g == '' || g == null) {
+          document.getElementById('kelurahan_pasangan').focus();
+          alert('Kelurahan Harus diisi');
+          return false;
+        }
+        var h = document.forms['data_entry_form']['kecamatan_pasangan'].value;
+        if (h == '' || h == null) {
+          document.getElementById('kecamatan_pasangan').focus();
+          alert('Kecamatan Harus diisi');
+          return false;
+        }
+        var d43 = document.forms['data_entry_form']['rt_pasangan'].value;
+        if (d43 == '' || d43 == null) {
+          document.getElementById('rt_pasangan').focus();
+          alert('RW Harus diisi');
+          return false;
+        }
+        var d = document.forms['data_entry_form']['rw_pasangan'].value;
+        if (d == '' || d == null) {
+          document.getElementById('rw_pasangan').focus();
+          alert('RW Harus diisi');
+          return false;
+        }
+        var i = document.forms['data_entry_form']['kode_pos_pasangan'].value;
+        if (i == '' || i == null) {
+          document.getElementById('kode_pos_pasangan').focus();
+          alert('Kode Pos Harus diisi');
+          return false;
+        }
+        var j = document.forms['data_entry_form']['tanggal_lahir_pasangan'].value;
+        if (j == '' || j == null) {
+          document.getElementById('tanggal_lahir_pasangan').focus();
+          alert('Tanggal Lahir Harus diisi');
+          return false;
+        }
+        var k = document.forms['data_entry_form']['kewarganegaraan_pasangan'].value;
+        if (k == '' || k == null) {
+          document.getElementById('kewarganegaraan_pasangan').focus();
+          alert('Kewarganegaraan Harus diisi');
+          return false;
+        }
+        var l = document.forms['data_entry_form']['pendidikan_pasangan'].value;
+        if (l == '' || l == null) {
+          document.getElementById('pendidikan_pasangan').focus();
+          alert('Pendidikan Harus diisi');
+          return false;
+        }
+        var m = document.forms['data_entry_form']['email_pasangan'].value;
+        if (m == '' || m == null) {
+          document.getElementById('email_pasangan').focus();
+          alert('Email Harus diisi');
+          return false;
+        }
+        var n = document.forms['data_entry_form']['no_handphone_pasangan'].value;
+        if (n == '' || n == null) {
+          document.getElementById('no_handphone_pasangan').focus();
+          alert('No Handphone Harus diisi');
+          return false;
+        }
+        var o = document.forms['data_entry_form']['no_ktp_pasangan'].value;
+        if (o == '' || o == null) {
+          document.getElementById('no_ktp_pasangan').focus();
+          alert('No KTP Harus diisi');
+          return false;
+        }
+        var p = document.forms['data_entry_form']['tanggal_terbit_ktp_pasangan'].value;
+        if (p == '' || p == null) {
+          document.getElementById('tanggal_terbit_ktp_pasangan').focus();
+          alert('Tanggal Terbit KTP Harus diisi');
+          return false;
+        }
+        var q = document.forms['data_entry_form']['status_ktp_pasangan'].value;
+        if (q == '' || q == null) {
+          document.getElementById('status_ktp_pasangan').focus();
+          alert('KTP Seumur Hidup diisi');
+          return false;
+        }
+        // var r = document.forms["data_entry_form"]["tanggal_exp_ktp_pasangan"].value;
+        // if (r=="" || r== null) {
+        //     alert("Tanggal Expired KTP Harus diisi");
+        //     return false;
+        // }
+        var s = document.forms['data_entry_form']['npwp_pasangan'].value;
+        if (s == '' || s == null) {
+          document.getElementById('npwp_pasangan').focus();
+          alert('NPWP Harus diisi');
+          return false;
+        }
+      }
+    </script>
+    <!-- penutup validasi Data Pasangan -->
+
+    <!------------- get dukcapil wilayah dan cari by kodepos --------------->
+    <script>
+      $(document).ready(function () {
+        //  AJAX request
+        $.ajax({
+          url: 'http://10.20.34.183:8080/new-efos/data_entry/getTokenDukcapil',
+          dataType: 'json',
+          type: 'post',
+          data: { ket: 'prov', provid: '0' },
+          success: function (response) {
+            console.log(response);
+            $province = '';
+            $.each(response, function (i, n) {
+              console.log(n['kdWilayah']);
+              province = '<option value="' + n['kdWilayah'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
+              province = province + '';
+              $('#provinsi_pasangan').append(province);
+            });
+          },
+        });
+
+        $('#provinsi_pasangan').change(function () {
+          var provid = $(this).val().substring(0, 2);
+          $.ajax({
+            url: 'http://10.20.34.183:8080/new-efos/data_entry/getTokenDukcapil',
+            dataType: 'json',
+            type: 'post',
+            data: { ket: 'kabkota', provid: provid },
+            success: function (response) {
+              console.log(response);
+              $kabkota = '';
+              $('#kabkota_pasangan').empty();
+              kabkota = '<option value="">Pilih Kota</option>';
+              $('#kabkota_pasangan').append(kabkota);
+              $.each(response, function (i, n) {
+                console.log('tes' + n['kdWilayah']);
+                kabkota = '<option value="' + n['kdWilayah'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
+                kabkota = kabkota + '';
+                $('#kabkota_pasangan').append(kabkota);
+              });
+            },
+          });
+        });
+
+        $('#kabkota_pasangan').change(function () {
+          var kabkotaid = $(this).val().substring(0, 4);
+          $.ajax({
+            url: 'http://10.20.34.183:8080/new-efos/data_entry/getTokenDukcapil',
+            dataType: 'json',
+            type: 'post',
+            data: { ket: 'kecamatan', provid: kabkotaid },
+            success: function (response) {
+              console.log(response);
+              $kecamatan = '';
+              $('#kecamatan_pasangan').empty();
+              kecamatan = '<option value="">Pilih Kecamatan</option>';
+              $('#kecamatan_pasangan').append(kecamatan);
+              $.each(response, function (i, n) {
+                console.log(n['kdWilayah']);
+                kecamatan = '<option value="' + n['kdWilayah'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
+                kecamatan = kecamatan + '';
+                $('#kecamatan_pasangan').append(kecamatan);
+              });
+            },
+          });
+        });
+
+        $('#kecamatan_pasangan').change(function () {
+          var kecamatanid = $(this).val().substring(0, 6);
+          $.ajax({
+            url: 'http://10.20.34.183:8080/new-efos/data_entry/getTokenDukcapil',
+            dataType: 'json',
+            type: 'post',
+            data: { ket: 'kelurahan', provid: kecamatanid },
+            success: function (response) {
+              console.log(response);
+              $kelurahan = '';
+              $('#kelurahan_pasangan').empty();
+              kelurahan = '<option value="">Pilih Kelurahan</option>';
+              $('#kelurahan_pasangan').append(kelurahan);
+              $.each(response, function (i, n) {
+                console.log(n['kdWilayah']);
+                kelurahan = '<option value="' + n['kdPos'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
+                kelurahan = kelurahan + '';
+                $('#kelurahan_pasangan').append(kelurahan);
+              });
+            },
+          });
+        });
+
+        $('#kelurahan_pasangan').change(function () {
+          var kelurahanid = $(this).val().substring(0, 5);
+          document.getElementById('kode_pos').value = kelurahanid;
+        });
+      });
+
+      function buatisi() {
+        var x = kode_pos_pasangan.value;
+        $.ajax({
+          // url: 'http://10.20.34.178:8087/efo/getWilByKdPos/' + x,
+          url: 'http://10.20.34.183:8080/new-efos/data_entry/getTokenDukcapil',
+          dataType: 'json',
+          type: 'post',
+          data: {
+            ket: 'kodpos',
+            provid: x,
+          },
+          success: function (response) {
+            console.log(response);
+            var da = JSON.parse(JSON.stringify(response));
+            //var result_ = JSON.parse(JSON.stringify(da.result))
+            var data_wilayah = JSON.parse(JSON.stringify(da.provKec));
+            var data_list_kelurahan = JSON.parse(JSON.stringify(da.kels));
+            console.log('data:' + data_list_kelurahan[0].kdWilayah);
+            $kelurahan = '';
+            $('#kelurahan_pasangan').empty();
+            $.each(data_list_kelurahan, function (i, n) {
+              console.log(n['kdPos']);
+              if (n['kdPos'] == x) {
+                console.log(n['namaWilayah']);
+                kelurahan = '<option value="' + n['kdPos'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
+                kelurahan = kelurahan + '';
+                $('#kelurahan_pasangan').append(kelurahan);
+              }
+            });
+            var namaprov = data_wilayah.nm_prov;
+            var namakota = data_wilayah.nm_kota;
+            var namakecamatan = data_wilayah.nm_kec;
+            var namakelurahan = data_wilayah.nm_kel;
+            var kodeprov = data_wilayah.kd_prov;
+            var kodekota = data_wilayah.kd_kota;
+            var kodekecamatan = data_wilayah.kd_kec;
+            var kodekelurahan = data_wilayah.kd_kel;
+            $('#provinsi_pasangan')
+              .attr('selected', 'selected')
+              .val(kodeprov + '|' + namaprov);
+            $('#provinsi_pasangan option:first').text(namaprov);
+            $('#kabkota_pasangan option:selected').val(kodekota + '|' + namakota);
+            $('#kabkota_pasangan option:selected').text(namakota);
+            $('#kecamatan_pasangan option:selected').val(kodekecamatan + '|' + namakecamatan);
+            $('#kecamatan_pasangan option:selected').text(namakecamatan);
+            //    $('#kelurahan_pasangan option:first').val(x + '|' + namakelurahan);
+            //     $('#kelurahan_pasangan option:first').text(namakelurahan);
+          },
+        });
+      }
+    </script>
+    <!------------- get dukcapil wilayah dan cari by kodepos --------------->
+
+    <!-- untuk show hide ktp -->
+    <script>
+      $("input[name='checkTidak']").click(function () {
+        if ($('#chkNo').is(':checked')) {
+          $('.hidden_ktp_dataPasangan').addClass('show-hidden_ktp_dataPasangan');
+        } else {
+          $('.hidden_ktp_dataPasangan').removeClass('show-hidden_ktp_dataPasangan');
+        }
+      });
+    </script>
+    <!-- akhir untuk show hide ktp -->
+
+    <!-- untuk show Alamat Sama  -->
+    <script>
+      $("input[name='ktpSama']").click(function () {
+        if ($('#ktpSamaYa').is(':checked')) {
+          $('.hidden_alamat_ktp_pasanganSama').addClass('show-hidden_alamat_ktp_pasanganSama');
+          $('.hidden_alamat_ktp_pasanganTidakSama').addClass('show-hidden_alamat_ktp_pasanganTidakSama');
+        } else if ($('#ktpSamaTidak').is(':checked')) {
+          $('.hidden_alamat_ktp_pasanganSama').removeClass('show-hidden_alamat_ktp_pasanganSama');
+          $('.hidden_alamat_ktp_pasanganTidakSama').removeClass('show-hidden_alamat_ktp_pasanganTidakSama');
+        } else {
+          $('.hidden_alamat_ktp_pasanganSama').removeClass('show-hidden_alamat_ktp_pasanganSama');
+        }
+      });
+    </script>
+    <!-- akhir untuk Alamat Sama -->
+
+    <!-- retrive ktp -->
+    <script>
+      const bbv = document.getElementById('expKTP').value;
+      // alert(bbv)
+      if (bbv == 'non') {
+        $('.hidden_ktp_dataPasangan').addClass('show-hidden_ktp_dataPasangan');
+      }
+    </script>
+    <!-- retrive ktp -->
+
+    <!-- buat biar inpunya number -->
+    <script>
+      function onlyNumberKey(evt) {
+        var ASCIICode = evt.which ? evt.which : evt.keyCode;
+        if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) return false;
+        return true;
+      }
+    </script>
+
+    <!------------- Untuk BM ----------------------->
+    <script>
+      $(document).ready(function () {
+        var grupname = WADUH.value;
+        // var grupname=$this->session->userdata('GROUP_NAME');
+        // alert(grupname);
+        if (grupname == 'BRANCHMANAGER') {
+          $('#kategori_pekerjaan').attr('disabled', 'disabled');
+          $('#jenis_kelamin_pasangan').attr('disabled', 'disabled');
+          // $('#alamat_ktp_pasangan').attr('readonly', 'readonly');
+          $('#provinsi_pasangan').attr('disabled', 'disabled');
+          $('#kabkota_pasangan').attr('disabled', 'disabled');
+          $('#kecamatan_pasangan').attr('disabled', 'disabled');
+          $('#kelurahan_pasangan').attr('disabled', 'disabled');
+          $('#kode_pos_pasangan').attr('disabled', 'disabled');
+          $('#rt_pasangan').attr('disabled', 'disabled');
+          $('#rw_pasangan').attr('disabled', 'disabled');
+          $('#usia_pasangan').attr('disabled', 'disabled');
+          $('#tanggal_lahir_pasangan').attr('disabled', 'disabled');
+          $('#kewarganegaraan_pasangan').attr('disabled', 'disabled');
+          $('#pendidikan_pasangan').attr('disabled', 'disabled');
+          $('#email_pasangan').attr('disabled', 'disabled');
+          $('#no_handphone_pasangan').attr('disabled', 'disabled');
+          $('#no_ktp_pasangan').attr('disabled', 'disabled');
+          $('#tanggal_terbit_ktp_pasangan').attr('disabled', 'disabled');
+          $('#chkYes').attr('disabled', 'disabled');
+          $('#chkNo').attr('disabled', 'disabled');
+          $('#tanggal_exp_ktp_pasangan').attr('disabled', 'disabled');
+          $('#npwp_pasangan').attr('disabled', 'disabled');
+          $('#nama_pasangan').attr('disabled', 'disabled');
+          $('#comment').attr('readonly', 'readonly');
+          // $('#pendapatan').attr('readonly', 'readonly');
+          // $('#pendapatan_lain').attr('disabled', 'disabled');
+          // $('#tunjangan').attr('readonly', 'readonly');
+          // $('#total_pendapatan').attr('readonly', 'readonly');
+          // $('#kategori_pekerjaan_sebelum').attr('readonly', 'readonly');
+          // $('#tipe_pekerjaan_sebelum').attr('disabled', 'disabled');
+          // $('#payroll_sebelum').attr('disabled', 'disabled');
+          // $('#payroll_sebeluma').attr('disabled', 'disabled');
+          // $('#posisi_sebelum').attr('disabled', 'disabled');
+          // $('#nama_perusahaan_sebelum').attr('disabled', 'disabled');
+          // $('#alamat_pekerjaan_sebelum').attr('readonly', 'readonly');
+          // $('#provinsi_sebelum').attr('readonly', 'readonly');
+          //  $('#kabkota_sebelum').attr('readonly', 'readonly');
+          // $('#kecamatan_sebelum').attr('disabled', 'disabled');
+          // $('#kelurahan_sebelum').attr('hidden', 'hidden');
+          // $('#kode_pos_sebelum').attr('disabled', 'disabled');
+          // $('#rt_sebelum').attr('disabled', 'disabled');
+          // $('#rw_sebelum').attr('disabled', 'disabled');
+          // $('#no_siup_sebelum').attr('disabled', 'disabled');
+          // $('#jenis_bidang_sebelum').attr('disabled', 'disabled');
+          // $('#sektor_ekonomi_sebelum').attr('disabled', 'disabled');
+          // $('#lama_bekerja_tahun_sebelum').attr('disabled', 'disabled');
+          // $('#lama_bekerja_bulan_sebelum').attr('disabled', 'disabled');
+          // $('#tipe_perusahaan').attr('disabled', 'disabled');
+          // $('#tipe_kepegawaian').attr('disabled', 'disabled');
+          // $('#jumlah_karyawan_sebelum').attr('disabled', 'disabled');
+          $('#simpanData').attr('hidden', 'hidden');
+          $('#btn').attr('hidden', 'hidden');
+          $('#btnkdphilang').attr('hidden', 'hidden');
+          // a = document.getElementById("nama").value;
+          // a.readonly=true;
+          // alert(a);
+        } else {
+          $('#selanjutnya').attr('hidden', 'hidden');
+        }
+      });
+    </script>
+    <!------------- Untuk BM ----------------------->
+
+    <!-- untuk convert ke bulan lahir -->
+    <script>
+      function submitBday() {
+        var Q4A = '';
+        var Bdate = document.getElementById('tanggal_lahir_pasangan').value;
+        var Bday = +new Date(Bdate);
+        Q4A += +~~((Date.now() - Bday) / 31557600000);
+        var theBday = document.getElementById('umur_pasangan');
+        theBday.value = Q4A;
+        /////////tambahan alertnya\\\\\\\\\\\
+        // var bStat = document.getElementById('status_perkawinan').value;
+        // if(bStat == 0 && Q4A < 21){
+        //     alert("Usia Minimal 21 Tahun")
+        // }
+
+        // if(bStat == 1 && Q4A < 18){
+        //     alert("Usia Minimal 18 Tahun")
+        // }
+      }
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        //  AJAX request
+        $.ajax({
+          url: 'http://10.20.34.183:8080/new-efos/data_entry/getstatusperkawinan',
+          dataType: 'json',
+          type: 'post',
+          success: function (response) {
+            console.log(response);
+            $province = '';
+            // $('#status_perkawinan').empty();
+            // province = '<option value="">Pilih tipe status </option>';
+            //                         $('#status_perkawinan').append(province);
+            $.each(response, function (i, n) {
+              console.log(n['deskripsi']);
+              province = '<option value="' + n['kode'] + '">' + n['deskripsi'] + '</option>';
+              province = province + '';
+              $('#status_perkawinan').append(province);
+            });
+          },
+        });
+      });
+    </script>
+    <!-- untuk convert ke bulan lahir -->
+  </body>
+</html>

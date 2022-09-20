@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Mobiscroll JS and CSS Includes -->
+  </head>
+  <body>
+    <!--*******************
+        Preloader start
+    ********************-->
+
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <!--**********************************
+            Content body start
+        ***********************************-->
+    <div class="content-body">
+      <div class="container-fluid">
+        <form
+          id="data_entry_form"
+          method="post"
+          action="<?php echo base_url();?>data_entry/createcallreport"
+          onsubmit="return validateFormCallReport()"
+          required
+        >
+          <div class="card">
+            <h4 class="card card-body gradient-9" style="text-align: center">Call Report</h4>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <tr *ngFor="let daWa of daWa"></tr>
+                  <tr *ngFor="let daWa1 of daWa1"></tr>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Nomor Aplikasi<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        id="app_no_de"
+                        name="app_no_de"
+                        type="text"
+                        class="form-control"
+                        placeholder="app_no_de"
+                        value="{{ daWa.app_no_de }}"
+                        readonly
+                      />
+                    </div>
+                    <div class="col-sm-8">
+                      <input
+                        id="app_no_ide"
+                        name="app_no_ide"
+                        type="hidden"
+                        class="form-control"
+                        placeholder="app_no_ide"
+                        value="<?=@$app_no_ide?>"
+                        readonly
+                      />
+                    </div>
+                    <div class="col-sm-8">
+                      <input
+                        type="hidden"
+                        id="WADUH"
+                        name="WADUH"
+                        value="<?=$this->session->userdata('GROUP_NAME');?>"
+                        class="form-control"
+                      />
+                      <input type="hidden" id="curef_id" name="curef_id" value="<?=@$curef?>" class="form-control" />
+                    </div>
+                    <div class="col-sm-8">
+                      <!-- <input type="hidden" id="id_customer" name="id_customer" value="<?=@$id?>" class="form-control" >
+                                          <input type="hidden" id="id" name="id" value="<?=@$id_customer?>" class="form-control" > -->
+                    </div>
+
+                    <div class="col-sm-8">
+                      <input
+                        type="hidden"
+                        id="kategori_pekerjaan"
+                        name="kategori_pekerjaan"
+                        value="{{ daWa.kategori_pekerjaan }}"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Nama Nasabah<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Nama Nasabah"
+                        name="nama"
+                        id="nama"
+                        value="{{ daWa1.nama }}"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Fasilitas<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Fasilitas"
+                        id="fasilitas"
+                        name="fasilitas"
+                        value="{{ daWa1.kode_fasilitas_name }}"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Tenor Pengajuan<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Tenor Pengajuan"
+                        id="tenor"
+                        name="tenor"
+                        value="{{ daWa1.jangka_waktu }}"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Platform Pengajuan<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Platform Pengajuan"
+                        id="platform"
+                        name="platform"
+                        value="{{ daWa1.nilai_pembiayaan }}"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Cabang<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Nama AO"
+                        id="cabang"
+                        name="cabang"
+                        value="{{ daWa.cabang }}"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Nama AO<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Nama AO"
+                        id="nama_ao"
+                        name="nama_ao"
+                        value="{{ daWa.nama_ao }}"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Kategori Nasabah<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Tipe Nasabah"
+                        id="tipe_nasabah"
+                        name="tipe_nasabah"
+                        value="{{ daWa1.kategori_pekerjaan }}"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Profil Nasabah -->
+              <h4 class="card-body gradient-9" style="text-align: center">Profil Nasabah</h4>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Alamat Tinggal<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <textarea class="form-control h-150px" rows="6" id="alamat_ktp" name="alamat_ktp">{{ daWa.alamat_ktp }}</textarea>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input class="form-control" type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ daWa.tanggal_lahir }}" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Status Perkawinan</label>
+                    <div class="col-sm-8">
+                      <div class="form-group">
+                        <select class="form-control" id="status_perkawinan" name="status_perkawinan">
+                          <option value="{{ daWa.status_perkawinan }}"></option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Pendidikan<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <div class="form-group">
+                        <select class="form-control" id="pendidikan" name="pendidikan">
+                          <option value="{{ daWa.pendidikan }}">{{ daWa.pendidikan }}</option>
+                          <option>SMA</option>
+                          <option>D3</option>
+                          <option>S1</option>
+                          <option>S2</option>
+                          <option>S3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row" id="tipe_kendaraan">
+                    <label class="col-sm-4 col-form-label">Tipe Kendaraan<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <div class="form-group">
+                        <select class="form-control" value="" id="tipe_kendaraan1" name="tipe_kendaraan1">
+                          <option value="{{ daWa.kendaraan }}">{{ daWa.kendaraan }}</option>
+                          <option value="Mobil">Mobil</option>
+                          <option value="Motor">Motor</option>
+                          <option value="Motor dan Mobil">Motor dan Mobil</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Angunan -->
+              <h4 class="card-body gradient-9" style="text-align: center">Agunan</h4>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Status Kepemilikan Agunan</label>
+                    <div class="form-group col-md-4">
+                      <select class="form-control" id="status_agunan" name="status_agunan">
+                        <option selected value="{{ daWa.status_agunan }}">{{ daWa.status_agunan }}</option>
+                        <option value="Penjual">Penjual</option>
+                        <option value="Milik Orang Tua">Milik Orang Tua</option>
+                        <option value="Milik Sndiri">Milik Sndiri</option>
+                        <option value="Lainnya">Lainnya</option>
+                      </select>
+                    </div>
+                    <div id="catatanLainnyaAnggunan" class="form-group col-md-4" style="display: none">
+                      <input
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="<?=$catatan_status_agunan?>"
+                        type="text"
+                        id="catatan_status_agunan"
+                        name="catatan_status_agunan"
+                        value="<?=$catatan_status_agunan?>"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Dokumen Kepemilikan</label>
+                    <div class="form-group col-md-4">
+                      <select class="form-control" id="dokumen_kepemilikan" name="dokumen_kepemilikan">
+                        <option selected value="{{ daWa.dokumen_agunan }}">{{ daWa.dokumen_agunan }}</option>
+                        <option value="SHM">SHM</option>
+                        <option value="SHGB">SHGB</option>
+                        <option value="PPJB">PPJB</option>
+                        <option value="Lainnya">Lainnya</option>
+                      </select>
+                    </div>
+                    <div id="catatanLainnyaDokumen" class="form-group col-md-4" style="display: none">
+                      <input
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="{{ daWa.catatan_dokumen_agunan }}"
+                        type="text"
+                        id="catatan_dokumen_agunan"
+                        name="catatan_dokumen_agunan"
+                        value="{{ daWa.catatan_dokumen_agunan }}"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Posisi Dokumen</label>
+                    <div class="form-group col-md-4">
+                      <select class="form-control" id="posisi_dokumen" name="posisi_dokumen">
+                        <option selected value="{{ daWa.posisi_dokumen }}">{{ daWa.posisi_dokumen }}</option>
+                        <option value="On Hand">On Hand</option>
+                        <option value="Di Bank Lain">Di Bank Lain</option>
+                        <option value="Lainnya">Lainnya</option>
+                      </select>
+                    </div>
+                    <div id="catatanLainnyaPosisi_dokumen" class="form-group col-md-4" style="display: none">
+                      <input
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="{{ daWa.catatan_posisi_dokumen }}"
+                        type="text"
+                        id="catatan_posisi_dokumen"
+                        name="catatan_posisi_dokumen"
+                        value="{{ daWa.catatan_posisi_dokumen }}"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- untuk usaha nasabah -->
+              <h4 class="card-body gradient-9" style="text-align: center">Usaha Nasabah</h4>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Jenis Usaha</label>
+                    <div class="form-group col-sm-8">
+                      <select class="form-control" id="jenis_usaha_call" name="jenis_usaha_call">
+                        <option selected value="{{ daWa.jenis_usaha }}">{{ daWa.jenis_usaha }}</option>
+                        <option value="Badan Usaha">Badan Usaha</option>
+                        <option value="Perorangan">Perorangan</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Lama Usaha<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        maxlength="2"
+                        class="form-control"
+                        placeholder="Tahun"
+                        id="lama_usaha"
+                        name="lama_usaha"
+                        value="{{ daWa.lama_usaha }}"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Legalitas Usaha</label>
+                    <!-- <div mbsc-page class="demo-multiple-select">
+                                        <div style="height:100%">
+                                                <label>
+                                                    Pilih Legalitas Usaha
+                                                    <input mbsc-input id="input_legalitas_usaha" placeholder="Mohon Pilih" data-dropdown="true" data-input-style="outline" data-label-style="stacked" data-tags="true" />
+                                                </label>
+                                                <select id="legalitas_usaha" name="legalitas_usaha[]" multiple>
+                                                    <option selected value="<?=@$legalitas_usaha?>"><?=@$legalitas_usaha?></option>
+                                                    <option value="SIU">SIU</option>
+                                                    <option value="SIUP">SIUP</option>
+                                                    <option value="NIB">NIB</option>
+                                                    <option value="SKDU">SKDU</option>
+                                                    <option value="SKDP">SKDP</option>
+                                                    <option value="Atka Pendirian">Atka Pendirian</option>
+                                                </select>
+                                            </div>
+                                        </div> -->
+                    <div class="form-group col-sm-8"></div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Bidang Usaha<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder=""
+                        id="bidang_usaha"
+                        name="bidang_usaha"
+                        value="{{ daWa.bidang_usaha }}"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Nama Perusahaan (Badan Usaha)<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder=""
+                        id="nama_badan_usaha"
+                        name="nama_badan_usaha"
+                        value="{{ daWa.nama_perusahaan }}"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Skala Perusahaan</label>
+                    <div class="form-group col-sm-8">
+                      <select class="form-control" id="skala_perusahaan" name="skala_perusahaan">
+                        <option selected value="{{ daWa.skala_perusahaan }}">{{ daWa.skala_perusahaan }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Jenis Produk</label>
+                    <div class="form-group col-sm-8">
+                      <select class="form-control" id="jenis_produk" name="jenis_produk">
+                        <option selected value="{{ daWa.jenis_produk }}">{{ daWa.jenis_produk }}</option>
+                        <option value="Barang">Barang</option>
+                        <option value="Jasa">Jasa</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Tahun Berdiri<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        minlength="4"
+                        maxlength="4"
+                        class="form-control"
+                        placeholder=""
+                        id="tahun_berdiri_perusahaan"
+                        name="tahun_berdiri_perusahaan"
+                        value="{{ daWa.tahun_berdiri_perusahaan }}"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Alamat<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan" name="alamat_perusahaan">
+<?=$alamat_perusahaan?></textarea
+                      >
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        maxlength="100000"
+                        placeholder=""
+                        id="jumlah_karyawan"
+                        name="jumlah_karyawan"
+                        value="{{ daWa.jumlah_karyawan }}"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Kondisi Pandemik</label>
+                    <div class="form-group col-sm-8">
+                      <select class="form-control" id="kondisi_pandemik" name="kondisi_pandemik">
+                        <option selected value="{{ daWa.kondisi_pandemik }}">{{ daWa.kondisi_pandemik }}</option>
+                        <option value="Cukup Berdampak">Cukup Berdampak</option>
+                        <option value="Tidak Berdampak">Tidak Berdampak</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Kepemilikan Usaha<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder=""
+                        id="kepemilikan_usaha"
+                        name="kepemilikan_usaha"
+                        value="{{ daWa.kepemilikan_usaha }}"
+                      />
+                    </div>
+                  </div>
+                  <!-- show jika menikah -->
+                  <!-- <div  id="joint_income">
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Tipe Pekerjaan</label>
+                                            <div class="form-group col-sm-8">
+                                                <select class="form-control" id="tipe_pekerjaan1" name="tipe_pekerjaan1" >
+                                                    <option selected value="<?=$tipe_pekerjaan?>"><?=$tipe_pekerjaan?></option>
+                                                    <option value="Karyawan">Karyawan</option>
+                                                    <option value="Wiraswasta">Wiraswasta</option>
+                                                    <option value="Profesional">Profesional</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Lama Bekerja<span class="text-danger">*</span></label>
+                                            <div class="col-sm-8">
+                                                <div class="form-row">
+                                                    <div class="col">
+                                                        <select class="form-control" id="lama_bekerja" name="lama_bekerja" >
+                                                            <option selected value="<?=$lama_bekerja_bulan?>"><?=$lama_bekerja_bulan?></option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                            <option value="6">6</option>
+                                                            <option value="7">7</option>
+                                                            <option value="8">8</option>
+                                                            <option value="9">9</option>
+                                                            <option value="10">10</option>
+                                                            <option value="11">11</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col">
+                                                        <input type="tel" class="form-control" placeholder="Tahun" id="lama_bekerja_tahun" name="lama_bekerja_tahun" maxlength="2" value="<?=@$lama_bekerja_tahun?>">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Jabatan Terakhir<span class="text-danger">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" placeholder="" id="jabatan_terakhir" name="jabatan_terakhir" value="<?=$jabatan_terakhir?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Nama Perusahaan<span class="text-danger">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" placeholder="" id="nama_perushaan" name="nama_perushaan" value="<?=@$nama_perushaan?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Bidang Usaha<span class="text-danger">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" placeholder="" id="bidang_usaha" name="bidang_usaha" value="<?=$bidang_usaha?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Skala Perorangan<span class="text-danger">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" placeholder="" id="skala_perorangan" name="skala_perorangan" value="<?=$bidang_usaha?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Tahun Berdiri<span class="text-danger">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input type="number" class="form-control" maxlength="2" placeholder="" id="tahun_berdiri" name="tahun_berdiri" value="<?=$tahun_berdiri_perusahaan?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Alamat<span class="text-danger">*</span></label>
+                                            <div class="col-sm-8">
+                                                <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan_pasangan" name="alamat_perusahaan_pasangan" value="<?=@$alamat?>"><?=@$alamat?></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input type="number" class="form-control" maxlength="2" placeholder="" id="jumlah_karyawan" name="jumlah_karyawan" value="<?=$jumlah_karyawan?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Kondisi Pandemik</label>
+                                            <div class="form-group col-sm-8">
+                                                <select class="form-control" id="kondisi_pandemik" name="kondisi_pandemik" value="">
+                                                    <option selected value="">Pilih Kondisi Pamdemik</option>
+                                                    <option value="Cukup Berdampak">Cukup Berdampak</option>
+                                                    <option value="Tidak Berdampak">Tidak Berdampak</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">No Kontak HR<span class="text-danger">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input type="tel" class="form-control" maxlength="12" placeholder="" id="no_kontak_hr" name="no_kontak_hr" value="<?=$no_kontak_hr?>">
+                                            </div>
+                                        </div>
+                                    </div> -->
+                  <!-- show jika menikah -->
+                </div>
+              </div>
+
+              <!-- untuk Perkerjaan Pasangan -->
+              <div id="pekerjaanPasanganCallReport">
+                <h4 class="card-body gradient-9" style="text-align: center">Pekerjaan Pasangan</h4>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Tipe Pekerjaan</label>
+                      <div class="form-group col-sm-8">
+                        <select class="form-control" id="tipe_pekerjaan_pasangan" name="tipe_pekerjaan_pasangan" value="">
+                          <option value="{{ daWa.tipe_pekerjaan_pasangan }}"></option>
+                          <!-- <option selected value="">Pilih Tipe Pekerjaan</option> -->
+                          <option value="Karyawan">Karyawan</option>
+                          <option value="Wiraswasta">Wiraswasta</option>
+                          <option value="Profesional">Profesional</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Status Pekerjaan</label>
+                      <div class="form-group col-sm-8">
+                        <select
+                          class="form-control"
+                          id="status_pekerjaan_pasangan"
+                          name="status_pekerjaan_pasangan"
+                          value="<?=@$status_pekerjaan_pasangan?>"
+                        >
+                          <option selected value="{{ daWa.status_pekerjaan_pasangan }}">{{ daWa.status_pekerjaan_pasangan }}</option>
+                          <option value="Tetap">Tetap</option>
+                          <option value="Kontrak">Kontrak</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Lama Bekerja<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <div class="form-row">
+                          <div class="col">
+                            <select class="form-control" id="lama_bekerja_bulan_pasangan" name="lama_bekerja_bulan_pasangan" value="">
+                              <option selected value="{{ daWa.lama_bekerja_bulan_pasangan }}">
+                                {{ daWa.lama_bekerja_bulan_pasangan }}
+                              </option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                            </select>
+                          </div>
+                          <div class="col">
+                            <input
+                              type="tel"
+                              onkeypress="return onlyNumberKey(event)"
+                              class="form-control"
+                              placeholder="Tahun"
+                              id="lama_bekerja_tahun_pasangan"
+                              name="lama_bekerja_tahun_pasangan"
+                              value="{{ daWa.lama_bekerja_tahun_pasangan }}"
+                              maxlength="2"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Jabatan Terakhir<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder=""
+                          id="jabatan_terakhir_pasangan"
+                          name="jabatan_terakhir_pasangan"
+                          value="{{ daWa.jabatan_terakhir_pasangan }}"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Nama Perusahaan<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder=""
+                          id="nama_perusahaan_pasangan"
+                          name="nama_perusahaan_pasangan"
+                          value="{{ daWa.nama_perusahaan_pasangan }}"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Bidang Usaha<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder=""
+                          id="bidang_usaha_pasangan"
+                          name="bidang_usaha_pasangan"
+                          value="{{ daWa.bidang_usaha_pasangan }}"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Skala Perorangan<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder=""
+                          id="skala_perusahaan_pasangan"
+                          name="skala_perusahaan_pasangan"
+                          value="{{ daWa.skala_perusahaan_pasangan }}"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Tahun Berdiri<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <input
+                          type="tel"
+                          onkeypress="return onlyNumberKey(event)"
+                          minlength="4"
+                          class="form-control"
+                          maxlength="4"
+                          placeholder=""
+                          id="tahun_berdiri_perusahaan_pasangan"
+                          name="tahun_berdiri_perusahaan_pasangan"
+                          value="{{ daWa.tahun_berdiri_perusahaan_pasangan }}"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Alamat<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan_pasangan" name="alamat_perusahaan_pasangan">{{
+                          daWa.alamat_perusahaan_pasangan
+                        }}</textarea>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <input
+                          class="form-control"
+                          type="tel"
+                          onkeypress="return onlyNumberKey(event)"
+                          minlength="4"
+                          maxlength="1000"
+                          placeholder=""
+                          id="jumlah_karyawan_perusahaan_pasangan"
+                          name="jumlah_karyawan_perusahaan_pasangan"
+                          value="{{ daWa.jumlah_karyawan_perusahaan_pasangan }}"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Kondisi Pandemik</label>
+                      <div class="form-group col-sm-8">
+                        <select class="form-control" id="kondisi_pandemi_pasangan" name="kondisi_pandemi_perusahaan_pasangan">
+                          <!-- <option selected value="">Pilih Kondisi Pamdemik</option> -->
+                          <option selected value="{{ daWa.kondisi_pandemi_perusahaan_pasangan }}">
+                            {{ daWa.kondisi_pandemi_perusahaan_pasangan }}
+                          </option>
+                          <option value="Cukup Berdampak">Cukup Berdampak</option>
+                          <option value="Tidak Berdampak">Tidak Berdampak</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">No Kontak HR<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <input
+                          type="tel"
+                          onkeypress="return onlyNumberKey(event)"
+                          pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
+                          class="form-control"
+                          maxlength="12"
+                          placeholder=""
+                          id="no_kontak_hr_pasangan"
+                          name="no_kontak_hr_pasangan"
+                          value="{{ daWa.no_kontak_hr_pasangan }}"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pendapatan dan Kewajiban -->
+              <h4 class="card-body gradient-9" style="text-align: center">Pendapatan dan Kewajiban</h4>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label"
+                      >Laba Bersih Setelah Pajak Periode I (Per Tahun)<span class="text-danger">*</span></label
+                    >
+                    <div class="col-sm-8">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder=""
+                        id="laba_periode_1"
+                        name="laba_periode_1"
+                        value="{{ daWa.laba_periode_1 }}"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label"
+                      >Laba Bersih Setelah Pajak Periode II (Per Tahun)<span class="text-danger">*</span></label
+                    >
+                    <div class="col-sm-8">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder=""
+                        id="laba_periode_2"
+                        name="laba_periode_2"
+                        value="{{ daWa.laba_periode_2 }}"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label"
+                      >Laba Bersih Setelah Pajak Periode III (Per Tahun)<span class="text-danger">*</span></label
+                    >
+                    <div class="col-sm-8">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder=""
+                        id="laba_periode_3"
+                        name="laba_periode_3"
+                        value="{{ daWa.laba_periode_3 }}"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label"
+                      >Laba Bersih Setelah Pajak Periode IIII (Per Tahun)<span class="text-danger">*</span></label
+                    >
+                    <div class="col-sm-8">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder=""
+                        id="laba_periode_4"
+                        name="laba_periode_4"
+                        value="{{ daWa.laba_periode_4 }}"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label"
+                      >Rata Rata Laba Bersih Setelah Pajak (Per Bulan)<span class="text-danger">*</span></label
+                    >
+                    <div class="col-sm-8">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder=""
+                        id="rata_rata_laba"
+                        name="rata_rata_laba"
+                        value="{{ daWa.rata_rata_laba }}"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Estimasi Angsuran Saat Ini<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder=""
+                        id="estimasi_angsuran"
+                        name="estimasi_angsuran"
+                        value="{{ daWa.estimasi_angsuran }}"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Tercermin di Rekening<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <div class="form-group">
+                        <select class="form-control" id="tercermin_rekening" name="tercermin_rekening">
+                          <option value="{{ daWa.tercermin_rekening }}">{{ daWa.tercermin_rekening }}</option>
+                          <option value="Ya">Ya</option>
+                          <option value="Tidak">Tidak</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label"></label>
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <p id="denganini"></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">tanggal wawancara</label>
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <input
+                          class="form-control"
+                          type="date"
+                          id="tanggal_wawancara"
+                          name="tanggal_wawancara"
+                          value="{{ daWa.tanggal_wawancara }}"
+                          onchange="tanggalWawancara()"
+                        />
+                        <input class="form-control" id="hariWawancara" hidden />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">no wawancara</label>
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="no_wawancara"
+                          name="no_wawancara"
+                          value="{{ daWa.no_wawancara }}"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    (click)="goto()"
+                    id="selanjutnya"
+                    name="selanjutnya"
+                    value="selanjutnya"
+                    class="btn mb-1 btn-warning"
+                    style="float: right"
+                  >
+                    1Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
+                  </button>
+                  <button
+                    type="submit"
+                    id="buttonsimpan"
+                    name="buttonsimpan"
+                    value="buttonsimpan"
+                    class="btn mb-1 btn-dark"
+                    style="float: right"
+                    hidden
+                  >
+                    Simpan Data<span class="btn-icon-right"><i class="fa fa-floppy-o"></i></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- #/ container -->
+    </div>
+    <!--**********************************
+            Content body end
+        ***********************************-->
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/common/common.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/custom.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/settings.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/gleek.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/styleSwitcher.js"></script>
+
+    <!-- Chartjs -->
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/chart.js/Chart.bundle.min.js"></script>
+    <!-- Circle progress -->
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/circle-progress/circle-progress.min.js"></script>
+    <!-- Datamap -->
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/d3v3/index.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/topojson/topojson.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/datamaps/datamaps.world.min.js"></script>
+    <!-- Morrisjs -->
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/raphael/raphael.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/morris/morris.min.js"></script>
+    <!-- Pignose Calender -->
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/moment/moment.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
+    <!-- ChartistJS -->
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/chartist/js/chartist.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/dashboard/dashboard-1.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/tables/js/jquery.dataTables.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+    <script>
+      function onlyNumberKey(evt) {
+        var ASCIICode = evt.which ? evt.which : evt.keyCode;
+        if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) return false;
+        return true;
+      }
+    </script>
+
+    <!-- untuk reff -->
+    <script>
+      $(document).ready(function () {
+        $.ajax({
+          url: 'http://10.20.34.183:8080/new-efos/data_entry/getSkalaPerusahaan',
+          dataType: 'json',
+          type: 'post',
+          success: function (response) {
+            console.log(response);
+            $kelurahan = '';
+            $.each(response, function (i, n) {
+              console.log(n['deskripsi']);
+              kelurahan = '<option value="' + n['deskripsi'] + '">' + n['deskripsi'] + '</option>';
+              kelurahan = kelurahan + '';
+              $('#skala_perusahaan').append(kelurahan);
+            });
+          },
+        });
+      });
+    </script>
+
+    <script>
+      window.addEventListener('load', function () {
+        var url = 'http://10.20.34.110:8805/api/v1/efos-de/get_call_report_seq';
+        var xhr;
+
+        var pemisahantara = WADUH.value;
+        var pemisahuntukretrivewawancara = no_wawancara.value;
+        // alert(pemisahuntukretrivewawancara);
+        var denya = app_no_de.value;
+        if (window.XMLHttpRequest) {
+          xhr = new XMLHttpRequest();
+        } else {
+          xhr = new ActiveXObject('Microsoft.XMLHTTP');
+        }
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            var res = JSON.parse(xhr.responseText),
+              data = res.result;
+            // $c1.val(data)
+            if (pemisahantara == 'BRANCHMANAGER') {
+            } else {
+              if (pemisahuntukretrivewawancara == '') {
+                document.getElementById('no_wawancara').value = 'CR' + '_' + denya + '_' + data;
+              } else {
+                // document.getElementById("no_wawancara").value=('CR'+'_'+denya+'_'+data);
+              }
+            }
+          }
+        };
+        xhr.open('GET', url, true);
+        xhr.send();
+      });
+    </script>
+
+    <script>
+      var hidePekerjaanPasangan = document.getElementById('status_perkawinan');
+      hidePekerjaanPasangan.addEventListener('change', function () {
+        if (this.value == 1) {
+          $('#pekerjaanPasanganCallReport').show();
+        } else {
+          $('#pekerjaanPasanganCallReport').hide();
+        }
+      });
+
+      $('#cek').click(function () {
+        if ($('#cek').is(':checked')) {
+          $('#buttonsimpan').removeAttr('hidden');
+        } else {
+          $('#buttonsimpan').attr('hidden', 'true');
+        }
+      });
+
+      /////////buat retrivannya/////////////////
+      $(document).ready(function () {
+        var retrivePekerjaanPasangan = document.getElementById('status_perkawinan').value;
+        if (retrivePekerjaanPasangan == 1) $('#pekerjaanPasanganCallReport').show();
+        else $('#pekerjaanPasanganCallReport').hide();
+      });
+    </script>
+    <!-- untuk pekerjaan pasangan -->
+
+    <!-- untuk hide di anggunan -->
+    <script>
+      var s = document.getElementById('status_agunan');
+      s.addEventListener('change', function () {
+        if (this.value == 'Lainnya') $('#catatanLainnyaAnggunan').show();
+        else $('#catatanLainnyaAnggunan').hide();
+      });
+
+      var t = document.getElementById('dokumen_kepemilikan');
+      t.addEventListener('change', function () {
+        if (this.value == 'Lainnya') $('#catatanLainnyaDokumen').show();
+        else $('#catatanLainnyaDokumen').hide();
+      });
+
+      var u = document.getElementById('posisi_dokumen');
+      u.addEventListener('change', function () {
+        if (this.value == 'Lainnya') $('#catatanLainnyaPosisi_dokumen').show();
+        else $('#catatanLainnyaPosisi_dokumen').hide();
+      });
+      //////////////////untuk retrive lainnya////////////////////////////
+      $(document).ready(function () {
+        var retriveAgunan = document.getElementById('status_agunan').value;
+        var retriveDokumenKepemilikan = document.getElementById('dokumen_kepemilikan').value;
+        var retrivePosisiDokumen = document.getElementById('posisi_dokumen').value;
+        if (retriveAgunan == 'Lainnya') {
+          $('#catatanLainnyaAnggunan').show();
+        }
+        if (retriveDokumenKepemilikan == 'Lainnya') {
+          $('#catatanLainnyaDokumen').show();
+        }
+        if (retrivePosisiDokumen == 'Lainnya') {
+          $('#catatanLainnyaPosisi_dokumen').show();
+        }
+      });
+    </script>
+    <!-- untuk hide di anggunan -->
+
+    <!-- untuk legalitas usaha -->
+    <!-- <script>
+        mobiscroll.setOptions({
+            locale: mobiscroll.localeEn,
+            theme: 'ios',
+            themeVariant: 'light'
+        });
+
+        mobiscroll.select('#legalitas_usaha', {
+            inputElement: document.getElementById('input_legalitas_usaha')
+        });
+    </script> -->
+
+    <script>
+      $(document).ready(function () {
+        var grupname = WADUH.value;
+
+        // var grupname=$this->session->userdata('GROUP_NAME');
+        // alert(grupname);
+        if (grupname == 'BRANCHMANAGER') {
+          $('#alamat_ktp').attr('disabled', 'disabled');
+          $('#tanggal_lahir').attr('disabled', 'disabled');
+          $('#status_perkawinan').attr('disabled', 'disabled');
+          $('#pendidikan').attr('disabled', 'disabled');
+          $('#tipe_kendaraan1').attr('disabled', 'disabled');
+          $('#status_agunan').attr('disabled', 'disabled');
+          $('#dokumen_kepemilikan').attr('disabled', 'disabled');
+          $('#posisi_dokumen').attr('disabled', 'disabled');
+          $('#jenis_usaha_call').attr('disabled', 'disabled');
+          $('#lama_usaha').attr('disabled', 'disabled');
+          $('#legalitas_usaha').attr('disabled', 'disabled');
+          $('#lama_usaha').attr('disabled', 'disabled');
+
+          $('#nama_badan_usaha').attr('disabled', 'disabled');
+          $('#skala_perusahaan').attr('disabled', 'disabled');
+          $('#jenis_produk').attr('disabled', 'disabled');
+          $('#tahun_berdiri_perusahaan').attr('disabled', 'disabled');
+          $('#alamat_perusahaan').attr('disabled', 'disabled');
+          $('#jumlah_karyawan').attr('disabled', 'disabled');
+          $('#kondisi_pandemik').attr('disabled', 'disabled');
+          $('#kepemilikan_usaha').attr('disabled', 'disabled');
+          $('#tipe_pekerjaan').attr('disabled', 'disabled');
+          $('#lama_bekerja').attr('disabled', 'disabled');
+          $('#lama_bekerja_tahun').attr('disabled', 'disabled');
+          $('#jabatan_terakhir').attr('disabled', 'disabled');
+          $('#nama_perushaan').attr('disabled', 'disabled');
+          $('#bidang_usaha').attr('disabled', 'disabled');
+          $('#skala_perorangan').attr('disabled', 'disabled');
+          $('#tahun_berdiri').attr('disabled', 'disabled');
+          $('#jumlah_karyawan').attr('disabled', 'disabled');
+          $('#no_kontak_hr').attr('disabled', 'disabled');
+          $('#laba_periode_1').attr('disabled', 'disabled');
+          $('#laba_periode_2').attr('disabled', 'disabled');
+          $('#laba_periode_3').attr('disabled', 'disabled');
+          $('#laba_periode_4').attr('disabled', 'disabled');
+          $('#rata_rata_laba').attr('disabled', 'disabled');
+          $('#estimasi_angsuran').attr('disabled', 'disabled');
+          $('#tercermin_rekening').attr('disabled', 'disabled');
+          $('#tanggal_wawancara').attr('disabled', 'disabled');
+          $('#no_wawancara').attr('disabled', 'disabled');
+          $('#catatan_status_agunan').attr('readonly', 'readonly');
+          $('#catatan_dokumen_agunan').attr('readonly', 'readonly');
+          $('#catatan_posisi_dokumen').attr('readonly', 'readonly');
+          ////pasangan
+          $('#cek').attr('disabled', 'disabled');
+          $('#tipe_pekerjaan_pasangan').attr('disabled', 'disabled');
+          $('#status_pekerjaan_pasangan').attr('disabled', 'disabled');
+          $('#lama_bekerja_bulan_pasangan').attr('disabled', 'disabled');
+          $('#lama_bekerja_tahun_pasangan').attr('disabled', 'disabled');
+          $('#jabatan_terakhir_pasangan').attr('disabled', 'disabled');
+          $('#nama_perusahaan_pasangan').attr('disabled', 'disabled');
+          $('#bidang_usaha_pasangan').attr('disabled', 'disabled');
+          $('#skala_perusahaan_pasangan').attr('disabled', 'disabled');
+          $('#tahun_berdiri_perusahaan_pasangan').attr('disabled', 'disabled');
+          $('#alamat_perusahaan_pasangan').attr('disabled', 'disabled');
+          $('#jumlah_karyawan_perusahaan_pasangan').attr('disabled', 'disabled');
+          $('#no_kontak_hr_pasangan').attr('disabled', 'disabled');
+          $('#catatanLainnyaAnggunan').attr('disabled', 'disabled');
+          $('#catatanLainnyaDokumen').attr('disabled', 'disabled');
+          $('#catatanLainnyaPosisi_dokumen').attr('disabled', 'disabled');
+          $('#kondisi_pandemi_pasangan').attr('disabled', 'disabled');
+          $('#buttonsimpan').attr('hidden', 'hidden');
+          // a = document.getElementById("nama").value;
+          // a.readonly=true;
+          // alert(a);
+        } else {
+          $('#selanjutnya').attr('hidden', 'hidden');
+        }
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        var grupname = WADUH.value;
+        if (grupname == 'BRANCHMANAGER') {
+          var retrivenamaao = '<?=$nama_ao?>';
+          var userName = $('#nama').val();
+          var Aoname = retrivenamaao;
+          $('#denganini').html(
+            'Dengan ini saya menyatakan hasil wawancara yang diisi oleh saya ' +
+              Aoname +
+              ' dan pemberi Informasi yang disebut nasabah adalah benar adanya ' +
+              userName
+          );
+        } else {
+          var userName = $('#nama').val();
+          var Aoname = $('#nama_ao').val();
+          $('#denganini').html(
+            'Dengan ini saya menyatakan hasil wawancara yang diisi oleh saya ' +
+              Aoname +
+              ' dan pemberi Informasi yang disebut nasabah adalah benar adanya ' +
+              userName
+          );
+        }
+      });
+    </script>
+
+    <!--///////////////////////////////////Validasi/////////////////////////////////////////-->
+    <script>
+      var untukFasilitas = document.getElementById('fasilitas').value;
+      function validateFormCallReport() {
+        var validasiAlamatTinggal = document.forms['data_entry_form']['alamat_ktp'].value;
+        if (validasiAlamatTinggal == null || validasiAlamatTinggal == '') {
+          document.getElementById('alamat_ktp').focus();
+          alert('Alamat KTP Wajib diisi');
+          return false;
+        }
+        var validasiTanggalLahir = document.forms['data_entry_form']['tanggal_lahir'].value;
+        if (validasiTanggalLahir == null || validasiTanggalLahir == '') {
+          document.getElementById('tanggal_lahir').focus();
+          alert('Tanggal Lahir Wajib diisi');
+          return false;
+        }
+        var validasiStatusPerkawinan = document.forms['data_entry_form']['status_perkawinan'].value;
+        if (validasiStatusPerkawinan == null || validasiStatusPerkawinan == '') {
+          document.getElementById('status_perkawinan').focus();
+          alert('Status Perkawinan Wajib diisi');
+          return false;
+        }
+        var validasiPendidikan = document.forms['data_entry_form']['pendidikan'].value;
+        if (validasiPendidikan == null || validasiPendidikan == '') {
+          document.getElementById('pendidikan').focus();
+          alert('Pendidikan Wajib diisi');
+          return false;
+        }
+        ///////////////// 1 ////////////////////////////////////
+        var validasiStatusAgunan = document.forms['data_entry_form']['status_agunan'].value;
+
+        ///////////////// 2 ////////////////////////////////////
+        var validasiDokumenKepemilikan = document.forms['data_entry_form']['dokumen_kepemilikan'].value;
+
+        ///////////////// 3 ////////////////////////////////////
+        var validasiPosisiDokumen = document.forms['data_entry_form']['posisi_dokumen'].value;
+        ////////////////////////////////////////////////////////
+        var validasiJenisCall = document.forms['data_entry_form']['jenis_usaha_call'].value;
+        if (validasiJenisCall == null || validasiJenisCall == '') {
+          document.getElementById('jenis_usaha_call').focus();
+          alert('Jenis Usaha Wajib diisi');
+          return false;
+        }
+        var validasiLamaUsaha = document.forms['data_entry_form']['lama_usaha'].value;
+        if (validasiLamaUsaha == null || validasiLamaUsaha == '') {
+          document.getElementById('lama_usaha').focus();
+          alert('Lama Usaha Tahun Wajib diisi');
+          return false;
+        }
+        // var validasiLegalitasUsaha = document.forms["data_entry_form"]["legalitas_usaha"].value;
+        // if(validasiLegalitasUsaha == null || validasiLegalitasUsaha == ""){
+        //     document.getElementById("legalitas_usaha").focus();
+        //     alert("Legalitas Usaha Wajib diisi");
+        //     return false;
+        // }
+        var validasiBidangUsaha = document.forms['data_entry_form']['bidang_usaha'].value;
+        if (validasiBidangUsaha == null || validasiBidangUsaha == '') {
+          document.getElementById('bidang_usaha').focus();
+          alert('Bidang Usaha Wajib diisi');
+          return false;
+        }
+        var validasiBadanUsaha = document.forms['data_entry_form']['nama_badan_usaha'].value;
+        if (validasiBadanUsaha == null || validasiBadanUsaha == '') {
+          document.getElementById('nama_badan_usaha').focus();
+          alert('Jabatan Terakhir Wajib diisi');
+          return false;
+        }
+        var validasiSkalaPerusahaan = document.forms['data_entry_form']['skala_perusahaan'].value;
+        if (validasiSkalaPerusahaan == null || validasiSkalaPerusahaan == '') {
+          document.getElementById('skala_perusahaan').focus();
+          alert('Skala Perusahaan Wajib diisi');
+          return false;
+        }
+        var validasiJenisProduk = document.forms['data_entry_form']['jenis_produk'].value;
+        if (validasiJenisProduk == null || validasiJenisProduk == '') {
+          document.getElementById('jenis_produk').focus();
+          alert('Jenis Produk Wajib diisi');
+          return false;
+        }
+        var validasiTahunBerdiri = document.forms['data_entry_form']['tahun_berdiri_perusahaan'].value;
+        if (validasiTahunBerdiri == null || validasiTahunBerdiri == '') {
+          document.getElementById('tahun_berdiri_perusahaan').focus();
+          alert('Tahun Berdiri Wajib diisi');
+          return false;
+        }
+        var validasiAlamatPekerjaan = document.forms['data_entry_form']['alamat_perusahaan'].value;
+        if (validasiAlamatPekerjaan == null || validasiAlamatPekerjaan == '') {
+          document.getElementById('alamat_perusahaan').focus();
+          alert('Alamat Pekerjaan Wajib diisi');
+          return false;
+        }
+        var validasiJumlahKaryawan = document.forms['data_entry_form']['jumlah_karyawan'].value;
+        if (validasiJumlahKaryawan == null || validasiJumlahKaryawan == '') {
+          document.getElementById('jumlah_karyawan').focus();
+          alert('Jumlah Karyawan Wajib diisi');
+          return false;
+        }
+        var validasiKondisiPandemik = document.forms['data_entry_form']['kondisi_pandemik'].value;
+        if (validasiKondisiPandemik == null || validasiKondisiPandemik == '') {
+          document.getElementById('kondisi_pandemik').focus();
+          alert('Kondisi Pandemik Wajib diisi');
+          return false;
+        }
+        var validasiKepemilikanUsaha = document.forms['data_entry_form']['kepemilikan_usaha'].value;
+        if (validasiKepemilikanUsaha == null || validasiKepemilikanUsaha == '') {
+          document.getElementById('kepemilikan_usaha').focus();
+          alert('Kepemilikan Usaha Wajib diisi');
+          return false;
+        }
+        var validasiLabaPeriode_1 = document.forms['data_entry_form']['laba_periode_1'].value;
+        if (validasiLabaPeriode_1 == null || validasiLabaPeriode_1 == '') {
+          document.getElementById('laba_periode_1').focus();
+          alert('Laba Bersih Setelah Pajak Periode I (Per Tahun) Wajib diisi');
+          return false;
+        }
+        var validasiLabaPeriode_2 = document.forms['data_entry_form']['laba_periode_2'].value;
+        if (validasiLabaPeriode_2 == null || validasiLabaPeriode_2 == '') {
+          document.getElementById('laba_periode_2').focus();
+          alert('Laba Bersih Setelah Pajak Periode II (Per Tahun) Saat Ini Wajib diisi');
+          return false;
+        }
+        var validasiLabaPeriode_3 = document.forms['data_entry_form']['laba_periode_3'].value;
+        if (validasiLabaPeriode_3 == null || validasiLabaPeriode_3 == '') {
+          document.getElementById('laba_periode_3').focus();
+          alert('Laba Bersih Setelah Pajak Periode III (Per Tahun) Wajib diisi');
+          return false;
+        }
+        var validasiLabaPeriode_4 = document.forms['data_entry_form']['laba_periode_4'].value;
+        if (validasiLabaPeriode_4 == null || validasiLabaPeriode_4 == '') {
+          document.getElementById('laba_periode_4').focus();
+          alert('Laba Bersih Setelah Pajak Periode IIII (Per Tahun) Wajib diisi');
+          return false;
+        }
+        var validasiRataRataLaba = document.forms['data_entry_form']['rata_rata_laba'].value;
+        if (validasiRataRataLaba == null || validasiRataRataLaba == '') {
+          document.getElementById('rata_rata_laba').focus();
+          alert('Rata Rata Laba Bersih Setelah Pajak (Per Bulan) Wajib diisi');
+          return false;
+        }
+        var validasiEstimasiAngsuran = document.forms['data_entry_form']['estimasi_angsuran'].value;
+        if (validasiEstimasiAngsuran == null || validasiEstimasiAngsuran == '') {
+          document.getElementById('estimasi_angsuran').focus();
+          alert('Estimasi Angsuran Saat Ini Wajib diisi');
+          return false;
+        }
+        var validasiTercerminRekening = document.forms['data_entry_form']['tercermin_rekening'].value;
+        if (validasiTercerminRekening == null || validasiTercerminRekening == '') {
+          document.getElementById('tercermin_rekening').focus();
+          alert('Tercermin di Rekening Wajib diisi');
+          return false;
+        }
+        var validasiHariWawancara = document.forms['data_entry_form']['tanggal_wawancara'].value;
+        var validasiHariWawancaraVal = document.forms['data_entry_form']['hariWawancara'].value;
+        ////////////////////////tambhan///////////////////////////////////////////////////////
+        var tanggalYangWawancara = new Date(validasiHariWawancara);
+        var tanggalPunyanyaWawancara = tanggalYangWawancara.getDate();
+        var today = new Date();
+        var tanggalAsliHariIni = today.getDate();
+        ////////////////////////tambhan///////////////////////////////////////////////////////
+        if (validasiHariWawancara == null || validasiHariWawancara == '') {
+          document.getElementById('tanggal_wawancara').focus();
+          alert('Tanggal Wawancara Wajib diisi');
+          return false;
+        }
+        if (validasiHariWawancaraVal > 60) {
+          document.getElementById('tanggal_wawancara').focus();
+          alert('Tanggal Wawancara Tidak Boleh < 60 Hari Kerja, Tanggal Wawancara Sudah Expired');
+          return false;
+        }
+        if (validasiHariWawancaraVal == 0) {
+          if (tanggalPunyanyaWawancara == tanggalAsliHariIni) {
+            return true;
+          } else {
+            alert('Tanggal Wawancara Tidak Boleh Lebih');
+            return false;
+          }
+        }
+        if (validasiHariWawancaraVal < 0) {
+          document.getElementById('tanggal_wawancara').focus();
+          alert('Tanggal Wawancara Tidak Boleh Lebih dari hari ini');
+          return false;
+        }
+        ///////////////////////////////////////////buat status kalo menikah/////////////////////////
+        if (validasiStatusPerkawinan == 1) {
+          var validasiPekerjaanPasangan = document.forms['data_entry_form']['tipe_pekerjaan_pasanga'].value;
+          if (validasiPekerjaanPasangan == null || validasiPekerjaanPasangan == '') {
+            document.getElementById('tipe_pekerjaan_pasanga').focus();
+            alert('Tipe Pekerjaan Wajib diisi');
+            return false;
+          }
+          var validasiStatusPekerjaanPasangan = document.forms['data_entry_form']['status_pekerjaan_pasangan'].value;
+          if (validasiStatusPekerjaanPasangan == null || validasiStatusPekerjaanPasangan == '') {
+            document.getElementById('status_pekerjaan_pasangan').focus();
+            alert('Status Pekerjaan Pasangan Wajib diisi');
+            return false;
+          }
+          var validasiLamaBekerjaBulanPasangan = document.forms['data_entry_form']['lama_bekerja_bulan_pasangan'].value;
+          if (validasiLamaBekerjaBulanPasangan == null || validasiLamaBekerjaBulanPasangan == '') {
+            document.getElementById('lama_bekerja_bulan_pasangan').focus();
+            alert('Lama Bekerja Bulan Pasangan Wajib diisi');
+            return false;
+          }
+          var validasiLamaBekerjaTahunPasangan = document.forms['data_entry_form']['lama_bekerja_tahun_pasangan'].value;
+          if (validasiLamaBekerjaTahunPasangan == null || validasiLamaBekerjaTahunPasangan == '') {
+            document.getElementById('lama_bekerja_tahun_pasangan').focus();
+            alert('Lama Bekerja Tahun Pasangan Wajib diisi');
+            return false;
+          }
+          var validasiJabatanTerakhirPasangan = document.forms['data_entry_form']['jabatan_terakhir_pasangan'].value;
+          if (validasiJabatanTerakhirPasangan == null || validasiJabatanTerakhirPasangan == '') {
+            document.getElementById('jabatan_terakhir_pasangan').focus();
+            alert('Jabatan Terakhir Pasangan Wajib diisi');
+            return false;
+          }
+          var validasiNamaPersahaanPasangan = document.forms['data_entry_form']['nama_perusahaan_pasangan'].value;
+          if (validasiNamaPersahaanPasangan == null || validasiNamaPersahaanPasangan == '') {
+            document.getElementById('nama_perusahaan_pasangan').focus();
+            alert('Nama Perusahaan Pasangan Wajib diisi');
+            return false;
+          }
+          var validasiBidangUsahaPasangan = document.forms['data_entry_form']['bidang_usaha_pasangan'].value;
+          if (validasiBidangUsahaPasangan == null || validasiBidangUsahaPasangan == '') {
+            document.getElementById('bidang_usaha_pasangan').focus();
+            alert('Bidang Usaha Pasangan Wajib diisi');
+            return false;
+          }
+          var validasiSkalaPeroranganPasangan = document.forms['data_entry_form']['skala_perusahaan_pasangan'].value;
+          if (validasiSkalaPeroranganPasangan == null || validasiSkalaPeroranganPasangan == '') {
+            document.getElementById('skala_perusahaan_pasangan').focus();
+            alert('Sakala Perorangan Pasangan Wajib diisi');
+            return false;
+          }
+          var validasiTahunBerdiriPerusahaanPasangan = document.forms['data_entry_form']['tahun_berdiri_perusahaan_pasangan'].value;
+          if (validasiTahunBerdiriPerusahaanPasangan == null || validasiTahunBerdiriPerusahaanPasangan == '') {
+            document.getElementById('tahun_berdiri_perusahaan_pasangan').focus();
+            alert('Tahun Berdiri Pasangan Wajib diisi');
+            return false;
+          }
+          var validasiAlamatPekerjaanPasangan = document.forms['data_entry_form']['alamat_perusahaan_pasangan'].value;
+          if (validasiAlamatPekerjaanPasangan == null || validasiAlamatPekerjaanPasangan == '') {
+            document.getElementById('alamat_perusahaan_pasangan').focus();
+            alert('Alamat Pekerjaan Pasangan Wajib diisi');
+            return false;
+          }
+          var validasiJumlahKaryawanPasangan = document.forms['data_entry_form']['jumlah_karyawan_perusahaan_pasangan'].value;
+          if (validasiJumlahKaryawanPasangan == null || validasiJumlahKaryawanPasangan == '') {
+            document.getElementById('jumlah_karyawan_perusahaan_pasangan').focus();
+            alert('Jumlah Karyawan Pasangan Wajib diisi');
+            return false;
+          }
+          var validasiKondisiPandemikPasangan = document.forms['data_entry_form']['kondisi_pandemi_perusahaan_pasangan'].value;
+          if (validasiKondisiPandemikPasangan == null || validasiKondisiPandemikPasangan == '') {
+            document.getElementById('kondisi_pandemi_perusahaan_pasangan').focus();
+            alert('Kondisi Pandemik Pasangan Wajib diisi');
+            return false;
+          }
+          var validasiNoKontakHrPasangan = document.forms['data_entry_form']['no_kontak_hr_pasangan'].value;
+          if (validasiNoKontakHrPasangan == null || validasiNoKontakHrPasangan == '') {
+            document.getElementById('no_kontak_hr_pasangan').focus();
+            alert('No Kontak HR Pasangan Wajib diisi');
+            return false;
+          }
+        }
+        if (untukFasilitas != 'PTA') {
+          if (validasiStatusAgunan == null || validasiStatusAgunan == '') {
+            document.getElementById('status_agunan').focus();
+            alert('Kepemilikan Agunan Wajib diisi');
+            return false;
+          }
+          if (validasiDokumenKepemilikan == null || validasiDokumenKepemilikan == '') {
+            document.getElementById('dokumen_kepemilikan').focus();
+            alert('Dokumen Kepemilikan Wajib diisi');
+            return false;
+          }
+          if (validasiPosisiDokumen == null || validasiPosisiDokumen == '') {
+            document.getElementById('posisi_dokumen').focus();
+            alert('Posisi Dokumen Wajib diisi');
+            return false;
+          }
+        }
+      }
+    </script>
+    <!--///////////////////////////////////Validasi/////////////////////////////////////////-->
+    <!--/////////////////////////////untuk tanggal wawancara////////////////////////////////////////////////-->
+    <script>
+      function tanggalWawancara() {
+        var tanggalWawancaraNya = '';
+        var idWawancara = document.getElementById('tanggal_wawancara').value;
+        var tanggalWawancaraConvert = +new Date(idWawancara);
+        tanggalWawancaraNya += +~~((Date.now() - tanggalWawancaraConvert) / 86400000);
+        var thetanggalWawancaraConvert = document.getElementById('hariWawancara');
+        thetanggalWawancaraConvert.value = tanggalWawancaraNya;
+      }
+      $(document).ready(function () {
+        var tanggalWawancaraNyaReady = '';
+        var idWawancaraReady = document.getElementById('tanggal_wawancara').value;
+        var tanggalWawancaraConvertReady = +new Date(idWawancaraReady);
+        tanggalWawancaraNyaReady += +~~((Date.now() - tanggalWawancaraConvertReady) / 86400000);
+        var thetanggalWawancaraConvertReady = document.getElementById('hariWawancara');
+        thetanggalWawancaraConvertReady.value = tanggalWawancaraNyaReady;
+      });
+    </script>
+    <!--/////////////////////////////untuk tanggal wawancara////////////////////////////////////////////////-->
+    <script>
+      var labaRupiah1 = document.getElementById('laba_periode_1');
+      var labaRupiah2 = document.getElementById('laba_periode_2');
+      var labaRupiah3 = document.getElementById('laba_periode_3');
+      var labaRupiah4 = document.getElementById('laba_periode_4');
+      var rataRataLaba = document.getElementById('rata_rata_laba');
+      var estimasiAngsuran = document.getElementById('estimasi_angsuran');
+      labaRupiah1.addEventListener('keyup', function (e) {
+        labaRupiah1.value = formatRupiah(this.value, 'Rp. ');
+        var total4 =
+          parseInt(labaRupiah1.value.replace(/[^,\d]/g, '').toString()) +
+          parseInt(labaRupiah2.value.replace(/[^,\d]/g, '').toString()) +
+          parseInt(labaRupiah3.value.replace(/[^,\d]/g, '').toString()) +
+          parseInt(labaRupiah4.value.replace(/[^,\d]/g, '').toString());
+        // $('#rata_rata_laba').val(formatRupiahtotal(total4, 'Rp. '));
+      });
+      labaRupiah2.addEventListener('keyup', function (e) {
+        labaRupiah2.value = formatRupiah(this.value, 'Rp. ');
+        // var total3=(parseInt(labaRupiah1.value.replace(/[^,\d]/g, '').toString())+parseInt(labaRupiah2.value.replace(/[^,\d]/g, '').toString())+parseInt(labaRupiah3.value.replace(/[^,\d]/g, '').toString())+parseInt(labaRupiah4.value.replace(/[^,\d]/g, '').toString()) );
+        // $('#rata_rata_laba').val(formatRupiahtotal(total3, 'Rp. '));
+      });
+      labaRupiah3.addEventListener('keyup', function (e) {
+        labaRupiah3.value = formatRupiah(this.value, 'Rp. ');
+        // var total2=(parseInt(labaRupiah1.value.replace(/[^,\d]/g, '').toString())+parseInt(labaRupiah2.value.replace(/[^,\d]/g, '').toString())+parseInt(labaRupiah3.value.replace(/[^,\d]/g, '').toString())+parseInt(labaRupiah4.value.replace(/[^,\d]/g, '').toString()) );
+        // $('#rata_rata_laba').val(formatRupiahtotal(total2, 'Rp. '));
+      });
+      labaRupiah4.addEventListener('keyup', function (e) {
+        labaRupiah4.value = formatRupiah(this.value, 'Rp. ');
+        // var total=(parseInt(labaRupiah1.value.replace(/[^,\d]/g, '').toString())+parseInt(labaRupiah2.value.replace(/[^,\d]/g, '').toString())+parseInt(labaRupiah3.value.replace(/[^,\d]/g, '').toString())+parseInt(labaRupiah4.value.replace(/[^,\d]/g, '').toString()) );
+        // $('#rata_rata_laba').val(formatRupiahtotal(total, 'Rp. '));
+      });
+      rataRataLaba.addEventListener('keyup', function (e) {
+        rataRataLaba.value = formatRupiah(this.value, 'Rp. ');
+        // var total=(parseInt(labaRupiah1.value.replace(/[^,\d]/g, '').toString())+parseInt(labaRupiah2.value.replace(/[^,\d]/g, '').toString())+parseInt(labaRupiah3.value.replace(/[^,\d]/g, '').toString())+parseInt(labaRupiah4.value.replace(/[^,\d]/g, '').toString()) );
+        // $('#rata_rata_laba').val(formatRupiahtotal(total, 'Rp. '));
+      });
+      estimasiAngsuran.addEventListener('keyup', function (e) {
+        estimasiAngsuran.value = formatRupiah(this.value, 'Rp. ');
+        // var total=(parseInt(labaRupiah1.value.replace(/[^,\d]/g, '').toString())+parseInt(labaRupiah2.value.replace(/[^,\d]/g, '').toString())+parseInt(labaRupiah3.value.replace(/[^,\d]/g, '').toString())+parseInt(labaRupiah4.value.replace(/[^,\d]/g, '').toString()) );
+        // $('#rata_rata_laba').val(formatRupiahtotal(total, 'Rp. '));
+      });
+      function formatRupiah(angka, prefix) {
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+          split = number_string.split(','),
+          sisa = split[0].length % 3,
+          rupiah = split[0].substr(0, sisa),
+          ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+          separator = sisa ? '.' : '';
+          rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : rupiah ? 'Rp. ' + rupiah : '';
+      }
+
+      function formatRupiahtotal(angka, prefix) {
+        var number_string = angka
+            .toString()
+            .replace(/[^,\d]/g, '')
+            .toString(),
+          split = number_string.split(','),
+          sisa = split[0].length % 3,
+          rupiah = split[0].substr(0, sisa),
+          ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+          separator = sisa ? '.' : '';
+          rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : rupiah ? 'Rp. ' + rupiah : '';
+      }
+    </script>
+
+    <!-- //////////////////////tambahan //////////////////////// -->
+    <script>
+      $(document).ready(function () {
+        var agaga = document.getElementById('selanjutnya');
+        if ($('#cek').is(':checked')) {
+          $('#selanjutnya').removeAttr('hidden');
+        }
+      });
+    </script>
+    <!-- ////////////tambahan/////////////// -->
+    <script>
+      $(document).ready(function () {
+        //  AJAX request
+        $.ajax({
+          url: 'http://10.20.34.183:8080/new-efos/data_entry/getstatusperkawinan',
+          dataType: 'json',
+          type: 'post',
+          success: function (response) {
+            console.log(response);
+            $province = '';
+            $.each(response, function (i, n) {
+              console.log(n['deskripsi']);
+              province = '<option value="' + n['kode'] + '">' + n['deskripsi'] + '</option>';
+              province = province + '';
+              $('#status_perkawinan').append(province);
+            });
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

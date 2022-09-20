@@ -41,6 +41,17 @@ import { SuratPersetujuanComponent } from './verification/surat-persetujuan/sura
 import { NgxEditorModule } from 'ngx-editor';
 import { StukturPembiayaanComponent } from './verification/stuktur-pembiayaan/stuktur-pembiayaan.component';
 import { ChecklistDocumentComponent } from './verification/checklist-document/checklist-document.component';
+import { DataEntryComponent } from './data-entry/data-entry.component';
+import { PersonalInfoComponent } from './data-entry/personal-info/personal-info.component';
+import { JobInfoComponent } from './data-entry/job-info/job-info.component';
+import { DataPasanganComponent } from './data-entry/data-pasangan/data-pasangan.component';
+import { PekerjaanPasanganComponent } from './data-entry/pekerjaan-pasangan/pekerjaan-pasangan.component';
+import { CollateralComponent } from './data-entry/collateral/collateral.component';
+import { CallReportComponent } from './data-entry/call-report/call-report.component';
+import { CallReportNonComponent } from './data-entry/call-report-non/call-report-non.component';
+import { MemoComponent } from './data-entry/memo/memo.component';
+import { EmergencyContactComponent } from './data-entry/emergency-contact/emergency-contact.component';
+import { StrukturPembiayaanComponent } from './data-entry/struktur-pembiayaan/struktur-pembiayaan.component';
 
 @NgModule({
   imports: [
@@ -86,6 +97,17 @@ import { ChecklistDocumentComponent } from './verification/checklist-document/ch
     SuratPersetujuanComponent,
     StukturPembiayaanComponent,
     ChecklistDocumentComponent,
+    DataEntryComponent,
+    PersonalInfoComponent,
+    JobInfoComponent,
+    DataPasanganComponent,
+    PekerjaanPasanganComponent,
+    CollateralComponent,
+    CallReportComponent,
+    CallReportNonComponent,
+    MemoComponent,
+    EmergencyContactComponent,
+    StrukturPembiayaanComponent,
   ],
   bootstrap: [
     MainComponent,
@@ -95,6 +117,17 @@ import { ChecklistDocumentComponent } from './verification/checklist-document/ch
     DataCalonNasabahComponent,
     DataRumahComponent,
     DataKantorComponent,
+    DataEntryComponent,
+    PersonalInfoComponent,
+    JobInfoComponent,
+    DataPasanganComponent,
+    PekerjaanPasanganComponent,
+    CollateralComponent,
+    CallReportComponent,
+    CallReportNonComponent,
+    MemoComponent,
+    EmergencyContactComponent,
+    StrukturPembiayaanComponent,
   ],
 })
 export class AppModule {

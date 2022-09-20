@@ -27,9 +27,13 @@ export class AuthServerProvider {
   }
 
   login(credentials: Login): Observable<void> {
-    return this.http
-      .post<JwtToken>(this.applicationConfigService.getEndpointFor('api/authenticate'), credentials)
-      .pipe(map(response => this.authenticateSuccess(response, credentials.rememberMe)));
+    return (
+      this.http
+        // .post<JwtToken>(this.applicationConfigService.getEndpointFor('api/authenticate'), credentials)
+        .post<JwtToken>(this.applicationConfigService.getEndpointFor('http://10.20.81.186:8096/token/generate-token'), credentials)
+        // .pipe(map(response => this.authenticateSuccess(response, credentials.rememberMe)));
+        .pipe(map(response => this.authenticateSuccess(response)))
+    );
   }
 
   logout(): Observable<void> {
@@ -40,14 +44,14 @@ export class AuthServerProvider {
     });
   }
 
-  private authenticateSuccess(response: JwtToken, rememberMe: boolean): void {
+  private authenticateSuccess(response: JwtToken): void {
     const jwt = response.id_token;
-    if (rememberMe) {
-      this.localStorageService.store('authenticationToken', jwt);
-      this.sessionStorageService.clear('authenticationToken');
-    } else {
-      this.sessionStorageService.store('authenticationToken', jwt);
-      this.localStorageService.clear('authenticationToken');
-    }
+    // if (rememberMe) {
+    this.localStorageService.store('authenticationToken', jwt);
+    this.sessionStorageService.clear('authenticationToken');
+    // } else {
+    //   this.sessionStorageService.store('authenticationToken', jwt);
+    //   this.localStorageService.clear('authenticationToken');
+    // }
   }
 }

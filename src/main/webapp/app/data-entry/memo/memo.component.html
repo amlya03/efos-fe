@@ -1,0 +1,367 @@
+<html>
+  <body>
+    <!--*******************
+        Preloader start
+    ********************-->
+
+    <!--*******************
+        Preloader end
+    ********************-->
+    <!--**********************************
+        Content body start
+    ***********************************-->
+    <div class="content-body">
+      <div class="container-fluid">
+        <form id="" method="post" action="<?php echo base_url();?>data_entry/postcreatememo">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <tr *ngFor="let daWa1; for: daWa1"></tr>
+                <div class="col">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Nomor Aplikasi</label>
+                    <div class="col-sm-8">
+                      <input
+                        type="hidden"
+                        id="WADUH"
+                        name="WADUH"
+                        value="<?=$this->session->userdata('GROUP_NAME');?>"
+                        class="form-control"
+                      />
+                      <input type="text" class="form-control" value="{{ daWa1.app_no_de }}" placeholder="Nomor Aplikasi" readonly />
+                      <input
+                        type="hidden"
+                        class="form-control"
+                        name="status_aplikasi"
+                        id="status_aplikasi"
+                        value="<?=$status_aplikasi?>"
+                        placeholder="Nomor Aplikasi"
+                        readonly
+                      />
+                      <input
+                        type="hidden"
+                        class="form-control"
+                        name="curef"
+                        id="curef"
+                        value="<?=$curef?>"
+                        placeholder="Nomor Aplikasi"
+                        readonly
+                      />
+                    </div>
+                    <div class="col-sm-9">
+                      <input
+                        id="app_no_de"
+                        name="app_no_de"
+                        type="hidden"
+                        class="form-control"
+                        placeholder="app_no_ide"
+                        value="<?=$app_no_de?>"
+                        readonly
+                      />
+                    </div>
+                    <div class="col-sm-9">
+                      <!-- <input type="hidden" id="WADUH" name="WADUH" value="<?=$this->session->userdata('GROUP_NAME');?>" class="form-control" > -->
+                      <input type="hidden" id="id" name="id" value="" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Program</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" value="{{ daWa1.program_pembiayaan }}" placeholder="Program" readonly />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Track / Aktifitas</label>
+                    <div class="col-sm-8">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="status_aplikasi_desc"
+                        id="status_aplikasi_desc"
+                        value="{{ daWa1.status_aplikasi }}"
+                        placeholder="Program"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Nama Nasabah</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" value="{{ daWa1.nama }}" placeholder="Nama Nasabah" readonly />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Product</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" value="{{ daWa1.produk_pembiayaan }}" placeholder="Product" readonly />
+                      <input type="hidden" id="kategoriUntukUpload" value="<?=$kategori_pekerjaan?>" />
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label id="changeLabelUpload" class="col-sm-4 col-form-label">Upload</label>
+                    <div class="col-sm-8">
+                      <div id="hideFileUploadJikaViewShow" class="input-group">
+                        <div class="custom-file">
+                          <input
+                            type="file"
+                            class="custom-file-input"
+                            type="file"
+                            id="fileUpload"
+                            name="uploadFile"
+                            accept="image/jpeg, image/jpg, image/png, application/pdf"
+                          />
+                          <label id="labelUntukUpload" class="custom-file-label">Pilih File Untuk Upload</label>
+                        </div>
+                        <button class="btn btn-outline-dark" type="button" id="cobaButton" name="cobaButton" onclick="thisFileUpload()">
+                          Upload Document
+                        </button>
+                        <input type="hidden" class="form-control" id="untukupload" name="untukupload" placeholder="" />
+                      </div>
+                      <input type="text" id="uploadUntukMemo" name="uploadUntukMemo" class="form-control" hidden />
+                      <button
+                        style="display: none"
+                        type="button"
+                        class="btn mb-1 btn-rounded btn-secondary"
+                        id="testButton"
+                        onclick="getArchiveAjax();"
+                      >
+                        <span class="btn-icon-left"><i class="fa fa-download color-warning"></i> </span>View
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Isi Memo</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" rows="6" id="keterangan" name="keterangan"></textarea>
+                </div>
+              </div>
+              <div class="text-center">
+                <!-- <button type="submit" class="fa fa-floppy-o btn btn-secondary">Simpan Memo</button> -->
+                <button
+                  onclick="return validateMemo()"
+                  type="submit"
+                  id="update_memo"
+                  name="update_memo"
+                  value="update_memo"
+                  class="btn mb-1 btn-dark"
+                >
+                  Simpan Memo<span class="btn-icon-right"><i class="fa fa-floppy-o"></i></span>
+                </button>
+                <button type="button" id="cetakYuk" class="btn mb-1 btn-secondary">
+                  Cetak Memo<span class="btn-icon-right"><i class="fa fa-print"></i></span>
+                </button>
+                <button
+                  type="submit"
+                  id="simpan_memo"
+                  name="simpan_memo"
+                  value="simpan_memo"
+                  class="btn mb-1 btn-warning"
+                  style="display: none"
+                >
+                  Update Status Memo<span class="btn-icon-right"><i class="fa fa-check"></i></span>
+                </button>
+
+                <!--  and  $this->session->userdata('cekstrukturpembayaran')=='1'){?> -->
+                <button type="submit" id="kembalide" name="kembalide" value="kembalide" class="btn mb-1 btn-danger">
+                  Kembali Ke De<span class="btn-icon-right"><i class="fa fa-chevron-circle-left"></i></span>
+                </button>
+                <button
+                  onclick="return validateMemo()"
+                  style="display: none"
+                  type="submit"
+                  id="selanjutnyauntukbm"
+                  name="selanjutnyauntukbm"
+                  value="selanjutnyauntukbm"
+                  class="btn mb-1 btn-warning"
+                >
+                  Update Status<span class="btn-icon-right"><i class="fa fa-check"></i></span>
+                </button>
+
+                <!-- <button class="btn mb-1 btn-warning" id="btn_bm_selesai" name="btn_bm_selesai" value="btn_bm_selesai">Update Status<span>&nbsp;<i class="fa fa-check"></i></span></button>  -->
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="card">
+          <h4 class="card card-body gradient-9" style="text-align: center">Informasi Memo</h4>
+          <div class="card-body">
+            <div class="row">
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead style="background-color: grey">
+                    <tr>
+                      <th scope="col" style="text-align: center; color: #fff">
+                        <span>No</span>
+                      </th>
+                      <th scope="col" style="text-align: center; color: #fff">
+                        <span>Nomor Aplikasi</span>
+                      </th>
+                      <th scope="col" style="text-align: center; color: #fff">
+                        <span>Nama Pemohon</span>
+                      </th>
+                      <th scope="col" style="text-align: center; color: #fff">
+                        <span>Program</span>
+                      </th>
+                      <th scope="col" style="text-align: center; color: #fff">
+                        <span>Tipe Pekerjaan</span>
+                      </th>
+                      <th scope="col" style="text-align: center; color: #fff">
+                        <span>Verification</span>
+                      </th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <form action=""></form>
+                  <tbody>
+                    <tr *ngFor="let daWa of daWa">
+                      <!-- <td style="text-align: center" scope="col">{{ i + 1 }}</td> -->
+                      <!-- <td style="text-align: center;" scope="col">{{ daWa.id }}</td> -->
+                      <td style="text-align: center" scope="col">{{ daWa.keterangan }}</td>
+                      <td style="text-align: center" scope="col">{{ daWa.app_no_de }}</td>
+                      <td style="text-align: center" scope="col">{{ daWa.users }}</td>
+                      <td style="text-align: center" scope="col">{{ daWa.role }}</td>
+                      <td style="text-align: center" scope="col">{{ daWa.id }}</td>
+                      <!-- (change)="getProoduct(daWa.isSelected, daWa.app_no_de)" -->
+                      <!-- <td> <input   (change)="getProoduct($event, daWa.app_no_de ,i+1)"  type="checkbox" > </td> -->
+                      <td class="text-end">
+                        <div class="btn-group">
+                          <!-- <button type="button" (click)="viewdataentry( daWa.app_no_de)"  class="btn btn-outline-info"> -->
+                          <!-- <fa-icon icon="eye"></fa-icon>
+                                      <span class="d-none d-md-inline">Detail</span>
+                                    </button> -->
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- <buttom type="submit" class="fa fa-arrow-circle-right btn btn-dark" style="float: right;">Next Proces</buttom> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- #/ container -->
+    </div>
+    <!--**********************************
+        Content body end
+    ***********************************-->
+
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/common/common.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/custom.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/settings.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/gleek.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/styleSwitcher.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/tables/js/jquery.dataTables.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+    <!-- untuk validasi memo -->
+
+    <!-- untuk validasi memo -->
+
+    <!-- unyuk menampilkan datatable memo -->
+    <script>
+      var a = app_no_de.value;
+      // alert(a)
+      // alert(iniCuref)
+      //http://10.20.34.110:8805/api/v1/efos-ide/list_app_de
+      fetch(`http://10.20.34.110:8805/api/v1/efos-de/getMemoByDe?sd=` + a)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(data => {
+          var temp = '';
+          data.result.forEach((itemData, $i) => {
+            if (itemData.keterangan != null) {
+              $('#simpan_memo').show();
+            }
+            if (itemData.role == 'BRANCHMANAGER') {
+              $('#selanjutnyauntukbm').show();
+            }
+            temp += '<tr>';
+            temp += '<td style="text-align: center;">' + ($i + 1) + '</td>';
+            temp += '<td style="text-align: center;">' + itemData.created_date + '</td>';
+            temp += '<td style="text-align: center;" id="keteranganTable' + $i + '">' + itemData.keterangan + '</td>';
+            temp += '<td style="text-align: center;">' + itemData.users + '</td>';
+            temp += '<td style="text-align: center;">' + itemData.role + '</td>';
+            // temp +=  "<td style=\"text-align: center;\" id=\"iniPunyaBmdanAo\" hidden>" + sayaBmDanAo + "</td>";
+            temp +=
+              '<td id="hilangLu" style="text-align: center;"><a href="<?php echo base_url().\'data_entry/detailMemo/' +
+              a +
+              '/' +
+              itemData.id +
+              '\'?>"><i class="fa fa-ellipsis-h fa-2x" data-toggle="tooltip" data-placement="top" title="Detail"></i></a></td></tr>';
+          });
+          document.getElementById('data1').innerHTML = temp;
+        })
+        .catch(err => {
+          console.log(`Error fetching: ${err}`);
+        });
+
+      /////////////////////////buat upload de////////////////////////////////
+      // fetch(`http://10.20.34.110:8805/api/v1/efos-de/getMemoUploadByCuref?sc=`+a+`ss=`+iniCuref)
+      // var url = "http://10.20.34.110:8805/api/v1/efos-de/getMemoUploadByCuref?sc=curef_20220810_262&ss=de220820001017";
+
+      window.addEventListener('load', function () {
+        var iniAppNoDe = document.getElementById('app_no_de').value;
+        var iniCuref = document.getElementById('curef').value;
+        // alert(iniAppNoDe)
+        // alert(iniCuref)
+        var url = 'http://10.20.34.110:8805/api/v1/efos-de/getMemoUploadByCuref?sc=' + iniCuref + '&ss=' + iniAppNoDe + '';
+        // var url = "http://10.20.34.110:8805/api/v1/efos-de/getMemoUploadByCuref?sc=curef_20220810_262&ss=de220820001017";
+        var xhr;
+        // alert(url)
+        if (window.XMLHttpRequest) {
+          xhr = new XMLHttpRequest();
+        } else {
+          xhr = new ActiveXObject('Microsoft.XMLHTTP');
+        }
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            var res = JSON.parse(xhr.responseText),
+              data = res.result;
+            aData = document.getElementById('uploadUntukMemo');
+            aData.value = '';
+            aData.value = data.nama_dokumen;
+            hideJikaGaAda = aData.value;
+            // alert(hideJikaGaAda)
+            if (hideJikaGaAda != '') {
+              $('#testButton').show();
+              $('#hideFileUploadJikaViewShow').hide();
+              document.getElementById('changeLabelUpload').innerHTML = 'Sudah Di Upload';
+            }
+          }
+        };
+        xhr.open('GET', url, true);
+        xhr.send();
+      });
+      // document.getElementById('statusUploadMemo').innerHTML = temp;
+    </script>
+    <!-- penutup untuk menampilkan datatable memo -->
+
+    <!-- untuk buttun cetak memo -->
+    <script>
+      document.getElementById('cetakYuk').addEventListener('click', function printData() {
+        var divToPrint = document.getElementById('example');
+        newWin = window.open('');
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+      });
+    </script>
+  </body>
+</html>

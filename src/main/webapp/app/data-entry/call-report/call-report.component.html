@@ -1,0 +1,790 @@
+<div class="content-body">
+  <div class="container-fluid">
+    <form
+      id="data_entry_form"
+      method="post"
+      action="<?php echo base_url();?>data_entry/createcallreport"
+      onsubmit="return validateFormCallReport()"
+      required
+    >
+      <div class="card">
+        <h4 class="card card-body gradient-9" style="text-align: center">Call Report</h4>
+        <div class="card-body">
+          <div class="row">
+            <tr *ngFor="let daWa of daWa"></tr>
+            <tr *ngFor="let daWa1 of daWa1"></tr>
+            <div class="col">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nomor Aplikasi<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    id="app_no_de"
+                    name="app_no_de"
+                    type="text"
+                    class="form-control"
+                    placeholder="app_no_de"
+                    value="{{ daWa.app_no_de }}"
+                    readonly
+                  />
+                </div>
+                <div class="col-sm-8">
+                  <input
+                    id="app_no_ide"
+                    name="app_no_ide"
+                    type="hidden"
+                    class="form-control"
+                    placeholder="app_no_ide"
+                    value="<?=@$app_no_ide?>"
+                    readonly
+                  />
+                </div>
+                <div class="col-sm-8">
+                  <input type="hidden" id="curef_id" name="curef_id" value="<?=@$curef?>" class="form-control" />
+                </div>
+                <div class="col-sm-8">
+                  <input type="hidden" id="WADUH" name="WADUH" value="<?=$this->session->userdata('GROUP_NAME');?>" class="form-control" />
+                  <input type="hidden" id="id" name="id_customer" value="<?=@$id?>" class="form-control" />
+                  <input type="hidden" id="id" name="id" value="<?=@$id_customer?>" class="form-control" />
+                </div>
+
+                <div class="col-sm-8">
+                  <input
+                    type="hidden"
+                    id="kategori_pekerjaan"
+                    name="kategori_pekerjaan"
+                    value="<?=@$kategori_pekerjaan?>"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nama Nasabah<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nama Nasabah"
+                    name="nama"
+                    id="nama"
+                    value="{{ daWa1.nama }}"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Fasilitas<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Fasilitas"
+                    id="fasilitas"
+                    name="fasilitas"
+                    value="{{ daWa1.kode_fasilitas_name }}"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tenor Pengajuan<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Tenor Pengajuan"
+                    id="tenor"
+                    name="tenor"
+                    value="{{ daWa1.jangka_waktu }}"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Platform Pengajuan<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Platform Pengajuan"
+                    id="platform"
+                    name="platform"
+                    value="{{ daWa1.nilai_pembiayaan }}"
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Cabang<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nama AO"
+                    id="cabang"
+                    name="cabang"
+                    value="{{ daWa.cabang }}"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nama AO<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nama AO"
+                    id="nama_ao"
+                    name="nama_ao"
+                    value="{{ daWa.nama_ao }}"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Kategori Nasabah<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Tipe Nasabah"
+                    id="tipe_nasabah"
+                    name="tipe_nasabah"
+                    value="{{ daWa1.kategori_pekerjaan }}"
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profil Nasabah -->
+          <h4 class="card-body gradient-9" style="text-align: center">Profil Nasabah</h4>
+          <div class="row">
+            <div class="col">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Alamat Tinggal<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <textarea class="form-control h-150px" rows="6" id="alamat_ktp" name="alamat_ktp">{{ daWa.alamat_tinggal }}</textarea>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input class="form-control" type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ daWa.tanggal_lahir }}" />
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Status Perkawinan</label>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <select class="form-control" id="status_perkawinan" name="status_perkawinan" value="{{ daWa.status_perkawinan }}">
+                      <option value="{{ daWa.status_kawin }}">{{ daWa.status_kawin }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Pendidikan<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <select class="form-control" id="pendidikan" name="pendidikan">
+                      <option value="{{ daWa.pendidikan }}">{{ daWa.pendidikan }}</option>
+                      <option>SMA</option>
+                      <option>D3</option>
+                      <option>S1</option>
+                      <option>S2</option>
+                      <option>S3</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row" id="tipe_kendaraan">
+                <label class="col-sm-4 col-form-label">Tipe Kendaraan<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <select class="form-control" id="tipe_kendaraan1" name="tipe_kendaraan1">
+                      <option value="{{ daWa.kendaraan }}">{{ daWa.kendaraan }}</option>
+                      <option value="Mobil">Mobil</option>
+                      <option value="Motor">Motor</option>
+                      <option value="Motor dan Mobil">Motor dan Mobil</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Angunan -->
+          <h4 class="card-body gradient-9" style="text-align: center">Agunan</h4>
+          <div class="row">
+            <div class="col">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Status Kepemilikan Agunan</label>
+                <div class="form-group col-md-4">
+                  <select class="form-control" id="status_agunan" name="status_agunan">
+                    <option value="{{ daWa.status_agunan }}">{{ daWa.status_agunan }}</option>
+                    <option value="Penjual">Penjual</option>
+                    <option value="Milik Orang Tua">Milik Orang Tua</option>
+                    <option value="Milik Sndiri">Milik Sndiri</option>
+                    <option value="Lainnya">Lainnya</option>
+                  </select>
+                </div>
+                <div id="catatanLainnyaAnggunan" name="catatan_status_agunan" class="form-group col-md-4" style="display: none">
+                  <input
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title="{{ daWa.catatan_status_agunan }}"
+                    type="text"
+                    id="catatan_status_agunan"
+                    name="catatan_status_agunan"
+                    value="{{ daWa.catatan_status_agunan }}"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Dokumen Kepemilikan</label>
+                <div class="form-group col-md-4">
+                  <select class="form-control" id="dokumen_kepemilikan" name="dokumen_kepemilikan">
+                    <option value="{{ daWa.dokumen_agunan }}">{{ daWa.dokumen_agunan }}</option>
+                    <option value="SHM">SHM</option>
+                    <option value="SHGB">SHGB</option>
+                    <option value="PPJB">PPJB</option>
+                    <option value="Lainnya">Lainnya</option>
+                  </select>
+                </div>
+                <div id="catatanLainnyaDokumen" name="catatan_dokumen_agunan" class="form-group col-md-4" style="display: none">
+                  <input
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title="{{ daWa.catatan_dokumen_agunan }}"
+                    type="text"
+                    id="catatan_dokumen_agunan"
+                    name="catatan_dokumen_agunan"
+                    value="{{ daWa.catatan_dokumen_agunan }}"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Posisi Dokumen</label>
+                <div class="form-group col-md-4">
+                  <select class="form-control" id="posisi_dokumen" name="posisi_dokumen">
+                    <option value="{{ daWa.posisi_dokumen }}">{{ daWa.posisi_dokumen }}</option>
+                    <option value="On Hand">On Hand</option>
+                    <option value="Di Bank Lain">Di Bank Lain</option>
+                    <option value="Lainnya">Lainnya</option>
+                  </select>
+                </div>
+                <div id="catatanLainnyaPosisi_dokumen" name="catatan_posisi_dokumen" class="form-group col-md-4" style="display: none">
+                  <input
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title="{{ daWa.catatan_posisi_dokumen }}"
+                    type="text"
+                    id="catatan_posisi_dokumen"
+                    name="catatan_posisi_dokumen"
+                    value="{{ daWa.catatan_posisi_dokumen }}"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- untuk Pekerjaan nasabah -->
+          <h4 class="card-body gradient-9" style="text-align: center">Pekerjaan Nasabah</h4>
+          <div class="row">
+            <div class="col">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tipe Pekerjaan</label>
+                <div class="form-group col-sm-8">
+                  <select class="form-control" id="tipe_pekerjaan" name="tipe_pekerjaan">
+                    <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
+                    <option value="Karyawan">Karyawan</option>
+                    <option value="Wiraswasta">Wiraswasta</option>
+                    <option value="Profesional">Profesional</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Status Pekerjaan</label>
+                <div class="form-group col-sm-8">
+                  <select class="form-control" id="status_pekerjaan" name="status_pekerjaan">
+                    <option value="{{ daWa.status_agunan }}">{{ daWa.status_agunan }}</option>
+                    <option value="Tetap">Tetap</option>
+                    <option value="Kontrak">Kontrak</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Lama Bekerja<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <div class="form-row">
+                    <div class="col">
+                      <select class="form-control" id="lama_bekerja" name="lama_bekerja">
+                        <option value="{{ daWa.lama_bekerja_tahun }}">{{ daWa.lama_bekerja_tahun }}</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder="Tahun"
+                        id="lama_bekerja_bulan"
+                        name="lama_bekerja_bulan"
+                        maxlength="2"
+                        value="{{ daWa.lama_bekerja_bulan }}"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Jabatan Terakhir<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    id="jabatan_terakhir"
+                    name="jabatan_terakhir"
+                    value="{{ daWa.jabatan_terakhir }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nama Perusahaan<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    id="nama_perusahan"
+                    name="nama_perusahan"
+                    value="{{ daWa.nama_perusahaan }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Bidang Usaha<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    id="bidang_usaha"
+                    name="bidang_usaha"
+                    value="{{ daWa.bidang_usaha }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Skala Perorangan<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <select class="form-control" id="skala_perusahaan" name="skala_perusahaan">
+                    <option value="">{{ daWa.skala_perusahaan }}</option>
+                  </select>
+                  <!-- <input type="text" class="form-control" placeholder="" id="skala_perusahaan" name="skala_perusahaan" value="<?=@$skala_perusahaan?>"> -->
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tahun Berdiri<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    minlength="4"
+                    maxlength="4"
+                    placeholder=""
+                    id="tahun_berdiri_perusahaan"
+                    name="tahun_berdiri_perusahaan"
+                    value="{{ daWa.tahun_berdiri_perusahaan }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Alamat<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan" name="alamat_perusahaan">{{
+                    daWa.alamat_perusahaan
+                  }}</textarea>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    maxlength="10000"
+                    placeholder=""
+                    id="jumlah_karyawan"
+                    name="jumlah_karyawan"
+                    value="{{ daWa.jumlah_karyawan }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Kondisi Pandemik</label>
+                <div class="form-group col-sm-8">
+                  <select class="form-control" id="kondisi_pandemik" name="kondisi_pandemik">
+                    <option value="{{ daWa.kondisi_pandemi }}">{{ daWa.kondisi_pandemi }}</option>
+                    <option value="Cukup Berdampak">Cukup Berdampak</option>
+                    <option value="Tidak Berdampak">Tidak Berdampak</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">No Kontak HR<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
+                    class="form-control"
+                    maxlength="12"
+                    placeholder=""
+                    id="no_kontak_hr"
+                    name="no_kontak_hr"
+                    value="{{ daWa.no_kontak_hr }}"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- untuk Perkerjaan Pasangan -->
+          <div id="pekerjaanPasanganCallReport">
+            <h4 class="card-body gradient-9" style="text-align: center">Pekerjaan Pasangan</h4>
+            <div class="row">
+              <div class="col">
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Tipe Pekerjaan</label>
+                  <div class="form-group col-sm-8">
+                    <select class="form-control" id="tipe_pekerjaan_pasanga" name="tipe_pekerjaan_pasangan">
+                      <option value="{{ daWa.tipe_pekerjaan_pasangan }}">{{ daWa.tipe_pekerjaan_pasangan }}</option>
+                      <option value="Karyawan">Karyawan</option>
+                      <option value="Wiraswasta">Wiraswasta</option>
+                      <option value="Profesional">Profesional</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Status Pekerjaan</label>
+                  <div class="form-group col-sm-8">
+                    <select class="form-control" id="status_pekerjaan_pasangan" name="status_pekerjaan_pasangan">
+                      <option value="{{ daWa.tipe_pekerjaan_pasangan }}">{{ daWa.tipe_pekerjaan_pasangan }}</option>
+                      <option value="Tetap">Tetap</option>
+                      <option value="Kontrak">Kontrak</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Lama Bekerja<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <div class="form-row">
+                      <div class="col">
+                        <select class="form-control" id="lama_bekerja_bulan_pasangan" name="lama_bekerja_bulan_pasangan">
+                          <option value="{{ daWa.lama_bekerja_bulan_pasangan }}">{{ daWa.lama_bekerja_bulan_pasangan }}</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                        </select>
+                      </div>
+                      <div class="col">
+                        <input
+                          type="tel"
+                          onkeypress="return onlyNumberKey(event)"
+                          class="form-control"
+                          placeholder="Tahun"
+                          id="lama_bekerja_tahun_pasangan"
+                          name="lama_bekerja_tahun_pasangan"
+                          maxlength="2"
+                          value="<?=@$lama_bekerja_tahun_pasangan?>"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Jabatan Terakhir<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder=""
+                      id="jabatan_terakhir_pasangan"
+                      name="jabatan_terakhir_pasangan"
+                      value="{{ daWa.jabatan_terakhir_pasangan }}"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Nama Perusahaan<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder=""
+                      id="nama_perusahaan_pasangan"
+                      name="nama_perusahaan_pasangan"
+                      value="{{ daWa.nama_perusahaan_pasangan }}"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Bidang Usaha<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder=""
+                      id="bidang_usaha_pasangan"
+                      name="bidang_usaha_pasangan"
+                      value="{{ daWa.bidang_usaha_pasangan }}"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Skala Perorangan<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder=""
+                      id="skala_perusahaan_pasangan"
+                      name="skala_perusahaan_pasangan"
+                      value="{{ daWa.skala_perusahaan_pasangan }}"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Tahun Berdiri<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      class="form-control"
+                      minlength="4"
+                      maxlength="4"
+                      id="tahun_berdiri_perusahaan_pasangan"
+                      name="tahun_berdiri_perusahaan_pasangan"
+                      value="{{ daWa.tahun_berdiri_perusahaan_pasangan }}"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Alamat<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan_pasangan" name="alamat_perusahaan_pasangan">{{
+                      daWa.alamat_perusahaan_pasangan
+                    }}</textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      class="form-control"
+                      maxlength="10000"
+                      placeholder=""
+                      id="jumlah_karyawan_perusahaan_pasangan"
+                      name="jumlah_karyawan_perusahaan_pasangan"
+                      value="{{ daWa.jumlah_karyawan_perusahaan_pasangan }}"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Kondisi Pandemik</label>
+                  <div class="form-group col-sm-8">
+                    <select class="form-control" id="kondisi_pandemi_perusahaan_pasangan" name="kondisi_pandemi_perusahaan_pasangan">
+                      <option value="{{ daWa.kondisi_pandemi_perusahaan_pasangan }}">{{ daWa.kondisi_pandemi_perusahaan_pasangan }}</option>
+                      <option value="Cukup Berdampak">Cukup Berdampak</option>
+                      <option value="Tidak Berdampak">Tidak Berdampak</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">No Kontak HR<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
+                      class="form-control"
+                      maxlength="12"
+                      placeholder=""
+                      id="no_kontak_hr_pasangan"
+                      name="no_kontak_hr_pasangan"
+                      value="{{ daWa.no_kontak_hr_pasangan }}"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pendapatan dan Kewajiban -->
+          <h4 class="card-body gradient-9" style="text-align: center">Pendapatan dan Kewajiban</h4>
+          <div class="row">
+            <div class="col">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Take Home Pay<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    placeholder=""
+                    id="takeHomepay"
+                    name="takeHomepay"
+                    value="{{ daWa.take_home_pay }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Estimasi Angsuran Saat Ini<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    placeholder=""
+                    id="estimasi_angsuran"
+                    name="estimasi_angsuran"
+                    value="{{ daWa.estimasi_angsuran }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tercermin di Rekening<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <select class="form-control" id="tercermin_rekening" name="tercermin_rekening">
+                      <option value="{{ daWa.validasi_rekening }}">{{ daWa.validasi_rekening }}</option>
+                      <option value="Ya">Ya</option>
+                      <option value="Tidak">Tidak</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Keterangan<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <textarea name="keterangan" id="keterangan" cols="100" rows="6">{{ daWa.keterangan }}</textarea>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label"></label>
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <!-- <input type="checkbox" name="cek" id="cek" checked>  -->
+                    <p id="denganini"></p>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tanggal wawancara</label>
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <input
+                      class="form-control"
+                      type="date"
+                      id="tanggal_wawancara"
+                      name="tanggal_wawancara"
+                      value="{{ daWa.tanggal_wawancara }}"
+                      onchange="tanggalWawancara()"
+                    />
+                    <input class="form-control" id="hariWawancara" hidden />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nomor wawancara</label>
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="no_wawancara"
+                      name="no_wawancara"
+                      readonly
+                      value="{{ daWa.no_wawancara }}"
+                    />
+                  </div>
+                </div>
+              </div>
+              <button
+                (click)="goto()"
+                type="submit"
+                id="selanjutnya"
+                name="selanjutnya"
+                value="selanjutnya"
+                class="btn mb-1 btn-warning"
+                style="float: right"
+              >
+                Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
+              </button>
+              <button
+                type="submit"
+                id="buttonsimpan"
+                name="buttonsimpan"
+                value="buttonsimpan"
+                class="btn mb-1 btn-dark"
+                style="float: right"
+                hidden
+              >
+                Simpan Data<span class="btn-icon-right"><i class="fa fa-floppy-o"></i></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- #/ container -->
+</div>
+<!--**********************************
+          Content body end
+      ***********************************-->
+
+<!--**********************************
+      Scripts
+  ***********************************-->

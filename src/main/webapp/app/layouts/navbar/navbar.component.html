@@ -157,7 +157,7 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <!-- <a
+          <a
             class="nav-link dropdown-toggle"
             [routerLink]="'login'"
             ngbDropdownToggle
@@ -172,7 +172,7 @@
             <span *ngIf="account?.imageUrl">
               <img [src]="account!.imageUrl" class="profile-image rounded-circle" alt="Avatar" />
             </span>
-          </a> -->
+          </a>
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
             <li *ngSwitchCase="true">
               <a

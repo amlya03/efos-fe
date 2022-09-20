@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 // import { DataTableDirective } from 'angular-datatables';
 // import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -16,10 +18,10 @@ declare let $: any;
   templateUrl: './daftar-aplikasi-waiting-assigment.component.html',
   styleUrls: ['./daftar-aplikasi-waiting-assigment.component.scss'],
 })
-export class DaftarAplikasiWaitingAssigmentComponent implements OnInit {
+export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestroy {
   title = 'EFOS';
   numbers: Array<number> = [];
-  daWa?: daWaModel[];
+  daWa?: daWaModel[] = [];
   // modelDawa: daWaModel = new daWaModel();
   daWaAprisal?: daWaModelAprisal[];
   onResponseSuccess: any;
@@ -29,10 +31,10 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit {
   kirimStatusAplikasi: Array<number> = [];
   kirimAssign: any;
 
-  // @ViewChild(DataTableDirective, { static: false })
-  // dtElement!: DataTableDirective;
-  // dtTrigger: Subject<daWaModel> = new Subject<daWaModel>();
-  // dtOptions: DataTables.Settings = {};
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
 
   constructor(
     protected daWaService: ServiceVerificationService,
@@ -43,12 +45,12 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.dtOptions = {
-    //   pagingType: 'full_numbers',
-    //   pageLength: 2,
-    //   processing: true,
-    //   responsive: true
-    // }
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      processing: true,
+      responsive: true,
+    };
     this.load();
   }
   load(): void {
@@ -70,7 +72,8 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit {
     this.daWaService.getDaWa().subscribe(data => {
       console.warn(data);
       if (data.code === 200) {
-        this.daWa = data.result;
+        this.daWa = (data as any).result;
+        this.dtTrigger.next(data.result);
       }
     });
     // ////////Aprisal/////
@@ -83,10 +86,10 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit {
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
   }
 
-  // ngOnDestroy(): void {
-  //   this.dtTrigger.unsubscribe();
-  //   // alert('knfsdkds');
-  // }
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+    // alert('knfsdkds');
+  }
 
   cariButton(listFasilitas: string, listKategori: string, inputNamaNasabah: string, inputNoAplikasi: string): void {
     $('#dataTables-example').DataTable().columns(1).search(inputNoAplikasi).draw();
@@ -123,7 +126,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit {
       // alert(this.kirimStatusAplikasi[i])
       // alert(this.kirimAssign)
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/verif_assignment', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/verif_assignment', {
           analis_verifikasi: this.kirimAssign,
           app_no_de: this.kirimDe[i],
           status_aplikasi: this.kirimStatusAplikasi[i],
@@ -131,6 +134,22 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit {
         })
         .subscribe({});
     }
+
+    this.dtElement.dtInstance.then((dtIntance: DataTables.Api) => {
+      dtIntance.destroy();
+      this.dtOptions = {
+        pagingType: 'full_numbers',
+        pageLength: 10,
+        processing: true,
+        responsive: true,
+      };
+      this.dtTrigger.next(this.daWa);
+    });
+  }
+
+  viewdataentry(getAppNoDe: any): void {
+    alert(getAppNoDe);
+    this.router.navigate(['/data-entry'], { queryParams: { datakiriman: getAppNoDe } });
   }
   // /////////////////////////Untuk Alert/////////////////////////////////////
 
