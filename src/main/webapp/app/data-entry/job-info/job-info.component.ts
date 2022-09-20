@@ -63,7 +63,7 @@ export class JobInfoComponent implements OnInit {
         this.daWa = res.body?.result;
 
         // this.tampunganid = this.daWa[0].id;
-        alert(this.tampunganid);
+        // alert(this.tampunganid);
         console.warn('t1312abel', this.tampunganid);
         console.warn('tabe123l', this.tampunganid);
       },
@@ -75,7 +75,7 @@ export class JobInfoComponent implements OnInit {
         console.warn('sebelum', res.body?.result);
         this.nampungsebelum = res.body?.result;
         this.tampunganid = this.nampungsebelum[0];
-        alert('ini masih hard code');
+        // alert('ini masih hard code');
         console.warn('SEBELUMNYA', this.tampunganid);
 
         // this.onResponseSuccess(res);
@@ -96,7 +96,7 @@ export class JobInfoComponent implements OnInit {
         console.warn('sebelum', res.body?.result);
         this.nampungsebelum = res.body?.result;
 
-        alert('ini masih hard code');
+        // alert('ini masih hard code');
         console.warn('SEBELUMNYA', this.nampungsebelum);
 
         // this.onResponseSuccess(res);
@@ -127,11 +127,11 @@ export class JobInfoComponent implements OnInit {
           datakirimancuref: contohtampungancuref,
         },
       });
-      alert(' ini NIKAH');
+      // alert(' ini NIKAH');
       console.warn(this.datakiriman);
     } else {
-      alert('ini jomblo');
-      alert(contohtampungancuref);
+      // alert('ini jomblo');
+      // alert(contohtampungancuref);
       this.router.navigate(['/collateral'], {
         queryParams: {
           datakirimanappde: this.datakirimanappde,
