@@ -1,571 +1,163 @@
-<html>
-  <body>
-    <!--*******************
-        Preloader start
-    ********************-->
-    <!-- <div id="preloader">
-        <div class="loader">
-            <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
-            </svg>
-        </div>
-    </div> -->
-    <!--*******************
-        Preloader end
-    ********************-->
-    <!--**********************************
-            Content body start
-        ***********************************-->
-    <div class="content-body">
-      <div class="container-fluid">
-        <form
-          id="data_entry_form"
-          method="post"
-          action="<?php echo base_url();?>data_entry/postcreateemergenc"
-          onsubmit="return validateFormEmergency()"
-          required
-        >
-          <div class="card">
-            <h4 class="card card-body gradient-9" style="text-align: center">Emergency Contact</h4>
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <div class="form-group row">
-                    <tr *ngFor="let daWa of daWa"></tr>
-                    <label class="col-sm-4 col-form-label">Nama<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" placeholder="Nama" name="nama" id="nama" value="{{ daWa.nama }}" />
-                    </div>
-                    <div class="col-sm-9">
-                      <input
-                        type="hidden"
-                        id="WADUH"
-                        name="WADUH"
-                        value="<?=$this->session->userdata('GROUP_NAME');?>"
-                        class="form-control"
-                      />
-                      <input
-                        id="app_no_de"
-                        name="app_no_de"
-                        type="hidden"
-                        class="form-control"
-                        placeholder="app_no_de"
-                        value="<?=$app_no_de?>"
-                        readonly
-                      />
-                      <input type="hidden" id="curef_id" name="curef_id" value="<?=$curef?>" class="form-control" />
-                    </div>
-                    <div class="col-sm-9"></div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Alamat<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <textarea class="form-control h-150px" rows="6" name="alamat" id="alamat">{{ daWa.alamat }}</textarea>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select class="form-control" id="provinsi_cabang" name="provinsi">
-                          <option>{{ daWa.provinsi }}</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select class="form-control" id="kabkota_cabang" name="kabkota">
-                          <option>{{ daWa.kabkota }}</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select class="form-control" id="kecamatan" name="kecamatan">
-                          <option>{{ daWa.kecamatan }}</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select class="form-control" id="kelurahan" name="kelurahan">
-                          <option>{{ daWa.kelurahan }}</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Kode Pos<span class="text-danger">*</span></label>
-                    <div class="input-group col-sm-8">
-                      <input
-                        type="tel"
-                        onkeypress="return onlyNumberKey(event)"
-                        maxlength="8"
-                        class="form-control"
-                        name="kode_pos"
-                        id="kode_pos"
-                        value="{{ daWa.kode_pos }}"
-                      />
-                      <div class="input-group-append">
-                        <button class="btn btn-outline-dark" id="kode_poshilang" onclick="buatisi()" type="button">Cari Data</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-row">
-                        <div class="col">
-                          <input
-                            type="tel"
-                            onkeypress="return onlyNumberKey(event)"
-                            class="form-control"
-                            placeholder="RT"
-                            maxlength="3"
-                            id="rt"
-                            name="rt"
-                            value="{{ daWa.rt }}"
-                          />
-                        </div>
-                        <h2>/</h2>
-                        <div class="col">
-                          <input
-                            type="tel"
-                            onkeypress="return onlyNumberKey(event)"
-                            class="form-control"
-                            placeholder="RW"
-                            maxlength="3"
-                            id="rw"
-                            name="rw"
-                            value="{{ daWa.rw }}"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Nomor Telepon<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input
-                        type="tel"
-                        onkeypress="return onlyNumberKey(event)"
-                        class="form-control"
-                        pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
-                        placeholder="Nomor Telepon"
-                        id="no_telepon"
-                        name="no_telepon"
-                        value="{{ daWa.no_telepon }}"
-                        maxlength="12"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Hubungan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select class="form-control" id="hubungan" name="hubungan">
-                          <option>{{ daWa.hubungan }}</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Email<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input type="email" class="form-control" placeholder="Email" id="email" name="email" value=" {{ daWa.email }}" />
-                    </div>
-                  </div>
-                  <button type="submit" id="btn" name="simpandata" value="simpandata" class="btn btn-dark" style="float: right">
-                    Simpan Data
-                  </button>
-                  <button
-                    type="submit"
-                    (click)="goto(0)"
-                    id="selanjutnya"
-                    name="selanjutnya"
-                    value="selanjutnya"
-                    class="btn btn-warning"
-                    style="float: right"
-                  >
-                    Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
-                  </button>
-                  <!-- <button type="submit" class="btn btn-dark" style="float: right;">Save Data</button> -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Emergency Contact</h3>
+</div>
+<p></p>
+<p></p>
+<div class="row form-material">
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nama<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" placeholder="Nama" name="nama" id="nama" value="{{ daWa.nama }}" />
       </div>
-      <!-- #/ container -->
     </div>
-    <!--**********************************
-            Content body end
-        ***********************************-->
-
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
-
-    <!--**********************************
-        Scripts
-    ***********************************-->
-    <script src="<?php echo base_url();?>/asset/e-fos/plugins/common/common.min.js"></script>
-    <script src="<?php echo base_url();?>/asset/e-fos/js/custom.min.js"></script>
-    <script src="<?php echo base_url();?>/asset/e-fos/js/settings.js"></script>
-    <script src="<?php echo base_url();?>/asset/e-fos/js/gleek.js"></script>
-    <script src="<?php echo base_url();?>/asset/e-fos/js/styleSwitcher.js"></script>
-
-    <script src="<?php echo base_url();?>/asset/e-fos/plugins/tables/js/jquery.dataTables.min.js"></script>
-    <script src="<?php echo base_url();?>/asset/e-fos/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
-    <script src="<?php echo base_url();?>/asset/e-fos/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
-
-    <script>
-      $(document).ready(function () {
-        //  AJAX request
-        $.ajax({
-          url: 'http://10.20.34.183:8080/new-efos/data_entry/getTokenDukcapil',
-          dataType: 'json',
-          type: 'post',
-          data: { ket: 'prov', provid: '0' },
-          success: function (response) {
-            console.log(response);
-            $province = '';
-            $.each(response, function (i, n) {
-              console.log(n['kdWilayah']);
-              province = '<option value="' + n['kdWilayah'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
-              province = province + '';
-              $('#provinsi_cabang').append(province);
-            });
-          },
-        });
-
-        $('#provinsi_cabang').change(function () {
-          var provid = $(this).val().substring(0, 2);
-          $.ajax({
-            url: 'http://10.20.34.183:8080/new-efos/data_entry/getTokenDukcapil',
-            dataType: 'json',
-            type: 'post',
-            data: { ket: 'kabkota', provid: provid },
-            success: function (response) {
-              console.log(response);
-              $kabkota = '';
-              $('#kabkota_cabang').empty();
-              kabkota = '<option value="">Pilih Kota</option>';
-              $('#kabkota_cabang').append(kabkota);
-              $.each(response, function (i, n) {
-                console.log('tes' + n['kdWilayah']);
-                kabkota = '<option value="' + n['kdWilayah'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
-                kabkota = kabkota + '';
-                $('#kabkota_cabang').append(kabkota);
-              });
-            },
-          });
-        });
-
-        $('#kabkota_cabang').change(function () {
-          var kabkotaid = $(this).val().substring(0, 4);
-          $.ajax({
-            url: 'http://10.20.34.183:8080/new-efos/data_entry/getTokenDukcapil',
-            dataType: 'json',
-            type: 'post',
-            data: { ket: 'kecamatan', provid: kabkotaid },
-            success: function (response) {
-              console.log(response);
-              $kecamatan = '';
-              $('#kecamatan').empty();
-              kecamatan = '<option value="">Pilih Kecamatan</option>';
-              $('#kecamatan').append(kecamatan);
-              $.each(response, function (i, n) {
-                console.log(n['kdWilayah']);
-                kecamatan = '<option value="' + n['kdWilayah'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
-                kecamatan = kecamatan + '';
-                $('#kecamatan').append(kecamatan);
-              });
-            },
-          });
-        });
-
-        $('#kecamatan').change(function () {
-          var kecamatanid = $(this).val().substring(0, 6);
-          $.ajax({
-            url: 'http://10.20.34.183:8080/new-efos/data_entry/getTokenDukcapil',
-            dataType: 'json',
-            type: 'post',
-            data: { ket: 'kelurahan', provid: kecamatanid },
-            success: function (response) {
-              console.log(response);
-              $kelurahan = '';
-              $('#kelurahan').empty();
-              kelurahan = '<option value="">Pilih Kelurahan</option>';
-              $('#kelurahan').append(kelurahan);
-              $.each(response, function (i, n) {
-                console.log(n['kdWilayah']);
-                kelurahan = '<option value="' + n['kdPos'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
-                kelurahan = kelurahan + '';
-                $('#kelurahan').append(kelurahan);
-              });
-            },
-          });
-        });
-
-        $('#kelurahan').change(function () {
-          var kelurahanid = $(this).val().substring(0, 5);
-          document.getElementById('kode_pos').value = kelurahanid;
-        });
-      });
-
-      function buatisi() {
-        var x = kode_pos.value;
-        $.ajax({
-          // url: 'http://10.20.34.178:8087/efo/getWilByKdPos/' + x,
-          url: 'http://10.20.34.183:8080/new-efos/data_entry/getTokenDukcapil',
-          dataType: 'json',
-          type: 'post',
-          data: {
-            ket: 'kodpos',
-            provid: x,
-          },
-          success: function (response) {
-            console.log(response);
-            var da = JSON.parse(JSON.stringify(response));
-            //var result_ = JSON.parse(JSON.stringify(da.result))
-            var data_wilayah = JSON.parse(JSON.stringify(da.provKec));
-            var data_list_kelurahan = JSON.parse(JSON.stringify(da.kels));
-            console.log('data:' + data_list_kelurahan[0].kdWilayah);
-            $kelurahan = '';
-            $('#kelurahan').empty();
-            $.each(data_list_kelurahan, function (i, n) {
-              console.log(n['kdPos']);
-              if (n['kdPos'] == x) {
-                console.log(n['namaWilayah']);
-                kelurahan = '<option value="' + n['kdPos'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
-                kelurahan = kelurahan + '';
-                $('#kelurahan').append(kelurahan);
-              }
-            });
-            var namaprov = data_wilayah.nm_prov;
-            var namakota = data_wilayah.nm_kota;
-            var namakecamatan = data_wilayah.nm_kec;
-            var namakelurahan = data_wilayah.nm_kel;
-            var kodeprov = data_wilayah.kd_prov;
-            var kodekota = data_wilayah.kd_kota;
-            var kodekecamatan = data_wilayah.kd_kec;
-            var kodekelurahan = data_wilayah.kd_kel;
-            $('#provinsi_cabang')
-              .attr('selected', 'selected')
-              .val(kodeprov + '|' + namaprov);
-            $('#provinsi_cabang option:first').text(namaprov);
-            $('#kabkota_cabang option:selected').val(kodekota + '|' + namakota);
-            $('#kabkota_cabang option:selected').text(namakota);
-            $('#kecamatan option:selected').val(kodekecamatan + '|' + namakecamatan);
-            $('#kecamatan option:selected').text(namakecamatan);
-            // $('#kelurahan option:first').val(x + '|' + namakelurahan);
-            //$('#kelurahan option:first').text(namakelurahan);
-          },
-        });
-      }
-
-      $(document).ready(function () {
-        //  AJAX request
-        $.ajax({
-          url: 'http://10.20.34.183:8080/new-efos/data_entry/gethubunganemergency',
-          dataType: 'json',
-          type: 'post',
-          success: function (response) {
-            console.log(response);
-            $province = '';
-            $.each(response, function (i, n) {
-              console.log(n['deskripsi']);
-              province = '<option value="' + n['deskripsi'] + '">' + n['deskripsi'] + '</option>';
-              province = province + '';
-              $('#hubungan').append(province);
-            });
-          },
-        });
-      });
-    </script>
-    <!--//////////////////////////////// validasi //////////////////////////////////-->
-    <script>
-      function validateFormEmergency() {
-        var a = document.forms['data_entry_form']['nama'].value;
-        if (a == null || a == '') {
-          document.getElementById('nama').focus();
-          alert('Nama Lengkap  Harus diisi');
-          return false;
-        }
-        var b = document.forms['data_entry_form']['alamat'].value;
-        if (b == '' || b == null) {
-          document.getElementById('alamat').focus();
-          alert('Alamat Harus diisi');
-          return false;
-        }
-        var c = document.forms['data_entry_form']['provinsi_cabang'].value;
-        if (c == '' || c == null) {
-          document.getElementById('provinsi_cabang').focus();
-          alert('Provinsi Harus diisi');
-          return false;
-        }
-        var d8 = document.forms['data_entry_form']['kabkota_cabang'].value;
-        if (d8 == '' || d8 == null) {
-          document.getElementById('kabkota_cabang').focus();
-          alert('Kota Harus diisi');
-          return false;
-        }
-        var d = document.forms['data_entry_form']['kecamatan'].value;
-        if (d == '' || d == null) {
-          document.getElementById('kecamatan').focus();
-          alert('Kecamatan Harus diisi');
-          return false;
-        }
-        var e = document.forms['data_entry_form']['kelurahan'].value;
-        if (e == '' || e == null) {
-          document.getElementById('kelurahan').focus();
-          alert('Kelurahan Harus diisi');
-          return false;
-        }
-        var f = document.forms['data_entry_form']['kode_pos'].value;
-        if (f == '' || f == null) {
-          document.getElementById('kode_pos').focus();
-          alert('Kode Pos Harus diisi');
-          return false;
-        }
-        var i = document.forms['data_entry_form']['rt'].value;
-        if (i == '' || i == null) {
-          document.getElementById('rt').focus();
-          alert('RT Harus diisi');
-          return false;
-        }
-        var i5 = document.forms['data_entry_form']['rw'].value;
-        if (i5 == '' || i5 == null) {
-          document.getElementById('rw').focus();
-          alert('RW Harus diisi');
-          return false;
-        }
-        var i6 = document.forms['data_entry_form']['no_telepon'].value;
-        if (i6 == '' || i6 == null) {
-          document.getElementById('no_telepon').focus();
-          alert('Nomor Telepon Harus diisi');
-          return false;
-        }
-        var i7 = document.forms['data_entry_form']['hubungan'].value;
-        if (i7 == '' || i7 == null) {
-          document.getElementById('hubungan').focus();
-          alert('Hubungan Harus diisi');
-          return false;
-        }
-        var j = document.forms['data_entry_form']['kode_pos'].value;
-        if (j == '' || j == null) {
-          document.getElementById('kode_pos').focus();
-          alert('Kode Pos Harus diisi');
-          return false;
-        }
-        var g = document.forms['data_entry_form']['email'].value;
-        if (g == '' || g == null) {
-          document.getElementById('email').focus();
-          alert('Email Harus diisi');
-          return false;
-        }
-      }
-    </script>
-    <!--//////////////////////////////// validasi //////////////////////////////////-->
-
-    <!--////////////////////////////// Untuk Nomor /////////////////////////////-->
-    <script>
-      //     $(document).ready(function(){
-      //     // Format nomor HP.
-      //     // no_telepon
-      //   $("#no_telepon").mask('0000âˆ’0000âˆ’0000');
-      // })
-    </script>
-    <!-- buat biar inpunya number -->
-    <script>
-      function onlyNumberKey(evt) {
-        var ASCIICode = evt.which ? evt.which : evt.keyCode;
-        if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) return false;
-        return true;
-      }
-    </script>
-
-    <script>
-      $(document).ready(function () {
-        var grupname = WADUH.value;
-
-        // var grupname=$this->session->userdata('GROUP_NAME');
-        // alert(grupname);
-        if (grupname == 'BRANCHMANAGER') {
-          $('#nama').attr('disabled', 'disabled');
-          $('#alamat').attr('disabled', 'disabled');
-          $('#provinsi_cabang').attr('disabled', 'disabled');
-          $('#kabkota_cabang').attr('disabled', 'disabled');
-          $('#kecamatan').attr('disabled', 'disabled');
-          $('#kelurahan').attr('disabled', 'disabled');
-          $('#kode_pos').attr('disabled', 'disabled');
-          $('#rt').attr('disabled', 'disabled');
-          $('#rw').attr('disabled', 'disabled');
-          $('#no_telepon').attr('disabled', 'disabled');
-          $('#email').attr('disabled', 'disabled');
-          $('#hubungan').attr('disabled', 'disabled');
-          $('#Angsuran').attr('disabled', 'disabled');
-          $('#hasil_pembiayaan').attr('disabled', 'disabled');
-          $('#detail_objek_pembiayaan').attr('disabled', 'disabled');
-          $('#no_siup').attr('disabled', 'disabled');
-          $('#jenis_bidang_perusahaan').attr('disabled', 'disabled');
-          $('#jenis_sektor_perusahaan').attr('disabled', 'disabled');
-          $('#umur1').attr('disabled', 'disabled');
-          $('#umur_pensiun').attr('disabled', 'disabled');
-          $('#lama_bekerja_tahun').attr('disabled', 'disabled');
-          $('#lama_bekerja_bulan').attr('disabled', 'disabled');
-          $('#jumlah_karyawan').attr('disabled', 'disabled');
-          $('#jumlah_karyawan2').attr('disabled', 'disabled');
-          $('#pendapatan').attr('disabled', 'disabled');
-          $('#pendapatan_lain').attr('disabled', 'disabled');
-          $('#tunjangan').attr('disabled', 'disabled');
-          $('#total_pendapatan').attr('disabled', 'disabled');
-          $('#kategori_pekerjaan_sebelum').attr('disabled', 'disabled');
-          $('#tipe_pekerjaan_sebelum').attr('disabled', 'disabled');
-          $('#payroll_sebelum').attr('disabled', 'disabled');
-          $('#payroll_sebeluma').attr('disabled', 'disabled');
-          $('#posisi_sebelum').attr('disabled', 'disabled');
-          $('#nama_perusahaan_sebelum').attr('disabled', 'disabled');
-          $('#alamat_pekerjaan_sebelum').attr('disabled', 'disabled');
-          $('#provinsi_sebelum').attr('disabled', 'disabled');
-          $('#kabkota_sebelum').attr('disabled', 'disabled');
-          $('#kecamatan_sebelum').attr('disabled', 'disabled');
-          $('#kelurahan_sebelum').attr('hidden', 'hidden');
-          $('#kode_pos_sebelum').attr('disabled', 'disabled');
-          $('#rt_sebelum').attr('disabled', 'disabled');
-          $('#rw_sebelum').attr('disabled', 'disabled');
-          $('#no_siup_sebelum').attr('disabled', 'disabled');
-          $('#jenis_bidang_sebelum').attr('disabled', 'disabled');
-          $('#sektor_ekonomi_sebelum').attr('disabled', 'disabled');
-          $('#lama_bekerja_tahun_sebelum').attr('disabled', 'disabled');
-          $('#lama_bekerja_bulan_sebelum').attr('disabled', 'disabled');
-          $('#jumlah_karyawan_sebelum').attr('disabled', 'disabled');
-          $('#simpanData').attr('hidden', 'hidden');
-          $('#btn').attr('hidden', 'hidden');
-          $('#kode_poshilang').attr('hidden', 'hidden');
-          // a = document.getElementById("nama").value;
-          // a.readonly=true;
-          // alert(a);
-        } else {
-          $('#selanjutnya').attr('hidden', 'hidden');
-        }
-      });
-    </script>
-    <!-- buat biar inpunya number -->
-  </body>
-</html>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Alamat<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <textarea class="form-control h-150px" rows="6" name="alamat" id="alamat">{{ daWa.alamat }}</textarea>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="provinsi_cabang" name="provinsi">
+            <option>{{ daWa.provinsi }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="kabkota_cabang" name="kabkota">
+            <option>{{ daWa.kabkota }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="kecamatan" name="kecamatan">
+            <option>{{ daWa.kecamatan }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="kelurahan" name="kelurahan">
+            <option>{{ daWa.kelurahan }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="input-group mb-3">
+          <input
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            maxlength="8"
+            class="form-control"
+            name="kode_pos"
+            id="kode_pos"
+            value="{{ daWa.kode_pos }}"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-outline-dark" id="kode_poshilang" onclick="buatisi()" type="button">Cari Data</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
+      <div class="col">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder="RT"
+          maxlength="3"
+          id="rt"
+          name="rt"
+          value="{{ daWa.rt }}"
+        />
+      </div>
+      <div class="col">RT</div>
+      <div class="col">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder="RW"
+          maxlength="3"
+          id="rw"
+          name="rw"
+          value="{{ daWa.rw }}"
+        />
+      </div>
+      <div class="col">RW</div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nomor Telepon<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
+          placeholder="Nomor Telepon"
+          id="no_telepon"
+          name="no_telepon"
+          value="{{ daWa.no_telepon }}"
+          maxlength="12"
+          required
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Hubungan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="hubungan" name="hubungan">
+            <option>{{ daWa.hubungan }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Email<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input type="email" class="form-control" placeholder="Email" id="email" name="email" value=" {{ daWa.email }}" />
+      </div>
+    </div>
+  </div>
+</div>
+<p></p>
+<p></p>
+<div class="row">
+  <div class="col" style="text-align: center">
+    <button type="submit" id="btn" name="simpandata" value="simpandata" class="btn btn-dark">Simpan Data</button>
+    <button type="submit" (click)="goto(0)" id="selanjutnya" name="selanjutnya" value="selanjutnya" class="btn btn-warning">
+      Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
+    </button>
+  </div>
+</div>

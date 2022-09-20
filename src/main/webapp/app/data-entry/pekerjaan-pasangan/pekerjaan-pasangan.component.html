@@ -31,1539 +31,281 @@
       </div>
     </div>
     <br />
+    <div [ngSwitch]="daWa.tipe_pekerjaan"></div>
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Posisi</label>
+      <div class="col-sm-9">
+        <div class="form-group">
+          <select class="form-control" name="posisi1" id="posisi1">
+            <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Nama Perusahaan</label>
+      <div class="col-sm-9">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Nama Perusahaan"
+          id="nama_perusahaan1"
+          value="{{ daWa.tipe_pekerjaan }}"
+          name="nama_perusahaan1"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Alamat Perusahaan</label>
+      <div class="col-sm-9">
+        <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan1" name="alamat_perusahaan1">
+          {{ daWa.tipe_pekerjaan }}
+        </textarea>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Provinsi</label>
+      <div class="col-sm-9">
+        <div class="form-group">
+          <select class="form-control" id="provinsi_cabang_swasta" name="provinsi1">
+            <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Kota</label>
+      <div class="col-sm-9">
+        <div class="form-group">
+          <select class="form-control" id="kabkota_cabang_swasta" name="kabkota1">
+            <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Kecamatan</label>
+      <div class="col-sm-9">
+        <div class="form-group">
+          <select class="form-control" id="kecamatan_swasta" name="kecamatan1">
+            <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Kelurahan</label>
+      <div class="col-sm-9">
+        <div class="form-group">
+          <select class="form-control" id="kelurahan_swasta" name="kelurahan1">
+            <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Kode Pos</label>
+      <div class="col-sm-9">
+        <div class="input-group mb-3">
+          <input
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            maxlength="8"
+            class="form-control"
+            id="kode_pos_swasta"
+            value="{{ daWa.tipe_pekerjaan }}"
+            name="kode_pos1"
+          />
+          <div class="input-group-append">
+            <button id="btnisi1" onclick="buatisi1()" class="btn btn-outline-dark" type="button">Cari Data</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div [ngSwitch]="daWa.tipe_pekerjaan">
+      <!--//////////// Wiraswasta \\\\\\\\\\\\\\\\\-->
+      <div *ngSwitchCase="'3'">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Nomor SIUP</label>
+          <div class="col-sm-9">
+            <input type="tel" class="form-control" value="{{ daWa.tipe_pekerjaan }}" id="siup2" name="siup2" maxlength="16" />
+          </div>
+        </div>
+      </div>
+      <!--//////////// Wiraswasta \\\\\\\\\\\\\\\\\-->
+
+      <!--//////////// Profesional \\\\\\\\\\\\\\\\\-->
+      <div *ngSwitchCase="'4'">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Nomor SIP</label>
+          <div class="col-sm-9">
+            <input type="tel" class="form-control" value="{{ daWa.tipe_pekerjaan }}" id="siup2" name="siup2" maxlength="16" />
+          </div>
+        </div>
+      </div>
+      <!--//////////// Profesional \\\\\\\\\\\\\\\\\-->
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Jenis Bidang Usaha</label>
+      <div class="col-sm-9">
+        <div class="form-group">
+          <select class="form-control" id="jenis_bidang" name="jenis_bidang">
+            <option value="{{ daWa.jenis_bidang }}"></option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Jenis Sub Bidang Usaha</label>
+      <div class="col-sm-9">
+        <div class="form-group">
+          <select class="form-control" id="sektor_ekonomi" name="sektor_ekonomi">
+            <option value="{{ daWa.sektor_ekonomi }}"></option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+
+    <div [ngSwitch]="daWa.kategori_pekerjaan">
+      <!--//////////// NON FIX INCOME \\\\\\\\\\\\\\\\\-->
       <div *ngSwitchCase="'2'">
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Posisi / Jabatan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" name="posisi1" id="posisi1">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Nama Perusahaan</label>
+          <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
           <div class="col-sm-9">
             <input
-              type="text"
+              type="tel"
               class="form-control"
-              placeholder="Nama Perusahaan"
-              id="nama_perusahaan1"
-              value="{{ daWa.tipe_pekerjaan }}"
-              name="nama_perusahaan1"
+              value="{{ daWa.jumlah_karyawan }}"
+              id="jumlah_karyawan"
+              name="jumlah_karyawan"
+              maxlength="16"
             />
           </div>
         </div>
         <br />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Alamat Perusahaan</label>
-          <div class="col-sm-9">
-            <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan1" name="alamat_perusahaan1">{{
-              daWa.tipe_pekerjaan
-            }}</textarea>
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Provinsi</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="provinsi_cabang_swasta" name="provinsi1">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kota</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="kabkota_cabang_swasta" name="kabkota1">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kecamatan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="kecamatan_swasta" name="kecamatan1">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kelurahan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="kelurahan_swasta" name="kelurahan1">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kode Pos</label>
-          <div class="col-sm-9">
-            <div class="input-group mb-3">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                maxlength="8"
-                class="form-control"
-                id="kode_pos_swasta"
-                value="{{ daWa.tipe_pekerjaan }}"
-                name="kode_pos1"
-              />
-              <div class="input-group-append">
-                <button id="btnisi1" onclick="buatisi1()" class="btn btn-outline-dark" type="button">Cari Data</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Tipe Perusahaan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="tipe_perusahaan1" name="tipe_perusahaan1">
-                <option value="{{ daWa.tipe_pekerjaan }}"></option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Lama Bekerja</label>
-          <div class="col-sm-9">
-            <div class="form-row">
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="Bulan"
-                  value="{{ daWa.tipe_pekerjaan }}"
-                  id="lama_bekerja_bulan1"
-                  name="lama_bekerja_bulan1"
-                  maxlength="2"
-                />
-              </div>
-              <span>Tahun</span>
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="Tahun"
-                  value="{{ daWa.tipe_pekerjaan }}"
-                  id="lama_bekerja_tahun1"
-                  name="lama_bekerja_tahun1"
-                  maxlength="2"
-                />
-              </div>
-              <span>Bulan</span>
-            </div>
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Status Kepegawaian</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="status_kepegawaian1" name="status_kepegawaian1">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-                <option value="Pegawai Tetap">Pegawai Tetap</option>
-                <option value="Pegawai Kontrak">Pegawai Kontrak</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Pendapatan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Pendapatan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="pendapatan1"
-              name="pendapatan1"
-            />
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Tunjangan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Tunjangan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="tunjangan1"
-              name="tunjangan1"
-            />
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Pendapatan Lain</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Pendapatan Lain"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="pendapatan_lain1"
-              name="pendapatan_lain1"
-            />
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Total Pendapatan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Total Pendapatan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="total_pendapatan1"
-              name="total_pendapatan1"
-            />
-          </div>
-        </div>
       </div>
+      <!--//////////// NON FIX INCOME \\\\\\\\\\\\\\\\\-->
+    </div>
 
-      <div *ngSwitchCase="'5'">
-        <div class="form-group row">
-          <h1>pen</h1>
-          <label class="col-sm-3 col-form-label">Posisi / Jabatan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" name="posisi5" id="posisi5">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Nama Perusahaan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Nama Perusahaan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="nama_perusahaan5"
-              name="nama_perusahaan5"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Alamat Perusahaan</label>
-          <div class="col-sm-9">
-            <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan5" name="alamat_perusahaan5">{{
-              daWa.tipe_pekerjaan
-            }}</textarea>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Provinsi</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="provinsi_cabang_pensiun" name="provinsi5">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kota</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="kabkota_cabang_pensiun" name="kabkota5">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kecamatan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="kecamatan_pensiun" name="kecamatan5">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kelurahan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="kelurahan_pensiun" name="kelurahan5">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kode Pos</label>
-          <div class="col-sm-9">
-            <div class="input-group mb-3">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                maxlength="8"
-                class="form-control"
-                id="kode_pos_pensiun"
-                value="{{ daWa.tipe_pekerjaan }}"
-                name="kode_pos5"
-              />
-              <div class="input-group-append">
-                <button id="btnisi5" onclick="buatisi5()" class="btn btn-outline-dark" type="button">Cari Data</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Tipe Perusahaan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="tipe_perusahaan5" name="tipe_perusahaan5">
-                <option value="{{ daWa.tipe_pekerjaan }}"></option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Lama Bekerja</label>
-          <div class="col-sm-9">
-            <div class="form-row">
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="Bulan"
-                  value="{{ daWa.tipe_pekerjaan }}"
-                  id="lama_bekerja_bulan5"
-                  name="lama_bekerja_bulan5"
-                  maxlength="2"
-                />
-              </div>
-              <span>Tahun</span>
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="Tahun"
-                  value="{{ daWa.tipe_pekerjaan }}"
-                  id="lama_bekerja_tahun5"
-                  name="lama_bekerja_tahun5"
-                  maxlength="2"
-                />
-              </div>
-              <span>Bulan</span>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Status Kepegawaian</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="status_kepegawaian5" name="status_kepegawaian5">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-                <option value="Pegawai Tetap">Pegawai Tetap</option>
-                <option value="Pegawai Kontrak">Pegawai Kontrak</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Pendapatan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Pendapatan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="pendapatan5"
-              name="pendapatan5"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Tunjangan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Tunjangan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="tunjangan5"
-              name="tunjangan5"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Pendapatan Lain</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Pendapatan Lain"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="pendapatan_lain5"
-              name="pendapatan_lain5"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Total Pendapatan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Total Pendapatan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="total_pendapatan5"
-              name="total_pendapatan5"
-            />
-          </div>
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Tipe Perusahaan</label>
+      <div class="col-sm-9">
+        <div class="form-group">
+          <select class="form-control" id="tipe_perusahaan" name="tipe_perusahaan">
+            <option value="{{ daWa.tipe_pekerjaan }}"></option>
+          </select>
         </div>
       </div>
-      <div *ngSwitchCase="'7'">
-        <div class="form-group row">
-          <h1>AAAAAAAAAtbnuAAAA</h1>
-          <label class="col-sm-3 col-form-label">Posisi / Jabatan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" name="posisi7" id="posisi7">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Nama Perusahaan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              value="{{ daWa.tipe_pekerjaan }}"
-              placeholder="Nama Perusahaan"
-              id="nama_perusahaan7"
-              name="nama_perusahaan7"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Alamat Perusahaan</label>
-          <div class="col-sm-9">
-            <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan7" name="alamat_perusahaan7">{{
-              daWa.tipe_pekerjaan
-            }}</textarea>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Provinsi</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="provinsi_cabang_tni" name="provinsi7">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kota</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="kabkota_cabang_tni" name="kabkota7">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kecamatan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="kecamatan_tni" name="kecamatan7">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kelurahan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="kelurahan_tni" name="kelurahan7">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kode Pos</label>
-          <div class="col-sm-9">
-            <div class="input-group mb-3">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                maxlength="8"
-                class="form-control"
-                id="kode_pos_tni"
-                value="{{ daWa.tipe_pekerjaan }}"
-                name="kode_pos7"
-              />
-              <div class="input-group-append">
-                <button id="btnisi7" onclick="buatisi7()" class="btn btn-outline-dark" type="button">Cari Data</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Tipe Perusahaan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="tipe_perusahaan7" name="tipe_perusahaan7">
-                <option value="{{ daWa.tipe_pekerjaan }}"></option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Lama Bekerja</label>
-          <div class="col-sm-9">
-            <div class="form-row">
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="Bulan"
-                  value="{{ daWa.tipe_pekerjaan }}"
-                  id="lama_bekerja_bulan7"
-                  name="lama_bekerja_bulan7"
-                  maxlength="2"
-                />
-              </div>
-              <span>Tahun</span>
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="Tahun"
-                  value="{{ daWa.tipe_pekerjaan }}"
-                  id="lama_bekerja_tahun7"
-                  name="lama_bekerja_tahun7"
-                  maxlength="2"
-                />
-              </div>
-              <span>Bulan</span>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Status Kepegawaian</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="status_kepegawaian7" name="status_kepegawaian7">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-                <option value="Pegawai Tetap">Pegawai Tetap</option>
-                <option value="Pegawai Kontrak">Pegawai Kontrak</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Pendapatan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Pendapatan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="pendapatan7"
-              name="pendapatan7"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Tunjangan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Tunjangan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="tunjangan7"
-              name="tunjangan7"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Pendapatan Lain</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Pendapatan Lain"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="pendapatan_lain7"
-              name="pendapatan_lain7"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Total Pendapatan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Total Pendapatan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="total_pendapatan7"
-              name="total_pendapatan7"
-            />
-          </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Lama Bekerja</label>
+      <div class="col">
+        <input
+          type="tel"
+          class="form-control"
+          value="{{ daWa.tipe_pekerjaan }}"
+          id="lama_bekerja_bulan1"
+          name="lama_bekerja_bulan1"
+          maxlength="2"
+        />
+      </div>
+      <div class="col">Tahun</div>
+      <div class="col">
+        <input
+          type="tel"
+          class="form-control"
+          value="{{ daWa.tipe_pekerjaan }}"
+          id="lama_bekerja_tahun1"
+          name="lama_bekerja_tahun1"
+          maxlength="2"
+        />
+      </div>
+      <div class="col">Bulan</div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Status Kepegawaian</label>
+      <div class="col-sm-9">
+        <div class="form-group">
+          <select class="form-control" id="status_kepegawaian" name="status_kepegawaian">
+            <option value="{{ daWa.status_kepegawaian }}">{{ daWa.status_kepegawaian }}</option>
+          </select>
         </div>
       </div>
-      <div *ngSwitchCase="'8'">
-        <div class="form-group row">
-          <h1>AAAAAAAAAAbunAAA</h1>
-          <label class="col-sm-3 col-form-label">Posisi / Jabatan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" name="posisi8" id="posisi8">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Nama Perusahaan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Nama Perusahaan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="nama_perusahaan8"
-              name="nama_perusahaan8"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Alamat Perusahaan</label>
-          <div class="col-sm-9">
-            <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan8" name="alamat_perusahaan8">{{
-              daWa.tipe_pekerjaan
-            }}</textarea>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Provinsi</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="provinsi_cabang_bumn" name="provinsi8">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kota</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="kabkota_cabang_bumn" name="kabkota8">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kecamatan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="kecamatan_bumn" name="kecamatan8">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kelurahan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="kelurahan_bumn" name="kelurahan8">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kode Pos</label>
-          <div class="col-sm-9">
-            <div class="input-group mb-3">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                maxlength="8"
-                class="form-control"
-                value="{{ daWa.tipe_pekerjaan }}"
-                id="kode_pos_bumn"
-                name="kode_pos8"
-              />
-              <div class="input-group-append">
-                <button id="btnisi8" onclick="buatisi8()" class="btn btn-outline-dark" type="button">Cari Data</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Tipe Perusahaan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="tipe_perusahaan8" name="tipe_perusahaan8">
-                <option value="{{ daWa.tipe_pekerjaan }}"></option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Lama Bekerja</label>
-          <div class="col-sm-9">
-            <div class="form-row">
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="Bulan"
-                  value="{{ daWa.tipe_pekerjaan }}"
-                  id="lama_bekerja_bulan8"
-                  name="lama_bekerja_bulan8"
-                  maxlength="2"
-                />
-              </div>
-              <span>Tahun</span>
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="Tahun"
-                  value="{{ daWa.tipe_pekerjaan }}"
-                  id="lama_bekerja_tahun8"
-                  name="lama_bekerja_tahun8"
-                  maxlength="2"
-                />
-              </div>
-              <span>Bulan</span>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Status Kepegawaian</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="status_kepegawaian8" name="status_kepegawaian8">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-                <option value="Pegawai Tetap">Pegawai Tetap</option>
-                <option value="Pegawai Kontrak">Pegawai Kontrak</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Pendapatan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Pendapatan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="pendapatan8"
-              name="pendapatan8"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Tunjangan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Tunjangan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="tunjangan8"
-              name="tunjangan8"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Pendapatan Lain</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Pendapatan Lain"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="pendapatan_lain8"
-              name="pendapatan_lain8"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Total Pendapatan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Total Pendapatan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="total_pendapatan8"
-              name="total_pendapatan8"
-              readonly
-            />
-          </div>
-        </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Pendapatan</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" value="{{ daWa.pendapatan }}" id="pendapatan" name="pendapatan" />
       </div>
-      <div *ngSwitchCase="'1'">
-        <div class="form-group row">
-          <h1>AAAAAAAAAApnsAAA</h1>
-          <label class="col-sm-3 col-form-label">Posisi / Jabatan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" name="posisi4" id="posisi4">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Nama Perusahaan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Nama Perusahaan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="nama_perusahaan4"
-              name="nama_perusahaan4"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Alamat Perusahaan</label>
-          <div class="col-sm-9">
-            <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan4" name="alamat_perusahaan4">{{
-              daWa.tipe_pekerjaan
-            }}</textarea>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Provinsi</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="provinsi_cabang_pns" name="provinsi4">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kota</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="kabkota_cabang_pns" name="kabkota4">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kecamatan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="kecamatan_pns" name="kecamatan4">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kelurahan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="kelurahan_pns" name="kelurahan4">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Kode Pos</label>
-          <div class="col-sm-9">
-            <div class="input-group mb-3">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                maxlength="8"
-                class="form-control"
-                value="{{ daWa.tipe_pekerjaan }}"
-                id="kode_pos_pns"
-                name="kode_pos4"
-              />
-              <div class="input-group-append">
-                <button id="btnisi4" onclick="buatisi4()" class="btn btn-outline-dark" type="button">Cari Data</button>
-              </div>
-            </div>
-          </div>
-        </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Tunjangan</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" placeholder="Tunjangan" value="{{ daWa.tunjangan }}" id="tunjangan" name="tunjangan" />
       </div>
-      <div *ngSwitchCase="'3'">
-        <div id="hilang_wiraswasta" class="hilang_wiraswasta">
-          <div class="form-group row">
-            <h1>AAAAAAAAAwasdwasdAAAA</h1>
-            <label class="col-sm-3 col-form-label">Jenis Pekerjaan</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="jenis_pekerjaan" name="jenis_pekerjaan">
-                  <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Nama Perusahaan</label>
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                value="{{ daWa.tipe_pekerjaan }}"
-                id="nama_perusahaan2"
-                name="nama_perusahaan2"
-                placeholder="Nama Perusahaan"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Alamat Perusahaan</label>
-            <div class="col-sm-9">
-              <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan2" name="alamat_perusahaan2">{{
-                daWa.tipe_pekerjaan
-              }}</textarea>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Provinsi</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="provinsi_cabang_wira" name="provinsi2">
-                  <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kota</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="kabkota_cabang_wira" name="kabkota2">
-                  <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kecamatan</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="kecamatan_wira" name="kecamatan2">
-                  <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kelurahan</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="kelurahan_wira" name="kelurahan2">
-                  <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kode Pos</label>
-            <div class="col-sm-9">
-              <div class="input-group mb-3">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  maxlength="8"
-                  class="form-control"
-                  id="kode_pos_wira"
-                  value="<?=$kode_pos?>"
-                  name="kode_pos2"
-                />
-                <div class="input-group-append">
-                  <button id="btnisi2" onclick="buatisi2()" class="btn btn-outline-dark" type="button">Cari Data</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">RT / RW</label>
-            <div class="col">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                class="form-control"
-                value="{{ daWa.tipe_pekerjaan }}"
-                maxlength="3"
-                placeholder="RT"
-                id="rt2"
-                name="rt2"
-              />
-            </div>
-            <h2>/</h2>
-            <div class="col">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                class="form-control"
-                placeholder="RW"
-                maxlength="3"
-                value="{{ daWa.tipe_pekerjaan }}"
-                id="rw2"
-                name="rw2"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Nomor SIUP</label>
-            <div class="col-sm-9">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                class="form-control"
-                value="{{ daWa.tipe_pekerjaan }}"
-                placeholder="No SIUP"
-                id="siup2"
-                name="siup2"
-                maxlength="16"
-              />
-            </div>
-          </div>
-        </div>
-        <div id="hilang_wiraswastaCol2" class="hilang_wiraswasta2">
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="jumlah_karyawan2" name="jumlah_karyawan2">
-                  <option>{{ daWa.tipe_pekerjaan }}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Pendapatan</label>
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                placeholder=""
-                value="{{ daWa.tipe_pekerjaan }}"
-                id="pendapatan2"
-                name="pendapatan2"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Total Pengeluaran</label>
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                placeholder=""
-                value="{{ daWa.tipe_pekerjaan }}"
-                id="total_pengeluaran2"
-                name="total_pengeluaran2"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Jarak Lokasi Usaha Ke Unit</label>
-            <div class="col">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                class="form-control"
-                placeholder=""
-                value="{{ daWa.tipe_pekerjaan }}"
-                id="lokasi2"
-                name="jarak_lokasi_usaha2"
-                oninput="LengthConverter(this.value)"
-                onchange="LengthConverter(this.value)"
-              />
-            </div>
-            <span>Meter</span>
-            <div class="col">
-              <span id="outputKilometers" class="form-control" readonly></span>
-            </div>
-            <span>Kilometer</span>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Lama Bekerja</label>
-            <div class="col-sm-9">
-              <div class="form-row">
-                <div class="col">
-                  <input
-                    type="tel"
-                    onkeypress="return onlyNumberKey(event)"
-                    class="form-control"
-                    placeholder="Bulan"
-                    value="{{ daWa.tipe_pekerjaan }}"
-                    id="lama_bekerja_bulan2"
-                    name="lama_bekerja_bulan2"
-                    maxlength="2"
-                  />
-                </div>
-                <span>Tahun</span>
-                <div class="col">
-                  <input
-                    type="tel"
-                    onkeypress="return onlyNumberKey(event)"
-                    class="form-control"
-                    placeholder="Tahun"
-                    value="{{ daWa.tipe_pekerjaan }}"
-                    id="lama_bekerja_tahun2"
-                    name="lama_bekerja_tahun2"
-                    maxlength="2"
-                  />
-                </div>
-                <span>Bulan</span>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Tipe Perusahaan</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="tipe_perusahaan2" name="tipe_perusahaan2">
-                  <option value="{{ daWa.tipe_pekerjaan }}"></option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Tipe Perusahaan</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="tipe_perusahaan4" name="tipe_perusahaan4">
-                <option value="{{ daWa.tipe_pekerjaan }}"></option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Lama Bekerja</label>
-          <div class="col-sm-9">
-            <div class="form-row">
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="Bulan"
-                  value="<?=$lama_bekerja_bulan?>"
-                  id="lama_bekerja_bulan4"
-                  name="lama_bekerja_bulan4"
-                  maxlength="2"
-                />
-              </div>
-              <span>Tahun</span>
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="Tahun"
-                  value="<?=$lama_bekerja_tahun?>"
-                  id="lama_bekerja_tahun4"
-                  name="lama_bekerja_tahun4"
-                  maxlength="2"
-                />
-              </div>
-              <span>Bulan</span>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Status Kepegawaian</label>
-          <div class="col-sm-9">
-            <div class="form-group">
-              <select class="form-control" id="status_kepegawaian4" name="status_kepegawaian4">
-                <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
-                <option value="Pegawai Tetap">Pegawai Tetap</option>
-                <option value="Pegawai Kontrak">Pegawai Kontrak</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Pendapatan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Pendapatan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="pendapatan4"
-              name="pendapatan4"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Tunjangan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Tunjangan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="tunjangan4"
-              name="tunjangan4"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Pendapatan Lain</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Pendapatan Lain"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="pendapatan_lain4"
-              name="pendapatan_lain4"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Total Pendapatan</label>
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Total Pendapatan"
-              value="{{ daWa.tipe_pekerjaan }}"
-              id="total_pendapatan4"
-              name="total_pendapatan4"
-            />
-          </div>
-        </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Pendapatan Lain</label>
+      <div class="col-sm-9">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Pendapatan Lain"
+          value="{{ daWa.pendapatan_lain }}"
+          id="pendapatan_lain"
+          name="pendapatan_lain"
+        />
       </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Total Pendapatan</label>
+      <div class="col-sm-9">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Total Pendapatan"
+          value="{{ daWa.total_pendapatan }}"
+          id="total_pendapatan"
+          name="total_pendapatan"
+        />
+      </div>
+    </div>
+    <br />
+
+    <div [ngSwitch]="daWa.tipe_pekerjaan">
+      <!--//////////// Profesional \\\\\\\\\\\\\\\\\-->
       <div *ngSwitchCase="'4'">
-        <div id="hilang_pro" class="hilang_pro">
-          <div class="form-group row">
-            <h1>AAAAAAAAAAAAtrwasdA</h1>
-            <label class="col-sm-3 col-form-label">Jenis Pekerjaan</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="jenis_pekerjaan_pro" name="jenis_pekerjaan_pro">
-                  <option value="{{ daWa.jenis_pekerjaan }}">{{ daWa.jenis_pekerjaan }}</option>
-                </select>
-              </div>
-            </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Usia</label>
+          <div class="col-sm-9">
+            <input type="tel" class="form-control" value="{{ daWa.usia }}" id="usia" name="usia" maxlength="2" />
           </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Nama Perusahaan</label>
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                id="nama_perusahaan3"
-                value="{{ daWa.jenis_pekerjaan }}"
-                name="nama_perusahaan3"
-                placeholder="Nama Perusahaan"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Alamat</label>
-            <div class="col-sm-9">
-              <textarea class="form-control h-150px" rows="6" id="alamat3" name="alamat_perusahaan3">{{ daWa.jenis_pekerjaan }}</textarea>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Provinsi</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="provinsi_cabang_pro" name="provinsi3">
-                  <option value="{{ daWa.jenis_pekerjaan }}">{{ daWa.jenis_pekerjaan }}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kota</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="kabkota_cabang_pro" name="kabkota3">
-                  <option value="{{ daWa.jenis_pekerjaan }}">{{ daWa.jenis_pekerjaan }}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kecamatan</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="kecamatan_pro" name="kecamatan3">
-                  <option value="{{ daWa.jenis_pekerjaan }}">{{ daWa.jenis_pekerjaan }}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kelurahan</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="kelurahan_pro" name="kelurahan3">
-                  <option value="{{ daWa.jenis_pekerjaan }}">{{ daWa.jenis_pekerjaan }}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kode Pos</label>
-            <div class="col-sm-9">
-              <div class="input-group mb-3">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  maxlength="8"
-                  class="form-control"
-                  value="{{ daWa.jenis_pekerjaan }}"
-                  id="kode_pos_pro"
-                  name="kode_pos3"
-                />
-                <div class="input-group-append">
-                  <button id="btnisi3" onclick="buatisi3()" class="btn btn-outline-dark" type="button">Cari Data</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">RT / RW</label>
-            <div class="col">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                class="form-control"
-                placeholder="RT"
-                maxlength="3"
-                value="{{ daWa.jenis_pekerjaan }}"
-                id="rt3"
-                name="rt3"
-              />
-            </div>
-            <h2>/</h2>
-            <div class="col">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                class="form-control"
-                placeholder="RW"
-                maxlength="3"
-                value="{{ daWa.jenis_pekerjaan }}"
-                id="rw3"
-                name="rw3"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Nomor SIP</label>
-            <div class="col-sm-9">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                class="form-control"
-                placeholder="No SIUP"
-                value="{{ daWa.jenis_pekerjaan }}"
-                name="siup3"
-                id="siup3"
-                maxlength="16"
-              />
-            </div>
-          </div>
-        </div>
-        <div id="hilang_proCol2" class="hilang_pro2">
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="jumlah_karyawan3" name="jumlah_karyawan3">
-                  <option value="{{ daWa.jenis_pekerjaan }}">{{ daWa.jenis_pekerjaan }}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Pendapatan</label>
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                placeholder=""
-                value="{{ daWa.jenis_pekerjaan }}"
-                id="pendapatan3"
-                name="pendapatan3"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Pendapatan Lain</label>
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                placeholder=""
-                value="{{ daWa.jenis_pekerjaan }}"
-                id="pendapatan_lain3"
-                name="pendapatan_lain3"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Tunjangan</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" placeholder="" value="{{ daWa.jenis_pekerjaan }}" id="tunjangan3" name="tunjangan3" />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Total Pendapatan</label>
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                placeholder=""
-                value="{{ daWa.jenis_pekerjaan }}"
-                id="total_pendapatan3"
-                name="total_pendapatan3"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Umur Pensiun</label>
-            <div class="col-sm-9">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                maxlength="2"
-                class="form-control"
-                placeholder=""
-                value="{{ daWa.jenis_pekerjaan }}"
-                id="umur_pensiun"
-                name="umur_pensiun3"
-              />
-              <input
-                type="hidden"
-                id="udhdh"
-                class="form-control"
-                value="<?php $katagori = $this->session->userdata('usia_pasangan'); echo $katagori; ?>"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Lama Bekerja</label>
-            <div class="col-sm-9">
-              <div class="form-row">
-                <div class="col">
-                  <input
-                    type="tel"
-                    onkeypress="return onlyNumberKey(event)"
-                    class="form-control"
-                    placeholder="Bulan"
-                    value="{{ daWa.jenis_pekerjaan }}"
-                    id="lama_bekerja_bulan3"
-                    name="lama_bekerja_bulan3"
-                    maxlength="2"
-                  />
-                </div>
-                <span>Tahun</span>
-                <div class="col">
-                  <input
-                    type="tel"
-                    onkeypress="return onlyNumberKey(event)"
-                    class="form-control"
-                    placeholder="Tahun"
-                    value="{{ daWa.jenis_pekerjaan }}"
-                    id="lama_bekerja_tahun3"
-                    name="lama_bekerja_tahun3"
-                    maxlength="2"
-                  />
-                </div>
-                <span>Bulan</span>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Tipe Perusahaan</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="tipe_perusahaan3" name="tipe_perusahaan3">
-                  <option value="{{ daWa.jenis_pekerjaan }}">
-                    {{ daWa.jenis_pekerjaan }}
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <button id="btn3" name="simpandata" value="simpandata" type="submit" onclick="" class="btn btn-dark" style="float: right">
-            Simpan Data
-          </button>
-          <button
-            id="btn_selanjutnya3"
-            name="selanjutnya"
-            value="selanjutnya"
-            type="submit"
-            onclick=""
-            class="btn btn-warning"
-            style="float: right"
-          >
-            Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
-          </button>
         </div>
       </div>
-      <div *ngSwitchDefault>...</div>
+      <!--//////////// Profesional \\\\\\\\\\\\\\\\\-->
     </div>
   </div>
 </div>
+<p></p>
+<p></p>
 <div class="row">
   <div class="col" style="text-align: center">
     <button type="button" class="btn btn-dark">Simpan Data</button>

@@ -1,301 +1,214 @@
-<div class="content-body">
-  <div class="container-fluid">
-    <form
-      id="data_entry_form"
-      action="<?php echo base_url();?>data_entry/postcreatestrukturpembayaran"
-      method="post"
-      onsubmit="return validateFormStruktur()"
-      required
-    >
-      <div class="card">
-        <h4 class="card card-body gradient-9" style="text-align: center">Struktur Pembiayaan</h4>
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <div class="col-sm-9">
-                <tr *ngFor="let daWa of daWa"></tr>
-                <input type="hidden" id="pemisahpemisah" name="pemisahpemisah" value="<?=$pemisahpemisah?>" class="form-control" />
-                <input type="hidden" id="skema_name" name="skema_name" value="<?=$skema_name?>" class="form-control" />
-                <input type="hidden" id="skema_master_id" name="skema_master_id" value="<?=$skema_master_id?>" class="form-control" />
-                <input type="hidden" id="programname" name="programname" value="<?=$program_name?>" class="form-control" />
-                <input type="hidden" id="produkname" name="produkname" value="<?=$produk_name?>" class="form-control" />
-                <input
-                  type="hidden"
-                  id="kodefasilitasname"
-                  name="kodefasilitasname"
-                  value="<?=$kode_fasilitas_name?>"
-                  class="form-control"
-                />
-                <input type="hidden" id="kodefasilitas" name="kodefasilitas" value="<?=$kode_fasilitas?>" class="form-control" />
-                <input type="hidden" id="WADUH" name="WADUH" value="<?=$this->session->userdata('GROUP_NAME');?>" class="form-control" />
-                <input type="hidden" id="showJikaJoint" value="<?=$this->session->userdata('status_perkawinan');?>" class="form-control" />
-                <input type="hidden" id="curef_id" name="curef_id" value="<?=$curef?>" class="form-control" />
-              </div>
-              <div class="col-sm-9">
-                <input type="hidden" id="id" name="id" value="" class="form-control" />
-                <!-- <input type="hidden" id="pemisah" name="pemisah" value="<?=$pemisah?>" class="form-control"> -->
-              </div>
-              <div id="jointIncomeMenikah" class="form-group row" style="display: none">
-                <label class="col-sm-4 col-form-label">Joint Income<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <select class="form-control" name="joint_income" id="joint_income">
-                      <option value="<?=@$joint_income?>">
-                        <?php if($joint_income == 0) echo "Tidak"; if($joint_income == 1) echo "Ya";?>
-                      </option>
-                      <option value="1">Ya</option>
-                      <option value="0">Tidak</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-9">
-                <input
-                  id="app_no_de"
-                  name="app_no_de"
-                  type="hidden"
-                  class="form-control"
-                  placeholder="app_no_ide"
-                  value="<?=$app_no_de?>"
-                  readonly
-                />
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Kode Fasilitas<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <select class="form-control" name="kode_fasilitas" id="kode_fasilitas">
-                      <option value="{{ daWa.kode_fasilitas_name }}">{{ daWa.kode_fasilitas_name }}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Program<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <select class="form-control" name="program" id="program">
-                      <option value="{{ daWa.program_name }}" selected>{{ daWa.program_name }}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Product<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <select class="form-control" name="produk" id="produk">
-                      <option value="{{ daWa.produk_name }}" selected>{{ daWa.produk_name }}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Skema<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <select class="form-control" name="skema" id="skema">
-                      <option value="{{ daWa.skema_name }}" selected>{{ daWa.skema_name }}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Jangka Waktu<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <select class="form-control" name="jangka_waktu" id="jangka_waktu">
-                      <option selected value="{{ daWa.jangka_waktu }}">{{ daWa.jangka_waktu }}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Tipe Margin<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <select class="form-control" name="tipe_margin" id="tipe_margin">
-                      <option selected value="{{ daWa.tipe_margin }}">{{ daWa.tipe_margin }}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Tujuan Pembiayaan<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <select class="form-control" name="tujuan_pembiayaan" id="tujuan_pembiayaan">
-                      <!-- 19-08-20 -->
-                      <option selected value="{{ daWa.kode_fasilitas }}">{{ daWa.tujuan_pembiayaan }}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Fasilitas Ke<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <select class="form-control" name="fasilitas_ke" id="fasilitas_ke">
-                      <option value="{{ daWa.kode_fasilitas }}" selected>{{ daWa.fasilitas_ke }}</option>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Margin<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    value="{{ daWa.margin }}"
-                    readonly
-                    name="margin"
-                    id="margin"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title="{{ daWa.margin }}"
-                  />
-                  <input
-                    type="test"
-                    class="form-control"
-                    value="<?=$margin?>"
-                    readonly
-                    name="margin1"
-                    id="margin1"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    hidden
-                  />
-                  <input
-                    type="test"
-                    class="form-control"
-                    value="<?=$margin?>"
-                    readonly
-                    name="margin2"
-                    id="margin2"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    hidden
-                  />
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Harga Objek Pembiayaan<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Hrga Objek Pembiayaan"
-                    name="harga_objek_pembiayaan"
-                    id="harga_objek_pembiayaan"
-                    value="{{ daWa.harga_objek_pembiayaan }}"
-                  />
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Fee Base</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" placeholder="Rp" name="fee_based" id="fee_based" value="{{ daWa.fee_based }}" />
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label" name="siapsiap" id="siapsiap">DP<span class="text-danger">*</span></label>
-                <div class="input-group col-sm-8">
-                  <input type="text" class="form-control" name="uang_muka" id="uang_muka" value="{{ daWa.uang_muka }}" />
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-dark" type="button" id="rincihan" style="float: right" onclick="buatkirimstrukturdata()">
-                      Rincian Pembayaran
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Angsuran<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    readonly
-                    placeholder="Angsuran"
-                    name="angsuran"
-                    id="angsuran"
-                    value="{{ daWa.angsuran }}"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title="<?=$angsuran?>"
-                  />
-                  <input
-                    type="hidden"
-                    value="<?=$angsuran?>"
-                    class="form-control"
-                    readonly
-                    placeholder="Angsuran"
-                    name="angsuran1"
-                    id="angsuran1"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title="<?=$angsuran?>"
-                  />
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Nilai Pembiayaan<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    value="{{ daWa.nilai_pembiayaan }}"
-                    readonly
-                    placeholder="hasil_pembiayaan"
-                    name="hasil_pembiayaan"
-                    id="hasil_pembiayaan"
-                  />
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Detail Objek Pembiayaan<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <textarea class="form-control h-150px" rows="6" name="detail_objek_pembiayaan" id="detail_objek_pembiayaan">{{
-                    daWa.detail_objek_pembiayaan
-                  }}</textarea>
-                </div>
-              </div>
-              <button
-                type="submit"
-                id="btn"
-                name="simpandata"
-                value="simpandata"
-                class="btn btn-dark"
-                style="float: right"
-                onclick="return validateFormStruktur()"
-              >
-                Simpan Data
-              </button>
-              <button
-                type="submit"
-                (click)="goto()"
-                id="selanjutnya"
-                name="selanjutnya"
-                value="selanjutnya"
-                class="btn btn-warning"
-                style="float: right"
-              >
-                Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
-              </button>
-              <!-- <button type="submit" id="tombolsimpan" class="btn btn-dark" style="float: right;">Simpan Data</button> -->
-            </div>
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Struktur Pembiayaan</h3>
+</div>
+<p></p>
+<p></p>
+<div class="row form-material">
+  <div class="col">
+    <div id="jointIncomeMenikah" class="form-group row">
+      <label class="col-sm-4 col-form-label">Joint Income<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" name="joint_income" id="joint_income">
+            <option value="{{ daWa.joint_income }}">{{ daWa.joint_income }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kode Fasilitas<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" name="kode_fasilitas" id="kode_fasilitas">
+            <option value="{{ daWa.kode_fasilitas_name }}">{{ daWa.kode_fasilitas_name }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Program<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" name="program" id="program">
+            <option value="{{ daWa.program_name }}" selected>{{ daWa.program_name }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Product<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" name="produk" id="produk">
+            <option value="{{ daWa.produk_name }}" selected>{{ daWa.produk_name }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Skema<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" name="skema" id="skema">
+            <option value="{{ daWa.skema_name }}" selected>{{ daWa.skema_name }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Jangka Waktu<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" name="jangka_waktu" id="jangka_waktu">
+            <option selected value="{{ daWa.jangka_waktu }}">{{ daWa.jangka_waktu }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tipe Margin<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" name="tipe_margin" id="tipe_margin">
+            <option selected value="{{ daWa.tipe_margin }}">{{ daWa.tipe_margin }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tujuan Pembiayaan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" name="tujuan_pembiayaan" id="tujuan_pembiayaan">
+            <!-- 19-08-20 -->
+            <option selected value="{{ daWa.kode_fasilitas }}">{{ daWa.tujuan_pembiayaan }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Fasilitas Ke<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" name="fasilitas_ke" id="fasilitas_ke">
+            <option value="{{ daWa.kode_fasilitas }}" selected>{{ daWa.fasilitas_ke }}</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+  </div>
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Margin<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          value="{{ daWa.margin }}"
+          readonly
+          name="margin"
+          id="margin"
+          data-toggle="tooltip"
+          data-placement="bottom"
+          title="{{ daWa.margin }}"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Harga Objek Pembiayaan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Hrga Objek Pembiayaan"
+          name="harga_objek_pembiayaan"
+          id="harga_objek_pembiayaan"
+          value="{{ daWa.harga_objek_pembiayaan }}"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Fee Base</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" placeholder="Rp" name="fee_based" id="fee_based" value="{{ daWa.fee_based }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label" name="siapsiap" id="siapsiap">DP<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" name="uang_muka" id="uang_muka" value="{{ daWa.uang_muka }}" />
+          <div class="input-group-append">
+            <button class="btn btn-outline-dark" type="button" id="rincihan" style="float: right" onclick="buatkirimstrukturdata()">
+              Rincian Pembayaran
+            </button>
           </div>
         </div>
       </div>
-    </form>
-    <!-- #/ container -->
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Angsuran<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          readonly
+          name="angsuran"
+          id="angsuran"
+          value="{{ daWa.angsuran }}"
+          data-toggle="tooltip"
+          data-placement="bottom"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nilai Pembiayaan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          value="{{ daWa.nilai_pembiayaan }}"
+          readonly
+          name="hasil_pembiayaan"
+          id="hasil_pembiayaan"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Detail Objek Pembiayaan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <textarea class="form-control h-150px" rows="6" name="detail_objek_pembiayaan" id="detail_objek_pembiayaan">{{
+          daWa.detail_objek_pembiayaan
+        }}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col" style="text-align: center">
+    <button type="submit" id="btn" name="simpandata" value="simpandata" class="btn btn-dark" onclick="return validateFormStruktur()">
+      Simpan Data
+    </button>
+    <button type="submit" (click)="goto()" id="selanjutnya" name="selanjutnya" value="selanjutnya" class="btn btn-warning">
+      Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
+    </button>
   </div>
 </div>

@@ -1,3 +1,8 @@
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Daftar Collateral</h3>
+</div>
+<p></p>
+<p></p>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead style="background-color: grey">
@@ -6,48 +11,43 @@
           <span>No</span>
         </th>
         <th scope="col" style="text-align: center; color: #fff">
-          <span>Nomor Aplikasi</span>
+          <span>Tipe Agunan</span>
         </th>
         <th scope="col" style="text-align: center; color: #fff">
-          <span>Nama Pemohon</span>
+          <span>Status</span>
         </th>
         <th scope="col" style="text-align: center; color: #fff">
-          <span>Program</span>
+          <span>Jenis Objek</span>
         </th>
         <th scope="col" style="text-align: center; color: #fff">
-          <span>Tipe Pekerjaan</span>
+          <span>Harga Objek</span>
         </th>
         <th scope="col" style="text-align: center; color: #fff">
-          <span>Verification</span>
+          <span>Aksi</span>
         </th>
-        <th scope="col"></th>
-        <th scope="col"></th>
       </tr>
     </thead>
-    <form action=""></form>
     <tbody>
-      <tr *ngFor="let daWa of daWa">
-        <!-- <td style="text-align: center" scope="col">{{ i + 1 }}</td> -->
-        <!-- <td style="text-align: center;" scope="col">{{ daWa.id }}</td> -->
+      <tr *ngFor="let daWa of daWa; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
         <td style="text-align: center" scope="col">{{ daWa.tipe_agunan }}</td>
         <td style="text-align: center" scope="col">{{ daWa.provinsi_agunan }}</td>
-        <td style="text-align: center" scope="col">{{ daWa.status_active }}</td>
-        <td style="text-align: center" scope="col">{{ daWa.id_collateral_detail }}</td>
-        <td style="text-align: center" scope="col">{{ daWa.id_collateral }}</td>
-        <!-- (change)="getProoduct(daWa.isSelected, daWa.app_no_de)" -->
-        <!-- <td> <input   (change)="getProoduct($event, daWa.app_no_de ,i+1)"  type="checkbox" > </td> -->
-        <td class="text-end">
-          <div class="btn-group">
-            <!-- <button type="button" (click)="viewdataentry( daWa.app_no_de)"  class="btn btn-outline-info"> -->
-            <!-- <fa-icon icon="eye"></fa-icon>
-                          <span class="d-none d-md-inline">Detail</span>
-                        </button> -->
-          </div>
+        <td style="text-align: center" scope="col">{{ daWa.tipe_agunan }}</td>
+        <td style="text-align: center" scope="col">{{ daWa.harga_objek }}</td>
+        <td style="text-align: center">
+          <button type="button" class="btn btn-outline-info">
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline">Detail</span>
+          </button>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
-<button type="submit" id="selanjutnya" (click)="goto()" name="selanjutnya" value="selanjutnya" class="btn btn-warning" style="float: right">
-  Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
-</button>
+<div class="row">
+  <div class="col" style="text-align: center">
+    <button type="submit" id="selanjutnya" (click)="goto()" name="selanjutnya" value="selanjutnya" class="btn btn-warning">
+      Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
+    </button>
+  </div>
+</div>
