@@ -68,7 +68,7 @@ export class PekerjaanPasanganComponent implements OnInit {
     console.warn('colalteral', this.datakirimanappde, this.datakirimancuref, this.datakirimanakategoripekerjaan);
     this.router.navigate(['/collateral'], {
       queryParams: {
-        datakirimanappde: this.datakirimanappde,
+        datakirimande: this.datakirimande,
         datakirimancuref: this.datakirimancuref,
         datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },
