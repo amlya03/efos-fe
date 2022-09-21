@@ -1,448 +1,172 @@
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Data Rumah</h3>
+  <h3 style="color: #fff; text-align: center">Analisa Keuangan</h3>
 </div>
-<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Data Rumah</h3>
-</div>
-<form [formGroup]="dataRumahForm" (ngSubmit)="onSubmit()">
+<br />
+<form [formGroup]="analisaKeuanganForm" (ngSubmit)="onSubmit()">
   <div class="row form-material">
     <!-- ////Colom ke 1\\\\\ -->
-    <div class="col">
+    <div class="col-md-6">
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tanggal Verification</label>
-        <div class="col-sm-8">
-          <input
-            class="form-control"
-            type="date"
-            formControlName="tanggal_verification"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.tanggal_verification.errors }"
-            id="tanggal_verification"
-            name="tanggal_verification"
-            onchange="submitBday()"
-          />
-          <div *ngIf="submitted && dataRumahForm.controls.tanggal_verification.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.tanggal_verification.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Pemberi Keterangan</label>
-        <div class="col-sm-8">
-          <input
-            class="form-control"
-            type="text"
-            formControlName="pemberi_keterangan"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.pemberi_keterangan.errors }"
-            id="pemberi_keterangan"
-            name="pemberi_keterangan"
-            onchange="submitBday()"
-          />
-          <div *ngIf="submitted && dataRumahForm.controls.pemberi_keterangan.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.pemberi_keterangan.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Hubungan dengan pemberi Keterangan</label>
-        <div class="col-sm-8">
-          <select
-            name="hubungan_dengen_pemberi_keterangan"
-            id="hubungan_dengen_pemberi_keterangan"
-            class="form-control"
-            formControlName="hubungan_dengen_pemberi_keterangan"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.hubungan_dengen_pemberi_keterangan.errors }"
-          >
-            <option value="">Pilih Data</option>
-            <option *ngFor="let refHubunganEmergency of refHubunganEmergency" value="{{ refHubunganEmergency.deskripsi }}">
-              {{ refHubunganEmergency.deskripsi }}
-            </option>
-          </select>
-          <div *ngIf="submitted && dataRumahForm.controls.hubungan_dengen_pemberi_keterangan.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.hubungan_dengen_pemberi_keterangan.errors.required">Harap Pilih Data</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">No Customer</label>
+        <label class="col-sm-4 col-form-label">Nama Nasabah</label>
         <div class="col-sm-8">
           <input
             type="text"
-            (keypress)="keyPressNumbers($event)"
-            formControlName="no_customer"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.no_customer.errors }"
             class="form-control"
-            id="no_customer"
-            name="no_customer"
+            id="nama"
+            name="nama"
             placeholder=""
-            maxlength="12"
+            formControlName="nama"
+            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.nama.errors }"
           />
-          <div *ngIf="submitted && dataRumahForm.controls.no_customer.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.no_customer.errors.required">Nomor Tidak Boleh Kosong</div>
+          <div *ngIf="submitted && analisaKeuanganForm.controls.nama.errors" class="text-danger">
+            <div *ngIf="submitted && analisaKeuanganForm.controls.nama.errors.required">Tidak Boleh Kosong</div>
           </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">No Aplikasi</label>
-        <div class="col-sm-8">
-          <input type="text" (keypress)="keyPressNumbers($event)" class="form-control" id="no_aplikasi" name="no_aplikasi" placeholder="" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">No HP</label>
+        <label class="col-sm-4 col-form-label">Nama Perusahaan</label>
         <div class="col-sm-8">
           <input
             type="text"
-            maxlength="12"
-            (keypress)="keyPressNumbers($event)"
             class="form-control"
-            id="no_hp"
-            name="no_hp"
+            id="nama_perusahaan"
+            name="nama_perusahaan"
             placeholder=""
+            formControlName="nama_perusahaan"
+            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.nama_perusahaan.errors }"
           />
+          <div *ngIf="submitted && analisaKeuanganForm.controls.nama_perusahaan.errors" class="text-danger">
+            <div *ngIf="submitted && analisaKeuanganForm.controls.nama_perusahaan.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
-        <div class="col-sm-8">
-          <select name="jenis_kelamin" id="jenis_kelamin" class="form-control">
-            <option value="">Pilih Data</option>
-            <option value="">Laki-laki</option>
-            <option value="">Perempuan</option>
-          </select>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nama</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Alamat Rumah</label>
+        <label class="col-sm-4 col-form-label">Alamat Perusahaan</label>
         <div class="col-sm-8">
           <textarea
-            name="alamat_rumah"
-            id="alamat_rumah"
+            class="form-control"
+            name="alamat_perusahaan"
+            id="alamat_perusahaan"
             cols="49"
-            rows="2"
-            formControlName="alamat_rumah"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.alamat_rumah.errors }"
-          ></textarea>
-          <div *ngIf="submitted && dataRumahForm.controls.alamat_rumah.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.alamat_rumah.errors.required">Tidak Boleh Kosong</div>
+            rows="4"
+            formControlName="alamat_perusahaan"
+            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.alamat_perusahaan.errors }"
+          >
+          </textarea>
+          <div *ngIf="submitted && analisaKeuanganForm.controls.alamat_perusahaan.errors" class="text-danger">
+            <div *ngIf="submitted && analisaKeuanganForm.controls.alamat_perusahaan.errors.required">Tidak Boleh Kosong</div>
           </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">RT / RW</label>
-        <div class="col">
+        <label class="col-sm-4 col-form-label">No Telepon Perusahaan</label>
+        <div class="col-sm-8">
           <input
-            (keypress)="keyPressNumbers($event)"
-            type="text"
+            type="number"
             class="form-control"
-            id="rt"
-            name="rt"
+            id="no_telepon_perusahaan"
+            name="no_telepon_perusahaan"
             placeholder=""
-            formControlName="rt"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.rt.errors }"
+            formControlName="no_telepon_perusahaan"
+            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.no_telepon_perusahaan.errors }"
           />
-          <div *ngIf="submitted && dataRumahForm.controls.rt.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.rt.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-        <div class="col">RT</div>
-        <div class="col">
-          <input
-            (keypress)="keyPressNumbers($event)"
-            type="text"
-            class="form-control"
-            id="rw"
-            name="rw"
-            placeholder=""
-            formControlName="rw"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.rw.errors }"
-            maxlength="3"
-          />
-          <div *ngIf="submitted && dataRumahForm.controls.rw.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.rw.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-        <div class="col">RW</div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Provinsi</label>
-        <div class="col-sm-8">
-          <select
-            name="provinsi"
-            id="provinsi"
-            class="form-control"
-            formControlName="provinsi"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.provinsi.errors }"
-            maxlength="3"
-          >
-            <option value="">Pilih Data</option>
-          </select>
-          <div *ngIf="submitted && dataRumahForm.controls.provinsi.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.provinsi.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Kota</label>
-        <div class="col-sm-8">
-          <select
-            name="kota"
-            id="kota"
-            class="form-control"
-            formControlName="kota"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.kota.errors }"
-          >
-            <option value="">Pilih Data</option>
-          </select>
-          <div *ngIf="submitted && dataRumahForm.controls.kota.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.kota.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Kecamatan</label>
-        <div class="col-sm-8">
-          <select
-            name="kecamatan"
-            id="kecamatan"
-            class="form-control"
-            formControlName="kecamatan"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.kecamatan.errors }"
-          >
-            <option value="">Pilih Data</option>
-          </select>
-          <div *ngIf="submitted && dataRumahForm.controls.kecamatan.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.kecamatan.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Kelurahan</label>
-        <div class="col-sm-8">
-          <select
-            name="kelurahan"
-            id="kelurahan"
-            class="form-control"
-            formControlName="kelurahan"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.kelurahan.errors }"
-          >
-            <option value="">Pilih Data</option>
-          </select>
-          <div *ngIf="submitted && dataRumahForm.controls.kelurahan.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.kelurahan.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Kode Pos</label>
-        <div class="col-sm-8">
-          <div class="input-group mb-3">
-            <input
-              (keypress)="keyPressNumbers($event)"
-              id="kode_pos"
-              name="kode_pos"
-              type="text"
-              class="form-control"
-              placeholder=""
-              aria-label=""
-              aria-describedby="basic-addon2"
-              formControlName="kode_pos"
-              maxlength="8"
-              [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.kode_pos.errors }"
-            />
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">Cari Data</button>
-            </div>
-          </div>
-          <div *ngIf="submitted && dataRumahForm.controls.kode_pos.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.kode_pos.errors.required">Tidak Boleh Kosong</div>
+          <div *ngIf="submitted && analisaKeuanganForm.controls.no_telepon_perusahaan.errors" class="text-danger">
+            <div *ngIf="submitted && analisaKeuanganForm.controls.no_telepon_perusahaan.errors.required">Tidak Boleh Kosong</div>
           </div>
         </div>
       </div>
     </div>
     <!-- ////Colom ke 2\\\\\ -->
-    <div class="col">
+    <div class="col-md-6">
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
-        <div class="col-sm-8">
-          <input
-            class="form-control"
-            type="date"
-            id="tanggal_lahir"
-            name="tanggal_lahir"
-            onchange="submitBday()"
-            formControlName="tanggal_lahir"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.tanggal_lahir.errors }"
-          />
-          <div *ngIf="submitted && dataRumahForm.controls.tanggal_lahir.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.tanggal_lahir.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Pendidikan</label>
-        <div class="col-sm-8">
-          <select
-            name="pedidikan"
-            id="pedidikan"
-            class="form-control"
-            formControlName="pedidikan"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.pedidikan.errors }"
-          >
-            <option value="">Pilih Data</option>
-          </select>
-          <div *ngIf="submitted && dataRumahForm.controls.pedidikan.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.pedidikan.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Status Menikah</label>
-        <div class="col-sm-8">
-          <select
-            name="status_menikah"
-            id="status_menikah"
-            class="form-control"
-            formControlName="status_menikah"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.status_menikah.errors }"
-          >
-            <option value="">Pilih Data</option>
-            <option *ngFor="let refStatusPerkawinan of refStatusPerkawinan" value="{{ refStatusPerkawinan.deskripsi }}">
-              {{ refStatusPerkawinan.deskripsi }}
-            </option>
-          </select>
-          <div *ngIf="submitted && dataRumahForm.controls.status_menikah.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.status_menikah.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nama Pasangan</label>
+        <label class="col-sm-4 col-form-label">Nama yang Dihubungi</label>
         <div class="col-sm-8">
           <input
             type="text"
             class="form-control"
-            id="nama_pasangan"
-            name="nama_pasangan"
+            id="nama_yang_dihubungi"
+            name="nama_yang_dihubungi"
             placeholder=""
-            formControlName="nama_pasangan"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.nama_pasangan.errors }"
+            formControlName="nama_yang_dihubungi"
+            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.nama_yang_dihubungi.errors }"
           />
-          <div *ngIf="submitted && dataRumahForm.controls.nama_pasangan.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.nama_pasangan.errors.required">Tidak Boleh Kosong</div>
+          <div *ngIf="submitted && analisaKeuanganForm.controls.nama_yang_dihubungi.errors" class="text-danger">
+            <div *ngIf="submitted && analisaKeuanganForm.controls.nama_yang_dihubungi.errors.required">Tidak Boleh Kosong</div>
           </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Pekerjaan Pasangan</label>
+        <label class="col-sm-4 col-form-label">Jabatan yang Dihubungi</label>
         <div class="col-sm-8">
           <input
             type="text"
             class="form-control"
-            id="pekerjaan_pasangan"
-            name="pekerjaan_pasangan"
+            id="jabatan_yang_dihubungi"
+            name="jabatan_yang_dihubungi"
             placeholder=""
-            formControlName="pekerjaan_pasangan"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.pekerjaan_pasangan.errors }"
+            formControlName="jabatan_yang_dihubungi"
+            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.jabatan_yang_dihubungi.errors }"
           />
-          <div *ngIf="submitted && dataRumahForm.controls.pekerjaan_pasangan.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.pekerjaan_pasangan.errors.required">Tidak Boleh Kosong</div>
+          <div *ngIf="submitted && analisaKeuanganForm.controls.jabatan_yang_dihubungi.errors" class="text-danger">
+            <div *ngIf="submitted && analisaKeuanganForm.controls.jabatan_yang_dihubungi.errors.required">Tidak Boleh Kosong</div>
           </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nama Ibu Kandung</label>
+        <label class="col-sm-4 col-form-label">Tanggal Permintaan</label>
         <div class="col-sm-8">
           <input
             type="text"
             class="form-control"
-            id="nama_ibu_kandung"
-            name="nama_ibu_kandung"
+            id="tanggal_permintaan"
+            name="tanggal_permintaan"
             placeholder=""
-            formControlName="nama_ibu_kandung"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.nama_ibu_kandung.errors }"
+            formControlName="tanggal_permintaan"
+            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.tanggal_permintaan.errors }"
           />
-          <div *ngIf="submitted && dataRumahForm.controls.nama_ibu_kandung.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.nama_ibu_kandung.errors.required">Tidak Boleh Kosong</div>
+          <div *ngIf="submitted && analisaKeuanganForm.controls.tanggal_permintaan.errors" class="text-danger">
+            <div *ngIf="submitted && analisaKeuanganForm.controls.tanggal_permintaan.errors.required">Tidak Boleh Kosong</div>
           </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Jumlah Tanggunan</label>
+        <label class="col-sm-4 col-form-label">Tanggal Pemeriksa</label>
         <div class="col-sm-8">
           <input
-            (keypress)="keyPressNumbers($event)"
             type="text"
             class="form-control"
-            id="jumlah_tanggunan"
-            name="jumlah_tanggunan"
+            id="tanggal_pemeriksa"
+            name="tanggal_pemeriksa"
             placeholder=""
-            formControlName="jumlah_tanggunan"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.jumlah_tanggunan.errors }"
+            formControlName="tanggal_pemeriksa"
+            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.tanggal_pemeriksa.errors }"
           />
-          <div *ngIf="submitted && dataRumahForm.controls.jumlah_tanggunan.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.jumlah_tanggunan.errors.required">Tidak Boleh Kosong</div>
+          <div *ngIf="submitted && analisaKeuanganForm.controls.tanggal_pemeriksa.errors" class="text-danger">
+            <div *ngIf="submitted && analisaKeuanganForm.controls.tanggal_pemeriksa.errors.required">Tidak Boleh Kosong</div>
           </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Karakter Calon Nasabah</label>
+        <label class="col-sm-4 col-form-label">Nama Pemeriksa</label>
         <div class="col-sm-8">
           <input
             type="text"
             class="form-control"
-            id="karakter_nasabah"
-            name="karakter_nasabah"
+            id="nama_pemeriksa"
+            name="nama_pemeriksa"
             placeholder=""
-            formControlName="karakter_nasabah"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.karakter_nasabah.errors }"
+            formControlName="nama_pemeriksa"
+            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.nama_perusahaan.errors }"
           />
-          <div *ngIf="submitted && dataRumahForm.controls.karakter_nasabah.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.karakter_nasabah.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Fasilitas Pembiayaan Ke</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            class="form-control"
-            id="fasilitas_pembiayaan_ke"
-            name="fasilitas_pembiayaan_ke"
-            placeholder=""
-            formControlName="fasilitas_pembiayaan_ke"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.fasilitas_pembiayaan_ke.errors }"
-          />
-          <div *ngIf="submitted && dataRumahForm.controls.fasilitas_pembiayaan_ke.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.fasilitas_pembiayaan_ke.errors.required">Tidak Boleh Kosong</div>
+          <div *ngIf="submitted && analisaKeuanganForm.controls.nama_pemeriksa.errors" class="text-danger">
+            <div *ngIf="submitted && analisaKeuanganForm.controls.nama_pemeriksa.errors.required">Tidak Boleh Kosong</div>
           </div>
         </div>
       </div>
@@ -450,255 +174,519 @@
   </div>
   <p></p>
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-    <h3 style="color: #fff; text-align: center">Data Rumah yang Dihuni Pemohon</h3>
-  </div>
-  <div class="row form-material">
-    <!-- ////Colom ke 1\\\\\ -->
-    <div class="col">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Status Rumah</label>
-        <div class="col-sm-8">
-          <select name="status_rumah" id="status_rumah" class="form-control">
-            <option value="">Pilih Data</option>
-          </select>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Cek Ke</label>
-        <div class="col-sm-8">
-          <div class="col">
-            <input type="checkbox" id="sertifikat" name="sertifikat" />Sertifikat &nbsp;&nbsp;
-            <input type="checkbox" id="rekening" name="rekening" />Rekening Listrik &nbsp;&nbsp;
-            <input type="checkbox" id="rekening" name="rekening" />Akta Jual Beli
-          </div>
-          <div class="col">
-            <input type="checkbox" id="rekening_listrik" name="rekening_listrik" />Rekening Listrik &nbsp;&nbsp;
-            <input type="checkbox" id="rekening_telepon" name="rekening_telepon" />Rekening Telepon
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Rumah Dihuni</label>
-        <div class="col-sm-8">
-          <select name="rumah_dihuni" id="rumah_dihuni" class="form-control">
-            <option value="Ya">Ya</option>
-            <option value="Tidak">Tidak</option>
-          </select>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Lama Menetap</label>
-        <div class="col">
-          <input type="text" class="form-control" id="lama_menetap_tahun" name="lama_menetap_tahun" placeholder="" />
-        </div>
-        <div class="col">Tahun</div>
-        <div class="col">
-          <input type="text" class="form-control" id="lama_menetap_bulan" name="lama_menetap_bulan" placeholder="" />
-        </div>
-        <div class="col">Bulan</div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Jenis Bangunan</label>
-        <div class="col-sm-8">
-          <select name="jenis_bangunan" id="jenis_bangunan" class="form-control">
-            <option value="Ya">Ya</option>
-            <option value="Tidak">Tidak</option>
-          </select>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Lokasi Perumahan</label>
-        <div class="col-sm-8">
-          <select name="lokasi_perumahan" id="lokasi_perumahan" class="form-control">
-            <option value="Ya">Ya</option>
-            <option value="Tidak">Tidak</option>
-          </select>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">fasilitas Listrik</label>
-        <div class="col-sm-8">
-          <select name="fasilitas_listrik" id="fasilitas_listrik" class="form-control">
-            <option value="Ya">Ya</option>
-            <option value="Tidak">Tidak</option>
-          </select>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Isi Rumah</label>
-        <div class="col">
-          <input type="checkbox" id="isi_rumah_mobil" name="isi_rumah_mobil" />Mobil &nbsp;&nbsp;
-          <input type="checkbox" id="isi_rumah_motor" name="isi_rumah_motor" />Motor &nbsp;&nbsp;
-          <input type="checkbox" id="isi_rumah_tv" name="isi_rumah_tv" />TV
-        </div>
-        <div class="col">
-          <input type="checkbox" id="isi_rumah_sofa" name="isi_rumah_sofa" />Sofa &nbsp;&nbsp;
-          <input type="checkbox" id="isi_rumah_perabot_lainnya" name="isi_rumah_perabot_lainnya" />Perabot Lainnya
-        </div>
-      </div>
-    </div>
-    <!-- ////Colom ke 2\\\\\ -->
-    <div class="col">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Kondisi Lingkungan</label>
-        <div class="col-sm-8">
-          <select
-            name="kondisi_lingkungan"
-            id="kondisi_lingkungan"
-            class="form-control"
-            formControlName="kondisi_lingkungan"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.kondisi_lingkungan.errors }"
-          >
-            <option value="">Pilih Data</option>
-          </select>
-          <div *ngIf="submitted && dataRumahForm.controls.kondisi_lingkungan.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.kondisi_lingkungan.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Akses Jalan Ke Rumah Tingal</label>
-        <div class="col-sm-8">
-          <select
-            name="akses_jalan_ke_rumah_tinggal"
-            id="akses_jalan_ke_rumah_tinggal"
-            class="form-control"
-            formControlName="akses_jalan_ke_rumah_tinggal"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.akses_jalan_ke_rumah_tinggal.errors }"
-          >
-            <option value="">Pilih Data</option>
-          </select>
-          <div *ngIf="submitted && dataRumahForm.controls.akses_jalan_ke_rumah_tinggal.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.akses_jalan_ke_rumah_tinggal.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Luas Tanah</label>
-        <div class="col-sm-8">
-          <input (keypress)="keyPressNumbers($event)" type="text" class="form-control" id="luas_tanah" name="luas_tanah" placeholder="" />
-          <label>m2</label>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Luas Bangunan</label>
-        <div class="col-sm-8">
-          <input
-            (keypress)="keyPressNumbers($event)"
-            type="text"
-            class="form-control"
-            id="luas_bangunan"
-            name="luas_bangunan"
-            placeholder=""
-          />
-          <label>m2</label>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Garasi</label>
-        <div class="col-sm-8">
-          <input type="radio" id="garasi_ya" name="garasi" class="custom-control-input" value="Ada" checked="checked" />
-          <label class="custom-control-label">Ada</label>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <input type="radio" id="garasi_tidak" name="garasi" class="custom-control-input" value="Tidak" />
-          <label class="custom-control-label">Tidak</label>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Car Port</label>
-        <div class="col-sm-8">
-          <input type="radio" id="car_port_ya" name="car_port" class="custom-control-input" value="Ada" checked="checked" />
-          <label class="custom-control-label">Ada</label>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <input type="radio" id="car_port_tidak" name="car_port" class="custom-control-input" value="Tidak" />
-          <label class="custom-control-label">Tidak</label>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Kendaraan</label>
-        <div class="col-sm-8">
-          <input type="radio" id="kendaraan_ya" name="kendaraan" class="custom-control-input" value="Ada" checked="checked" />
-          <label class="custom-control-label">Ada</label>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <input type="radio" id="kendaraan_tidak" name="kendaraan" class="custom-control-input" value="Tidak" />
-          <label class="custom-control-label">Tidak</label>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Jumlah Kendaraan</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            (keypress)="keyPressNumbers($event)"
-            class="form-control"
-            id="jumlah_kendaraan"
-            name="jumlah_kendaraan"
-            placeholder=""
-            formControlName="jumlah_kendaraan"
-            [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.jumlah_kendaraan.errors }"
-          />
-          <div *ngIf="submitted && dataRumahForm.controls.jumlah_kendaraan.errors" class="text-danger">
-            <div *ngIf="submitted && dataRumahForm.controls.jumlah_kendaraan.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Kondisi Kendaraan</label>
-        <div class="col-sm-8">
-          <input
-            type="radio"
-            id="kondisi_kendaraan_ya"
-            name="kondisi_kendaraan"
-            class="custom-control-input"
-            value="Baik"
-            checked="checked"
-          />
-          <label class="custom-control-label">Baik</label>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <input type="radio" id="kondisi_kendaraan_tidak" name="kondisi_kendaraan" class="custom-control-input" value="Tidak Baik" />
-          <label class="custom-control-label">Tidak Baik</label>
-        </div>
-      </div>
-    </div>
+    <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pemohon)</h3>
   </div>
   <p></p>
-  <div class="row form-material">
-    <label class="col-sm-3 col-form-label">Kesimpulan Hasil Investigasi</label>
-    <div class="col-sm-9">
-      <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
-      <ngx-editor
-        [editor]="editor"
-        [(ngModel)]="html"
-        [disabled]="false"
-        [placeholder]="'Tulis Disini. . .'"
-        formControlName="kesimpulan_hasil_investigasi"
-        [ngClass]="{ 'is-invalid': submitted && dataRumahForm.controls.kesimpulan_hasil_investigasi.errors }"
-      >
-      </ngx-editor>
-      <div *ngIf="submitted && dataRumahForm.controls.kesimpulan_hasil_investigasi.errors" class="text-danger">
-        <div *ngIf="submitted && dataRumahForm.controls.kesimpulan_hasil_investigasi.errors.required">Tidak Boleh Kosong</div>
-      </div>
-    </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">NIK</th>
+        <th scope="col">Nama Bank</th>
+        <th scope="col">Jenis Fasilitas</th>
+        <th scope="col">Kolektibilitas</th>
+        <th scope="col">Outstanding</th>
+        <th scope="col">Plafound</th>
+        <th scope="col">Tanggal Mulai</th>
+        <th scope="col">Tanggal Berakhir</th>
+        <th scope="col">Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td><input type="checkbox" name="" id="" /></td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+        <td><input type="checkbox" name="" id="" /></td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+        <td><input type="checkbox" name="" id="" /></td>
+      </tr>
+    </tbody>
+  </table>
+  <p></p>
+  <button class="btn btn-info" type="button">Lihat Slik</button>
+  <p></p>
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pasangan)</h3>
+  </div>
+  <p></p>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">NIK</th>
+        <th scope="col">Nama Bank</th>
+        <th scope="col">Jenis Fasilitas</th>
+        <th scope="col">Kolektibilitas</th>
+        <th scope="col">Outstanding</th>
+        <th scope="col">Plafound</th>
+        <th scope="col">Tanggal Mulai</th>
+        <th scope="col">Tanggal Berakhir</th>
+        <th scope="col">Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td><input type="checkbox" name="" id="" /></td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+        <td><input type="checkbox" name="" id="" /></td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+        <td><input type="checkbox" name="" id="" /></td>
+      </tr>
+    </tbody>
+  </table>
+  <p></p>
+  <button class="btn btn-info" type="button">Lihat Slik</button>
+  <p></p>
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Data Keuangan Nasabah</h3>
   </div>
   <p></p>
   <div class="row">
+    <div class="col" style="text-align: center"><input type="checkbox" name="" id="" /> Joint Income</div>
+  </div>
+  <p></p>
+  <div id="fixIncome">
+    <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+      <h3 style="color: #fff; text-align: center">Fix Income</h3>
+    </div>
+    <p></p>
+    <div class="row form-material">
+      <div class="col">
+        <h6 style="text-align: center">Pemohon</h6>
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label">Gaji Kotor</label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control" id="gaji_kotor_pemohon" name="gaji_kotor_pemohon" placeholder="" />
+          </div>
+        </div>
+        <br />
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label">Tunjangan</label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control" id="tunjangan_pemohon" name="tunjangan_pemohon" placeholder="" />
+          </div>
+        </div>
+        <br />
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label">Pendapatan Kotor</label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control" id="pendapatan_kotor_pemohon" name="pendapatan_kotor_pemohon" placeholder="" />
+          </div>
+        </div>
+        <br />
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label">Pendapatan Kotor Lainnya</label>
+          <div class="col-sm-7">
+            <input
+              type="text"
+              class="form-control"
+              id="pendapatan_kotor_lainnya_pemohon"
+              name="pendapatan_kotor_lainnya_pemohon"
+              placeholder=""
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label">Total Angsuran Kewajiban Kantor</label>
+          <div class="col-sm-7">
+            <input
+              type="text"
+              class="form-control"
+              id="total_angsuran_kewajiban_kantor_pemohon"
+              name="total_angsuran_kewajiban_kantor_pemohon"
+              placeholder=""
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label">Pendapatan Bersih</label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control" id="pendapatan_bersih_pemohon" name="pendapatan_bersih_pemohon" placeholder="" />
+          </div>
+        </div>
+        <br />
+      </div>
+      <div class="col">
+        <h6 style="text-align: center">Pasangan</h6>
+        <div class="form-group row">
+          <div class="col">
+            <input type="text" class="form-control" id="gaji_kotor_pasangan" name="gaji_kotor_pasangan" placeholder="" />
+          </div>
+        </div>
+        <br />
+        <div class="form-group row">
+          <div class="col">
+            <input type="text" class="form-control" id="tunjangan_pasangan" name="tunjangan_pasangan" placeholder="" />
+          </div>
+        </div>
+        <br />
+        <div class="form-group row">
+          <div class="col">
+            <input type="text" class="form-control" id="pendapatan_kotor_pasangan" name="pendapatan_kotor_pasangan" placeholder="" />
+          </div>
+        </div>
+        <br />
+        <div class="form-group row">
+          <div class="col">
+            <input
+              type="text"
+              class="form-control"
+              id="pendapatan_kotor_lainnya_pasangan"
+              name="pendapatan_kotor_lainnya_pasangan"
+              placeholder=""
+            />
+          </div>
+        </div>
+        <br />
+        <div class="form-group row">
+          <div class="col">
+            <input
+              type="text"
+              class="form-control"
+              id="total_angsuran_kewajiban_kantor_pasangan"
+              name="total_angsuran_kewajiban_kantor_pasangan"
+              placeholder=""
+            />
+          </div>
+        </div>
+        <br />
+        <div class="form-group row">
+          <div class="col">
+            <input type="text" class="form-control" id="pendapatan_bersih_pasangan" name="pendapatan_bersih_pasangan" placeholder="" />
+          </div>
+        </div>
+        <br />
+      </div>
+      <div class="col">
+        <h6 style="text-align: center">Total</h6>
+        <div class="form-group row">
+          <input type="text" class="form-control" id="gaji_kotor_total" name="gaji_kotor_total" placeholder="" />
+        </div>
+        <br />
+        <div class="form-group row">
+          <input type="text" class="form-control" id="tunjangan_total" name="tunjangan_total" placeholder="" />
+        </div>
+        <br />
+        <div class="form-group row">
+          <input type="text" class="form-control" id="pendapatan_kotor_total" name="pendapatan_kotor_total" placeholder="" />
+        </div>
+        <br />
+        <div class="form-group row">
+          <input
+            type="text"
+            class="form-control"
+            id="pendapatan_kotor_lainnya_total"
+            name="pendapatan_kotor_lainnya_total"
+            placeholder=""
+          />
+        </div>
+        <br />
+        <div class="form-group row">
+          <input
+            type="text"
+            class="form-control"
+            id="total_angsuran_kewajiban_kantor_total"
+            name="total_angsuran_kewajiban_kantor_total"
+            placeholder=""
+          />
+        </div>
+        <br />
+        <div class="form-group row">
+          <input type="text" class="form-control" id="pendapatan_bersih_total" name="pendapatan_bersih_total" placeholder="" />
+        </div>
+        <br />
+      </div>
+    </div>
+  </div>
+  <p></p>
+  <div id="nonFixIncome">
+    <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+      <h3 style="color: #fff; text-align: center">Non Fix Income</h3>
+    </div>
+    <p></p>
+    <div class="row form-material">
+      <div class="col">
+        <h6 style="text-align: center">Pemohon</h6>
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label">Pendapatan Usaha</label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control" id="pendapatan_usaha_pemohon" name="pendapatan_usaha_pemohon" placeholder="" />
+          </div>
+        </div>
+        <br />
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label">Pendapatan Profesional</label>
+          <div class="col-sm-7">
+            <input
+              type="text"
+              class="form-control"
+              id="pendapatan_profesional_pemohon"
+              name="pendapatan_profesional_pemohon"
+              placeholder=""
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h6 style="text-align: center">Pasangan</h6>
+        <div class="form-group row">
+          <div class="col">
+            <input type="text" class="form-control" id="pendapatan_usaha_pasangan" name="pendapatan_usaha_pasangan" placeholder="" />
+          </div>
+        </div>
+        <br />
+        <div class="form-group row">
+          <div class="col">
+            <input
+              type="text"
+              class="form-control"
+              id="pendapatan_profesional_pasangan"
+              name="pendapatan_profesional_pasangan"
+              placeholder=""
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h6 style="text-align: center">Total</h6>
+        <div class="form-group row">
+          <input type="text" readonly class="form-control" id="pendapatan_usaha_total" name="pendapatan_usaha_total" placeholder="" />
+        </div>
+        <br />
+        <div class="form-group row">
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="pendapatan_profesional_total"
+            name="pendapatan_profesional_total"
+            placeholder=""
+          />
+        </div>
+      </div>
+    </div>
+    <p></p>
+    <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+      <h3 style="color: #fff; text-align: center">Total Penghasilan Kotor</h3>
+    </div>
+    <p></p>
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label" style="color: #fff">TPK</label>
+          <div class="col">
+            <input
+              type="text"
+              readonly
+              class="form-control"
+              id="total_penghasilan_kotor_pemohon"
+              name="total_penghasilan_kotor_pemohon"
+              placeholder=""
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <div class="col">
+            <input
+              type="text"
+              readonly
+              class="form-control"
+              id="total_penghasilan_kotor_pasangan"
+              name="total_penghasilan_kotor_pasangan"
+              placeholder=""
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="total_penghasilan_kotor_pasangan"
+            name="total_penghasilan_kotor_pasangan"
+            placeholder=""
+          />
+        </div>
+      </div>
+    </div>
+    <p></p>
+    <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+      <h3 style="color: #fff; text-align: center">Kewajiban Bank</h3>
+    </div>
+    <p></p>
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label" style="color: #fff">KB</label>
+          <div class="col-sm-7">
+            <input type="text" readonly class="form-control" id="kewajiban_bank_pemohon" name="kewajiban_bank_pemohon" placeholder="" />
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <div class="col">
+            <input type="text" readonly class="form-control" id="kewajiban_bank_pasangan" name="kewajiban_bank_pasangan" placeholder="" />
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <input type="text" readonly class="form-control" id="kewajiban_bank_total" name="kewajiban_bank_total" placeholder="" />
+        </div>
+      </div>
+    </div>
+    <p></p>
+    <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+      <h3 style="color: #fff; text-align: center">Kewajiban Lainnya</h3>
+    </div>
+    <p></p>
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label" style="color: #fff">KL</label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control" id="kewajiban_lainnya_pemohon" name="kewajiban_lainnya_pemohon" placeholder="" />
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <div class="col">
+            <input type="text" class="form-control" id="kewajiban_lainnya_pasangan" name="kewajiban_lainnya_pasangan" placeholder="" />
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <input type="text" readonly class="form-control" id="kewajiban_lainnya_total" name="kewajiban_lainnya_total" placeholder="" />
+        </div>
+      </div>
+    </div>
+    <p></p>
+    <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+      <h3 style="color: #fff; text-align: center">Total Penghasilan Bersih</h3>
+    </div>
+    <p></p>
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label" style="color: #fff">TPB</label>
+          <div class="col-sm-7">
+            <input
+              type="text"
+              readonly
+              class="form-control"
+              id="total_penghasilan_bersih_pemohon"
+              name="total_penghasilan_bersih_pemohon"
+              placeholder=""
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <div class="col">
+            <input
+              type="text"
+              readonly
+              class="form-control"
+              id="total_penghasilan_bersih_pasangan"
+              name="total_penghasilan_bersih_pasangan"
+              placeholder=""
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="total_penghasilan_bersih_total"
+            name="total_penghasilan_bersih_total"
+            placeholder=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <p></p>
+  <p></p>
+  <div class="row">
     <div class="col" style="text-align: center">
-      <button class="btn btn-info">Simpan Data</button>
+      <button type="submit" class="btn btn-info">Simpan Data</button>
     </div>
   </div>
 </form>

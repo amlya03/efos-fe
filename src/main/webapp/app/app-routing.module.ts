@@ -70,7 +70,7 @@ import { StrukturPembiayaanComponent } from './data-entry/struktur-pembiayaan/st
           component: DataKantorComponent,
         },
         {
-          path: 'data-rumah',
+          path: 'analisa-keuangan',
           component: DataRumahComponent,
         },
         {
