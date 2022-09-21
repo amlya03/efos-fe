@@ -64,7 +64,7 @@ export class PekerjaanPasanganComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto() {
     // this.onResponseSuccess(res);
-    alert('otw collateral ');
+    alert('otw collateral1 ');
     console.warn('colalteral', this.datakirimanappde, this.datakirimancuref, this.datakirimanakategoripekerjaan);
     this.router.navigate(['/collateral'], {
       queryParams: {
