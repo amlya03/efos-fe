@@ -28,6 +28,10 @@ import { CallReportComponent } from './data-entry/call-report/call-report.compon
 import { CallReportNonComponent } from './data-entry/call-report-non/call-report-non.component';
 import { MemoComponent } from './data-entry/memo/memo.component';
 import { StrukturPembiayaanComponent } from './data-entry/struktur-pembiayaan/struktur-pembiayaan.component';
+import { DaftarAplikasiIdeComponent } from './initial-data-entry/daftar-aplikasi-ide/daftar-aplikasi-ide.component';
+import { DaftarAplikasiPilihComponent } from './initial-data-entry/daftar-aplikasi-pilih/daftar-aplikasi-pilih.component';
+import { InitialDataEntryFixComponent } from './initial-data-entry/initial-data-entry-fix/initial-data-entry-fix.component';
+import { InitialDataEntryNonComponent } from './initial-data-entry/initial-data-entry-non/initial-data-entry-non.component';
 
 @NgModule({
   imports: [
@@ -128,6 +132,22 @@ import { StrukturPembiayaanComponent } from './data-entry/struktur-pembiayaan/st
         {
           path: 'memo',
           component: MemoComponent,
+        },
+        {
+          path: 'daftaraplikasiide',
+          component: DaftarAplikasiIdeComponent,
+        },
+        {
+          path: 'daftaraplikasiidetambahide',
+          component: DaftarAplikasiPilihComponent,
+        },
+        {
+          path: 'initial-data-entryfix',
+          component: InitialDataEntryFixComponent,
+        },
+        {
+          path: 'initial-data-entrynon',
+          component: InitialDataEntryNonComponent,
         },
         {
           path: '',

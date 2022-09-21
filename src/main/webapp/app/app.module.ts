@@ -52,6 +52,14 @@ import { CallReportNonComponent } from './data-entry/call-report-non/call-report
 import { MemoComponent } from './data-entry/memo/memo.component';
 import { EmergencyContactComponent } from './data-entry/emergency-contact/emergency-contact.component';
 import { StrukturPembiayaanComponent } from './data-entry/struktur-pembiayaan/struktur-pembiayaan.component';
+import { InitialDataEntryComponent } from './initial-data-entry/initial-data-entry.component';
+import { HasilPrescreeningComponent } from './initial-data-entry/hasil-prescreening/hasil-prescreening.component';
+import { DaftarAplikasiIdeComponent } from './initial-data-entry/daftar-aplikasi-ide/daftar-aplikasi-ide.component';
+import { InitialDataEntryFixComponent } from './initial-data-entry/initial-data-entry-fix/initial-data-entry-fix.component';
+import { InitialDataEntryNonComponent } from './initial-data-entry/initial-data-entry-non/initial-data-entry-non.component';
+import { InitialDataEntryNonEditComponent } from './initial-data-entry/initial-data-entry-non-edit/initial-data-entry-non-edit.component';
+import { InitialDataEntryFixEditComponent } from './initial-data-entry/initial-data-entry-fix-edit/initial-data-entry-fix-edit.component';
+import { DaftarAplikasiPilihComponent } from './initial-data-entry/daftar-aplikasi-pilih/daftar-aplikasi-pilih.component';
 
 @NgModule({
   imports: [
@@ -108,6 +116,14 @@ import { StrukturPembiayaanComponent } from './data-entry/struktur-pembiayaan/st
     MemoComponent,
     EmergencyContactComponent,
     StrukturPembiayaanComponent,
+    InitialDataEntryComponent,
+    HasilPrescreeningComponent,
+    DaftarAplikasiIdeComponent,
+    InitialDataEntryFixComponent,
+    InitialDataEntryNonComponent,
+    InitialDataEntryNonEditComponent,
+    InitialDataEntryFixEditComponent,
+    DaftarAplikasiPilihComponent,
   ],
   bootstrap: [
     MainComponent,
