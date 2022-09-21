@@ -32,6 +32,8 @@ import { DaftarAplikasiIdeComponent } from './initial-data-entry/daftar-aplikasi
 import { DaftarAplikasiPilihComponent } from './initial-data-entry/daftar-aplikasi-pilih/daftar-aplikasi-pilih.component';
 import { InitialDataEntryFixComponent } from './initial-data-entry/initial-data-entry-fix/initial-data-entry-fix.component';
 import { InitialDataEntryNonComponent } from './initial-data-entry/initial-data-entry-non/initial-data-entry-non.component';
+import { HasilPrescreeningComponent } from './initial-data-entry/hasil-prescreening/hasil-prescreening.component';
+import { PersonalInfoComponent } from './data-entry/personal-info/personal-info.component';
 
 @NgModule({
   imports: [
@@ -98,6 +100,10 @@ import { InitialDataEntryNonComponent } from './initial-data-entry/initial-data-
           component: DataEntryComponent,
         },
         {
+          path: 'personalinfo',
+          component: PersonalInfoComponent,
+        },
+        {
           path: 'job-info',
           component: JobInfoComponent,
         },
@@ -148,6 +154,10 @@ import { InitialDataEntryNonComponent } from './initial-data-entry/initial-data-
         {
           path: 'initial-data-entrynon',
           component: InitialDataEntryNonComponent,
+        },
+        {
+          path: 'hasilprescreening',
+          component: HasilPrescreeningComponent,
         },
         {
           path: '',

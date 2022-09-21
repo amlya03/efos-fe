@@ -45,7 +45,7 @@ export class DataEntryComponent implements OnInit {
     // this.tampungandataygdibawa = this.route.snapshot.paramMap.get('datakiriman');
   }
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_app_de?sc=20000');
 
   ngOnInit(): void {
     this.load();
@@ -68,20 +68,13 @@ export class DataEntryComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.resourceUrl + this.datakiriman, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  gotojobinfo(contohtampungancuref: any, contohtampungstatuskawain: any, contohtampunganappde: any, contohtampungankategoripekerjaan: any) {
-    // this.onResponseSuccess(res);
-    alert(contohtampungancuref);
-    this.router.navigate(['/job-info'], {
-      queryParams: {
-        datakiriman: contohtampungancuref,
-        datakirimanstatus: contohtampungstatuskawain,
-        datakirimanappde: contohtampunganappde,
-        datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
-      },
-    });
+
+  viewdataentry(getAppNoDe: any): void {
+    alert(getAppNoDe);
+    this.router.navigate(['/personalinfo'], { queryParams: { datakiriman: getAppNoDe } });
   }
 }

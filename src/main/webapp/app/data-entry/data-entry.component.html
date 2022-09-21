@@ -1,525 +1,174 @@
-<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Personal Info</h3>
-</div>
-<p></p>
-<p></p>
-<div class="row form-material">
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Nama Lengkap</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" placeholder="Nama Lengkap" name="nama" id="nama" value="{{ daWa.nama }}" />
+<html>
+  <body>
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+      <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+        </svg>
       </div>
     </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Jenis Kelamin</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" value="">
-            <option value="{{ daWa.jenis_kelamin }}">{{ daWa.jenis_kelamin }}</option>
-            <option value="Laki-laki">Laki - laki</option>
-            <option value="Perempuan">Perempuan</option>
-          </select>
+    <!--*******************
+        Preloader end
+    ********************-->
+    <!--**********************************
+            Content body start
+        ***********************************-->
+    <div class="content-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <!-- Card -->
+            <div class="card">
+              <div class="card-body">
+                <div class="row form-material">
+                  <div class="col-md-6">
+                    <label class="m-t-5">No Aplikasi</label>
+                    <input id="input_noapp" name="input_noapp" type="text" class="form-control" placeholder="Maasukkan Nomor Aplikasi" />
+                    <p></p>
+                    <label class="m-t-5">Kategori Pekerjaan</label>
+                    <div class="form-group">
+                      <select id="selectCari" class="form-control">
+                        <option selected value="">Pilih Pencarian Berdasarkan Kategori Pekerjaan</option>
+                        <option value="0">Fix Income</option>
+                        <option value="1">Non-Fix Income</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="m-t-20 table-responsive #example">Nama Nasabah</label>
+                    <input
+                      id="input_nama"
+                      name="input_nama"
+                      type="text"
+                      class="form-control form-control-sm"
+                      placeholder="Masukan Nama Nasabah"
+                      aria-controls="example"
+                    />
+                  </div>
+                  <div class="col-md-4 m-b-30"></div>
+                  <div class="col-md-4 m-b-30">
+                    <button id="btn_cari" type="submit" class="btn btn-dark">Cari Data</button>
+
+                    <button id="btn_clear" class="btn btn-info" onclick="clearinput()">Clear Data</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
-      <div class="col-sm-9">
-        <input class="form-control" type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ daWa.tanggal_lahir }}" />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Tempat Lahir</label>
-      <div class="col-sm-9">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Tempat Lahir"
-          id="tempat_lahir"
-          name="tempat_lahir"
-          value="{{ daWa.tempat_lahir }}"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Usia</label>
-      <div class="col-sm-9">
-        <input
-          type="tel"
-          onkeypress="return onlyNumberKey(event)"
-          maxlength="2"
-          class="form-control"
-          placeholder="Usia"
-          id="usia"
-          name="usia"
-          value="{{ daWa.usia }}"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Agama</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" id="agama" name="agama">
-            <option value="{{ daWa.agama }}">{{ daWa.agama }}</option>
-            <!-- <option>Islam</option>
-            <option>Kristen</option>
-            <option>Khatolik</option>
-            <option>Budha</option>
-            <option>Hindu</option>
-            <option>Kong Hu Chu</option> -->
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Pendidikan</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" id="pendidikan" name="pendidikan">
-            <option value="{{ daWa.pendidikan }}">{{ daWa.pendidikan }}</option>
-            <!-- <option value="SMA">SMA</option>
-            <option value="D3">D3</option>
-            <option value="S1">S1</option>
-            <option value="S2">S2</option>
-            <option value="S3">S3</option> -->
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Kewarganegaraan</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" id="kewarganegaraan" name="kewarganegaraan">
-            <option value="{{ daWa.kewarganegaraan }}">{{ daWa.kewarganegaraan }}</option>
-            <!-- <option>WNI</option>
-            <option>WNA</option> -->
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-  </div>
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Nomor Telepon</label>
-      <div class="col-sm-9">
-        <input
-          type="tel"
-          onkeypress="return onlyNumberKey(event)"
-          pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
-          class="form-control"
-          placeholder="Nomor Telepon"
-          id="no_telepon"
-          name="no_telepon"
-          value="{{ daWa.no_telepon }}"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Email</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" placeholder="Email" id="email" name="email" value="{{ daWa.email }}" />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">No Handphone</label>
-      <div class="col-sm-9">
-        <input
-          type="tel"
-          onkeypress="return onlyNumberKey(event)"
-          pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
-          class="form-control"
-          placeholder="No Handphone"
-          id="no_handphone"
-          name="no_handphone"
-          value="{{ daWa.no_handphone }}"
-          maxlength="13"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">No KTP</label>
-      <div class="col-sm-9">
-        <input
-          type="tel"
-          onkeypress="return onlyNumberKey(event)"
-          minlength="16"
-          maxlength="16"
-          class="form-control"
-          placeholder="No KTP"
-          id="no_ktp"
-          name="no_ktp"
-          value="{{ daWa.no_ktp }}"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Tanggal Terbit KTP</label>
-      <div class="col-sm-9">
-        <input class="form-control" type="date" id="tanggal_terbit_ktp" name="tanggal_terbit_ktp" value="{{ daWa.tanggal_terbit_ktp }}" />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label"> KTP Seumur Hidup</label>
-      <div class="col-sm-9">
-        <input type="radio" id="ktp_seumur_hidup_ya" name="ktp_seumur_hidup" value="Ya" checked /> Ya
-        <input type="radio" id="ktp_seumur_hidup_tidak" name="ktp_seumur_hidup" value="Tidak" /> Tidak
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Tanggal Exipred KTP</label>
-      <div class="col-sm-9">
-        <input class="form-control" type="date" id="tanggal_exp_ktp" name="tanggal_exp_ktp" value="{{ daWa.tanggal_exp_ktp }}" />
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">NPWP</label>
-      <div class="col-sm-9">
-        <input
-          type="tel"
-          onkeypress="return onlyNumberKey(event)"
-          class="form-control"
-          placeholder="NPWP"
-          maxlength="16"
-          id="npwp"
-          name="npwp"
-          value="{{ daWa.npwp }}"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Status Perkawinan</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" id="status_perkawinan" name="status_perkawinan">
-            <option value="{{ daWa.status_perkawinan }}">{{ daWa.status_perkawinan }}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Jumlah Anak</label>
-      <div class="col-sm-9">
-        <input
-          type="tel"
-          onkeypress="return onlyNumberKey(event)"
-          class="form-control"
-          placeholder="Jumlah Anak"
-          maxlength="2"
-          id="jumlah_anak"
-          name="jumlah_anak"
-          value="{{ daWa.jumlah_anak }}"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Status Rumah</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" value="" id="status_rumah" name="status_rumah">
-            <option value="{{ daWa.status_rumah }}">{{ daWa.status_rumah }}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Lama Menetap</label>
-      <div class="col-sm-9">
-        <input
-          type="tel"
-          onkeypress="return onlyNumberKey(event)"
-          maxlength="2"
-          class="form-control"
-          placeholder="Lama Menetap"
-          id="lama_menetap"
-          name="lama_menetap"
-          value="{{ daWa.lama_menetap }}"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Punya Kendaraan</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" id="status_kendaraan" name="status_kendaraan">
-            <option value="{{ daWa.status_kendaraan }}">{{ daWa.status_kendaraan }}</option>
-            <option value="1">Ya</option>
-            <option value="2">Tidak</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row" id="hidden_tipe_kendaraan" style="display: none">
-      <label class="col-sm-3 col-form-label">Tipe Kendaraan</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" value="" id="tipe_kendaraan" name="tipe_kendaraan">
-            <option value="{{ daWa.tipe_kendaraan }}">{{ daWa.tipekendaraan }}"></option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-  </div>
-</div>
-<p></p>
-<p></p>
-<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Alamat Pemohon</h3>
-</div>
-<p></p>
-<div class="row form-material">
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Alamat KTP</label>
-      <div class="col-sm-9">
-        <textarea class="form-control h-150px" rows="6" id="alamat_ktp" name="alamat_ktp" value="{{ daWa.alamat_ktp }}"></textarea>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Provinsi</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" id="provinsi_cabang" name="provinsi">
-            <option value="{{ daWa.provinsi }}">{{ daWa.provinsi }}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Kota</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" id="kabkota_cabang" name="kabkota">
-            <option value="{{ daWa.kabkota }}">{{ daWa.kabkota }}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Kecamatan</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" id="kecamatan" name="kecamatan">
-            <option>{{ daWa.kecamatan }}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Kelurahan</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" id="kelurahan" name="kelurahan">
-            <option>{{ daWa.kelurahan }}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Kode Pos</label>
-      <div class="col-sm-9">
-        <div class="input-group mb-3">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            class="form-control"
-            id="kode_pos"
-            name="kode_pos"
-            value="{{ daWa.kode_pos }}"
-          />
-          <div class="input-group-append">
-            <button onclick="buatisi()" class="btn btn-outline-dark" type="button">Cari Data</button>
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead style="background-color: grey">
+                      <tr>
+                        <th scope="col" style="text-align: center; color: #fff">
+                          <span>Nama Perusahaan</span>
+                        </th>
+                        <th scope="col" style="text-align: center; color: #fff">
+                          <span>Kategori Pekerjaan</span>
+                        </th>
+                        <th scope="col" style="text-align: center; color: #fff">
+                          <span>Posisi / Jabatan</span>
+                        </th>
+                        <th scope="col" style="text-align: center; color: #fff">
+                          <span>Curef</span>
+                        </th>
+                        <th scope="col" style="text-align: center; color: #fff">
+                          <span>Id</span>
+                        </th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <form action=""></form>
+                    <tbody>
+                      <tr *ngFor="let daWa of daWa">
+                        <!-- <td style="text-align: center" scope="col">{{ i + 1 }}</td> -->
+                        <!-- <td style="text-align: center;" scope="col">{{ daWa.id }}</td> -->
+                        <td style="text-align: center" scope="col">{{ daWa.nama }}</td>
+                        <td style="text-align: center" scope="col">{{ daWa.kategori_pekerjaan }}</td>
+                        <td style="text-align: center" scope="col">{{ daWa.nama_ibu_kandung }}</td>
+                        <td style="text-align: center" scope="col">{{ daWa.curef }}</td>
+                        <td style="text-align: center" scope="col">{{ daWa.id }}</td>
+                        <!-- (change)="getProoduct(daWa.isSelected, daWa.app_no_de)" -->
+                        <!-- <td> <input   (change)="getProoduct($event, daWa.app_no_de ,i+1)"  type="checkbox" > </td> -->
+                        <td class="text-end">
+                          <div class="btn-group">
+                            <button type="button" (click)="viewdataentry(daWa.app_no_de)" class="btn btn-outline-info">
+                              <fa-icon icon="eye"></fa-icon>
+                              <span class="d-none d-md-inline">Detail</span>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <!-- #/ container -->
     </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">RT / RW</label>
-      <div class="col">
-        <input
-          type="tel"
-          onkeypress="return onlyNumberKey(event)"
-          class="form-control"
-          placeholder="RT"
-          maxlength="3"
-          id="rt"
-          name="rt"
-          value="{{ daWa.rt }}"
-        />
-      </div>
-      <div class="col">RT</div>
-      <div class="col">
-        <input
-          type="tel"
-          onkeypress="return onlyNumberKey(event)"
-          class="form-control"
-          placeholder="RW"
-          maxlength="3"
-          id="rw"
-          name="rw"
-          value="{{ daWa.rw }}"
-        />
-      </div>
-      <div class="col">RW</div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Alamat Sama dengan Alamat KTP</label>
-      <div class="col-sm-9">
-        <input type="radio" name="alamat_sama_ktp" id="alamat_sama_ktp_tidak" value="Tidak Sama" />Tidak Sama
-        <input type="radio" name="alamat_sama_ktp" id="alamat_sama_ktp_sama" value="Sama" />Sama
+    <!--**********************************
+            Content body end
+        ***********************************-->
+
+    <!--**********************************
+            Footer start
+        ***********************************-->
+    <div class="footer">
+      <div class="copyright">
+        <p>Copyright &copy; Designed & Developed by <a href="https://cms.megasyariah.co.id">Bank Mega Syariah</a> 2022</p>
       </div>
     </div>
-    <br />
-  </div>
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Alamat Domisili</label>
-      <div class="col-sm-9">
-        <textarea
-          class="form-control h-150px"
-          rows="6"
-          id="alamat_domisili"
-          name="alamat_domisili"
-          value="{{ daWa.alamat_domisili }}"
-        ></textarea>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Provinsi</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" id="provinsi_domisili" name="provinsi_domisili">
-            <option>{{ daWa.provinsi_domisili }}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Kota</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" id="kabkota_domisili" name="kabkota_domisili">
-            <option value="{{ daWa.kabkota_domisili }}">{{ daWa.kabkota_domisili }}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">kecamatan</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" id="kecamatan_domisili" name="kecamatan_domisili">
-            <option>{{ daWa.kecamatan_domisili }}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Kelurahan</label>
-      <div class="col-sm-9">
-        <div class="form-group">
-          <select class="form-control" id="kelurahan_domisili" name="kelurahan_domisili">
-            <option>{{ daWa.kelurahan_domisili }}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Kode Pos</label>
-      <div class="col-sm-9">
-        <div class="input-group mb-3">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            maxlength="8"
-            class="form-control"
-            id="kode_pos_domisili"
-            name="kode_pos_domisili"
-            value="{{ daWa.kode_pos_domisili }}"
-          />
-          <div class="input-group-append">
-            <button onclick="buatisidomisili()" class="btn btn-outline-dark" id="kode_pos_domisilihilang" type="button">Cari Data</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">RT / RW</label>
-      <div class="col">
-        <input
-          type="tel"
-          onkeypress="return onlyNumberKey(event)"
-          maxlength="3"
-          class="form-control"
-          placeholder="RT"
-          id="rt_domisili"
-          name="rt_domisili"
-          value="{{ daWa.rt_domisili }}"
-        />
-      </div>
-      <div class="col">RT</div>
-      <div class="col">
-        <input
-          type="tel"
-          onkeypress="return onlyNumberKey(event)"
-          class="form-control"
-          placeholder="RW"
-          maxlength="3"
-          id="rw_domisili"
-          name="rw_domisili"
-          value="{{ daWa.rw_domisili }}"
-        />
-      </div>
-      <div class="col">RW</div>
-    </div>
-    <br />
-  </div>
-  <div class="raw">
-    <div class="col" style="text-align: center">
-      <button type="submit" onclick="" class="btn btn-dark">Simpan Data</button>
-      <button
-        (click)="gotojobinfo(daWa.curef, daWa.status_perkawinan, daWa.app_no_de, daWa.kategori_pekerjaan)"
-        type="button"
-        class="btn btn-warning"
-      >
-        Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
-      </button>
-    </div>
-  </div>
-</div>
+    <!--**********************************
+            Footer end
+        ***********************************-->
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/common/common.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/custom.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/settings.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/gleek.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/js/styleSwitcher.js"></script>
+
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/tables/js/jquery.dataTables.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+    <script src="<?php echo base_url();?>/asset/e-fos/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+    <script>
+      //untuk tombol cari
+      $('#btn_cari').click(function () {
+        //             $(document).ready(function () {
+        var table = $('#example').DataTable();
+        var nama = input_nama.value;
+        var noapp = input_noapp.value;
+        table.search(nama || noapp).draw();
+      });
+
+      //untuk tombol clear
+      $('#btn_clear').click(function () {
+        var table = $('#example').DataTable();
+        // var nama=input_nama.value;
+        table.search('').draw();
+        $.each($('#example tbody tr'), function () {
+          document.getElementById('input_noapp').value = '';
+          document.getElementById('input_nama').value = '';
+
+          if ($(this).text().toLowerCase().indexOf($('#input_nama').val().toLowerCase()) === -1) $(this).hide();
+          else $(this).show();
+        });
+      });
+    </script>
+
+    <script></script>
+  </body>
+</html>
