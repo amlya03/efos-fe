@@ -212,9 +212,15 @@
                     <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
                       <div class="form-group">
-                        <select class="form-control" [(ngModel)]="provinsi_cabang" id="provinsi_cabang" name="provinsi">
-                          <option selected value="">Pilih Provinsi</option>
-                          <option value="">{{ daWaprof.id }}</option>
+                        <select
+                          (change)="onChange(provinsi_cabang)"
+                          class="form-control"
+                          [(ngModel)]="provinsi_cabang"
+                          id="provinsi_cabang"
+                          name="provinsi"
+                        >
+                          <option>Pilih Provinsi</option>
+                          <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}">{{ daWaprof.namaWilayah }}</option>
                         </select>
                       </div>
                     </div>
@@ -223,8 +229,15 @@
                     <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
                       <div class="form-group">
-                        <select class="form-control" [(ngModel)]="kabkota_cabang" id="kabkota_cabang" name="kabkota">
+                        <select
+                          (change)="onChangekota(kabkota_cabang)"
+                          class="form-control"
+                          [(ngModel)]="kabkota_cabang"
+                          id="kabkota_cabang"
+                          name="kabkota"
+                        >
                           <option value="">Pilih Kota</option>
+                          <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}">{{ daWakota.namaWilayah }}</option>
                         </select>
                       </div>
                     </div>
@@ -233,8 +246,17 @@
                     <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
                       <div class="form-group">
-                        <select class="form-control" id="kecamatan" [(ngModel)]="kecamatan" name="kecamatan">
+                        <select
+                          (change)="onChangekecamatan(kecamatan)"
+                          class="form-control"
+                          id="kecamatan"
+                          [(ngModel)]="kecamatan"
+                          name="kecamatan"
+                        >
                           <option value="">Pilih Kecamatan</option>
+                          <option *ngFor="let daWakecamatan of daWakecamatan" value="{{ daWakecamatan.kdWilayah }}">
+                            {{ daWakecamatan.namaWilayah }}
+                          </option>
                         </select>
                       </div>
                     </div>
@@ -243,8 +265,17 @@
                     <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
                       <div class="form-group">
-                        <select class="form-control" id="kelurahan" [(ngModel)]="kelurahan" name="kelurahan">
+                        <select
+                          (change)="onChangekelurahan(kecamatan)"
+                          class="form-control"
+                          id="kelurahan"
+                          [(ngModel)]="kelurahan"
+                          name="kelurahan"
+                        >
                           <option value="">Pilih Kelurahan</option>
+                          <option *ngFor="let daWakelurahan of daWakelurahan" value="{{ daWakelurahan.kdWilayah }}">
+                            {{ daWakelurahan.namaWilayah }}
+                          </option>
                         </select>
                       </div>
                     </div>
