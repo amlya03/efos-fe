@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { SessionStorageService } from 'ngx-webstorage';
-
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { VERSION } from 'app/app.constants';
 import { LANGUAGES } from 'app/config/language.constants';
 import { Account } from 'app/core/auth/account.model';
@@ -27,8 +26,14 @@ export class NavbarComponent implements OnInit {
   element = false;
   navVerif = false;
   navHome = true;
+  navDe = false;
+  untukSessionRole: any;
+  untukSessionUserName: any;
+  untukSessionFullName: any;
+  untukSessionKodeCabang: any;
 
   constructor(
+    private localStorageService: LocalStorageService,
     private loginService: LoginService,
     private translateService: TranslateService,
     private sessionStorageService: SessionStorageService,
@@ -51,6 +56,11 @@ export class NavbarComponent implements OnInit {
     this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
     });
+
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
+    this.untukSessionFullName = this.localStorageService.retrieve('sessionFullName');
+    this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
   }
 
   changeLanguage(languageKey: string): void {

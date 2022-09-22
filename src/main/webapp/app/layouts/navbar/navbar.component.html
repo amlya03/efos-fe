@@ -27,19 +27,34 @@
             </span>
           </a>
         </li>
-        <li id="verificationNav" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a
-            class="nav-link"
-            routerLink="daftar-aplikasi-waiting-assigment"
-            (click)="collapseNavbar()"
-            (click)="showData()"
-            [class.active]="navVerif"
-          >
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="user-check"></fa-icon>
-            <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
-            <p>Verification</p>
-          </a>
-        </li>
+        <div [ngSwitch]="untukSessionRole">
+          <div *ngSwitchCase="'APPRAISAL'">
+            <li id="verificationNav" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+              <a
+                class="nav-link"
+                routerLink="daftar-aplikasi-waiting-assigment"
+                (click)="collapseNavbar()"
+                (click)="showData()"
+                [class.active]="navVerif"
+              >
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="user-check"></fa-icon>
+                <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
+                <p>Verification</p>
+              </a>
+            </li>
+          </div>
+        </div>
+        <div [ngSwitch]="untukSessionRole">
+          <div *ngSwitchCase="'AO'">
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+              <a class="nav-link" routerLink="data-entry" (click)="collapseNavbar()" (click)="showData()" [class.active]="navDe">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="user-check"></fa-icon>
+                <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
+                <p>Data Entry</p>
+              </a>
+            </li>
+          </div>
+        </div>
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
         <!-- <li
           *ngSwitchCase="true"
@@ -131,7 +146,7 @@
             <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
           </ul>
         </li>
-        <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
+        <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1" hidden>
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
             <span>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="flag"></fa-icon>
@@ -151,6 +166,7 @@
           </ul>
         </li>
         <li
+          hidden
           ngbDropdown
           class="nav-item dropdown pointer"
           display="dynamic"
@@ -164,6 +180,7 @@
             href="javascript:void(0);"
             id="account-menu"
             data-cy="accountMenu"
+            style="border-left: disabled; border-right: disabled; border-bottom: disabled"
           >
             <span *ngIf="!account?.imageUrl">
               <fa-icon icon="user"></fa-icon>
@@ -198,19 +215,19 @@
                 <span jhiTranslate="global.menu.account.password">Password</span>
               </a>
             </li>
-            <li *ngSwitchCase="true">
+            <li *ngSwitchCase="false">
               <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
                 <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
                 <span jhiTranslate="global.menu.account.logout">Sign out</span>
               </a>
             </li>
-            <li *ngSwitchCase="false">
+            <li *ngSwitchCase="true">
               <a class="dropdown-item" (click)="login()" id="login" data-cy="login">
                 <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
                 <span jhiTranslate="global.menu.account.login">Sign in</span>
               </a>
             </li>
-            <li *ngSwitchCase="false">
+            <li *ngSwitchCase="true">
               <a
                 class="dropdown-item"
                 routerLink="account/register"
@@ -226,20 +243,27 @@
         </li>
       </ul>
     </div>
-    <a class="nav-link" [routerLink]="'login'" id="account-menu" data-cy="accountMenu">
-      <span *ngIf="!account?.imageUrl">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="user"></fa-icon>
-        <p jhiTranslate="global.menu.account.main">Account</p>
-      </span>
+    <a class="nav-link" [routerLink]="'/'" (click)="login()" routerLinkActive="active">
+      <div class="row" *ngIf="!account?.imageUrl">
+        <div class="col" style="text-align: center">
+          <fa-icon icon="user"></fa-icon>
+          <p>{{ untukSessionUserName }} / {{ untukSessionRole }}</p>
+        </div>
+        <!-- <span>{{untukSessionRole}}</span>
+        <span>{{untukSessionUserName}}</span>
+        <span>{{untukSessionFullName}}</span>
+        <span>{{untukSessionKodeCabang}}</span> -->
+      </div>
     </a>
   </div>
 </nav>
-<nav class="nav nav-pills nav-justified" id="nk-sidebar" *ngIf="element == true">
+<nav [ngSwitch]="untukSessionRole" class="nav nav-pills nav-justified" id="nk-sidebar" *ngIf="element == true">
   <a
     class="nav-item nav-link"
     routerLink="daftar-aplikasi-waiting-assigment"
     [routerLinkActive]="'active'"
     [routerLinkActiveOptions]="{ exact: true }"
+    *ngSwitchCase="'AO'"
   >
     <h6>Daftar Aplikasi Waiting Assigment</h6>
   </a>
@@ -248,6 +272,7 @@
     routerLink="daftar-aplikasi-on-process"
     [routerLinkActive]="'active'"
     [routerLinkActiveOptions]="{ exact: true }"
+    *ngSwitchCase="'AO'"
   >
     <h6>Daftar Aplikasi On Process</h6>
   </a>
@@ -256,25 +281,62 @@
     routerLink="daftar-aplikasi-waiting-update-status"
     [routerLinkActive]="'active'"
     [routerLinkActiveOptions]="{ exact: true }"
+    *ngSwitchCase="'AO'"
   >
     <h6>Daftar Aplikasi Waiting Update Satatus</h6>
   </a>
-  <a class="nav-item nav-link" routerLink="analisa-keuangan" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+  <a
+    class="nav-item nav-link"
+    routerLink="analisa-keuangan"
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    *ngSwitchCase="'APPRAISAL'"
+  >
     <h6>Analisa Keuangan</h6>
   </a>
-  <a class="nav-item nav-link" routerLink="data-calon-nasabah" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+  <a
+    class="nav-item nav-link"
+    routerLink="data-calon-nasabah"
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    *ngSwitchCase="'APPRAISAL'"
+  >
     <h6>Detail Analisa</h6>
   </a>
-  <a class="nav-item nav-link" routerLink="data-kantor" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+  <a
+    class="nav-item nav-link"
+    routerLink="data-kantor"
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    *ngSwitchCase="'APPRAISAL'"
+  >
     <h6>Data Kantor</h6>
   </a>
-  <a class="nav-item nav-link" routerLink="mutasi-rekening" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+  <a
+    class="nav-item nav-link"
+    routerLink="mutasi-rekening"
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    *ngSwitchCase="'APPRAISAL'"
+  >
     <h6>Mutasi Rekening</h6>
   </a>
-  <a class="nav-item nav-link" routerLink="sturktur-pembiayaan" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+  <a
+    class="nav-item nav-link"
+    routerLink="sturktur-pembiayaan"
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    *ngSwitchCase="'APPRAISAL'"
+  >
     <h6>Struktur Pembiayaan</h6>
   </a>
-  <a class="nav-item nav-link" routerLink="checklist-document" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+  <a
+    class="nav-item nav-link"
+    routerLink="checklist-document"
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    *ngSwitchCase="'APPRAISAL'"
+  >
     <h6>Checklist Document</h6>
   </a>
   <a
@@ -283,6 +345,7 @@
     routerLink="surat-persetujuan"
     [routerLinkActive]="'active'"
     [routerLinkActiveOptions]="{ exact: true }"
+    *ngSwitchCase="'APPRAISAL'"
   >
     <h6>Surat Persetujuan</h6>
   </a>
