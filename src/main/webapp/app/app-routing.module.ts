@@ -76,7 +76,7 @@ import { PersonalInfoComponent } from './data-entry/personal-info/personal-info.
           component: DataKantorComponent,
         },
         {
-          path: 'data-rumah',
+          path: 'analisa-keuangan',
           component: DataRumahComponent,
         },
         {

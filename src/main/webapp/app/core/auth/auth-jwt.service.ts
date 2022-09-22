@@ -7,9 +7,16 @@ import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { ApplicationConfigService } from '../config/application-config.service';
 import { Login } from 'app/login/login.model';
 
-type JwtToken = {
-  id_token: string;
-};
+class JwtToken {
+  code?: number;
+  message?: string;
+  result?: any;
+  token?: string;
+  fullname: any;
+  groupname?: string;
+  kd_cabang?: number;
+  username?: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthServerProvider {
@@ -30,7 +37,7 @@ export class AuthServerProvider {
     return (
       this.http
         // .post<JwtToken>(this.applicationConfigService.getEndpointFor('api/authenticate'), credentials)
-        .post<JwtToken>(this.applicationConfigService.getEndpointFor('http://10.20.81.186:8096/token/generate-token'), credentials)
+        .post<any>(this.applicationConfigService.getEndpointFor('http://10.20.81.186:8096/token/generate-token'), credentials)
         // .pipe(map(response => this.authenticateSuccess(response, credentials.rememberMe)));
         .pipe(map(response => this.authenticateSuccess(response)))
     );
@@ -40,13 +47,40 @@ export class AuthServerProvider {
     return new Observable(observer => {
       this.localStorageService.clear('authenticationToken');
       this.sessionStorageService.clear('authenticationToken');
+      // //////role//////////////
+      this.localStorageService.clear('sessionRole');
+      this.sessionStorageService.clear('sessionRole');
+      // /////username///////////
+      this.localStorageService.clear('sessionUserName');
+      this.sessionStorageService.clear('sessionUserName');
+      // //////fullname/////////
+      this.localStorageService.clear('sessionFullName');
+      this.sessionStorageService.clear('sessionFullName');
+      // /////kodebarang//////////
+      this.localStorageService.clear('sessionKdCabang');
+      this.sessionStorageService.clear('sessionKdCabang');
       observer.complete();
     });
   }
 
   private authenticateSuccess(response: JwtToken): void {
-    const jwt = response.id_token;
+    const jwt = response.result?.token;
+    const sessionRole = response.result?.groupname;
+    const sessionUserName = response.result?.username;
+    const sessionFullName = response.result?.fullname;
+    const sessionKdCabang = response.result?.kd_cabang;
+    // console.warn('ttttoookkkkeeeennnn',response)
+    // console.warn('ttttoookkkkeeeennnn22',response.result?.groupname)
+    console.warn('token ', jwt);
+    console.warn('role ', sessionRole);
+    console.warn('username ', sessionUserName);
+    console.warn('full name ', sessionFullName);
+    console.warn('kode cabang ', sessionKdCabang);
     // if (rememberMe) {
+    this.localStorageService.store('sessionRole', sessionRole);
+    this.localStorageService.store('sessionUserName', sessionUserName);
+    this.localStorageService.store('sessionFullName', sessionFullName);
+    this.localStorageService.store('sessionKdCabang', sessionKdCabang);
     this.localStorageService.store('authenticationToken', jwt);
     this.sessionStorageService.clear('authenticationToken');
     // } else {

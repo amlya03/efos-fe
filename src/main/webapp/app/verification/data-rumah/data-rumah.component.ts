@@ -3,10 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Editor } from 'ngx-editor';
 import { ServiceVerificationService } from '../service/service-verification.service';
-import { refHubunganEmergency } from '../service/config/refHubunganEmergency.model';
-import { refStatusPerkawinan } from '../service/config/refStatusPerkawinan.model';
 
 @Component({
   selector: 'jhi-data-rumah',
@@ -14,12 +11,8 @@ import { refStatusPerkawinan } from '../service/config/refStatusPerkawinan.model
   styleUrls: ['./data-rumah.component.scss'],
 })
 export class DataRumahComponent implements OnInit {
-  editor!: Editor;
-  html = '';
-  dataRumahForm!: FormGroup;
+  analisaKeuanganForm!: FormGroup;
   submitted = false;
-  refHubunganEmergency?: refHubunganEmergency[];
-  refStatusPerkawinan?: refStatusPerkawinan[];
 
   constructor(
     protected dataRumah: ServiceVerificationService,
@@ -31,36 +24,17 @@ export class DataRumahComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.editor = new Editor();
-
     // ////////// Validasi \\\\\\\\\\\\\\\\\
-    this.dataRumahForm = this.formBuilder.group({
-      tanggal_verification: ['', Validators.required],
-      no_customer: ['', [Validators.required, Validators.minLength(12)]],
-      hubungan_dengen_pemberi_keterangan: ['', Validators.required],
-      pemberi_keterangan: ['', Validators.required],
-      alamat_rumah: ['', Validators.required],
-      rt: ['', Validators.required],
-      rw: ['', Validators.required],
-      provinsi: ['', Validators.required],
-      kota: ['', Validators.required],
-      kecamatan: ['', Validators.required],
-      kelurahan: ['', Validators.required],
-      kode_pos: ['', Validators.required],
-      tanggal_lahir: ['', Validators.required],
-      pedidikan: ['', Validators.required],
-      status_menikah: ['', Validators.required],
+    this.analisaKeuanganForm = this.formBuilder.group({
+      nama: ['', Validators.required],
+      nama_perusahaan: ['', Validators.required],
+      alamat_perusahaan: ['', Validators.required],
+      no_telepon_perusahaan: ['', Validators.required],
+      nama_yang_dihubungi: ['', Validators.required],
+      jabatan_yang_dihubungi: ['', Validators.required],
+      tanggal_permintaan: ['', Validators.required],
       tanggal_pemeriksa: ['', Validators.required],
-      nama_pasangan: ['', Validators.required],
-      pekerjaan_pasangan: ['', Validators.required],
-      nama_ibu_kandung: ['', Validators.required],
-      jumlah_tanggunan: ['', Validators.required],
-      karakter_nasabah: ['', Validators.required],
-      fasilitas_pembiayaan_ke: ['', Validators.required],
-      kondisi_lingkungan: ['', Validators.required],
-      akses_jalan_ke_rumah_tinggal: ['', Validators.required],
-      jumlah_kendaraan: ['', Validators.required],
-      kesimpulan_hasil_investigasi: ['', Validators.required],
+      nama_pemeriksa: ['', Validators.required],
     });
 
     this.load();
@@ -68,7 +42,7 @@ export class DataRumahComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-    if (this.dataRumahForm.invalid) {
+    if (this.analisaKeuanganForm.invalid) {
       return;
     }
     // alert('Coba Validasi');
@@ -76,20 +50,12 @@ export class DataRumahComponent implements OnInit {
 
   load(): void {
     // ref Hubungan Emergency
-    this.dataRumah.getHubunganEmergency().subscribe(data => {
-      // console.warn('ref', data);
-      if (data.code === 200) {
-        this.refHubunganEmergency = data.result;
-      }
-    });
-
-    // ref Status Menikah
-    this.dataRumah.getStatusPerkawinan().subscribe(data => {
-      // console.warn('ref', data);
-      if (data.code === 200) {
-        this.refStatusPerkawinan = data.result;
-      }
-    });
+    // this.dataRumah.getHubunganEmergency().subscribe(data => {
+    //   // console.warn('ref', data);
+    //   if (data.code === 200) {
+    //     this.refHubunganEmergency = data.result;
+    //   }
+    // });
   }
 
   // Only Numbers
