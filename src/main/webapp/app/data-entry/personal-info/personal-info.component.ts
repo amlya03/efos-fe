@@ -21,10 +21,9 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 export class PersonalInfoComponent implements OnInit {
   numbers: number[] | undefined;
   datakiriman!: string;
-
   tampungandataygdibawa: any;
   daWa: any;
-  protected resourceUrlAprisal = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-verif/list_appraisal');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   constructor(
     private route: ActivatedRoute,
@@ -37,11 +36,10 @@ export class PersonalInfoComponent implements OnInit {
     });
   }
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
   ngOnInit(): void {
     this.load();
   }
-  load() {
+  load(): void {
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         // console.log(res.body?.result);
@@ -60,7 +58,12 @@ export class PersonalInfoComponent implements OnInit {
     return this.http.get<ApiResponse>(this.resourceUrl + this.datakiriman, { params: options, observe: 'response' });
   }
 
-  gotojobinfo(contohtampungancuref: any, contohtampungstatuskawain: any, contohtampunganappde: any, contohtampungankategoripekerjaan: any) {
+  gotojobinfo(
+    contohtampungancuref: any,
+    contohtampungstatuskawain: any,
+    contohtampunganappde: any,
+    contohtampungankategoripekerjaan: any
+  ): void {
     // this.onResponseSuccess(res);
     alert(contohtampungancuref);
     this.router.navigate(['/job-info'], {

@@ -26,6 +26,12 @@ export class ServiceVerificationService {
   );
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected allDataMutasiRekening = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-verif/list_verif_mutasi?si=de220820000152'
+  );
+  // //////////////////////Mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // ////////////////////// REFF \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   // ////////////////////// Ref Hubungan Angunan /////////////////////////////
   protected refHubunganAgunan = this.applicationConfigService.getEndpointFor(
@@ -85,6 +91,12 @@ export class ServiceVerificationService {
     return this.http.get<ApiResponse>(this.allDataWaitingUpdateStatus);
   }
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // /////////////////////get mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getMutasiRekening(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.allDataMutasiRekening);
+  }
+  // //////////////////////get mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ///////////////////// REF ////////////////////////////////////////////////
   // ////////////////////// Ref Hubungan Agunan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

@@ -1,80 +1,92 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
+import { HttpClient } from '@angular/common/http';
 import { dataentrymodel } from '../data-entry/data-entry-model';
-// import { DaftarAplikasiWaitingAssigmentService,EntityArrayResponseDaWa } from './data-entry-component.servis';
-import { createRequestOption } from 'app/core/request/request-util';
-// import { DaftarAplikasiWaitingAssigmentService, EntityArrayResponseDaWa } from '../service/daftar-aplikasi-waiting-assigment.service';
-
-export type EntityResponseDaWa = HttpResponse<dataentrymodel>;
-export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
+import { DataEntryService } from './services/data-entry.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+declare let $: any;
 
 @Component({
   selector: 'jhi-data-entry',
   templateUrl: './data-entry.component.html',
   styleUrls: ['./data-entry.component.scss'],
 })
-export class DataEntryComponent implements OnInit {
-  numbers: number[];
-  datakiriman!: string;
+export class DataEntryComponent implements OnInit, OnDestroy {
+  title = 'EFOS';
+  app_no_de!: string;
   tampungandataygdibawa: any;
-  daWa: any;
-  protected resourceUrlAprisal = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-verif/list_appraisal');
-  // protected resourceUrlAprisal = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-verif/list_appraisal_process');
-  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+  dataEntry?: dataentrymodel[];
+  valueCariButton = '';
+  kategori_pekerjaan = '';
+  a = '';
+  b = '';
+  c = '';
+  d = '';
+
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
 
   constructor(
-    // protected daWaService: DaftarAplikasiWaitingAssigmentService,
+    protected datEntryService: DataEntryService,
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    protected modalService: NgbModal
   ) {
-    this.numbers = Array(1000)
-      .fill(1)
-      .map((x, i) => i);
-
     this.route.queryParams.subscribe(params => {
-      this.datakiriman = params['datakiriman'];
+      this.app_no_de = params['app_no_de'];
     });
-
-    // this.tampungandataygdibawa = this.route.snapshot.paramMap.get('datakiriman');
   }
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_app_de?sc=20000');
 
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      processing: true,
+      responsive: true,
+    };
     this.load();
   }
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  load() {
-    this.getdataentry().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        // console.log(res.body?.result);
-        console.warn('tabel', res);
-        console.warn('!!!!!!!!!!!!!!!!!!!', this.datakiriman);
-        // console.warn('@@@@@@@@@@@@@', this.datakiriman);
-        // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
-        this.daWa = res.body?.result;
-        // this.onResponseSuccess(res);
-      },
+
+  load(): void {
+    this.datEntryService.getDaftarAplikasiDataEntry().subscribe(data => {
+      console.warn(data);
+      if (data.code === 200) {
+        this.dataEntry = (data as any).result;
+        this.dtTrigger.next(data.result);
+      }
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.resourceUrl, { params: options, observe: 'response' });
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+    // alert('knfsdkds');
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  cariButton(listKategori: string, inputNamaNasabah: string, inputNoAplikasi: string): void {
+    $('#dataTables-example').DataTable().columns(4).search(inputNoAplikasi).draw();
+    $('#dataTables-example').DataTable().columns(3).search(inputNamaNasabah).draw();
+    $('#dataTables-example').DataTable().columns(2).search(listKategori).draw();
+    // this.a = inputNoAplikasi
+    // this.b = inputNamaNasabah
+    // this.c = listKategori
+    // alert("1 "+ this.a)
+    // alert("2 "+ this.b)
+    // alert("3 "+ this.c)
+  }
+
+  clearInput(): void {
+    $('#dataTables-example').DataTable().columns().search('').draw();
+    // alert("bbb")
+  }
 
   viewdataentry(getAppNoDe: any): void {
-    alert(getAppNoDe);
-    this.router.navigate(['/personalinfo'], { queryParams: { datakiriman: getAppNoDe } });
+    // alert(getAppNoDe);
+    this.router.navigate(['/personalinfo'], { queryParams: { app_no_de: getAppNoDe } });
   }
 }

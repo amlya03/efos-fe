@@ -20,6 +20,8 @@ export class PekerjaanPasanganComponent implements OnInit {
   datakirimanakategoripekerjaan: any;
   datakirimanappde: any;
   daWa: any;
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobPasanganByCuref?sc=');
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -40,14 +42,11 @@ export class PekerjaanPasanganComponent implements OnInit {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobPasanganByCuref?sc=');
-
   ngOnInit(): void {
     this.load();
   }
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  load() {
+
+  load(): void {
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         // console.log(res.body?.result);
@@ -61,8 +60,7 @@ export class PekerjaanPasanganComponent implements OnInit {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  goto() {
+  goto(): void {
     // this.onResponseSuccess(res);
     alert('otw collateral1 ');
     console.warn('colalteral', this.datakirimanappde, this.datakirimancuref, this.datakirimanakategoripekerjaan);

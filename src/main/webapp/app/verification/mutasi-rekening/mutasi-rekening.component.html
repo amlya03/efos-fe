@@ -1,35 +1,35 @@
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Daftar Calon Nasabah</h3>
 </div>
-<form>
+<form [formGroup]="mutasiForm" (ngSubmit)="submitForm()">
   <div class="row form-material">
     <!-- ////Colom ke 1\\\\\ -->
     <div class="col">
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Nasabah</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nama" name="nama" placeholder="" />
+          <input readonly type="text" class="form-control" id="nama" name="nama" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">No Aplikasi</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="no_aplikasi" name="no_aplikasi" placeholder="" />
+          <input type="text" formControlName="app_no_de" class="form-control" id="no_aplikasi" name="no_aplikasi" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Fasilitas</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="fasilitas" name="fasilitas" placeholder="" />
+          <input type="text" readonly class="form-control" id="fasilitas" name="fasilitas" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Program</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="program" name="program" placeholder="" />
+          <input type="text" readonly class="form-control" id="program" name="program" />
         </div>
       </div>
     </div>
@@ -38,129 +38,101 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Product</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="product" name="product" placeholder="" />
+          <input type="text" readonly class="form-control" id="product" name="product" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Skema</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="skema" name="skema" placeholder="" />
+          <input type="text" readonly class="form-control" id="skema" name="skema" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tenor</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="tenor" name="tenor" placeholder="" />
+          <input type="text" readonly class="form-control" id="tenor" name="tenor" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nilai_pembiayaan" name="nilai_pembiayaan" placeholder="" />
+          <input type="text" readonly class="form-control" id="nilai_pembiayaan" name="nilai_pembiayaan" />
         </div>
       </div>
     </div>
   </div>
-</form>
-<p></p>
-<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Mutasi Rekening</h3>
-</div>
-<p></p>
-<p></p>
-<button class="btn btn-info" style="float: right">Tambah Data</button>
-<p></p>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nama Bank</th>
-      <th scope="col">No Rekening</th>
-      <th scope="col">Tahun</th>
-      <th scope="col">Bulan</th>
-      <th scope="col">Debet</th>
-      <th scope="col">Kredit</th>
-      <th scope="col">Saldo</th>
-      <th scope="col">Aksi</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>
-        <fa-icon icon="ellipsis"></fa-icon> &nbsp;&nbsp;&nbsp; <fa-icon icon="trash"></fa-icon> &nbsp;&nbsp;&nbsp;
-        <fa-icon icon="pencil-square"></fa-icon>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>
-        <fa-icon icon="ellipsis"></fa-icon> &nbsp;&nbsp;&nbsp; <fa-icon icon="trash"></fa-icon> &nbsp;&nbsp;&nbsp;
-        <fa-icon icon="pencil-square"></fa-icon>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>
-        <fa-icon icon="ellipsis"></fa-icon> &nbsp;&nbsp;&nbsp; <fa-icon icon="trash"></fa-icon> &nbsp;&nbsp;&nbsp;
-        <fa-icon icon="pencil-square"></fa-icon>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<p></p>
-<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pasangan)</h3>
-</div>
-<p></p>
-<p></p>
-<form>
+  <p></p>
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Mutasi Rekening</h3>
+  </div>
+  <p></p>
+  <p></p>
+  <button class="btn btn-info" style="float: right">Tambah Data</button>
+  <p></p>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th style="text-align: center" scope="col">#</th>
+        <th style="text-align: center" scope="col">Nama Bank</th>
+        <th style="text-align: center" scope="col">No Rekening</th>
+        <th style="text-align: center" scope="col">Tahun</th>
+        <th style="text-align: center" scope="col">Bulan</th>
+        <th style="text-align: center" scope="col">Debet</th>
+        <th style="text-align: center" scope="col">Kredit</th>
+        <th style="text-align: center" scope="col">Saldo</th>
+        <th style="text-align: center" scope="col">Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mutasiRekening of mutasiRekening; index as i">
+        <th style="text-align: center" scope="row">{{ i + 1 }}</th>
+        <td style="text-align: center">{{ mutasiRekening.nama_bank }}</td>
+        <td style="text-align: center">{{ mutasiRekening.no_rekening }}</td>
+        <td style="text-align: center">{{ mutasiRekening.tahun }}</td>
+        <td style="text-align: center">{{ mutasiRekening.bulan }}</td>
+        <td style="text-align: center">{{ mutasiRekening.debet }}</td>
+        <td style="text-align: center">{{ mutasiRekening.kredit }}</td>
+        <td style="text-align: center">{{ mutasiRekening.saldo }}</td>
+        <td style="text-align: center">
+          {{ mutasiRekening.id }} <fa-icon icon="ellipsis"></fa-icon> &nbsp;&nbsp;&nbsp; <fa-icon icon="trash"></fa-icon> &nbsp;&nbsp;&nbsp;
+          <fa-icon icon="pencil-square"></fa-icon>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p></p>
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pasangan)</h3>
+  </div>
+  <p></p>
+  <p></p>
   <div class="row form-material">
     <!-- ////Colom ke 1\\\\\ -->
     <div class="col">
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Bank</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nama_bank" name="nama_bank" placeholder="" />
+          <input type="text" formControlName="nama_bank" class="form-control" id="nama_bank" name="nama_bank" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">No Rekening</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="no_rekening" name="no_rekening" placeholder="" />
+          <input type="text" formControlName="no_rekening" class="form-control" id="no_rekening" name="no_rekening" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tahun</label>
         <div class="col-sm-8">
-          <select name="view_data_tahun" id="view_data_tahun" class="form-control">
-            <option value="">Pilih Data</option>
+          <select formControlName="tahun" name="view_data_tahun" id="view_data_tahun" class="form-control">
+            <!-- <option value="">Pilih Data</option> -->
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
           </select>
         </div>
       </div>
@@ -170,8 +142,20 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Bulan</label>
         <div class="col-sm-8">
-          <select name="view_data_bulan" id="view_data_bulan" class="form-control">
-            <option value="">Pilih Data</option>
+          <select formControlName="bulan" name="view_data_bulan" id="view_data_bulan" class="form-control">
+            <!-- <option value="">Pilih Data</option> -->
+            <option value="Januari">Januari</option>
+            <option value="Febuari">Febuari</option>
+            <option value="Maret">Maret</option>
+            <option value="April">April</option>
+            <option value="Mei">Mei</option>
+            <option value="Juni">Juni</option>
+            <option value="Juli">Juli</option>
+            <option value="Agustus">Agustus</option>
+            <option value="September">September</option>
+            <option value="Oktober">Oktober</option>
+            <option value="November">November</option>
+            <option value="Desember">Desember</option>
           </select>
         </div>
       </div>
@@ -179,19 +163,29 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Debet</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="debet" name="debet" placeholder="" />
+          <input formControlName="debet" type="text" class="form-control" id="debet" name="debet" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kredit</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="kredit" name="kredit" placeholder="" />
+          <input formControlName="kredit" type="text" class="form-control" id="kredit" name="kredit" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Saldo</label>
+        <div class="col-sm-8">
+          <input formControlName="saldo" type="text" class="form-control" id="saldo" name="saldo" />
         </div>
       </div>
     </div>
   </div>
   <p></p>
-  <button class="btn btn-info" style="float: right">Simpan Data</button>
+  <div class="row">
+    <div class="col" style="text-align: center">
+      <button type="submit" class="btn btn-info">Simpan Data</button>
+    </div>
+  </div>
 </form>
-<p></p>

@@ -81,6 +81,7 @@ import { DaftarAplikasiPilihComponent } from './initial-data-entry/daftar-aplika
     NgxPaginationModule,
     NgxEditorModule,
     ReactiveFormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     Title,
@@ -133,7 +134,7 @@ import { DaftarAplikasiPilihComponent } from './initial-data-entry/daftar-aplika
     DataCalonNasabahComponent,
     DataRumahComponent,
     DataKantorComponent,
-    DataEntryComponent,
+    MutasiRekeningComponent,
     PersonalInfoComponent,
     JobInfoComponent,
     DataPasanganComponent,
