@@ -85,14 +85,18 @@
                       <td style="text-align: center">{{ daWa.id }}</td>
                       <td style="text-align: center">{{ daWa.app_no_ide }}</td>
                       <td style="text-align: center">{{ daWa.curef }}</td>
-                      <td style="text-align: center">{{ daWa.nama }}</td>
+                      <td style="text-align: center">{{ daWa.kategori_pekerjaan }}</td>
                       <td hidden>{{ daWa.kategori_pekerjaan === 'Fix Income' }}</td>
                       <td style="text-align: center">{{ daWa.status_aplikasi }}</td>
                       <!-- <td style="text-align: center"><input (change)="getProoduct($event, daWa.app_no_de, daWa.status_aplikasi)" type="checkbox" /></td> -->
                       <td style="text-align: center">
-                        <!-- <button (click)="viewdataentry(daWa.app_no_de)" type="button" class="btn btn-outline-secondary"> -->
-                        <!-- <fa-icon icon="ellipsis"></fa-icon><br />Detail
-                                          </button> -->
+                        <button
+                          (click)="viewdataide(daWa.id_customer, daWa.kategori_pekerjaan)"
+                          type="button"
+                          class="btn btn-outline-secondary"
+                        >
+                          --> <fa-icon icon="ellipsis"></fa-icon><br />Detail
+                        </button>
                       </td>
                     </tr>
                   </tbody>

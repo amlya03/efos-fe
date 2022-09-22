@@ -79,7 +79,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       params: options,
       observe: 'response',
     });
-    alert('CONTOH' + token);
+    // alert('CONTOH' + token);
 
     // return this.http.get<ApiResponse>(this.getprovinsi, { params: options, observe: 'response' });
   }
@@ -91,14 +91,16 @@ export class InitialDataEntryFixComponent implements OnInit {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     };
+    const kodepotongan = kodekota.split('|');
 
     //  this.http.get('http://10.20.82.12:8083/wilayahSvc/getProvinsi/',httpOptions)
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKota/' + kodekota, {
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKota/' + kodepotongan[0], {
       headers: httpOptions,
       params: options,
       observe: 'response',
     });
-    alert('CONTOHkota');
+    // alert('CONTOHkota');
+    alert(kodepotongan[0]);
 
     // return this.http.get<ApiResponse>(this.getprovinsi, { params: options, observe: 'response' });
   }
@@ -109,12 +111,14 @@ export class InitialDataEntryFixComponent implements OnInit {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     };
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKec/' + kodekecamatan, {
+
+    const kodepotongan = kodekecamatan.split('|');
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKec/' + kodepotongan[0], {
       headers: httpOptions,
       params: options,
       observe: 'response',
     });
-    alert('CONTOHkecamatan');
+    // alert('CONTOHkecamatan');
 
     // return this.http.get<ApiResponse>(this.getprovinsi, { params: options, observe: 'response' });
   }
@@ -125,12 +129,13 @@ export class InitialDataEntryFixComponent implements OnInit {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     };
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKdPos/' + kodekecamatan, {
+    const kodepotongan = kodekecamatan.split('|');
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKdPos/' + kodepotongan[0], {
       headers: httpOptions,
       params: options,
       observe: 'response',
     });
-    alert('CONTOHkecamatan');
+    // alert('CONTOHkecamatan');
 
     // return this.http.get<ApiResponse>(this.getprovinsi, { params: options, observe: 'response' });
   }
@@ -141,21 +146,71 @@ export class InitialDataEntryFixComponent implements OnInit {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     };
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKel/' + kodekecamatan, {
+    const kodepotongan = kodekecamatan.split('|');
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKel/' + kodepotongan[0], {
       headers: httpOptions,
       params: options,
       observe: 'response',
     });
-    alert('CONTOHkecamatan');
+    // alert('CONTOHkecamatan');
 
     // return this.http.get<ApiResponse>(this.getprovinsi, { params: options, observe: 'response' });
   }
 
-  gotoprescreaning() {
-    alert(this.app_no_ide);
-    this.router.navigate(['/hasilprescreening'], {
-      queryParams: {},
-    });
+  gotoprescreaning(getappide: any, kodeposget: any) {
+    const kirimanprovinsi = this.provinsi_cabang.split('|');
+    const kirimankabkota = this.kabkota_cabang.split('|');
+    const kirimankecamatan = this.kecamatan.split('|');
+    const kirimankelurahan = this.kelurahan.split('|');
+
+    alert(this.kode_pos);
+
+    alert(this.provinsi_cabang);
+    this.http
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
+        nama: this.nama,
+        jenis_kelamin: this.jenis_kelamin,
+        app_no_ide: getappide,
+        tanggal_lahir: this.tanggal_lahir,
+        tempat_lahir: this.tempat_lahir,
+        status_perkawinan: this.status_perkawinan,
+        agama: this.agama,
+        pendidikan: this.pendidikan,
+        kewarganegaraan: this.kewarganegaraan,
+        nama_ibu_kandung: this.nama_ibu_kandung,
+        npwp: this.npwp,
+        alamat_ktp: this.alamat_ktp,
+        provinsi: kirimanprovinsi[1],
+        kabkota: kirimankabkota[1],
+        kecamatan: kirimankecamatan[1],
+        kelurahan: kirimankelurahan[1],
+        kode_pos: kodeposget,
+        rt: this.rt,
+        rw: this.rw,
+        no_ktp: this.no_ktp,
+        tanggal_terbit_ktp: this.tanggal_terbit_ktp,
+        tanggal_exp_ktp: this.tanggal_exp_ktp,
+        no_handphone: this.no_handphone,
+
+        // status_aplikasi: this.kirimStatusAplikasi[i],
+      })
+      .subscribe({
+        next: data => {
+          this.router.navigate(['/hasilprescreening'], {
+            queryParams: {},
+          });
+        },
+        error: error => {
+          this.errorMessage = error.message;
+          console.error('There was an error!', error);
+          alert(this.errorMessage);
+          alert('kiriman error');
+        },
+      });
+
+    // this.router.navigate(['/daftaraplikasiide'], {
+    //   queryParams: {},
+    // });
   }
 
   postUpdateStatus(): void {
@@ -217,31 +272,96 @@ export class InitialDataEntryFixComponent implements OnInit {
   nama_ibu_kandung: string | undefined;
   npwp: string | undefined;
   alamat_ktp: string | undefined;
-  provinsi_cabang: string | undefined;
-  kabkota_cabang: string | undefined;
-  kecamatan: string | undefined;
-  kelurahan: string | undefined;
+  provinsi_cabang: any;
+  kabkota_cabang: any;
+  kecamatan: any;
+  kelurahan: any;
   kode_pos: string | undefined;
 
-  gotodaftaraplikasiide(getappide: any) {
-    alert(this.nama);
+  rt: string | undefined;
+  rw: string | undefined;
+  no_ktp: string | undefined;
+  tanggal_terbit_ktp: string | undefined;
+  tanggal_exp_ktp: string | undefined;
+  no_handphone: string | undefined;
+
+  gotodaftaraplikasiide(getappide: any, kodeposget: any) {
+    // const kodepotongan =this.nama.split("|");
+    const kirimanprovinsi = this.provinsi_cabang.split('|');
+    const kirimankabkota = this.kabkota_cabang.split('|');
+    const kirimankecamatan = this.kecamatan.split('|');
+    const kirimankelurahan = this.kelurahan.split('|');
+
+    const headers = 'Access-Control-Allow-Origin';
+
+    //     let headers = new Headers();
+    // headers.append('Content-Type', 'application/json');
+    // headers.append('X-Authorization','');
+    // headers.append('Authorization', 'Bearer ' );
+
+    const body = {
+      nama: this.nama,
+      kategori_pekerjaan: 'Fixincome',
+      curef: ' ',
+      jenis_kelamin: this.jenis_kelamin,
+      usia: '0',
+      app_no_ide: getappide,
+      tanggal_lahir: this.tanggal_lahir,
+      tempat_lahir: this.tempat_lahir,
+      status_perkawinan: this.status_perkawinan,
+      agama: this.agama,
+      pendidikan: this.pendidikan,
+      kewarganegaraan: this.kewarganegaraan,
+      nama_ibu_kandung: this.nama_ibu_kandung,
+      npwp: this.npwp,
+      alamat_ktp: this.alamat_ktp,
+      provinsi: kirimanprovinsi[1],
+      kabkota: kirimankabkota[1],
+      kecamatan: kirimankecamatan[1],
+      kelurahan: kirimankelurahan[1],
+      kode_pos: kodeposget,
+      rt: this.rt,
+      rw: this.rw,
+      no_ktp: this.no_ktp,
+      tanggal_terbit_ktp: this.tanggal_terbit_ktp,
+      tanggal_exp_ktp: this.tanggal_exp_ktp,
+      no_handphone: this.no_handphone,
+    };
+    alert(this.kode_pos);
+
+    alert(this.provinsi_cabang);
+
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
-        nama: this.nama,
-        jenis_kelamin: this.jenis_kelamin,
-        app_no_ide: getappide,
-        tanggal_lahir: this.tanggal_lahir,
-        tempat_lahir: this.tempat_lahir,
-        status_perkawinan: this.status_perkawinan,
-        agama: this.agama,
-        pendidikan: this.pendidikan,
-        kewarganegaraan: this.kewarganegaraan,
-        nama_ibu_kandung: this.nama_ibu_kandung,
-        npwp: this.npwp,
-        alamat_ktp: this.alamat_ktp,
-        provinsi_cabang: this.provinsi_cabang,
-        // status_aplikasi: this.kirimStatusAplikasi[i],
-      })
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', body, {})
+
+      //   this.http.post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', { nama: this.nama,
+      //   kategori_pekerjaan:'Fixincome',
+      //   curef:'curef',
+      //   jenis_kelamin: this.jenis_kelamin,
+      //   usia:'0',
+      //   app_no_ide: getappide,
+      //   tanggal_lahir: this.tanggal_lahir,
+      //   tempat_lahir: this.tempat_lahir,
+      //   status_perkawinan: this.status_perkawinan,
+      //   agama: this.agama,
+      //   pendidikan: this.pendidikan,
+      //   kewarganegaraan: this.kewarganegaraan,
+      //   nama_ibu_kandung: this.nama_ibu_kandung,
+      //   npwp: this.npwp,
+      //   alamat_ktp: this.alamat_ktp,
+      //   provinsi: kirimanprovinsi[1],
+      //   kabkota:kirimankabkota[1],
+      //   kecamatan: kirimankecamatan[1],
+      //   kelurahan:kirimankelurahan[1],
+      //   kode_pos: kodeposget,
+      //   rt: this.rt,
+      //   rw: this.rw,
+      //   no_ktp: this.no_ktp,
+      //   tanggal_terbit_ktp: this.tanggal_terbit_ktp,
+      //   tanggal_exp_ktp: this.tanggal_exp_ktp,
+      //   no_handphone: this.no_handphone, }).subscribe(data => {
+      //     this.postId = data.id;
+      // })
       .subscribe({
         next: data => {
           this.router.navigate(['/daftaraplikasiide'], {
@@ -251,13 +371,14 @@ export class InitialDataEntryFixComponent implements OnInit {
         error: error => {
           this.errorMessage = error.message;
           console.error('There was an error!', error);
-          alert('error');
+          alert(this.errorMessage);
+          alert('kiriman error');
         },
       });
 
-    // this.router.navigate(['/daftaraplikasiide'], {
-    //   queryParams: {},
-    // });
+    this.router.navigate(['/daftaraplikasiide'], {
+      queryParams: {},
+    });
   }
 
   onSubmit(event: any) {
@@ -310,15 +431,13 @@ export class InitialDataEntryFixComponent implements OnInit {
 
   onChangekelurahan(selectedStatus: any) {
     alert(this.postId);
-    this.getkelurahan(this.postId, selectedStatus).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kodepos', res);
+    const datakodepos = selectedStatus.split('|');
 
-        this.daWakodepos = res.body?.result;
-        alert(this.postId);
-        // this.onResponseSuccess(res);
-      },
-    });
+    this.daWakodepos = datakodepos[0];
+
+    alert(this.daWakodepos);
+    // this.onResponseSuccess(res);
+
     console.log(selectedStatus);
   }
 }
