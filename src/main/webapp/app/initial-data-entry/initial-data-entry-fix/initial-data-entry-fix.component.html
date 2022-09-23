@@ -57,7 +57,7 @@
                       />
                     </div>
                     <div class="col-sm-8">
-                      <input type="hidden" id="curef_id" name="curef_id" class="form-control" />
+                      <input type="hidden" [value]="daWacuref" id="curef_id" name="curef_id" class="form-control" />
                     </div>
                   </div>
                   <div class="form-group row">
@@ -408,7 +408,7 @@
                     id="prosesData"
                     name="proses"
                     value="proses"
-                    (click)="gotoprescreaning(daWa, daWakodepos)"
+                    (click)="gotoprescreaning(daWa, daWakodepos, daWacuref)"
                     type="submit"
                     style="float: right"
                   >
@@ -419,7 +419,7 @@
                     id="simpandata2"
                     name="simpan"
                     value="simpan"
-                    (click)="gotodaftaraplikasiide(daWa, daWakodepos)"
+                    (click)="gotodaftaraplikasiide(daWa, daWakodepos, daWacuref)"
                     type="submit"
                     style="float: right"
                   >
@@ -690,7 +690,7 @@
                       id="prosesData"
                       name="proses"
                       value="proses"
-                      (click)="gotoprescreaning(daWa, daWakodepos)"
+                      (click)="gotoprescreaning(daWa, daWakodepos, daWacuref)"
                       type="submit"
                       style="float: right"
                     >
@@ -701,7 +701,7 @@
                       id="simpandata"
                       name="simpan"
                       value="simpan"
-                      (click)="gotodaftaraplikasiide(daWa, daWakodepos)"
+                      (click)="gotodaftaraplikasiide(daWa, daWakodepos, daWacuref)"
                       type="submit"
                       style="float: right"
                     >

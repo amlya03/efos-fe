@@ -6,6 +6,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
+import { LocalStorageService } from 'ngx-webstorage';
 // import { jobinfolist } from './job-info-modellist';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -23,10 +24,14 @@ export class DaftarAplikasiIdeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    private localstorateservice: LocalStorageService
   ) {}
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/list_app_ide?sc=20000');
+  protected koderetirvt = this.localstorateservice.retrieve('sessionKdCabang');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-ide/list_app_ide?sc=' + this.koderetirvt
+  );
 
   ngOnInit(): void {
     this.load();
