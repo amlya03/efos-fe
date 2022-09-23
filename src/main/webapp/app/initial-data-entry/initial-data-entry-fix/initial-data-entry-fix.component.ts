@@ -26,12 +26,15 @@ export class InitialDataEntryFixComponent implements OnInit {
   daWakecamatan: any;
   daWakelurahan: any;
   daWakodepos: any;
+  daWacuref: any;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService
   ) {}
+
+  protected getcuref = this.applicationConfigService.getEndpointFor(' http://10.20.34.178:8805/api/v1/efos-ide/getCuref');
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/getAppId');
   protected getprovinsi = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/wilayahSvc/getProvinsi/');
   protected gettokenducapil = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/token/generate-token');
@@ -51,6 +54,13 @@ export class InitialDataEntryFixComponent implements OnInit {
       },
     });
 
+    this.getcurefnih().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        this.daWacuref = res.body?.result;
+        // this.onResponseSuccess(res);
+      },
+    });
+
     // this.getdataentry1().subscribe({
     //   next: (res: EntityArrayResponseDaWa) => {
     //     console.warn('PROVINSI', res);
@@ -65,6 +75,12 @@ export class InitialDataEntryFixComponent implements OnInit {
     const options = createRequestOption(req);
     return this.http.get<ApiResponse>(this.resourceUrl, { params: options, observe: 'response' });
   }
+
+  getcurefnih(req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    return this.http.get<ApiResponse>(this.getcuref, { params: options, observe: 'response' });
+  }
+
   getdataentry1(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     const httpOptions = {
@@ -157,60 +173,113 @@ export class InitialDataEntryFixComponent implements OnInit {
     // return this.http.get<ApiResponse>(this.getprovinsi, { params: options, observe: 'response' });
   }
 
-  gotoprescreaning(getappide: any, kodeposget: any) {
+  gotoprescreaning(getappide: any, kodeposget: any, getcuref: any) {
     const kirimanprovinsi = this.provinsi_cabang.split('|');
     const kirimankabkota = this.kabkota_cabang.split('|');
     const kirimankecamatan = this.kecamatan.split('|');
     const kirimankelurahan = this.kelurahan.split('|');
+    const httpOptions = {
+      'Content-Type': 'text/plain',
+    };
 
-    alert(this.kode_pos);
+    const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
+    let options = { headers: headers };
+    const body = {
+      nama: this.nama,
+      nama_pasangan: '',
+      kategori_pekerjaan: 'Fixincome',
+      curef: getcuref,
+      jenis_kelamin: this.jenis_kelamin,
+      jenis_kelamin_pasangan: '',
+      usia: '0',
+      app_no_ide: getappide,
+      tanggal_lahir: this.tanggal_lahir,
+      tanggal_lahir_pasangan: '',
+      tempat_lahir: this.tempat_lahir,
+      tempat_lahir_pasangan: '',
+      status_perkawinan: this.status_perkawinan,
+      status_alamat: '',
+      status_kendaraan: '',
+      status_ktp: '',
+      status_ktp_pasangan: '',
+      status_rumah: '',
+      agama: this.agama,
+      agama_pasangan: '',
+      pendidikan: this.pendidikan,
+      pendidikan_pasangan: '',
+      kewarganegaraan: this.kewarganegaraan,
+      kewarganegaraan_pasangan: '',
+      nama_ibu_kandung: this.nama_ibu_kandung,
+      nama_ibu_kandung_pasangan: '',
+      npwp: this.npwp,
+      npwp_pasangan: '',
+      alamat_ktp: this.alamat_ktp,
+      alamat_ktp_pasangan: '',
+      alamat_domisili: '',
+      provinsi: kirimanprovinsi[1],
+      provinsi_domisili: '',
+      provinsi_pasangan: '',
+      kabkota: kirimankabkota[1],
+      kabkota_domisili: '',
+      kecamatan: kirimankecamatan[1],
+      kecamatan_domisili: '',
+      kecamatan_pasangan: '',
+      kelurahan: kirimankelurahan[1],
+      kelurahan_domisili: '',
+      kelurahan_pasangan: '',
+      kode_pos: kodeposget,
+      kode_pos_domisili: '',
+      kode_pos_pasangan: '',
+      lama_menetap: '',
+      cabang: '',
+      created_by: '',
+      created_date: '',
+      email: '',
+      email_pasangan: '',
+      id: 0,
+      jumlah_anak: '',
+      rt: this.rt,
+      rt_domisili: '',
+      rt_pasangan: '',
+      rw: this.rw,
+      rw_domisili: '',
+      rw_pasangan: '',
+      no_ktp: this.no_ktp,
+      no_ktp_pasangan: '',
+      tanggal_terbit_ktp: this.tanggal_terbit_ktp,
+      tanggal_terbit_ktp_pasangan: '',
+      tanggal_exp_ktp: this.tanggal_exp_ktp,
+      tipe_kendaraan: '',
+      no_handphone: this.no_handphone,
+      no_handphone_pasangan: '',
+      no_telepon: '',
+      updated_by: '',
+      updated_date: '',
+      usia_pasangan: '',
+    };
+    // alert(kodeposget);
+    // alert(this.provinsi_cabang);
+    this.http.post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', body, { headers });
+    // .subscribe({
 
-    alert(this.provinsi_cabang);
-    this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
-        nama: this.nama,
-        jenis_kelamin: this.jenis_kelamin,
-        app_no_ide: getappide,
-        tanggal_lahir: this.tanggal_lahir,
-        tempat_lahir: this.tempat_lahir,
-        status_perkawinan: this.status_perkawinan,
-        agama: this.agama,
-        pendidikan: this.pendidikan,
-        kewarganegaraan: this.kewarganegaraan,
-        nama_ibu_kandung: this.nama_ibu_kandung,
-        npwp: this.npwp,
-        alamat_ktp: this.alamat_ktp,
-        provinsi: kirimanprovinsi[1],
-        kabkota: kirimankabkota[1],
-        kecamatan: kirimankecamatan[1],
-        kelurahan: kirimankelurahan[1],
-        kode_pos: kodeposget,
-        rt: this.rt,
-        rw: this.rw,
-        no_ktp: this.no_ktp,
-        tanggal_terbit_ktp: this.tanggal_terbit_ktp,
-        tanggal_exp_ktp: this.tanggal_exp_ktp,
-        no_handphone: this.no_handphone,
+    //   next: data => {
+    //     this.router.navigate(['/hasilprescreening'], {
+    //       queryParams: {},
+    //     });
+    //   },
+    //   error: error => {
+    //     this.errorMessage = error.message;
+    //     console.error('There was an error!', error);
+    //     // alert(this.errorMessage);
+    //     alert('kekirim gk yah ?');
 
-        // status_aplikasi: this.kirimStatusAplikasi[i],
-      })
-      .subscribe({
-        next: data => {
-          this.router.navigate(['/hasilprescreening'], {
-            queryParams: {},
-          });
-        },
-        error: error => {
-          this.errorMessage = error.message;
-          console.error('There was an error!', error);
-          alert(this.errorMessage);
-          alert('kiriman error');
-        },
-      });
-
-    // this.router.navigate(['/daftaraplikasiide'], {
-    //   queryParams: {},
-    // });
+    //   },
+    // }
+    // );
+    // alert(this.postId);
+    //       this.router.navigate(['/hasilprescreening'], {
+    //         queryParams: {},
+    //       });
   }
 
   postUpdateStatus(): void {
@@ -285,100 +354,215 @@ export class InitialDataEntryFixComponent implements OnInit {
   tanggal_exp_ktp: string | undefined;
   no_handphone: string | undefined;
 
-  gotodaftaraplikasiide(getappide: any, kodeposget: any) {
+  gotodaftaraplikasiide(getappide: any, kodeposget: any, getcuref: any) {
     // const kodepotongan =this.nama.split("|");
     const kirimanprovinsi = this.provinsi_cabang.split('|');
     const kirimankabkota = this.kabkota_cabang.split('|');
     const kirimankecamatan = this.kecamatan.split('|');
     const kirimankelurahan = this.kelurahan.split('|');
 
-    const headers = 'Access-Control-Allow-Origin';
-
+    // const headers =   'Content-Type': 'application/json';
+    // headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     //     let headers = new Headers();
     // headers.append('Content-Type', 'application/json');
     // headers.append('X-Authorization','');
     // headers.append('Authorization', 'Bearer ' );
 
+    // {'Content-Type': 'application/json'}
+
+    const httpOptions = {
+      'Content-Type': 'text/plain',
+    };
+
+    const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
+
+    // let headers = new HttpHeaders();
+    // headers = headers.append('Access-Control-Allow-Origin', '*');
+    // headers = headers.append('Access-Control-Allow-Credentials', 'true');
+
+    let options = { headers: headers };
+
     const body = {
       nama: this.nama,
+      nama_pasangan: '',
       kategori_pekerjaan: 'Fixincome',
-      curef: ' ',
+      curef: getcuref,
       jenis_kelamin: this.jenis_kelamin,
+      jenis_kelamin_pasangan: '',
       usia: '0',
       app_no_ide: getappide,
       tanggal_lahir: this.tanggal_lahir,
+      tanggal_lahir_pasangan: '',
       tempat_lahir: this.tempat_lahir,
+      tempat_lahir_pasangan: '',
       status_perkawinan: this.status_perkawinan,
+      status_alamat: '',
+      status_kendaraan: '',
+      status_ktp: '',
+      status_ktp_pasangan: '',
+      status_rumah: '',
       agama: this.agama,
+      agama_pasangan: '',
       pendidikan: this.pendidikan,
+      pendidikan_pasangan: '',
       kewarganegaraan: this.kewarganegaraan,
+      kewarganegaraan_pasangan: '',
       nama_ibu_kandung: this.nama_ibu_kandung,
+      nama_ibu_kandung_pasangan: '',
       npwp: this.npwp,
+      npwp_pasangan: '',
       alamat_ktp: this.alamat_ktp,
+      alamat_ktp_pasangan: '',
+      alamat_domisili: '',
       provinsi: kirimanprovinsi[1],
+      provinsi_domisili: '',
+      provinsi_pasangan: '',
       kabkota: kirimankabkota[1],
+      kabkota_domisili: '',
       kecamatan: kirimankecamatan[1],
+      kecamatan_domisili: '',
+      kecamatan_pasangan: '',
       kelurahan: kirimankelurahan[1],
+      kelurahan_domisili: '',
+      kelurahan_pasangan: '',
       kode_pos: kodeposget,
+      kode_pos_domisili: '',
+      kode_pos_pasangan: '',
+      lama_menetap: '',
+      cabang: '',
+      created_by: '',
+      created_date: '',
+      email: '',
+      email_pasangan: '',
+      id: 0,
+      jumlah_anak: '',
       rt: this.rt,
+      rt_domisili: '',
+      rt_pasangan: '',
       rw: this.rw,
+      rw_domisili: '',
+      rw_pasangan: '',
       no_ktp: this.no_ktp,
+      no_ktp_pasangan: '',
       tanggal_terbit_ktp: this.tanggal_terbit_ktp,
+      tanggal_terbit_ktp_pasangan: '',
       tanggal_exp_ktp: this.tanggal_exp_ktp,
+      tipe_kendaraan: '',
       no_handphone: this.no_handphone,
+      no_handphone_pasangan: '',
+      no_telepon: '',
+      updated_by: '',
+      updated_date: '',
+      usia_pasangan: '',
     };
-    alert(this.kode_pos);
+    alert(kodeposget);
 
     alert(this.provinsi_cabang);
 
+    // this.http.post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', body, { headers })
+    // http://10.20.34.178:8805/api/v1/efos-ide/create_app_ide
+    // http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide
+    // this.http
+    //   .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', body,{headers: httpOptions} )
+
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', body, {})
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
+        headers: headers,
+        nama: this.nama,
+        nama_pasangan: '',
+        kategori_pekerjaan: 'Fixincome',
+        curef: getcuref,
+        jenis_kelamin: this.jenis_kelamin,
+        jenis_kelamin_pasangan: '',
+        usia: '0',
+        app_no_ide: getappide,
+        tanggal_lahir: this.tanggal_lahir,
+        tanggal_lahir_pasangan: '',
+        tempat_lahir: this.tempat_lahir,
+        tempat_lahir_pasangan: '',
+        status_perkawinan: this.status_perkawinan,
+        status_alamat: '',
+        status_kendaraan: '',
+        status_ktp: '',
+        status_ktp_pasangan: '',
+        status_rumah: '',
+        agama: this.agama,
+        agama_pasangan: '',
+        pendidikan: this.pendidikan,
+        pendidikan_pasangan: '',
+        kewarganegaraan: this.kewarganegaraan,
+        kewarganegaraan_pasangan: '',
+        nama_ibu_kandung: this.nama_ibu_kandung,
+        nama_ibu_kandung_pasangan: '',
+        npwp: this.npwp,
+        npwp_pasangan: '',
+        alamat_ktp: this.alamat_ktp,
+        alamat_ktp_pasangan: '',
+        alamat_domisili: '',
+        provinsi: kirimanprovinsi[1],
+        provinsi_domisili: '',
+        provinsi_pasangan: '',
+        kabkota: kirimankabkota[1],
+        kabkota_domisili: '',
+        kecamatan: kirimankecamatan[1],
+        kecamatan_domisili: '',
+        kecamatan_pasangan: '',
+        kelurahan: kirimankelurahan[1],
+        kelurahan_domisili: '',
+        kelurahan_pasangan: '',
+        kode_pos: kodeposget,
+        kode_pos_domisili: '',
+        kode_pos_pasangan: '',
+        lama_menetap: '',
+        cabang: '',
+        created_by: '',
+        created_date: '',
+        email: '',
+        email_pasangan: '',
+        id: 0,
+        jumlah_anak: '',
+        rt: this.rt,
+        rt_domisili: '',
+        rt_pasangan: '',
+        rw: this.rw,
+        rw_domisili: '',
+        rw_pasangan: '',
+        no_ktp: this.no_ktp,
+        no_ktp_pasangan: '',
+        tanggal_terbit_ktp: this.tanggal_terbit_ktp,
+        tanggal_terbit_ktp_pasangan: '',
+        tanggal_exp_ktp: this.tanggal_exp_ktp,
+        tipe_kendaraan: '',
+        no_handphone: this.no_handphone,
+        no_handphone_pasangan: '',
+        no_telepon: '',
+        updated_by: '',
+        updated_date: '',
+        usia_pasangan: '',
+      })
+      .subscribe(
+        resposne => {
+          console.log(resposne);
+        }
 
-      //   this.http.post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', { nama: this.nama,
-      //   kategori_pekerjaan:'Fixincome',
-      //   curef:'curef',
-      //   jenis_kelamin: this.jenis_kelamin,
-      //   usia:'0',
-      //   app_no_ide: getappide,
-      //   tanggal_lahir: this.tanggal_lahir,
-      //   tempat_lahir: this.tempat_lahir,
-      //   status_perkawinan: this.status_perkawinan,
-      //   agama: this.agama,
-      //   pendidikan: this.pendidikan,
-      //   kewarganegaraan: this.kewarganegaraan,
-      //   nama_ibu_kandung: this.nama_ibu_kandung,
-      //   npwp: this.npwp,
-      //   alamat_ktp: this.alamat_ktp,
-      //   provinsi: kirimanprovinsi[1],
-      //   kabkota:kirimankabkota[1],
-      //   kecamatan: kirimankecamatan[1],
-      //   kelurahan:kirimankelurahan[1],
-      //   kode_pos: kodeposget,
-      //   rt: this.rt,
-      //   rw: this.rw,
-      //   no_ktp: this.no_ktp,
-      //   tanggal_terbit_ktp: this.tanggal_terbit_ktp,
-      //   tanggal_exp_ktp: this.tanggal_exp_ktp,
-      //   no_handphone: this.no_handphone, }).subscribe(data => {
-      //     this.postId = data.id;
-      // })
-      .subscribe({
-        next: data => {
-          this.router.navigate(['/daftaraplikasiide'], {
-            queryParams: {},
-          });
-        },
-        error: error => {
-          this.errorMessage = error.message;
-          console.error('There was an error!', error);
-          alert(this.errorMessage);
-          alert('kiriman error');
-        },
-      });
+        //     {
+        //     next: data => {
+        //       this.router.navigate(['/daftaraplikasiide'], {
+        //         queryParams: {},
+        //       });
+        //     },
+        //     error: error => {
+        //       this.errorMessage = error.message;
+        //       console.error('There was an error!', error);
+        //       alert(this.errorMessage);
+        //       alert('kiriman error');
+        //     },
+        //   });
 
-    this.router.navigate(['/daftaraplikasiide'], {
-      queryParams: {},
-    });
+        // this.router.navigate(['/daftaraplikasiide'], {
+        //   queryParams: {},
+        // }
+      );
   }
 
   onSubmit(event: any) {

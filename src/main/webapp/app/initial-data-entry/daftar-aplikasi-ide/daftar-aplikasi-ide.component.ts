@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
@@ -27,7 +27,7 @@ export class DaftarAplikasiIdeComponent implements OnInit, OnDestroy {
 
   constructor(
     protected initialDatEntryService: InitialDataEntryService,
-    private route: ActivatedRoute,
+    // private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
     protected modalService: NgbModal
