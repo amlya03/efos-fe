@@ -220,7 +220,9 @@
                           name="provinsi"
                         >
                           <option>Pilih Provinsi</option>
-                          <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}">{{ daWaprof.namaWilayah }}</option>
+                          <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+                            {{ daWaprof.namaWilayah }}
+                          </option>
                         </select>
                       </div>
                     </div>
@@ -237,7 +239,9 @@
                           name="kabkota"
                         >
                           <option value="">Pilih Kota</option>
-                          <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}">{{ daWakota.namaWilayah }}</option>
+                          <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
+                            {{ daWakota.namaWilayah }}
+                          </option>
                         </select>
                       </div>
                     </div>
@@ -254,7 +258,10 @@
                           name="kecamatan"
                         >
                           <option value="">Pilih Kecamatan</option>
-                          <option *ngFor="let daWakecamatan of daWakecamatan" value="{{ daWakecamatan.kdWilayah }}">
+                          <option
+                            *ngFor="let daWakecamatan of daWakecamatan"
+                            value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}"
+                          >
                             {{ daWakecamatan.namaWilayah }}
                           </option>
                         </select>
@@ -266,14 +273,17 @@
                     <div class="col-sm-8">
                       <div class="form-group">
                         <select
-                          (change)="onChangekelurahan(kecamatan)"
+                          (change)="onChangekelurahan(kelurahan)"
                           class="form-control"
                           id="kelurahan"
                           [(ngModel)]="kelurahan"
                           name="kelurahan"
                         >
                           <option value="">Pilih Kelurahan</option>
-                          <option *ngFor="let daWakelurahan of daWakelurahan" value="{{ daWakelurahan.kdWilayah }}">
+                          <option
+                            *ngFor="let daWakelurahan of daWakelurahan"
+                            value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}"
+                          >
                             {{ daWakelurahan.namaWilayah }}
                           </option>
                         </select>
@@ -290,6 +300,7 @@
                           maxlength="8"
                           class="form-control"
                           id="kode_pos"
+                          value="{{ daWakodepos }}"
                           name="kode_pos"
                           [(ngModel)]="kode_pos"
                         />
@@ -308,6 +319,7 @@
                         type="tel"
                         onkeypress="return onlyNumberKey(event)"
                         class="form-control"
+                        [(ngModel)]="rt"
                         placeholder="RT"
                         id="rt"
                         name="rt"
@@ -321,6 +333,7 @@
                         class="form-control"
                         placeholder="RW"
                         maxlength="3"
+                        [(ngModel)]="rw"
                         id="rw"
                         name="rw"
                       />
@@ -335,6 +348,7 @@
                         class="form-control"
                         placeholder="Nomor KTP"
                         maxlength="16"
+                        [(ngModel)]="no_ktp"
                         id="no_ktp"
                         name="no_ktp"
                         oninvalid="this.setCustomValidity('harap masukan 16 digit no ktp')"
@@ -346,7 +360,13 @@
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
-                      <input class="form-control" type="date" id="tanggal_terbit_ktp" name="tanggal_terbit_ktp" />
+                      <input
+                        class="form-control"
+                        [(ngModel)]="tanggal_terbit_ktp"
+                        type="date"
+                        id="tanggal_terbit_ktp"
+                        name="tanggal_terbit_ktp"
+                      />
                     </div>
                   </div>
 
@@ -361,7 +381,7 @@
                     <div class="form-group row">
                       <label class="col-sm-4 col-form-label">Tanggal Exipred KTP<span class="text-danger">*</span></label>
                       <div class="col-sm-8">
-                        <input class="form-control" type="date" id="tanggal_exp_ktp" name="tanggal_exp_ktp" />
+                        <input class="form-control" type="date" [(ngModel)]="tanggal_exp_ktp" id="tanggal_exp_ktp" name="tanggal_exp_ktp" />
                       </div>
                     </div>
                   </div>
@@ -375,6 +395,7 @@
                         class="form-control"
                         placeholder="Nomor Handphone"
                         id="no_handphone"
+                        [(ngModel)]="no_handphone"
                         name="no_handphone"
                         oninvalid="this.setCustomValidity('nomor tidak sesuai')"
                         oninput="this.setCustomValidity('')"
@@ -387,7 +408,7 @@
                     id="prosesData"
                     name="proses"
                     value="proses"
-                    (click)="gotoprescreaning()"
+                    (click)="gotoprescreaning(daWa, daWakodepos)"
                     type="submit"
                     style="float: right"
                   >
@@ -398,7 +419,7 @@
                     id="simpandata2"
                     name="simpan"
                     value="simpan"
-                    (click)="gotodaftaraplikasiide(daWa)"
+                    (click)="gotodaftaraplikasiide(daWa, daWakodepos)"
                     type="submit"
                     style="float: right"
                   >
@@ -669,7 +690,7 @@
                       id="prosesData"
                       name="proses"
                       value="proses"
-                      (click)="gotoprescreaning()"
+                      (click)="gotoprescreaning(daWa, daWakodepos)"
                       type="submit"
                       style="float: right"
                     >
@@ -680,7 +701,7 @@
                       id="simpandata"
                       name="simpan"
                       value="simpan"
-                      (click)="gotodaftaraplikasiide(daWa)"
+                      (click)="gotodaftaraplikasiide(daWa, daWakodepos)"
                       type="submit"
                       style="float: right"
                     >

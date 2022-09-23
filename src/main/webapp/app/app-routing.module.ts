@@ -34,6 +34,8 @@ import { InitialDataEntryFixComponent } from './initial-data-entry/initial-data-
 import { InitialDataEntryNonComponent } from './initial-data-entry/initial-data-entry-non/initial-data-entry-non.component';
 import { HasilPrescreeningComponent } from './initial-data-entry/hasil-prescreening/hasil-prescreening.component';
 import { PersonalInfoComponent } from './data-entry/personal-info/personal-info.component';
+import { InitialDataEntryFixEditComponent } from './initial-data-entry/initial-data-entry-fix-edit/initial-data-entry-fix-edit.component';
+import { InitialDataEntryNonEditComponent } from './initial-data-entry/initial-data-entry-non-edit/initial-data-entry-non-edit.component';
 
 @NgModule({
   imports: [
@@ -158,6 +160,14 @@ import { PersonalInfoComponent } from './data-entry/personal-info/personal-info.
         {
           path: 'hasilprescreening',
           component: HasilPrescreeningComponent,
+        },
+        {
+          path: 'editidefix',
+          component: InitialDataEntryFixEditComponent,
+        },
+        {
+          path: 'editidenon',
+          component: InitialDataEntryNonEditComponent,
         },
         {
           path: '',

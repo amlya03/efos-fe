@@ -56,4 +56,19 @@ export class DaftarAplikasiIdeComponent implements OnInit {
       queryParams: {},
     });
   }
+
+  viewdataide(costomerid: any, kategori: any) {
+    if (kategori === 'Fix Income') {
+      this.router.navigate(['/editidefix'], {
+        queryParams: {
+          datakirimanidcustomer: costomerid,
+        },
+      });
+    } else {
+      this.router.navigate(['/editidenon'], {
+        queryParams: { datakirimanidcustomer: costomerid },
+      });
+    }
+    // alert(kategori)
+  }
 }
