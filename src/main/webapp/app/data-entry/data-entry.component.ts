@@ -87,6 +87,6 @@ export class DataEntryComponent implements OnInit, OnDestroy {
 
   viewdataentry(getAppNoDe: any): void {
     // alert(getAppNoDe);
-    this.router.navigate(['/personalinfo'], { queryParams: { app_no_de: getAppNoDe } });
+    this.router.navigate(['/data-entry/personalinfo'], { queryParams: { app_no_de: getAppNoDe } });
   }
 }

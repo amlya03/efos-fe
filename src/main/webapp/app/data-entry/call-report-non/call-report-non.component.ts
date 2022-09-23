@@ -65,7 +65,9 @@ export class CallReportNonComponent implements OnInit {
   goto() {
     alert(this.datakirimanappde);
     // this.router.navigate(['/memo'], { queryParams: {  } });
-    this.router.navigate(['/memo'], { queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure } });
+    this.router.navigate(['/data-entry/memo'], {
+      queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure },
+    });
   }
 
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {

@@ -66,7 +66,7 @@ export class PersonalInfoComponent implements OnInit {
   ): void {
     // this.onResponseSuccess(res);
     alert(contohtampungancuref);
-    this.router.navigate(['/job-info'], {
+    this.router.navigate(['/data-entry/job-info'], {
       queryParams: {
         datakiriman: contohtampungancuref,
         datakirimanstatus: contohtampungstatuskawain,

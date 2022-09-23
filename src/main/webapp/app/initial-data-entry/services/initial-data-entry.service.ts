@@ -7,18 +7,17 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 @Injectable({
   providedIn: 'root',
 })
-export class DataEntryService {
+export class InitialDataEntryService {
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
-  protected daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-de/list_app_de?sc=20000'
+  protected daftarAplikasiInitialDataEntry = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-ide/list_app_ide?sc=20000'
   );
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
-
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.daftarAplikasiDataEntry);
+  getDaftarAplikasiInitialDataEntry(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.daftarAplikasiInitialDataEntry);
   }
   // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 }

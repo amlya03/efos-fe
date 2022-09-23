@@ -8,4 +8,5 @@ export interface daWuS {
   status_aplikasi_desc?: string | null;
   status_aplikasi?: string | null;
   created_by?: string | null;
+  sla?: string | null;
 }

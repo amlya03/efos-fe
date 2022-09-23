@@ -62,7 +62,9 @@ export class CallReportComponent implements OnInit {
   goto() {
     // this.router.navigate(['/memo'], { queryParams: {  } });
     alert(this.datakirimanappde);
-    this.router.navigate(['/memo'], { queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure } });
+    this.router.navigate(['/data-entry/memo'], {
+      queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure },
+    });
   }
 
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {

@@ -75,7 +75,7 @@ export class CollateralComponent implements OnInit {
     alert('ke struktur ');
     alert(this.datakirimanakategoripekerjaan);
     console.warn('INI ADA GK SIH', this.datakirimancuref, this.datakirimande);
-    this.router.navigate(['/struktur-pembiayaan'], {
+    this.router.navigate(['/data-entry/struktur-pembiayaan'], {
       queryParams: {
         datakirimanappde: this.datakirimanappde,
         datakirimiancure: this.datakirimancuref,

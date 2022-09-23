@@ -66,14 +66,14 @@ export class EmergencyContactComponent implements OnInit {
     if (this.datakirimanakategoripekerjaan === 'Fix Income') {
       alert('ini fix');
       alert(this.datakirimanappde);
-      this.router.navigate(['/call-report'], {
+      this.router.navigate(['/data-entry/call-report'], {
         queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure },
       });
     } else {
       alert('ini non fix');
       alert(this.datakirimanappde);
       alert(this.datakirimanakategoripekerjaan);
-      this.router.navigate(['/call-report-non'], {
+      this.router.navigate(['/data-entry/call-report-non'], {
         queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure },
       });
     }

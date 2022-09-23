@@ -36,7 +36,7 @@
                 routerLink="daftaraplikasiide"
                 (click)="collapseNavbar()"
                 (click)="showData()"
-                [class.active]="navVerif"
+                [class.active]="navIde"
               >
                 <fa-icon icon="address-card"></fa-icon>
                 <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> <i class="fa-thin fa-address-card"></i>-->
@@ -50,7 +50,7 @@
             <li id="verificationNav" class="row nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
               <a
                 class="col nav-link"
-                routerLink="daftar-aplikasi-waiting-assigment"
+                routerLink="daftar-aplikasi-verification"
                 (click)="collapseNavbar()"
                 (click)="showData()"
                 [class.active]="navVerif"
@@ -311,170 +311,227 @@
   >
     <h6>Daftar Aplikasi Waiting Update Satatus</h6>
   </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="analisa-keuangan"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'APPRAISAL'"
+  <div
+    *ngIf="
+      router.url === '/analisa-keuangan' ||
+      router.url === '/data-calon-nasabah' ||
+      router.url === '/data-kantor' ||
+      router.url === '/mutasi-rekening' ||
+      router.url === '/sturktur-pembiayaan' ||
+      router.url === '/checklist-document' ||
+      router.url === '/surat-persetujuan'
+    "
   >
-    <h6>Analisa Keuangan</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="data-calon-nasabah"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'APPRAISAL'"
+    <a
+      class="nav-item nav-link"
+      routerLink="analisa-keuangan"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'APPRAISAL'"
+    >
+      <h6>Analisa Keuangan</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="data-calon-nasabah"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'APPRAISAL'"
+    >
+      <h6>Detail Analisa</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="data-kantor"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'APPRAISAL'"
+    >
+      <h6>Data Kantor</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="mutasi-rekening"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'APPRAISAL'"
+    >
+      <h6>Mutasi Rekening</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="sturktur-pembiayaan"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'APPRAISAL'"
+    >
+      <h6>Struktur Pembiayaan</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="checklist-document"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'APPRAISAL'"
+    >
+      <h6>Checklist Document</h6>
+    </a>
+    <a
+      hidden
+      class="nav-item nav-link"
+      routerLink="surat-persetujuan"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'APPRAISAL'"
+    >
+      <h6>Surat Persetujuan</h6>
+    </a>
+  </div>
+  <div
+    *ngIf="
+      router.url === '/initial-data-entryfix' ||
+      router.url === '/initial-data-entrynon' ||
+      router.url === '/editidenon' ||
+      router.url === '/editidefix'
+    "
   >
-    <h6>Detail Analisa</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="data-kantor"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'APPRAISAL'"
+    <!-- [routerLink]="['/initial-data-entryfix'] || ['/initial-data-entrynon'] || ['/editidenon'] || ['/editidefix']" -->
+    <a
+      class="nav-item nav-link"
+      [routerLink]="['/initial-data-entryfix' || '/initial-data-entrynon']"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'AO'"
+    >
+      <h6>Initial Data Entry</h6>
+    </a>
+    <a
+      hidden
+      class="nav-item nav-link"
+      routerLink=""
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'AO'"
+    >
+      <h6>Hasil Pre Screening</h6>
+    </a>
+  </div>
+  <div
+    *ngIf="
+      router.url === '/data-entry' ||
+      router.url === '/data-entry/personalinfo' ||
+      router.url === '/data-entry/job-info' ||
+      router.url === '/data-entry/data-pasangan' ||
+      router.url === '/data-entry/pekerjaan-pasangan' ||
+      router.url === '/data-entry/collateral' ||
+      router.url === '/data-entry/struktur-pembiayaan' ||
+      router.url === '/data-entry/emergency-contact' ||
+      router.url === '/data-entry/call-report' ||
+      router.url === '/data-entry/call-report-non' ||
+      router.url === '/data-entry/memo'
+    "
   >
-    <h6>Data Kantor</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="mutasi-rekening"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'APPRAISAL'"
-  >
-    <h6>Mutasi Rekening</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="sturktur-pembiayaan"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'APPRAISAL'"
-  >
-    <h6>Struktur Pembiayaan</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="checklist-document"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'APPRAISAL'"
-  >
-    <h6>Checklist Document</h6>
-  </a>
-  <a
-    hidden
-    class="nav-item nav-link"
-    routerLink="surat-persetujuan"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'APPRAISAL'"
-  >
-    <h6>Surat Persetujuan</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="personalinfo"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'AO'"
-  >
-    <h6>Personal Info</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="job-info"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'AO'"
-  >
-    <h6>Job Info</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="data-pasangan"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'AO'"
-  >
-    <h6>Data Pasangan</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="pekerjaan-pasangan"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'AO'"
-  >
-    <h6>Pekerjaan Pasangan</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="collateral"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'AO'"
-  >
-    <h6>Collateral</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="struktur-pembiayaan"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'AO'"
-  >
-    <h6>Struktur Pembiayaan</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="emergency-contact"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'AO'"
-  >
-    <h6>Emergency Contact</h6>
-  </a>
-  <a
-    hidden
-    class="nav-item nav-link"
-    routerLink="surat-persetujuan"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'AO'"
-  >
-    <h6>Blacklist / Duplicate Checking</h6>
-  </a>
-  <a
-    hidden
-    class="nav-item nav-link"
-    routerLink="surat-persetujuan"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'AO'"
-  >
-    <h6>Scoring</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="call-report"
-    routerLink="call-report-non"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'AO'"
-  >
-    <h6>Call Report</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="memo"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'AO'"
-  >
-    <h6>Memo</h6>
-  </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="data-entry/personalinfo"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'AO'"
+    >
+      <h6>Personal Info</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="data-entry/job-info"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'AO'"
+    >
+      <h6>Job Info</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="data-entry/data-pasangan"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'AO'"
+    >
+      <h6>Data Pasangan</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="data-entry/pekerjaan-pasangan"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'AO'"
+    >
+      <h6>Pekerjaan Pasangan</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="data-entry/collateral"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'AO'"
+    >
+      <h6>Collateral</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="data-entry/struktur-pembiayaan"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'AO'"
+    >
+      <h6>Struktur Pembiayaan</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="data-entry/emergency-contact"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'AO'"
+    >
+      <h6>Emergency Contact</h6>
+    </a>
+    <a
+      hidden
+      class="nav-item nav-link"
+      routerLink="data-entry/duplicate-checking"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'AO'"
+    >
+      <h6>Blacklist / Duplicate Checking</h6>
+    </a>
+    <a
+      hidden
+      class="nav-item nav-link"
+      routerLink="data-entry/scoring"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'AO'"
+    >
+      <h6>Scoring</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="data-entry/call-report"
+      routerLink="data-entry/call-report-non"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'AO'"
+    >
+      <h6>Call Report</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="data-entry/memo"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'AO'"
+    >
+      <h6>Memo</h6>
+    </a>
+  </div>
 </nav>

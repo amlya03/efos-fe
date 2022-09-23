@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { VERSION } from 'app/app.constants';
@@ -27,6 +27,7 @@ export class NavbarComponent implements OnInit {
   navVerif = false;
   navHome = true;
   navDe = false;
+  navIde = false;
   untukSessionRole: any;
   untukSessionUserName: any;
   untukSessionFullName: any;
@@ -39,11 +40,13 @@ export class NavbarComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
     private accountService: AccountService,
     private profileService: ProfileService,
-    private router: Router
+    public router: Router,
+    private route: ActivatedRoute
   ) {
     if (VERSION) {
       this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`;
     }
+    this.route.params.subscribe(params => console.warn('parameternya ', params));
   }
 
   ngOnInit(): void {
@@ -87,12 +90,55 @@ export class NavbarComponent implements OnInit {
   }
   showData(): void {
     this.element = true;
-    this.navVerif = true;
     this.navHome = false;
+    this.navDe = true;
+    this.navVerif = true;
+    if (
+      this.router.url === '/daftaraplikasiide'
+      //   // this.router.url === '/data-entry/personalinfo',
+      //   // this.router.url === '/data-entry/job-info',
+      //   // this.router.url === '/data-entry/data-pasangan',
+      //   // this.router.url === '/data-entry/pekerjaan-pasangan',
+      //   // this.router.url === '/data-entry/collateral',
+      //   // this.router.url === '/data-entry/struktur-pembiayaan',
+      //   // this.router.url === '/data-entry/emergency-contact',
+      //   // this.router.url === '/data-entry/duplicate-checking',
+      //   // this.router.url === '/data-entry/scoring',
+      //   // this.router.url === '/data-entry/call-report',
+      //   // this.router.url === '/data-entry/call-report-non',
+      //   // this.router.url === '/data-entry/memo'
+    ) {
+      this.element = true;
+      this.navHome = false;
+      this.navIde = true;
+      this.navDe = false;
+      this.navVerif = true;
+    }
+    // if(
+    //   this.router.url === '/data-entry'
+    //   // this.router.url === '/data-entry/personalinfo',
+    //   // this.router.url === '/data-entry/job-info',
+    //   // this.router.url === '/data-entry/data-pasangan',
+    //   // this.router.url === '/data-entry/pekerjaan-pasangan',
+    //   // this.router.url === '/data-entry/collateral',
+    //   // this.router.url === '/data-entry/struktur-pembiayaan',
+    //   // this.router.url === '/data-entry/emergency-contact',
+    //   // this.router.url === '/data-entry/duplicate-checking',
+    //   // this.router.url === '/data-entry/scoring',
+    //   // this.router.url === '/data-entry/call-report',
+    //   // this.router.url === '/data-entry/call-report-non',
+    //   // this.router.url === '/data-entry/memo'
+    //   ){
+    //     this.element=true;
+    //     this.navDe = true;
+    //     this.navIde = false;
+    //   }
   }
   hideData(): void {
     this.element = false;
     this.navHome = true;
     this.navVerif = false;
+    this.navIde = false;
+    this.navDe = false;
   }
 }

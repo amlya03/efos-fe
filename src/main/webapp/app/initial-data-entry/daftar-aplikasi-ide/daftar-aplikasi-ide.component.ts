@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { createRequestOption } from 'app/core/request/request-util';
+import { Subject } from 'rxjs';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
-// import { jobinfolist } from './job-info-modellist';
+import { InitialDataEntryService } from '../services/initial-data-entry.service';
+import { daftaraplikasimodelide } from './daftar-aplikasi-model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DataTableDirective } from 'angular-datatables';
+declare let $: any;
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 
@@ -15,49 +16,71 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   templateUrl: './daftar-aplikasi-ide.component.html',
   styleUrls: ['./daftar-aplikasi-ide.component.scss'],
 })
-export class DaftarAplikasiIdeComponent implements OnInit {
+export class DaftarAplikasiIdeComponent implements OnInit, OnDestroy {
   datakiriman: string | undefined;
-  daWa: any;
+  initialDataEntry?: daftaraplikasimodelide[];
+
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
 
   constructor(
+    protected initialDatEntryService: InitialDataEntryService,
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    protected modalService: NgbModal
   ) {}
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/list_app_ide?sc=20000');
-
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      processing: true,
+      responsive: true,
+    };
     this.load();
   }
-  load() {
-    this.getdataentry().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        // console.log(res.body?.result);
-        console.warn('tabel', res);
-        this.daWa = res.body?.result;
-
-        // this.tampunganid = this.daWa[0].id;
-        // alert(this.tampunganid);
-        // console.warn('t1312abel', this.tampunganid);
-        // console.warn('tabe123l', this.tampunganid);
-      },
+  load(): void {
+    this.initialDatEntryService.getDaftarAplikasiInitialDataEntry().subscribe(data => {
+      console.warn(data);
+      if (data.code === 200) {
+        this.initialDataEntry = (data as any).result;
+        this.dtTrigger.next(data.result);
+      }
     });
   }
 
-  getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.resourceUrl, { params: options, observe: 'response' });
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+    // alert('knfsdkds');
   }
 
-  goto() {
+  cariButton(listKategori: string, inputNamaNasabah: string, inputNoAplikasi: string): void {
+    $('#dataTables-example').DataTable().columns(4).search(inputNoAplikasi).draw();
+    $('#dataTables-example').DataTable().columns(3).search(inputNamaNasabah).draw();
+    $('#dataTables-example').DataTable().columns(2).search(listKategori).draw();
+    // this.a = inputNoAplikasi
+    // this.b = inputNamaNasabah
+    // this.c = listKategori
+    // alert("1 "+ this.a)
+    // alert("2 "+ this.b)
+    // alert("3 "+ this.c)
+  }
+
+  clearInput(): void {
+    $('#dataTables-example').DataTable().columns().search('').draw();
+    // alert("bbb")
+  }
+
+  goto(): void {
     this.router.navigate(['/daftaraplikasiidetambahide'], {
       queryParams: {},
     });
   }
 
-  viewdataide(costomerid: any, kategori: any) {
+  viewdataide(costomerid: any, kategori: any): void {
     if (kategori === 'Fix Income') {
       this.router.navigate(['/editidefix'], {
         queryParams: {

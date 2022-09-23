@@ -36,6 +36,7 @@ import { HasilPrescreeningComponent } from './initial-data-entry/hasil-prescreen
 import { PersonalInfoComponent } from './data-entry/personal-info/personal-info.component';
 import { InitialDataEntryFixEditComponent } from './initial-data-entry/initial-data-entry-fix-edit/initial-data-entry-fix-edit.component';
 import { InitialDataEntryNonEditComponent } from './initial-data-entry/initial-data-entry-non-edit/initial-data-entry-non-edit.component';
+import { VerificationComponent } from './verification/verification.component';
 
 @NgModule({
   imports: [
@@ -56,6 +57,10 @@ import { InitialDataEntryNonEditComponent } from './initial-data-entry/initial-d
         {
           path: 'login',
           loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
+        },
+        {
+          path: 'daftar-aplikasi-verification',
+          component: VerificationComponent,
         },
         {
           path: 'daftar-aplikasi-waiting-assigment',
@@ -102,43 +107,43 @@ import { InitialDataEntryNonEditComponent } from './initial-data-entry/initial-d
           component: DataEntryComponent,
         },
         {
-          path: 'personalinfo',
+          path: 'data-entry/personalinfo',
           component: PersonalInfoComponent,
         },
         {
-          path: 'job-info',
+          path: 'data-entry/job-info',
           component: JobInfoComponent,
         },
         {
-          path: 'data-pasangan',
+          path: 'data-entry/data-pasangan',
           component: DataPasanganComponent,
         },
         {
-          path: 'pekerjaan-pasangan',
+          path: 'data-entry/pekerjaan-pasangan',
           component: PekerjaanPasanganComponent,
         },
         {
-          path: 'collateral',
+          path: 'data-entry/collateral',
           component: CollateralComponent,
         },
         {
-          path: 'struktur-pembiayaan',
+          path: 'data-entry/struktur-pembiayaan',
           component: StrukturPembiayaanComponent,
         },
         {
-          path: 'emergency-contact',
+          path: 'data-entry/emergency-contact',
           component: EmergencyContactComponent,
         },
         {
-          path: 'call-report',
+          path: 'data-entry/call-report',
           component: CallReportComponent,
         },
         {
-          path: 'call-report-non',
+          path: 'data-entry/call-report-non',
           component: CallReportNonComponent,
         },
         {
-          path: 'memo',
+          path: 'data-entry/memo',
           component: MemoComponent,
         },
         {

@@ -79,7 +79,7 @@ export class DataPasanganComponent implements OnInit {
     alert(contohtampungancuref);
     alert(this.datakirimanappde);
     alert(this.datakirimancuref);
-    this.router.navigate(['/pekerjaan-pasangan'], {
+    this.router.navigate(['/data-entry/pekerjaan-pasangan'], {
       queryParams: {
         datakirimanappde: this.datakirimanappde,
         datakirimancuref: this.datakirimancuref,

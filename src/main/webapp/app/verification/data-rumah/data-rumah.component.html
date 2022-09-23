@@ -186,7 +186,7 @@
         <th scope="col">Jenis Fasilitas</th>
         <th scope="col">Kolektibilitas</th>
         <th scope="col">Outstanding</th>
-        <th scope="col">Plafound</th>
+        <th scope="col">Plafond</th>
         <th scope="col">Tanggal Mulai</th>
         <th scope="col">Tanggal Berakhir</th>
         <th scope="col">Status</th>
@@ -322,21 +322,42 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Gaji Kotor</label>
           <div class="col-sm-7">
-            <input type="text" class="form-control" id="gaji_kotor_pemohon" name="gaji_kotor_pemohon" placeholder="" />
+            <input
+              formControlName="gaji_kotor_pemohon"
+              type="text"
+              class="form-control"
+              id="gaji_kotor_pemohon"
+              name="gaji_kotor_pemohon"
+              placeholder=""
+            />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Tunjangan</label>
           <div class="col-sm-7">
-            <input type="text" class="form-control" id="tunjangan_pemohon" name="tunjangan_pemohon" placeholder="" />
+            <input
+              formControlName="tunjangan_pemohon"
+              type="text"
+              class="form-control"
+              id="tunjangan_pemohon"
+              name="tunjangan_pemohon"
+              placeholder=""
+            />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Pendapatan Kotor</label>
           <div class="col-sm-7">
-            <input type="text" class="form-control" id="pendapatan_kotor_pemohon" name="pendapatan_kotor_pemohon" placeholder="" />
+            <input
+              formControlName="pendapatan_kotor_pemohon"
+              type="text"
+              class="form-control"
+              id="pendapatan_kotor_pemohon"
+              name="pendapatan_kotor_pemohon"
+              placeholder=""
+            />
           </div>
         </div>
         <br />
@@ -348,7 +369,7 @@
               class="form-control"
               id="pendapatan_kotor_lainnya_pemohon"
               name="pendapatan_kotor_lainnya_pemohon"
-              placeholder=""
+              formControlName="pendapatan_kotor_lainnya_pemohon"
             />
           </div>
         </div>
@@ -360,14 +381,21 @@
               class="form-control"
               id="total_angsuran_kewajiban_kantor_pemohon"
               name="total_angsuran_kewajiban_kantor_pemohon"
-              placeholder=""
+              formControlName="total_angsuran_kewajiban_kantor_pemohon"
             />
           </div>
         </div>
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Pendapatan Bersih</label>
           <div class="col-sm-7">
-            <input type="text" class="form-control" id="pendapatan_bersih_pemohon" name="pendapatan_bersih_pemohon" placeholder="" />
+            <input
+              formControlName="pendapatan_bersih_pemohon"
+              type="text"
+              class="form-control"
+              id="pendapatan_bersih_pemohon"
+              name="pendapatan_bersih_pemohon"
+              placeholder=""
+            />
           </div>
         </div>
         <br />
@@ -376,19 +404,40 @@
         <h6 style="text-align: center">Pasangan</h6>
         <div class="form-group row">
           <div class="col">
-            <input type="text" class="form-control" id="gaji_kotor_pasangan" name="gaji_kotor_pasangan" placeholder="" />
+            <input
+              formControlName="gaji_kotor_pasangan"
+              type="text"
+              class="form-control"
+              id="gaji_kotor_pasangan"
+              name="gaji_kotor_pasangan"
+              placeholder=""
+            />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <div class="col">
-            <input type="text" class="form-control" id="tunjangan_pasangan" name="tunjangan_pasangan" placeholder="" />
+            <input
+              formControlName="tunjangan_pasangan"
+              type="text"
+              class="form-control"
+              id="tunjangan_pasangan"
+              name="tunjangan_pasangan"
+              placeholder=""
+            />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <div class="col">
-            <input type="text" class="form-control" id="pendapatan_kotor_pasangan" name="pendapatan_kotor_pasangan" placeholder="" />
+            <input
+              formControlName="pendapatan_kotor_pasangan"
+              type="text"
+              class="form-control"
+              id="pendapatan_kotor_pasangan"
+              name="pendapatan_kotor_pasangan"
+              placeholder=""
+            />
           </div>
         </div>
         <br />
@@ -399,7 +448,7 @@
               class="form-control"
               id="pendapatan_kotor_lainnya_pasangan"
               name="pendapatan_kotor_lainnya_pasangan"
-              placeholder=""
+              formControlName="pendapatan_kotor_lainnya_pasangan"
             />
           </div>
         </div>
@@ -411,14 +460,21 @@
               class="form-control"
               id="total_angsuran_kewajiban_kantor_pasangan"
               name="total_angsuran_kewajiban_kantor_pasangan"
-              placeholder=""
+              formControlName="total_angsuran_kewajiban_kantor_pasangan"
             />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <div class="col">
-            <input type="text" class="form-control" id="pendapatan_bersih_pasangan" name="pendapatan_bersih_pasangan" placeholder="" />
+            <input
+              formControlName="pendapatan_bersih_pasangan"
+              type="text"
+              class="form-control"
+              id="pendapatan_bersih_pasangan"
+              name="pendapatan_bersih_pasangan"
+              placeholder=""
+            />
           </div>
         </div>
         <br />
@@ -426,15 +482,36 @@
       <div class="col">
         <h6 style="text-align: center">Total</h6>
         <div class="form-group row">
-          <input type="text" class="form-control" id="gaji_kotor_total" name="gaji_kotor_total" placeholder="" />
+          <input
+            formControlName="gaji_kotor_total"
+            type="text"
+            class="form-control"
+            id="gaji_kotor_total"
+            name="gaji_kotor_total"
+            placeholder=""
+          />
         </div>
         <br />
         <div class="form-group row">
-          <input type="text" class="form-control" id="tunjangan_total" name="tunjangan_total" placeholder="" />
+          <input
+            formControlName="tunjangan_total"
+            type="text"
+            class="form-control"
+            id="tunjangan_total"
+            name="tunjangan_total"
+            placeholder=""
+          />
         </div>
         <br />
         <div class="form-group row">
-          <input type="text" class="form-control" id="pendapatan_kotor_total" name="pendapatan_kotor_total" placeholder="" />
+          <input
+            formControlName="pendapatan_kotor_total"
+            type="text"
+            class="form-control"
+            id="pendapatan_kotor_total"
+            name="pendapatan_kotor_total"
+            placeholder=""
+          />
         </div>
         <br />
         <div class="form-group row">
@@ -443,7 +520,7 @@
             class="form-control"
             id="pendapatan_kotor_lainnya_total"
             name="pendapatan_kotor_lainnya_total"
-            placeholder=""
+            formControlName="pendapatan_kotor_lainnya_total"
           />
         </div>
         <br />
@@ -453,12 +530,19 @@
             class="form-control"
             id="total_angsuran_kewajiban_kantor_total"
             name="total_angsuran_kewajiban_kantor_total"
-            placeholder=""
+            formControlName="total_angsuran_kewajiban_kantor_total"
           />
         </div>
         <br />
         <div class="form-group row">
-          <input type="text" class="form-control" id="pendapatan_bersih_total" name="pendapatan_bersih_total" placeholder="" />
+          <input
+            formControlName="pendapatan_bersih_total"
+            type="text"
+            class="form-control"
+            id="pendapatan_bersih_total"
+            name="pendapatan_bersih_total"
+            placeholder=""
+          />
         </div>
         <br />
       </div>
@@ -476,7 +560,14 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Pendapatan Usaha</label>
           <div class="col-sm-7">
-            <input type="text" class="form-control" id="pendapatan_usaha_pemohon" name="pendapatan_usaha_pemohon" placeholder="" />
+            <input
+              formControlName="pendapatan_usaha_pemohon"
+              type="text"
+              class="form-control"
+              id="pendapatan_usaha_pemohon"
+              name="pendapatan_usaha_pemohon"
+              placeholder=""
+            />
           </div>
         </div>
         <br />
@@ -488,7 +579,7 @@
               class="form-control"
               id="pendapatan_profesional_pemohon"
               name="pendapatan_profesional_pemohon"
-              placeholder=""
+              formControlName="pendapatan_profesional_pemohon"
             />
           </div>
         </div>
@@ -497,7 +588,14 @@
         <h6 style="text-align: center">Pasangan</h6>
         <div class="form-group row">
           <div class="col">
-            <input type="text" class="form-control" id="pendapatan_usaha_pasangan" name="pendapatan_usaha_pasangan" placeholder="" />
+            <input
+              formControlName="pendapatan_usaha_pasangan"
+              type="text"
+              class="form-control"
+              id="pendapatan_usaha_pasangan"
+              name="pendapatan_usaha_pasangan"
+              placeholder=""
+            />
           </div>
         </div>
         <br />
@@ -508,7 +606,7 @@
               class="form-control"
               id="pendapatan_profesional_pasangan"
               name="pendapatan_profesional_pasangan"
-              placeholder=""
+              formControlName="pendapatan_profesional_pasangan"
             />
           </div>
         </div>
@@ -516,7 +614,15 @@
       <div class="col">
         <h6 style="text-align: center">Total</h6>
         <div class="form-group row">
-          <input type="text" readonly class="form-control" id="pendapatan_usaha_total" name="pendapatan_usaha_total" placeholder="" />
+          <input
+            formControlName="pendapatan_usaha_total"
+            type="text"
+            readonly
+            class="form-control"
+            id="pendapatan_usaha_total"
+            name="pendapatan_usaha_total"
+            placeholder=""
+          />
         </div>
         <br />
         <div class="form-group row">
@@ -526,7 +632,7 @@
             class="form-control"
             id="pendapatan_profesional_total"
             name="pendapatan_profesional_total"
-            placeholder=""
+            formControlName="pendapatan_profesional_total"
           />
         </div>
       </div>
@@ -547,7 +653,7 @@
               class="form-control"
               id="total_penghasilan_kotor_pemohon"
               name="total_penghasilan_kotor_pemohon"
-              placeholder=""
+              formControlName=""
             />
           </div>
         </div>
@@ -561,7 +667,7 @@
               class="form-control"
               id="total_penghasilan_kotor_pasangan"
               name="total_penghasilan_kotor_pasangan"
-              placeholder=""
+              formControlName=""
             />
           </div>
         </div>
@@ -574,7 +680,7 @@
             class="form-control"
             id="total_penghasilan_kotor_pasangan"
             name="total_penghasilan_kotor_pasangan"
-            placeholder=""
+            formControlName=""
           />
         </div>
       </div>
@@ -589,20 +695,44 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label" style="color: #fff">KB</label>
           <div class="col-sm-7">
-            <input type="text" readonly class="form-control" id="kewajiban_bank_pemohon" name="kewajiban_bank_pemohon" placeholder="" />
+            <input
+              formControlName=""
+              type="text"
+              readonly
+              class="form-control"
+              id="kewajiban_bank_pemohon"
+              name="kewajiban_bank_pemohon"
+              placeholder=""
+            />
           </div>
         </div>
       </div>
       <div class="col">
         <div class="form-group row">
           <div class="col">
-            <input type="text" readonly class="form-control" id="kewajiban_bank_pasangan" name="kewajiban_bank_pasangan" placeholder="" />
+            <input
+              formControlName=""
+              type="text"
+              readonly
+              class="form-control"
+              id="kewajiban_bank_pasangan"
+              name="kewajiban_bank_pasangan"
+              placeholder=""
+            />
           </div>
         </div>
       </div>
       <div class="col">
         <div class="form-group row">
-          <input type="text" readonly class="form-control" id="kewajiban_bank_total" name="kewajiban_bank_total" placeholder="" />
+          <input
+            formControlName=""
+            type="text"
+            readonly
+            class="form-control"
+            id="kewajiban_bank_total"
+            name="kewajiban_bank_total"
+            placeholder=""
+          />
         </div>
       </div>
     </div>
@@ -616,20 +746,42 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label" style="color: #fff">KL</label>
           <div class="col-sm-7">
-            <input type="text" class="form-control" id="kewajiban_lainnya_pemohon" name="kewajiban_lainnya_pemohon" placeholder="" />
+            <input
+              formControlName=""
+              type="text"
+              class="form-control"
+              id="kewajiban_lainnya_pemohon"
+              name="kewajiban_lainnya_pemohon"
+              placeholder=""
+            />
           </div>
         </div>
       </div>
       <div class="col">
         <div class="form-group row">
           <div class="col">
-            <input type="text" class="form-control" id="kewajiban_lainnya_pasangan" name="kewajiban_lainnya_pasangan" placeholder="" />
+            <input
+              formControlName=""
+              type="text"
+              class="form-control"
+              id="kewajiban_lainnya_pasangan"
+              name="kewajiban_lainnya_pasangan"
+              placeholder=""
+            />
           </div>
         </div>
       </div>
       <div class="col">
         <div class="form-group row">
-          <input type="text" readonly class="form-control" id="kewajiban_lainnya_total" name="kewajiban_lainnya_total" placeholder="" />
+          <input
+            formControlName=""
+            type="text"
+            readonly
+            class="form-control"
+            id="kewajiban_lainnya_total"
+            name="kewajiban_lainnya_total"
+            placeholder=""
+          />
         </div>
       </div>
     </div>
@@ -649,7 +801,7 @@
               class="form-control"
               id="total_penghasilan_bersih_pemohon"
               name="total_penghasilan_bersih_pemohon"
-              placeholder=""
+              formControlName=""
             />
           </div>
         </div>
@@ -663,7 +815,7 @@
               class="form-control"
               id="total_penghasilan_bersih_pasangan"
               name="total_penghasilan_bersih_pasangan"
-              placeholder=""
+              formControlName=""
             />
           </div>
         </div>
@@ -676,7 +828,7 @@
             class="form-control"
             id="total_penghasilan_bersih_total"
             name="total_penghasilan_bersih_total"
-            placeholder=""
+            formControlName=""
           />
         </div>
       </div>

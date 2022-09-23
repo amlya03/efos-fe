@@ -60,6 +60,7 @@ import { InitialDataEntryNonComponent } from './initial-data-entry/initial-data-
 import { InitialDataEntryNonEditComponent } from './initial-data-entry/initial-data-entry-non-edit/initial-data-entry-non-edit.component';
 import { InitialDataEntryFixEditComponent } from './initial-data-entry/initial-data-entry-fix-edit/initial-data-entry-fix-edit.component';
 import { DaftarAplikasiPilihComponent } from './initial-data-entry/daftar-aplikasi-pilih/daftar-aplikasi-pilih.component';
+import { VerificationComponent } from './verification/verification.component';
 
 @NgModule({
   imports: [
@@ -125,6 +126,7 @@ import { DaftarAplikasiPilihComponent } from './initial-data-entry/daftar-aplika
     InitialDataEntryNonEditComponent,
     InitialDataEntryFixEditComponent,
     DaftarAplikasiPilihComponent,
+    VerificationComponent,
   ],
   bootstrap: [
     MainComponent,
@@ -145,6 +147,7 @@ import { DaftarAplikasiPilihComponent } from './initial-data-entry/daftar-aplika
     MemoComponent,
     EmergencyContactComponent,
     StrukturPembiayaanComponent,
+    VerificationComponent,
   ],
 })
 export class AppModule {

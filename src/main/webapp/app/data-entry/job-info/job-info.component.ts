@@ -132,7 +132,7 @@ export class JobInfoComponent implements OnInit {
     } else {
       // alert('ini jomblo');
       // alert(contohtampungancuref);
-      this.router.navigate(['/collateral'], {
+      this.router.navigate(['/data-entry/collateral'], {
         queryParams: {
           datakirimanappde: this.datakirimanappde,
           datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,

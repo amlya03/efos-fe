@@ -80,7 +80,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     alert('ke emergency');
     alert(this.datakirimanakategoripekerjaan);
     alert(this.datakirimanappde);
-    this.router.navigate(['/emergency-contact'], {
+    this.router.navigate(['/data-entry/emergency-contact'], {
       queryParams: {
         datakirimanappde: this.datakirimanappde,
         datakirimiancure: this.datakirimiancure,
