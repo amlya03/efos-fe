@@ -6,6 +6,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
+import { InitialDataEntryService } from '../services/initial-data-entry.service';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 
@@ -27,13 +28,14 @@ export class InitialDataEntryNonComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    protected ideNonServices: InitialDataEntryService
   ) {}
 
-  protected getcuref = this.applicationConfigService.getEndpointFor(' http://10.20.34.178:8805/api/v1/efos-ide/getCuref');
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/getAppId');
-  protected getprovinsi = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/wilayahSvc/getProvinsi/');
-  protected gettokenducapil = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/token/generate-token');
+  // protected getcuref = this.applicationConfigService.getEndpointFor(' http://10.20.34.178:8805/api/v1/efos-ide/getCuref');
+  // protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/getAppId');
+  // protected getprovinsi = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/wilayahSvc/getProvinsi/');
+  // protected gettokenducapil = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/token/generate-token');
 
   ngOnInit(): void {
     this.load();
@@ -44,30 +46,42 @@ export class InitialDataEntryNonComponent implements OnInit {
 
     console.warn('loadingNIH', this.postId);
 
-    this.getdataentry().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        this.daWa = res.body?.result;
-        // this.onResponseSuccess(res);
-      },
+    this.ideNonServices.getIdeById().subscribe(data => {
+      console.warn(data);
+      if (data.code === 200) {
+        this.daWa = (data as any).result;
+      }
     });
+    // this.getdataentry().subscribe({
+    //   next: (res: EntityArrayResponseDaWa) => {
+    //     this.daWa = res.body?.result;
+    //     // this.onResponseSuccess(res);
+    //   },
+    // });
 
-    this.getcurefnih().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        this.daWacuref = res.body?.result;
-        // this.onResponseSuccess(res);
-      },
+    this.ideNonServices.getIdeByCuref().subscribe(data => {
+      console.warn(data);
+      if (data.code === 200) {
+        this.daWacuref = (data as any).result;
+      }
     });
+    // this.getcurefnih().subscribe({
+    //   next: (res: EntityArrayResponseDaWa) => {
+    //     this.daWacuref = res.body?.result;
+    //     // this.onResponseSuccess(res);
+    //   },
+    // });
   }
 
-  getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.resourceUrl, { params: options, observe: 'response' });
-  }
+  // getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
+  //   const options = createRequestOption(req);
+  //   return this.http.get<ApiResponse>(this.resourceUrl, { params: options, observe: 'response' });
+  // }
 
-  getcurefnih(req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.getcuref, { params: options, observe: 'response' });
-  }
+  // getcurefnih(req?: any): Observable<EntityArrayResponseDaWa> {
+  //   const options = createRequestOption(req);
+  //   return this.http.get<ApiResponse>(this.getcuref, { params: options, observe: 'response' });
+  // }
 
   getdataentry1(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
