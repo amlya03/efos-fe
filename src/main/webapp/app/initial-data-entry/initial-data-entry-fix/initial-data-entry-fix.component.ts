@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { initialdataentryfix } from './initial-data-entry-model';
@@ -51,13 +52,20 @@ export class InitialDataEntryFixComponent implements OnInit {
   tanggal_terbit_ktp: string | undefined;
   tanggal_exp_ktp: string | undefined;
   no_handphone: string | undefined;
+  contohdata: any;
+
   // ///////////////////////////////////////////
   constructor(
     protected http: HttpClient,
+    private router: Router,
     protected applicationConfigService: ApplicationConfigService,
     protected ideFixServices: InitialDataEntryService
   ) {}
 
+  protected getcuref = this.applicationConfigService.getEndpointFor(' http://10.20.34.110:8805/api/v1/efos-ide/getCuref');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getAppId');
+  protected getprovinsi = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/wilayahSvc/getProvinsi/');
+  protected gettokenducapil = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/token/generate-token');
   ngOnInit(): void {
     this.load();
   }
@@ -68,6 +76,8 @@ export class InitialDataEntryFixComponent implements OnInit {
     this.ideFixServices.getIdeById().subscribe(data => {
       console.warn(data);
       if (data.code === 200) {
+        this.daWa = (data as any).result;
+      } else {
         this.daWa = (data as any).result;
       }
     });
@@ -81,6 +91,8 @@ export class InitialDataEntryFixComponent implements OnInit {
     this.ideFixServices.getIdeByCuref().subscribe(data => {
       console.warn(data);
       if (data.code === 200) {
+        this.daWacuref = (data as any).result;
+      } else {
         this.daWacuref = (data as any).result;
       }
     });
@@ -266,23 +278,112 @@ export class InitialDataEntryFixComponent implements OnInit {
     };
     // alert(kodeposget);
     // alert(this.provinsi_cabang);
-    this.http.post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', body, { headers }).subscribe({
-      //   next: data => {
-      //     this.router.navigate(['/hasilprescreening'], {
-      //       queryParams: {},
-      //     });
-      //   },
-      //   error: error => {
-      //     this.errorMessage = error.message;
-      //     console.error('There was an error!', error);
-      //     // alert(this.errorMessage);
-      //     alert('kekirim gk yah ?');
-      //   },
-    });
+    // this.http.post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', body, { headers }).subscribe({
+    //     next: data => {
+    //   //     this.router.navigate(['/hasilprescreening'], {
+    //   //       queryParams: {},
+    //   //     });
+    //   //   },
+    //   //   error: error => {
+    //   //     this.errorMessage = error.message;
+    //   //     console.error('There was an error!', error);
+    //   //     // alert(this.errorMessage);
+    //   //     alert('kekirim gk yah ?');
+    //      },
+    // });
     // alert(this.postId);
     //       this.router.navigate(['/hasilprescreening'], {
     //         queryParams: {},
     //       });
+
+    this.http
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
+        headers: headers,
+        nama: this.nama,
+        nama_pasangan: '',
+        kategori_pekerjaan: 'Fixincome',
+        curef: getcuref,
+        jenis_kelamin: this.jenis_kelamin,
+        jenis_kelamin_pasangan: '',
+        usia: '0',
+        app_no_ide: getappide,
+        tanggal_lahir: this.tanggal_lahir,
+        tanggal_lahir_pasangan: '',
+        tempat_lahir: this.tempat_lahir,
+        tempat_lahir_pasangan: '',
+        status_perkawinan: this.status_perkawinan,
+        status_alamat: '',
+        status_kendaraan: '',
+        status_ktp: '',
+        status_ktp_pasangan: '',
+        status_rumah: '',
+        agama: this.agama,
+        agama_pasangan: '',
+        pendidikan: this.pendidikan,
+        pendidikan_pasangan: '',
+        kewarganegaraan: this.kewarganegaraan,
+        kewarganegaraan_pasangan: '',
+        nama_ibu_kandung: this.nama_ibu_kandung,
+        nama_ibu_kandung_pasangan: '',
+        npwp: this.npwp,
+        npwp_pasangan: '',
+        alamat_ktp: this.alamat_ktp,
+        alamat_ktp_pasangan: '',
+        alamat_domisili: '',
+        provinsi: kirimanprovinsi[1],
+        provinsi_domisili: '',
+        provinsi_pasangan: '',
+        kabkota: kirimankabkota[1],
+        kabkota_domisili: '',
+        kecamatan: kirimankecamatan[1],
+        kecamatan_domisili: '',
+        kecamatan_pasangan: '',
+        kelurahan: kirimankelurahan[1],
+        kelurahan_domisili: '',
+        kelurahan_pasangan: '',
+        kode_pos: kodeposget,
+        kode_pos_domisili: '',
+        kode_pos_pasangan: '',
+        lama_menetap: '',
+        cabang: '',
+        created_by: '',
+        created_date: '',
+        email: '',
+        email_pasangan: '',
+        id: 0,
+        jumlah_anak: '',
+        rt: this.rt,
+        rt_domisili: '',
+        rt_pasangan: '',
+        rw: this.rw,
+        rw_domisili: '',
+        rw_pasangan: '',
+        no_ktp: this.no_ktp,
+        no_ktp_pasangan: '',
+        tanggal_terbit_ktp: this.tanggal_terbit_ktp,
+        tanggal_terbit_ktp_pasangan: '',
+        tanggal_exp_ktp: this.tanggal_exp_ktp,
+        tipe_kendaraan: '',
+        no_handphone: this.no_handphone,
+        no_handphone_pasangan: '',
+        no_telepon: '',
+        updated_by: '',
+        updated_date: '',
+        usia_pasangan: '',
+      })
+      .subscribe({
+        next: data => {
+          this.contohdata = data.result.id;
+          this.app_no_ide = data.result.app_no_ide;
+          this.tanggal_lahir = data.result.tanggal_lahir;
+
+          this.router.navigate(['/hasilprescreening'], {
+            queryParams: { datakirimanid: this.contohdata, datakirimantgllahir: this.tanggal_lahir, datakirimanappide: this.app_no_ide },
+          });
+
+          alert(this.contohdata);
+        },
+      });
   }
 
   postUpdateStatus(): void {
@@ -433,29 +534,17 @@ export class InitialDataEntryFixComponent implements OnInit {
         updated_date: '',
         usia_pasangan: '',
       })
-      .subscribe(
-        resposne => {
-          console.log(resposne);
-        }
+      .subscribe({
+        next: data => {
+          this.contohdata = data.result.id;
 
-        //     {
-        //     next: data => {
-        //       this.router.navigate(['/daftaraplikasiide'], {
-        //         queryParams: {},
-        //       });
-        //     },
-        //     error: error => {
-        //       this.errorMessage = error.message;
-        //       console.error('There was an error!', error);
-        //       alert(this.errorMessage);
-        //       alert('kiriman error');
-        //     },
-        //   });
+          this.router.navigate(['/daftaraplikasiide'], {
+            //   queryParams: {},
+          });
 
-        // this.router.navigate(['/daftaraplikasiide'], {
-        //   queryParams: {},
-        // }
-      );
+          alert(this.contohdata);
+        },
+      });
   }
 
   onSubmit(event: any) {
