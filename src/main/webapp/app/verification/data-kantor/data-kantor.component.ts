@@ -66,15 +66,34 @@ export class DataKantorComponent implements OnInit {
       usia_pensiun: ['', Validators.required],
       kesimpulan_hasil_investigasi: ['', Validators.required],
     });
+
     this.load();
   }
 
   onSubmit(): void {
-    this.submitted = true;
-    if (this.dataKantorForm.invalid) {
-      return;
+    const getSekarang = new Date();
+    const getValueTanggal = new Date(this.dataKantorForm.value.tanggal_verification);
+    // alert(getValueTanggal.getTime());
+    // /////////////ini buat dapet bulan//////////////////////////
+    const calculateSekarang = Math.abs(Date.now() - getValueTanggal.getTime());
+    const getBulan = Math.floor(calculateSekarang / (1000 * 3600 * 24) / 365.25);
+    alert('Bulannya ' + getBulan);
+    // /////////////ini buat dapet bulan/////////////////////////
+    var getHariIni = Math.abs(getSekarang.getTime() / (1000 * 3600 * 24) / 365.25);
+    const diffInMs = calculateSekarang / (24 * 60 * 60 * 1000);
+    // const getHari = getValueTanggal.getUTCDate()
+    if (diffInMs < 30) {
+      alert('Hari ' + diffInMs);
     }
-    // alert('Coba Validasi');
+    if (diffInMs > 0) {
+      alert('kurang dari 0');
+      alert('hasilnya ' + diffInMs);
+    }
+
+    // this.submitted = true;
+    // if (this.dataKantorForm.invalid) {
+    //   return;
+    // }
   }
 
   load(): void {

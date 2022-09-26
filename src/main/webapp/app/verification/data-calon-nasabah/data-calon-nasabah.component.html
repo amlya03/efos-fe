@@ -74,6 +74,7 @@
             id="pemberi_keterangan"
             name="pemberi_keterangan"
             onchange="submitBday()"
+            maxlength="200"
           />
           <div *ngIf="submitted && dataCalonNasabahForm.controls.pemberi_keterangan.errors" class="text-danger">
             <div *ngIf="submitted && dataCalonNasabahForm.controls.pemberi_keterangan.errors.required">Tidak Boleh Kosong</div>
@@ -137,14 +138,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_no_customer" id="ceklis_no_customer_ya" />
+      <input type="radio" name="verifikasi_alamat_rumah" id="verifikasi_alamat_rumah_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_no_customer" id="ceklis_no_customer_tidak" />
+      <input type="radio" name="verifikasi_alamat_rumah" id="verifikasi_alamat_rumah_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <textarea class="form-control" name="alamat_rumah" id="alamat_rumah"></textarea>
+        <textarea class="form-control" name="note_alamat_rumah" id="note_alamat_rumah"></textarea>
       </div>
     </div>
   </div>
@@ -160,7 +161,7 @@
             class="form-control"
             id="rt"
             name="rt"
-            placeholder=""
+            maxlength="3"
             formControlName="rt"
             [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.rt.errors }"
           />
@@ -176,7 +177,7 @@
             class="form-control"
             id="rw"
             name="rw"
-            placeholder=""
+            maxlength="3"
             formControlName="rw"
             [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.rw.errors }"
             maxlength="3"
@@ -190,14 +191,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_no_aplikasi" id="ceklis_no_aplikasi_ya" />
+      <input type="radio" name="verifikasi_rt_rw" id="verifikasi_rt_rw_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_no_aplikasi" id="ceklis_no_aplikasi_tidak" />
+      <input type="radio" name="verifikasi_rt_rw" id="verifikasi_rt_rw_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="provinsi" id="provinsi" class="form-control" />
+        <input name="note_rt_rw" id="note_rt_rw" class="form-control" />
       </div>
     </div>
   </div>
@@ -225,14 +226,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_no_hp" id="ceklis_no_hp_ya" />
+      <input type="radio" name="verifikasi_provinsi" id="verifikasi_provinsi_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_no_hp" id="ceklis_no_hp_tidak" />
+      <input type="radio" name="verifikasi_provinsi" id="verifikasi_provinsi_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="kota" id="kota" class="form-control" />
+        <input name="note_provinsi" id="note_provinsi" class="form-control" />
       </div>
     </div>
   </div>
@@ -259,14 +260,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_nama" id="ceklis_nama_ya" />
+      <input type="radio" name="verifikasi_kota" id="verifikasi_kota_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_nama" id="ceklis_nama_tidak" />
+      <input type="radio" name="verifikasi_kota" id="verifikasi_kota_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="kecamatan" id="kecamatan" class="form-control" />
+        <input name="note_kota" id="note_kota" class="form-control" />
       </div>
     </div>
   </div>
@@ -293,9 +294,9 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_alamat_rumah" id="ceklis_alamat_rumah_ya" />
+      <input type="radio" name="verifikasi_kecamatan" id="verifikasi_kecamatan_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_alamat_rumah" id="ceklis_alamat_rumah_tidak" />
+      <input type="radio" name="verifikasi_kecamatan" id="verifikasi_kecamatan_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
@@ -327,23 +328,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_rt_rw" id="ceklis_rt_rw_ya" />
+      <input type="radio" name="verifikasi_kelurahan" id="verifikasi_kelurahan_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_rt_rw" id="ceklis_rt_rw_tidak" />
+      <input type="radio" name="verifikasi_kelurahan" id="verifikasi_kelurahan_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input
-          (keypress)="keyPressNumbers($event)"
-          id="kode_pos"
-          name="kode_pos"
-          type="text"
-          class="form-control"
-          placeholder=""
-          aria-label=""
-          aria-describedby="basic-addon2"
-        />
+        <input id="note_kelurahan" name="note_kelurahan" type="text" class="form-control" placeholder="" />
       </div>
     </div>
   </div>
@@ -379,14 +371,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_provinsi" id="ceklis_provinsi_ya" />
+      <input type="radio" name="verifikasi_kodepos" id="verifikasi_kodepos_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_provinsi" id="ceklis_provinsi_tidak" />
+      <input type="radio" name="verifikasi_kodepos" id="verifikasi_kodepos_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input class="form-control" type="text" id="tanggal_lahir" name="tanggal_lahir" />
+        <input class="form-control" type="text" id="note_kodepos" name="note_kodepos" />
       </div>
     </div>
   </div>
@@ -413,9 +405,9 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_kota" id="ceklis_kota_ya" />
+      <input type="radio" name="verifikasi_tanggal_lahir" id="verifikasi_tanggal_lahir_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_kota" id="ceklis_kota_tidak" />
+      <input type="radio" name="verifikasi_tanggal_lahir" id="verifikasi_tanggal_lahir_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
@@ -447,14 +439,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_kecamatan" id="ceklis_kecamatan_ya" />
+      <input type="radio" name="verifikasi_pendidikan" id="verifikasi_pendidikan_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_kecamatan" id="ceklis_kecamatan_tidak" />
+      <input type="radio" name="verifikasi_pendidikan" id="verifikasi_pendidikan_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="status_menikah" id="status_menikah" class="form-control" />
+        <input name="note_pendidikan" id="note_pendidikan" class="form-control" />
       </div>
     </div>
   </div>
@@ -484,14 +476,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_kelurahan" id="ceklis_kelurahan_ya" />
+      <input type="radio" name="verifikasi_status_menikah" id="verifikasi_status_menikah_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_kelurahan" id="ceklis_kelurahan_tidak" />
+      <input type="radio" name="verifikasi_status_menikah" id="verifikasi_status_menikah_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input type="text" class="form-control" id="nama_ibu_kandung" name="nama_ibu_kandung" placeholder="" />
+        <input type="text" class="form-control" id="note_status_menikah" name="note_status_menikah" placeholder="" />
       </div>
     </div>
   </div>
@@ -518,9 +510,9 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_kode_pos" id="ceklis_kode_pos_ya" />
+      <input type="radio" name="verifikasi_nama_ibu_kandung" id="verifikasi_nama_ibu_kandung_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_kode_pos" id="ceklis_kode_pos_tidak" />
+      <input type="radio" name="verifikasi_nama_ibu_kandung" id="verifikasi_nama_ibu_kandung_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
@@ -560,14 +552,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_kode_pos" id="ceklis_kode_pos_ya" />
+      <input type="radio" name="verifikasi_jumlah_tanggunan" id="verifikasi_jumlah_tanggunan_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_kode_pos" id="ceklis_kode_pos_tidak" />
+      <input type="radio" name="verifikasi_jumlah_tanggunan" id="verifikasi_jumlah_tanggunan_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input type="text" class="form-control" id="nama_pasangan" name="nama_pasangan" placeholder="" />
+        <input type="text" class="form-control" id="note_jumlah_tanggunan" name="note_jumlah_tanggunan" placeholder="" />
       </div>
     </div>
   </div>
@@ -594,14 +586,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_kode_pos" id="ceklis_kode_pos_ya" />
+      <input type="radio" name="verifikasi_nama_pasangan" id="verifikasi_nama_pasangan_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_kode_pos" id="ceklis_kode_pos_tidak" />
+      <input type="radio" name="verifikasi_nama_pasangan" id="verifikasi_nama_pasangan_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input type="text" class="form-control" id="pekerjaan_pasangan" name="pekerjaan_pasangan" placeholder="" />
+        <input type="text" class="form-control" id="note_nama_pasangan" name="note_nama_pasangan" placeholder="" />
       </div>
     </div>
   </div>
@@ -628,14 +620,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_kode_pos" id="ceklis_kode_pos_ya" />
+      <input type="radio" name="verifikasi_pekerjaan_pasangan" id="verifikasi_pekerjaan_pasangan_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_kode_pos" id="ceklis_kode_pos_tidak" />
+      <input type="radio" name="verifikasi_pekerjaan_pasangan" id="verifikasi_pekerjaan_pasangan_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input type="text" class="form-control" id="fasilitas_pembiayaan_ke" name="fasilitas_pembiayaan_ke" placeholder="" />
+        <input type="text" class="form-control" id="note_pekerjaan_pasangan" name="note_pekerjaan_pasangan" placeholder="" />
       </div>
     </div>
   </div>
@@ -662,9 +654,9 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_kode_pos" id="ceklis_kode_pos_ya" />
+      <input type="radio" name="verifikasi_fasilitas_pembiayaan_ke" id="verifikasi_fasilitas_pembiayaan_ke_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_kode_pos" id="ceklis_kode_pos_tidak" />
+      <input type="radio" name="verifikasi_fasilitas_pembiayaan_ke" id="verifikasi_fasilitas_pembiayaan_ke_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
@@ -718,11 +710,32 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Lama Menetap</label>
         <div class="col">
-          <input type="text" class="form-control" id="lama_menetap_tahun" name="lama_menetap_tahun" placeholder="" />
+          <input
+            type="text"
+            class="form-control"
+            id="lama_menetap_tahun"
+            name="lama_menetap_tahun"
+            formControlName="lama_menetap_tahun"
+            maxlength="2"
+            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.lama_menetap_tahun.errors }"
+          />
+          <div *ngIf="submitted && dataCalonNasabahForm.controls.lama_menetap_tahun.errors" class="text-danger">
+            <div *ngIf="submitted && dataCalonNasabahForm.controls.lama_menetap_tahun.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
         <div class="col">Tahun</div>
         <div class="col">
-          <input type="text" class="form-control" id="lama_menetap_bulan" name="lama_menetap_bulan" placeholder="" />
+          <input
+            type="text"
+            class="form-control"
+            id="lama_menetap_bulan"
+            name="lama_menetap_bulan"
+            formControlName="lama_menetap_bulan"
+            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.lama_menetap_bulan.errors }"
+          />
+          <div *ngIf="submitted && dataCalonNasabahForm.controls.lama_menetap_bulan.errors" class="text-danger">
+            <div *ngIf="submitted && dataCalonNasabahForm.controls.lama_menetap_bulan.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
         <div class="col">Bulan</div>
       </div>
