@@ -22,6 +22,7 @@ export class PersonalInfoComponent implements OnInit {
   numbers: number[] | undefined;
   datakiriman!: string;
   tampungandataygdibawa: any;
+  app_no_de: any;
   daWa: any;
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
@@ -33,6 +34,9 @@ export class PersonalInfoComponent implements OnInit {
   ) {
     this.route.queryParams.subscribe(params => {
       this.datakiriman = params['datakiriman'];
+    });
+    this.route.queryParams.subscribe(params => {
+      this.app_no_de = params['app_no_de'];
     });
   }
 
@@ -55,7 +59,7 @@ export class PersonalInfoComponent implements OnInit {
 
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.resourceUrl + this.datakiriman, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.resourceUrl + this.app_no_de, { params: options, observe: 'response' });
   }
 
   gotojobinfo(

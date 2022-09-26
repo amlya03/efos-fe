@@ -34,8 +34,8 @@ export class InitialDataEntryFixComponent implements OnInit {
     protected applicationConfigService: ApplicationConfigService
   ) {}
 
-  protected getcuref = this.applicationConfigService.getEndpointFor(' http://10.20.34.178:8805/api/v1/efos-ide/getCuref');
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/getAppId');
+  protected getcuref = this.applicationConfigService.getEndpointFor(' http://10.20.34.110:8805/api/v1/efos-ide/getCuref');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getAppId');
   protected getprovinsi = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/wilayahSvc/getProvinsi/');
   protected gettokenducapil = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/token/generate-token');
   ngOnInit(): void {
