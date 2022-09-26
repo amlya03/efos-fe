@@ -65,9 +65,9 @@
         <div class="col-sm-8">
           <div class="form-group">
             <select class="form-control" id="status_perkawinan" [(ngModel)]="status_perkawinan" name="status_perkawinan">
-              <option selected value="">Pilih Status Perkawinan</option>
-              <option value="Lajang">Lajang</option>
-              <option value="Menikah">Menikah</option>
+              <option *ngFor="let refStatusPerkawinan of refStatusPerkawinan" value="{{ refStatusPerkawinan.deskripsi }}">
+                {{ refStatusPerkawinan.deskripsi }}
+              </option>
             </select>
           </div>
         </div>

@@ -60,6 +60,10 @@ export class ServiceVerificationService {
     'http://10.20.34.110:8805/api/v1/efos-ref/list_status_perkawinan'
   );
   // ////////////////////// Ref Hubungan Emergency /////////////////////////////
+
+  // ////////////////////// Ref Status Rumah  /////////////////////////////
+  protected refStatusRumah = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_status_rumah');
+  // ////////////////////// Ref Status Rumah /////////////////////////////
   // ////////////////////// REFF \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
@@ -128,5 +132,11 @@ export class ServiceVerificationService {
     return this.http.get<ApiResponse>(this.refStatusPerkawinan);
   }
   // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////// Ref Status Rumah \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getStatusRumah(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refStatusRumah);
+  }
+  // ////////////////////// Ref Status Rumah \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   // ///////////////////// REF ////////////////////////////////////////////////
 }
