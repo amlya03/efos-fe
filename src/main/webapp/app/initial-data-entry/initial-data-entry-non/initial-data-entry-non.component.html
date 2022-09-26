@@ -1,2415 +1,1105 @@
-<<<<<<< HEAD
-<html>
-  <style>
-    /* buat hidden informasi pasangan */
-    .hidden_div_non {
-      display: none;
-    }
-
-    .show_hidden_div_non {
-      display: block;
-    }
-    /* buat hidden informasi pasangan */
-
-    /* buat hide button */
-
-    /* buat hide button */
-
-    /* buat ktp seumur hidup informasi */
-    .ktpSeumurJagungNon {
-      display: none;
-    }
-    .show-ktpSeumurJagungNon {
-      display: block;
-    }
-    /* buat ktp seumur hidup informasi */
-
-    /* buat ktp seumur hidup informasi pasangan */
-    .ktpSeumurJagungNon2 {
-      display: none;
-    }
-    .show-ktpSeumurJagungNon2 {
-      display: block;
-    }
-    /* buat ktp seumur hidup informasi pasangan */
-
-    /* buat hide pekerjaan sebelumnya */
-    .hidden_pekerjaanSebelum {
-      display: none;
-    }
-    .show-hidden_pekerjaanSebelum {
-      display: block;
-    }
-    /* buat hide pekerjaan sebelumnya */
-
-    /* buat hide show button */
-    .btnPekerjaan {
-      display: block;
-    }
-    .show-btnPekerjaan {
-      display: none;
-    }
-  </style>
-  <body>
-    <!--**********************************
-            Content body start
-        ***********************************-->
-    <div class="content-body">
-      <div class="container-fluid">
-        <h4 class="card card-body gradient-9" style="text-align: center">Informasi Pemohon Pembiayaan</h4>
-        <form
-          id="initial_data_entry_form"
-          onsubmit="return validateForm()"
-          method="post"
-          action="<?php echo site_url('ide/postCreateIde'); ?>"
-          required
-        >
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Nomor Aplikasi<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input type="hidden" id="kategori_pekerjaan" name="kategori_pekerjaan" value="Non" class="form-control" readonly />
-                      <input
-                        type="text"
-                        id="app_no_ide"
-                        [(ngModel)]="app_no_ide"
-                        [value]="daWa"
-                        name="app_no_ide"
-                        value="D"
-                        class="form-control"
-                        readonly
-                      />
-                    </div>
-
-                    <div class="col-sm-8">
-                      <input type="hidden" id="curef_id" name="curef_id" class="form-control" />
-                    </div>
-
-                    <div class="col-sm-8">
-                      <input type="hidden" id="fix" name="fix" value="1" class="form-control" />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Nama Lengkap<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input
-                        type="name"
-                        id="nama"
-                        name="nama"
-                        class="form-control"
-                        [(ngModel)]="nama"
-                        placeholder="Nama Lengkap"
-                        id="nama"
-                        name="nama"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select class="form-control" id="jenis_kelamin" [(ngModel)]="jenis_kelamin" name="jenis_kelamin">
-                          <option value="">Pilih Jenis Kelamin</option>
-                          <option value="Laki-laki">Laki - laki</option>
-                          <option value="Perempuan">Perempuan</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input
-                        class="form-control"
-                        type="date"
-                        [(ngModel)]="tanggal_lahir"
-                        id="tanggal_lahir"
-                        name="tanggal_lahir"
-                        onchange="submitBday()"
-                      />
-                      <input class="form-control" type="text" id="umur" name="usia" />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Tempat Lahir<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" placeholder="Tempat Lahir" id="tempat_lahir" name="tempat_lahir" />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Status Perkawinan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select class="form-control" [(ngModel)]="status_perkawinan" id="status_perkawinan" name="status_perkawinan">
-                          <option selected value="">Pilih Status Perkawinan</option>
-                          <option value="0">Lajang</option>
-                          <option value="1">Menikah</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Agama<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select class="form-control" id="agama" [(ngModel)]="agama" name="agama">
-                          <option selected value="">Pilih Agama</option>
-                          <option value="islam">Islam</option>
-                          <option value="kristen">Kristen</option>
-                          <option value="khatolik">Khatolik</option>
-                          <option value="budha">Budha</option>
-                          <option value="hindu">Hindu</option>
-                          <option value="kong hu chu">Kong Hu Chu</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Pendidikan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select class="form-control" [(ngModel)]="pendidikan" id="pendidikan" name="pendidikan">
-                          <option selected value="">Pilih Pendidikan</option>
-                          <option value="SMA">SMA</option>
-                          <option value="D3">D3</option>
-                          <option value="S1">S1</option>
-                          <option value="S2">S2</option>
-                          <option value="S3">S3</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Kewarganegaraan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select class="form-control" [(ngModel)]="kewarganegaraan" id="kewarganegaraan" name="kewarganegaraan">
-                          <option selected value="">Pilih Kewarganegaraan</option>
-                          <option value="WNI">WNI</option>
-                          <option value="WNA">WNA</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Ibu Kandung<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder=""
-                        [(ngModel)]="nama_ibu_kandung"
-                        id="nama_ibu_kandung"
-                        name="nama_ibu_kandung"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">NPWP<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input
-                        type="tel"
-                        onkeypress="return onlyNumberKey(event)"
-                        class="form-control"
-                        placeholder="NPWP"
-                        [(ngModel)]="npwp"
-                        maxlength="16"
-                        id="npwp"
-                        name="npwp"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <textarea
-                        class="form-control h-150px"
-                        rows="6"
-                        [(ngModel)]="alamat_ktp"
-                        id="alamat_ktp"
-                        name="alamat_ktp"
-                        oninput="inputAlamat()"
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select
-                          class="form-control"
-                          (change)="onChange(provinsi_cabang)"
-                          [(ngModel)]="provinsi_cabang"
-                          id="provinsi_cabang"
-                          name="provinsi_cabang"
-                        >
-                          <option value="">Pilih Provinsi</option>
-                          <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
-                            {{ daWaprof.namaWilayah }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select
-                          class="form-control"
-                          (change)="onChangekota(kabkota_cabang)"
-                          [(ngModel)]="kabkota_cabang"
-                          id="kabkota_cabang"
-                          name="kabkota"
-                        >
-                          <option value="">Pilih Kota</option>
-                          <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
-                            {{ daWakota.namaWilayah }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select
-                          class="form-control"
-                          (change)="onChangekecamatan(kecamatan)"
-                          [(ngModel)]="kecamatan"
-                          id="kecamatan"
-                          name="kecamatan"
-                        >
-                          <option value="">Pilih Kecamatan</option>
-                          <option
-                            *ngFor="let daWakecamatan of daWakecamatan"
-                            value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}"
-                          >
-                            {{ daWakecamatan.namaWilayah }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select
-                          class="form-control"
-                          (change)="onChangekelurahan(kelurahan)"
-                          [(ngModel)]="kelurahan"
-                          id="kelurahan"
-                          name="kelurahan"
-                        >
-                          <option value="">Pilih Kelurahan</option>
-                          <option
-                            *ngFor="let daWakelurahan of daWakelurahan"
-                            value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}"
-                          >
-                            {{ daWakelurahan.namaWilayah }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Kode Pos<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="input-group mb-3">
-                        <input
-                          type="tel"
-                          onkeypress="return onlyNumberKey(event)"
-                          maxlength="8"
-                          [(ngModel)]="kode_pos"
-                          class="form-control"
-                          id="kode_pos"
-                          value="{{ daWakodepos }}"
-                          name="kode_pos"
-                        />
-                        <div class="input-group-append">
-                          <button onclick="buatisi()" class="btn btn-outline-dark" type="button">Cari Data</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
-                    <div class="col">
-                      <input
-                        maxlength="3"
-                        min="2"
-                        max="3"
-                        type="tel"
-                        [(ngModel)]="rt"
-                        onkeypress="return onlyNumberKey(event)"
-                        class="form-control"
-                        placeholder="RT"
-                        id="rt"
-                        name="rt"
-                      />
-                    </div>
-                    <h2>/</h2>
-                    <div class="col">
-                      <input
-                        type="tel"
-                        onkeypress="return onlyNumberKey(event)"
-                        class="form-control"
-                        placeholder="RW"
-                        maxlength="3"
-                        [(ngModel)]="rw"
-                        id="rw"
-                        name="rw"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">No KTP<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input
-                        type="tel"
-                        onkeypress="return onlyNumberKey(event)"
-                        class="form-control"
-                        placeholder="Nomor KTP"
-                        maxlength="16"
-                        [(ngModel)]="no_ktp"
-                        id="no_ktp"
-                        name="no_ktp"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input
-                        class="form-control"
-                        type="date"
-                        [(ngModel)]="tanggal_terbit_ktp"
-                        id="tanggal_terbit_ktp"
-                        name="tanggal_terbit_ktp"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
-                    <div class="col-sm-8" id="rates">
-                      <label for="chkYes"> <input type="radio" id="chkYes" name="chkPinNo" value="fix" checked /> Ya </label>
-                      <label for="chkNo"> <input type="radio" id="chkNo" name="chkPinNo" value="non" /> Tidak </label>
-                    </div>
-                  </div>
-                  <div class="ktpSeumurJagungNon">
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Tanggal Exipred KTP<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <input class="form-control" type="date" [(ngModel)]="tanggal_exp_ktp" id="tanggal_exp_ktp" name="tanggal_exp_ktp" />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">No Handphone<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input
-                        type="tel"
-                        onkeypress="return onlyNumberKey(event)"
-                        pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
-                        maxlength="12"
-                        class="form-control"
-                        [(ngModel)]="no_handphone"
-                        placeholder="Nomor Handphone"
-                        id="no_handphone"
-                        name="no_handphone"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!--informasi Pekerjaan-->
-              <h4 class="card card-body gradient-9" style="text-align: center">Informasi Pekerjaan Pemohon</h4>
-              <h5>Pekerjaan Saat Ini</h5>
-              <div class="row">
-                <!--colom 1-->
-                <div class="col">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Nama Perusahaan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input
-                        type="text"
-                        class="form-control"
-                        [(ngModel)]="nama_perusahaan"
-                        placeholder="Nama Perusahaan"
-                        id="nama_perusahaan"
-                        name="nama_perusahaan"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Tipe Perusahaan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select class="form-control" id="tipe_perusahaan" [(ngModel)]="tipe_perusahaan" name="tipe_perusahaan">
-                          <option selected value="">Pilih Tipe Perusahaan</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Tipe Pekerjaan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select class="form-control" id="ngetestNih" [(ngModel)]="tipe_pekerjaan" name="tipe_pekerjaan">
-                          <option value="">Tipe Pekerjaan</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Kepemilikan Perusahaan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select
-                          class="form-control"
-                          [(ngModel)]="kepemilikan_perusahaan"
-                          id="kepemilikan_perusahaan"
-                          name="kepemilikan_perusahaan"
-                        >
-                          <option selected value="">Pilih Kepemilikan Perusahaan</option>
-                          <option value="Bukan Milik Sendiri">Bukan Milik Sendiri</option>
-                          <option value="Milik Sendiri">Milik Sendiri</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Pemilik Usaha<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input
-                        type="text"
-                        class="form-control"
-                        [(ngModel)]="pemilik_usaha"
-                        placeholder="Pemilik Usaha"
-                        id="pemilik_usaha"
-                        name="pemilik_usaha"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Nomor Telephone<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input
-                        type="tel"
-                        onkeypress="return onlyNumberKey(event)"
-                        pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
-                        class="form-control"
-                        [(ngModel)]="no_telepon"
-                        placeholder="Nomor Telephone"
-                        id="no_telepon"
-                        name="no_telepon"
-                        maxlength="16"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Jenis Bidang<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select class="form-control" [(ngModel)]="jenis_bidang" id="jenis_bidang" name="jenis_bidang">
-                          <option value="">Pilih Jenis Bidang</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Sektor Ekonomi<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select class="form-control" [(ngModel)]="jenis_sektor" id="jenis_sektor" name="sektor_ekonomi">
-                          <option value="">Pilih Sektor Ekonomi</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!--penutup colom 1-->
-                <!--colom 2-->
-                <div class="col">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Alamat Perusahaan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <textarea
-                        class="form-control h-150px"
-                        rows="6"
-                        [(ngModel)]="alamat_perusahaan"
-                        id="alamat_perusahaan"
-                        name="alamat_perusahaan"
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select
-                          class="form-control"
-                          (change)="onChange(provinsi_perusahaan)"
-                          id="provinsi_perusahaan"
-                          [(ngModel)]="provinsi_perusahaan"
-                          name="provinsi_perusahaan"
-                        >
-                          <option value="">Pilih Provinsi</option>
-
-                          <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
-                            {{ daWaprof.namaWilayah }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select
-                          class="form-control"
-                          (change)="onChangekota(kabkota_perusahaan)"
-                          id="kabkota_perusahaan"
-                          [(ngModel)]="kabkota_perusahaan"
-                          name="kabkota_perusahaan"
-                        >
-                          <option value="">Pilih Kota</option>
-                          <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
-                            {{ daWakota.namaWilayah }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select
-                          class="form-control"
-                          (change)="onChangekecamatan(kecamatan_perusahaan)"
-                          id="kecamatan_perusahaan"
-                          [(ngModel)]="kecamatan_perusahaan"
-                          name="kecamatan_perusahaan"
-                        >
-                          <option value="">Pilih Kecamatan</option>
-                          <option
-                            *ngFor="let daWakecamatan of daWakecamatan"
-                            value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}"
-                          >
-                            {{ daWakecamatan.namaWilayah }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <div class="form-group">
-                        <select
-                          class="form-control"
-                          (change)="onChangekelurahan(kelurahan_perusahaan)"
-                          id="kelurahan_perusahaan"
-                          [(ngModel)]="kelurahan_perusahaan"
-                          name="kelurahan_perusahaan"
-                        >
-                          <option value="">Pilih Kelurahan</option>
-                          <option
-                            *ngFor="let daWakelurahan of daWakelurahan"
-                            value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}"
-                          >
-                            {{ daWakelurahan.namaWilayah }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
-                    <div class="col">
-                      <input
-                        maxlength="3"
-                        type="tel"
-                        onkeypress="return onlyNumberKey(event)"
-                        class="form-control"
-                        placeholder="RT"
-                        [(ngModel)]="rt_perusahaan"
-                        id="rt_perusahaan"
-                        name="rt_perusahaan"
-                      />
-                    </div>
-                    <h2>/</h2>
-                    <div class="col">
-                      <input
-                        type="tel"
-                        onkeypress="return onlyNumberKey(event)"
-                        class="form-control"
-                        placeholder="RW"
-                        maxlength="3"
-                        [(ngModel)]="rw_perusahaan"
-                        id="rw_perusahaan"
-                        name="rw_perusahaan"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <!--penutup colom 2-->
-                <!--colom 3-->
-                <div class="col">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input
-                        type="tel"
-                        oninput="this.value = this.value.replace(/^0/g, '');"
-                        onkeypress="return onlyNumberKey(event)"
-                        maxlength="13"
-                        [(ngModel)]="jumlah_karyawan"
-                        class="form-control"
-                        placeholder="Jumlah Karyawan"
-                        id="jumlah_karyawan"
-                        name="jumlah_karyawan"
-                        maxlength="20"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">NPWP</label>
-                    <div class="col-sm-8">
-                      <input
-                        type="tel"
-                        onkeypress="return onlyNumberKey(event)"
-                        class="form-control"
-                        placeholder="NPWP"
-                        maxlength="16"
-                        [(ngModel)]="npwp_perusahaan"
-                        id="npwp_perusahaan"
-                        name="npwp_perusahaan"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Berdiri Sejak<span class="text-danger">*</span></label>
-                    <div class="col">
-                      <input
-                        type="tel"
-                        onkeypress="return onlyNumberKey(event)"
-                        class="form-control"
-                        placeholder=""
-                        id="bulan_berdiri_perusahaan"
-                        [(ngModel)]="bulan_berdiri_perusahaan"
-                        name="bulan_berdiri_perusahaan"
-                        maxlength="2"
-                      />
-                    </div>
-                    <span>Bulan</span>
-                    <div class="col">
-                      <input
-                        type="tel"
-                        onkeypress="return onlyNumberKey(event)"
-                        class="form-control"
-                        placeholder=""
-                        id="tahun_berdiri_perusahaan"
-                        [(ngModel)]="tahun_berdiri_perusahaan"
-                        name="tahun_berdiri_perusahaan"
-                        maxlength="2"
-                      />
-                    </div>
-                    <span>Tahun</span>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">No SIUP<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <input
-                        type="tel"
-                        oninput="this.value = this.value.replace(/^0/g, '');"
-                        onkeypress="return onlyNumberKey(event)"
-                        class="form-control"
-                        placeholder="Nomor Siup"
-                        [(ngModel)]="no_siup"
-                        id="no_siup"
-                        name="no_siup"
-                        maxlength="16"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Barang / Jasa<span class="text-danger">*</span></label>
-                    <div class="col-sm-8">
-                      <textarea
-                        class="form-control h-150px"
-                        minlength="5"
-                        rows="6"
-                        [(ngModel)]="barang_jasa"
-                        id="barang_jasa"
-                        name="barang_jasa"
-                      ></textarea>
-                    </div>
-                  </div>
-                </div>
-                <!--penutup colom 3-->
-              </div>
-
-              <!--hidden pekerjaan sebelumnya-->
-              <div id="hidden_pekerjaanSebelum" class="hidden_pekerjaanSebelum">
-                <h5>Pekerjaan Sebelumnya</h5>
-                <div class="row">
-                  <div class="col">
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Nama Perusahaan<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <input
-                          type="text"
-                          class="form-control"
-                          [(ngModel)]="nama_perusahaan_sebelum"
-                          placeholder="Nama Perusahaan"
-                          id="nama_perusahaan_sebelum"
-                          name="nama_perusahaan_sebelum"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Tipe Perusahaan<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          <select
-                            class="form-control"
-                            id="tipe_perusahaan_sebelum"
-                            [(ngModel)]="tipe_perusahaan_sebelum"
-                            name="tipe_perusahaan_sebelum"
-                          >
-                            <option selected value="">Pilih Tipe Perusahaan</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Tipe Pekerjaan<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          <select
-                            class="form-control"
-                            id="tipe_pekerjaan_sebelum"
-                            [(ngModel)]="tipe_pekerjaan_sebelum"
-                            name="tipe_pekerjaan_sebelum"
-                          >
-                            <option selected value="">Pilih Tipe Pekerjaan</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Alamat</label>
-                      <div class="col-sm-8">
-                        <textarea
-                          class="form-control h-150px"
-                          rows="6"
-                          [(ngModel)]="alamat_pekerjaan_sebelum"
-                          id="alamat_pekerjaan_sebelum"
-                          name="alamat_pekerjaan_sebelum"
-                        ></textarea>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Jenis Bidang<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          <select
-                            class="form-control"
-                            id="jenis_bidang_sebelum"
-                            [(ngModel)]="jenis_bidang_sebelum"
-                            name="jenis_bidang_sebelum"
-                          >
-                            <option value="">Pilih Jenis Bidang</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Sektor Ekonomi<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          <select
-                            class="form-control"
-                            id="jenis_sektor_sebelum"
-                            [(ngModel)]="jenis_sektor_sebelum"
-                            name="jenis_sektor_sebelum"
-                          >
-                            <option value="">Pilih Sektor Ekonomi</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Berdiri Sejak<span class="text-danger">*</span></label>
-                      <div class="col">
-                        <input
-                          type="tel"
-                          onkeypress="return onlyNumberKey(event)"
-                          class="form-control"
-                          maxlength="2"
-                          [(ngModel)]="bulan_berdiri_perusahaan_sebelum"
-                          placeholder=""
-                          id="bulan_berdiri_perusahaan_sebelum"
-                          name="bulan_berdiri_perusahaan_sebelum"
-                        />
-                      </div>
-                      <span>Bulan</span>
-                      <div class="col">
-                        <input
-                          type="tel"
-                          onkeypress="return onlyNumberKey(event)"
-                          class="form-control"
-                          maxlength="2"
-                          placeholder=""
-                          [(ngModel)]="tahun_berdiri_perusahaan_sebelum"
-                          id="tahun_berdiri_perusahaan_sebelum"
-                          name="tahun_berdiri_perusahaan_sebelum"
-                        />
-                      </div>
-                      <span>Tahun</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!--hide data pasangan-->
-              <div id="hidden_div" style="display: none">
-                <h4 class="card card-body gradient-9" style="text-align: center">Informasi Pasangan</h4>
-                <div class="row">
-                  <div class="col">
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Nama Lengkap<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <input
-                          type="text"
-                          class="form-control"
-                          [(ngModel)]="nama_pasangan"
-                          placeholder="Nama Lengkap"
-                          id="nama_pasangan"
-                          name="nama_pasangan"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          <select
-                            class="form-control"
-                            [(ngModel)]="jenis_kelamin_pasangan"
-                            id="jenis_kelamin_pasangan"
-                            name="jenis_kelamin_pasangan"
-                          >
-                            <option selected value="">Pilih Jenis Kelamin</option>
-                            <option id="jLakiNon" value="Laki-laki">Laki - laki</option>
-                            <option id="jPereNon" value="Perempuan">Perempuan</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <input
-                          class="form-control"
-                          type="date"
-                          [(ngModel)]="tanggal_lahir_pasangan"
-                          id="tanggal_lahir_pasangan"
-                          name="tanggal_lahir_pasangan"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Tempat Lahir<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <input
-                          type="text"
-                          class="form-control"
-                          [(ngModel)]="tempat_lahir_pasangan"
-                          placeholder="Tempat Lahir"
-                          id="tempat_lahir_pasangan"
-                          name="tempat_lahir_pasangan"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Agama<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          <select class="form-control" id="agama_pasangan" [(ngModel)]="agama_pasangan" name="agama_pasangan">
-                            <option selected value="">Pilih Agama</option>
-                            <option value="islam">Islam</option>
-                            <option value="kristen">Kristen</option>
-                            <option value="khatolik">Khatolik</option>
-                            <option value="budha">Budha</option>
-                            <option value="hindu">Hindu</option>
-                            <option value="kong hu chu">Kong Hu Chu</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Pendidikan</label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          <select
-                            class="form-control"
-                            id="pendidikan_pasangan"
-                            [(ngModel)]="pendidikan_pasangan"
-                            name="pendidikan_pasangan"
-                          >
-                            <option selected value="">Pilih Pendidikan</option>
-                            <option value="SMA">SMA</option>
-                            <option value="D3">D3</option>
-                            <option value="S1">S1</option>
-                            <option value="S2">S2</option>
-                            <option value="S3">S3</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Kewarganegaraan</label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          <select
-                            class="form-control"
-                            [(ngModel)]="kewarganegaraan_pasangan"
-                            id="kewarganegaraan_pasangan"
-                            name="kewarganegaraan_pasangan"
-                          >
-                            <option selected value="">Pilih Kewarganegaraan</option>
-                            <option value="WNI">WNI</option>
-                            <option value="WNA">WNA</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Ibu Kandung<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <input
-                          type="text"
-                          [(ngModel)]="nama_ibu_kandung_pasangan"
-                          class="form-control"
-                          placeholder=""
-                          id="nama_ibu_kandung_pasangan"
-                          name="nama_ibu_kandung_pasangan"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">NPWP</label>
-                      <div class="col-sm-8">
-                        <input
-                          type="tel"
-                          onkeypress="return onlyNumberKey(event)"
-                          class="form-control"
-                          placeholder="NPWP"
-                          [(ngModel)]="npwp_pasangan"
-                          maxlength="16"
-                          id="npwp_pasangan"
-                          name="npwp_pasangan"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label"> Alamat Sama Dengan Pemohon</label>
-                      <div class="col-sm-8">
-                        <input value="0" type="radio" name="sama" id="tidakSamaNon" checked /> Tidak Sama
-                        <input value="1" type="radio" name="sama" id="harusSamaNon" />Sama
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <textarea
-                          class="form-control h-150px"
-                          [(ngModel)]="alamat_ktp_pasangan"
-                          rows="6"
-                          id="alamat_ktp_pasangan"
-                          name="alamat_ktp_pasangan"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          <select
-                            class="form-control"
-                            id="provinsi_cabang_pasangan"
-                            [(ngModel)]="provinsi_cabang_pasangan"
-                            name="provinsi_pasangan"
-                          >
-                            <option value="">Pilih Provinsi</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          <select
-                            class="form-control"
-                            id="kabkota_cabang_pasangan"
-                            [(ngModel)]="kabkota_cabang_pasangan"
-                            name="kabkota_pasangan"
-                          >
-                            <option value="">Pilih Kota</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          <select class="form-control" id="kecamatan_pasangan" [(ngModel)]="kecamatan_pasangan" name="kecamatan_pasangan">
-                            <option value="">Pilih Kecamatan</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          <select class="form-control" id="kelurahan_pasangan" [(ngModel)]="kelurahan_pasangan" name="kelurahan_pasangan">
-                            <option value="">Pilih Kelurahan</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Kode Pos<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <div class="input-group mb-3">
-                          <input
-                            type="tel"
-                            onkeypress="return onlyNumberKey(event)"
-                            maxlength="8"
-                            class="form-control"
-                            [(ngModel)]="kode_pos_pasangan"
-                            id="kode_pos_pasangan"
-                            name="kode_pos_pasangan"
-                          />
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-dark" onclick="buatisipasangan()" type="button">Cari Data</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
-                      <div class="col">
-                        <input
-                          maxlength="3"
-                          type="tel"
-                          [(ngModel)]="rt_pasangan"
-                          onkeypress="return onlyNumberKey(event)"
-                          class="form-control"
-                          placeholder="RT"
-                          id="rt_pasangan"
-                          name="rt_pasangan"
-                        />
-                      </div>
-                      <h2>/</h2>
-                      <div class="col">
-                        <input
-                          type="tel"
-                          onkeypress="return onlyNumberKey(event)"
-                          class="form-control"
-                          placeholder="RW"
-                          maxlength="3"
-                          [(ngModel)]="rw_pasangan"
-                          id="rw_pasangan"
-                          name="rw_pasangan"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">No KTP<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <input
-                          type="tel"
-                          onkeypress="return onlyNumberKey(event)"
-                          class="form-control"
-                          placeholder="Nomor KTP"
-                          maxlength="16"
-                          [(ngModel)]="no_ktp_pasangan"
-                          id="no_ktp_pasangan"
-                          name="no_ktp_pasangan"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <input
-                          class="form-control"
-                          type="date"
-                          [(ngModel)]="tanggal_terbit_ktp_pasangan"
-                          id="tanggal_terbit_ktp_pasangan"
-                          name="tanggal_terbit_ktp_pasangan"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row" id="rates2">
-                      <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <label for="chkYes2"> <input type="radio" id="chkYes2" name="chkPinNo2" value="fix" checked /> Ya </label>
-                        <label for="chkNo2"> <input type="radio" id="chkNo2" name="chkPinNo2" value="non" /> Tidak </label>
-                      </div>
-                    </div>
-                    <div class="ktpSeumurJagungNon2">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Tanggal Expired KTP<span class="text-danger">*</span></label>
-                        <div class="col-sm-8">
-                          <input
-                            class="form-control"
-                            type="date"
-                            [(ngModel)]="tanggal_exp_ktp_pasangan"
-                            id="tanggal_exp_ktp_pasangan"
-                            name="tanggal_exp_ktp_pasangan"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">No Handphone<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <input
-                          type="tel"
-                          pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
-                          maxlength="12"
-                          class="form-control"
-                          [(ngModel)]="no_handphone_pasangan"
-                          placeholder="Nomor Handphone"
-                          id="no_handphone_pasangan"
-                          name="no_handphone_pasangan"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <button
-                class="fa fa-file-archive-o btn btn-dark"
-                id="prosesData"
-                name="proses"
-                value="proses"
-                (click)="gotoprescreaning()"
-                type="submit"
-                style="float: right"
-              >
-                Proses Data
-              </button>
-              <button
-                class="fa fa-file-archive-o btn btn-dark"
-                id="simpandata2"
-                name="simpan"
-                value="simpan"
-                (click)="gotodaftaraplikasiide()"
-                type="submit"
-                style="float: right"
-              >
-                Simpan Data
-              </button>
-              <!--penutup hiden-->
-            </div>
-          </div>
-        </form>
-        =======
-        <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-          <h3 style="color: #fff; text-align: center">Informasi Pemohon Pembiayaan</h3>
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Informasi Pemohon Pembiayaan</h3>
+</div>
+<br />
+<div class="row form-material">
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nomor Aplikasi<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input type="text" id="app_no_ide" [(ngModel)]="app_no_ide" name="app_no_ide" value="" class="form-control" readonly />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nama Lengkap<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input type="name" id="nama" name="nama" class="form-control" [(ngModel)]="nama" placeholder="Nama Lengkap" id="nama" name="nama" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="jenis_kelamin" [(ngModel)]="jenis_kelamin" name="jenis_kelamin">
+            <option value="">Pilih Jenis Kelamin</option>
+            <option value="Laki-laki">Laki - laki</option>
+            <option value="Perempuan">Perempuan</option>
+          </select>
         </div>
-        <br />
-        <div class="row form-material">
-          <div class="col">
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Nomor Aplikasi<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input type="text" id="app_no_ide" [(ngModel)]="app_no_ide" name="app_no_ide" value="" class="form-control" readonly />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Nama Lengkap<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="name"
-                  id="nama"
-                  name="nama"
-                  class="form-control"
-                  [(ngModel)]="nama"
-                  placeholder="Nama Lengkap"
-                  id="nama"
-                  name="nama"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" id="jenis_kelamin" [(ngModel)]="jenis_kelamin" name="jenis_kelamin">
-                    <option value="">Pilih Jenis Kelamin</option>
-                    <option value="Laki-laki">Laki - laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  class="form-control"
-                  type="date"
-                  [(ngModel)]="tanggal_lahir"
-                  id="tanggal_lahir"
-                  name="tanggal_lahir"
-                  onchange="submitBday()"
-                />
-                <input class="form-control" type="text" id="umur" name="usia" />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Tempat Lahir<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" placeholder="Tempat Lahir" id="tempat_lahir" name="tempat_lahir" />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Status Perkawinan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" [(ngModel)]="status_perkawinan" id="status_perkawinan" name="status_perkawinan">
-                    <option selected value="">Pilih Status Perkawinan</option>
-                    <option value="0">Lajang</option>
-                    <option value="1">Menikah</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Agama<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" id="agama" [(ngModel)]="agama" name="agama">
-                    <option selected value="">Pilih Agama</option>
-                    <option value="islam">Islam</option>
-                    <option value="kristen">Kristen</option>
-                    <option value="khatolik">Khatolik</option>
-                    <option value="budha">Budha</option>
-                    <option value="hindu">Hindu</option>
-                    <option value="kong hu chu">Kong Hu Chu</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Pendidikan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" [(ngModel)]="pendidikan" id="pendidikan" name="pendidikan">
-                    <option selected value="">Pilih Pendidikan</option>
-                    <option value="SMA">SMA</option>
-                    <option value="D3">D3</option>
-                    <option value="S1">S1</option>
-                    <option value="S2">S2</option>
-                    <option value="S3">S3</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Kewarganegaraan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" [(ngModel)]="kewarganegaraan" id="kewarganegaraan" name="kewarganegaraan">
-                    <option selected value="">Pilih Kewarganegaraan</option>
-                    <option value="WNI">WNI</option>
-                    <option value="WNA">WNA</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Ibu Kandung<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder=""
-                  [(ngModel)]="nama_ibu_kandung"
-                  id="nama_ibu_kandung"
-                  name="nama_ibu_kandung"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">NPWP<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="NPWP"
-                  [(ngModel)]="npwp"
-                  maxlength="16"
-                  id="npwp"
-                  name="npwp"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <textarea
-                  class="form-control h-150px"
-                  rows="6"
-                  [(ngModel)]="alamat_ktp"
-                  id="alamat_ktp"
-                  name="alamat_ktp"
-                  oninput="inputAlamat()"
-                ></textarea>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    (change)="onChange(provinsi_cabang)"
-                    [(ngModel)]="provinsi_cabang"
-                    id="provinsi_cabang"
-                    name="provinsi_cabang"
-                  >
-                    <option value="">Pilih Provinsi</option>
-                    <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
-                      {{ daWaprof.namaWilayah }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    (change)="onChangekota(kabkota_cabang)"
-                    [(ngModel)]="kabkota_cabang"
-                    id="kabkota_cabang"
-                    name="kabkota"
-                  >
-                    <option value="">Pilih Kota</option>
-                    <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
-                      {{ daWakota.namaWilayah }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    (change)="onChangekecamatan(kecamatan)"
-                    [(ngModel)]="kecamatan"
-                    id="kecamatan"
-                    name="kecamatan"
-                  >
-                    <option value="">Pilih Kecamatan</option>
-                    <option
-                      *ngFor="let daWakecamatan of daWakecamatan"
-                      value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}"
-                    >
-                      {{ daWakecamatan.namaWilayah }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    (change)="onChangekelurahan(kelurahan)"
-                    [(ngModel)]="kelurahan"
-                    id="kelurahan"
-                    name="kelurahan"
-                  >
-                    <option value="">Pilih Kelurahan</option>
-                    <option *ngFor="let daWakelurahan of daWakelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
-                      {{ daWakelurahan.namaWilayah }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Kode Pos<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="input-group mb-3">
-                  <input
-                    type="tel"
-                    onkeypress="return onlyNumberKey(event)"
-                    maxlength="8"
-                    [(ngModel)]="kode_pos"
-                    class="form-control"
-                    id="kode_pos"
-                    value="{{ daWakodepos }}"
-                    name="kode_pos"
-                  />
-                  <div class="input-group-append">
-                    <button onclick="buatisi()" class="btn btn-outline-dark" type="button">Cari Data</button>
-                  </div>
-                </div>
-                >>>>>>> bcd524a182b5b202a0e9bfa8b99f315226c311c8
-              </div>
-            </div>
-
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
-              <div class="col">
-                <input
-                  maxlength="3"
-                  min="2"
-                  max="3"
-                  type="tel"
-                  [(ngModel)]="rt"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="RT"
-                  id="rt"
-                  name="rt"
-                />
-              </div>
-              <div class="col">RT</div>
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="RW"
-                  maxlength="3"
-                  [(ngModel)]="rw"
-                  id="rw"
-                  name="rw"
-                />
-              </div>
-              <div class="col">RW</div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">No KTP<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="Nomor KTP"
-                  maxlength="16"
-                  [(ngModel)]="no_ktp"
-                  id="no_ktp"
-                  name="no_ktp"
-                />
-              </div>
-            </div>
-
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  class="form-control"
-                  type="date"
-                  [(ngModel)]="tanggal_terbit_ktp"
-                  id="tanggal_terbit_ktp"
-                  name="tanggal_terbit_ktp"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
-              <div class="col-sm-8" id="rates">
-                <label for="chkYes"> <input type="radio" id="chkYes" name="chkPinNo" value="fix" checked /> Ya </label>
-                <label for="chkNo"> <input type="radio" id="chkNo" name="chkPinNo" value="non" /> Tidak </label>
-              </div>
-            </div>
-            <div class="ktpSeumurJagungNon">
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Tanggal Exipred KTP<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <input class="form-control" type="date" [(ngModel)]="tanggal_exp_ktp" id="tanggal_exp_ktp" name="tanggal_exp_ktp" />
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">No Handphone<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
-                  maxlength="12"
-                  class="form-control"
-                  [(ngModel)]="no_handphone"
-                  placeholder="Nomor Handphone"
-                  id="no_handphone"
-                  name="no_handphone"
-                />
-              </div>
-            </div>
-          </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          class="form-control"
+          type="date"
+          [(ngModel)]="tanggal_lahir"
+          id="tanggal_lahir"
+          name="tanggal_lahir"
+          onchange="submitBday()"
+        />
+        <input class="form-control" type="text" id="umur" name="usia" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tempat Lahir<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" placeholder="Tempat Lahir" id="tempat_lahir" name="tempat_lahir" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Status Perkawinan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="status_perkawinan" id="status_perkawinan" name="status_perkawinan">
+            <option selected value="">Pilih Status Perkawinan</option>
+            <option value="0">Lajang</option>
+            <option value="1">Menikah</option>
+          </select>
         </div>
-        <br />
-        <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-          <h3 style="color: #fff; text-align: center">Informasi Pekerjaan Pemohon</h3>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Agama<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="agama" [(ngModel)]="agama" name="agama">
+            <option selected value="">Pilih Agama</option>
+            <option value="islam">Islam</option>
+            <option value="kristen">Kristen</option>
+            <option value="khatolik">Khatolik</option>
+            <option value="budha">Budha</option>
+            <option value="hindu">Hindu</option>
+            <option value="kong hu chu">Kong Hu Chu</option>
+          </select>
         </div>
-        <br />
-        <div class="row">
-          <h5>Pekerjaan Saat Ini</h5>
-          <!--colom 1-->
-          <div class="col">
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Nama Perusahaan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="nama_perusahaan"
-                  placeholder="Nama Perusahaan"
-                  id="nama_perusahaan"
-                  name="nama_perusahaan"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Tipe Perusahaan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" id="tipe_perusahaan" [(ngModel)]="tipe_perusahaan" name="tipe_perusahaan">
-                    <option selected value="">Pilih Tipe Perusahaan</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Tipe Pekerjaan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" id="ngetestNih" [(ngModel)]="tipe_pekerjaan" name="tipe_pekerjaan">
-                    <option value="">Tipe Pekerjaan</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Kepemilikan Perusahaan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    [(ngModel)]="kepemilikan_perusahaan"
-                    id="kepemilikan_perusahaan"
-                    name="kepemilikan_perusahaan"
-                  >
-                    <option selected value="">Pilih Kepemilikan Perusahaan</option>
-                    <option value="Bukan Milik Sendiri">Bukan Milik Sendiri</option>
-                    <option value="Milik Sendiri">Milik Sendiri</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Pemilik Usaha<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="pemilik_usaha"
-                  placeholder="Pemilik Usaha"
-                  id="pemilik_usaha"
-                  name="pemilik_usaha"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Nomor Telephone<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
-                  class="form-control"
-                  [(ngModel)]="no_telepon"
-                  placeholder="Nomor Telephone"
-                  id="no_telepon"
-                  name="no_telepon"
-                  maxlength="16"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Jenis Bidang<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" [(ngModel)]="jenis_bidang" id="jenis_bidang" name="jenis_bidang">
-                    <option value="">Pilih Jenis Bidang</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Sektor Ekonomi<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" [(ngModel)]="jenis_sektor" id="jenis_sektor" name="sektor_ekonomi">
-                    <option value="">Pilih Sektor Ekonomi</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--penutup colom 1-->
-          <!--colom 2-->
-          <div class="col">
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Alamat Perusahaan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <textarea
-                  class="form-control h-150px"
-                  rows="6"
-                  [(ngModel)]="alamat_perusahaan"
-                  id="alamat_perusahaan"
-                  name="alamat_perusahaan"
-                ></textarea>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    (change)="onChange(provinsi_perusahaan)"
-                    id="provinsi_perusahaan"
-                    [(ngModel)]="provinsi_perusahaan"
-                    name="provinsi_perusahaan"
-                  >
-                    <option value="">Pilih Provinsi</option>
-
-                    <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
-                      {{ daWaprof.namaWilayah }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    (change)="onChangekota(kabkota_perusahaan)"
-                    id="kabkota_perusahaan"
-                    [(ngModel)]="kabkota_perusahaan"
-                    name="kabkota_perusahaan"
-                  >
-                    <option value="">Pilih Kota</option>
-                    <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
-                      {{ daWakota.namaWilayah }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    (change)="onChangekecamatan(kecamatan_perusahaan)"
-                    id="kecamatan_perusahaan"
-                    [(ngModel)]="kecamatan_perusahaan"
-                    name="kecamatan_perusahaan"
-                  >
-                    <option value="">Pilih Kecamatan</option>
-                    <option
-                      *ngFor="let daWakecamatan of daWakecamatan"
-                      value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}"
-                    >
-                      {{ daWakecamatan.namaWilayah }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    (change)="onChangekelurahan(kelurahan_perusahaan)"
-                    id="kelurahan_perusahaan"
-                    [(ngModel)]="kelurahan_perusahaan"
-                    name="kelurahan_perusahaan"
-                  >
-                    <option value="">Pilih Kelurahan</option>
-                    <option *ngFor="let daWakelurahan of daWakelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
-                      {{ daWakelurahan.namaWilayah }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
-              <div class="col">
-                <input
-                  maxlength="3"
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="RT"
-                  [(ngModel)]="rt_perusahaan"
-                  id="rt_perusahaan"
-                  name="rt_perusahaan"
-                />
-              </div>
-              <div class="col">RT</div>
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="RW"
-                  maxlength="3"
-                  [(ngModel)]="rw_perusahaan"
-                  id="rw_perusahaan"
-                  name="rw_perusahaan"
-                />
-              </div>
-              <div class="col">RW</div>
-            </div>
-          </div>
-          <!--penutup colom 2-->
-          <!--colom 3-->
-          <div class="col">
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="tel"
-                  oninput="this.value = this.value.replace(/^0/g, '');"
-                  onkeypress="return onlyNumberKey(event)"
-                  maxlength="13"
-                  [(ngModel)]="jumlah_karyawan"
-                  class="form-control"
-                  placeholder="Jumlah Karyawan"
-                  id="jumlah_karyawan"
-                  name="jumlah_karyawan"
-                  maxlength="20"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">NPWP</label>
-              <div class="col-sm-8">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="NPWP"
-                  maxlength="16"
-                  [(ngModel)]="npwp_perusahaan"
-                  id="npwp_perusahaan"
-                  name="npwp_perusahaan"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Berdiri Sejak<span class="text-danger">*</span></label>
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder=""
-                  id="bulan_berdiri_perusahaan"
-                  [(ngModel)]="bulan_berdiri_perusahaan"
-                  name="bulan_berdiri_perusahaan"
-                  maxlength="2"
-                />
-              </div>
-              <div class="col">Bulan</div>
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder=""
-                  id="tahun_berdiri_perusahaan"
-                  [(ngModel)]="tahun_berdiri_perusahaan"
-                  name="tahun_berdiri_perusahaan"
-                  maxlength="2"
-                />
-              </div>
-              <div class="col">Tahun</div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">No SIUP<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="tel"
-                  oninput="this.value = this.value.replace(/^0/g, '');"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="Nomor Siup"
-                  [(ngModel)]="no_siup"
-                  id="no_siup"
-                  name="no_siup"
-                  maxlength="16"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Barang / Jasa<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <textarea
-                  class="form-control h-150px"
-                  minlength="5"
-                  rows="6"
-                  [(ngModel)]="barang_jasa"
-                  id="barang_jasa"
-                  name="barang_jasa"
-                ></textarea>
-              </div>
-            </div>
-          </div>
-          <!--penutup colom 3-->
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Pendidikan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="pendidikan" id="pendidikan" name="pendidikan">
+            <option selected value="">Pilih Pendidikan</option>
+            <option value="SMA">SMA</option>
+            <option value="D3">D3</option>
+            <option value="S1">S1</option>
+            <option value="S2">S2</option>
+            <option value="S3">S3</option>
+          </select>
         </div>
-        <br />
-        <div class="row">
-          <h5>Pekerjaan Sebelumnya</h5>
-          <div class="col">
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Nama Perusahaan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="nama_perusahaan_sebelum"
-                  placeholder="Nama Perusahaan"
-                  id="nama_perusahaan_sebelum"
-                  name="nama_perusahaan_sebelum"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Tipe Perusahaan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    id="tipe_perusahaan_sebelum"
-                    [(ngModel)]="tipe_perusahaan_sebelum"
-                    name="tipe_perusahaan_sebelum"
-                  >
-                    <option selected value="">Pilih Tipe Perusahaan</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Tipe Pekerjaan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    id="tipe_pekerjaan_sebelum"
-                    [(ngModel)]="tipe_pekerjaan_sebelum"
-                    name="tipe_pekerjaan_sebelum"
-                  >
-                    <option selected value="">Pilih Tipe Pekerjaan</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Alamat</label>
-              <div class="col-sm-8">
-                <textarea
-                  class="form-control h-150px"
-                  rows="6"
-                  [(ngModel)]="alamat_pekerjaan_sebelum"
-                  id="alamat_pekerjaan_sebelum"
-                  name="alamat_pekerjaan_sebelum"
-                ></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Jenis Bidang<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" id="jenis_bidang_sebelum" [(ngModel)]="jenis_bidang_sebelum" name="jenis_bidang_sebelum">
-                    <option value="">Pilih Jenis Bidang</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Sektor Ekonomi<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" id="jenis_sektor_sebelum" [(ngModel)]="jenis_sektor_sebelum" name="jenis_sektor_sebelum">
-                    <option value="">Pilih Sektor Ekonomi</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Berdiri Sejak<span class="text-danger">*</span></label>
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  maxlength="2"
-                  [(ngModel)]="bulan_berdiri_perusahaan_sebelum"
-                  placeholder=""
-                  id="bulan_berdiri_perusahaan_sebelum"
-                  name="bulan_berdiri_perusahaan_sebelum"
-                />
-              </div>
-              <div class="col">Bulan</div>
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  maxlength="2"
-                  placeholder=""
-                  [(ngModel)]="tahun_berdiri_perusahaan_sebelum"
-                  id="tahun_berdiri_perusahaan_sebelum"
-                  name="tahun_berdiri_perusahaan_sebelum"
-                />
-              </div>
-              <div class="col">Tahun</div>
-            </div>
-          </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kewarganegaraan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="kewarganegaraan" id="kewarganegaraan" name="kewarganegaraan">
+            <option selected value="">Pilih Kewarganegaraan</option>
+            <option value="WNI">WNI</option>
+            <option value="WNA">WNA</option>
+          </select>
         </div>
-        <br />
-        <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-          <h3 style="color: #fff; text-align: center">Informasi Pasangan</h3>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Ibu Kandung<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          placeholder=""
+          [(ngModel)]="nama_ibu_kandung"
+          id="nama_ibu_kandung"
+          name="nama_ibu_kandung"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">NPWP<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder="NPWP"
+          [(ngModel)]="npwp"
+          maxlength="16"
+          id="npwp"
+          name="npwp"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <textarea
+          class="form-control h-150px"
+          rows="6"
+          [(ngModel)]="alamat_ktp"
+          id="alamat_ktp"
+          name="alamat_ktp"
+          oninput="inputAlamat()"
+        ></textarea>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select
+            class="form-control"
+            (change)="onChange(provinsi_cabang)"
+            [(ngModel)]="provinsi_cabang"
+            id="provinsi_cabang"
+            name="provinsi_cabang"
+          >
+            <option value="">Pilih Provinsi</option>
+            <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+              {{ daWaprof.namaWilayah }}
+            </option>
+          </select>
         </div>
-        <br />
-        <div class="row">
-          <div class="col">
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Nama Lengkap<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="nama_pasangan"
-                  placeholder="Nama Lengkap"
-                  id="nama_pasangan"
-                  name="nama_pasangan"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    [(ngModel)]="jenis_kelamin_pasangan"
-                    id="jenis_kelamin_pasangan"
-                    name="jenis_kelamin_pasangan"
-                  >
-                    <option selected value="">Pilih Jenis Kelamin</option>
-                    <option id="jLakiNon" value="Laki-laki">Laki - laki</option>
-                    <option id="jPereNon" value="Perempuan">Perempuan</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  class="form-control"
-                  type="date"
-                  [(ngModel)]="tanggal_lahir_pasangan"
-                  id="tanggal_lahir_pasangan"
-                  name="tanggal_lahir_pasangan"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Tempat Lahir<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="tempat_lahir_pasangan"
-                  placeholder="Tempat Lahir"
-                  id="tempat_lahir_pasangan"
-                  name="tempat_lahir_pasangan"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Agama<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" id="agama_pasangan" [(ngModel)]="agama_pasangan" name="agama_pasangan">
-                    <option selected value="">Pilih Agama</option>
-                    <option value="islam">Islam</option>
-                    <option value="kristen">Kristen</option>
-                    <option value="khatolik">Khatolik</option>
-                    <option value="budha">Budha</option>
-                    <option value="hindu">Hindu</option>
-                    <option value="kong hu chu">Kong Hu Chu</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Pendidikan</label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" id="pendidikan_pasangan" [(ngModel)]="pendidikan_pasangan" name="pendidikan_pasangan">
-                    <option selected value="">Pilih Pendidikan</option>
-                    <option value="SMA">SMA</option>
-                    <option value="D3">D3</option>
-                    <option value="S1">S1</option>
-                    <option value="S2">S2</option>
-                    <option value="S3">S3</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Kewarganegaraan</label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    [(ngModel)]="kewarganegaraan_pasangan"
-                    id="kewarganegaraan_pasangan"
-                    name="kewarganegaraan_pasangan"
-                  >
-                    <option selected value="">Pilih Kewarganegaraan</option>
-                    <option value="WNI">WNI</option>
-                    <option value="WNA">WNA</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Ibu Kandung<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="text"
-                  [(ngModel)]="nama_ibu_kandung_pasangan"
-                  class="form-control"
-                  placeholder=""
-                  id="nama_ibu_kandung_pasangan"
-                  name="nama_ibu_kandung_pasangan"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">NPWP</label>
-              <div class="col-sm-8">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="NPWP"
-                  [(ngModel)]="npwp_pasangan"
-                  maxlength="16"
-                  id="npwp_pasangan"
-                  name="npwp_pasangan"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label"> Alamat Sama Dengan Pemohon</label>
-              <div class="col-sm-8">
-                <input value="0" type="radio" name="sama" id="tidakSamaNon" checked /> Tidak Sama
-                <input value="1" type="radio" name="sama" id="harusSamaNon" />Sama
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <textarea
-                  class="form-control h-150px"
-                  [(ngModel)]="alamat_ktp_pasangan"
-                  rows="6"
-                  id="alamat_ktp_pasangan"
-                  name="alamat_ktp_pasangan"
-                ></textarea>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    id="provinsi_cabang_pasangan"
-                    [(ngModel)]="provinsi_cabang_pasangan"
-                    name="provinsi_pasangan"
-                  >
-                    <option value="">Pilih Provinsi</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" id="kabkota_cabang_pasangan" [(ngModel)]="kabkota_cabang_pasangan" name="kabkota_pasangan">
-                    <option value="">Pilih Kota</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" id="kecamatan_pasangan" [(ngModel)]="kecamatan_pasangan" name="kecamatan_pasangan">
-                    <option value="">Pilih Kecamatan</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="form-group">
-                  <select class="form-control" id="kelurahan_pasangan" [(ngModel)]="kelurahan_pasangan" name="kelurahan_pasangan">
-                    <option value="">Pilih Kelurahan</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Kode Pos<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <div class="input-group mb-3">
-                  <input
-                    type="tel"
-                    onkeypress="return onlyNumberKey(event)"
-                    maxlength="8"
-                    class="form-control"
-                    [(ngModel)]="kode_pos_pasangan"
-                    id="kode_pos_pasangan"
-                    name="kode_pos_pasangan"
-                  />
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-dark" onclick="buatisipasangan()" type="button">Cari Data</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
-              <div class="col">
-                <input
-                  maxlength="3"
-                  type="tel"
-                  [(ngModel)]="rt_pasangan"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="RT"
-                  id="rt_pasangan"
-                  name="rt_pasangan"
-                />
-              </div>
-              <div class="col">RT</div>
-              <div class="col">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="RW"
-                  maxlength="3"
-                  [(ngModel)]="rw_pasangan"
-                  id="rw_pasangan"
-                  name="rw_pasangan"
-                />
-              </div>
-              <div class="col">RW</div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">No KTP<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  class="form-control"
-                  placeholder="Nomor KTP"
-                  maxlength="16"
-                  [(ngModel)]="no_ktp_pasangan"
-                  id="no_ktp_pasangan"
-                  name="no_ktp_pasangan"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  class="form-control"
-                  type="date"
-                  [(ngModel)]="tanggal_terbit_ktp_pasangan"
-                  id="tanggal_terbit_ktp_pasangan"
-                  name="tanggal_terbit_ktp_pasangan"
-                />
-              </div>
-            </div>
-            <div class="form-group row" id="rates2">
-              <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <label for="chkYes2"> <input type="radio" id="chkYes2" name="chkPinNo2" value="fix" checked /> Ya </label>
-                <label for="chkNo2"> <input type="radio" id="chkNo2" name="chkPinNo2" value="non" /> Tidak </label>
-              </div>
-            </div>
-            <div class="ktpSeumurJagungNon2">
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Tanggal Expired KTP<span class="text-danger">*</span></label>
-                <div class="col-sm-8">
-                  <input
-                    class="form-control"
-                    type="date"
-                    [(ngModel)]="tanggal_exp_ktp_pasangan"
-                    id="tanggal_exp_ktp_pasangan"
-                    name="tanggal_exp_ktp_pasangan"
-                  />
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">No Handphone<span class="text-danger">*</span></label>
-              <div class="col-sm-8">
-                <input
-                  type="tel"
-                  pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
-                  maxlength="12"
-                  class="form-control"
-                  [(ngModel)]="no_handphone_pasangan"
-                  placeholder="Nomor Handphone"
-                  id="no_handphone_pasangan"
-                  name="no_handphone_pasangan"
-                />
-              </div>
-            </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select
+            class="form-control"
+            (change)="onChangekota(kabkota_cabang)"
+            [(ngModel)]="kabkota_cabang"
+            id="kabkota_cabang"
+            name="kabkota"
+          >
+            <option value="">Pilih Kota</option>
+            <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
+              {{ daWakota.namaWilayah }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" (change)="onChangekecamatan(kecamatan)" [(ngModel)]="kecamatan" id="kecamatan" name="kecamatan">
+            <option value="">Pilih Kecamatan</option>
+            <option *ngFor="let daWakecamatan of daWakecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
+              {{ daWakecamatan.namaWilayah }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" (change)="onChangekelurahan(kelurahan)" [(ngModel)]="kelurahan" id="kelurahan" name="kelurahan">
+            <option value="">Pilih Kelurahan</option>
+            <option *ngFor="let daWakelurahan of daWakelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
+              {{ daWakelurahan.namaWilayah }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="input-group mb-3">
+          <input
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            maxlength="8"
+            [(ngModel)]="kode_pos"
+            class="form-control"
+            id="kode_pos"
+            value="{{ daWakodepos }}"
+            name="kode_pos"
+          />
+          <div class="input-group-append">
+            <button onclick="buatisi()" class="btn btn-outline-dark" type="button">Cari Data</button>
           </div>
         </div>
       </div>
     </div>
-  </body>
-</html>
+
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
+      <div class="col">
+        <input
+          maxlength="3"
+          min="2"
+          max="3"
+          type="tel"
+          [(ngModel)]="rt"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder="RT"
+          id="rt"
+          name="rt"
+        />
+      </div>
+      <div class="col">RT</div>
+      <div class="col">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder="RW"
+          maxlength="3"
+          [(ngModel)]="rw"
+          id="rw"
+          name="rw"
+        />
+      </div>
+      <div class="col">RW</div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">No KTP<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder="Nomor KTP"
+          maxlength="16"
+          [(ngModel)]="no_ktp"
+          id="no_ktp"
+          name="no_ktp"
+        />
+      </div>
+    </div>
+
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input class="form-control" type="date" [(ngModel)]="tanggal_terbit_ktp" id="tanggal_terbit_ktp" name="tanggal_terbit_ktp" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
+      <div class="col-sm-8" id="rates">
+        <label for="chkYes"> <input type="radio" id="chkYes" name="chkPinNo" value="fix" checked /> Ya </label>
+        <label for="chkNo"> <input type="radio" id="chkNo" name="chkPinNo" value="non" /> Tidak </label>
+      </div>
+    </div>
+    <div class="ktpSeumurJagungNon">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tanggal Exipred KTP<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input class="form-control" type="date" [(ngModel)]="tanggal_exp_ktp" id="tanggal_exp_ktp" name="tanggal_exp_ktp" />
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">No Handphone<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
+          maxlength="12"
+          class="form-control"
+          [(ngModel)]="no_handphone"
+          placeholder="Nomor Handphone"
+          id="no_handphone"
+          name="no_handphone"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Informasi Pekerjaan Pemohon</h3>
+</div>
+<br />
+<div class="row">
+  <h5>Pekerjaan Saat Ini</h5>
+  <!--colom 1-->
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nama Perusahaan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="nama_perusahaan"
+          placeholder="Nama Perusahaan"
+          id="nama_perusahaan"
+          name="nama_perusahaan"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tipe Perusahaan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="tipe_perusahaan" [(ngModel)]="tipe_perusahaan" name="tipe_perusahaan">
+            <option selected value="">Pilih Tipe Perusahaan</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tipe Pekerjaan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="ngetestNih" [(ngModel)]="tipe_pekerjaan" name="tipe_pekerjaan">
+            <option value="">Tipe Pekerjaan</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kepemilikan Perusahaan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="kepemilikan_perusahaan" id="kepemilikan_perusahaan" name="kepemilikan_perusahaan">
+            <option selected value="">Pilih Kepemilikan Perusahaan</option>
+            <option value="Bukan Milik Sendiri">Bukan Milik Sendiri</option>
+            <option value="Milik Sendiri">Milik Sendiri</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Pemilik Usaha<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="pemilik_usaha"
+          placeholder="Pemilik Usaha"
+          id="pemilik_usaha"
+          name="pemilik_usaha"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nomor Telephone<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
+          class="form-control"
+          [(ngModel)]="no_telepon"
+          placeholder="Nomor Telephone"
+          id="no_telepon"
+          name="no_telepon"
+          maxlength="16"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Jenis Bidang<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="jenis_bidang" id="jenis_bidang" name="jenis_bidang">
+            <option value="">Pilih Jenis Bidang</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Sektor Ekonomi<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="jenis_sektor" id="jenis_sektor" name="sektor_ekonomi">
+            <option value="">Pilih Sektor Ekonomi</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--penutup colom 1-->
+  <!--colom 2-->
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Alamat Perusahaan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <textarea
+          class="form-control h-150px"
+          rows="6"
+          [(ngModel)]="alamat_perusahaan"
+          id="alamat_perusahaan"
+          name="alamat_perusahaan"
+        ></textarea>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select
+            class="form-control"
+            (change)="onChange(provinsi_perusahaan)"
+            id="provinsi_perusahaan"
+            [(ngModel)]="provinsi_perusahaan"
+            name="provinsi_perusahaan"
+          >
+            <option value="">Pilih Provinsi</option>
+
+            <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+              {{ daWaprof.namaWilayah }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select
+            class="form-control"
+            (change)="onChangekota(kabkota_perusahaan)"
+            id="kabkota_perusahaan"
+            [(ngModel)]="kabkota_perusahaan"
+            name="kabkota_perusahaan"
+          >
+            <option value="">Pilih Kota</option>
+            <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
+              {{ daWakota.namaWilayah }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select
+            class="form-control"
+            (change)="onChangekecamatan(kecamatan_perusahaan)"
+            id="kecamatan_perusahaan"
+            [(ngModel)]="kecamatan_perusahaan"
+            name="kecamatan_perusahaan"
+          >
+            <option value="">Pilih Kecamatan</option>
+            <option *ngFor="let daWakecamatan of daWakecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
+              {{ daWakecamatan.namaWilayah }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select
+            class="form-control"
+            (change)="onChangekelurahan(kelurahan_perusahaan)"
+            id="kelurahan_perusahaan"
+            [(ngModel)]="kelurahan_perusahaan"
+            name="kelurahan_perusahaan"
+          >
+            <option value="">Pilih Kelurahan</option>
+            <option *ngFor="let daWakelurahan of daWakelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
+              {{ daWakelurahan.namaWilayah }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
+      <div class="col">
+        <input
+          maxlength="3"
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder="RT"
+          [(ngModel)]="rt_perusahaan"
+          id="rt_perusahaan"
+          name="rt_perusahaan"
+        />
+      </div>
+      <div class="col">RT</div>
+      <div class="col">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder="RW"
+          maxlength="3"
+          [(ngModel)]="rw_perusahaan"
+          id="rw_perusahaan"
+          name="rw_perusahaan"
+        />
+      </div>
+      <div class="col">RW</div>
+    </div>
+  </div>
+  <!--penutup colom 2-->
+  <!--colom 3-->
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="tel"
+          oninput="this.value = this.value.replace(/^0/g, '');"
+          onkeypress="return onlyNumberKey(event)"
+          maxlength="13"
+          [(ngModel)]="jumlah_karyawan"
+          class="form-control"
+          placeholder="Jumlah Karyawan"
+          id="jumlah_karyawan"
+          name="jumlah_karyawan"
+          maxlength="20"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">NPWP</label>
+      <div class="col-sm-8">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder="NPWP"
+          maxlength="16"
+          [(ngModel)]="npwp_perusahaan"
+          id="npwp_perusahaan"
+          name="npwp_perusahaan"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Berdiri Sejak<span class="text-danger">*</span></label>
+      <div class="col">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder=""
+          id="bulan_berdiri_perusahaan"
+          [(ngModel)]="bulan_berdiri_perusahaan"
+          name="bulan_berdiri_perusahaan"
+          maxlength="2"
+        />
+      </div>
+      <div class="col">Bulan</div>
+      <div class="col">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder=""
+          id="tahun_berdiri_perusahaan"
+          [(ngModel)]="tahun_berdiri_perusahaan"
+          name="tahun_berdiri_perusahaan"
+          maxlength="2"
+        />
+      </div>
+      <div class="col">Tahun</div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">No SIUP<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="tel"
+          oninput="this.value = this.value.replace(/^0/g, '');"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder="Nomor Siup"
+          [(ngModel)]="no_siup"
+          id="no_siup"
+          name="no_siup"
+          maxlength="16"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Barang / Jasa<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <textarea
+          class="form-control h-150px"
+          minlength="5"
+          rows="6"
+          [(ngModel)]="barang_jasa"
+          id="barang_jasa"
+          name="barang_jasa"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+  <!--penutup colom 3-->
+</div>
+<br />
+<div class="row">
+  <h5>Pekerjaan Sebelumnya</h5>
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nama Perusahaan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="nama_perusahaan_sebelum"
+          placeholder="Nama Perusahaan"
+          id="nama_perusahaan_sebelum"
+          name="nama_perusahaan_sebelum"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tipe Perusahaan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="tipe_perusahaan_sebelum" [(ngModel)]="tipe_perusahaan_sebelum" name="tipe_perusahaan_sebelum">
+            <option selected value="">Pilih Tipe Perusahaan</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tipe Pekerjaan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="tipe_pekerjaan_sebelum" [(ngModel)]="tipe_pekerjaan_sebelum" name="tipe_pekerjaan_sebelum">
+            <option selected value="">Pilih Tipe Pekerjaan</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Alamat</label>
+      <div class="col-sm-8">
+        <textarea
+          class="form-control h-150px"
+          rows="6"
+          [(ngModel)]="alamat_pekerjaan_sebelum"
+          id="alamat_pekerjaan_sebelum"
+          name="alamat_pekerjaan_sebelum"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Jenis Bidang<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="jenis_bidang_sebelum" [(ngModel)]="jenis_bidang_sebelum" name="jenis_bidang_sebelum">
+            <option value="">Pilih Jenis Bidang</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Sektor Ekonomi<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="jenis_sektor_sebelum" [(ngModel)]="jenis_sektor_sebelum" name="jenis_sektor_sebelum">
+            <option value="">Pilih Sektor Ekonomi</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Berdiri Sejak<span class="text-danger">*</span></label>
+      <div class="col">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          maxlength="2"
+          [(ngModel)]="bulan_berdiri_perusahaan_sebelum"
+          placeholder=""
+          id="bulan_berdiri_perusahaan_sebelum"
+          name="bulan_berdiri_perusahaan_sebelum"
+        />
+      </div>
+      <div class="col">Bulan</div>
+      <div class="col">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          maxlength="2"
+          placeholder=""
+          [(ngModel)]="tahun_berdiri_perusahaan_sebelum"
+          id="tahun_berdiri_perusahaan_sebelum"
+          name="tahun_berdiri_perusahaan_sebelum"
+        />
+      </div>
+      <div class="col">Tahun</div>
+    </div>
+  </div>
+</div>
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Informasi Pasangan</h3>
+</div>
+<br />
+<div class="row">
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nama Lengkap<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="nama_pasangan"
+          placeholder="Nama Lengkap"
+          id="nama_pasangan"
+          name="nama_pasangan"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="jenis_kelamin_pasangan" id="jenis_kelamin_pasangan" name="jenis_kelamin_pasangan">
+            <option selected value="">Pilih Jenis Kelamin</option>
+            <option id="jLakiNon" value="Laki-laki">Laki - laki</option>
+            <option id="jPereNon" value="Perempuan">Perempuan</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          class="form-control"
+          type="date"
+          [(ngModel)]="tanggal_lahir_pasangan"
+          id="tanggal_lahir_pasangan"
+          name="tanggal_lahir_pasangan"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tempat Lahir<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="tempat_lahir_pasangan"
+          placeholder="Tempat Lahir"
+          id="tempat_lahir_pasangan"
+          name="tempat_lahir_pasangan"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Agama<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="agama_pasangan" [(ngModel)]="agama_pasangan" name="agama_pasangan">
+            <option selected value="">Pilih Agama</option>
+            <option value="islam">Islam</option>
+            <option value="kristen">Kristen</option>
+            <option value="khatolik">Khatolik</option>
+            <option value="budha">Budha</option>
+            <option value="hindu">Hindu</option>
+            <option value="kong hu chu">Kong Hu Chu</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Pendidikan</label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="pendidikan_pasangan" [(ngModel)]="pendidikan_pasangan" name="pendidikan_pasangan">
+            <option selected value="">Pilih Pendidikan</option>
+            <option value="SMA">SMA</option>
+            <option value="D3">D3</option>
+            <option value="S1">S1</option>
+            <option value="S2">S2</option>
+            <option value="S3">S3</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kewarganegaraan</label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="kewarganegaraan_pasangan" id="kewarganegaraan_pasangan" name="kewarganegaraan_pasangan">
+            <option selected value="">Pilih Kewarganegaraan</option>
+            <option value="WNI">WNI</option>
+            <option value="WNA">WNA</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Ibu Kandung<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          [(ngModel)]="nama_ibu_kandung_pasangan"
+          class="form-control"
+          placeholder=""
+          id="nama_ibu_kandung_pasangan"
+          name="nama_ibu_kandung_pasangan"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">NPWP</label>
+      <div class="col-sm-8">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder="NPWP"
+          [(ngModel)]="npwp_pasangan"
+          maxlength="16"
+          id="npwp_pasangan"
+          name="npwp_pasangan"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label"> Alamat Sama Dengan Pemohon</label>
+      <div class="col-sm-8">
+        <input value="0" type="radio" name="sama" id="tidakSamaNon" checked /> Tidak Sama
+        <input value="1" type="radio" name="sama" id="harusSamaNon" />Sama
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <textarea
+          class="form-control h-150px"
+          [(ngModel)]="alamat_ktp_pasangan"
+          rows="6"
+          id="alamat_ktp_pasangan"
+          name="alamat_ktp_pasangan"
+        ></textarea>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="provinsi_cabang_pasangan" [(ngModel)]="provinsi_cabang_pasangan" name="provinsi_pasangan">
+            <option value="">Pilih Provinsi</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="kabkota_cabang_pasangan" [(ngModel)]="kabkota_cabang_pasangan" name="kabkota_pasangan">
+            <option value="">Pilih Kota</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="kecamatan_pasangan" [(ngModel)]="kecamatan_pasangan" name="kecamatan_pasangan">
+            <option value="">Pilih Kecamatan</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select class="form-control" id="kelurahan_pasangan" [(ngModel)]="kelurahan_pasangan" name="kelurahan_pasangan">
+            <option value="">Pilih Kelurahan</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <div class="input-group mb-3">
+          <input
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            maxlength="8"
+            class="form-control"
+            [(ngModel)]="kode_pos_pasangan"
+            id="kode_pos_pasangan"
+            name="kode_pos_pasangan"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-outline-dark" onclick="buatisipasangan()" type="button">Cari Data</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
+      <div class="col">
+        <input
+          maxlength="3"
+          type="tel"
+          [(ngModel)]="rt_pasangan"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder="RT"
+          id="rt_pasangan"
+          name="rt_pasangan"
+        />
+      </div>
+      <div class="col">RT</div>
+      <div class="col">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder="RW"
+          maxlength="3"
+          [(ngModel)]="rw_pasangan"
+          id="rw_pasangan"
+          name="rw_pasangan"
+        />
+      </div>
+      <div class="col">RW</div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">No KTP<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="tel"
+          onkeypress="return onlyNumberKey(event)"
+          class="form-control"
+          placeholder="Nomor KTP"
+          maxlength="16"
+          [(ngModel)]="no_ktp_pasangan"
+          id="no_ktp_pasangan"
+          name="no_ktp_pasangan"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          class="form-control"
+          type="date"
+          [(ngModel)]="tanggal_terbit_ktp_pasangan"
+          id="tanggal_terbit_ktp_pasangan"
+          name="tanggal_terbit_ktp_pasangan"
+        />
+      </div>
+    </div>
+    <div class="form-group row" id="rates2">
+      <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <label for="chkYes2"> <input type="radio" id="chkYes2" name="chkPinNo2" value="fix" checked /> Ya </label>
+        <label for="chkNo2"> <input type="radio" id="chkNo2" name="chkPinNo2" value="non" /> Tidak </label>
+      </div>
+    </div>
+    <div class="ktpSeumurJagungNon2">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tanggal Expired KTP<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input
+            class="form-control"
+            type="date"
+            [(ngModel)]="tanggal_exp_ktp_pasangan"
+            id="tanggal_exp_ktp_pasangan"
+            name="tanggal_exp_ktp_pasangan"
+          />
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">No Handphone<span class="text-danger">*</span></label>
+      <div class="col-sm-8">
+        <input
+          type="tel"
+          pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
+          maxlength="12"
+          class="form-control"
+          [(ngModel)]="no_handphone_pasangan"
+          placeholder="Nomor Handphone"
+          id="no_handphone_pasangan"
+          name="no_handphone_pasangan"
+        />
+      </div>
+    </div>
+  </div>
+</div>
