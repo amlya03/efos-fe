@@ -60,6 +60,8 @@ export class DataCalonNasabahComponent implements OnInit {
       akses_jalan_ke_rumah_tinggal: ['', Validators.required],
       jumlah_kendaraan: ['', Validators.required],
       kesimpulan_hasil_investigasi: ['', Validators.required],
+      lama_menetap_bulan: ['', Validators.required],
+      lama_menetap_tahun: ['', Validators.required],
     });
     this.load();
   }
