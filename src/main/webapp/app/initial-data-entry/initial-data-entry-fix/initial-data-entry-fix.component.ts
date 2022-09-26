@@ -7,6 +7,8 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { initialdataentryfix } from './initial-data-entry-model';
 import { InitialDataEntryService } from '../services/initial-data-entry.service';
+import { refStatusPerkawinan } from 'app/verification/service/config/refStatusPerkawinan.model';
+import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
 
 export type EntityResponseDaWa = HttpResponse<initialdataentryfix>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -29,6 +31,7 @@ export class InitialDataEntryFixComponent implements OnInit {
   ktp_seumur_hidup: any;
 
   // //////////////////////////////////////////
+  refStatusPerkawinan?: refStatusPerkawinan[];
   nama: string | undefined;
   jenis_kelamin: string | undefined;
   app_no_ide: string | undefined;
@@ -56,6 +59,7 @@ export class InitialDataEntryFixComponent implements OnInit {
 
   // ///////////////////////////////////////////
   constructor(
+    protected dataCalonNasabah: ServiceVerificationService,
     protected http: HttpClient,
     private router: Router,
     protected applicationConfigService: ApplicationConfigService,
@@ -81,12 +85,6 @@ export class InitialDataEntryFixComponent implements OnInit {
         this.daWa = (data as any).result;
       }
     });
-    // this.getcurefnih().subscribe({
-    //   next: (res: EntityArrayResponseDaWa) => {
-    //     this.daWacuref = res.body?.result;
-    //     // this.onResponseSuccess(res);
-    //   },
-    // });
 
     this.ideFixServices.getIdeByCuref().subscribe(data => {
       console.warn(data);
@@ -96,14 +94,14 @@ export class InitialDataEntryFixComponent implements OnInit {
         this.daWacuref = (data as any).result;
       }
     });
-    // this.getdataentry1().subscribe({
-    //   next: (res: EntityArrayResponseDaWa) => {
-    //     console.warn('PROVINSI', res);
 
-    //     this.daWaprof = res.body?.result;
-    //     // this.onResponseSuccess(res);
-    //   },
-    // });
+    // ref Status Menikah
+    this.dataCalonNasabah.getStatusPerkawinan().subscribe(data => {
+      // console.warn('ref', data);
+      if (data.code === 200) {
+        this.refStatusPerkawinan = data.result;
+      }
+    });
   }
 
   // getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {

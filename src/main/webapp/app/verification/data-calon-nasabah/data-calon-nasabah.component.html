@@ -212,11 +212,14 @@
             name="provinsi"
             id="provinsi"
             class="form-control"
+            (change)="onChangeProvinsi(provinsi_cabang)"
+            [(ngModel)]="provinsi_cabang"
             formControlName="provinsi"
             [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.provinsi.errors }"
-            maxlength="3"
           >
-            <option value="">Pilih Data</option>
+            <option *ngFor="let getProvinsi of getProvinsi" value="{{ getProvinsi.kdWilayah }}|{{ getProvinsi.namaWilayah }}">
+              {{ getProvinsi.namaWilayah }}
+            </option>
           </select>
           <div *ngIf="submitted && dataCalonNasabahForm.controls.provinsi.errors" class="text-danger">
             <div *ngIf="submitted && dataCalonNasabahForm.controls.provinsi.errors.required">Tidak Boleh Kosong</div>
@@ -244,13 +247,17 @@
         <label class="col-sm-4 col-form-label">Kota</label>
         <div class="col-sm-8">
           <select
+            (change)="onChangekota(kabkota_cabang)"
+            [(ngModel)]="kabkota_cabang"
             name="kota"
             id="kota"
             class="form-control"
             formControlName="kota"
             [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.kota.errors }"
           >
-            <option value="">Pilih Data</option>
+            <option *ngFor="let getKota of getKota" value="{{ getKota.kdWilayah }}|{{ getKota.namaWilayah }}">
+              {{ getKota.namaWilayah }}
+            </option>
           </select>
           <div *ngIf="submitted && dataCalonNasabahForm.controls.kota.errors" class="text-danger">
             <div *ngIf="submitted && dataCalonNasabahForm.controls.kota.errors.required">Tidak Boleh Kosong</div>
@@ -278,13 +285,17 @@
         <label class="col-sm-4 col-form-label">Kecamatan</label>
         <div class="col-sm-8">
           <select
+            (change)="onChangekecamatan(kecamatan)"
+            [(ngModel)]="kecamatan"
             name="kecamatan"
             id="kecamatan"
             class="form-control"
             formControlName="kecamatan"
             [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.kecamatan.errors }"
           >
-            <option value="">Pilih Data</option>
+            <option *ngFor="let getKecamatan of getKecamatan" value="{{ getKecamatan.kdWilayah }}|{{ getKecamatan.namaWilayah }}">
+              {{ getKecamatan.namaWilayah }}
+            </option>
           </select>
           <div *ngIf="submitted && dataCalonNasabahForm.controls.kecamatan.errors" class="text-danger">
             <div *ngIf="submitted && dataCalonNasabahForm.controls.kecamatan.errors.required">Tidak Boleh Kosong</div>
@@ -312,13 +323,17 @@
         <label class="col-sm-4 col-form-label">Kelurahan</label>
         <div class="col-sm-8">
           <select
+            (change)="onChangekelurahan(kelurahan)"
+            [(ngModel)]="kelurahan"
             name="kelurahan"
             id="kelurahan"
             class="form-control"
             formControlName="kelurahan"
             [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.kelurahan.errors }"
           >
-            <option value="">Pilih Data</option>
+            <option *ngFor="let getKelurahan of getKelurahan" value="{{ getKelurahan.kdPos }}|{{ getKelurahan.namaWilayah }}">
+              {{ getKelurahan.namaWilayah }}
+            </option>
           </select>
           <div *ngIf="submitted && dataCalonNasabahForm.controls.kelurahan.errors" class="text-danger">
             <div *ngIf="submitted && dataCalonNasabahForm.controls.kelurahan.errors.required">Tidak Boleh Kosong</div>
@@ -347,17 +362,16 @@
         <div class="col-sm-8">
           <div class="input-group mb-3">
             <input
-              (keypress)="keyPressNumbers($event)"
-              id="kode_pos"
-              name="kode_pos"
               type="text"
+              [(ngModel)]="kode_pos"
               class="form-control"
-              placeholder=""
-              aria-label=""
-              aria-describedby="basic-addon2"
+              id="kode_pos"
+              value="{{ getKodePos }}"
+              name="kode_pos"
               formControlName="kode_pos"
-              maxlength="8"
               [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.kode_pos.errors }"
+              (keypress)="keyPressNumbers($event)"
+              maxlength="8"
             />
             <div class="input-group-append">
               <button class="btn btn-outline-secondary" type="button">Cari Data</button>
@@ -430,6 +444,11 @@
             [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.pedidikan.errors }"
           >
             <option value="">Pilih Data</option>
+            <option value="SMA">SMA</option>
+            <option value="D3">D3</option>
+            <option value="S1">S1</option>
+            <option value="S2">S2</option>
+            <option value="S3">S3</option>
           </select>
           <div *ngIf="submitted && dataCalonNasabahForm.controls.pedidikan.errors" class="text-danger">
             <div *ngIf="submitted && dataCalonNasabahForm.controls.pedidikan.errors.required">Tidak Boleh Kosong</div>
@@ -457,8 +476,9 @@
         <label class="col-sm-4 col-form-label">Status Menikah</label>
         <div class="col-sm-8">
           <select
-            name="status_menikah"
-            id="status_menikah"
+            name="status_perkawinan"
+            id="status_perkawinan"
+            #status_perkawinan
             class="form-control"
             formControlName="status_menikah"
             [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.status_menikah.errors }"
@@ -567,67 +587,98 @@
   <div class="row form-material">
     <div class="col">
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nama Pasangan</label>
+        <label class="col-sm-4 col-form-label">Karakter Calon Nasabah</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            class="form-control"
-            id="nama_pasangan"
-            name="nama_pasangan"
-            placeholder=""
-            formControlName="nama_pasangan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.nama_pasangan.errors }"
-          />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_pasangan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_pasangan.errors.required">Tidak Boleh Kosong</div>
-          </div>
+          <select name="karakter_calon_nasabah " id="karakter_calon_nasabah " class="form-control">
+            <option value="">Pilih Data</option>
+            <option value="Baik">Baik</option>
+            <option value="Tidak Baik">Tidak Baik</option>
+          </select>
         </div>
       </div>
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_nama_pasangan" id="verifikasi_nama_pasangan_ya" />
+      <input type="radio" name="verifikasi_pendidikan" id="verifikasi_pendidikan_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_nama_pasangan" id="verifikasi_nama_pasangan_tidak" />
+      <input type="radio" name="verifikasi_pendidikan" id="verifikasi_pendidikan_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input type="text" class="form-control" id="note_nama_pasangan" name="note_nama_pasangan" placeholder="" />
+        <input name="note_pendidikan" id="note_pendidikan" class="form-control" />
       </div>
     </div>
   </div>
   <br />
-  <div class="row form-material">
-    <div class="col">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Pekerjaan Pasangan</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            class="form-control"
-            id="pekerjaan_pasangan"
-            name="pekerjaan_pasangan"
-            placeholder=""
-            formControlName="pekerjaan_pasangan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.pekerjaan_pasangan.errors }"
-          />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.pekerjaan_pasangan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.pekerjaan_pasangan.errors.required">Tidak Boleh Kosong</div>
+  <div [ngSwitch]="status_perkawinan.value">
+    <div *ngSwitchCase="'Menikah'">
+      <div class="row form-material">
+        <div class="col">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Nama Pasangan</label>
+            <div class="col-sm-8">
+              <input
+                type="text"
+                class="form-control"
+                id="nama_pasangan"
+                name="nama_pasangan"
+                placeholder=""
+                formControlName="nama_pasangan"
+                [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.nama_pasangan.errors }"
+              />
+              <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_pasangan.errors" class="text-danger">
+                <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_pasangan.errors.required">Tidak Boleh Kosong</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col" style="text-align: center">
+          <label>Sesuai</label>
+          <input type="radio" name="verifikasi_nama_pasangan" id="verifikasi_nama_pasangan_ya" />
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="radio" name="verifikasi_nama_pasangan" id="verifikasi_nama_pasangan_tidak" />
+          <label>Tidak Sesuai</label>
+        </div>
+        <div class="col">
+          <div class="form-group row">
+            <input type="text" class="form-control" id="note_nama_pasangan" name="note_nama_pasangan" placeholder="" />
           </div>
         </div>
       </div>
-    </div>
-    <div class="col" style="text-align: center">
-      <label>Sesuai</label>
-      <input type="radio" name="verifikasi_pekerjaan_pasangan" id="verifikasi_pekerjaan_pasangan_ya" />
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_pekerjaan_pasangan" id="verifikasi_pekerjaan_pasangan_tidak" />
-      <label>Tidak Sesuai</label>
-    </div>
-    <div class="col">
-      <div class="form-group row">
-        <input type="text" class="form-control" id="note_pekerjaan_pasangan" name="note_pekerjaan_pasangan" placeholder="" />
+      <br />
+      <div class="row form-material">
+        <div class="col">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Pekerjaan Pasangan</label>
+            <div class="col-sm-8">
+              <input
+                type="text"
+                class="form-control"
+                id="pekerjaan_pasangan"
+                name="pekerjaan_pasangan"
+                placeholder=""
+                formControlName="pekerjaan_pasangan"
+                [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.pekerjaan_pasangan.errors }"
+              />
+              <div *ngIf="submitted && dataCalonNasabahForm.controls.pekerjaan_pasangan.errors" class="text-danger">
+                <div *ngIf="submitted && dataCalonNasabahForm.controls.pekerjaan_pasangan.errors.required">Tidak Boleh Kosong</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col" style="text-align: center">
+          <label>Sesuai</label>
+          <input type="radio" name="verifikasi_pekerjaan_pasangan" id="verifikasi_pekerjaan_pasangan_ya" />
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="radio" name="verifikasi_pekerjaan_pasangan" id="verifikasi_pekerjaan_pasangan_tidak" />
+          <label>Tidak Sesuai</label>
+        </div>
+        <div class="col">
+          <div class="form-group row">
+            <input type="text" class="form-control" id="note_pekerjaan_pasangan" name="note_pekerjaan_pasangan" placeholder="" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -678,6 +729,9 @@
         <div class="col-sm-8">
           <select name="status_rumah" id="status_rumah" class="form-control">
             <option value="">Pilih Data</option>
+            <option *ngFor="let refStatusRumah of refStatusRumah" value="{{ refStatusRumah.description }}">
+              {{ refStatusRumah.description }}
+            </option>
           </select>
         </div>
       </div>
@@ -744,8 +798,10 @@
         <label class="col-sm-4 col-form-label">Jenis Bangunan</label>
         <div class="col-sm-8">
           <select name="jenis_bangunan" id="jenis_bangunan" class="form-control">
-            <option value="Ya">Ya</option>
-            <option value="Tidak">Tidak</option>
+            <option value="">Pilih Data</option>
+            <option *ngFor="let refListTipeProperti of refListTipeProperti" value="{{ refListTipeProperti.properti_deskripsi }}">
+              {{ refListTipeProperti.properti_deskripsi }}
+            </option>
           </select>
         </div>
       </div>
@@ -764,8 +820,14 @@
         <label class="col-sm-4 col-form-label">fasilitas Listrik</label>
         <div class="col-sm-8">
           <select name="fasilitas_listrik" id="fasilitas_listrik" class="form-control">
-            <option value="Ya">Ya</option>
-            <option value="Tidak">Tidak</option>
+            <option value="">Pilih Data</option>
+            <option value="450 WATT">450 WATT</option>
+            <option value="900 WATT">900 WATT</option>
+            <option value="1300 WATT">1300 WATT</option>
+            <option value="2200 WATT">2200 WATT</option>
+            <option value="3500 WATT">3500 WATT</option>
+            <option value="5500 WATT">5500 WATT</option>
+            <option value="6600 WATT">6600 WATT</option>
           </select>
         </div>
       </div>
@@ -796,6 +858,9 @@
             [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.kondisi_lingkungan.errors }"
           >
             <option value="">Pilih Data</option>
+            <option value="Baik">Baik</option>
+            <option value="Sedang">Sedang</option>
+            <option value="Kurang Baik">Kurang Baik</option>
           </select>
           <div *ngIf="submitted && dataCalonNasabahForm.controls.kondisi_lingkungan.errors" class="text-danger">
             <div *ngIf="submitted && dataCalonNasabahForm.controls.kondisi_lingkungan.errors.required">Tidak Boleh Kosong</div>
@@ -814,6 +879,10 @@
             [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.akses_jalan_ke_rumah_tinggal.errors }"
           >
             <option value="">Pilih Data</option>
+            <option>Bisa Masuk Mobil</option>
+            <option>Bisa masuk Mobil dan Motor</option>
+            <option>Hanya bisa masuk motor</option>
+            <option>Tidak bisa masuk mobil dan motor</option>
           </select>
           <div *ngIf="submitted && dataCalonNasabahForm.controls.akses_jalan_ke_rumah_tinggal.errors" class="text-danger">
             <div *ngIf="submitted && dataCalonNasabahForm.controls.akses_jalan_ke_rumah_tinggal.errors.required">Tidak Boleh Kosong</div>
