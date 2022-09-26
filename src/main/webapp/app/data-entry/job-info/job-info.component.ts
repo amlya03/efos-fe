@@ -120,7 +120,7 @@ export class JobInfoComponent implements OnInit {
     // this.onResponseSuccess(res);
 
     if (this.datakirimanstatus === 'Menikah') {
-      this.router.navigate(['/data-pasangan'], {
+      this.router.navigate(['/data-entry/data-pasangan'], {
         queryParams: {
           datakirimanappde: this.datakirimanappde,
           datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,

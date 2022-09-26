@@ -130,6 +130,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
           // 'created_by': '199183174'
         })
         .subscribe({});
+      window.location.reload();
     }
 
     this.dtElement.dtInstance.then((dtIntance: DataTables.Api) => {

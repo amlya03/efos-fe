@@ -55,7 +55,57 @@ export class PekerjaanPasanganComponent implements OnInit {
         // console.warn('@@@@@@@@@@@@@', this.datakiriman);
         // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
         this.daWa = res.body?.result;
-        // this.onResponseSuccess(res);
+        // /////////////////////// Untuk COnvert hasil yang angka ///////////////////////////////////
+        if (this.daWa.kategori_pekerjaan == 1) {
+          this.daWa.kategori_pekerjaan = 'Fix Income';
+        }
+        if (this.daWa.kategori_pekerjaan == 2) {
+          this.daWa.kategori_pekerjaan = 'Non Fix Income';
+        }
+        if (this.daWa.kategori_pekerjaan == 3) {
+          this.daWa.kategori_pekerjaan = 'Lainnya';
+        }
+        if (this.daWa.tipe_pekerjaan == 1) {
+          this.daWa.tipe_pekerjaan = 'Pegawai Negeri Sipil';
+        }
+        if (this.daWa.tipe_pekerjaan == 2) {
+          this.daWa.tipe_pekerjaan = 'Pegawai Swasta';
+        }
+        if (this.daWa.tipe_pekerjaan == 3) {
+          this.daWa.tipe_pekerjaan = 'Wiraswasta';
+        }
+        if (this.daWa.tipe_pekerjaan == 4) {
+          this.daWa.tipe_pekerjaan = 'Profesional';
+        }
+        if (this.daWa.tipe_pekerjaan == 5) {
+          this.daWa.tipe_pekerjaan = 'Pensiunan';
+        }
+        if (this.daWa.tipe_pekerjaan == 6) {
+          this.daWa.tipe_pekerjaan = 'Tidak Bekerja';
+        }
+        if (this.daWa.tipe_pekerjaan == 7) {
+          this.daWa.tipe_pekerjaan = 'TNI / POLRI';
+        }
+        if (this.daWa.tipe_pekerjaan == 8) {
+          this.daWa.tipe_pekerjaan = 'Pegawai BUMN';
+        }
+        if (this.daWa.tipe_perusahaan == 1) {
+          this.daWa.tipe_perusahaan = 'Perseorangan';
+        }
+        if (this.daWa.tipe_perusahaan == 2) {
+          this.daWa.tipe_perusahaan = 'PT Terbuka (Perseroan Terbatas TBK)';
+        }
+        if (this.daWa.tipe_perusahaan == 3) {
+          this.daWa.tipe_perusahaan = 'PT (Perseroan Terbatas)';
+        }
+        if (this.daWa.tipe_perusahaan == 5) {
+          this.daWa.tipe_perusahaan = 'CV';
+        }
+        if (this.daWa.tipe_perusahaan == 6) {
+          this.daWa.tipe_perusahaan = 'Tidak Bekerja';
+        }
+        // /////////////////////// Untuk COnvert hasil yang angka ///////////////////////////////////
+        // alert(this.daWa.tipe_perusahaan)
       },
     });
   }

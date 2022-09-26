@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if (!this.router.getCurrentNavigation()) {
           // There were no routing during login (eg from navigationToStoredUrl)
           this.router.navigate(['']);
+          window.location.reload();
         }
       },
       error: () => (this.authenticationError = true),

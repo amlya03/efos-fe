@@ -101,6 +101,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
           created_by: '199183174',
         })
         .subscribe({});
+      window.location.reload();
     }
   }
 
@@ -118,6 +119,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
           created_by: '199183174',
         })
         .subscribe({});
+      window.location.reload();
     }
   }
 
@@ -143,6 +145,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
               created_by: '199183174',
             })
             .subscribe({});
+          window.location.reload();
         }
         Swal.fire('Data di Reject!', 'File Sudah Tidak Ada', 'success');
       } else if (result.dismiss === Swal.DismissReason.cancel) {

@@ -37,7 +37,7 @@
       <div class="col-sm-9">
         <div class="form-group">
           <select class="form-control" name="posisi1" id="posisi1">
-            <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
+            <option value="{{ daWa.posisi }}">{{ daWa.posisi }}</option>
           </select>
         </div>
       </div>
@@ -50,9 +50,9 @@
           type="text"
           class="form-control"
           placeholder="Nama Perusahaan"
-          id="nama_perusahaan1"
-          value="{{ daWa.tipe_pekerjaan }}"
-          name="nama_perusahaan1"
+          id="nama_perusahaan"
+          name="nama_perusahaan"
+          value="{{ daWa.nama_perusahaan }}"
         />
       </div>
     </div>
@@ -60,9 +60,9 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Alamat Perusahaan</label>
       <div class="col-sm-9">
-        <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan1" name="alamat_perusahaan1">
-          {{ daWa.tipe_pekerjaan }}
-        </textarea>
+        <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan1" name="alamat_perusahaan1">{{
+          daWa.alamat_perusahaan
+        }}</textarea>
       </div>
     </div>
     <br />
@@ -71,7 +71,7 @@
       <div class="col-sm-9">
         <div class="form-group">
           <select class="form-control" id="provinsi_cabang_swasta" name="provinsi1">
-            <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
+            <option value="{{ daWa.provinsi }}">{{ daWa.provinsi }}</option>
           </select>
         </div>
       </div>
@@ -82,7 +82,7 @@
       <div class="col-sm-9">
         <div class="form-group">
           <select class="form-control" id="kabkota_cabang_swasta" name="kabkota1">
-            <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
+            <option value="{{ daWa.kabkota }}">{{ daWa.kabkota }}</option>
           </select>
         </div>
       </div>
@@ -93,7 +93,7 @@
       <div class="col-sm-9">
         <div class="form-group">
           <select class="form-control" id="kecamatan_swasta" name="kecamatan1">
-            <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
+            <option value="{{ daWa.kecamatan }}">{{ daWa.kecamatan }}</option>
           </select>
         </div>
       </div>
@@ -104,7 +104,7 @@
       <div class="col-sm-9">
         <div class="form-group">
           <select class="form-control" id="kelurahan_swasta" name="kelurahan1">
-            <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
+            <option value="{{ daWa.kelurahan }}">{{ daWa.kelurahan }}</option>
           </select>
         </div>
       </div>
@@ -120,7 +120,7 @@
             maxlength="8"
             class="form-control"
             id="kode_pos_swasta"
-            value="{{ daWa.tipe_pekerjaan }}"
+            value="{{ daWa.kode_pos }}"
             name="kode_pos1"
           />
           <div class="input-group-append">
@@ -132,22 +132,22 @@
 
     <div [ngSwitch]="daWa.tipe_pekerjaan">
       <!--//////////// Wiraswasta \\\\\\\\\\\\\\\\\-->
-      <div *ngSwitchCase="'3'">
+      <div *ngSwitchCase="'Wiraswasta'">
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Nomor SIUP</label>
           <div class="col-sm-9">
-            <input type="tel" class="form-control" value="{{ daWa.tipe_pekerjaan }}" id="siup2" name="siup2" maxlength="16" />
+            <input type="tel" class="form-control" value="{{ daWa.no_siup }}" id="siup2" name="siup2" maxlength="16" />
           </div>
         </div>
       </div>
       <!--//////////// Wiraswasta \\\\\\\\\\\\\\\\\-->
 
       <!--//////////// Profesional \\\\\\\\\\\\\\\\\-->
-      <div *ngSwitchCase="'4'">
+      <div *ngSwitchCase="'Profesional'">
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Nomor SIP</label>
           <div class="col-sm-9">
-            <input type="tel" class="form-control" value="{{ daWa.tipe_pekerjaan }}" id="siup2" name="siup2" maxlength="16" />
+            <input type="tel" class="form-control" value="{{ daWa.no_siup }}" id="siup2" name="siup2" maxlength="16" />
           </div>
         </div>
       </div>
@@ -160,7 +160,7 @@
       <div class="col-sm-9">
         <div class="form-group">
           <select class="form-control" id="jenis_bidang" name="jenis_bidang">
-            <option value="{{ daWa.jenis_bidang }}"></option>
+            <option value="{{ daWa.jenis_bidang }}">{{ daWa.jenis_bidang }}</option>
           </select>
         </div>
       </div>
@@ -171,7 +171,7 @@
       <div class="col-sm-9">
         <div class="form-group">
           <select class="form-control" id="sektor_ekonomi" name="sektor_ekonomi">
-            <option value="{{ daWa.sektor_ekonomi }}"></option>
+            <option value="{{ daWa.sektor_ekonomi }}">{{ daWa.sektor_ekonomi }}</option>
           </select>
         </div>
       </div>
@@ -180,7 +180,7 @@
 
     <div [ngSwitch]="daWa.kategori_pekerjaan">
       <!--//////////// NON FIX INCOME \\\\\\\\\\\\\\\\\-->
-      <div *ngSwitchCase="'2'">
+      <div *ngSwitchCase="'Non Fix Income'">
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
           <div class="col-sm-9">
@@ -204,7 +204,7 @@
       <div class="col-sm-9">
         <div class="form-group">
           <select class="form-control" id="tipe_perusahaan" name="tipe_perusahaan">
-            <option value="{{ daWa.tipe_pekerjaan }}"></option>
+            <option value="{{ daWa.tipe_perusahaan }}">{{ daWa.tipe_perusahaan }}</option>
           </select>
         </div>
       </div>
@@ -216,7 +216,7 @@
         <input
           type="tel"
           class="form-control"
-          value="{{ daWa.tipe_pekerjaan }}"
+          value="{{ daWa.lama_bekerja_bulan }}"
           id="lama_bekerja_bulan1"
           name="lama_bekerja_bulan1"
           maxlength="2"
@@ -227,7 +227,7 @@
         <input
           type="tel"
           class="form-control"
-          value="{{ daWa.tipe_pekerjaan }}"
+          value="{{ daWa.lama_bekerja_tahun }}"
           id="lama_bekerja_tahun1"
           name="lama_bekerja_tahun1"
           maxlength="2"
@@ -292,7 +292,7 @@
 
     <div [ngSwitch]="daWa.tipe_pekerjaan">
       <!--//////////// Profesional \\\\\\\\\\\\\\\\\-->
-      <div *ngSwitchCase="'4'">
+      <div *ngSwitchCase="'Profesional'">
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Usia</label>
           <div class="col-sm-9">
