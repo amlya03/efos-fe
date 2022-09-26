@@ -25,6 +25,7 @@ export class PersonalInfoComponent implements OnInit {
   app_no_de: any;
   daWa: any;
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  hasildhn: any;
 
   constructor(
     private route: ActivatedRoute,
