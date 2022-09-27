@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
 
   private readonly destroy$ = new Subject<void>();
+  harusUnset: any;
 
   constructor(private accountService: AccountService, private router: Router) {}
 

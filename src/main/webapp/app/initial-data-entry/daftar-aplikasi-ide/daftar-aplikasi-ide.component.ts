@@ -34,6 +34,7 @@ export class DaftarAplikasiIdeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    localStorage.removeItem('l_dafAppDe');
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,

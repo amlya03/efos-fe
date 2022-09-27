@@ -52,6 +52,8 @@ export class JobInfoComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobByCurefDe?sj=');
   ngOnInit(): void {
+    // const job_info_retrive = (<HTMLInputElement>document.getElementById("job_info")).value;
+    // localStorage.setItem('daftar_aplikasi_de', job_info_retrive)
     this.load();
   }
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -120,7 +122,7 @@ export class JobInfoComponent implements OnInit {
     // this.onResponseSuccess(res);
 
     if (this.datakirimanstatus === 'Menikah') {
-      this.router.navigate(['/data-pasangan'], {
+      this.router.navigate(['/data-entry/data-pasangan'], {
         queryParams: {
           datakirimanappde: this.datakirimanappde,
           datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,

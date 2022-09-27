@@ -9,6 +9,12 @@ import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from 'app/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { EntityArrayResponseDaWa, PersonalInfoComponent } from 'app/data-entry/personal-info/personal-info.component';
+import { createRequestOption } from 'app/core/request/request-util';
+import { Observable } from 'rxjs';
+import { ApiResponse } from 'app/entities/book/ApiResponse';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'jhi-navbar',
@@ -16,6 +22,7 @@ import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
   inProduction?: boolean;
   isNavbarCollapsed = true;
   languages = LANGUAGES;
@@ -32,8 +39,15 @@ export class NavbarComponent implements OnInit {
   untukSessionUserName: any;
   untukSessionFullName: any;
   untukSessionKodeCabang: any;
+  role: any;
+  navbarPersonalInfo: any;
+  app_no_de: any;
+  daWa: any;
+  datakiriman: any;
+  isDisabled = true;
 
   constructor(
+    protected http: HttpClient,
     private localStorageService: LocalStorageService,
     private loginService: LoginService,
     private translateService: TranslateService,
@@ -41,15 +55,30 @@ export class NavbarComponent implements OnInit {
     private accountService: AccountService,
     private profileService: ProfileService,
     public router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    protected applicationConfigService: ApplicationConfigService
   ) {
     if (VERSION) {
       this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`;
     }
     this.route.params.subscribe(params => console.warn('parameternya ', params));
+    this.route.queryParams.subscribe(params => {
+      this.datakiriman = params['datakiriman'];
+    });
+    this.route.queryParams.subscribe(params => {
+      this.app_no_de = params['app_no_de'];
+    });
   }
 
   ngOnInit(): void {
+    if (this.app_no_de != null) {
+      this.isDisabled = false;
+    }
+    // alert(this.app_no_de)
+    // const personal_info_retrive = (<HTMLInputElement>document.getElementById("personal_info")).value;
+    // alert((<HTMLInputElement>document.getElementById("personal_info")).value)
+    // this.navbarPersonalInfo = personal_info_retrive
+    // ////////////////////////////////////////
     this.entitiesNavbarItems = EntityNavbarItems;
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;
@@ -64,6 +93,13 @@ export class NavbarComponent implements OnInit {
     this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
     this.untukSessionFullName = this.localStorageService.retrieve('sessionFullName');
     this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
+
+    // ref personal info
+    this.getdataentry().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        this.daWa = res.body?.result;
+      },
+    });
   }
 
   changeLanguage(languageKey: string): void {
@@ -140,5 +176,11 @@ export class NavbarComponent implements OnInit {
     this.navVerif = false;
     this.navIde = false;
     this.navDe = false;
+  }
+
+  // ref personal
+  getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    return this.http.get<ApiResponse>(this.resourceUrl + this.app_no_de, { params: options, observe: 'response' });
   }
 }
