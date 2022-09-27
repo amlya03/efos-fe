@@ -7,7 +7,7 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Nomor Aplikasi<span class="text-danger">*</span></label>
       <div class="col-sm-8">
-        <input type="text" id="app_no_ide" [(ngModel)]="app_no_ide" name="app_no_ide" value="" class="form-control" readonly />
+        <input type="text" id="app_no_ide" [(ngModel)]="app_no_ide" name="app_no_ide" [value]="daWa" class="form-control" readonly />
       </div>
     </div>
     <br />
@@ -1099,6 +1099,32 @@
           id="no_handphone_pasangan"
           name="no_handphone_pasangan"
         />
+      </div>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+      <div class="col" style="text-align: center">
+        <button
+          class="fa fa-file-archive-o btn btn-dark"
+          id="prosesData"
+          name="proses"
+          value="proses"
+          (click)="gotoprescreaning(daWa, daWacuref)"
+          type="submit"
+        >
+          Proses Data
+        </button>
+        <button
+          class="fa fa-file-archive-o btn btn-dark"
+          id="simpandata2"
+          name="simpan"
+          value="simpan"
+          (click)="gotodaftaraplikasiide(daWa, daWacuref)"
+          type="submit"
+        >
+          Simpan data
+        </button>
       </div>
     </div>
   </div>
