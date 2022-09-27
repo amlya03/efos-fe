@@ -5,10 +5,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
-// import { dataentrymodel } from '../data-entry/data-entry-model';
-// import { DaftarAplikasiWaitingAssigmentService,EntityArrayResponseDaWa } from './data-entry-component.servis';
 import { createRequestOption } from 'app/core/request/request-util';
-// import { DaftarAplikasiWaitingAssigmentService, EntityArrayResponseDaWa } from '../service/daftar-aplikasi-waiting-assigment.service';
 
 // export type EntityResponseDaWa = HttpResponse<dataentrymodel>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -26,6 +23,7 @@ export class PersonalInfoComponent implements OnInit {
   daWa: any;
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
   hasildhn: any;
+  personal_info_value: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,6 +43,10 @@ export class PersonalInfoComponent implements OnInit {
     this.load();
   }
   load(): void {
+    const personal_info_retrive = (<HTMLInputElement>document.getElementById('personal_info')).value;
+    this.personal_info_value = personal_info_retrive;
+    // alert(personal_info_retrive)
+    // localStorage.setItem('daftar_aplikasi_de', personal_info_retrive);
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         // console.log(res.body?.result);
@@ -70,7 +72,7 @@ export class PersonalInfoComponent implements OnInit {
     contohtampungankategoripekerjaan: any
   ): void {
     // this.onResponseSuccess(res);
-    alert(contohtampungancuref);
+    // alert(contohtampungancuref);
     this.router.navigate(['/data-entry/job-info'], {
       queryParams: {
         datakiriman: contohtampungancuref,

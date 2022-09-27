@@ -34,7 +34,6 @@
                 class="col nav-link"
                 style="text-align: center"
                 routerLink="daftaraplikasiide"
-                (click)="collapseNavbar()"
                 (click)="showData()"
                 [class.active]="navIde"
               >
@@ -51,7 +50,6 @@
               <a
                 class="col nav-link"
                 routerLink="daftar-aplikasi-verification"
-                (click)="collapseNavbar()"
                 (click)="showData()"
                 [class.active]="navVerif"
                 style="text-align: center"
@@ -416,27 +414,24 @@
       <h6>Hasil Pre Screening</h6>
     </a>
   </div>
-  <div
+  <!-- <div
     *ngIf="
-      router.url === '/data-entry/personalinfo' ||
-      router.url === '/data-entry/job-info' ||
-      router.url === '/data-entry/data-pasangan' ||
-      router.url === '/data-entry/pekerjaan-pasangan' ||
-      router.url === '/data-entry/collateral' ||
-      router.url === '/data-entry/struktur-pembiayaan' ||
-      router.url === '/data-entry/emergency-contact' ||
-      router.url === '/data-entry/call-report' ||
-      router.url === '/data-entry/call-report-non' ||
-      router.url === '/data-entry/memo'
+      router.url === 'data-entry/personalinfo' ||
+      router.url === 'data-entry/job-info' ||
+      router.url === 'data-entry/data-pasangan' ||
+      router.url === 'data-entry/pekerjaan-pasangan' ||
+      router.url === 'data-entry/collateral' ||
+      router.url === 'data-entry/struktur-pembiayaan' ||
+      router.url === 'data-entry/emergency-contact' ||
+      router.url === 'data-entry/call-report' ||
+      router.url === 'data-entry/call-report-non' ||
+      router.url === 'data-entry/memo'
     "
-  >
-    <a
-      class="nav-item nav-link"
-      routerLink="data-entry/personalinfo"
-      [routerLinkActive]="'active'"
-      [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'AO'"
-    >
+  > -->
+  <input type="text" value="{{ this.app_no_de == null }}" />
+  <!-- [routerLink]="['data-entry/personalinfo', this.app_no_de]" -->
+  <div>
+    <a class="nav-item nav-link active" [class.active]="this.app_no_de != null" routerLink="data-entry/personalinfo" *ngSwitchCase="'AO'">
       <h6>Personal Info</h6>
     </a>
     <a
