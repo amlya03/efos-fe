@@ -22,6 +22,11 @@ export class HasilPrescreeningComponent implements OnInit {
   hasildhn: any;
   datakirimantgllahir: any;
   datakirimanappide: any;
+  dataif: any;
+  datadukcapil: any;
+  contohdata: any;
+  potongankakotanih: any;
+  statusnikah: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -110,6 +115,21 @@ export class HasilPrescreeningComponent implements OnInit {
     // const timestamp = 'aaa';
     const local = 'aaa';
     const now = 'aaa';
+
+    const kirimanprovinsi = this.daWa.provinsi.split('|');
+    const kirimankabkota = this.daWa.kabkota.split('|');
+    const kirimankecamatan = this.daWa.kecamatan.split('|');
+    const kirimankelurahan = this.daWa.kelurahan.split('|');
+
+    if (this.daWa.kabkota.indexOf(' ')) {
+      this.potongankakotanih = this.daWa.kabkota.replace('Kota ', '');
+    }
+    if (this.daWa.status_perkawinan === 'Menikah') {
+      this.statusnikah = 'KAWIN';
+    } else {
+      this.statusnikah = 'BELUM KAWIN';
+    }
+
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify', {
         no_id: this.datakirimanappide,
@@ -128,7 +148,7 @@ export class HasilPrescreeningComponent implements OnInit {
         appNoIde: this.daWa.app_no_ide,
         pendidikan: '',
         pekerjaan: '',
-        statusPerkawinan: this.daWa.status_perkawinan,
+        statusPerkawinan: this.statusnikah,
         namaIbuKandung: '',
         statusHubKeluarga: '',
         alamat: this.daWa.alamat_ktp,
@@ -136,8 +156,8 @@ export class HasilPrescreeningComponent implements OnInit {
         kodeKabupaten: '',
         kodeKecamatan: '',
         kodeKelurahan: '',
-        namaPropinsi: this.daWa.nama,
-        namaKabupaten: this.daWa.kabkota,
+        namaPropinsi: this.daWa.provinsi,
+        namaKabupaten: this.potongankakotanih,
         namaKecamatan: this.daWa.kecamatan,
         namaKelurahan: this.daWa.kelurahan,
         noRW: this.daWa.rw,
@@ -156,6 +176,8 @@ export class HasilPrescreeningComponent implements OnInit {
               alert('ini gagal');
               alert(data.result.responseDesc);
             } else {
+              this.datadukcapil = data.result;
+              this.dataif = data.result.responseCode;
               alert('berhasil ');
             }
           }
@@ -168,10 +190,35 @@ export class HasilPrescreeningComponent implements OnInit {
     return this.http.get<ApiResponse>(this.resourceUrl + this.datakirimanid, { params: options, observe: 'response' });
   }
 
-  gotodaftaraplikaside() {
-    this.router.navigate(['/data-entry'], {
-      queryParams: {},
-    });
+  gotopersonalinfo(app_no_ide: any, curef: any) {
+    const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
+
+    this.http
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_app_de', {
+        headers: headers,
+        app_no_ide: app_no_ide,
+        curef: curef,
+        app_no_de: '',
+        cabang: '',
+        created_by: '',
+        created_date: '',
+        flag_tab: '',
+        id: 0,
+        status_aplikasi: '',
+      })
+      .subscribe({
+        next: data => {
+          this.contohdata = data.result.app_no_de;
+
+          this.router.navigate(['/data-entry/personalinfo'], {
+            queryParams: { app_no_de: this.contohdata },
+          });
+        },
+      });
+
+    // this.router.navigate(['/daftaraplikasiide'], {
+    //     queryParams: {datakirimanid: this.datakirimanid},
+    // });
   }
 
   postUpdateStatus(): void {

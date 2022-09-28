@@ -9,7 +9,15 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Nama Lengkap</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" placeholder="Nama Lengkap" name="nama" id="nama" value="{{ daWa.nama }}" />
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="nama"
+          placeholder="Nama Lengkap"
+          name="nama"
+          id="nama"
+          value="{{ daWa.nama }}"
+        />
       </div>
     </div>
     <br />
@@ -17,7 +25,7 @@
       <label class="col-sm-3 col-form-label">Jenis Kelamin</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" value="">
+          <select class="form-control" [(ngModel)]="jenis_kelamin" id="jenis_kelamin" name="jenis_kelamin" value="">
             <option value="{{ daWa.jenis_kelamin }}">{{ daWa.jenis_kelamin }}</option>
             <option value="Laki-laki">Laki - laki</option>
             <option value="Perempuan">Perempuan</option>
@@ -29,7 +37,14 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
       <div class="col-sm-9">
-        <input class="form-control" type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ daWa.tanggal_lahir }}" />
+        <input
+          class="form-control"
+          type="date"
+          [(ngModel)]="tanggal_lahir"
+          id="tanggal_lahir"
+          name="tanggal_lahir"
+          value="{{ daWa.tanggal_lahir }}"
+        />
       </div>
     </div>
     <br />
@@ -42,6 +57,7 @@
           placeholder="Tempat Lahir"
           id="tempat_lahir"
           name="tempat_lahir"
+          [(ngModel)]="tempat_lahir"
           value="{{ daWa.tempat_lahir }}"
         />
       </div>
@@ -57,6 +73,7 @@
           class="form-control"
           placeholder="Usia"
           id="usia"
+          [(ngModel)]="usia"
           name="usia"
           value="{{ daWa.usia }}"
         />
@@ -67,7 +84,7 @@
       <label class="col-sm-3 col-form-label">Agama</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="agama" name="agama">
+          <select class="form-control" [(ngModel)]="agama" id="agama" name="agama">
             <option value="{{ daWa.agama }}">{{ daWa.agama }}</option>
             <!-- <option>Islam</option>
             <option>Kristen</option>
@@ -84,7 +101,7 @@
       <label class="col-sm-3 col-form-label">Pendidikan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="pendidikan" name="pendidikan">
+          <select class="form-control" id="pendidikan" [(ngModel)]="pendidikan" name="pendidikan">
             <option value="{{ daWa.pendidikan }}">{{ daWa.pendidikan }}</option>
             <!-- <option value="SMA">SMA</option>
             <option value="D3">D3</option>
@@ -100,7 +117,7 @@
       <label class="col-sm-3 col-form-label">Kewarganegaraan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kewarganegaraan" name="kewarganegaraan">
+          <select class="form-control" [(ngModel)]="kewarganegaraan" id="kewarganegaraan" name="kewarganegaraan">
             <option value="{{ daWa.kewarganegaraan }}">{{ daWa.kewarganegaraan }}</option>
             <!-- <option>WNI</option>
             <option>WNA</option> -->
@@ -121,6 +138,7 @@
           class="form-control"
           placeholder="Nomor Telepon"
           id="no_telepon"
+          [(ngModel)]="no_telepon"
           name="no_telepon"
           value="{{ daWa.no_telepon }}"
         />
@@ -130,7 +148,7 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Email</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" placeholder="Email" id="email" name="email" value="{{ daWa.email }}" />
+        <input type="text" class="form-control" [(ngModel)]="email" placeholder="Email" id="email" name="email" value="{{ daWa.email }}" />
       </div>
     </div>
     <br />
@@ -145,6 +163,7 @@
           placeholder="No Handphone"
           id="no_handphone"
           name="no_handphone"
+          [(ngModel)]="no_handphone"
           value="{{ daWa.no_handphone }}"
           maxlength="13"
         />
@@ -163,6 +182,7 @@
           placeholder="No KTP"
           id="no_ktp"
           name="no_ktp"
+          [(ngModel)]="no_ktp"
           value="{{ daWa.no_ktp }}"
         />
       </div>
@@ -171,7 +191,14 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Tanggal Terbit KTP</label>
       <div class="col-sm-9">
-        <input class="form-control" type="date" id="tanggal_terbit_ktp" name="tanggal_terbit_ktp" value="{{ daWa.tanggal_terbit_ktp }}" />
+        <input
+          class="form-control"
+          type="date"
+          [(ngModel)]="tanggal_terbit_ktp"
+          id="tanggal_terbit_ktp"
+          name="tanggal_terbit_ktp"
+          value="{{ daWa.tanggal_terbit_ktp }}"
+        />
       </div>
     </div>
     <br />
@@ -186,7 +213,14 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Tanggal Exipred KTP</label>
       <div class="col-sm-9">
-        <input class="form-control" type="date" id="tanggal_exp_ktp" name="tanggal_exp_ktp" value="{{ daWa.tanggal_exp_ktp }}" />
+        <input
+          class="form-control"
+          type="date"
+          [(ngModel)]="tanggal_exp_ktp"
+          id="tanggal_exp_ktp"
+          name="tanggal_exp_ktp"
+          value="{{ daWa.tanggal_exp_ktp }}"
+        />
       </div>
     </div>
     <div class="form-group row">
@@ -200,6 +234,7 @@
           maxlength="16"
           id="npwp"
           name="npwp"
+          [(ngModel)]="npwp"
           value="{{ daWa.npwp }}"
         />
       </div>
@@ -209,7 +244,7 @@
       <label class="col-sm-3 col-form-label">Status Perkawinan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="status_perkawinan" name="status_perkawinan">
+          <select class="form-control" id="status_perkawinan" [(ngModel)]="status_perkawinan" name="status_perkawinan">
             <option value="{{ daWa.status_perkawinan }}">{{ daWa.status_perkawinan }}</option>
           </select>
         </div>
@@ -227,6 +262,7 @@
           maxlength="2"
           id="jumlah_anak"
           name="jumlah_anak"
+          [(ngModel)]="jumlah_anak"
           value="{{ daWa.jumlah_anak }}"
         />
       </div>
@@ -236,7 +272,7 @@
       <label class="col-sm-3 col-form-label">Status Rumah</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" value="" id="status_rumah" name="status_rumah">
+          <select class="form-control" value="" [(ngModel)]="status_rumah" id="status_rumah" name="status_rumah">
             <option value="{{ daWa.status_rumah }}">{{ daWa.status_rumah }}</option>
           </select>
         </div>
@@ -254,6 +290,7 @@
           placeholder="Lama Menetap"
           id="lama_menetap"
           name="lama_menetap"
+          [(ngModel)]="lama_menetap"
           value="{{ daWa.lama_menetap }}"
         />
       </div>
@@ -263,7 +300,7 @@
       <label class="col-sm-3 col-form-label">Punya Kendaraan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="status_kendaraan" name="status_kendaraan">
+          <select class="form-control" id="status_kendaraan" [(ngModel)]="status_kendaraan" name="status_kendaraan">
             <option value="{{ daWa.status_kendaraan }}">{{ daWa.status_kendaraan }}</option>
             <option value="1">Ya</option>
             <option value="2">Tidak</option>
@@ -276,7 +313,7 @@
       <label class="col-sm-3 col-form-label">Tipe Kendaraan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" value="" id="tipe_kendaraan" name="tipe_kendaraan">
+          <select class="form-control" value="" [(ngModel)]="tipe_kendaraan" id="tipe_kendaraan" name="tipe_kendaraan">
             <option value="{{ daWa.tipe_kendaraan }}">{{ daWa.tipekendaraan }}"></option>
           </select>
         </div>
@@ -296,7 +333,14 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Alamat KTP</label>
       <div class="col-sm-9">
-        <textarea class="form-control h-150px" rows="6" id="alamat_ktp" name="alamat_ktp" value="{{ daWa.alamat_ktp }}"></textarea>
+        <textarea
+          class="form-control h-150px"
+          rows="6"
+          [(ngModel)]="alamat_ktp"
+          id="alamat_ktp"
+          name="alamat_ktp"
+          value="{{ daWa.alamat_ktp }}"
+        ></textarea>
       </div>
     </div>
     <br />
@@ -304,7 +348,7 @@
       <label class="col-sm-3 col-form-label">Provinsi</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="provinsi_cabang" name="provinsi">
+          <select class="form-control" id="provinsi_cabang" [(ngModel)]="provinsi_cabang" name="provinsi">
             <option value="{{ daWa.provinsi }}">{{ daWa.provinsi }}</option>
           </select>
         </div>
@@ -315,7 +359,7 @@
       <label class="col-sm-3 col-form-label">Kota</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kabkota_cabang" name="kabkota">
+          <select class="form-control" id="kabkota_cabang" [(ngModel)]="kabkota_cabang" name="kabkota">
             <option value="{{ daWa.kabkota }}">{{ daWa.kabkota }}</option>
           </select>
         </div>
@@ -326,7 +370,7 @@
       <label class="col-sm-3 col-form-label">Kecamatan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kecamatan" name="kecamatan">
+          <select class="form-control" id="kecamatan" [(ngModel)]="kecamatan" name="kecamatan">
             <option>{{ daWa.kecamatan }}</option>
           </select>
         </div>
@@ -337,7 +381,7 @@
       <label class="col-sm-3 col-form-label">Kelurahan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kelurahan" name="kelurahan">
+          <select class="form-control" id="kelurahan" [(ngModel)]="kelurahan" name="kelurahan">
             <option>{{ daWa.kelurahan }}</option>
           </select>
         </div>
@@ -353,6 +397,7 @@
             onkeypress="return onlyNumberKey(event)"
             class="form-control"
             id="kode_pos"
+            [(ngModel)]="kode_pos"
             name="kode_pos"
             value="{{ daWa.kode_pos }}"
           />
@@ -373,6 +418,7 @@
           placeholder="RT"
           maxlength="3"
           id="rt"
+          [(ngModel)]="rt"
           name="rt"
           value="{{ daWa.rt }}"
         />
@@ -385,6 +431,7 @@
           class="form-control"
           placeholder="RW"
           maxlength="3"
+          [(ngModel)]="rw"
           id="rw"
           name="rw"
           value="{{ daWa.rw }}"
@@ -411,6 +458,7 @@
           rows="6"
           id="alamat_domisili"
           name="alamat_domisili"
+          [(ngModel)]="alamat_domisili"
           value="{{ daWa.alamat_domisili }}"
         ></textarea>
       </div>
@@ -420,7 +468,7 @@
       <label class="col-sm-3 col-form-label">Provinsi</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="provinsi_domisili" name="provinsi_domisili">
+          <select class="form-control" [(ngModel)]="provinsi_domisili" id="provinsi_domisili" name="provinsi_domisili">
             <option>{{ daWa.provinsi_domisili }}</option>
           </select>
         </div>
@@ -431,7 +479,7 @@
       <label class="col-sm-3 col-form-label">Kota</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kabkota_domisili" name="kabkota_domisili">
+          <select class="form-control" id="kabkota_domisili" [(ngModel)]="kabkota_domisili" name="kabkota_domisili">
             <option value="{{ daWa.kabkota_domisili }}">{{ daWa.kabkota_domisili }}</option>
           </select>
         </div>
@@ -442,7 +490,7 @@
       <label class="col-sm-3 col-form-label">kecamatan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kecamatan_domisili" name="kecamatan_domisili">
+          <select class="form-control" [(ngModel)]="kecamatan_domisili" id="kecamatan_domisili" name="kecamatan_domisili">
             <option>{{ daWa.kecamatan_domisili }}</option>
           </select>
         </div>
@@ -453,7 +501,7 @@
       <label class="col-sm-3 col-form-label">Kelurahan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kelurahan_domisili" name="kelurahan_domisili">
+          <select class="form-control" [(ngModel)]="kelurahan_domisili" id="kelurahan_domisili" name="kelurahan_domisili">
             <option>{{ daWa.kelurahan_domisili }}</option>
           </select>
         </div>
@@ -471,6 +519,7 @@
             class="form-control"
             id="kode_pos_domisili"
             name="kode_pos_domisili"
+            [(ngModel)]="kode_pos_domisili"
             value="{{ daWa.kode_pos_domisili }}"
           />
           <div class="input-group-append">
@@ -491,6 +540,7 @@
           placeholder="RT"
           id="rt_domisili"
           name="rt_domisili"
+          [(ngModel)]="rt_domisili"
           value="{{ daWa.rt_domisili }}"
         />
       </div>
@@ -504,6 +554,7 @@
           maxlength="3"
           id="rw_domisili"
           name="rw_domisili"
+          [(ngModel)]="rw_domisili"
           value="{{ daWa.rw_domisili }}"
         />
       </div>
@@ -513,7 +564,14 @@
   </div>
   <div class="raw">
     <div class="col" style="text-align: center">
-      <button type="submit" onclick="" class="btn btn-dark">Simpan Data</button>
+      <button
+        (click)="gotojobandupdate(daWa.curef, daWa.status_perkawinan, daWa.app_no_de, daWa.kategori_pekerjaan)"
+        type="submit"
+        onclick=""
+        class="btn btn-dark"
+      >
+        Simpan Data
+      </button>
       <button
         (click)="gotojobinfo(daWa.curef, daWa.status_perkawinan, daWa.app_no_de, daWa.kategori_pekerjaan)"
         type="button"

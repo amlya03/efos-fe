@@ -21,7 +21,32 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+    <div *ngIf="datadukcapil.namaLengkap.substring(0, 1) === 'T'; else untuknama">
+      <i class="fa fa-window-close fa-lg" style="color: red"></i>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaLengkap }} </label>
+      </p>
+    </div>
+
+    <ng-template #untuknama>
+      <i class="fa fa-window-close fa-lg" style="color: rgb(0, 204, 0)"></i>
+      <p>
+        <label for="check3" style="font-size: 100%; color: rgb(0, 255, 0)">{{ datadukcapil.namaLengkap }} </label>
+      </p>
+      <!-- <input type="checkbox" id="check3" checked="checked" disabled/><p><label for="check3" style="font-size:100%">{{ datadukcapil.namaLengkap }} </label></p> -->
+    </ng-template>
+
+    <!-- <div *ngIf=" datadukcapil.nama.substring(0,1)=== 'T'; else loggedOut">
+      <i class="fa fa-window-close fa-lg" style="color: red;"></i><p><label for="check3" style="font-size:100%; color: red;">GAGAL</label></p>
+   </div>
+
+   <ng-template #loggedOut>
+    <i class="fa fa-window-close fa-lg" style="color: red;"></i><p><label for="check3" style="font-size:100%; color: red;">GAGAL</label></p>
+
+   </ng-template> -->
+
+    <!-- <h2>contoh</h2> -->
+    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
 <br />
@@ -37,7 +62,21 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+    <div *ngIf="datadukcapil.tglLahir.substring(0, 1) === 'T'; else untuknama">
+      <i class="fa fa-window-close fa-lg" style="color: red"></i>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.tglLahir }} </label>
+      </p>
+    </div>
+
+    <ng-template #untuknama>
+      <input type="checkbox" id="check3" checked="checked" disabled />
+      <p>
+        <label for="check3" style="font-size: 100%">{{ datadukcapil.tglLahir }} </label>
+      </p>
+    </ng-template>
+
+    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
 <br />
@@ -53,7 +92,21 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+    <div *ngIf="datadukcapil.statusPerkawinan.substring(0, 1) === 'T'; else untukstatuskawin">
+      <i class="fa fa-window-close fa-lg" style="color: red"></i>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.statusPerkawinan }} </label>
+      </p>
+    </div>
+
+    <ng-template #untukstatuskawin>
+      <input type="checkbox" id="check3" checked="checked" disabled />
+      <p>
+        <label for="check3" style="font-size: 100%">{{ datadukcapil.statusPerkawinan }} </label>
+      </p>
+    </ng-template>
+
+    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
 <br />
@@ -74,7 +127,21 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+    <div *ngIf="datadukcapil.alamat.substring(0, 1) === 'T'; else untukalamat">
+      <i class="fa fa-window-close fa-lg" style="color: red"></i>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.alamat }} </label>
+      </p>
+    </div>
+
+    <ng-template #untukalamat>
+      <input type="checkbox" id="check3" checked="checked" disabled />
+      <p>
+        <label for="check3" style="font-size: 100%">{{ datadukcapil.alamat }} </label>
+      </p>
+    </ng-template>
+
+    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
 <br />
@@ -90,7 +157,20 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+    <div *ngIf="datadukcapil.namaPropinsi.substring(0, 1) === 'T'; else untukprovinsi">
+      <i class="fa fa-window-close fa-lg" style="color: red"></i>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaPropinsi }}</label>
+      </p>
+    </div>
+
+    <ng-template #untukprovinsi>
+      <input type="checkbox" id="check3" checked="checked" disabled />
+      <p>
+        <label for="check3" style="font-size: 100%">{{ datadukcapil.namaPropinsi }} </label>
+      </p>
+    </ng-template>
+    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
 <br />
@@ -106,7 +186,21 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+    <div *ngIf="datadukcapil.namaKabupaten.substring(0, 1) === 'T'; else untukkota">
+      <i class="fa fa-window-close fa-lg" style="color: red"></i>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaKabupaten }} </label>
+      </p>
+    </div>
+
+    <ng-template #untukkota>
+      <input type="checkbox" id="check3" checked="checked" disabled />
+      <p>
+        <label for="check3" style="font-size: 100%">{{ datadukcapil.namaKabupaten }} </label>
+      </p>
+    </ng-template>
+
+    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
 <br />
@@ -122,7 +216,21 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+    <div *ngIf="datadukcapil.namaKecamatan.substring(0, 1) === 'T'; else untukkecamatan">
+      <i class="fa fa-window-close fa-lg" style="color: red"></i>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaKecamatan }} </label>
+      </p>
+    </div>
+
+    <ng-template #untukkecamatan>
+      <input type="checkbox" id="check3" checked="checked" disabled />
+      <p>
+        <label for="check3" style="font-size: 100%">{{ datadukcapil.namaKecamatan }} </label>
+      </p>
+    </ng-template>
+
+    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
 <br />
@@ -138,7 +246,21 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+    <div *ngIf="datadukcapil.namaKelurahan.substring(0, 1) === 'T'; else untukkelurahan">
+      <i class="fa fa-window-close fa-lg" style="color: red"></i>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaKelurahan }}</label>
+      </p>
+    </div>
+
+    <ng-template #untukkelurahan>
+      <input type="checkbox" id="check3" checked="checked" disabled />
+      <p>
+        <label for="check3" style="font-size: 100%">{{ datadukcapil.namaKelurahan }} </label>
+      </p>
+    </ng-template>
+
+    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
 <br />
@@ -159,10 +281,38 @@
   <div class="col" style="text-align: center">
     <div class="row">
       <div class="col" style="text-align: center">
-        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+        <div *ngIf="datadukcapil.noRT.substring(0, 1) === 'T'; else untukrt">
+          <i class="fa fa-window-close fa-lg" style="color: red"></i>
+          <p>
+            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.noRT }}</label>
+          </p>
+        </div>
+
+        <ng-template #untukrt>
+          <input type="checkbox" id="check3" checked="checked" disabled />
+          <p>
+            <label for="check3" style="font-size: 100%">{{ datadukcapil.noRT }} </label>
+          </p>
+        </ng-template>
+
+        <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
       </div>
       <div class="col" style="text-align: center">
-        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+        <div *ngIf="datadukcapil.noRW.substring(0, 1) === 'T'; else untukrw">
+          <i class="fa fa-window-close fa-lg" style="color: red"></i>
+          <p>
+            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.noRW }}</label>
+          </p>
+        </div>
+
+        <ng-template #untukrw>
+          <input type="checkbox" id="check3" checked="checked" disabled />
+          <p>
+            <label for="check3" style="font-size: 100%">{{ datadukcapil.noRW }} </label>
+          </p>
+        </ng-template>
+
+        <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
       </div>
     </div>
   </div>
@@ -180,188 +330,207 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+    <div *ngIf="datadukcapil.jenisKelamin.substring(0, 1) === 'T'; else jenisKelamin">
+      <i class="fa fa-window-close fa-lg" style="color: red"></i>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.jenisKelamin }}</label>
+      </p>
+    </div>
+
+    <ng-template #jenisKelamin>
+      <input type="checkbox" id="check3" checked="checked" disabled />
+      <p>
+        <label for="check3" style="font-size: 100%">{{ datadukcapil.jenisKelamin }} </label>
+      </p>
+    </ng-template>
+
+    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
-<br />
+
+<div [ngSwitch]="'{{ daWa.status_perkawinan }}'">
+  <div *ngSwitchCase="'Kawin'">
+    <br />
+    <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+      <h3 style="color: #fff; text-align: center">Hasil Pengecekan E-KTP Pasangan</h3>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <h4 style="text-align: center">Hasil E-KTP</h4>
+      </div>
+      <div class="col">
+        <h4 style="text-align: center">Keterangan</h4>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Nama Lengkap</label>
+          <div class="col-sm-8">
+            <input type="name" class="form-control" placeholder="Nama Lengkap" id="nama2" name="nama2" readonly />
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
+          <div class="col-sm-8">
+            <input class="form-control" type="date" id="tanggal_lahir" name="tanggal_lahir" readonly />
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Status Perkawinan</label>
+          <div class="col-sm-8">
+            <div class="form-group">
+              <input class="form-control" id="status_perkawinan" name="status_perkawinan" readonly />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Alamat KTP</label>
+          <div class="col-sm-8">
+            <textarea class="form-control h-150px" rows="6" id="alamat_ktp" name="alamat_ktp" readonly></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Provinsi</label>
+          <div class="col-sm-8">
+            <div class="form-group">
+              <input class="form-control" id="provinsi_cabang" name="provinsi" readonly />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Kota</label>
+          <div class="col-sm-8">
+            <div class="form-group">
+              <input class="form-control" id="kabkota_cabang" name="kabkota" readonly />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Kecamatan</label>
+          <div class="col-sm-8">
+            <div class="form-group">
+              <input class="form-control" id="kecamatan" name="kecamatan" readonly />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Kelurahan</label>
+          <div class="col-sm-8">
+            <div class="form-group">
+              <input class="form-control" id="kelurahan" name="kelurahan" readonly />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">RT / RW</label>
+          <div class="col">
+            <input type="text" class="form-control" placeholder="RT" id="rt" name="rt" readonly />
+          </div>
+          <div class="col">RT</div>
+          <div class="col">
+            <input type="text" class="form-control" placeholder="RW" maxlength="3" id="rw" name="rw" readonly />
+          </div>
+          <div class="col">RW</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col" style="text-align: center">
+            <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+          </div>
+          <div class="col" style="text-align: center">
+            <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
+          <div class="col-sm-8">
+            <div class="form-group">
+              <input class="form-control" id="jenis_kelamin" name="jenis_kelamin" readonly />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+      </div>
+    </div>
+  </div>
+</div>
 <br />
 
-<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Hasil Pengecekan E-KTP Pasangan</h3>
-</div>
-<br />
-<div class="row form-material">
-  <div class="col">
-    <h4 style="text-align: center">Hasil E-KTP</h4>
-  </div>
-  <div class="col">
-    <h4 style="text-align: center">Keterangan</h4>
-  </div>
-</div>
-<br />
-<div class="row form-material">
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Nama Lengkap</label>
-      <div class="col-sm-8">
-        <input type="name" class="form-control" placeholder="Nama Lengkap" id="nama2" name="nama2" readonly />
-      </div>
-    </div>
-  </div>
-  <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
-  </div>
-</div>
-<br />
-<div class="row form-material">
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
-      <div class="col-sm-8">
-        <input class="form-control" type="date" id="tanggal_lahir" name="tanggal_lahir" readonly />
-      </div>
-    </div>
-  </div>
-  <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
-  </div>
-</div>
-<br />
-<div class="row form-material">
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Status Perkawinan</label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <input class="form-control" id="status_perkawinan" name="status_perkawinan" readonly />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
-  </div>
-</div>
-<br />
-<div class="row form-material">
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Alamat KTP</label>
-      <div class="col-sm-8">
-        <textarea class="form-control h-150px" rows="6" id="alamat_ktp" name="alamat_ktp" readonly></textarea>
-      </div>
-    </div>
-  </div>
-  <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
-  </div>
-</div>
-<br />
-<div class="row form-material">
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Provinsi</label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <input class="form-control" id="provinsi_cabang" name="provinsi" readonly />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
-  </div>
-</div>
-<br />
-<div class="row form-material">
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Kota</label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <input class="form-control" id="kabkota_cabang" name="kabkota" readonly />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
-  </div>
-</div>
-<br />
-<div class="row form-material">
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Kecamatan</label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <input class="form-control" id="kecamatan" name="kecamatan" readonly />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
-  </div>
-</div>
-<br />
-<div class="row form-material">
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Kelurahan</label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <input class="form-control" id="kelurahan" name="kelurahan" readonly />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
-  </div>
-</div>
-<br />
-<div class="row form-material">
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">RT / RW</label>
-      <div class="col">
-        <input type="text" class="form-control" placeholder="RT" id="rt" name="rt" readonly />
-      </div>
-      <div class="col">RT</div>
-      <div class="col">
-        <input type="text" class="form-control" placeholder="RW" maxlength="3" id="rw" name="rw" readonly />
-      </div>
-      <div class="col">RW</div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="row">
-      <div class="col" style="text-align: center">
-        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
-      </div>
-      <div class="col" style="text-align: center">
-        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
-      </div>
-    </div>
-  </div>
-</div>
-<br />
-<div class="row form-material">
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <input class="form-control" id="jenis_kelamin" name="jenis_kelamin" readonly />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col" style="text-align: center">
-    <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
-  </div>
-</div>
 <br />
 <br />
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
@@ -446,8 +615,29 @@
 <br />
 <div class="row form-material">
   <div class="col" style="text-align: center">
-    <button (click)="gotodaftaraplikaside()" name="submit_button" onclic="untuksubmit()" class="fa fa-file-archive-o btn btn-dark">
+    <div *ngIf="dataif != 00; else untukbutton">
+      <button name="submit_button" onclic="untuksubmit()" class="fa fa-file-archive-o btn btn-dark">Tolak</button>
+    </div>
+
+    <ng-template #untukbutton>
+      <button
+        (click)="gotopersonalinfo(daWa.app_no_ide, daWa.curef)"
+        name="submit_button"
+        onclic="untuksubmit()"
+        class="fa fa-file-archive-o btn btn-dark"
+      >
+        prosesssss
+      </button>
+
+      <!-- <input type="checkbox" id="check3" checked="checked" disabled/><p><label for="check3" style="font-size:100%">{{ datadukcapil.namaLengkap }} </label></p> -->
+    </ng-template>
+
+    <!-- <div [ngSwitch]= "'{{ dataif}}'">
+      <div *ngSwitchCase="'00'">
+<button (click)="gotodaftaraplikaside()" name="submit_button" onclic="untuksubmit()" class="fa fa-file-archive-o btn btn-dark">
       Proses Data
     </button>
+        </div>
+      </div> -->
   </div>
 </div>
