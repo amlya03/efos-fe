@@ -1,30 +1,25 @@
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { dataentrymodel } from '../data-entry/data-entry-model';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
-import { DataEntryService } from './services/data-entry.service';
+import { DataEntryService } from '../data-entry/services/data-entry.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { dataentrymodel } from '../data-entry/data-entry-model';
+import { ActivatedRoute, Router } from '@angular/router';
 declare let $: any;
 
 @Component({
-  selector: 'jhi-data-entry',
-  templateUrl: './data-entry.component.html',
-  styleUrls: ['./data-entry.component.scss'],
+  selector: 'jhi-upload-document',
+  templateUrl: './upload-document.component.html',
+  styleUrls: ['./upload-document.component.scss'],
 })
-export class DataEntryComponent implements OnInit, OnDestroy {
+export class UploadDocumentComponent implements OnInit, OnDestroy {
   title = 'EFOS';
   app_no_de!: string;
   tampungandataygdibawa: any;
   dataEntry?: dataentrymodel[];
   valueCariButton = '';
   kategori_pekerjaan = '';
-  a = '';
-  b = '';
-  c = '';
-  d = '';
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -62,16 +57,16 @@ export class DataEntryComponent implements OnInit, OnDestroy {
       }
     });
   }
-
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
     // alert('knfsdkds');
   }
 
-  cariButton(listKategori: string, inputNamaNasabah: string, inputNoAplikasi: string): void {
-    $('#dataTables-example').DataTable().columns(4).search(inputNoAplikasi).draw();
+  cariButton(listFasilitas: string, listKategori: string, inputNamaNasabah: string, inputNoAplikasi: string): void {
+    $('#dataTables-example').DataTable().columns(1).search(inputNoAplikasi).draw();
     $('#dataTables-example').DataTable().columns(3).search(inputNamaNasabah).draw();
-    $('#dataTables-example').DataTable().columns(2).search(listKategori).draw();
+    $('#dataTables-example').DataTable().columns(8).search(listKategori).draw();
+    $('#dataTables-example').DataTable().columns(5).search(listFasilitas).draw();
     // this.a = inputNoAplikasi
     // this.b = inputNamaNasabah
     // this.c = listKategori
@@ -85,8 +80,8 @@ export class DataEntryComponent implements OnInit, OnDestroy {
     // alert("bbb")
   }
 
-  viewdataentry(getAppNoDe: any): void {
+  viewUpload(curef: any): void {
     // alert(getAppNoDe);
-    this.router.navigate(['/data-entry/personalinfo'], { queryParams: { app_no_de: getAppNoDe } });
+    this.router.navigate(['/upload_document/upload_document_de'], { queryParams: { datakiriman: curef } });
   }
 }

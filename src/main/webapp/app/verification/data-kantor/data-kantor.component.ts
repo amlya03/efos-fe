@@ -302,4 +302,10 @@ export class DataKantorComponent implements OnInit {
         }
       });
   }
+
+  // pindah
+  viewDataKantor(): void {
+    // alert(getAppNoDe);
+    this.router.navigate(['/mutasi-rekening']);
+  }
 }

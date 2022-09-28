@@ -61,6 +61,9 @@ import { InitialDataEntryNonEditComponent } from './initial-data-entry/initial-d
 import { InitialDataEntryFixEditComponent } from './initial-data-entry/initial-data-entry-fix-edit/initial-data-entry-fix-edit.component';
 import { DaftarAplikasiPilihComponent } from './initial-data-entry/daftar-aplikasi-pilih/daftar-aplikasi-pilih.component';
 import { VerificationComponent } from './verification/verification.component';
+import { UploadDocumentComponent } from './upload-document/upload-document.component';
+import { UploadDocumentDeComponent } from './upload-document/upload-document-de/upload-document-de.component';
+import { UploadDocumentAgunanComponent } from './upload-document/upload-document-agunan/upload-document-agunan.component';
 
 @NgModule({
   imports: [
@@ -127,6 +130,9 @@ import { VerificationComponent } from './verification/verification.component';
     InitialDataEntryFixEditComponent,
     DaftarAplikasiPilihComponent,
     VerificationComponent,
+    UploadDocumentComponent,
+    UploadDocumentDeComponent,
+    UploadDocumentAgunanComponent,
   ],
   bootstrap: [
     MainComponent,

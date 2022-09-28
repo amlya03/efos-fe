@@ -137,4 +137,10 @@ export class DataRumahComponent implements OnInit {
       return;
     }
   }
+
+  // pindah
+  viewAnalisaKeuangan(): void {
+    // alert(getAppNoDe);
+    this.router.navigate(['/data-calon-nasabah']);
+  }
 }
