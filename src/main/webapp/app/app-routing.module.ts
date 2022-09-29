@@ -37,6 +37,7 @@ import { PersonalInfoComponent } from './data-entry/personal-info/personal-info.
 import { InitialDataEntryFixEditComponent } from './initial-data-entry/initial-data-entry-fix-edit/initial-data-entry-fix-edit.component';
 import { InitialDataEntryNonEditComponent } from './initial-data-entry/initial-data-entry-non-edit/initial-data-entry-non-edit.component';
 import { VerificationComponent } from './verification/verification.component';
+import { EditjobinfoComponent } from './data-entry/editjobinfo/editjobinfo.component';
 
 @NgModule({
   imports: [
@@ -143,6 +144,10 @@ import { VerificationComponent } from './verification/verification.component';
           component: CallReportNonComponent,
         },
         {
+          path: 'editjobinfo',
+          component: EditjobinfoComponent,
+        },
+        {
           path: 'data-entry/memo',
           component: MemoComponent,
         },
@@ -174,6 +179,7 @@ import { VerificationComponent } from './verification/verification.component';
           path: 'editidenon',
           component: InitialDataEntryNonEditComponent,
         },
+
         {
           path: '',
           loadChildren: () => import(`./entities/entity-routing.module`).then(m => m.EntityRoutingModule),

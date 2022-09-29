@@ -61,6 +61,8 @@ import { InitialDataEntryNonEditComponent } from './initial-data-entry/initial-d
 import { InitialDataEntryFixEditComponent } from './initial-data-entry/initial-data-entry-fix-edit/initial-data-entry-fix-edit.component';
 import { DaftarAplikasiPilihComponent } from './initial-data-entry/daftar-aplikasi-pilih/daftar-aplikasi-pilih.component';
 import { VerificationComponent } from './verification/verification.component';
+import { EditjobinfoComponent } from './data-entry/editjobinfo/editjobinfo.component';
+import { EditcollateralComponent } from './data-entry/editcollateral/editcollateral.component';
 
 @NgModule({
   imports: [
@@ -127,6 +129,8 @@ import { VerificationComponent } from './verification/verification.component';
     InitialDataEntryFixEditComponent,
     DaftarAplikasiPilihComponent,
     VerificationComponent,
+    EditjobinfoComponent,
+    EditcollateralComponent,
   ],
   bootstrap: [
     MainComponent,

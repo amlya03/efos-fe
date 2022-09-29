@@ -143,4 +143,11 @@ export class JobInfoComponent implements OnInit {
       });
     }
   }
+
+  vieweditjobinfo(): void {
+    // alert(getAppNoDe);
+    this.router.navigate(['/data-entry/editjobinfo'], {
+      // queryParams: { app_no_de: getAppNoDe }
+    });
+  }
 }

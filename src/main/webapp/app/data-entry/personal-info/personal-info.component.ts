@@ -66,6 +66,8 @@ export class PersonalInfoComponent implements OnInit {
   tanggal_terbit_ktp: string | undefined;
   tanggal_exp_ktp: string | undefined;
   no_handphone: string | undefined;
+  databawaan: any;
+  contohdata: any;
 
   /////
 
@@ -95,7 +97,7 @@ export class PersonalInfoComponent implements OnInit {
       next: (res: EntityArrayResponseDaWa) => {
         // console.log(res.body?.result);
         console.warn('tabel', res);
-        console.warn('!!!!!!!!!!!!!!!!!!!', this.datakiriman);
+        console.warn('!!!!!!!!!!!!!!!!!!!', this.app_no_de);
         // console.warn('@@@@@@@@@@@@@', this.datakiriman);
         // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
         this.daWa = res.body?.result;
@@ -132,104 +134,147 @@ export class PersonalInfoComponent implements OnInit {
     contohtampungstatuskawain: any,
     contohtampunganappde: any,
     contohtampungankategoripekerjaan: any
-  ): void {
-    // this.onResponseSuccess(res);
+  ) {
+    const nama = document.getElementById('nama') as HTMLInputElement | any;
+    const jenis_kelamin = document.getElementById('jenis_kelamin') as HTMLInputElement | any;
+    const app_no_ide = document.getElementById('app_no_ide') as HTMLInputElement | any;
+    const tanggal_lahir = document.getElementById('tanggal_lahir') as HTMLInputElement | any;
+    const tempat_lahir = document.getElementById('tanggal_lahir') as HTMLInputElement | any;
+    const status_perkawinan = document.getElementById('status_perkawinan') as HTMLInputElement | any;
+    const agama = document.getElementById('agama') as HTMLInputElement | any;
+    const pendidikan = document.getElementById('pendidikan') as HTMLInputElement | any;
+    const kewarganegaraan = document.getElementById('kewarganegaraan') as HTMLInputElement | any;
+    const nama_ibu_kandung = document.getElementById('nama_ibu_kandung') as HTMLInputElement | any;
+    const npwp = document.getElementById('npwp') as HTMLInputElement | any;
+    const alamat_ktp = document.getElementById('alamat_ktp') as HTMLInputElement | any;
+    const alamat_domisili = document.getElementById('alamat_domisili') as HTMLInputElement | any;
+    const provinsi_domisili = document.getElementById('provinsi_domisili') as HTMLInputElement | any;
+    const kabkota_domisili = document.getElementById('kabkota_domisili') as HTMLInputElement | any;
+    const kecamatan_domisili = document.getElementById('kecamatan_domisili') as HTMLInputElement | any;
+    const kelurahan_domisili = document.getElementById('kelurahan_domisili') as HTMLInputElement | any;
+    const kode_pos_domisili = document.getElementById('kode_pos_domisili') as HTMLInputElement | any;
+    const rt_domisili = document.getElementById('rt_domisili') as HTMLInputElement | any;
+    const rw_domisili = document.getElementById('rw_domisili') as HTMLInputElement | any;
+    const provinsi_cabang = document.getElementById('provinsi_cabang') as HTMLInputElement | any;
+    const kabkota_cabang = document.getElementById('kabkota_cabang') as HTMLInputElement | any;
+    const no_telepon = document.getElementById('no_telepon') as HTMLInputElement | any;
+    const email = document.getElementById('email') as HTMLInputElement | any;
+    const jumlah_anak = document.getElementById('jumlah_anak') as HTMLInputElement | any;
+    const status_rumah = document.getElementById('status_rumah') as HTMLInputElement | any;
+    const lama_menetap = document.getElementById('lama_menetap') as HTMLInputElement | any;
+    const status_kendaraan = document.getElementById('status_kendaraan') as HTMLInputElement | any;
+    const tipe_kendaraan = document.getElementById('tipe_kendaraan') as HTMLInputElement | any;
+    const kecamatan = document.getElementById('kecamatan') as HTMLInputElement | any;
+    const usia = document.getElementById('usia') as HTMLInputElement | any;
+    const kelurahan = document.getElementById('kelurahan') as HTMLInputElement | any;
+    const kode_pos = document.getElementById('kelurahan') as HTMLInputElement | any;
+    const rt = document.getElementById('rt') as HTMLInputElement | any;
+    const rw = document.getElementById('rw') as HTMLInputElement | any;
+    const no_ktp = document.getElementById('no_ktp') as HTMLInputElement | any;
+    const tanggal_terbit_ktp = document.getElementById('tanggal_terbit_ktp') as HTMLInputElement | any;
+    const tanggal_exp_ktp = document.getElementById('tanggal_exp_ktp') as HTMLInputElement | any;
+    const no_handphone = document.getElementById('no_handphone') as HTMLInputElement | any;
+    const id = document.getElementById('id') as HTMLInputElement | any;
+    alert(id.value);
+    alert(jenis_kelamin.value);
 
+    // input?.addEventListener('input', function (event: { target: HTMLInputElement; }) {
+    //   const target = event.target as HTMLInputElement |any;
+    //   console.log(target.value);
+    // });
+
+    // alert(target.value);
+
+    //   const headers = {     'Content-Type': 'application/json',
+    //   'Accept': 'application/json',
+    //   // 'Access-Control-Allow-Origin': 'http://localhost:9000',
+    //   // 'Access-Control-Allow-Credentials': 'true',
+    //   // 'Access-Control-Allow-Methods' : "GET,POST,OPTIONS,DELETE,PUT",
+    //   // 'Access-Control-Allow-Headers': "Access-Control-Allow-Headers: *",
+    //   // Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar',
+
+    // };
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
     this.http
       .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_customer', {
-        headers: headers,
-        nama: this.nama,
-        nama_pasangan: '',
-        kategori_pekerjaan: 'Fixincome',
-        curef: '',
-        jenis_kelamin: this.jenis_kelamin,
-        jenis_kelamin_pasangan: '',
-        usia: '0',
-        app_no_ide: '',
-        tanggal_lahir: this.tanggal_lahir,
-        tanggal_lahir_pasangan: '',
-        tempat_lahir: this.tempat_lahir,
-        tempat_lahir_pasangan: '',
-        status_perkawinan: this.status_perkawinan,
-        status_alamat: '',
-        status_kendaraan: '',
-        status_ktp: '',
-        status_ktp_pasangan: '',
-        status_rumah: '',
-        agama: this.agama,
-        agama_pasangan: '',
-        pendidikan: this.pendidikan,
-        pendidikan_pasangan: '',
-        kewarganegaraan: this.kewarganegaraan,
-        kewarganegaraan_pasangan: '',
-        nama_ibu_kandung: this.nama_ibu_kandung,
-        nama_ibu_kandung_pasangan: '',
-        npwp: this.npwp,
-        npwp_pasangan: '',
-        alamat_ktp: this.alamat_ktp,
-        alamat_ktp_pasangan: '',
-        alamat_domisili: '',
-        provinsi: '',
-        provinsi_domisili: '',
-        provinsi_pasangan: '',
-        kabkota: '',
-        kabkota_domisili: '',
-        kecamatan: '',
-        kecamatan_domisili: '',
-        kecamatan_pasangan: '',
-        kelurahan: '',
-        kelurahan_domisili: '',
-        kelurahan_pasangan: '',
-        kode_pos: '',
-        kode_pos_domisili: '',
-        kode_pos_pasangan: '',
-        lama_menetap: '',
-        cabang: '',
-        created_by: '',
-        created_date: '',
-        email: '',
-        email_pasangan: '',
-        id: 0,
-        jumlah_anak: '',
-        rt: this.rt,
-        rt_domisili: '',
-        rt_pasangan: '',
-        rw: this.rw,
-        rw_domisili: '',
-        rw_pasangan: '',
-        no_ktp: this.no_ktp,
-        no_ktp_pasangan: '',
-        tanggal_terbit_ktp: this.tanggal_terbit_ktp,
-        tanggal_terbit_ktp_pasangan: '',
-        tanggal_exp_ktp: this.tanggal_exp_ktp,
-        tipe_kendaraan: '',
-        no_handphone: this.no_handphone,
-        no_handphone_pasangan: '',
-        no_telepon: '',
-        updated_by: '',
-        updated_date: '',
-        usia_pasangan: '',
-      })
-      .subscribe({
-        next: data => {
-          // this.contohdata = data.result.app_no_de;
+        // headers: headers,
 
-          this.router.navigate(['/data-entry/personalinfo'], {
-            // queryParams: {app_no_de: this.contohdata},
+        nama: nama.value,
+        kategori_pekerjaan: contohtampungankategoripekerjaan,
+        curef: contohtampungancuref,
+        jenis_kelamin: jenis_kelamin.value,
+        usia: usia.value,
+        app_no_ide: app_no_ide.value,
+        app_no_de: contohtampunganappde,
+        tanggal_lahir: tanggal_lahir.value,
+        tempat_lahir: tempat_lahir.value,
+        status_perkawinan: status_perkawinan.value,
+        status_alamat: ' 1',
+        status_kendaraan: '1 ',
+        status_ktp: ' 1',
+        status_rumah: ' 1',
+        agama: agama.value,
+        pendidikan: pendidikan.value,
+        kewarganegaraan: kewarganegaraan.value,
+        // nama_ibu_kandung: ' 1',
+        npwp: npwp.value,
+        alamat_ktp: alamat_ktp.value,
+        id: id.value,
+        alamat_domisili: alamat_domisili.value,
+        provinsi: provinsi_cabang.value,
+        provinsi_domisili: provinsi_domisili.value,
+        kabkota: kabkota_cabang.value,
+        kabkota_domisili: kabkota_domisili.value,
+        kecamatan: kecamatan.value,
+        kecamatan_domisili: kecamatan_domisili.value,
+        kelurahan: kelurahan.value,
+        kelurahan_domisili: kelurahan_domisili.value,
+        kode_pos: kode_pos.value,
+        kode_pos_domisili: kode_pos_domisili.value,
+        lama_menetap: lama_menetap.value,
+        // cabang: '1',
+        // created_by: '1',
+        // created_date: '1',
+        email: 'emaik',
+        jumlah_anak: jumlah_anak.value,
+        rt: rt.value,
+        rt_domisili: rt_domisili.value,
+        rw: rw.value,
+        rw_domisili: rw_domisili.value,
+        no_ktp: no_ktp.value,
+        tanggal_terbit_ktp: tanggal_terbit_ktp.value,
+        tanggal_exp_ktp: tanggal_exp_ktp.value,
+        no_handphone: no_handphone.value,
+        no_telepon: '123123',
+        updated_by: ' 1',
+        // updated_date: '1 ',
+      })
+
+      .subscribe({
+        next: bawaan => {
+          //           this.contohdata = bawaan.result.app_no_de;
+          this.databawaan = bawaan.result.app_no_de;
+          // alert('MASUKAJAHSUSAH');
+          this.router.navigate(['/data-entry/job-info'], {
+            queryParams: {
+              datakiriman: contohtampungancuref,
+              datakirimanstatus: contohtampungstatuskawain,
+              datakirimanappde: contohtampunganappde,
+              datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
+            },
           });
         },
       });
 
-    alert(contohtampungancuref);
-    this.router.navigate(['/data-entry/job-info'], {
-      queryParams: {
-        datakiriman: contohtampungancuref,
-        datakirimanstatus: contohtampungstatuskawain,
-        datakirimanappde: contohtampunganappde,
-        datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
-      },
-    });
+    // alert(contohtampungancuref);
+    // this.router.navigate(['/data-entry/job-info'], {
+    //   queryParams: {
+    //     datakiriman: contohtampungancuref,
+    //     datakirimanstatus: contohtampungstatuskawain,
+    //     datakirimanappde: contohtampunganappde,
+    //     datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
+    //   },
+    // });
   }
 }
