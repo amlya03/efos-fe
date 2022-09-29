@@ -16,6 +16,18 @@
           id="nama_pasangan"
           value="{{ daWa.nama_pasangan }}"
         />
+        <input type="hidden" class="form-control" placeholder="Nama Lengkap" name="id" id="id" value="{{ daWa.id_customer }}" />
+
+        <input
+          type="hidden"
+          class="form-control"
+          placeholder="Nama Lengkap"
+          name="app_no_ide"
+          id="app_no_ide"
+          value="{{ daWa.app_no_ide }}"
+        />
+
+        <input type="hidden" class="form-control" placeholder="Nama Lengkap" name="curef" id="curef" value="{{ daWa.curef }}" />
       </div>
     </div>
     <br />
@@ -272,7 +284,7 @@
 </div>
 <div class="row">
   <div class="col" style="text-align: center">
-    <button class="btn btn-dark">Simpan Data</button>
+    <button (click)="updatedatapasngan('0')" class="btn btn-dark">Simpan Data</button>
     <button type="submit" (click)="goto('0')" class="btn btn-warning">
       Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
     </button>

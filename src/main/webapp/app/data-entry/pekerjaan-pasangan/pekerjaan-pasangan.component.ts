@@ -21,6 +21,7 @@ export class PekerjaanPasanganComponent implements OnInit {
   datakirimanappde: any;
   daWa: any;
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobPasanganByCuref?sc=');
+  kirimansiup: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,6 +48,8 @@ export class PekerjaanPasanganComponent implements OnInit {
   }
 
   load(): void {
+    alert(this.datakirimancuref);
+
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         // console.log(res.body?.result);
@@ -116,7 +119,7 @@ export class PekerjaanPasanganComponent implements OnInit {
     console.warn('colalteral', this.datakirimanappde, this.datakirimancuref, this.datakirimanakategoripekerjaan);
     this.router.navigate(['/data-entry/collateral'], {
       queryParams: {
-        datakirimande: this.datakirimande,
+        datakirimande: this.datakirimanappde,
         datakirimancuref: this.datakirimancuref,
         datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },
@@ -127,5 +130,109 @@ export class PekerjaanPasanganComponent implements OnInit {
     const options = createRequestOption(req);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return this.http.get<ApiResponse>(this.resourceUrl + this.datakirimancuref, { params: options, observe: 'response' });
+  }
+
+  updatejobpasangan(contohtampungancuref: any) {
+    // this.onResponseSuccess(res);
+    // alert(contohtampungancuref);
+    // alert(this.datakirimanappde);
+    // alert(this.datakirimancuref);
+
+    const kate_peker = document.getElementById('kate_peker') as HTMLInputElement | any;
+    const tipe_pekerjaan = document.getElementById('tipe_pekerjaan') as HTMLInputElement | any;
+    const posisi1 = document.getElementById('posisi1') as HTMLInputElement | any;
+    const nama_perusahaan = document.getElementById('nama_perusahaan') as HTMLInputElement | any;
+    const alamat_perusahaan1 = document.getElementById('alamat_perusahaan1') as HTMLInputElement | any;
+    const provinsi_cabang_swasta = document.getElementById('provinsi_cabang_swasta') as HTMLInputElement | any;
+    const kabkota_cabang_swasta = document.getElementById('kabkota_cabang_swasta') as HTMLInputElement | any;
+    const kecamatan_swasta = document.getElementById('kecamatan_swasta') as HTMLInputElement | any;
+    const kelurahan_swasta = document.getElementById('kelurahan_swasta') as HTMLInputElement | any;
+    const kode_pos_swasta = document.getElementById('kode_pos_swasta') as HTMLInputElement | any;
+    const siup2 = document.getElementById('siup2') as HTMLInputElement | any;
+    const jenis_bidang = document.getElementById('jenis_bidang') as HTMLInputElement | any;
+    const sektor_ekonomi = document.getElementById('sektor_ekonomi') as HTMLInputElement | any;
+    const jumlah_karyawan = document.getElementById('jumlah_karyawan') as HTMLInputElement | any;
+    const tipe_perusahaan = document.getElementById('tipe_perusahaan') as HTMLInputElement | any;
+    const lama_bekerja_bulan1 = document.getElementById('lama_bekerja_bulan1') as HTMLInputElement | any;
+    const lama_bekerja_tahun1 = document.getElementById('lama_bekerja_tahun1') as HTMLInputElement | any;
+    const status_kepegawaian = document.getElementById('status_kepegawaian') as HTMLInputElement | any;
+    const pendapatan = document.getElementById('pendapatan') as HTMLInputElement | any;
+    const tunjangan = document.getElementById('tunjangan') as HTMLInputElement | any;
+    const pendapatan_lain = document.getElementById('pendapatan_lain') as HTMLInputElement | any;
+    const total_pendapatan = document.getElementById('total_pendapatan') as HTMLInputElement | any;
+    const usia = document.getElementById('usia') as HTMLInputElement | any;
+    const id = document.getElementById('id') as HTMLInputElement | any;
+    const curef = document.getElementById('curef') as HTMLInputElement | any;
+
+    if (tipe_pekerjaan.value != 'Wiraswasta' || tipe_pekerjaan.value != 'Wiraswasta') {
+      this.kirimansiup = '';
+    } else {
+      this.kirimansiup = siup2.value;
+    }
+    alert(id.value);
+    alert(contohtampungancuref);
+
+    this.http
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_job_info_pasangan', {
+        // headers: headers,
+
+        curef: this.datakirimancuref,
+        alamat_perusahaan: alamat_perusahaan1.value,
+        // created_by: app_no_ide.value,
+        // created_date: jenis_kelamin.value,
+        id: id.value,
+        // jarak_lokasi_usaha: curef.value,
+        jenis_bidang: jenis_bidang.value,
+        // jenis_pekerjaan: id.value,
+        jumlah_karyawan: jumlah_karyawan.value,
+        kabkota: kabkota_cabang_swasta.value,
+        kategori_pekerjaan: kate_peker.value,
+        kecamatan: kecamatan_swasta.value,
+        kelurahan: kelurahan_swasta.value,
+        kode_pos: kode_pos_swasta.value,
+        lama_bekerja_bulan: lama_bekerja_bulan1.value,
+        lama_bekerja_tahun: lama_bekerja_tahun1.value,
+        nama_perusahaan: nama_perusahaan.value,
+        no_siup: this.kirimansiup,
+        pendapatan: pendapatan.value,
+        pendapatan_lain: pendapatan_lain.value,
+        posisi: posisi1.value,
+        provinsi: provinsi_cabang_swasta.value,
+        // rt: provinsi_cabang.value,
+        // rw: tanggal_exp_ktp_pasangan.value,
+        sektor_ekonomi: sektor_ekonomi.value,
+        status_kepegawaian: status_kepegawaian.value,
+        tipe_pekerjaan: tipe_pekerjaan.value,
+        tipe_perusahaan: tipe_perusahaan.value,
+        total_pendapatan: total_pendapatan.value,
+        // total_pengeluaran: provinsi_pasangan.value,
+        tunjangan: tunjangan.value,
+        // umur_pensiun: rw_pasangan.value,
+        // updated_by: provinsi_cabang.value,
+        // updated_date: tanggal_exp_ktp_pasangan.value,
+      })
+
+      .subscribe({
+        next: bawaan => {
+          //           this.contohdata = bawaan.result.app_no_de;
+          // this.databawaan = bawaan.result.app_no_de;
+          // alert('MASUKAJAHSUSAH');
+          this.router.navigate(['/data-entry/collateral'], {
+            queryParams: {
+              datakirimande: this.datakirimanappde,
+              datakirimancuref: this.datakirimancuref,
+              datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+            },
+          });
+        },
+      });
+
+    this.router.navigate(['/data-entry/collateral'], {
+      queryParams: {
+        datakirimande: this.datakirimanappde,
+        datakirimancuref: this.datakirimancuref,
+        datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+      },
+    });
   }
 }

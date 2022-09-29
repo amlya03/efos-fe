@@ -72,12 +72,12 @@
         <div class="form-group">
           <select class="form-control" id="agama" name="agama">
             <option value="{{ daWa.agama }}">{{ daWa.agama }}</option>
-            <!-- <option>Islam</option>
+            <option>Islam</option>
             <option>Kristen</option>
             <option>Khatolik</option>
             <option>Budha</option>
             <option>Hindu</option>
-            <option>Kong Hu Chu</option> -->
+            <option>Kong Hu Chu</option>
           </select>
         </div>
       </div>
@@ -89,11 +89,11 @@
         <div class="form-group">
           <select class="form-control" id="pendidikan" name="pendidikan">
             <option value="{{ daWa.pendidikan }}">{{ daWa.pendidikan }}</option>
-            <!-- <option value="SMA">SMA</option>
+            <option value="SMA">SMA</option>
             <option value="D3">D3</option>
             <option value="S1">S1</option>
             <option value="S2">S2</option>
-            <option value="S3">S3</option> -->
+            <option value="S3">S3</option>
           </select>
         </div>
       </div>
@@ -105,8 +105,8 @@
         <div class="form-group">
           <select class="form-control" id="kewarganegaraan" name="kewarganegaraan">
             <option value="{{ daWa.kewarganegaraan }}">{{ daWa.kewarganegaraan }}</option>
-            <!-- <option>WNI</option>
-            <option>WNA</option> -->
+            <option>WNI</option>
+            <option>WNA</option>
           </select>
         </div>
       </div>
@@ -307,8 +307,11 @@
       <label class="col-sm-3 col-form-label">Provinsi</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="provinsi_cabang" name="provinsi">
+          <select class="form-control" id="provinsi_cabang" (change)="onChange(provinsi_cabang)" name="provinsi">
             <option value="{{ daWa.provinsi }}">{{ daWa.provinsi }}</option>
+            <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+              {{ daWaprof.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>
@@ -318,8 +321,11 @@
       <label class="col-sm-3 col-form-label">Kota</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kabkota_cabang" name="kabkota">
+          <select class="form-control" (change)="onChangekota(kabkota_cabang)" id="kabkota_cabang" name="kabkota">
             <option value="{{ daWa.kabkota }}">{{ daWa.kabkota }}</option>
+            <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
+              {{ daWakota.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>
@@ -329,8 +335,11 @@
       <label class="col-sm-3 col-form-label">Kecamatan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kecamatan" name="kecamatan">
+          <select class="form-control" (change)="onChangekecamatan(kecamatan)" id="kecamatan" name="kecamatan">
             <option>{{ daWa.kecamatan }}</option>
+            <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
+              {{ daWakecamatan.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>
@@ -340,8 +349,11 @@
       <label class="col-sm-3 col-form-label">Kelurahan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kelurahan" name="kelurahan">
+          <select (change)="onChangekelurahan(kelurahan)" class="form-control" id="kelurahan" name="kelurahan">
             <option>{{ daWa.kelurahan }}</option>
+            <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
+              {{ daWakelurahan.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>
@@ -423,8 +435,11 @@
       <label class="col-sm-3 col-form-label">Provinsi</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="provinsi_domisili" name="provinsi_domisili">
+          <select class="form-control" (change)="onChangeD(provinsi_cabang)" id="provinsi_domisili" name="provinsi_domisili">
             <option>{{ daWa.provinsi_domisili }}</option>
+            <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+              {{ daWaprof.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>
@@ -434,8 +449,11 @@
       <label class="col-sm-3 col-form-label">Kota</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kabkota_domisili" name="kabkota_domisili">
+          <select class="form-control" (change)="onChangekotaD(kabkota_cabang)" id="kabkota_domisili" name="kabkota_domisili">
             <option value="{{ daWa.kabkota_domisili }}">{{ daWa.kabkota_domisili }}</option>
+            <option *ngFor="let daWakotaD of daWakotaD" value="{{ daWakotaD.kdWilayah }}|{{ daWakotaD.namaWilayah }}">
+              {{ daWakotaD.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>
@@ -445,8 +463,11 @@
       <label class="col-sm-3 col-form-label">kecamatan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kecamatan_domisili" name="kecamatan_domisili">
+          <select class="form-control" (change)="onChangekecamatanD(kecamatan)" id="kecamatan_domisili" name="kecamatan_domisili">
             <option>{{ daWa.kecamatan_domisili }}</option>
+            <option *ngFor="let daWakecamatanD of kecamatanD" value="{{ daWakecamatanD.kdWilayah }}|{{ daWakecamatanD.namaWilayah }}">
+              {{ daWakecamatanD.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>
@@ -456,8 +477,11 @@
       <label class="col-sm-3 col-form-label">Kelurahan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kelurahan_domisili" name="kelurahan_domisili">
+          <select class="form-control" (change)="onChangekelurahanD(kelurahan)" id="kelurahan_domisili" name="kelurahan_domisili">
             <option>{{ daWa.kelurahan_domisili }}</option>
+            <option *ngFor="let daWakelurahanD of kelurahanD" value="{{ daWakelurahanD.kdPos }}|{{ daWakelurahanD.namaWilayah }}">
+              {{ daWakelurahanD.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>

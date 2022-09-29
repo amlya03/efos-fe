@@ -49,6 +49,7 @@ export class CollateralComponent implements OnInit {
   }
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   load() {
+    alert('colalteral' + this.datakirimande);
     alert(this.datakirimancuref);
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
@@ -77,7 +78,7 @@ export class CollateralComponent implements OnInit {
     console.warn('INI ADA GK SIH', this.datakirimancuref, this.datakirimande);
     this.router.navigate(['/data-entry/struktur-pembiayaan'], {
       queryParams: {
-        datakirimanappde: this.datakirimanappde,
+        datakirimanappde: this.datakirimande,
         datakirimiancure: this.datakirimancuref,
         datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },

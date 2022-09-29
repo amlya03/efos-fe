@@ -147,7 +147,7 @@ import { EditjobinfoComponent } from './data-entry/editjobinfo/editjobinfo.compo
           component: CallReportNonComponent,
         },
         {
-          path: 'editjobinfo',
+          path: 'data-entry/editjobinfo',
           component: EditjobinfoComponent,
         },
         {
