@@ -63,6 +63,9 @@ import { DaftarAplikasiPilihComponent } from './initial-data-entry/daftar-aplika
 import { VerificationComponent } from './verification/verification.component';
 import { EditjobinfoComponent } from './data-entry/editjobinfo/editjobinfo.component';
 import { EditcollateralComponent } from './data-entry/editcollateral/editcollateral.component';
+import { UploadDocumentComponent } from './upload-document/upload-document.component';
+import { UploadDocumentDeComponent } from './upload-document/upload-document-de/upload-document-de.component';
+import { UploadDocumentAgunanComponent } from './upload-document/upload-document-agunan/upload-document-agunan.component';
 
 @NgModule({
   imports: [
@@ -131,6 +134,9 @@ import { EditcollateralComponent } from './data-entry/editcollateral/editcollate
     VerificationComponent,
     EditjobinfoComponent,
     EditcollateralComponent,
+    UploadDocumentComponent,
+    UploadDocumentDeComponent,
+    UploadDocumentAgunanComponent,
   ],
   bootstrap: [
     MainComponent,

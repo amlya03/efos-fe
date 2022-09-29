@@ -30,11 +30,6 @@ export class NavbarComponent implements OnInit {
   version = '';
   account: Account | null = null;
   entitiesNavbarItems: any[] = [];
-  element = false;
-  navVerif = false;
-  navHome = true;
-  navDe = false;
-  navIde = false;
   untukSessionRole: any;
   untukSessionUserName: any;
   untukSessionFullName: any;
@@ -44,7 +39,12 @@ export class NavbarComponent implements OnInit {
   app_no_de: any;
   daWa: any;
   datakiriman: any;
-  isDisabled = true;
+  datakirimanstatus: any;
+  datakirimanakategoripekerjaan: any;
+  datakirimanakategoripekerjaanNav: any;
+  datakirimanid: any;
+  datakirimantgllahir: any;
+  datakirimanappide: any;
 
   constructor(
     protected http: HttpClient,
@@ -61,20 +61,37 @@ export class NavbarComponent implements OnInit {
     if (VERSION) {
       this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`;
     }
-    this.route.params.subscribe(params => console.warn('parameternya ', params));
+    // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.route.queryParams.subscribe(params => {
+      // ///////////////////////////Initial Data Entry/////////////////////////////
+      this.datakirimanid = params.datakirimanid;
+      this.datakirimantgllahir = params.datakirimantgllahir;
+      this.datakirimanappide = params.datakirimanappide;
+
+      // ///////////////// Data Entry //////////////////////////////////
       this.datakiriman = params['datakiriman'];
-    });
-    this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
+      this.datakirimanstatus = params.datakirimanstatus;
+      this.datakirimanakategoripekerjaan = params.datakirimanakategoripekerjaan;
+      this.datakirimanakategoripekerjaanNav = params.datakirimanakategoripekerjaan;
+      if (this.datakirimanakategoripekerjaan === 'Fix Income') {
+        this.datakirimanakategoripekerjaan = this.datakirimanakategoripekerjaan.replace(' ', '%20');
+      }
+      if (this.datakirimanakategoripekerjaan === 'Non Fix Income') {
+        this.datakirimanakategoripekerjaan = 'Non%20Fix%20Income';
+      }
     });
+    // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
 
   ngOnInit(): void {
-    if (this.app_no_de != null) {
-      this.isDisabled = false;
-    }
-    // alert(this.app_no_de)
+    // alert(this.datakirimanid)
+    // alert(this.datakirimantgllahir)
+    // alert(this.datakirimanappide)
+    // alert(this.datakiriman);
+    // alert(this.app_no_de);
+    // alert(this.datakirimanstatus);
+    // alert(this.datakirimanakategoripekerjaanNav);
     // const personal_info_retrive = (<HTMLInputElement>document.getElementById("personal_info")).value;
     // alert((<HTMLInputElement>document.getElementById("personal_info")).value)
     // this.navbarPersonalInfo = personal_info_retrive
@@ -123,59 +140,6 @@ export class NavbarComponent implements OnInit {
 
   toggleNavbar(): void {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
-  }
-  showData(): void {
-    this.element = true;
-    this.navHome = false;
-    this.navDe = true;
-    this.navVerif = true;
-    if (
-      this.router.url === '/daftaraplikasiide'
-      //   // this.router.url === '/data-entry/personalinfo',
-      //   // this.router.url === '/data-entry/job-info',
-      //   // this.router.url === '/data-entry/data-pasangan',
-      //   // this.router.url === '/data-entry/pekerjaan-pasangan',
-      //   // this.router.url === '/data-entry/collateral',
-      //   // this.router.url === '/data-entry/struktur-pembiayaan',
-      //   // this.router.url === '/data-entry/emergency-contact',
-      //   // this.router.url === '/data-entry/duplicate-checking',
-      //   // this.router.url === '/data-entry/scoring',
-      //   // this.router.url === '/data-entry/call-report',
-      //   // this.router.url === '/data-entry/call-report-non',
-      //   // this.router.url === '/data-entry/memo'
-    ) {
-      this.element = true;
-      this.navHome = false;
-      this.navIde = true;
-      this.navDe = false;
-      this.navVerif = true;
-    }
-    // if(
-    //   this.router.url === '/data-entry'
-    //   // this.router.url === '/data-entry/personalinfo',
-    //   // this.router.url === '/data-entry/job-info',
-    //   // this.router.url === '/data-entry/data-pasangan',
-    //   // this.router.url === '/data-entry/pekerjaan-pasangan',
-    //   // this.router.url === '/data-entry/collateral',
-    //   // this.router.url === '/data-entry/struktur-pembiayaan',
-    //   // this.router.url === '/data-entry/emergency-contact',
-    //   // this.router.url === '/data-entry/duplicate-checking',
-    //   // this.router.url === '/data-entry/scoring',
-    //   // this.router.url === '/data-entry/call-report',
-    //   // this.router.url === '/data-entry/call-report-non',
-    //   // this.router.url === '/data-entry/memo'
-    //   ){
-    //     this.element=true;
-    //     this.navDe = true;
-    //     this.navIde = false;
-    //   }
-  }
-  hideData(): void {
-    this.element = false;
-    this.navHome = true;
-    this.navVerif = false;
-    this.navIde = false;
-    this.navDe = false;
   }
 
   // ref personal

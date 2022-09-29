@@ -89,8 +89,6 @@ export class PersonalInfoComponent implements OnInit {
     this.load();
   }
   load(): void {
-    const personal_info_retrive = (<HTMLInputElement>document.getElementById('personal_info')).value;
-    this.personal_info_value = personal_info_retrive;
     // alert(personal_info_retrive)
     // localStorage.setItem('daftar_aplikasi_de', personal_info_retrive);
     this.getdataentry().subscribe({
@@ -98,6 +96,8 @@ export class PersonalInfoComponent implements OnInit {
         // console.log(res.body?.result);
         console.warn('tabel', res);
         console.warn('!!!!!!!!!!!!!!!!!!!', this.app_no_de);
+        // console.warn('tabel', res);
+        // console.warn('!!!!!!!!!!!!!!!!!!!', this.datakiriman);
         // console.warn('@@@@@@@@@@@@@', this.datakiriman);
         // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
         this.daWa = res.body?.result;
@@ -123,7 +123,7 @@ export class PersonalInfoComponent implements OnInit {
       queryParams: {
         datakiriman: contohtampungancuref,
         datakirimanstatus: contohtampungstatuskawain,
-        datakirimanappde: contohtampunganappde,
+        app_no_de: contohtampunganappde,
         datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
       },
     });
@@ -276,5 +276,13 @@ export class PersonalInfoComponent implements OnInit {
     //     datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
     //   },
     // });
+    this.router.navigate(['/data-entry/job-info'], {
+      queryParams: {
+        datakiriman: contohtampungancuref,
+        datakirimanstatus: contohtampungstatuskawain,
+        app_no_de: contohtampunganappde,
+        datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
+      },
+    });
   }
 }

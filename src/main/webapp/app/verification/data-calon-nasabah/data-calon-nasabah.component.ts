@@ -262,4 +262,10 @@ export class DataCalonNasabahComponent implements OnInit {
     const datakodepos = valueKelurahan.split('|');
     this.getKodePos = datakodepos[0];
   }
+
+  // pindah
+  viewDetailAnalisa(): void {
+    // alert(getAppNoDe);
+    this.router.navigate(['/data-kantor']);
+  }
 }

@@ -126,7 +126,7 @@ export class JobInfoComponent implements OnInit {
         queryParams: {
           datakirimanappde: this.datakirimanappde,
           datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
-          datakirimancuref: contohtampungancuref,
+          datakiriman: contohtampungancuref,
         },
       });
       // alert(' ini NIKAH');
@@ -138,7 +138,7 @@ export class JobInfoComponent implements OnInit {
         queryParams: {
           datakirimanappde: this.datakirimanappde,
           datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
-          datakirimancuref: contohtampungancuref,
+          datakiriman: contohtampungancuref,
         },
       });
     }

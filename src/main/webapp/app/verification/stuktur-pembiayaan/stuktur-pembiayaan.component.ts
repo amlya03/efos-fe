@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-stuktur-pembiayaan',
@@ -6,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./stuktur-pembiayaan.component.scss'],
 })
 export class StukturPembiayaanComponent implements OnInit {
-  constructor() {}
+  constructor(public router: Router) {}
 
   ngOnInit(): void {}
+
+  // pindah
+  viewStruktur(): void {
+    // alert(getAppNoDe);
+    this.router.navigate(['/checklist-document']);
+  }
 }

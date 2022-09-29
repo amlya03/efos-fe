@@ -37,6 +37,9 @@ import { PersonalInfoComponent } from './data-entry/personal-info/personal-info.
 import { InitialDataEntryFixEditComponent } from './initial-data-entry/initial-data-entry-fix-edit/initial-data-entry-fix-edit.component';
 import { InitialDataEntryNonEditComponent } from './initial-data-entry/initial-data-entry-non-edit/initial-data-entry-non-edit.component';
 import { VerificationComponent } from './verification/verification.component';
+import { UploadDocumentComponent } from './upload-document/upload-document.component';
+import { UploadDocumentDeComponent } from './upload-document/upload-document-de/upload-document-de.component';
+import { UploadDocumentAgunanComponent } from './upload-document/upload-document-agunan/upload-document-agunan.component';
 import { EditjobinfoComponent } from './data-entry/editjobinfo/editjobinfo.component';
 
 @NgModule({
@@ -180,6 +183,18 @@ import { EditjobinfoComponent } from './data-entry/editjobinfo/editjobinfo.compo
           component: InitialDataEntryNonEditComponent,
         },
 
+        {
+          path: 'upload_document',
+          component: UploadDocumentComponent,
+        },
+        {
+          path: 'upload_document/upload_document_de',
+          component: UploadDocumentDeComponent,
+        },
+        {
+          path: 'upload_document/upload_document_agunan',
+          component: UploadDocumentAgunanComponent,
+        },
         {
           path: '',
           loadChildren: () => import(`./entities/entity-routing.module`).then(m => m.EntityRoutingModule),

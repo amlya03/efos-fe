@@ -103,4 +103,10 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
         error: error => console.warn(error),
       });
   }
+
+  // pindah
+  viewMutasiRek(): void {
+    // alert(getAppNoDe);
+    this.router.navigate(['/sturktur-pembiayaan']);
+  }
 }
