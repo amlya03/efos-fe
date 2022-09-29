@@ -51,16 +51,36 @@
           <td style="text-align: center">{{ i + 1 }}</td>
           <td style="text-align: center">{{ uploadDocument.doc_description }}</td>
           <td style="text-align: center">{{ uploadDocument.nama_dokumen }}</td>
-          <td style="text-align: center">{{ uploadDocument.status }}</td>
+          <td style="text-align: center">{{ uploadDocument.status != null ? 'Sudah Upload' : 'Belum Upload' }}</td>
           <td style="text-align: center">{{ uploadDocument.created_date }}</td>
           <td style="text-align: center">
-            <button type="button" class="btn btn-outline-info">
-              <fa-icon icon="eye"></fa-icon>
-              <span class="d-none d-md-inline">Detail</span>
-            </button>
+            <div class="text-center">
+              <input class="form-control" type="file" (change)="onChange($event); this.buttonUpload = true" />
+
+              <button *ngIf="this.buttonUpload" (click)="onUpload()" class="btn btn-success">Upload</button>
+            </div>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
+<br />
+<div class="text-center">
+  <input class="form-control" type="file" (change)="onChange($event)" />
+
+  <button (click)="onUpload()" class="btn btn-success">Upload</button>
+</div>
+
+<!-- Shareable short link of  uploaded file -->
+<div class="container text-center jumbotron" *ngIf="shortLink">
+  <h2>Visit Here</h2>
+  <a href="{{ shortLink }}">{{ shortLink }}</a>
+</div>
+
+<!--Flag variable is used here-->
+<div class="container" *ngIf="loading">
+  <h3>Loading ...</h3>
+</div>
+<br />
+<button (click)="viewUploadDEA()" class="btn btn-warning" style="float: left">Selanjutnya Ke Document Agunan</button>

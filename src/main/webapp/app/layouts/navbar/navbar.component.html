@@ -188,6 +188,90 @@
             </a>
           </li>
         </div>
+        <div>
+          <li class="row nav-item">
+            <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="col nav-link" style="text-align: center">
+              <fa-icon icon="institution"></fa-icon>
+              <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
+              <p>FLPP</p>
+
+              <!-- tambahan -->
+              <!-- <span
+                class="col nav-link"
+                [routerLink]="['/upload_document/upload_document_de']"
+                [queryParams]="{ datakiriman: this.datakiriman }"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                [routerLink]="['/upload_document/upload_document_agunan']"
+                [queryParams]="{
+                  datakiriman: this.datakiriman,
+                  datakirimanstatus: this.datakirimanstatus,
+                  app_no_de: this.app_no_de,
+                  datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav
+                }"
+                hidden
+              ></span> -->
+            </a>
+          </li>
+        </div>
+        <div>
+          <li class="row nav-item">
+            <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="col nav-link" style="text-align: center">
+              <fa-icon icon="list-check"></fa-icon>
+              <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
+              <p>Inquiry</p>
+
+              <!-- tambahan -->
+              <!-- <span
+                class="col nav-link"
+                [routerLink]="['/upload_document/upload_document_de']"
+                [queryParams]="{ datakiriman: this.datakiriman }"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                [routerLink]="['/upload_document/upload_document_agunan']"
+                [queryParams]="{
+                  datakiriman: this.datakiriman,
+                  datakirimanstatus: this.datakirimanstatus,
+                  app_no_de: this.app_no_de,
+                  datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav
+                }"
+                hidden
+              ></span> -->
+            </a>
+          </li>
+        </div>
+        <div>
+          <li class="row nav-item">
+            <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="col nav-link" style="text-align: center">
+              <fa-icon icon="question-circle"></fa-icon>
+              <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
+              <p>Help</p>
+
+              <!-- tambahan -->
+              <!-- <span
+                class="col nav-link"
+                [routerLink]="['/upload_document/upload_document_de']"
+                [queryParams]="{ datakiriman: this.datakiriman }"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                [routerLink]="['/upload_document/upload_document_agunan']"
+                [queryParams]="{
+                  datakiriman: this.datakiriman,
+                  datakirimanstatus: this.datakirimanstatus,
+                  app_no_de: this.app_no_de,
+                  datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav
+                }"
+                hidden
+              ></span> -->
+            </a>
+          </li>
+        </div>
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
         <!-- <li
           *ngSwitchCase="true"
@@ -714,6 +798,7 @@
     *ngIf="
       router.url === '/upload_document/upload_document_de' ||
       router.url === '/upload_document/upload_document_de?datakiriman=' + this.datakiriman ||
+      router.url === '/upload_document/upload_document_agunan?datakiriman=' + this.datakiriman ||
       router.url === '/upload_document/upload_document_agunan'
     "
   >
@@ -730,6 +815,7 @@
     <a
       class="nav-item nav-link"
       routerLink="upload_document/upload_document_agunan"
+      [queryParams]="{ datakiriman: this.datakiriman }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'AO'"

@@ -13,11 +13,8 @@ export class ServicesUploadDocumentService {
   datakiriman: any;
   app_no_de: any;
 
-  // /////////////////////////// DAFTAR APLIKASI INITIAL DATA ENTRY ////////////////////////////////////////////
-  protected FetchListUploadDocument = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-de/getDokumenUploadByCuref?sc='
-  );
-  // /////////////////////////// DAFTAR APLIKASI INITIAL DATA ENTRY ////////////////////////////////////////////
+  // API url
+  baseApiUrl = 'https://file.io';
 
   constructor(
     public router: Router,
@@ -34,16 +31,16 @@ export class ServicesUploadDocumentService {
     // alert(this.datakiriman)
   }
 
-  // ////////////////////// Ref Upload Document DE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getListUploadDocumentDE(): Observable<ApiResponse> {
-    // return this.http.get<ApiResponse>(this.ListUploadDocument+this.datakiriman+'&ss=DE');
-    return this.http.get<ApiResponse>(this.FetchListUploadDocument + 'curef_20220822_347&ss=DE');
-  }
-  // ////////////////////// Ref Upload Document DE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  // Returns an observable
+  upload(file: any): Observable<any> {
+    // Create form data
+    const formData = new FormData();
 
-  // ////////////////////// Ref Upload Document DEA \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  // getListUploadDocumentAgunan(): Observable<ApiResponse> {
-  //   return this.http.get<ApiResponse>(this.ListUploadDocument+this.datakiriman+'&ss=DEA');
-  // }
-  // ////////////////////// Ref Upload Document DEA \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    // Store form name as "file" with file data
+    formData.append('file', file, file.name);
+
+    // Make http post request over api
+    // with formData as req
+    return this.http.post(this.baseApiUrl, formData);
+  }
 }
