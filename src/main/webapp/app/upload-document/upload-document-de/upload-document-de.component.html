@@ -3,14 +3,14 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Nomor Aplikasi</label>
       <div class="col-sm-8">
-        <input #noAplikasi readonly type="text" class="form-control" placeholder="Masukan Nomor Aplikasi" />
+        <input #noAplikasi readonly type="text" class="form-control" value="{{ fetchAllDe.app_no_de }}" />
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Kategori Pekerjaan</label>
       <div class="col-sm-8">
-        <input #kategori readonly type="text" class="form-control" placeholder="Masukan Kategori Pekerjaan" />
+        <input #kategori readonly type="text" class="form-control" value="{{ fetchAllDe.kategori_pekerjaan }}" />
       </div>
     </div>
   </div>
@@ -18,14 +18,14 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Nama Nasabah</label>
       <div class="col-sm-8">
-        <input #namaNasabah readonly type="text" class="form-control" placeholder="Masukan Nama Nasabah" />
+        <input #namaNasabah readonly type="text" class="form-control" value="{{ fetchAllDe.nama }}" />
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Fasilitas</label>
       <div class="col-sm-8">
-        <input #Fasilitas readonly type="text" class="form-control" placeholder="Masukan Fasilitas" />
+        <input #Fasilitas readonly type="text" class="form-control" value="{{ fetchAllDe.kode_fasilitas_name }}" />
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@
           <td style="text-align: center">{{ uploadDocument.created_date }}</td>
           <td style="text-align: center">
             <div class="text-center">
-              <input class="form-control" type="file" (change)="onChange($event); this.buttonUpload = true" />
+              <input class="form-control" type="file" (change)="onChange($event, uploadDocument.id); this.buttonUpload = true" />
 
               <button *ngIf="this.buttonUpload" (click)="onUpload()" class="btn btn-success">Upload</button>
             </div>
@@ -67,7 +67,7 @@
 </div>
 <br />
 <div class="text-center">
-  <input class="form-control" type="file" (change)="onChange($event)" />
+  <!-- <input class="form-control" type="file" (change)="onChange($event)" /> -->
 
   <button (click)="onUpload()" class="btn btn-success">Upload</button>
 </div>

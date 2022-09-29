@@ -66,7 +66,13 @@
         <td style="text-align: center">{{ dataEntry.produk_pembiayaan }}</td>
         <td hidden>{{ dataEntry.kategori_pekerjaan === 'Fix Income' }}</td>
         <td style="text-align: center">
-          <button type="button" (click)="viewUpload(dataEntry.curef)" class="btn btn-outline-info">
+          <button
+            type="button"
+            (click)="
+              viewUpload(dataEntry.curef, dataEntry.app_no_de, dataEntry.program_pembiayaan, dataEntry.kategori_pekerjaan, dataEntry.nama)
+            "
+            class="btn btn-outline-info"
+          >
             <fa-icon icon="eye"></fa-icon>
             <span class="d-none d-md-inline">Detail</span>
           </button>

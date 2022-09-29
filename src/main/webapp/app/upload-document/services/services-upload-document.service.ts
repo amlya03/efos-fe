@@ -15,6 +15,11 @@ export class ServicesUploadDocumentService {
 
   // API url
   baseApiUrl = 'https://file.io';
+  // // /////////////////////////// DAFTAR APLIKASI INITIAL DATA ENTRY ////////////////////////////////////////////
+  // protected FetchListUploadDocument = this.applicationConfigService.getEndpointFor(
+  //   'http://10.20.34.110:8805/api/v1/efos-de/getDokumenUploadByCuref?sc='
+  // );
+  // // /////////////////////////// DAFTAR APLIKASI INITIAL DATA ENTRY ////////////////////////////////////////////
 
   constructor(
     public router: Router,
@@ -43,4 +48,11 @@ export class ServicesUploadDocumentService {
     // with formData as req
     return this.http.post(this.baseApiUrl, formData);
   }
+
+  // // ////////////////////// Ref Upload Document DE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  // getListUploadDocumentDE(): Observable<ApiResponse> {
+  //   // return this.http.get<ApiResponse>(this.ListUploadDocument+this.datakiriman+'&ss=DE');
+  //   return this.http.get<ApiResponse>(this.FetchListUploadDocument + 'curef_20220822_347&ss=DE');
+  // }
+  //   // ////////////////////// Ref Upload Document DE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 }

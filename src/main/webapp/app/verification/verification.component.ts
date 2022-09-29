@@ -63,8 +63,8 @@ export class VerificationComponent implements OnInit, OnDestroy {
     $('#dataTables-example').DataTable().columns().search('').draw();
   }
 
-  viewVerification(): void {
+  viewVerification(app_no_de: any): void {
     // alert(getAppNoDe);
-    this.router.navigate(['/analisa-keuangan']);
+    this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: app_no_de } });
   }
 }

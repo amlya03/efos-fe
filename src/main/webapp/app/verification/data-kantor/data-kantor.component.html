@@ -383,59 +383,6 @@
   <div class="row form-material">
     <div class="col">
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">RT / RW</label>
-        <div class="col">
-          <input
-            type="text"
-            class="form-control"
-            id="rt"
-            name="rt"
-            placeholder=""
-            formControlName="rt"
-            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.rt.errors }"
-            (keypress)="keyPressNumbers($event)"
-            maxlength="3"
-          />
-          <div *ngIf="submitted && dataKantorForm.controls.rt.errors" class="text-danger">
-            <div *ngIf="submitted && dataKantorForm.controls.rt.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-        <div class="col"><h4>/</h4></div>
-        <div class="col">
-          <input
-            type="text"
-            class="form-control"
-            id="rw"
-            name="rw"
-            placeholder=""
-            formControlName="rw"
-            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.rw.errors }"
-            (keypress)="keyPressNumbers($event)"
-            maxlength="3"
-          />
-          <div *ngIf="submitted && dataKantorForm.controls.rw.errors" class="text-danger">
-            <div *ngIf="submitted && dataKantorForm.controls.rw.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col" style="text-align: center">
-      <label>Sesuai</label>
-      <input type="radio" name="ceklis_kecamatan" id="ceklis_kecamatan_ya" />
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_kecamatan" id="ceklis_kecamatan_tidak" />
-      <label>Tidak Sesuai</label>
-    </div>
-    <div class="col">
-      <div class="form-group row">
-        <input name="status_menikah" id="status_menikah" class="form-control" />
-      </div>
-    </div>
-  </div>
-  <br />
-  <div class="row form-material">
-    <div class="col">
-      <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kode Pos</label>
         <div class="col-sm-8">
           <div class="input-group mb-3">
