@@ -83,7 +83,60 @@ export class DataRumahComponent implements OnInit {
     this.submitted = true;
     if (this.analisaKeuanganForm.invalid) {
       return;
-    }
+    } else
+      this.http
+        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_keuangan', {
+          alamat_perusahaan: this.analisaKeuanganForm.get('alamat_perusahaan')?.value,
+          app_no_de: this.app_no_de,
+          created_by: '',
+          created_date: '2022-09-29T10:45:53.691Z',
+          gaji_kotor: this.analisaKeuanganForm.get('gaji_kotor')?.value,
+          gaji_kotor_pasangan: this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value,
+          gaji_kotor_total: this.analisaKeuanganForm.get('gaji_kotor_total')?.value,
+          jabatan_dihubungi: '',
+          kewajiban_bank: this.analisaKeuanganForm.get('kewajiban_bank')?.value,
+          kewajiban_bank_pasangan: '',
+          kewajiban_bank_total: '',
+          kewajiban_lainnya: this.analisaKeuanganForm.get('kewajiban_lainnya')?.value,
+          ewajiban_lainnya_pasangan: '',
+          kewajiban_lainnya_total: '',
+          nama_dihubungi: '',
+          nama_pemeriksa: this.analisaKeuanganForm.get('nama_pemeriksa')?.value,
+          nama_perusahaan: this.analisaKeuanganForm.get('nama_perusahaan')?.value,
+          no_telepon_perusahaan: this.analisaKeuanganForm.get('no_telepon_perusahaan')?.value,
+          pendapatan_bersih: this.analisaKeuanganForm.get('pendapatan_bersih')?.value,
+          pendapatan_bersih_pasangan: this.analisaKeuanganForm.get('pendapatan_bersih_pasangan')?.value,
+          pendapatan_bersih_total: this.analisaKeuanganForm.get('pendapatan_bersih_total')?.value,
+          pendapatan_kantor_lainnya: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value,
+          endapatan_kantor_lainnya_pasangan: '',
+          pendapatan_kantor_lainnya_total: '',
+          pendapatan_kotor: '',
+          pendapatan_kotor_pasangan: '',
+          pendapatan_kotor_total: '',
+          endapatan_profesional: '',
+          pendapatan_profesional_pasangan: '',
+          pendapatan_profesional_total: '',
+          pendapatan_usaha: '',
+          endapatan_usaha_pasangan: '',
+          pendapatan_usaha_total: '',
+          tanggal_pemeriksa: '',
+          anggal_permintaan: '',
+          total_angsuran_kantor: '',
+          total_angsuran_kantor_akumulasi: '',
+          otal_angsuran_kantor_pasangan: '',
+          total_penghasilan_bersih: '',
+          total_penghasilan_bersih_akumulasi: '',
+          total_penghasilan_bersih_pasangan: '',
+          total_penghasilan_kotor: '',
+          total_penghasilan_kotor_akumulasi: '',
+          total_penghasilan_kotor_pasangan: '',
+          tunjangan: '',
+          unjangan_pasangan: '',
+          tunjangan_total: '',
+        })
+        .subscribe({});
+    this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de } });
+
     // this.http
     //   .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_verif_mutasi', {
     //     nama: this.analisaKeuanganForm.get('nama')?.value,
@@ -143,61 +196,5 @@ export class DataRumahComponent implements OnInit {
       event.preventDefault();
       return;
     }
-  }
-
-  // pindah
-  viewAnalisaKeuangan(): void {
-    this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_keuangan', {
-        alamat_perusahaan: this.analisaKeuanganForm.get('alamat_perusahaan')?.value,
-        app_no_de: this.app_no_de,
-        created_by: '',
-        created_date: '2022-09-29T10:45:53.691Z',
-        gaji_kotor: this.analisaKeuanganForm.get('gaji_kotor')?.value,
-        gaji_kotor_pasangan: this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value,
-        gaji_kotor_total: this.analisaKeuanganForm.get('gaji_kotor_total')?.value,
-        jabatan_dihubungi: '',
-        kewajiban_bank: this.analisaKeuanganForm.get('kewajiban_bank')?.value,
-        kewajiban_bank_pasangan: '',
-        kewajiban_bank_total: '',
-        kewajiban_lainnya: this.analisaKeuanganForm.get('kewajiban_lainnya')?.value,
-        ewajiban_lainnya_pasangan: '',
-        kewajiban_lainnya_total: '',
-        nama_dihubungi: '',
-        nama_pemeriksa: this.analisaKeuanganForm.get('nama_pemeriksa')?.value,
-        nama_perusahaan: this.analisaKeuanganForm.get('nama_perusahaan')?.value,
-        no_telepon_perusahaan: this.analisaKeuanganForm.get('no_telepon_perusahaan')?.value,
-        pendapatan_bersih: this.analisaKeuanganForm.get('pendapatan_bersih')?.value,
-        pendapatan_bersih_pasangan: this.analisaKeuanganForm.get('pendapatan_bersih_pasangan')?.value,
-        pendapatan_bersih_total: this.analisaKeuanganForm.get('pendapatan_bersih_total')?.value,
-        pendapatan_kantor_lainnya: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value,
-        endapatan_kantor_lainnya_pasangan: '',
-        pendapatan_kantor_lainnya_total: '',
-        pendapatan_kotor: '',
-        pendapatan_kotor_pasangan: '',
-        pendapatan_kotor_total: '',
-        endapatan_profesional: '',
-        pendapatan_profesional_pasangan: '',
-        pendapatan_profesional_total: '',
-        pendapatan_usaha: '',
-        endapatan_usaha_pasangan: '',
-        pendapatan_usaha_total: '',
-        tanggal_pemeriksa: '',
-        anggal_permintaan: '',
-        total_angsuran_kantor: '',
-        total_angsuran_kantor_akumulasi: '',
-        otal_angsuran_kantor_pasangan: '',
-        total_penghasilan_bersih: '',
-        total_penghasilan_bersih_akumulasi: '',
-        total_penghasilan_bersih_pasangan: '',
-        total_penghasilan_kotor: '',
-        total_penghasilan_kotor_akumulasi: '',
-        total_penghasilan_kotor_pasangan: '',
-        tunjangan: '',
-        unjangan_pasangan: '',
-        tunjangan_total: '',
-      })
-      .subscribe({});
-    this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de } });
   }
 }

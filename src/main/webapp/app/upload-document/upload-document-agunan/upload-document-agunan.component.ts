@@ -63,16 +63,17 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
   }
 
   load(): void {
+    this.getFetchSemuaDataDEA().subscribe(data => {
+      this.fetchAllDea = data.result;
+      this.fetchAllAgunan = data.result;
+      // this.dtTrigger.next(this.fetchAllAgunan);
+      // console.log(this.fetchAllDea);
+    });
+
     this.getListUploadDocumentDEA().subscribe(data => {
       // console.warn('ini upload de' + data);
       this.uploadDocument = (data as any).result;
       this.dtTrigger.next(data.result);
-    });
-
-    this.getFetchSemuaDataDEA().subscribe(data => {
-      this.fetchAllDea = data.result;
-      this.fetchAllAgunan = data.result;
-      console.log(this.fetchAllDea);
     });
   }
 
