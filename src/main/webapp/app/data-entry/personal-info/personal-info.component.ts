@@ -6,6 +6,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { createRequestOption } from 'app/core/request/request-util';
+import { DataEntryService } from '../services/data-entry.service';
 
 // export type EntityResponseDaWa = HttpResponse<dataentrymodel>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -81,6 +82,7 @@ export class PersonalInfoComponent implements OnInit {
   /////
 
   constructor(
+    protected datEntryService: DataEntryService,
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
@@ -189,14 +191,61 @@ export class PersonalInfoComponent implements OnInit {
     alert(id.value);
     alert(contohtampungancuref);
 
-    const kirimanprovinsi = provinsi_cabang.value.split('|');
-    const kirimankabkota = kabkota_cabang.value.split('|');
-    const kirimankecamatan = kecamatan.value.split('|');
-    const kirimankelurahan = kelurahan.value.split('|');
-    const kirimanprovinsid = provinsi_domisili.value.split('|');
-    const kirimankabkotad = kabkota_domisili.value.split('|');
-    const kirimankecamatand = kecamatan_domisili.value.split('|');
-    const kirimankelurahand = kelurahan_domisili.value.split('|');
+    var kirimanpotonganprovinsi = provinsi_cabang.value.split('|');
+    var cekdatapipe = provinsi_cabang.value.indexOf('|');
+    alert(cekdatapipe + 'inidatanya');
+    if (cekdatapipe !== -1) {
+      var kirimanprovinsi = kirimanpotonganprovinsi[1];
+
+      alert('update provinsi bawa value pipe |' + kirimanprovinsi);
+    } else {
+      //  var kirimanprovinsi =kirimanpotonganprovinsi[1];
+      var kirimanprovinsi = provinsi_cabang.value;
+      alert('update provinsi bawa value' + kirimanprovinsi);
+    }
+    var potongankabkota = kabkota_cabang.value.split('|');
+    if (kabkota_cabang.value.indexOf('|') !== -1) {
+      var kirimankabkota = potongankabkota[1];
+    } else {
+      var kirimankabkota = kabkota_cabang.value;
+    }
+    var potongankecamatan = kecamatan.value.split('|');
+    if (kecamatan.value.indexOf('|') !== -1) {
+      var kirimankecamatan = potongankecamatan[1];
+    } else {
+      var kirimankecamatan = kecamatan.value;
+    }
+    var potongankelurahan = kelurahan.value.split('|');
+    if (kelurahan.value.indexOf('|') !== -1) {
+      var kirimankelurahan = potongankelurahan[1];
+    } else {
+      var kirimankelurahan = kelurahan.value;
+    }
+    var kirimanpotonganprovinsid = provinsi_domisili.value.split('|');
+    if (provinsi_domisili.value.indexOf('|') !== -1) {
+      var kirimanprovinsid = kirimanpotonganprovinsid[1];
+    } else {
+      var kirimanprovinsid = provinsi_domisili.value;
+    }
+    var potongankabkota = kabkota_domisili.value.split('|');
+    if (kabkota_domisili.value.indexOf('|') !== -1) {
+      var kirimankabkotad = potongankabkota[1];
+    } else {
+      var kirimankabkotad = kabkota_domisili.value;
+    }
+    var potongankecamatan = kecamatan_domisili.value.split('|');
+    if (kecamatan_domisili.value.indexOf('|') !== -1) {
+      var kirimankecamatand = potongankecamatan[1];
+    } else {
+      var kirimankecamatand = kecamatan_domisili.value;
+    }
+    var potongankelurahan = kelurahan_domisili.value.split('|');
+    if (kelurahan_domisili.value.indexOf('|') !== -1) {
+      var kirimankelurahand = potongankelurahan[1];
+    } else {
+      var kirimankelurahand = kelurahan_domisili.value;
+    }
+
     // input?.addEventListener('input', function (event: { target: HTMLInputElement; }) {
     //   const target = event.target as HTMLInputElement |any;
     //   console.log(target.value);
@@ -241,14 +290,14 @@ export class PersonalInfoComponent implements OnInit {
         alamat_ktp: alamat_ktp.value,
         id: id.value,
         alamat_domisili: alamat_domisili.value,
-        provinsi: kirimanprovinsi[1],
-        provinsi_domisili: kirimanprovinsid[1],
-        kabkota: kirimankabkota[1],
-        kabkota_domisili: kirimankabkotad[1],
-        kecamatan: kirimankecamatan[1],
-        kecamatan_domisili: kirimankecamatand[1],
-        kelurahan: kirimankelurahan[1],
-        kelurahan_domisili: kirimankelurahand[1],
+        provinsi: kirimanprovinsi,
+        provinsi_domisili: kirimanprovinsid,
+        kabkota: kirimankabkota,
+        kabkota_domisili: kirimankabkotad,
+        kecamatan: kirimankecamatan,
+        kecamatan_domisili: kirimankecamatand,
+        kelurahan: kirimankelurahan,
+        kelurahan_domisili: kirimankelurahand,
         kode_pos: kode_pos.value,
         kode_pos_domisili: kode_pos_domisili.value,
         lama_menetap: lama_menetap.value,
@@ -325,7 +374,7 @@ export class PersonalInfoComponent implements OnInit {
           // });
           // alert('dapetnih');
 
-          this.getprovinsi(this.postId).subscribe({
+          this.datEntryService.getprovinsi(this.postId).subscribe({
             next: (res: EntityArrayResponseDaWa) => {
               console.warn('PROVINSI', res);
 
@@ -347,28 +396,12 @@ export class PersonalInfoComponent implements OnInit {
       });
   }
 
-  getprovinsi(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      // 'Authorization': token,
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvinsi/', {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-    // alert('CONTOH' + token);
-  }
-
   onChange(selectedStatus: any) {
     const provinsi_cabang = document.getElementById('provinsi_cabang') as HTMLInputElement | any;
 
     // alert(this.postId);
     console.log('kode' + selectedStatus);
-    this.getkabkota(this.postId, provinsi_cabang.value).subscribe({
+    this.datEntryService.getkabkota(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kota', res);
 
@@ -379,28 +412,10 @@ export class PersonalInfoComponent implements OnInit {
     });
   }
 
-  getkabkota(token: any, kodekota: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      // 'Authorization': token,
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-    const kodepotongan = kodekota.split('|');
-
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKota/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-    // alert('CONTOHkota');
-    // alert(kodepotongan[0]);
-  }
-
   onChangekota(selectedStatus: any) {
     // alert(this.postId);
     const provinsi_cabang = document.getElementById('kabkota_cabang') as HTMLInputElement | any;
-    this.getkecamatan(this.postId, provinsi_cabang.value).subscribe({
+    this.datEntryService.getkecamatan(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kecamata', res);
 
@@ -412,27 +427,11 @@ export class PersonalInfoComponent implements OnInit {
     console.log(selectedStatus);
   }
 
-  getkecamatan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-
-    const kodepotongan = kodekecamatan.split('|');
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKec/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-    // alert('CONTOHkecamatan');
-  }
-
   onChangekecamatan(selectedStatus: any) {
     // alert(this.postId);
 
     const provinsi_cabang = document.getElementById('kecamatan') as HTMLInputElement | any;
-    this.getkelurahan(this.postId, provinsi_cabang.value).subscribe({
+    this.datEntryService.getkelurahan(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kelurahan', res);
 
@@ -442,21 +441,6 @@ export class PersonalInfoComponent implements OnInit {
       },
     });
     console.log(selectedStatus);
-  }
-
-  getkelurahan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-    const kodepotongan = kodekecamatan.split('|');
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKel/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-    // alert('CONTOHkecamatan');
   }
 
   onChangekelurahan(selectedStatus: any) {
@@ -482,7 +466,7 @@ export class PersonalInfoComponent implements OnInit {
 
     // alert(this.postId);
     console.log('kode' + selectedStatus);
-    this.getkabkotaD(this.postId, provinsi_cabang.value).subscribe({
+    this.datEntryService.getkabkota(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kota', res);
 
@@ -493,28 +477,10 @@ export class PersonalInfoComponent implements OnInit {
     });
   }
 
-  getkabkotaD(token: any, kodekota: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      // 'Authorization': token,
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-    const kodepotongan = kodekota.split('|');
-
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKota/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-    // alert('CONTOHkota');
-    // alert(kodepotongan[0]);
-  }
-
   onChangekotaD(selectedStatus: any) {
     // alert(this.postId);
     const provinsi_cabang = document.getElementById('kabkota_domisili') as HTMLInputElement | any;
-    this.getkecamatan(this.postId, provinsi_cabang.value).subscribe({
+    this.datEntryService.getkecamatan(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kecamata', res);
 
@@ -526,27 +492,11 @@ export class PersonalInfoComponent implements OnInit {
     console.log(selectedStatus);
   }
 
-  getkecamatanD(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-
-    const kodepotongan = kodekecamatan.split('|');
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKec/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-    // alert('CONTOHkecamatan');
-  }
-
   onChangekecamatanD(selectedStatus: any) {
     // alert(this.postId);
 
     const provinsi_cabang = document.getElementById('kecamatan_domisili') as HTMLInputElement | any;
-    this.getkelurahan(this.postId, provinsi_cabang.value).subscribe({
+    this.datEntryService.getkelurahan(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kelurahan', res);
 
@@ -556,21 +506,6 @@ export class PersonalInfoComponent implements OnInit {
       },
     });
     console.log(selectedStatus);
-  }
-
-  getkelurahanD(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-    const kodepotongan = kodekecamatan.split('|');
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKel/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-    // alert('CONTOHkecamatan');
   }
 
   onChangekelurahanD(selectedStatus: any) {
