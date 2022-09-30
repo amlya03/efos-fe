@@ -90,7 +90,7 @@
             id="nama_yang_dihubungi"
             name="nama_yang_dihubungi"
             placeholder=""
-            formControlName="nama_yang_dihubungi"
+            formControlName="nama_dihubungi"
             [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.nama_yang_dihubungi.errors }"
           />
           <div *ngIf="submitted && analisaKeuanganForm.controls.nama_yang_dihubungi.errors" class="text-danger">
@@ -108,7 +108,7 @@
             id="jabatan_yang_dihubungi"
             name="jabatan_yang_dihubungi"
             placeholder=""
-            formControlName="jabatan_yang_dihubungi"
+            formControlName="jabatan_dihubungi"
             [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.jabatan_yang_dihubungi.errors }"
           />
           <div *ngIf="submitted && analisaKeuanganForm.controls.jabatan_yang_dihubungi.errors" class="text-danger">
@@ -121,7 +121,7 @@
         <label class="col-sm-4 col-form-label">Tanggal Permintaan</label>
         <div class="col-sm-8">
           <input
-            type="text"
+            type="date"
             class="form-control"
             id="tanggal_permintaan"
             name="tanggal_permintaan"
@@ -139,7 +139,7 @@
         <label class="col-sm-4 col-form-label">Tanggal Pemeriksa</label>
         <div class="col-sm-8">
           <input
-            type="text"
+            type="date"
             class="form-control"
             id="tanggal_pemeriksa"
             name="tanggal_pemeriksa"
@@ -323,7 +323,7 @@
           <label class="col-sm-5 col-form-label">Gaji Kotor</label>
           <div class="col-sm-7">
             <input
-              formControlName="gaji_kotor_pemohon"
+              formControlName="gaji_kotor"
               type="text"
               class="form-control"
               id="gaji_kotor_pemohon"
@@ -337,7 +337,7 @@
           <label class="col-sm-5 col-form-label">Tunjangan</label>
           <div class="col-sm-7">
             <input
-              formControlName="tunjangan_pemohon"
+              formControlName="tunjangan"
               type="text"
               class="form-control"
               id="tunjangan_pemohon"
@@ -351,7 +351,7 @@
           <label class="col-sm-5 col-form-label">Pendapatan Kotor</label>
           <div class="col-sm-7">
             <input
-              formControlName="pendapatan_kotor_pemohon"
+              formControlName="pendapatan_kotor"
               type="text"
               class="form-control"
               id="pendapatan_kotor_pemohon"
@@ -362,14 +362,14 @@
         </div>
         <br />
         <div class="form-group row">
-          <label class="col-sm-5 col-form-label">Pendapatan Kotor Lainnya</label>
+          <label class="col-sm-5 col-form-label">Pendapatan Kantor Lainnya</label>
           <div class="col-sm-7">
             <input
               type="text"
               class="form-control"
-              id="pendapatan_kotor_lainnya_pemohon"
-              name="pendapatan_kotor_lainnya_pemohon"
-              formControlName="pendapatan_kotor_lainnya_pemohon"
+              id="pendapatan_kantor_lainnya_pemohon"
+              name="pendapatan_kantor_lainnya_pemohon"
+              formControlName="pendapatan_kantor_lainnya"
             />
           </div>
         </div>
@@ -381,7 +381,7 @@
               class="form-control"
               id="total_angsuran_kewajiban_kantor_pemohon"
               name="total_angsuran_kewajiban_kantor_pemohon"
-              formControlName="total_angsuran_kewajiban_kantor_pemohon"
+              formControlName="total_angsuran_kantor"
             />
           </div>
         </div>
@@ -389,7 +389,7 @@
           <label class="col-sm-5 col-form-label">Pendapatan Bersih</label>
           <div class="col-sm-7">
             <input
-              formControlName="pendapatan_bersih_pemohon"
+              formControlName="pendapatan_bersih"
               type="text"
               class="form-control"
               id="pendapatan_bersih_pemohon"
@@ -446,9 +446,9 @@
             <input
               type="text"
               class="form-control"
-              id="pendapatan_kotor_lainnya_pasangan"
-              name="pendapatan_kotor_lainnya_pasangan"
-              formControlName="pendapatan_kotor_lainnya_pasangan"
+              id="pendapatan_kantor_lainnya_pasangan"
+              name="pendapatan_kantor_lainnya_pasangan"
+              formControlName="pendapatan_kantor_lainnya_pasangan"
             />
           </div>
         </div>
@@ -460,7 +460,7 @@
               class="form-control"
               id="total_angsuran_kewajiban_kantor_pasangan"
               name="total_angsuran_kewajiban_kantor_pasangan"
-              formControlName="total_angsuran_kewajiban_kantor_pasangan"
+              formControlName="total_angsuran_kantor_pasangan"
             />
           </div>
         </div>
@@ -518,9 +518,9 @@
           <input
             type="text"
             class="form-control"
-            id="pendapatan_kotor_lainnya_total"
-            name="pendapatan_kotor_lainnya_total"
-            formControlName="pendapatan_kotor_lainnya_total"
+            id="pendapatan_kantor_lainnya_total"
+            name="pendapatan_kantor_lainnya_total"
+            formControlName="pendapatan_kantor_lainnya_total"
           />
         </div>
         <br />
@@ -530,7 +530,7 @@
             class="form-control"
             id="total_angsuran_kewajiban_kantor_total"
             name="total_angsuran_kewajiban_kantor_total"
-            formControlName="total_angsuran_kewajiban_kantor_total"
+            formControlName="total_angsuran_kantor_akumulasi"
           />
         </div>
         <br />
@@ -561,7 +561,7 @@
           <label class="col-sm-5 col-form-label">Pendapatan Usaha</label>
           <div class="col-sm-7">
             <input
-              formControlName="pendapatan_usaha_pemohon"
+              formControlName="pendapatan_usaha"
               type="text"
               class="form-control"
               id="pendapatan_usaha_pemohon"
@@ -579,7 +579,7 @@
               class="form-control"
               id="pendapatan_profesional_pemohon"
               name="pendapatan_profesional_pemohon"
-              formControlName="pendapatan_profesional_pemohon"
+              formControlName="pendapatan_profesional"
             />
           </div>
         </div>
@@ -651,7 +651,7 @@
               class="form-control"
               id="total_penghasilan_kotor_pemohon"
               name="total_penghasilan_kotor_pemohon"
-              formControlName=""
+              formControlName="total_penghasilan_kotor"
             />
           </div>
         </div>
@@ -665,7 +665,7 @@
               class="form-control"
               id="total_penghasilan_kotor_pasangan"
               name="total_penghasilan_kotor_pasangan"
-              formControlName=""
+              formControlName="total_penghasilan_kotor_pasangan"
             />
           </div>
         </div>
@@ -694,7 +694,7 @@
           <label class="col-sm-5 col-form-label" style="color: #fff">KB</label>
           <div class="col-sm-7">
             <input
-              formControlName=""
+              formControlName="kewajiban_bank"
               type="text"
               readonly
               class="form-control"
@@ -709,7 +709,7 @@
         <div class="form-group row">
           <div class="col">
             <input
-              formControlName=""
+              formControlName="kewajiban_bank_pasangan"
               type="text"
               readonly
               class="form-control"
@@ -723,7 +723,7 @@
       <div class="col">
         <div class="form-group row">
           <input
-            formControlName=""
+            formControlName="kewajiban_bank_total"
             type="text"
             readonly
             class="form-control"
@@ -750,7 +750,7 @@
               class="form-control"
               id="kewajiban_lainnya_pemohon"
               name="kewajiban_lainnya_pemohon"
-              placeholder=""
+              placeholder="kewajiban_lainnya_total"
             />
           </div>
         </div>
@@ -759,7 +759,7 @@
         <div class="form-group row">
           <div class="col">
             <input
-              formControlName=""
+              formControlName="kewajiban_lainnya_pasangan"
               type="text"
               class="form-control"
               id="kewajiban_lainnya_pasangan"
@@ -826,7 +826,7 @@
             class="form-control"
             id="total_penghasilan_bersih_total"
             name="total_penghasilan_bersih_total"
-            formControlName=""
+            formControlName="total_penghasilan_bersih_akumulasi"
           />
         </div>
       </div>

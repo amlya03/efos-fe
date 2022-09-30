@@ -9,35 +9,35 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nomor Customer</label>
         <div class="col-sm-8">
-          <input class="form-control" type="text" id="no_customer" name="no_customer" readonly />
+          <input formControlName="app_no_de" class="form-control" type="text" id="no_customer" name="no_customer" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nomor Aplikasi</label>
         <div class="col-sm-8">
-          <input class="form-control" type="text" id="nomor_aplikasi" name="nomor_aplikasi" readonly value="{{ this.app_no_de }}" />
+          <input formControlName="app_no_de" class="form-control" type="text" id="nomor_aplikasi" name="nomor_aplikasi" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama</label>
         <div class="col-sm-8">
-          <input class="form-control" type="text" id="nama" name="nama" readonly />
+          <input formControlName="nama" class="form-control" type="text" id="nama" name="nama" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nomor HP</label>
         <div class="col-sm-8">
-          <input class="form-control" type="text" id="nomor_hp" name="nomor_hp" readonly />
+          <input formControlName="" class="form-control" type="text" id="nomor_hp" name="nomor_hp" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
         <div class="col-sm-8">
-          <input name="jenis_kelamin" id="jenis_kelamin" class="form-control" readonly />
+          <input formControlName="" name="jenis_kelamin" id="jenis_kelamin" class="form-control" readonly />
         </div>
       </div>
     </div>
@@ -138,9 +138,9 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_alamat_rumah" id="verifikasi_alamat_rumah_ya" />
+      <input type="radio" name="verifikasi_alamat_rumah" id="verifikasi_alamat_rumah_ya" formControlName="verif_alamat" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_alamat_rumah" id="verifikasi_alamat_rumah_tidak" />
+      <input type="radio" name="verifikasi_alamat_rumah" id="verifikasi_alamat_rumah_tidak" formControlName="verif_alamat" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
@@ -191,14 +191,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_rt_rw" id="verifikasi_rt_rw_ya" />
+      <input type="radio" name="verifikasi_rt_rw" id="verifikasi_rt_rw_ya" value="1" formControlName="verif_rt_rw" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_rt_rw" id="verifikasi_rt_rw_tidak" />
+      <input type="radio" name="verifikasi_rt_rw" id="verifikasi_rt_rw_tidak" value="0" formControlName="verif_rt_rw" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="note_rt_rw" id="note_rt_rw" class="form-control" />
+        <input name="note_rt_rw" id="note_rt_rw" class="form-control" formControlName="note_verif_rt_rw" />
       </div>
     </div>
   </div>
@@ -229,14 +229,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_provinsi" id="verifikasi_provinsi_ya" />
+      <input type="radio" name="verifikasi_provinsi" id="verifikasi_provinsi_ya" value="1" formControlName="verif_provinsi" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_provinsi" id="verifikasi_provinsi_tidak" />
+      <input type="radio" name="verifikasi_provinsi" id="verifikasi_provinsi_tidak" value="0" formControlName="verif_provinsi" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="note_provinsi" id="note_provinsi" class="form-control" />
+        <input name="note_provinsi" id="note_provinsi" class="form-control" formControlName="note_verif_provinsi" />
       </div>
     </div>
   </div>
@@ -267,14 +267,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_kota" id="verifikasi_kota_ya" />
+      <input type="radio" name="verifikasi_kota" id="verifikasi_kota_ya" value="1" formControlName="verif_kabkota" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_kota" id="verifikasi_kota_tidak" />
+      <input type="radio" name="verifikasi_kota" id="verifikasi_kota_tidak" value="0" formControlName="verif_kabkota" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="note_kota" id="note_kota" class="form-control" />
+        <input name="note_kota" id="note_kota" class="form-control" formControlName="note_verif_kabkota" />
       </div>
     </div>
   </div>
@@ -305,14 +305,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_kecamatan" id="verifikasi_kecamatan_ya" />
+      <input type="radio" name="verifikasi_kecamatan" id="verifikasi_kecamatan_ya" value="1" formControlName="verif_kecamatan" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_kecamatan" id="verifikasi_kecamatan_tidak" />
+      <input type="radio" name="verifikasi_kecamatan" id="verifikasi_kecamatan_tidak" value="0" formControlName="verif_kecamatan" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="kelurahan" id="kelurahan" class="form-control" />
+        <input name="kelurahan" id="kelurahan" class="form-control" formControlName="note_verif_kecamatan" />
       </div>
     </div>
   </div>
@@ -343,14 +343,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_kelurahan" id="verifikasi_kelurahan_ya" />
+      <input type="radio" name="verifikasi_kelurahan" id="verifikasi_kelurahan_ya" value="1" formControlName="verif_kelurahan" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_kelurahan" id="verifikasi_kelurahan_tidak" />
+      <input type="radio" name="verifikasi_kelurahan" id="verifikasi_kelurahan_tidak" value="0" formControlName="verif_kelurahan" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input id="note_kelurahan" name="note_kelurahan" type="text" class="form-control" placeholder="" />
+        <input id="note_kelurahan" name="note_kelurahan" type="text" class="form-control" formControlName="note_verif_kelurahan" />
       </div>
     </div>
   </div>
@@ -385,14 +385,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_kodepos" id="verifikasi_kodepos_ya" />
+      <input type="radio" name="verifikasi_kodepos" id="verifikasi_kodepos_ya" value="1" formControlName="verif_kode_pos" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_kodepos" id="verifikasi_kodepos_tidak" />
+      <input type="radio" name="verifikasi_kodepos" id="verifikasi_kodepos_tidak" value="0" formControlName="verif_kode_pos" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input class="form-control" type="text" id="note_kodepos" name="note_kodepos" />
+        <input class="form-control" type="text" id="note_kodepos" name="note_kodepos" formControlName="note_verif_kode_pos" />
       </div>
     </div>
   </div>
@@ -419,14 +419,26 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_tanggal_lahir" id="verifikasi_tanggal_lahir_ya" />
+      <input
+        type="radio"
+        name="verifikasi_tanggal_lahir"
+        id="verifikasi_tanggal_lahir_ya"
+        value="1"
+        formControlName="verif_tanggal_lahir"
+      />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_tanggal_lahir" id="verifikasi_tanggal_lahir_tidak" />
+      <input
+        type="radio"
+        name="verifikasi_tanggal_lahir"
+        id="verifikasi_tanggal_lahir_tidak"
+        value="0"
+        formControlName="verif_tanggal_lahir"
+      />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="pedidikan" id="pedidikan" class="form-control" />
+        <input name="pedidikan" id="pedidikan" class="form-control" formControlName="note_verif_tanggal_lahir" />
       </div>
     </div>
   </div>
@@ -458,14 +470,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_pendidikan" id="verifikasi_pendidikan_ya" />
+      <input type="radio" name="verifikasi_pendidikan" id="verifikasi_pendidikan_ya" value="1" formControlName="verif_pendidikan" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_pendidikan" id="verifikasi_pendidikan_tidak" />
+      <input type="radio" name="verifikasi_pendidikan" id="verifikasi_pendidikan_tidak" value="0" formControlName="verif_pendidikan" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="note_pendidikan" id="note_pendidikan" class="form-control" />
+        <input name="note_pendidikan" id="note_pendidikan" class="form-control" formControlName="note_verif_pendidikan" />
       </div>
     </div>
   </div>
@@ -496,14 +508,32 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_status_menikah" id="verifikasi_status_menikah_ya" />
+      <input
+        type="radio"
+        name="verifikasi_status_menikah"
+        id="verifikasi_status_menikah_ya"
+        value="1"
+        formControlName="verif_status_menikah"
+      />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_status_menikah" id="verifikasi_status_menikah_tidak" />
+      <input
+        type="radio"
+        name="verifikasi_status_menikah"
+        id="verifikasi_status_menikah_tidak"
+        value="0"
+        formControlName="verif_status_menikah"
+      />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input type="text" class="form-control" id="note_status_menikah" name="note_status_menikah" placeholder="" />
+        <input
+          type="text"
+          class="form-control"
+          id="note_status_menikah"
+          name="note_status_menikah"
+          formControlName="note_verif_status_menikah"
+        />
       </div>
     </div>
   </div>
@@ -530,20 +560,31 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_nama_ibu_kandung" id="verifikasi_nama_ibu_kandung_ya" />
+      <input
+        type="radio"
+        name="verifikasi_nama_ibu_kandung"
+        id="verifikasi_nama_ibu_kandung_ya"
+        value="1"
+        formControlName="verif_ibu_kandung"
+      />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_nama_ibu_kandung" id="verifikasi_nama_ibu_kandung_tidak" />
+      <input
+        type="radio"
+        name="verifikasi_nama_ibu_kandung"
+        id="verifikasi_nama_ibu_kandung_tidak"
+        value="0"
+        formControlName="verif_ibu_kandung"
+      />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
         <input
-          (keypress)="keyPressNumbers($event)"
           type="text"
           class="form-control"
-          id="jumlah_tanggunan"
-          name="jumlah_tanggunan"
-          placeholder=""
+          id="note_verif_ibu_kandung"
+          name="note_verif_ibu_kandung"
+          formControlName="note_verif_ibu_kandung"
         />
       </div>
     </div>
@@ -579,7 +620,13 @@
     </div>
     <div class="col">
       <div class="form-group row">
-        <input type="text" class="form-control" id="note_jumlah_tanggunan" name="note_jumlah_tanggunan" placeholder="" />
+        <input
+          type="text"
+          class="form-control"
+          id="note_jumlah_tanggunan"
+          name="note_jumlah_tanggunan"
+          formControlName="note_verif_jumlah_tanggungan"
+        />
       </div>
     </div>
   </div>
@@ -589,7 +636,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Karakter Calon Nasabah</label>
         <div class="col-sm-8">
-          <select name="karakter_calon_nasabah " id="karakter_calon_nasabah " class="form-control">
+          <select name="karakter_calon_nasabah " id="karakter_calon_nasabah " class="form-control" formControlName="">
             <option value="">Pilih Data</option>
             <option value="Baik">Baik</option>
             <option value="Tidak Baik">Tidak Baik</option>
@@ -606,7 +653,7 @@
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="note_pendidikan" id="note_pendidikan" class="form-control" />
+        <input name="note_pendidikan" id="note_pendidikan" class="form-control" formControlName="" />
       </div>
     </div>
   </div>
@@ -642,7 +689,13 @@
         </div>
         <div class="col">
           <div class="form-group row">
-            <input type="text" class="form-control" id="note_nama_pasangan" name="note_nama_pasangan" placeholder="" />
+            <input
+              type="text"
+              class="form-control"
+              id="note_nama_pasangan"
+              name="note_nama_pasangan"
+              formControlName="note_verif_nama_pasangan"
+            />
           </div>
         </div>
       </div>
@@ -676,7 +729,13 @@
         </div>
         <div class="col">
           <div class="form-group row">
-            <input type="text" class="form-control" id="note_pekerjaan_pasangan" name="note_pekerjaan_pasangan" placeholder="" />
+            <input
+              type="text"
+              class="form-control"
+              id="note_pekerjaan_pasangan"
+              name="note_pekerjaan_pasangan"
+              formControlName="note_verif_pekerjaan_pasangan"
+            />
           </div>
         </div>
       </div>
@@ -712,7 +771,13 @@
     </div>
     <div class="col">
       <div class="form-group row">
-        <input type="text" class="form-control" id="fasilitas_pembiayaan_ke" name="fasilitas_pembiayaan_ke" placeholder="" />
+        <input
+          type="text"
+          class="form-control"
+          id="fasilitas_pembiayaan_ke"
+          name="fasilitas_pembiayaan_ke"
+          formControlName="fasilitas_pembiayaan="
+        />
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 export class refAnalisaKeuangan {
-  id?: 1;
+  id?: number;
   app_no_de?: number;
   nama_perusahaan?: string;
   alamat_perusahaan?: string;
