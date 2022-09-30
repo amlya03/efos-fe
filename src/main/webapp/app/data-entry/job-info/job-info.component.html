@@ -48,6 +48,12 @@
                   <div class="form-group">
                     <select class="form-control" id="tipe_pekerjaan" name="tipe_pekerjaan">
                       <option value="">Pilih Tipe Pekerjaan</option>
+                      <option
+                        *ngFor="let getjenispekerjaandariapi of getjenispekerjaandariapi"
+                        value="{{ getjenispekerjaandariapi.job_desc }}"
+                      >
+                        {{ getjenispekerjaandariapi.job_desc }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -103,8 +109,11 @@
                 <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
                 <div class="col-sm-9">
                   <div class="form-group">
-                    <select class="form-control" id="provinsi_cabang_perusahaan" name="provinsi">
+                    <select class="form-control" (change)="onChange()" id="provinsi_cabang_perusahaan" name="provinsi">
                       <option value="">Pilih Provinsi</option>
+                      <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+                        {{ daWaprof.namaWilayah }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -113,8 +122,11 @@
                 <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
                 <div class="col-sm-9">
                   <div class="form-group">
-                    <select class="form-control" id="kabkota_cabang_perusahaan" name="kabkota">
+                    <select class="form-control" (change)="onChangekota()" id="kabkota_cabang_perusahaan" name="kabkota">
                       <option value="">Pilih Kota</option>
+                      <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
+                        {{ daWakota.namaWilayah }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -123,8 +135,11 @@
                 <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
                 <div class="col-sm-9">
                   <div class="form-group">
-                    <select class="form-control" id="kecamatan_perusahaan" name="kecamatan">
+                    <select class="form-control" (change)="onChangekecamatan()" id="kecamatan_perusahaan" name="kecamatan">
                       <option value="">Pilih Kecamatan</option>
+                      <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
+                        {{ daWakecamatan.namaWilayah }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -133,8 +148,11 @@
                 <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
                 <div class="col-sm-9">
                   <div class="form-group">
-                    <select class="form-control" id="kelurahan" name="kelurahan">
+                    <select class="form-control" (change)="onChangekelurahan()" id="kelurahan" name="kelurahan">
                       <option value="">Pilih Kelurahan</option>
+                      <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
+                        {{ daWakelurahan.namaWilayah }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -204,8 +222,14 @@
                 <label class="col-sm-3 col-form-label">Jenis Bidang<span class="text-danger">*</span></label>
                 <div class="col-sm-9">
                   <div class="form-group">
-                    <select class="form-control" id="jenis_bidang_perusahaan" name="jenis_bidang">
+                    <select class="form-control" (change)="jenisbidangselect()" id="jenis_bidang_perusahaan" name="jenis_bidang">
                       <option value="">Pilih Jenis Bidang</option>
+                      <option
+                        *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
+                        value="{{ getjenisbidangdariapi.group_sektor }}|{{ getjenisbidangdariapi.nama_group_sektor }}"
+                      >
+                        {{ getjenisbidangdariapi.nama_group_sektor }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -216,6 +240,9 @@
                   <div class="form-group">
                     <select class="form-control" id="jenis_sektor_perusahaan" name="sektor_ekonomi">
                       <option value="">Pilih Sektor Ekonomi</option>
+                      <option *ngFor="let getdatasektorekonomi of getdatasektorekonomi" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
+                        {{ getdatasektorekonomi.nama_sub_sektor }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -305,6 +332,12 @@
                     <div class="form-group">
                       <select class="form-control" id="jumlah_karyawan2" name="jumlah_karyawan2">
                         <option value="">Pilih Jumalah Karyawan</option>
+                        <option
+                          *ngFor="let getjumlahkaryawandariapi of getjumlahkaryawandariapi"
+                          value="{{ getjumlahkaryawandariapi.deskripsi }}"
+                        >
+                          {{ getjumlahkaryawandariapi.deskripsi }}
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -354,6 +387,12 @@
                   <div class="form-group">
                     <select class="form-control" id="tipe_perusahaan" name="tipe_perusahaan">
                       <option value="">Pilih Tipe Perusahaan</option>
+                      <option
+                        *ngFor="let gettipeperusahaandariapi of gettipeperusahaandariapi"
+                        value="{{ gettipeperusahaandariapi.company_deskripsi }}"
+                      >
+                        {{ gettipeperusahaandariapi.company_deskripsi }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -431,8 +470,16 @@
                 <label class="col-sm-3 col-form-label">Kategori Pekerjaan</label>
                 <div class="col-sm-9">
                   <div class="form-group">
-                    <select class="form-control" name="kategori_pekerjaan_sebelum" id="kategori_pekerjaan_sebelum">
-                      <option value="{{ tampunganid.kategori_pekerjaan }}">{{ tampunganid.kategori_pekerjaan }}</option>
+                    <select
+                      class="form-control"
+                      (change)="katagoripekerjaanselect()"
+                      name="kategori_pekerjaan_sebelum"
+                      id="kategori_pekerjaan_sebelum"
+                    >
+                      <option value="{{ tampunganid.kategori_pekerjaan_sebelum }}">{{ tampunganid.kategori_pekerjaan_sebelum }}</option>
+                      <option value="1|Fix Income">Fix Income</option>
+                      <option value="2|Non Fix Income">Non Fix Income</option>
+                      <option value="3|Lain-lainnya">Lain-lainnya</option>
                     </select>
                   </div>
                 </div>
@@ -444,6 +491,9 @@
                   <div class="form-group">
                     <select class="form-control" name="tipe_pekerjaan_sebelum" id="tipe_pekerjaan_sebelum">
                       <option value="">{{ tampunganid.tipe_pekerjaan_sebelum }}</option>
+                      <option *ngFor="let daWakotasebelum of daWakotasebelum" value="{{ daWakotasebelum.job_desc }}">
+                        {{ daWakotasebelum.job_desc }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -477,7 +527,16 @@
                     placeholder="Nama Perusahaan"
                     id="nama_perusahaan_sebelum"
                     name="nama_perusahaan_sebelum"
-                    value=""
+                    value="{{ tampunganid.nama_perusahaan_sebelum }}"
+                  />
+                  <input type="text" class="form-control" placeholder="Nama Perusahaan" id="id" name="id" value="{{ tampunganid.id }}" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nama Perusahaan"
+                    id="curef"
+                    name="curef"
+                    value="{{ tampunganid.curef }}"
                   />
                 </div>
               </div>
@@ -496,8 +555,11 @@
                 <label class="col-sm-3 col-form-label">Provinsi</label>
                 <div class="col-sm-9">
                   <div class="form-group">
-                    <select class="form-control" id="provinsi_sebelum" name="provinsi_sebelum">
+                    <select class="form-control" id="provinsi_sebelum" (change)="onChangeD()" name="provinsi_sebelum">
                       <option value="{{ tampunganid.provinsi_sebelum }}">{{ tampunganid.provinsi_sebelum }}</option>
+                      <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+                        {{ daWaprof.namaWilayah }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -507,8 +569,11 @@
                 <label class="col-sm-3 col-form-label">Kota</label>
                 <div class="col-sm-9">
                   <div class="form-group">
-                    <select class="form-control" id="kabkota_sebelum" name="kabkota_sebelum">
+                    <select class="form-control" id="kabkota_sebelum" (change)="onChangekotaD()" name="kabkota_sebelum">
                       <option value="{{ tampunganid.kabkota_sebelum }}">{{ tampunganid.kabkota_sebelum }}</option>
+                      <option *ngFor="let daWakotaD of daWakotaD" value="{{ daWakotaD.kdWilayah }}|{{ daWakotaD.namaWilayah }}">
+                        {{ daWakotaD.namaWilayah }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -518,8 +583,14 @@
                 <label class="col-sm-3 col-form-label">Kecamatan</label>
                 <div class="col-sm-9">
                   <div class="form-group">
-                    <select class="form-control" id="kecamatan_sebelum" name="kecamatan_sebelum">
+                    <select class="form-control" (change)="onChangekecamatanD()" id="kecamatan_sebelum" name="kecamatan_sebelum">
                       <option value="{{ tampunganid.kecamatan_sebelum }}">{{ tampunganid.kecamatan_sebelum }}</option>
+                      <option
+                        *ngFor="let daWakecamatanD of kecamatanD"
+                        value="{{ daWakecamatanD.kdWilayah }}|{{ daWakecamatanD.namaWilayah }}"
+                      >
+                        {{ daWakecamatanD.namaWilayah }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -529,8 +600,11 @@
                 <label class="col-sm-3 col-form-label">Kelurahan</label>
                 <div class="col-sm-9">
                   <div class="form-group">
-                    <select class="form-control" id="kelurahan_sebelum" name="kelurahan_sebelum">
+                    <select class="form-control" (change)="onChangekelurahanD()" id="kelurahan_sebelum" name="kelurahan_sebelum">
                       <option value="{{ tampunganid.kelurahan_sebelum }}">{{ tampunganid.kelurahan_sebelum }}</option>
+                      <option *ngFor="let daWakelurahanD of kelurahanD" value="{{ daWakelurahanD.kdPos }}|{{ daWakelurahanD.namaWilayah }}">
+                        {{ daWakelurahanD.namaWilayah }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -594,8 +668,19 @@
                 <label class="col-sm-4 col-form-label">Jenis Bidang</label>
                 <div class="col-sm-8">
                   <div class="form-group">
-                    <select class="form-control" id="jenis_bidang_sebelum" name="jenis_bidang_sebelum">
+                    <select
+                      class="form-control"
+                      (change)="jenisbidangsebelumselect()"
+                      id="jenis_bidang_sebelum"
+                      name="jenis_bidang_sebelum"
+                    >
                       <option value="">{{ tampunganid.jenis_bidang_sebelum }}</option>
+                      <option
+                        *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
+                        value="{{ getjenisbidangdariapi.group_sektor }}|{{ getjenisbidangdariapi.nama_group_sektor }}"
+                      >
+                        {{ getjenisbidangdariapi.nama_group_sektor }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -607,6 +692,9 @@
                   <div class="form-group">
                     <select class="form-control" id="sektor_ekonomi_sebelum" name="sektor_ekonomi_sebelum">
                       <option value="">{{ tampunganid.sektor_ekonomi_sebelum }}</option>
+                      <option *ngFor="let getdatasektorekonomi of getdatasektorekonomi" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
+                        {{ getdatasektorekonomi.nama_sub_sektor }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -674,6 +762,12 @@
                   <div class="form-group">
                     <select class="form-control" id="tipe_perusahaan_sebelum" name="tipe_perusahaan_sebelum">
                       <option value="">{{ tampunganid.tipe_perusahaan_sebelum }}</option>
+                      <option
+                        *ngFor="let gettipeperusahaandariapi of gettipeperusahaandariapi"
+                        value="{{ gettipeperusahaandariapi.company_deskripsi }}"
+                      >
+                        {{ gettipeperusahaandariapi.company_deskripsi }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -693,7 +787,7 @@
           </div>
           <div class="row">
             <div class="col" style="text-align: center">
-              <button class="btn btn-dark">Simpan Data</button>
+              <button (click)="updatejobsebelum()" class="btn btn-dark">Simpan Data</button>
               <button id="selanjutnya" name="selanjutnya" (click)="goto(tampunganid.curef)" value="selanjutnya" class="btn btn-warning">
                 Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
               </button>

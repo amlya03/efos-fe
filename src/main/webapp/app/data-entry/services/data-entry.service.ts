@@ -4,6 +4,8 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { Observable } from 'rxjs';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { LocalStorageService } from 'ngx-webstorage';
+import { EntityArrayResponseDaWa } from '../data-entry-component.servis';
+import { createRequestOption } from 'app/core/request/request-util';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +21,7 @@ export class DataEntryService {
   untukSessionFullName: any;
   untukSessionKodeCabang: any;
   daftarAplikasiDataEntry: any;
+  postId: any;
 
   constructor(
     protected http: HttpClient,
@@ -43,4 +46,69 @@ export class DataEntryService {
     return this.http.get<ApiResponse>(this.daftarAplikasiDataEntry);
   }
   // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  getprovinsi(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    const httpOptions = {
+      // 'Authorization': token,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvinsi/', {
+      headers: httpOptions,
+      params: options,
+      observe: 'response',
+    });
+    // alert('CONTOH' + token);
+  }
+
+  getkabkota(token: any, kodekota: any, req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    const httpOptions = {
+      // 'Authorization': token,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+    const kodepotongan = kodekota.split('|');
+
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKota/' + kodepotongan[0], {
+      headers: httpOptions,
+      params: options,
+      observe: 'response',
+    });
+    // alert('CONTOHkota');
+    // alert(kodepotongan[0]);
+  }
+
+  getkecamatan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    const httpOptions = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+
+    const kodepotongan = kodekecamatan.split('|');
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKec/' + kodepotongan[0], {
+      headers: httpOptions,
+      params: options,
+      observe: 'response',
+    });
+    // alert('CONTOHkecamatan');
+  }
+
+  getkelurahan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    const httpOptions = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+    const kodepotongan = kodekecamatan.split('|');
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKel/' + kodepotongan[0], {
+      headers: httpOptions,
+      params: options,
+      observe: 'response',
+    });
+    // alert('CONTOHkecamatan');
+  }
 }
