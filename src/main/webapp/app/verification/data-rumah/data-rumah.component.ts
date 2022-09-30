@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { ApiResponse } from 'app/entities/book/ApiResponse';
+import { Observable } from 'rxjs';
 import { ServiceVerificationService } from '../service/service-verification.service';
 // import { daWuS } from '../daftar-aplikasi-waiting-update-status/daWuS.model';
 
@@ -15,6 +18,7 @@ export class DataRumahComponent implements OnInit {
   analisaKeuanganForm!: FormGroup;
   submitted = false;
   app_no_de: any;
+  analisaKeuanganMap: any;
   // dataRumahModel?: daWuS[];
 
   constructor(
@@ -23,6 +27,7 @@ export class DataRumahComponent implements OnInit {
     public router: Router,
     protected modalService: NgbModal,
     protected http: HttpClient,
+    protected applicationConfigService: ApplicationConfigService,
     private formBuilder: FormBuilder
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -32,7 +37,13 @@ export class DataRumahComponent implements OnInit {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
 
+  // API url
+  protected getAnalisaKeuangan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-verif/getAnalisaKeuangan?sd='
+  );
+
   ngOnInit(): void {
+    this.load();
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.analisaKeuanganForm = this.formBuilder.group({
       nama: ['', Validators.required],
@@ -74,20 +85,59 @@ export class DataRumahComponent implements OnInit {
       pendapatan_profesional_pasangan: ['', Validators.required],
       pendapatan_usaha_total: ['', Validators.required],
       pendapatan_profesional_total: ['', Validators.required],
-    });
 
-    this.load();
+      // ////////// Validasi \\\\\\\\\\\\\\\\\
+      // nama_perusahaan: this.analisaKeuanganMap.nama_perusahaan,
+      // alamat_perusahaan: this.analisaKeuanganMap.alamat_perusahaan,
+      // no_telepon_perusahaan: this.analisaKeuanganMap.no_telepon_perusahaan,
+      // nama_yang_dihubungi: this.analisaKeuanganMap.nama_dihubungi,
+      // jabatan_yang_dihubungi: this.analisaKeuanganMap.jabatan_dihubungi,
+      // tanggal_permintaan: this.analisaKeuanganMap.tanggal_permintaan,
+      // tanggal_pemeriksa: this.analisaKeuanganMap.tanggal_pemeriksa,
+      // nama_pemeriksa: this.analisaKeuanganMap.nama_pemeriksa,
+
+      // ///////////fix income /////////////////
+      // gaji_kotor_pemohon: this.analisaKeuanganMap.gaji_kotor,
+      // tunjangan_pemohon: this.analisaKeuanganMap.tunjangan,
+      // pendapatan_kotor_pemohon: this.analisaKeuanganMap.pendapatan_kotor,
+      // pendapatan_kotor_lainnya_pemohon: this.analisaKeuanganMap.pendapatan_kantor_lainnya,
+      // total_angsuran_kewajiban_kantor_pemohon: this.analisaKeuanganMap.total_angsuran_kantor,
+      // pendapatan_bersih_pemohon: this.analisaKeuanganMap.pendapatan_bersih,
+      // gaji_kotor_pasangan: this.analisaKeuanganMap.gaji_kotor_pasangan,
+      // tunjangan_pasangan: this.analisaKeuanganMap.tunjangan_pasangan,
+      // pendapatan_kotor_pasangan: this.analisaKeuanganMap.pendapatan_kotor_pasangan,
+      // pendapatan_kotor_lainnya_pasangan: this.analisaKeuanganMap.pendapatan_kantor_lainnya_pasangan,
+      // total_angsuran_kewajiban_kantor_pasangan: this.analisaKeuanganMap.total_angsuran_kantor_pasangan,
+      // pendapatan_bersih_pasangan: this.analisaKeuanganMap.pendapatan_bersih_pasangan,
+      // gaji_kotor_total: this.analisaKeuanganMap.gaji_kotor_total,
+      // tunjangan_total: this.analisaKeuanganMap.tunjangan_total,
+      // pendapatan_kotor_total: this.analisaKeuanganMap.pendapatan_kotor_total,
+      // pendapatan_kotor_lainnya_total: this.analisaKeuanganMap.pendapatan_kantor_lainnya_total,
+      // pendapatan_bersih_total: this.analisaKeuanganMap.pendapatan_bersih_total,
+
+      // // ///////////////non fix income/////////////////////
+      // pendapatan_usaha_pemohon: this.analisaKeuanganMap.pendapatan_usaha,
+      // pendapatan_profesional_pemohon: this.analisaKeuanganMap.pendapatan_profesional,
+      // pendapatan_usaha_pasangan: this.analisaKeuanganMap.pendapatan_usaha_pasangan,
+      // pendapatan_profesional_pasangan: this.analisaKeuanganMap.pendapatan_profesional_pasangan,
+      // pendapatan_usaha_total: this.analisaKeuanganMap.pendapatan_usaha_total,
+      // pendapatan_profesional_total: this.analisaKeuanganMap.pendapatan_profesional_total
+    });
+  }
+
+  fetchAnalisaKeuangan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getAnalisaKeuangan + this.app_no_de);
   }
 
   onSubmit(): void {
     this.submitted = true;
     if (this.analisaKeuanganForm.invalid) {
       return;
-    } else
+    } else if (this.analisaKeuanganMap == null) {
       this.http
         .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_keuangan', {
           alamat_perusahaan: this.analisaKeuanganForm.get('alamat_perusahaan')?.value,
-          app_no_de: this.app_no_de,
+          app_no_de: this.analisaKeuanganMap.app_no_de,
           created_by: '',
           created_date: '2022-09-29T10:45:53.691Z',
           gaji_kotor: this.analisaKeuanganForm.get('gaji_kotor')?.value,
@@ -135,6 +185,67 @@ export class DataRumahComponent implements OnInit {
           tunjangan_total: '',
         })
         .subscribe({});
+      this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de } });
+    } else
+      this.http
+        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_keuangan', {
+          akses_jalan: '',
+          app_no_de: '',
+          carport: '',
+          cek: '',
+          created_by: '',
+          created_date: '',
+          fasilitas_listrik: '',
+          fasilitas_pembiayaan: '',
+          garasi: '',
+          hubungan_pemberi_keterangan: '',
+          id: 0,
+          isi_rumah: '',
+          jenis_bangunan: '',
+          jumlah_kendaraan: '',
+          karakter_calon_nasabah: '',
+          kendaraan: '',
+          kondisi_kendaraan: '',
+          kondisi_lingkungan: '',
+          lama_menetap_bulan: '',
+          lama_menetap_tahun: '',
+          lokasi_perumahan: '',
+          note_verif_alamat: '',
+          note_verif_ibu_kandung: '',
+          note_verif_jumlah_tanggungan: '',
+          note_verif_kabkota: '',
+          note_verif_kecamatan: '',
+          note_verif_kelurahan: '',
+          note_verif_kode_pos: '',
+          note_verif_nama_pasangan: '',
+          note_verif_pekerjaan_pasangan: '',
+          note_verif_pendidikan: '',
+          note_verif_provinsi: '',
+          note_verif_rt_rw: '',
+          note_verif_status_menikah: '',
+          note_verif_tanggal_lahir: '',
+          pemberi_keterangan: '',
+          rumah_dihuni: '',
+          status_rumah: '',
+          tanggal_verifikasi: '',
+          updated_by: '',
+          updated_date: '',
+          verif_alamat: '',
+          verif_ibu_kandung: '',
+          verif_jumlah_tanggungan: '',
+          verif_kabkota: '',
+          verif_kecamatan: '',
+          verif_kelurahan: '',
+          verif_kode_pos: '',
+          verif_nama_pasangan: '',
+          verif_pekerjaan_pasangan: '',
+          verif_pendidikan: '',
+          verif_provinsi: '',
+          verif_rt_rw: '',
+          verif_status_menikah: '',
+          verif_tanggal_lahir: '',
+        })
+        .subscribe({});
     this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de } });
 
     // this.http
@@ -173,6 +284,13 @@ export class DataRumahComponent implements OnInit {
   }
 
   load(): void {
+    this.fetchAnalisaKeuangan().subscribe(data => {
+      // if (data.message === "success") {
+      this.analisaKeuanganMap = data.result;
+      // alert('sdhgfhsghfgdh ' +this.analisaKeuanganMap.nama_perusahaan);
+      // console.log('sdhgfhsghfgdh ' +this.analisaKeuanganMap.app_no_de);
+      // }
+    });
     // this.dataRumah.getDaWuS().subscribe(data => {
     //   console.warn(data);
     //   if (data.code === 200) {

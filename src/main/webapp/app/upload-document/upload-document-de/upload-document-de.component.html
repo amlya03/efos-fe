@@ -56,8 +56,7 @@
           <td style="text-align: center">
             <div class="text-center">
               <input class="form-control" type="file" (change)="onChange($event, uploadDocument.id); this.buttonUpload = true" />
-
-              <button *ngIf="this.buttonUpload" (click)="onUpload()" class="btn btn-success">Upload</button>
+              <button *ngIf="this.buttonUpload" (click)="onUpload($event)" class="btn btn-success">Upload</button>
             </div>
           </td>
         </tr>
@@ -69,7 +68,7 @@
 <div class="text-center">
   <!-- <input class="form-control" type="file" (change)="onChange($event)" /> -->
 
-  <button (click)="onUpload()" class="btn btn-success">Upload</button>
+  <!-- <button (click)="onUpload()" class="btn btn-success">Upload</button> -->
 </div>
 
 <!-- Shareable short link of  uploaded file -->

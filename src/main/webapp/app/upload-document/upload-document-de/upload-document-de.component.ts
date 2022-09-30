@@ -117,8 +117,8 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     this.idUpload = id;
   }
   // OnClick of button Upload
-  onUpload() {
-    // alert(id)
+  onUpload(event: any) {
+    alert(event);
     // this.loading = !this.loading;
     // console.log(this.file);
     // this.fileUploadService.upload(this.file).subscribe((event: any) => {
@@ -130,15 +130,15 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     //   }
     // });
 
-    this.loading = !this.loading;
-    alert(this.idUpload);
-    this.upload(this.file, this.idUpload).subscribe((event: any) => {
-      if (typeof event === 'object') {
-        // Short link via api response
-        this.shortLink = event.link;
+    // this.loading = !this.loading;
+    // alert(this.idUpload);
+    // this.upload(this.file, this.idUpload).subscribe((event: any) => {
+    //   if (typeof event === 'object') {
+    //     // Short link via api response
+    //     this.shortLink = event.link;
 
-        this.loading = false; // Flag variable
-      }
-    });
+    //     this.loading = false; // Flag variable
+    //   }
+    // });
   }
 }
