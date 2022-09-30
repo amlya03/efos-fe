@@ -45,6 +45,7 @@ export class NavbarComponent implements OnInit {
   datakirimanid: any;
   datakirimantgllahir: any;
   datakirimanappide: any;
+  datakirimanidcustomer: any;
 
   constructor(
     protected http: HttpClient,
@@ -67,6 +68,7 @@ export class NavbarComponent implements OnInit {
       this.datakirimanid = params.datakirimanid;
       this.datakirimantgllahir = params.datakirimantgllahir;
       this.datakirimanappide = params.datakirimanappide;
+      this.datakirimanidcustomer = params.datakirimanidcustomer;
 
       // ///////////////// Data Entry //////////////////////////////////
       this.datakiriman = params['datakiriman'];
@@ -91,7 +93,7 @@ export class NavbarComponent implements OnInit {
     // alert(this.datakiriman);
     // alert(this.app_no_de);
     // alert(this.datakirimanstatus);
-    // alert(this.datakirimanakategoripekerjaanNav);
+    // alert(this.datakirimanidcustomer);
     // const personal_info_retrive = (<HTMLInputElement>document.getElementById("personal_info")).value;
     // alert((<HTMLInputElement>document.getElementById("personal_info")).value)
     // this.navbarPersonalInfo = personal_info_retrive

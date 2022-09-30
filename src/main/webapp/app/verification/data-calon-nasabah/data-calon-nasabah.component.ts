@@ -46,6 +46,7 @@ export class DataCalonNasabahComponent implements OnInit {
   getKelurahan: any;
   getKecamatan: any;
   getKota: any;
+  app_no_de: any;
 
   constructor(
     protected dataCalonNasabah: ServiceVerificationService,
@@ -55,7 +56,13 @@ export class DataCalonNasabahComponent implements OnInit {
     protected http: HttpClient,
     private formBuilder: FormBuilder,
     protected IdeService: InitialDataEntryService
-  ) {}
+  ) {
+    // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.app_no_de = params.app_no_de;
+    });
+    // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  }
 
   ngOnInit(): void {
     this.postGetTokenDuckapil();
@@ -265,7 +272,65 @@ export class DataCalonNasabahComponent implements OnInit {
 
   // pindah
   viewDetailAnalisa(): void {
-    // alert(getAppNoDe);
-    this.router.navigate(['/data-kantor']);
+    this.http
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_nasabah', {
+        akses_jalan: this.dataCalonNasabahForm.get('akses_jalan_ke_rumah_tinggal')?.value,
+        app_no_de: 'de220820000117',
+        carport: '',
+        cek: '',
+        created_by: '',
+        created_date: '',
+        fasilitas_listrik: '',
+        fasilitas_pembiayaan: this.dataCalonNasabahForm.get('fasilitas_pembiayaan_ke')?.value,
+        garasi: '',
+        hubungan_pemberi_keterangan: '',
+        id: 0,
+        isi_rumah: '',
+        jenis_bangunan: '',
+        jumlah_kendaraan: this.dataCalonNasabahForm.get('jumlah_kendaraan')?.value,
+        karakter_calon_nasabah: '',
+        kendaraan: '',
+        kondisi_kendaraan: '',
+        kondisi_lingkungan: this.dataCalonNasabahForm.get('kondisi_lingkungan')?.value,
+        lama_menetap_bulan: this.dataCalonNasabahForm.get('lama_menetap_bulan')?.value,
+        lama_menetap_tahun: this.dataCalonNasabahForm.get('lama_menetap_tahun')?.value,
+        lokasi_perumahan: '',
+        note_verif_alamat: '',
+        note_verif_ibu_kandung: '',
+        note_verif_jumlah_tanggungan: '',
+        note_verif_kabkota: '',
+        note_verif_kecamatan: '',
+        note_verif_kelurahan: '',
+        note_verif_kode_pos: '',
+        note_verif_nama_pasangan: '',
+        note_verif_pekerjaan_pasangan: '',
+        note_verif_pendidikan: '',
+        note_verif_provinsi: '',
+        note_verif_rt_rw: '',
+        note_verif_status_menikah: '',
+        note_verif_tanggal_lahir: '',
+        pemberi_keterangan: this.dataCalonNasabahForm.get('pemberi_keterangan')?.value,
+        rumah_dihuni: '',
+        status_rumah: '',
+        tanggal_verifikasi: '',
+        updated_by: '',
+        updated_date: '',
+        verif_alamat: '',
+        verif_ibu_kandung: '',
+        verif_jumlah_tanggungan: '',
+        verif_kabkota: '',
+        verif_kecamatan: '',
+        verif_kelurahan: '',
+        verif_kode_pos: '',
+        verif_nama_pasangan: '',
+        verif_pekerjaan_pasangan: '',
+        verif_pendidikan: '',
+        verif_provinsi: '',
+        verif_rt_rw: '',
+        verif_status_menikah: '',
+        verif_tanggal_lahir: '',
+      })
+      .subscribe({});
+    this.router.navigate(['/data-kantor'], { queryParams: { app_no_de: this.app_no_de } });
   }
 }

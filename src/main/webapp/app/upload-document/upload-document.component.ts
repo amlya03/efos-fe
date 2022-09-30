@@ -20,11 +20,18 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   dataEntry?: dataentrymodel[];
   valueCariButton = '';
   kategori_pekerjaan = '';
+  curef: any;
+  appNoDe: any;
+  fasilitas: any;
+  kategoriPekerjaan: any;
+  namaNasabah: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
+  static curef: any;
+  static this: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -80,8 +87,13 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     // alert("bbb")
   }
 
-  viewUpload(curef: any): void {
-    // alert(getAppNoDe);
-    this.router.navigate(['/upload_document/upload_document_de'], { queryParams: { datakiriman: curef } });
+  viewUpload(curef: any, app_no_de: any, fasilitas: any, kategori: any, nama: any): void {
+    this.curef = curef;
+    this.namaNasabah = nama;
+    this.appNoDe = app_no_de;
+    this.fasilitas = fasilitas;
+    this.kategoriPekerjaan = kategori;
+    // alert(this.appNoDe);
+    this.router.navigate(['/upload_document/upload_document_de'], { queryParams: { datakiriman: this.curef, app_no_de: this.appNoDe } });
   }
 }

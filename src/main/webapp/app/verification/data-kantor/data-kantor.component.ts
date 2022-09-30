@@ -44,6 +44,7 @@ export class DataKantorComponent implements OnInit {
   getKelurahan: any;
   getKecamatan: any;
   getKota: any;
+  app_no_de: any;
 
   constructor(
     protected dataKantor: ServiceVerificationService,
@@ -53,7 +54,13 @@ export class DataKantorComponent implements OnInit {
     protected http: HttpClient,
     private formBuilder: FormBuilder,
     protected IdeService: InitialDataEntryService
-  ) {}
+  ) {
+    // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.app_no_de = params.app_no_de;
+    });
+    // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  }
 
   ngOnInit(): void {
     this.postGetTokenDuckapil();
@@ -74,8 +81,6 @@ export class DataKantorComponent implements OnInit {
       kecamatan: ['', Validators.required],
       kelurahan: ['', Validators.required],
       kode_pos: ['', Validators.required],
-      rt: ['', Validators.required],
-      rw: ['', Validators.required],
       lama_bekerja_tahun: ['', Validators.required],
       lama_bekerja_bulan: ['', Validators.required],
       lama_beroperasi_tahun: ['', Validators.required],
@@ -305,7 +310,63 @@ export class DataKantorComponent implements OnInit {
 
   // pindah
   viewDataKantor(): void {
-    // alert(getAppNoDe);
-    this.router.navigate(['/mutasi-rekening']);
+    this.http
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_kantor', {
+        app_no_de: this.app_no_de,
+        aspek_syariah: '1',
+        created_by: '',
+        created_date: '',
+        divisi: this.dataKantorForm.get('divisi')?.value,
+        hubungan_pemberi_keterangan: '',
+        id: 0,
+        note_verif_alamat_perusahan: '',
+        note_verif_bidang_usaha: '',
+        note_verif_fax: '',
+        note_verif_jabatan: '',
+        note_verif_jenis_pekerjaan: '',
+        note_verif_jumlah_karyawan: '',
+        note_verif_kabkota: '',
+        note_verif_kecamatan: '',
+        note_verif_kelurahan: '',
+        note_verif_kode_pos: '',
+        note_verif_lama_bekerja: '',
+        note_verif_lama_beroperasi: '',
+        note_verif_nama_perusahan: '',
+        note_verif_no_telepon: '',
+        note_verif_provinsi: '',
+        note_verif_rt_rw: '',
+        note_verif_sektor_ekonomi: '',
+        note_verif_status_kepegawaian: '',
+        note_verif_tipe_pekerjaan: '',
+        note_verif_tipe_perusahaan: '',
+        note_verif_usia_pensiun: '',
+        pemberi_keterangan: this.dataKantorForm.get('pemberi_keterangan')?.value,
+        tanggal_verifikasi: this.dataKantorForm.get('tanggal_verification')?.value,
+        updated_by: '',
+        updated_date: '',
+        verif_alamat_perusahan: '',
+        verif_bidang_usaha: '',
+        verif_fax: '',
+        verif_jabatan: '',
+        verif_jenis_pekerjaan: '',
+        verif_jumlah_karyawan: '',
+        verif_kabkota: '',
+        verif_kecamatan: '',
+        verif_kelurahan: '',
+        verif_kode_pos: '',
+        verif_lama_bekerja: '',
+        verif_lama_beroperasi: '',
+        verif_nama_perusahan: '',
+        verif_no_telepon: '',
+        verif_provinsi: '',
+        verif_rt_rw: '',
+        verif_sektor_ekonomi: '',
+        verif_status_kepegawaian: '',
+        verif_tipe_pekerjaan: '',
+        verif_tipe_perusahaan: '',
+        verif_usia_pensiun: '',
+      })
+      .subscribe({});
+    this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de } });
   }
 }

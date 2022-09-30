@@ -5,6 +5,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { Observable, Subject } from 'rxjs';
+import { fetchAllDe } from '../services/config/fetchAllDe.model';
 import { uploadDocument } from '../services/config/uploadDocument.model';
 
 @Component({
@@ -14,8 +15,10 @@ import { uploadDocument } from '../services/config/uploadDocument.model';
 })
 export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
   uploadDocument?: uploadDocument[];
+  fetchAllDea?: fetchAllDe[];
   datakiriman: any;
   app_no_de: any;
+  fetchAllAgunan: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -37,6 +40,9 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
   protected FetchListUploadDocument = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.110:8805/api/v1/efos-de/getDokumenUploadByCuref?sc='
   );
+  protected fetchSemuaDataDEA = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd='
+  );
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -48,6 +54,10 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
     this.load();
   }
 
+  getFetchSemuaDataDEA(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchSemuaDataDEA + this.app_no_de);
+  }
+
   getListUploadDocumentDEA(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.FetchListUploadDocument + this.datakiriman + '&ss=DEA');
   }
@@ -57,6 +67,12 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
       // console.warn('ini upload de' + data);
       this.uploadDocument = (data as any).result;
       this.dtTrigger.next(data.result);
+    });
+
+    this.getFetchSemuaDataDEA().subscribe(data => {
+      this.fetchAllDea = data.result;
+      this.fetchAllAgunan = data.result;
+      console.log(this.fetchAllDea);
     });
   }
 
