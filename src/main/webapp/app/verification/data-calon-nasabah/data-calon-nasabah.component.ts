@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Editor } from 'ngx-editor';
@@ -16,6 +16,8 @@ import { refSektor } from 'app/initial-data-entry/services/config/refSektor.mode
 import { refStatusRumah } from '../service/config/refStatusRumah.model';
 import { refListTipeProperti } from '../service/config/refListTipeProperti.model';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { refAnalisaCalonNasabah } from './refAnalisaCalonNasabah.model';
 
 @Component({
   selector: 'jhi-data-calon-nasabah',
@@ -48,7 +50,8 @@ export class DataCalonNasabahComponent implements OnInit {
   getKecamatan: any;
   getKota: any;
   app_no_de: any;
-  dataCalonNasabahMap: any;
+  dataCalonNasabahMap: refAnalisaCalonNasabah = new refAnalisaCalonNasabah();
+  dataEntry?: fetchAllDe = new fetchAllDe();
 
   constructor(
     protected dataCalonNasabah: ServiceVerificationService,
@@ -71,6 +74,7 @@ export class DataCalonNasabahComponent implements OnInit {
   protected getDataCalonNasabah = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.178:8805/api/v1/efos-verif/getAnalisaCalonNasabah?sd='
   );
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   ngOnInit(): void {
     this.postGetTokenDuckapil();
@@ -105,6 +109,25 @@ export class DataCalonNasabahComponent implements OnInit {
       // kesimpulan_hasil_investigasi: ['', Validators.required],
       // lama_menetap_bulan: ['', Validators.required],
       // lama_menetap_tahun: ['', Validators.required],
+
+      // ini tambahan
+      nama: '',
+      curef: '',
+      no_handphone: '',
+      jenis_kelamin: '',
+      alamat_ktp: '',
+      rt: '',
+      rw: '',
+      // provinsi: '',
+      // kabkota: '',
+      // kecamatan: '',
+      // kelurahan: '',
+      kode_pos: '',
+      status_perkawinan: '',
+      tanggal_lahir: '',
+      pendidikan: '',
+      nama_ibu_kandung: '',
+      kode_fasilitas: '',
 
       // id: "",
       app_no_de: '',
@@ -298,11 +321,42 @@ export class DataCalonNasabahComponent implements OnInit {
     return this.http.get<ApiResponse>(this.getDataCalonNasabah + this.app_no_de);
   }
 
+  getFetchSemuaData(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchSemuaData + this.app_no_de);
+  }
+
   load(): void {
+    // ambil semua data
+    this.getFetchSemuaData().subscribe(data => {
+      // if(data.code === 200) {
+      this.dataEntry = data.result;
+      // console.log(this.dataEntry);
+      // console.log("ini data de "+this.fetchAllDe);
+      // }
+    });
+
     this.fetchDataNasabah().subscribe(data => {
       this.dataCalonNasabahMap = data.result;
-
       let retriveCalonNasabah = {
+        /// tambahan dari de
+        nama: this.dataEntry?.nama,
+        curef: this.dataEntry?.curef,
+        no_handphone: this.dataEntry?.no_handphone,
+        jenis_kelamin: this.dataEntry?.jenis_kelamin,
+        alamat_ktp: this.dataEntry?.alamat_ktp,
+        rt: this.dataEntry?.rt,
+        rw: this.dataEntry?.rw,
+        // provinsi: this.dataEntry?.provinsi,
+        // kabkota: this.dataEntry?.kabkota,
+        // kecamatan: this.dataEntry?.kecamatan,
+        // kelurahan: this.dataEntry?.kelurahan,
+        kode_pos: this.dataEntry?.kode_pos,
+        status_perkawinan: this.dataEntry?.status_perkawinan,
+        tanggal_lahir: this.dataEntry?.tanggal_lahir,
+        pendidikan: this.dataEntry?.pendidikan,
+        nama_ibu_kandung: this.dataEntry?.nama_ibu_kandung,
+        kode_fasilitas: this.dataEntry?.kode_fasilitas,
+
         // id: this.dataCalonNasabahMap ,
         app_no_de: this.dataCalonNasabahMap.app_no_de,
         tanggal_verifikasi: this.dataCalonNasabahMap.tanggal_verifikasi,

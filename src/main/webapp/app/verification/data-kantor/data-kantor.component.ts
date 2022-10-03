@@ -15,6 +15,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { Observable } from 'rxjs';
 import { InitialDataEntryService } from 'app/initial-data-entry/services/initial-data-entry.service';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { refAnalisaDataKantor } from './refAnalisaDataKantor.model';
 
 @Component({
   selector: 'jhi-data-kantor',
@@ -46,7 +47,7 @@ export class DataKantorComponent implements OnInit {
   getKecamatan: any;
   getKota: any;
   app_no_de: any;
-  dataKantorMap: any;
+  dataKantorMap: refAnalisaDataKantor = new refAnalisaDataKantor();
 
   constructor(
     protected dataKantor: ServiceVerificationService,

@@ -101,8 +101,8 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
           created_by: '199183174',
         })
         .subscribe({});
-      window.location.reload();
     }
+    window.location.reload();
   }
 
   // Forward
@@ -119,8 +119,8 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
           created_by: '199183174',
         })
         .subscribe({});
-      window.location.reload();
     }
+    window.location.reload();
   }
 
   // alert reject
@@ -145,9 +145,9 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
               created_by: '199183174',
             })
             .subscribe({});
-          window.location.reload();
         }
         Swal.fire('Data di Reject!', 'File Sudah Tidak Ada', 'success');
+        window.location.reload();
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire('Cancelled', 'File disimpan', 'error');
       }

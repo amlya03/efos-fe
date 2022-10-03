@@ -55,7 +55,29 @@
             </li>
           </div>
         </div>
-        <div *ngIf="untukSessionRole == 'APPRAISAL' || untukSessionRole === 'VER_PRESCR'">
+
+        <!-- ////////////////////////////// Verifikator \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <div *ngIf="untukSessionRole === 'VER_PRESCR'">
+          <li id="verificationNav" class="row nav-item">
+            <a
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="col nav-link"
+              routerLink="daftar-aplikasi-waiting-assigment"
+              style="text-align: center"
+            >
+              <fa-icon icon="user-check"></fa-icon>
+              <p>Verification</p>
+              <span class="col nav-link" routerLink="daftar-aplikasi-waiting-assigment" hidden></span>
+              <span class="col nav-link" routerLink="daftar-aplikasi-on-process" hidden></span>
+              <span class="col nav-link" routerLink="daftar-aplikasi-waiting-update-status" hidden></span>
+            </a>
+          </li>
+        </div>
+        <!-- ////////////////////////////// Verifikator \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
+        <!-- ////////////////////////////// Appraisal \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <div *ngIf="untukSessionRole == 'APPRAISAL'">
           <li id="verificationNav" class="row nav-item">
             <a
               routerLinkActive="active"
@@ -67,9 +89,6 @@
               <fa-icon icon="user-check"></fa-icon>
               <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
               <p>Verification</p>
-              <span class="col nav-link" routerLink="daftar-aplikasi-waiting-assigment" hidden></span>
-              <span class="col nav-link" routerLink="daftar-aplikasi-on-process" hidden></span>
-              <span class="col nav-link" routerLink="daftar-aplikasi-waiting-update-status" hidden></span>
               <span routerLink="/analisa-keuangan" [queryParams]="{ app_no_de: this.app_no_de }" hidden></span>
               <span routerLink="/data-calon-nasabah" [queryParams]="{ app_no_de: this.app_no_de }" hidden></span>
               <span routerLink="/data-kantor" [queryParams]="{ app_no_de: this.app_no_de }" hidden></span>
@@ -80,6 +99,8 @@
             </a>
           </li>
         </div>
+        <!-- ////////////////////////////// Appraisal \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
         <div *ngIf="untukSessionRole == 'BRANCHMANAGER' || untukSessionRole === 'AO'">
           <li class="row nav-item">
             <a
@@ -472,33 +493,41 @@
   </div>
 </nav>
 <nav [ngSwitch]="untukSessionRole" class="nav nav-pills nav-justified" id="nk-sidebar">
-  <a
-    class="nav-item nav-link"
-    routerLink="daftar-aplikasi-waiting-assigment"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'VER_PRESCR'"
+  <div
+    *ngIf="
+      router.url === '/daftar-aplikasi-waiting-assigment' ||
+      router.url === '/daftar-aplikasi-on-process' ||
+      router.url === '/daftar-aplikasi-waiting-update-status'
+    "
   >
-    <h6>Daftar Aplikasi Waiting Assigment</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="daftar-aplikasi-on-process"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'VER_PRESCR'"
-  >
-    <h6>Daftar Aplikasi On Process</h6>
-  </a>
-  <a
-    class="nav-item nav-link"
-    routerLink="daftar-aplikasi-waiting-update-status"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngSwitchCase="'VER_PRESCR'"
-  >
-    <h6>Daftar Aplikasi Waiting Update Satatus</h6>
-  </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="daftar-aplikasi-waiting-assigment"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'VER_PRESCR'"
+    >
+      <h6>Daftar Aplikasi Waiting Assigment</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="daftar-aplikasi-on-process"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'VER_PRESCR'"
+    >
+      <h6>Daftar Aplikasi On Process</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="daftar-aplikasi-waiting-update-status"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'VER_PRESCR'"
+    >
+      <h6>Daftar Aplikasi Waiting Update Satatus</h6>
+    </a>
+  </div>
   <div
     *ngIf="
       router.url === '/analisa-keuangan' ||

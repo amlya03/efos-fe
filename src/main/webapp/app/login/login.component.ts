@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     username: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     // rememberMe: new FormControl(false, { nonNullable: true, validators: [Validators.required] }),
-    app: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    app: new FormControl('efo', { nonNullable: true }),
   });
 
   constructor(private accountService: AccountService, private loginService: LoginService, private router: Router) {}
@@ -43,9 +43,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.authenticationError = false;
         if (!this.router.getCurrentNavigation()) {
           // There were no routing during login (eg from navigationToStoredUrl)
-          this.router.navigate(['']);
-          window.location.reload();
+          this.router.navigate(['/']);
         }
+        setTimeout(() => {
+          window.location.reload();
+        }, 300);
       },
       error: () => (this.authenticationError = true),
     });

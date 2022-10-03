@@ -82,7 +82,10 @@ export class AuthServerProvider {
     this.localStorageService.store('sessionFullName', sessionFullName);
     this.localStorageService.store('sessionKdCabang', sessionKdCabang);
     this.localStorageService.store('authenticationToken', jwt);
-    this.sessionStorageService.clear('authenticationToken');
+    this.sessionStorageService.clear('sessionRole');
+    this.sessionStorageService.clear('sessionUserName');
+    this.sessionStorageService.clear('sessionFullName');
+    this.sessionStorageService.clear('sessionKdCabang');
     // } else {
     //   this.sessionStorageService.store('authenticationToken', jwt);
     //   this.localStorageService.clear('authenticationToken');

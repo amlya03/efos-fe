@@ -9,7 +9,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nomor Customer</label>
         <div class="col-sm-8">
-          <input formControlName="app_no_de" class="form-control" type="text" id="no_customer" name="no_customer" readonly />
+          <input formControlName="curef" class="form-control" type="text" id="no_customer" name="no_customer" readonly />
         </div>
       </div>
       <br />
@@ -30,14 +30,14 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nomor HP</label>
         <div class="col-sm-8">
-          <input formControlName="" class="form-control" type="text" id="nomor_hp" name="nomor_hp" readonly />
+          <input formControlName="no_handphone" class="form-control" type="text" id="nomor_hp" name="nomor_hp" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
         <div class="col-sm-8">
-          <input formControlName="" name="jenis_kelamin" id="jenis_kelamin" class="form-control" readonly />
+          <input formControlName="jenis_kelamin" name="jenis_kelamin" id="jenis_kelamin" class="form-control" readonly />
         </div>
       </div>
     </div>
@@ -121,31 +121,21 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Alamat Rumah</label>
         <div class="col-sm-8">
-          <textarea
-            class="form-control"
-            name="alamat_rumah"
-            id="alamat_rumah"
-            cols="49"
-            rows="2"
-            formControlName="alamat_rumah"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.alamat_rumah.errors }"
-          ></textarea>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.alamat_rumah.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.alamat_rumah.errors.required">Tidak Boleh Kosong</div>
-          </div>
+          <textarea class="form-control" name="alamat_rumah" id="alamat_rumah" cols="49" rows="2" formControlName="alamat_ktp"></textarea>
         </div>
       </div>
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_alamat_rumah" id="verifikasi_alamat_rumah_ya" formControlName="verif_alamat" value="1" />
+      <input type="radio" name="verifikasi_alamat_rumah" id="verifikasi_alamat_rumah_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_alamat_rumah" id="verifikasi_alamat_rumah_tidak" formControlName="verif_alamat" value="0" />
+      <input type="radio" name="verifikasi_alamat_rumah" id="verifikasi_alamat_rumah_tidak" />
+      <!--formControlName="verif_alamat" -->
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <textarea class="form-control" name="note_alamat_rumah" id="note_alamat_rumah"></textarea>
+        <textarea class="form-control" name="note_alamat_rumah" id="note_alamat_rumah" formControlName="note_verif_alamat"></textarea>
       </div>
     </div>
   </div>
@@ -163,11 +153,7 @@
             name="rt"
             maxlength="3"
             formControlName="rt"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.rt.errors }"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.rt.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.rt.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
         <div class="col">RT</div>
         <div class="col">
@@ -179,21 +165,17 @@
             name="rw"
             maxlength="3"
             formControlName="rw"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.rw.errors }"
             maxlength="3"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.rw.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.rw.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
         <div class="col">RW</div>
       </div>
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_rt_rw" id="verifikasi_rt_rw_ya" formControlName="verif_rt_rw" />
+      <input type="radio" name="verifikasi_rt_rw" id="verifikasi_rt_rw_ya" /><!--formControlName="verif_rt_rw" -->
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_rt_rw" id="verifikasi_rt_rw_tidak" formControlName="verif_rt_rw" />
+      <input type="radio" name="verifikasi_rt_rw" id="verifikasi_rt_rw_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
@@ -215,23 +197,20 @@
             (change)="onChangeProvinsi(provinsi_cabang)"
             [(ngModel)]="provinsi_cabang"
             formControlName="provinsi"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.provinsi.errors }"
           >
             <option *ngFor="let getProvinsi of getProvinsi" value="{{ getProvinsi.kdWilayah }}|{{ getProvinsi.namaWilayah }}">
               {{ getProvinsi.namaWilayah }}
             </option>
           </select>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.provinsi.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.provinsi.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_provinsi" id="verifikasi_provinsi_ya" formControlName="verif_provinsi" />
+      <input type="radio" name="verifikasi_provinsi" id="verifikasi_provinsi_ya" />
+      <!--- formControlName="verif_provinsi" -->
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_provinsi" id="verifikasi_provinsi_tidak" formControlName="verif_provinsi" />
+      <input type="radio" name="verifikasi_provinsi" id="verifikasi_provinsi_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
@@ -252,24 +231,21 @@
             name="kota"
             id="kota"
             class="form-control"
-            formControlName="kota"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.kota.errors }"
+            formControlName="kabkota"
           >
             <option *ngFor="let getKota of getKota" value="{{ getKota.kdWilayah }}|{{ getKota.namaWilayah }}">
               {{ getKota.namaWilayah }}
             </option>
           </select>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.kota.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.kota.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_kota" id="verifikasi_kota_ya" value="1" formControlName="verif_kabkota" />
+      <input type="radio" name="verifikasi_kota" id="verifikasi_kota_ya" value="1" />
+      <!--- formControlName="verif_kabkota" -->
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_kota" id="verifikasi_kota_tidak" value="0" formControlName="verif_kabkota" />
+      <input type="radio" name="verifikasi_kota" id="verifikasi_kota_tidak" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
@@ -291,23 +267,20 @@
             id="kecamatan"
             class="form-control"
             formControlName="kecamatan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.kecamatan.errors }"
           >
             <option *ngFor="let getKecamatan of getKecamatan" value="{{ getKecamatan.kdWilayah }}|{{ getKecamatan.namaWilayah }}">
               {{ getKecamatan.namaWilayah }}
             </option>
           </select>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.kecamatan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.kecamatan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_kecamatan" id="verifikasi_kecamatan_ya" value="1" formControlName="verif_kecamatan" />
+      <input type="radio" name="verifikasi_kecamatan" id="verifikasi_kecamatan_ya" value="1" />
+      <!---- formControlName="verif_kecamatan" -->
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_kecamatan" id="verifikasi_kecamatan_tidak" value="0" formControlName="verif_kecamatan" />
+      <input type="radio" name="verifikasi_kecamatan" id="verifikasi_kecamatan_tidak" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
@@ -329,15 +302,11 @@
             id="kelurahan"
             class="form-control"
             formControlName="kelurahan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.kelurahan.errors }"
           >
             <option *ngFor="let getKelurahan of getKelurahan" value="{{ getKelurahan.kdPos }}|{{ getKelurahan.namaWilayah }}">
               {{ getKelurahan.namaWilayah }}
             </option>
           </select>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.kelurahan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.kelurahan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
     </div>
@@ -369,7 +338,6 @@
               value="{{ getKodePos }}"
               name="kode_pos"
               formControlName="kode_pos"
-              [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.kode_pos.errors }"
               (keypress)="keyPressNumbers($event)"
               maxlength="8"
             />
@@ -377,17 +345,15 @@
               <button class="btn btn-outline-secondary" type="button">Cari Data</button>
             </div>
           </div>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.kode_pos.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.kode_pos.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_kodepos" id="verifikasi_kodepos_ya" value="1" formControlName="verif_kode_pos" />
+      <input type="radio" name="verifikasi_kodepos" id="verifikasi_kodepos_ya" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_kodepos" id="verifikasi_kodepos_tidak" value="0" formControlName="verif_kode_pos" />
+      <input type="radio" name="verifikasi_kodepos" id="verifikasi_kodepos_tidak" value="0" />
+      <!---- formControlName="verif_kode_pos" -->
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
@@ -409,36 +375,26 @@
             name="tanggal_lahir"
             onchange="submitBday()"
             formControlName="tanggal_lahir"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.tanggal_lahir.errors }"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.tanggal_lahir.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.tanggal_lahir.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input
-        type="radio"
-        name="verifikasi_tanggal_lahir"
-        id="verifikasi_tanggal_lahir_ya"
-        value="1"
-        formControlName="verif_tanggal_lahir"
-      />
+      <input type="radio" name="verifikasi_tanggal_lahir" id="verifikasi_tanggal_lahir_ya" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input
-        type="radio"
-        name="verifikasi_tanggal_lahir"
-        id="verifikasi_tanggal_lahir_tidak"
-        value="0"
-        formControlName="verif_tanggal_lahir"
-      />
+      <input type="radio" name="verifikasi_tanggal_lahir" id="verifikasi_tanggal_lahir_tidak" value="0" />
+      <!--- formControlName="verif_tanggal_lahir"-->
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="pedidikan" id="pedidikan" class="form-control" formControlName="note_verif_tanggal_lahir" />
+        <input
+          name="note_verif_tanggal_lahir"
+          id="note_verif_tanggal_lahir"
+          class="form-control"
+          formControlName="note_verif_tanggal_lahir"
+        />
       </div>
     </div>
   </div>
@@ -452,8 +408,8 @@
             name="pedidikan"
             id="pedidikan"
             class="form-control"
-            formControlName="pedidikan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.pedidikan.errors }"
+            formControlName="pendidikan"
+            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.pendidikan.errors }"
           >
             <option value="">Pilih Data</option>
             <option value="SMA">SMA</option>
@@ -462,17 +418,15 @@
             <option value="S2">S2</option>
             <option value="S3">S3</option>
           </select>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.pedidikan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.pedidikan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_pendidikan" id="verifikasi_pendidikan_ya" value="1" formControlName="verif_pendidikan" />
+      <input type="radio" name="verifikasi_pendidikan" id="verifikasi_pendidikan_ya" value="1" />
+      <!--- formControlName="verif_pendidikan" -->
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_pendidikan" id="verifikasi_pendidikan_tidak" value="0" formControlName="verif_pendidikan" />
+      <input type="radio" name="verifikasi_pendidikan" id="verifikasi_pendidikan_tidak" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
@@ -492,37 +446,22 @@
             id="status_perkawinan"
             #status_perkawinan
             class="form-control"
-            formControlName="status_menikah"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.status_menikah.errors }"
+            formControlName="status_perkawinan"
           >
             <option value="">Pilih Data</option>
-            <option *ngFor="let refStatusPerkawinan of refStatusPerkawinan" value="{{ refStatusPerkawinan.deskripsi }}">
+            <option [ngValue]="refStatusPerkawinan.deskripsi" *ngFor="let refStatusPerkawinan of refStatusPerkawinan">
               {{ refStatusPerkawinan.deskripsi }}
             </option>
           </select>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.status_menikah.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.status_menikah.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input
-        type="radio"
-        name="verifikasi_status_menikah"
-        id="verifikasi_status_menikah_ya"
-        value="1"
-        formControlName="verif_status_menikah"
-      />
+      <input type="radio" name="verifikasi_status_menikah" id="verifikasi_status_menikah_ya" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input
-        type="radio"
-        name="verifikasi_status_menikah"
-        id="verifikasi_status_menikah_tidak"
-        value="0"
-        formControlName="verif_status_menikah"
-      />
+      <input type="radio" name="verifikasi_status_menikah" id="verifikasi_status_menikah_tidak" value="0" />
+      <!---formControlName="verif_status_menikah"-->
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
@@ -560,21 +499,10 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input
-        type="radio"
-        name="verifikasi_nama_ibu_kandung"
-        id="verifikasi_nama_ibu_kandung_ya"
-        value="1"
-        formControlName="verif_ibu_kandung"
-      />
+      <input type="radio" name="verifikasi_nama_ibu_kandung" id="verifikasi_nama_ibu_kandung_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input
-        type="radio"
-        name="verifikasi_nama_ibu_kandung"
-        id="verifikasi_nama_ibu_kandung_tidak"
-        value="0"
-        formControlName="verif_ibu_kandung"
-      />
+      <input type="radio" name="verifikasi_nama_ibu_kandung" id="verifikasi_nama_ibu_kandung_tidak" />
+      <!--formControlName="verif_ibu_kandung"-->
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
@@ -603,17 +531,14 @@
             name="jumlah_tanggunan"
             placeholder=""
             formControlName="jumlah_tanggunan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.jumlah_tanggunan.errors }"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.jumlah_tanggunan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.jumlah_tanggunan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <input type="radio" name="verifikasi_jumlah_tanggunan" id="verifikasi_jumlah_tanggunan_ya" />
+      <!--verif_jumlah_tanggungan-->
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input type="radio" name="verifikasi_jumlah_tanggunan" id="verifikasi_jumlah_tanggunan_tidak" />
       <label>Tidak Sesuai</label>
@@ -636,24 +561,33 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Karakter Calon Nasabah</label>
         <div class="col-sm-8">
-          <select name="karakter_calon_nasabah " id="karakter_calon_nasabah " class="form-control" formControlName="">
+          <select
+            name="karakter_calon_nasabah "
+            id="karakter_calon_nasabah "
+            class="form-control"
+            formControlName="karakter_calon_nasabah"
+            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.karakter_calon_nasabah.errors }"
+          >
             <option value="">Pilih Data</option>
             <option value="Baik">Baik</option>
             <option value="Tidak Baik">Tidak Baik</option>
           </select>
+          <div *ngIf="submitted && dataCalonNasabahForm.controls.karakter_calon_nasabah.errors" class="text-danger">
+            <div *ngIf="submitted && dataCalonNasabahForm.controls.karakter_calon_nasabah.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="verifikasi_pendidikan" id="verifikasi_pendidikan_ya" />
+      <input type="radio" name="karakter_calon_nasabah" id="karakter_calon_nasabah_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="verifikasi_pendidikan" id="verifikasi_pendidikan_tidak" />
+      <input type="radio" name="karakter_calon_nasabah" id="karakter_calon_nasabah_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="note_pendidikan" id="note_pendidikan" class="form-control" formControlName="" />
+        <input name="note_karakter_calon_nasabah" id="note_karakter_calon_nasabah" class="form-control" formControlName="" />
       </div>
     </div>
   </div>
@@ -683,6 +617,7 @@
         <div class="col" style="text-align: center">
           <label>Sesuai</label>
           <input type="radio" name="verifikasi_nama_pasangan" id="verifikasi_nama_pasangan_ya" />
+          <!--verif_nama_pasangan-->
           &nbsp;&nbsp;&nbsp;&nbsp;
           <input type="radio" name="verifikasi_nama_pasangan" id="verifikasi_nama_pasangan_tidak" />
           <label>Tidak Sesuai</label>
@@ -723,6 +658,7 @@
         <div class="col" style="text-align: center">
           <label>Sesuai</label>
           <input type="radio" name="verifikasi_pekerjaan_pasangan" id="verifikasi_pekerjaan_pasangan_ya" />
+          <!---verif_pekerjaan_pasangan-->
           &nbsp;&nbsp;&nbsp;&nbsp;
           <input type="radio" name="verifikasi_pekerjaan_pasangan" id="verifikasi_pekerjaan_pasangan_tidak" />
           <label>Tidak Sesuai</label>
@@ -753,7 +689,7 @@
             id="fasilitas_pembiayaan_ke"
             name="fasilitas_pembiayaan_ke"
             placeholder=""
-            formControlName="fasilitas_pembiayaan_ke"
+            formControlName="kode_fasilitas"
             [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.fasilitas_pembiayaan_ke.errors }"
           />
           <div *ngIf="submitted && dataCalonNasabahForm.controls.fasilitas_pembiayaan_ke.errors" class="text-danger">
@@ -776,7 +712,7 @@
           class="form-control"
           id="fasilitas_pembiayaan_ke"
           name="fasilitas_pembiayaan_ke"
-          formControlName="fasilitas_pembiayaan="
+          formControlName="fasilitas_pembiayaan"
         />
       </div>
     </div>
@@ -792,12 +728,21 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Status Rumah</label>
         <div class="col-sm-8">
-          <select name="status_rumah" id="status_rumah" class="form-control">
+          <select
+            name="status_rumah"
+            id="status_rumah"
+            class="form-control"
+            formControlName="status_rumah"
+            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.status_rumah.errors }"
+          >
             <option value="">Pilih Data</option>
-            <option *ngFor="let refStatusRumah of refStatusRumah" value="{{ refStatusRumah.description }}">
+            <option [ngValue]="refStatusRumah.description" *ngFor="let refStatusRumah of refStatusRumah">
               {{ refStatusRumah.description }}
             </option>
           </select>
+          <div *ngIf="submitted && dataCalonNasabahForm.controls.status_rumah.errors" class="text-danger">
+            <div *ngIf="submitted && dataCalonNasabahForm.controls.status_rumah.errors.required">Tidak Boleh Kosong</div>
+          </div>
         </div>
       </div>
       <br />
@@ -805,6 +750,7 @@
         <label class="col-sm-4 col-form-label">Cek Ke</label>
         <div class="col-sm-8">
           <div class="col">
+            <!---cek-->
             <input type="checkbox" id="sertifikat" name="sertifikat" />Sertifikat &nbsp;&nbsp;
             <input type="checkbox" id="rekening" name="rekening" />Rekening Listrik &nbsp;&nbsp;
             <input type="checkbox" id="rekening" name="rekening" />Akta Jual Beli
@@ -819,7 +765,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Rumah Dihuni</label>
         <div class="col-sm-8">
-          <select name="rumah_dihuni" id="rumah_dihuni" class="form-control">
+          <select name="rumah_dihuni" id="rumah_dihuni" class="form-control" formControlName="rumah_dihuni">
             <option value="Ya">Ya</option>
             <option value="Tidak">Tidak</option>
           </select>
@@ -864,7 +810,7 @@
         <div class="col-sm-8">
           <select name="jenis_bangunan" id="jenis_bangunan" class="form-control">
             <option value="">Pilih Data</option>
-            <option *ngFor="let refListTipeProperti of refListTipeProperti" value="{{ refListTipeProperti.properti_deskripsi }}">
+            <option [ngValue]="refListTipeProperti.properti_deskripsi" *ngFor="let refListTipeProperti of refListTipeProperti">
               {{ refListTipeProperti.properti_deskripsi }}
             </option>
           </select>
@@ -874,7 +820,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Lokasi Perumahan</label>
         <div class="col-sm-8">
-          <select name="lokasi_perumahan" id="lokasi_perumahan" class="form-control">
+          <select name="lokasi_perumahan" id="lokasi_perumahan" class="form-control" formControlName="lokasi_perumahan">
             <option value="Ya">Ya</option>
             <option value="Tidak">Tidak</option>
           </select>
@@ -884,7 +830,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">fasilitas Listrik</label>
         <div class="col-sm-8">
-          <select name="fasilitas_listrik" id="fasilitas_listrik" class="form-control">
+          <select name="fasilitas_listrik" id="fasilitas_listrik" class="form-control" formControlName="fasilitas_listrik">
             <option value="">Pilih Data</option>
             <option value="450 WATT">450 WATT</option>
             <option value="900 WATT">900 WATT</option>
@@ -900,6 +846,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Isi Rumah</label>
         <div class="col">
+          <!--isi_rumah-->
           <input type="checkbox" id="isi_rumah_mobil" name="isi_rumah_mobil" />Mobil &nbsp;&nbsp;
           <input type="checkbox" id="isi_rumah_motor" name="isi_rumah_motor" />Motor &nbsp;&nbsp;
           <input type="checkbox" id="isi_rumah_tv" name="isi_rumah_tv" />TV
@@ -940,8 +887,8 @@
             name="akses_jalan_ke_rumah_tinggal"
             id="akses_jalan_ke_rumah_tinggal"
             class="form-control"
-            formControlName="akses_jalan_ke_rumah_tinggal"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.akses_jalan_ke_rumah_tinggal.errors }"
+            formControlName="akses_jalan"
+            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.akses_jalan.errors }"
           >
             <option value="">Pilih Data</option>
             <option>Bisa Masuk Mobil</option>
@@ -949,8 +896,8 @@
             <option>Hanya bisa masuk motor</option>
             <option>Tidak bisa masuk mobil dan motor</option>
           </select>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.akses_jalan_ke_rumah_tinggal.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.akses_jalan_ke_rumah_tinggal.errors.required">Tidak Boleh Kosong</div>
+          <div *ngIf="submitted && dataCalonNasabahForm.controls.akses_jalan.errors" class="text-danger">
+            <div *ngIf="submitted && dataCalonNasabahForm.controls.akses_jalan.errors.required">Tidak Boleh Kosong</div>
           </div>
         </div>
       </div>
@@ -992,10 +939,10 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Car Port</label>
         <div class="col-sm-8">
-          <input type="radio" id="car_port_ya" name="car_port" class="custom-control-input" value="Ada" checked="checked" />
+          <input type="radio" id="carport_ya" name="carport" class="custom-control-input" value="Ada" checked="checked" />
           <label class="custom-control-label">Ada</label>
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <input type="radio" id="car_port_tidak" name="car_port" class="custom-control-input" value="Tidak" />
+          <input type="radio" id="carport_tidak" name="carport" class="custom-control-input" value="Tidak" />
           <label class="custom-control-label">Tidak</label>
         </div>
       </div>
@@ -1041,6 +988,7 @@
             value="Baik"
             checked="checked"
           />
+          <!--formControlName="kondisi_kendaraan"-->
           <label class="custom-control-label">Baik</label>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <input type="radio" id="kondisi_kendaraan_tidak" name="kondisi_kendaraan" class="custom-control-input" value="Tidak Baik" />

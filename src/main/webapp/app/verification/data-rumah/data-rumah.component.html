@@ -91,10 +91,10 @@
             name="nama_yang_dihubungi"
             placeholder=""
             formControlName="nama_dihubungi"
-            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.nama_yang_dihubungi.errors }"
+            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.nama_dihubungi.errors }"
           />
-          <div *ngIf="submitted && analisaKeuanganForm.controls.nama_yang_dihubungi.errors" class="text-danger">
-            <div *ngIf="submitted && analisaKeuanganForm.controls.nama_yang_dihubungi.errors.required">Tidak Boleh Kosong</div>
+          <div *ngIf="submitted && analisaKeuanganForm.controls.nama_dihubungi.errors" class="text-danger">
+            <div *ngIf="submitted && analisaKeuanganForm.controls.nama_dihubungi.errors.required">Tidak Boleh Kosong</div>
           </div>
         </div>
       </div>
@@ -109,10 +109,10 @@
             name="jabatan_yang_dihubungi"
             placeholder=""
             formControlName="jabatan_dihubungi"
-            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.jabatan_yang_dihubungi.errors }"
+            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.jabatan_dihubungi.errors }"
           />
-          <div *ngIf="submitted && analisaKeuanganForm.controls.jabatan_yang_dihubungi.errors" class="text-danger">
-            <div *ngIf="submitted && analisaKeuanganForm.controls.jabatan_yang_dihubungi.errors.required">Tidak Boleh Kosong</div>
+          <div *ngIf="submitted && analisaKeuanganForm.controls.jabatan_dihubungi.errors" class="text-danger">
+            <div *ngIf="submitted && analisaKeuanganForm.controls.jabatan_dihubungi.errors.required">Tidak Boleh Kosong</div>
           </div>
         </div>
       </div>
@@ -163,7 +163,7 @@
             name="nama_pemeriksa"
             placeholder=""
             formControlName="nama_pemeriksa"
-            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.nama_perusahaan.errors }"
+            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.nama_pemeriksa.errors }"
           />
           <div *ngIf="submitted && analisaKeuanganForm.controls.nama_pemeriksa.errors" class="text-danger">
             <div *ngIf="submitted && analisaKeuanganForm.controls.nama_pemeriksa.errors.required">Tidak Boleh Kosong</div>
@@ -316,9 +316,14 @@
       <h3 style="color: #fff; text-align: center">Fix Income</h3>
     </div>
     <p></p>
+    <h6 class="row" style="text-align: center">
+      <div class="col">Pemohon</div>
+      <div class="col">Pasangan</div>
+      <div class="col">Total</div>
+    </h6>
+    <br />
     <div class="row form-material">
       <div class="col">
-        <h6 style="text-align: center">Pemohon</h6>
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Gaji Kotor</label>
           <div class="col-sm-7">
@@ -332,7 +337,37 @@
             />
           </div>
         </div>
-        <br />
+      </div>
+      <br />
+      <div class="col">
+        <div class="form-group row">
+          <input
+            formControlName="gaji_kotor_pasangan"
+            type="text"
+            class="form-control"
+            id="gaji_kotor_pasangan"
+            name="gaji_kotor_pasangan"
+            placeholder=""
+          />
+        </div>
+      </div>
+      <br />
+      <div class="col">
+        <div class="form-group row">
+          <input
+            formControlName="gaji_kotor_total"
+            type="text"
+            class="form-control"
+            id="gaji_kotor_total"
+            name="gaji_kotor_total"
+            placeholder=""
+          />
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Tunjangan</label>
           <div class="col-sm-7">
@@ -346,7 +381,35 @@
             />
           </div>
         </div>
-        <br />
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <input
+            formControlName="tunjangan_pasangan"
+            type="text"
+            class="form-control"
+            id="tunjangan_pasangan"
+            name="tunjangan_pasangan"
+            placeholder=""
+          />
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <input
+            formControlName="tunjangan_total"
+            type="text"
+            class="form-control"
+            id="tunjangan_total"
+            name="tunjangan_total"
+            placeholder=""
+          />
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Pendapatan Kotor</label>
           <div class="col-sm-7">
@@ -360,149 +423,20 @@
             />
           </div>
         </div>
-        <br />
-        <div class="form-group row">
-          <label class="col-sm-5 col-form-label">Pendapatan Kantor Lainnya</label>
-          <div class="col-sm-7">
-            <input
-              type="text"
-              class="form-control"
-              id="pendapatan_kantor_lainnya_pemohon"
-              name="pendapatan_kantor_lainnya_pemohon"
-              formControlName="pendapatan_kantor_lainnya"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-5 col-form-label">Total Angsuran Kewajiban Kantor</label>
-          <div class="col-sm-7">
-            <input
-              type="text"
-              class="form-control"
-              id="total_angsuran_kewajiban_kantor_pemohon"
-              name="total_angsuran_kewajiban_kantor_pemohon"
-              formControlName="total_angsuran_kantor"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-5 col-form-label">Pendapatan Bersih</label>
-          <div class="col-sm-7">
-            <input
-              formControlName="pendapatan_bersih"
-              type="text"
-              class="form-control"
-              id="pendapatan_bersih_pemohon"
-              name="pendapatan_bersih_pemohon"
-              placeholder=""
-            />
-          </div>
-        </div>
-        <br />
       </div>
       <div class="col">
-        <h6 style="text-align: center">Pasangan</h6>
-        <div class="form-group row">
-          <div class="col">
-            <input
-              formControlName="gaji_kotor_pasangan"
-              type="text"
-              class="form-control"
-              id="gaji_kotor_pasangan"
-              name="gaji_kotor_pasangan"
-              placeholder=""
-            />
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <div class="col">
-            <input
-              formControlName="tunjangan_pasangan"
-              type="text"
-              class="form-control"
-              id="tunjangan_pasangan"
-              name="tunjangan_pasangan"
-              placeholder=""
-            />
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <div class="col">
-            <input
-              formControlName="pendapatan_kotor_pasangan"
-              type="text"
-              class="form-control"
-              id="pendapatan_kotor_pasangan"
-              name="pendapatan_kotor_pasangan"
-              placeholder=""
-            />
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <div class="col">
-            <input
-              type="text"
-              class="form-control"
-              id="pendapatan_kantor_lainnya_pasangan"
-              name="pendapatan_kantor_lainnya_pasangan"
-              formControlName="pendapatan_kantor_lainnya_pasangan"
-            />
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <div class="col">
-            <input
-              type="text"
-              class="form-control"
-              id="total_angsuran_kewajiban_kantor_pasangan"
-              name="total_angsuran_kewajiban_kantor_pasangan"
-              formControlName="total_angsuran_kantor_pasangan"
-            />
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <div class="col">
-            <input
-              formControlName="pendapatan_bersih_pasangan"
-              type="text"
-              class="form-control"
-              id="pendapatan_bersih_pasangan"
-              name="pendapatan_bersih_pasangan"
-              placeholder=""
-            />
-          </div>
-        </div>
-        <br />
-      </div>
-      <div class="col">
-        <h6 style="text-align: center">Total</h6>
         <div class="form-group row">
           <input
-            formControlName="gaji_kotor_total"
+            formControlName="pendapatan_kotor_pasangan"
             type="text"
             class="form-control"
-            id="gaji_kotor_total"
-            name="gaji_kotor_total"
+            id="pendapatan_kotor_pasangan"
+            name="pendapatan_kotor_pasangan"
             placeholder=""
           />
         </div>
-        <br />
-        <div class="form-group row">
-          <input
-            formControlName="tunjangan_total"
-            type="text"
-            class="form-control"
-            id="tunjangan_total"
-            name="tunjangan_total"
-            placeholder=""
-          />
-        </div>
-        <br />
+      </div>
+      <div class="col">
         <div class="form-group row">
           <input
             formControlName="pendapatan_kotor_total"
@@ -513,50 +447,24 @@
             placeholder=""
           />
         </div>
-        <br />
-        <div class="form-group row">
-          <input
-            type="text"
-            class="form-control"
-            id="pendapatan_kantor_lainnya_total"
-            name="pendapatan_kantor_lainnya_total"
-            formControlName="pendapatan_kantor_lainnya_total"
-          />
-        </div>
-        <br />
-        <div class="form-group row">
-          <input
-            type="text"
-            class="form-control"
-            id="total_angsuran_kewajiban_kantor_total"
-            name="total_angsuran_kewajiban_kantor_total"
-            formControlName="total_angsuran_kantor_akumulasi"
-          />
-        </div>
-        <br />
-        <div class="form-group row">
-          <input
-            formControlName="pendapatan_bersih_total"
-            type="text"
-            class="form-control"
-            id="pendapatan_bersih_total"
-            name="pendapatan_bersih_total"
-            placeholder=""
-          />
-        </div>
-        <br />
       </div>
     </div>
+    <br />
+    <br />
   </div>
   <p></p>
   <div id="nonFixIncome">
     <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
       <h3 style="color: #fff; text-align: center">Non Fix Income</h3>
     </div>
+    <h6 class="row" style="text-align: center">
+      <div class="col">Pemohon</div>
+      <div class="col">Pasangan</div>
+      <div class="col">Total</div>
+    </h6>
     <p></p>
     <div class="row form-material">
       <div class="col">
-        <h6 style="text-align: center">Pemohon</h6>
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Pendapatan Usaha</label>
           <div class="col-sm-7">
@@ -570,7 +478,35 @@
             />
           </div>
         </div>
-        <br />
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <input
+            formControlName="pendapatan_usaha_pasangan"
+            type="text"
+            class="form-control"
+            id="pendapatan_usaha_pasangan"
+            name="pendapatan_usaha_pasangan"
+            placeholder=""
+          />
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <input
+            formControlName="pendapatan_usaha_total"
+            type="text"
+            class="form-control"
+            id="pendapatan_usaha_total"
+            name="pendapatan_usaha_total"
+            placeholder=""
+          />
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Pendapatan Profesional</label>
           <div class="col-sm-7">
@@ -585,45 +521,17 @@
         </div>
       </div>
       <div class="col">
-        <h6 style="text-align: center">Pasangan</h6>
         <div class="form-group row">
-          <div class="col">
-            <input
-              formControlName="pendapatan_usaha_pasangan"
-              type="text"
-              class="form-control"
-              id="pendapatan_usaha_pasangan"
-              name="pendapatan_usaha_pasangan"
-              placeholder=""
-            />
-          </div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <div class="col">
-            <input
-              type="text"
-              class="form-control"
-              id="pendapatan_profesional_pasangan"
-              name="pendapatan_profesional_pasangan"
-              formControlName="pendapatan_profesional_pasangan"
-            />
-          </div>
+          <input
+            type="text"
+            class="form-control"
+            id="pendapatan_profesional_pasangan"
+            name="pendapatan_profesional_pasangan"
+            formControlName="pendapatan_profesional_pasangan"
+          />
         </div>
       </div>
       <div class="col">
-        <h6 style="text-align: center">Total</h6>
-        <div class="form-group row">
-          <input
-            formControlName="pendapatan_usaha_total"
-            type="text"
-            class="form-control"
-            id="pendapatan_usaha_total"
-            name="pendapatan_usaha_total"
-            placeholder=""
-          />
-        </div>
-        <br />
         <div class="form-group row">
           <input
             type="text"

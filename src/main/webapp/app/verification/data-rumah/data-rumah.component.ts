@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { Observable } from 'rxjs';
 import { ServiceVerificationService } from '../service/service-verification.service';
+import { refAnalisaKeuangan } from './refAnalisaKeuangan.model';
 // import { daWuS } from '../daftar-aplikasi-waiting-update-status/daWuS.model';
 
 @Component({
@@ -18,7 +19,7 @@ export class DataRumahComponent implements OnInit {
   analisaKeuanganForm!: FormGroup;
   submitted = false;
   app_no_de: any;
-  analisaKeuanganMap: any;
+  analisaKeuanganMap: refAnalisaKeuangan = new refAnalisaKeuangan();
   // dataRumahModel?: daWuS[];
 
   constructor(
@@ -46,15 +47,16 @@ export class DataRumahComponent implements OnInit {
     this.load();
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.analisaKeuanganForm = this.formBuilder.group({
-      app_no_de: '',
-      nama_perusahaan: '',
-      alamat_perusahaan: '',
-      no_telepon_perusahaan: '',
-      nama_dihubungi: '',
-      jabatan_dihubungi: '',
-      tanggal_permintaan: '',
-      tanggal_pemeriksa: '',
-      nama_pemeriksa: '',
+      // nama: ['', Validators.required],
+      app_no_de: new FormControl(this.app_no_de),
+      nama_perusahaan: ['', Validators.required],
+      alamat_perusahaan: ['', Validators.required],
+      no_telepon_perusahaan: ['', Validators.required],
+      nama_dihubungi: ['', Validators.required],
+      jabatan_dihubungi: ['', Validators.required],
+      tanggal_permintaan: ['', Validators.required],
+      tanggal_pemeriksa: ['', Validators.required],
+      nama_pemeriksa: ['', Validators.required],
       gaji_kotor: '',
       tunjangan: '',
       pendapatan_kantor_lainnya: '',
@@ -105,8 +107,9 @@ export class DataRumahComponent implements OnInit {
     } else if (this.analisaKeuanganMap == null) {
       this.http
         .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_keuangan', {
+          // nama: this.analisaKeuanganForm.get('nama')?.value,
           alamat_perusahaan: this.analisaKeuanganForm.get('alamat_perusahaan')?.value,
-          app_no_de: this.analisaKeuanganMap.app_no_de,
+          app_no_de: this.analisaKeuanganForm.get('app_no_de')?.value,
           created_by: '',
           created_date: '',
           gaji_kotor: this.analisaKeuanganForm.get('gaji_kotor')?.value,
@@ -158,6 +161,7 @@ export class DataRumahComponent implements OnInit {
     } else
       this.http
         .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_keuangan', {
+          // nama: this.analisaKeuanganForm.get('nama')?.value,
           alamat_perusahaan: this.analisaKeuanganForm.get('alamat_perusahaan')?.value,
           app_no_de: this.analisaKeuanganForm.get('app_no_de')?.value,
           created_by: '',
@@ -285,6 +289,7 @@ export class DataRumahComponent implements OnInit {
     //     this.refHubunganEmergency = data.result;
     //   }
     // });
+    // get semua de
   }
 
   // Only Numbers
