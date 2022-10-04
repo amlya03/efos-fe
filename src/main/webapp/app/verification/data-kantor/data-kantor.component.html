@@ -61,21 +61,19 @@
         <label class="col-sm-4 col-form-label">Hubungan Pemohon dengan Pemberi Keterangan</label>
         <div class="col-sm-8">
           <select
-            name="hungungan_pemohon_dengan_pemberi_keterangan"
-            id="hungungan_pemohon_dengan_pemberi_keterangan"
+            name="hubungan_pemberi_keterangan"
+            id="hubungan_pemberi_keterangan"
             class="form-control"
-            formControlName="hungungan_pemohon_dengan_pemberi_keterangan"
-            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.hungungan_pemohon_dengan_pemberi_keterangan.errors }"
+            formControlName="hubungan_pemberi_keterangan"
+            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.hubungan_pemberi_keterangan.errors }"
           >
             <option value="">Pilih Data</option>
             <option *ngFor="let refHubunganAgunan of refHubunganAgunan" value="{{ refHubunganAgunan.deskripsi }}">
               {{ refHubunganAgunan.deskripsi }}
             </option>
           </select>
-          <div *ngIf="submitted && dataKantorForm.controls.hungungan_pemohon_dengan_pemberi_keterangan.errors" class="text-danger">
-            <div *ngIf="submitted && dataKantorForm.controls.hungungan_pemohon_dengan_pemberi_keterangan.errors.required">
-              Tidak Boleh Kosong
-            </div>
+          <div *ngIf="submitted && dataKantorForm.controls.hubungan_pemberi_keterangan.errors" class="text-danger">
+            <div *ngIf="submitted && dataKantorForm.controls.hubungan_pemberi_keterangan.errors.required">Tidak Boleh Kosong</div>
           </div>
         </div>
       </div>
@@ -114,6 +112,7 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
+      <!--verif_no_telepon-->
       <input type="radio" name="ceklis_no_customer" id="ceklis_no_customer_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input type="radio" name="ceklis_no_customer" id="ceklis_no_customer_tidak" />
@@ -121,7 +120,7 @@
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="provinsi" id="provinsi" class="form-control" />
+        <input formControlName="note_verif_no_telepon" name="note_verif_no_telepon" id="note_verif_no_telepon" class="form-control" />
       </div>
     </div>
   </div>
@@ -150,6 +149,7 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
+      <!--verif_fax-->
       <input type="radio" name="ceklis_no_aplikasi" id="ceklis_no_aplikasi_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input type="radio" name="ceklis_no_aplikasi" id="ceklis_no_aplikasi_tidak" />
@@ -157,7 +157,7 @@
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="provinsi" id="provinsi" class="form-control" />
+        <input formControlName="note_verif_fax" name="note_verif_fax" id="note_verif_fax" class="form-control" />
       </div>
     </div>
   </div>
@@ -184,14 +184,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_no_hp" id="ceklis_no_hp_ya" />
+      <input type="radio" name="verif_nama_perusahaan" id="nama_perusahaan_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_no_hp" id="ceklis_no_hp_tidak" />
+      <input type="radio" name="verif_nama_perusahaan" id="nama_perusahaan_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="kota" id="kota" class="form-control" />
+        <input name="note_verif_nama_perusahaan" id="note_verif_nama_perusahaan" class="form-control" />
       </div>
     </div>
   </div>
@@ -216,14 +216,21 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input type="radio" name="ceklis_nama" id="ceklis_nama_ya" />
+      <!--verif_alamat_perusahaan-->
+      <input type="radio" name="verif_alamat_perusahaan" id="verif_alamat_perusahaan_ya" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="ceklis_nama" id="ceklis_nama_tidak" />
+      <input type="radio" name="verif_alamat_perusahaan" id="verif_alamat_perusahaan_tidak" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <textarea name="alamat_perusahaan" id="alamat_perusahaan" class="form-control"></textarea>
+        <textarea
+          formControlName="note_verif_alamat_perusahaan"
+          name="note_verif_alamat_perusahaan"
+          id="note_verif_alamat_perusahaan"
+          class="form-control"
+          formControlName="note_verif_alamat_perusahaan"
+        ></textarea>
       </div>
     </div>
   </div>
@@ -261,7 +268,7 @@
     </div>
     <div class="col">
       <div class="form-group row">
-        <input name="memo_provinsi" id="memo_provinsi" class="form-control" />
+        <input name="memo_provinsi" id="memo_provinsi" class="form-control" formControlName="note_verif_provinsi" />
       </div>
     </div>
   </div>

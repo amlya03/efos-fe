@@ -15,10 +15,9 @@ import { uploadDocument } from '../services/config/uploadDocument.model';
 })
 export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
   uploadDocument?: uploadDocument[];
-  fetchAllDea?: fetchAllDe[];
   datakiriman: any;
   app_no_de: any;
-  fetchAllAgunan: any;
+  fetchAllAgunan: fetchAllDe = new fetchAllDe();
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -64,10 +63,8 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
 
   load(): void {
     this.getFetchSemuaDataDEA().subscribe(data => {
-      this.fetchAllDea = data.result;
       this.fetchAllAgunan = data.result;
       // this.dtTrigger.next(this.fetchAllAgunan);
-      // console.log(this.fetchAllDea);
     });
 
     this.getListUploadDocumentDEA().subscribe(data => {

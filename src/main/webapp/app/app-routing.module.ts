@@ -41,6 +41,8 @@ import { UploadDocumentComponent } from './upload-document/upload-document.compo
 import { UploadDocumentDeComponent } from './upload-document/upload-document-de/upload-document-de.component';
 import { UploadDocumentAgunanComponent } from './upload-document/upload-document-agunan/upload-document-agunan.component';
 import { EditjobinfoComponent } from './data-entry/editjobinfo/editjobinfo.component';
+import { initialdataentryfix } from './initial-data-entry/initial-data-entry-fix/initial-data-entry-model';
+import { InitialDataEntryComponent } from './initial-data-entry/initial-data-entry.component';
 
 @NgModule({
   imports: [
@@ -194,6 +196,10 @@ import { EditjobinfoComponent } from './data-entry/editjobinfo/editjobinfo.compo
         {
           path: 'upload_document/upload_document_agunan',
           component: UploadDocumentAgunanComponent,
+        },
+        {
+          path: 'ideCoba',
+          component: InitialDataEntryComponent,
         },
         {
           path: '',

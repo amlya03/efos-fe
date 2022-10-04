@@ -5,6 +5,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { Observable, Subject } from 'rxjs';
+import { fetchAllDe } from '../services/config/fetchAllDe.model';
 import { uploadDocument } from '../services/config/uploadDocument.model';
 import { ServicesUploadDocumentService } from '../services/services-upload-document.service';
 
@@ -15,7 +16,7 @@ import { ServicesUploadDocumentService } from '../services/services-upload-docum
 })
 export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   uploadDocument?: uploadDocument[];
-  fetchAllDe: any;
+  dataEntry: fetchAllDe = new fetchAllDe();
   datakiriman: any;
   app_no_de: any;
 
@@ -95,8 +96,8 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     });
 
     this.getFetchSemuaData().subscribe(data => {
-      this.fetchAllDe = data.result;
-      console.log(this.fetchAllDe);
+      this.dataEntry = data.result;
+      console.log(this.dataEntry);
     });
   }
 
