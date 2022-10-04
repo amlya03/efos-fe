@@ -43,6 +43,9 @@ export class JobInfoComponent implements OnInit {
   kelurahanD: any;
   daWakodeposD: any;
   daWakotasebelum: any;
+  getjabatandariapi: any;
+  getjabatansebelum: any;
+  getjumlahkaryawansebelumdariapi: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -76,6 +79,7 @@ export class JobInfoComponent implements OnInit {
   protected apilisttipeperusahaan = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_perusahaan'
   );
+  protected apilistjabatan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_jabatan');
   protected apijumlahkaryawan = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.110:8805/api/v1/efos-ref/list_jumlah_karyawan'
   );
@@ -136,6 +140,14 @@ export class JobInfoComponent implements OnInit {
       },
     });
 
+    this.getlistjabatan().subscribe({
+      next: (res: EntityArrayResponseDaWa1) => {
+        // console.log(res.body?.result);
+        console.warn('jabatan', res.body?.result);
+        this.getjabatandariapi = res.body?.result;
+      },
+    });
+
     this.getlistjenisbidang().subscribe({
       next: (res: EntityArrayResponseDaWa1) => {
         // console.log(res.body?.result);
@@ -148,6 +160,24 @@ export class JobInfoComponent implements OnInit {
         // console.log(res.body?.result);
         console.warn('jumlahkaryawan', res.body?.result);
         this.getjumlahkaryawandariapi = res.body?.result;
+      },
+    });
+
+    this.getjumlahkaryawansebelum().subscribe({
+      next: (res: EntityArrayResponseDaWa1) => {
+        // console.log(res.body?.result);
+        console.warn('jumlahkaryawan', res.body?.result);
+        this.getjumlahkaryawansebelumdariapi = res.body?.result;
+      },
+    });
+
+    this.getlistjabatansebelum().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('jabatansebelum', res);
+
+        this.getjabatansebelum = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
       },
     });
   }
@@ -203,6 +233,15 @@ export class JobInfoComponent implements OnInit {
       observe: 'response',
     });
   }
+  getlistjabatansebelum(req1?: any): Observable<EntityArrayResponseDaWa1> {
+    const options = createRequestOption(req1);
+    return this.http.get<ApiResponse>(this.apilistjabatan, { params: options, observe: 'response' });
+  }
+
+  getlistjabatan(req1?: any): Observable<EntityArrayResponseDaWa1> {
+    const options = createRequestOption(req1);
+    return this.http.get<ApiResponse>(this.apilistjabatan, { params: options, observe: 'response' });
+  }
 
   getlisttipeperusahaan(req1?: any): Observable<EntityArrayResponseDaWa1> {
     const options = createRequestOption(req1);
@@ -215,10 +254,10 @@ export class JobInfoComponent implements OnInit {
 
   jenisbidangselect() {
     const id_sektor = document.getElementById('jenis_bidang_perusahaan') as HTMLInputElement | any;
-
+    const idsektorpotongan = id_sektor.value.split('|');
     // alert(this.postId);
     // console.log('kode' + selectedStatus);
-    this.getsektorekonomi(id_sektor.value).subscribe({
+    this.getsektorekonomi(idsektorpotongan[0]).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kota', res);
 
@@ -262,6 +301,10 @@ export class JobInfoComponent implements OnInit {
   }
 
   getjumlahkaryawan(req1?: any): Observable<EntityArrayResponseDaWa1> {
+    const options = createRequestOption(req1);
+    return this.http.get<ApiResponse>(this.apijumlahkaryawan, { params: options, observe: 'response' });
+  }
+  getjumlahkaryawansebelum(req1?: any): Observable<EntityArrayResponseDaWa1> {
     const options = createRequestOption(req1);
     return this.http.get<ApiResponse>(this.apijumlahkaryawan, { params: options, observe: 'response' });
   }

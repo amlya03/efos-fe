@@ -63,11 +63,13 @@
         <td style="text-align: center">{{ daWa.id_upload }}</td>
         <td style="text-align: center">{{ daWa.id }}</td>
         <td style="text-align: center">{{ daWa.nama_dokumen }}</td>
-        <td style="text-align: center"><input type="checkbox" (change)="getsesuai($event, daWa.id_upload, '0')" />tidak sesuai</td>
-        <td style="text-align: center"><input type="checkbox" (change)="getsesuai($event, daWa.id_upload, '1')" />sesuai</td>
+
+        <td style="text-align: center"><input type="text" id="rec" #input value="" class="form-control" /> keterangan</td>
         <td style="text-align: center">
-          <input type="text" id="rec4" #input class="form-control" (change)="store(input.value, daWa.id_upload)" /> keterangan
+          <input type="checkbox" (change)="getsesuai($event, daWa.id_upload, '0', input.value)" />tidak sesuai
         </td>
+        <td style="text-align: center"><input type="checkbox" (change)="getsesuai($event, daWa.id_upload, '1', input.value)" />sesuai</td>
+
         <td style="text-align: center">
           <button type="button" class="btn btn-outline-secondary"><fa-icon icon="ellipsis"></fa-icon><br />Detail</button>
         </td>

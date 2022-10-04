@@ -24,6 +24,8 @@ export class ChecklistDocumentComponent implements OnInit {
   keterangannya: Array<any> = [];
   datacontoh: Array<any> = [];
   datacontohid: Array<any> = [];
+  newValue: any;
+  rec: any;
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDokumenUploadByCuref?');
 
@@ -50,19 +52,26 @@ export class ChecklistDocumentComponent implements OnInit {
     return this.http.get<ApiResponse>(this.resourceUrl + 'sc=curef_20220816_322' + '&ss=DE', { params: options, observe: 'response' });
   }
 
-  getsesuai(isSelected: any, iddokumen: any, statussesuaitidak: any): void {
+  getsesuai(isSelected: any, iddokumen: any, statussesuaitidak: any, valueinout: any): void {
     // for (var x = 1; x < 11; x++) {
     //    const keteranganya = document.getElementById('keterangan'+x) as HTMLInputElement | any;
     // }
     // const keteranganyaa = document.getElementById('keterangan') as HTMLInputElement | any;
     const checked = isSelected.target.checked;
     if (checked) {
+      // const keteranganyaa = document.getElementById('rec') as HTMLInputElement | any;
       this.kirimDesesuai.push(statussesuaitidak);
       this.iddokumen.push(iddokumen);
+      this.store(valueinout, '1');
       // this.keterangannya.push(keteranganyaa.value);
     } else {
+      // const keteranganyaa = document.getElementById('rec') as HTMLInputElement | any;
+      this.store(valueinout, '0');
       const index = this.kirimDesesuai.findIndex(list => list === statussesuaitidak);
       const indexid = this.iddokumen.findIndex(list => list === iddokumen);
+      // const indexids = this.datacontoh.findIndex(list => list === newValue);
+
+      // this.datacontoh.splice(indexids,1)
       this.kirimDesesuai.splice(index, 1);
       this.iddokumen.splice(indexid, 1);
     }
@@ -71,11 +80,22 @@ export class ChecklistDocumentComponent implements OnInit {
     // console.warn(this.keterangannya);
   }
 
-  store(newValue: any, iddokumen: any): void {
-    this.datacontoh.push(newValue);
-    this.datacontohid.push(iddokumen);
-    // this.datacontoh=newValue;
+  store(newValue: any, pemisah: any): void {
+    if (pemisah == 1) {
+      this.datacontoh.push(newValue);
+    } else {
+      const indexids = this.datacontoh.findIndex(list => list === newValue);
+      this.datacontoh.splice(indexids, 1);
+    }
     console.log(this.datacontoh);
+    // this.datacontohid.push(iddokumen);
+    // this.datacontoh=newValue;
+
+    // let changes = this.newValue.diff(this.datacontoh);
+    // if (changes) {
+    //   alert('putetputer');
+    //     console.log('Changes detected!');
+    // }
   }
 
   postAssign(): void {

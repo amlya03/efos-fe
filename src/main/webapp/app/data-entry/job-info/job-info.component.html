@@ -79,6 +79,10 @@
                   <div class="form-group">
                     <select class="form-control" id="jabatan" name="posisi">
                       <option selected value="">Pilih Posisi</option>
+
+                      <option *ngFor="let getjabatandariapi of getjabatandariapi" value="{{ getjabatandariapi.jabatan_deskripsi }}">
+                        {{ getjabatandariapi.jabatan_deskripsi }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -513,6 +517,10 @@
                   <div class="form-group">
                     <select class="form-control" id="posisi_sebelum" name="posisi_sebelum">
                       <option>{{ tampunganid.posisi_sebelum }}</option>
+
+                      <option *ngFor="let getjabatansebelum of getjabatansebelum" value="{{ getjabatansebelum.jabatan_deskripsi }}">
+                        {{ getjabatansebelum.jabatan_deskripsi }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -751,6 +759,12 @@
                   <div class="form-group">
                     <select class="form-control" id="jumlah_karyawan_sebelumnya" name="jumlah_karyawan_sebelumnya">
                       <option>{{ tampunganid.jumlah_karyawan_sebelumnya }}</option>
+                      <option
+                        *ngFor="let getjumlahkaryawansebelumdariapi of getjumlahkaryawansebelumdariapi"
+                        value="{{ getjumlahkaryawansebelumdariapi.deskripsi }}"
+                      >
+                        {{ getjumlahkaryawansebelumdariapi.deskripsi }}
+                      </option>
                     </select>
                   </div>
                 </div>

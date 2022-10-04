@@ -9,10 +9,13 @@
       <label class="col-sm-3 col-form-label">Kategori Pekerjaan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" name="kate_peker" id="kate_peker">
+          <select (change)="katagoripekerjaanselect()" class="form-control" name="kate_peker" id="kate_peker">
             <option value=" {{ daWa.kategori_pekerjaan }}">
               {{ daWa.kategori_pekerjaan }}
             </option>
+            <option value="1|Fix Income">Fix Income</option>
+            <option value="2|Non Fix Income">Non Fix Income</option>
+            <option value="3|Lain-lainnya">Lain-lainnyatest</option>
           </select>
         </div>
       </div>
@@ -26,6 +29,9 @@
             <option value=" {{ daWa.tipe_pekerjaan }}">
               {{ daWa.tipe_pekerjaan }}
             </option>
+            <option *ngFor="let jenispekerjaan of jenispekerjaan" value="{{ jenispekerjaan.job_desc }}">
+              {{ jenispekerjaan.job_desc }}
+            </option>
           </select>
         </div>
       </div>
@@ -38,6 +44,9 @@
         <div class="form-group">
           <select class="form-control" name="posisi1" id="posisi1">
             <option value="{{ daWa.posisi }}">{{ daWa.posisi }}</option>
+            <option *ngFor="let getjabatan of getjabatan" value="{{ getjabatan.jabatan_deskripsi }}">
+              {{ getjabatan.jabatan_deskripsi }}
+            </option>
           </select>
         </div>
       </div>
@@ -71,8 +80,11 @@
       <label class="col-sm-3 col-form-label">Provinsi</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="provinsi_cabang_swasta" name="provinsi1">
+          <select class="form-control" (change)="onChange(0)" id="provinsi_cabang_swasta" name="provinsi1">
             <option value="{{ daWa.provinsi }}">{{ daWa.provinsi }}</option>
+            <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+              {{ daWaprof.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>
@@ -82,8 +94,11 @@
       <label class="col-sm-3 col-form-label">Kota</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kabkota_cabang_swasta" name="kabkota1">
+          <select class="form-control" (change)="onChangekota(0)" id="kabkota_cabang_swasta" name="kabkota1">
             <option value="{{ daWa.kabkota }}">{{ daWa.kabkota }}</option>
+            <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
+              {{ daWakota.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>
@@ -93,8 +108,11 @@
       <label class="col-sm-3 col-form-label">Kecamatan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kecamatan_swasta" name="kecamatan1">
+          <select class="form-control" (change)="onChangekecamatan(kecamatan)" id="kecamatan_swasta" name="kecamatan1">
             <option value="{{ daWa.kecamatan }}">{{ daWa.kecamatan }}</option>
+            <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
+              {{ daWakecamatan.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>
@@ -104,8 +122,11 @@
       <label class="col-sm-3 col-form-label">Kelurahan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kelurahan_swasta" name="kelurahan1">
+          <select (change)="onChangekelurahan(kelurahan)" class="form-control" id="kelurahan_swasta" name="kelurahan1">
             <option value="{{ daWa.kelurahan }}">{{ daWa.kelurahan }}</option>
+            <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
+              {{ daWakelurahan.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>

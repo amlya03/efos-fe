@@ -136,7 +136,7 @@ export class PersonalInfoComponent implements OnInit {
       queryParams: {
         datakiriman: contohtampungancuref,
         datakirimanstatus: contohtampungstatuskawain,
-        app_no_de: contohtampunganappde,
+        datakirimanappde: contohtampunganappde,
         datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
       },
     });

@@ -36,7 +36,7 @@
       <div class="col-sm-9">
         <div class="form-group">
           <select class="form-control" id="jenis_kelamin_pasangan" name="jenis_kelamin_pasangan">
-            <option>{{ daWa.jenis_kelamin_pasangan }}</option>
+            <option value="{{ daWa.jenis_kelamin_pasangan }}">{{ daWa.jenis_kelamin_pasangan }}</option>
           </select>
         </div>
       </div>
@@ -55,8 +55,11 @@
       <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="provinsi_pasangan" name="provinsi_pasangan">
+          <select (change)="onChange(0)" class="form-control" id="provinsi_pasangan" name="provinsi_pasangan">
             <option>{{ daWa.provinsi_pasangan }}</option>
+            <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+              {{ daWaprof.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>
@@ -66,8 +69,11 @@
       <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kabkota_pasangan" name="kabkota_pasangan">
+          <select class="form-control" (change)="onChangekota(0)" id="kabkota_pasangan" name="kabkota_pasangan">
             <option>{{ daWa.kabkota_pasangan }}</option>
+            <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
+              {{ daWakota.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>
@@ -77,8 +83,11 @@
       <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kecamatan_pasangan" name="kecamatan_pasangan">
+          <select class="form-control" (change)="onChangekecamatan(kecamatan)" id="kecamatan_pasangan" name="kecamatan_pasangan">
             <option>{{ daWa.kecamatan_pasangan }}</option>
+            <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
+              {{ daWakecamatan.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>
@@ -88,8 +97,11 @@
       <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kelurahan_pasangan" name="kelurahan_pasangan">
+          <select (change)="onChangekelurahan(kelurahan)" class="form-control" id="kelurahan_pasangan" name="kelurahan_pasangan">
             <option>{{ daWa.kelurahan_pasangan }}</option>
+            <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
+              {{ daWakelurahan.namaWilayah }}
+            </option>
           </select>
         </div>
       </div>

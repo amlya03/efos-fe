@@ -5,9 +5,10 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { DataEntryService } from '../services/data-entry.service';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
-
+export type EntityArrayResponseDaWa1 = HttpResponse<ApiResponse>;
 @Component({
   selector: 'jhi-pekerjaan-pasangan',
   templateUrl: './pekerjaan-pasangan.component.html',
@@ -15,6 +16,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 })
 export class PekerjaanPasanganComponent implements OnInit {
   datakirimiancure: any;
+
   datakirimande: any;
   datakirimancuref: any;
   datakirimanakategoripekerjaan: any;
@@ -22,8 +24,17 @@ export class PekerjaanPasanganComponent implements OnInit {
   daWa: any;
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobPasanganByCuref?sc=');
   kirimansiup: any;
+  jenispekerjaan: any;
+  getjabatan: any;
+  postId: any;
+  daWaprof: any;
+  daWakota: any;
+  kecamatan: any;
+  kelurahan: any;
+  daWakodepos: any;
 
   constructor(
+    protected datEntryService: DataEntryService,
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
@@ -43,12 +54,18 @@ export class PekerjaanPasanganComponent implements OnInit {
     });
   }
 
+  protected apigetjenispekeraan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_pekerjaan?sc='
+  );
+  protected apilistjabatan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_jabatan');
+
   ngOnInit(): void {
     this.load();
   }
 
   load(): void {
-    alert(this.datakirimancuref);
+    this.gettokendukcapil();
+    // alert(this.datakirimancuref);
 
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
@@ -111,6 +128,144 @@ export class PekerjaanPasanganComponent implements OnInit {
         // alert(this.daWa.tipe_perusahaan)
       },
     });
+
+    this.getlistjabatanpasangan().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('jabatansebelum', res);
+
+        this.getjabatan = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+  }
+  gettokendukcapil(): void {
+    this.http
+      .post<any>('http://10.20.82.12:8083/token/generate-token', {
+        password: '3foWeb@pp',
+        username: 'efo',
+        // password_dukcapil: '3foWeb@pp',
+      })
+      .subscribe({
+        next: data => {
+          this.postId = data.result.token;
+          // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
+          // return this.postId;
+
+          console.warn(data.result.token);
+          console.warn(this.postId);
+          // this.router.navigate(['/daftaraplikasiide'], {
+          //   queryParams: {},
+          // });
+          // alert('dapetnih');
+
+          this.datEntryService.getprovinsi(this.postId).subscribe({
+            next: (res: EntityArrayResponseDaWa) => {
+              console.warn('PROVINSI', res);
+
+              this.daWaprof = res.body?.result;
+              // alert(this.postId);
+              // this.onResponseSuccess(res);
+            },
+          });
+        },
+      });
+  }
+
+  onChange(selectedStatus: any) {
+    const provinsi_cabang = document.getElementById('provinsi_cabang_swasta') as HTMLInputElement | any;
+
+    // alert(this.postId);
+    console.log('kode' + selectedStatus);
+    this.datEntryService.getkabkota(this.postId, provinsi_cabang.value).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kota', res);
+
+        this.daWakota = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+  }
+
+  onChangekota(selectedStatus: any) {
+    // alert(this.postId);
+    const provinsi_cabang = document.getElementById('kabkota_cabang_swasta') as HTMLInputElement | any;
+    this.datEntryService.getkecamatan(this.postId, provinsi_cabang.value).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kecamata', res);
+
+        this.kecamatan = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+    console.log(selectedStatus);
+  }
+
+  onChangekecamatan(selectedStatus: any) {
+    // alert(this.postId);
+
+    const provinsi_cabang = document.getElementById('kecamatan_swasta') as HTMLInputElement | any;
+    this.datEntryService.getkelurahan(this.postId, provinsi_cabang.value).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kelurahan', res);
+
+        this.kelurahan = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+    console.log(selectedStatus);
+  }
+  onChangekelurahan(selectedStatus: any) {
+    // alert(this.postId);
+    alert('ganti');
+    const provinsi_cabang = document.getElementById('kelurahan_swasta') as HTMLInputElement | any;
+    var kode_post = document.getElementById('kode_pos_swasta') as HTMLInputElement | any;
+    const datakodepos = provinsi_cabang.value.split('|');
+
+    this.daWakodepos = datakodepos[0];
+
+    alert(this.daWakodepos);
+    // kode_post.innerHTML=this.daWakodepos ;
+    kode_post.value = this.daWakodepos;
+    alert('kodepos' + kode_post);
+    // document.getElementById('kode_pos').value=this.daWakodepos;
+    // alert(this.daWakodepos);
+    // this.onResponseSuccess(res);
+  }
+
+  katagoripekerjaanselect() {
+    const provinsi_cabang = document.getElementById('kate_peker') as HTMLInputElement | any;
+
+    // alert(this.postId);
+
+    this.getjenispekerjaan(provinsi_cabang.value).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kota', res);
+
+        this.jenispekerjaan = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+  }
+
+  getjenispekerjaan(katagori_pekerjaansebelum: any, req1?: any): Observable<EntityArrayResponseDaWa1> {
+    const options = createRequestOption(req1);
+    var katagori_pekerjaansebelumvalue = katagori_pekerjaansebelum.split('|');
+
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+    return this.http.get<ApiResponse>(this.apigetjenispekeraan + katagori_pekerjaansebelumvalue[0], {
+      params: options,
+      observe: 'response',
+    });
+  }
+
+  getlistjabatanpasangan(req1?: any): Observable<EntityArrayResponseDaWa1> {
+    const options = createRequestOption(req1);
+    return this.http.get<ApiResponse>(this.apilistjabatan, { params: options, observe: 'response' });
   }
 
   goto(): void {
