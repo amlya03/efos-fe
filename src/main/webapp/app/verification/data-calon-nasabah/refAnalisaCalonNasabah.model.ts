@@ -35,7 +35,7 @@ export class refAnalisaCalonNasabah {
   fasilitas_pembiayaan?: string;
   karakter_calon_nasabah?: string;
   status_rumah?: string;
-  cek?: number;
+  cek?: string;
   rumah_dihuni?: string;
   lama_menetap_bulan?: number;
   lama_menetap_tahun?: number;

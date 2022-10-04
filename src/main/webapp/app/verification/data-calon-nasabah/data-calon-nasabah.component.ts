@@ -25,14 +25,6 @@ import { refAnalisaCalonNasabah } from './refAnalisaCalonNasabah.model';
   styleUrls: ['./data-calon-nasabah.component.scss'],
 })
 export class DataCalonNasabahComponent implements OnInit {
-  // model dukcapil
-  provinsi_cabang: any;
-  kabkota_cabang: any;
-  kecamatan: any;
-  kelurahan: any;
-  kode_pos: string | undefined;
-  // model dukcapil
-
   dataCalonNasabahForm!: FormGroup;
   submitted = false;
   editor!: Editor;
@@ -43,12 +35,6 @@ export class DataCalonNasabahComponent implements OnInit {
   refSektor?: refSektor[];
   refStatusRumah?: refStatusRumah[];
   refListTipeProperti?: refListTipeProperti[];
-  getToken: any;
-  getProvinsi: any;
-  getKodePos: any;
-  getKelurahan: any;
-  getKecamatan: any;
-  getKota: any;
   app_no_de: any;
   dataCalonNasabahMap: refAnalisaCalonNasabah = new refAnalisaCalonNasabah();
   dataEntry?: fetchAllDe = new fetchAllDe();
@@ -77,7 +63,6 @@ export class DataCalonNasabahComponent implements OnInit {
   protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   ngOnInit(): void {
-    this.postGetTokenDuckapil();
     this.editor = new Editor();
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.dataCalonNasabahForm = this.formBuilder.group({
@@ -118,16 +103,18 @@ export class DataCalonNasabahComponent implements OnInit {
       alamat_ktp: '',
       rt: '',
       rw: '',
-      // provinsi: '',
-      // kabkota: '',
-      // kecamatan: '',
-      // kelurahan: '',
+      provinsi: '',
+      kabkota: '',
+      kecamatan: '',
+      kelurahan: '',
       kode_pos: '',
       status_perkawinan: '',
       tanggal_lahir: '',
       pendidikan: '',
       nama_ibu_kandung: '',
       kode_fasilitas: '',
+      nama_pasangan: '',
+      pekerjaan_pasangan: '',
 
       // id: "",
       app_no_de: '',
@@ -346,16 +333,18 @@ export class DataCalonNasabahComponent implements OnInit {
         alamat_ktp: this.dataEntry?.alamat_ktp,
         rt: this.dataEntry?.rt,
         rw: this.dataEntry?.rw,
-        // provinsi: this.dataEntry?.provinsi,
-        // kabkota: this.dataEntry?.kabkota,
-        // kecamatan: this.dataEntry?.kecamatan,
-        // kelurahan: this.dataEntry?.kelurahan,
+        provinsi: this.dataEntry?.provinsi,
+        kabkota: this.dataEntry?.kabkota,
+        kecamatan: this.dataEntry?.kecamatan,
+        kelurahan: this.dataEntry?.kelurahan,
         kode_pos: this.dataEntry?.kode_pos,
         status_perkawinan: this.dataEntry?.status_perkawinan,
         tanggal_lahir: this.dataEntry?.tanggal_lahir,
         pendidikan: this.dataEntry?.pendidikan,
         nama_ibu_kandung: this.dataEntry?.nama_ibu_kandung,
         kode_fasilitas: this.dataEntry?.kode_fasilitas,
+        nama_pasangan: this.dataEntry?.nama_pasangan,
+        pekerjaan_pasangan: this.dataEntry?.nama_ibu_kandung_pasangan,
 
         // id: this.dataCalonNasabahMap ,
         app_no_de: this.dataCalonNasabahMap.app_no_de,
@@ -456,123 +445,5 @@ export class DataCalonNasabahComponent implements OnInit {
       event.preventDefault();
       return;
     }
-  }
-  // Untuk Ducapil
-  postGetTokenDuckapil(): void {
-    this.http
-      .post<any>('http://10.20.82.12:8083/token/generate-token', {
-        password: '3foWeb@pp',
-        username: 'efo',
-      })
-      .subscribe({
-        next: data => {
-          this.getToken = data.result.token;
-
-          this.getProvinsiDukcapil(this.getToken).subscribe(data => {
-            console.warn('ref', data);
-            if (data.status === 200) {
-              this.getProvinsi = data.body?.result;
-            }
-          });
-        },
-      });
-  }
-  getProvinsiDukcapil(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvinsi/', {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-  }
-  getkabkota(token: any, kodekota: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-    const kodepotongan = kodekota.split('|');
-
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKota/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-  }
-
-  getkecamatan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-
-    const kodepotongan = kodekecamatan.split('|');
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKec/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-  }
-
-  getkodepos(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-    const kodepotongan = kodekecamatan.split('|');
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKdPos/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-  }
-
-  getkelurahan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-    const kodepotongan = kodekecamatan.split('|');
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKel/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-  }
-  onChangeProvinsi(valueProvinsi: any) {
-    this.getkabkota(this.getToken, valueProvinsi).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        this.getKota = res.body?.result;
-      },
-    });
-  }
-
-  onChangekota(valueKota: any) {
-    this.getkecamatan(this.getToken, valueKota).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        this.getKecamatan = res.body?.result;
-      },
-    });
-  }
-
-  onChangekecamatan(valueKecamatan: any) {
-    this.getkelurahan(this.getToken, valueKecamatan).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        this.getKelurahan = res.body?.result;
-      },
-    });
-  }
-
-  onChangekelurahan(valueKelurahan: any) {
-    const datakodepos = valueKelurahan.split('|');
-    this.getKodePos = datakodepos[0];
   }
 }
