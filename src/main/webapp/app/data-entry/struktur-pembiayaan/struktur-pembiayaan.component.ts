@@ -21,6 +21,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   datakirimanappde: any;
 
   daWa: any;
+  Kodefasilitas: any;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -42,13 +43,14 @@ export class StrukturPembiayaanComponent implements OnInit {
       this.datakirimanakategoripekerjaan = params['datakirimanakategoripekerjaan'];
     });
   }
+  protected getekodefasilitas = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_fasilitas');
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getStrukturBiayaByDe?');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getStrukturBiayaByDe?');
 
   ngOnInit(): void {
     this.load();
-    console.warn('strukturdata', this.datakirimiancure);
+    // console.warn('strukturdata', this.datakirimiancure);
   }
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   load() {
@@ -56,13 +58,28 @@ export class StrukturPembiayaanComponent implements OnInit {
       next: (res: EntityArrayResponseDaWa) => {
         // console.log(res.body?.result);
         console.warn('strukturdata', res);
-        // console.warn('!!!!!!!!!!!!!!!!!!!', this.datakiriman);
-        // console.warn('@@@@@@@@@@@@@', this.datakiriman);
-        // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
-        this.daWa = res.body?.result;
+
+        if (res.body?.result == null) {
+          this.daWa = '0';
+        } else {
+          this.daWa = res.body?.result;
+        }
+
         // this.onResponseSuccess(res);
       },
     });
+
+    this.getkodefasilitas().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        // console.log(res.body?.result);
+        console.warn('kodefasilitas', res.body?.result);
+        this.Kodefasilitas = res.body?.result;
+      },
+    });
+  }
+  getkodefasilitas(req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    return this.http.get<ApiResponse>(this.getekodefasilitas, { params: options, observe: 'response' });
   }
 
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
@@ -87,5 +104,22 @@ export class StrukturPembiayaanComponent implements OnInit {
         datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },
     });
+  }
+
+  onchangefasilitas(selectedStatus: any) {
+    const provinsi_cabang = document.getElementById('kode_fasilitas') as HTMLInputElement | any;
+
+    // alert(this.postId);
+    console.log('kode' + selectedStatus);
+    console.log('kode' + provinsi_cabang.value);
+    // this.datEntryService.getkabkota(this.postId, provinsi_cabang.value).subscribe({
+    //   next: (res: EntityArrayResponseDaWa) => {
+    //     console.warn('kota', res);
+
+    //     this.daWakota = res.body?.result;
+    //     // alert(this.postId);
+    //     // this.onResponseSuccess(res);
+    //   },
+    // });
   }
 }
