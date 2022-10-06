@@ -74,5 +74,103 @@ export class MemoComponent implements OnInit {
     return this.http.get<ApiResponse>(this.resourceUrl1 + this.datakirimanappde, { params: options, observe: 'response' });
   }
 
+  simpanmemo(): void {
+    // alert(getAppNoDe);
+
+    const keterangan = document.getElementById('keterangan') as HTMLInputElement | any;
+
+    // alert(id.value);
+    // alert(jenis_kelamin.value);
+
+    const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
+    // alert('CREATE NIH');
+    this.http
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_memo', {
+        // headers: headers,
+        // alamat_perusahaan: alamat_perusahaan.value,
+        // bulan_berdiri: contohtampungankategoripekerjaan,
+        // created_by: contohtampungancuref,
+        // curef: this.datakiriman,
+        id: '',
+        keterangan: keterangan.value,
+        // users: alamat_perusahaan.value,
+        // role: jenis_bidang_perusahaan.value,
+        // created_by: jumlah_karyawan.value,
+        app_no_de: this.datakirimanappde,
+      })
+
+      .subscribe({
+        next: bawaan => {
+          window.location.reload();
+        },
+      });
+
+    // this.router.navigate(['/data-entry/memo'], {
+    //   queryParams: { datakirimanappde: this.datakirimanappde}
+    //  });
+  }
+
+  kembalikede(): void {
+    alert('BackStatustoDe');
+
+    const keterangan = document.getElementById('keterangan') as HTMLInputElement | any;
+    const status_aplikasi_desc = document.getElementById('status_aplikasi_desc') as HTMLInputElement | any;
+
+    // alert(id.value);
+    // alert(jenis_kelamin.value);
+
+    const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
+    //   // alert('CREATE NIH');
+    //   this.http
+    //     .post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_memo', {
+
+    //   app_no_de:this.datakirimanappde,
+    //   // created_by:keterangan.value,
+    //     status_aplikasi: status_aplikasi_desc.value,
+
+    //     })
+
+    //     .subscribe({
+    //       next: bawaan => {
+
+    // // this.router.navigate(['/data-entry/memo'], {
+    // //   queryParams: { datakirimanappde: this.datakirimanappde}
+    // //  });
+
+    //         // window.location.reload();
+    //       },
+    //     });
+
+    // this.router.navigate(['/data-entry/memo'], {
+    //   queryParams: { datakirimanappde: this.datakirimanappde}
+    //  });
+  }
+
+  cetakmemo(): void {
+    alert('cetak');
+
+    //  var divToPrint=document.getElementById("example");
+    //         newWin= window.open("");
+    //         newWin.document.write(divToPrint.outerHTML);
+    //         newWin.print();
+    //         newWin.close();
+
+    // let printContents, popupWin;
+    // printContents = document.getElementById('#example').innerHTML;
+    // popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    // popupWin.document.open();
+    // popupWin.document.write(`
+    //   <html>
+    //     <head>
+    //       <title>Print tab</title>
+    //       // You need to insert the stylesheet to the print function
+    //       <link rel="stylesheet" href="correct href to your stylesheet">
+    //     </head>
+    // <body onload="window.print();window.close()">${printContents}</body>
+    //   </html>`
+    // );
+    // popupWin.document.close();
+  }
+
   // http://10.20.34.110:8805/api/v1/efos-de/getMemoByDe?sd=
 }

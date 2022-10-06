@@ -22,6 +22,14 @@ export class StrukturPembiayaanComponent implements OnInit {
 
   daWa: any;
   Kodefasilitas: any;
+  kodeprogram: any;
+  kodeproduk: any;
+  kodeskema: any;
+  kodetenor: any;
+  merginstepup: any;
+  databawaan: any;
+  postId: any;
+  errorMessage: any;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -44,7 +52,16 @@ export class StrukturPembiayaanComponent implements OnInit {
     });
   }
   protected getekodefasilitas = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_fasilitas');
-
+  protected getkodeprogramstruktur = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-de/list_program?sp='
+  );
+  protected getkodeproduknya = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_produk?sp=');
+  protected getskema = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_skema?ss=');
+  protected getfix = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_tenor_fix?ss=');
+  protected getstepup = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_tenor_stepup?ss=');
+  protected getmarginstepup = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-de/list_margin_stepup?ss='
+  );
   // eslint-disable-next-line @typescript-eslint/member-ordering
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getStrukturBiayaByDe?');
 
@@ -112,14 +129,353 @@ export class StrukturPembiayaanComponent implements OnInit {
     // alert(this.postId);
     console.log('kode' + selectedStatus);
     console.log('kode' + provinsi_cabang.value);
-    // this.datEntryService.getkabkota(this.postId, provinsi_cabang.value).subscribe({
-    //   next: (res: EntityArrayResponseDaWa) => {
-    //     console.warn('kota', res);
 
-    //     this.daWakota = res.body?.result;
-    //     // alert(this.postId);
-    //     // this.onResponseSuccess(res);
-    //   },
-    // });
+    this.getkodeprogram(provinsi_cabang.value).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kodefasilitas', res);
+
+        this.kodeprogram = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+  }
+
+  onchangeprogram(selectedStatus: any) {
+    const provinsi_cabang = document.getElementById('program') as HTMLInputElement | any;
+
+    // alert(this.postId);
+    console.log('kode' + selectedStatus);
+    console.log('kode' + provinsi_cabang.value);
+
+    this.getkodeproduk(provinsi_cabang.value).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kodeproduk', res);
+
+        this.kodeproduk = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+  }
+
+  onchangeproduk(selectedStatus: any) {
+    const provinsi_cabang = document.getElementById('produk') as HTMLInputElement | any;
+
+    // alert(this.postId);
+    console.log('kode' + selectedStatus);
+    console.log('kode' + provinsi_cabang.value);
+    this.getkodeskema(provinsi_cabang.value).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('skema', res);
+
+        this.kodeskema = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+  }
+
+  onchangeskema(selectedStatus: any) {
+    const provinsi_cabang = document.getElementById('skema') as HTMLInputElement | any;
+    const pemisahskemamaster = provinsi_cabang.value.split('|');
+    alert(pemisahskemamaster[1]);
+    if (pemisahskemamaster[1] == 1) {
+      let tipePro = '<option selected value="fix">FIX</option>';
+      tipePro = tipePro + '';
+      $('#tipe_margin').append(tipePro);
+
+      console.log('kode' + selectedStatus);
+      console.log('kode' + provinsi_cabang.value);
+      this.gettenor(provinsi_cabang.value).subscribe({
+        next: (res: EntityArrayResponseDaWa) => {
+          console.warn('tenor', res);
+
+          this.kodetenor = res.body?.result;
+          // alert(this.postId);
+          // this.onResponseSuccess(res);
+        },
+      });
+    } else {
+      let tipePro = '<option selected value="stepup">STEPUP</option>';
+      tipePro = tipePro + '';
+      $('#tipe_margin').append(tipePro);
+
+      console.log('kode' + selectedStatus);
+      console.log('kode' + provinsi_cabang.value);
+      this.gettenor(provinsi_cabang.value).subscribe({
+        next: (res: EntityArrayResponseDaWa) => {
+          console.warn('tenor', res);
+
+          this.kodetenor = res.body?.result;
+          // alert(this.postId);
+          // this.onResponseSuccess(res);
+        },
+      });
+    }
+  }
+
+  onchangejangkawaktu(selectedStatus: any) {
+    const provinsi_cabang = document.getElementById('jangka_waktu') as HTMLInputElement | any;
+    const pemisahfixorstepup = document.getElementById('skema') as HTMLInputElement | any;
+
+    const pemisahfixr = provinsi_cabang.value.split('|');
+    const pemisahskemamaster = pemisahfixorstepup.value.split('|');
+
+    if (pemisahskemamaster[1] == 1) {
+      let margin = pemisahfixr[1];
+      margin = margin + '';
+      $('#margin').val(margin);
+      $('#margin1').val(margin);
+
+      // alert('masukmargin')
+      // $('#margin').val=pemisahfixr[1];
+    } else {
+      //  alert('kokhilang ');
+      this.getmargin(pemisahskemamaster[0]).subscribe({
+        next: (res: EntityArrayResponseDaWa) => {
+          console.warn('marginstepup', res);
+
+          var marginke1 = res.body?.result[0];
+          var marginke2 = res.body?.result[1];
+
+          $('#margin').val('Margin ke1=' + marginke1 + 'margin ke2=' + marginke2);
+          $('#margin1').val(marginke1);
+
+          // this.merginstepup = res.body?.result;
+          // alert(this.postId);
+          // this.onResponseSuccess(res);
+        },
+      });
+    }
+    // alert(this.postId);
+  }
+
+  getkodeprogram(kodefasilitas: any, req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    const kodepotongan = kodefasilitas.split('|');
+    return this.http.get<ApiResponse>(this.getkodeprogramstruktur + kodepotongan[0], { params: options, observe: 'response' });
+  }
+
+  getkodeproduk(kodeproduk: any, req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    const kodepotongan = kodeproduk.split('|');
+    return this.http.get<ApiResponse>(this.getkodeproduknya + kodepotongan[0], { params: options, observe: 'response' });
+  }
+  getkodeskema(kodeskema: any, req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    const kodepotongan = kodeskema.split('|');
+    return this.http.get<ApiResponse>(this.getskema + kodepotongan[0], { params: options, observe: 'response' });
+  }
+
+  gettenor(kodeskema: any, req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    const kodepotongan = kodeskema.split('|');
+    if (kodepotongan[1] == 1) {
+      return this.http.get<ApiResponse>(this.getfix + kodepotongan[0], { params: options, observe: 'response' });
+    } else {
+      return this.http.get<ApiResponse>(this.getstepup + kodepotongan[0], { params: options, observe: 'response' });
+    }
+  }
+  getmargin(kodeproduk: any, req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    // const kodepotongan=kodeproduk.split('|')
+    return this.http.get<ApiResponse>(this.getmarginstepup + kodeproduk, { params: options, observe: 'response' });
+  }
+
+  itungrincihan() {
+    const kode_fasilitas = document.getElementById('kode_fasilitas') as HTMLInputElement | any;
+    const program = document.getElementById('program') as HTMLInputElement | any;
+    const produk = document.getElementById('produk') as HTMLInputElement | any;
+    const skema = document.getElementById('skema') as HTMLInputElement | any;
+    const fasilitas_ke = document.getElementById('fasilitas_ke') as HTMLInputElement | any;
+    const jangka_waktu = document.getElementById('jangka_waktu') as HTMLInputElement | any;
+    const uang_muka = document.getElementById('uang_muka') as HTMLInputElement | any;
+    const harga_objek_pembiayaan = document.getElementById('harga_objek_pembiayaan') as HTMLInputElement | any;
+    // const jenis_kelamin = document.getElementById('jenis_kelamin') as HTMLInputElement | any;
+
+    var kirimanpotonganprovinsi = kode_fasilitas.value.split('|');
+    var kirimanprogram = program.value.split('|');
+    var kirimanproduk = produk.value.split('|');
+    var kirimanskema = skema.value.split('|');
+    // var kirimanfasilitas = provinsi_cabang.value.split('|');
+    var kirimanjangkawaktu = jangka_waktu.value.split('|');
+
+    const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
+
+    this.http
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/hitung_angsuran', {
+        // headers: headers,
+
+        app_no_de: this.datakirimanappde,
+        curef: this.datakirimiancure,
+        dp: uang_muka.value,
+        fasilitas: fasilitas_ke.value,
+        harga_objek: harga_objek_pembiayaan.value,
+        kode_fasilitas: kirimanpotonganprovinsi[0],
+        kode_produk: kirimanproduk[0],
+        skema_id: kirimanskema[0],
+        skema_master: kirimanskema[1],
+        tenor: kirimanjangkawaktu[0],
+      })
+
+      .subscribe({
+        next: data => {
+          this.postId = data.result;
+
+          var anguran1 = data.result.angsuran[0];
+          var anguran2 = data.result.angsuran[1];
+          var nilai = data.result.nilai_pembiayaan;
+
+          if (anguran2 == null) {
+            $('#angsuran').val(anguran1);
+          } else {
+            $('#angsuran').val('Angsuran ke1=' + anguran1 + 'Angsuran ke2=' + anguran2);
+          }
+
+          $('#hasil_pembiayaan').val(nilai);
+
+          alert(this.postId);
+          alert(anguran2);
+          console.warn('There was an error!', data);
+        },
+        error: error => {
+          this.errorMessage = error.error.message;
+          console.error('There was an error!', error);
+
+          alert(this.errorMessage);
+        },
+      });
+  }
+
+  simpanstruktur() // contohtampungancuref: any,
+  // contohtampungstatuskawain: any,
+  // contohtampunganappde: any,
+  // contohtampungankategoripekerjaan: any
+  {
+    const joint_income = document.getElementById('joint_income') as HTMLInputElement | any;
+    const kode_fasilitas = document.getElementById('kode_fasilitas') as HTMLInputElement | any;
+    const program = document.getElementById('program') as HTMLInputElement | any;
+    const produk = document.getElementById('produk') as HTMLInputElement | any;
+    const skema = document.getElementById('skema') as HTMLInputElement | any;
+    const jangka_waktu = document.getElementById('jangka_waktu') as HTMLInputElement | any;
+    const tipe_margin = document.getElementById('tipe_margin') as HTMLInputElement | any;
+    const tujuan_pembiayaan = document.getElementById('tujuan_pembiayaan') as HTMLInputElement | any;
+    const fasilitas_ke = document.getElementById('fasilitas_ke') as HTMLInputElement | any;
+    const margin1 = document.getElementById('margin1') as HTMLInputElement | any;
+    const harga_objek_pembiayaan = document.getElementById('harga_objek_pembiayaan') as HTMLInputElement | any;
+    const uang_muka = document.getElementById('uang_muka') as HTMLInputElement | any;
+    const angsuran = document.getElementById('angsuran') as HTMLInputElement | any;
+    const hasil_pembiayaan = document.getElementById('hasil_pembiayaan') as HTMLInputElement | any;
+    const detail_objek_pembiayaan = document.getElementById('detail_objek_pembiayaan') as HTMLInputElement | any;
+    const fee_based = document.getElementById('fee_based') as HTMLInputElement | any;
+
+    var kirimanpotongkodefasilitas = kode_fasilitas.value.split('|');
+    var kirimanpotongproduk = produk.value.split('|');
+    var kirimanpotongprogram = program.value.split('|');
+    var kirimanpotongskema = skema.value.split('|');
+    var kirimanjangwaktunya = jangka_waktu.value.split('|');
+
+    if (this.daWa == 0) {
+      alert('ini create');
+      const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
+
+      this.http
+        .post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_struktur_pembiayaan', {
+          // headers: headers,
+          angsuran: angsuran.value,
+          app_no_de: this.datakirimanappde,
+          created_by: 'string',
+          // created_date: "",
+          curef: this.datakirimiancure,
+          detail_objek_pembiayaan: detail_objek_pembiayaan.value,
+          fasilitas_ke: fasilitas_ke.value,
+          fee_based: fee_based.value,
+          harga_objek_pembiayaan: harga_objek_pembiayaan.value,
+          id: 0,
+          jangka_waktu: kirimanjangwaktunya[1],
+          // joint_income: joint_income.value,
+          kode_fasilitas: kirimanpotongkodefasilitas[0],
+          kode_fasilitas_name: kirimanpotongkodefasilitas[1],
+          margin: margin1.value,
+          nilai_pembiayaan: hasil_pembiayaan.value,
+          produk: kirimanpotongproduk[0],
+          produk_name: kirimanpotongproduk[1],
+          program: kirimanpotongprogram[0],
+          program_name: kirimanpotongprogram[1],
+          skema: kirimanpotongskema[0],
+          skema_master: kirimanpotongskema[1],
+          skema_name: kirimanpotongskema[2],
+          tipe_margin: tipe_margin.value,
+          tujuan_pembiayaan: tujuan_pembiayaan.value,
+          uang_muka: uang_muka.value,
+        })
+
+        .subscribe({
+          next: bawaan => {
+            //           this.contohdata = bawaan.result.app_no_de;
+            this.databawaan = bawaan.result.app_no_de;
+            // alert('MASUKAJAHSUSAH');
+            this.router.navigate(['/data-entry/data-entry/emergency-contact'], {
+              queryParams: {
+                // datakiriman: contohtampungancuref,
+                // datakirimanstatus: contohtampungstatuskawain,
+                // datakirimanappde: contohtampunganappde,
+                // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
+              },
+            });
+          },
+        });
+    } else {
+      alert('ini update');
+      const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
+
+      this.http
+        .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_struktur_pembiayaan', {
+          // headers: headers,
+          angsuran: angsuran.value,
+          app_no_de: this.datakirimanappde,
+          created_by: 'string',
+          created_date: '',
+          curef: this.datakirimiancure,
+          detail_objek_pembiayaan: detail_objek_pembiayaan.value,
+          fasilitas_ke: fasilitas_ke.value,
+          fee_based: fee_based.value,
+          harga_objek_pembiayaan: harga_objek_pembiayaan.value,
+          id: 0,
+          jangka_waktu: jangka_waktu.value,
+          joint_income: joint_income.value,
+          kode_fasilitas: kirimanpotongkodefasilitas[0],
+          kode_fasilitas_name: kirimanpotongkodefasilitas[1],
+          margin: margin1.value,
+          nilai_pembiayaan: hasil_pembiayaan.value,
+          produk: kirimanpotongproduk[0],
+          produk_name: kirimanpotongproduk[1],
+          program: kirimanpotongprogram[0],
+          program_name: kirimanpotongprogram[1],
+          skema: kirimanpotongskema[0],
+          skema_master: kirimanpotongskema[1],
+          skema_name: kirimanpotongskema[2],
+          tipe_margin: tipe_margin.value,
+          tujuan_pembiayaan: tujuan_pembiayaan.value,
+          uang_muka: uang_muka.value,
+        })
+
+        .subscribe({
+          next: bawaan => {
+            //           this.contohdata = bawaan.result.app_no_de;
+            this.databawaan = bawaan.result.app_no_de;
+            // alert('MASUKAJAHSUSAH');
+            this.router.navigate(['/data-entry/emergency-contact'], {
+              queryParams: {
+                // datakiriman: contohtampungancuref,
+                // datakirimanstatus: contohtampungstatuskawain,
+                // datakirimanappde: contohtampunganappde,
+                // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
+              },
+            });
+          },
+        });
+    }
   }
 }

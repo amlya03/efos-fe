@@ -34,8 +34,11 @@
       <label class="col-sm-4 col-form-label">Program<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" name="program" id="program">
+          <select class="form-control" (change)="onchangeprogram(0)" name="program" id="program">
             <option value="{{ daWa.program_name }}" selected>{{ daWa.program_name }}</option>
+            <option *ngFor="let kodeprogram of kodeprogram" value="{{ kodeprogram.kode_program }}|{{ kodeprogram.program }}">
+              {{ kodeprogram.program }}
+            </option>
           </select>
         </div>
       </div>
@@ -45,8 +48,12 @@
       <label class="col-sm-4 col-form-label">Product<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" name="produk" id="produk">
+          <select class="form-control" (change)="onchangeproduk(0)" name="produk" id="produk">
             <option value="{{ daWa.produk_name }}" selected>{{ daWa.produk_name }}</option>
+
+            <option *ngFor="let kodeproduk of kodeproduk" value="{{ kodeproduk.kode_produk }}|{{ kodeproduk.produk_deskripsi }}">
+              {{ kodeproduk.produk_deskripsi }}
+            </option>
           </select>
         </div>
       </div>
@@ -56,8 +63,14 @@
       <label class="col-sm-4 col-form-label">Skema<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" name="skema" id="skema">
+          <select class="form-control" (change)="onchangeskema(0)" name="skema" id="skema">
             <option value="{{ daWa.skema_name }}" selected>{{ daWa.skema_name }}</option>
+            <option
+              *ngFor="let kodeskema of kodeskema"
+              value="{{ kodeskema.skema }}|{{ kodeskema.skema_master }}|{{ kodeskema.skema_deskripsi }}"
+            >
+              {{ kodeskema.skema_deskripsi }}
+            </option>
           </select>
         </div>
       </div>
@@ -67,8 +80,11 @@
       <label class="col-sm-4 col-form-label">Jangka Waktu<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" name="jangka_waktu" id="jangka_waktu">
+          <select class="form-control" (change)="onchangejangkawaktu(0)" name="jangka_waktu" id="jangka_waktu">
             <option selected value="{{ daWa.jangka_waktu }}">{{ daWa.jangka_waktu }}</option>
+            <option *ngFor="let kodetenor of kodetenor" value="{{ kodetenor.tn_code }}|{{ kodetenor.margin }}">
+              {{ kodetenor.tn_code }}
+            </option>
           </select>
         </div>
       </div>
@@ -92,6 +108,8 @@
           <select class="form-control" name="tujuan_pembiayaan" id="tujuan_pembiayaan">
             <!-- 19-08-20 -->
             <option selected value="{{ daWa.kode_fasilitas }}">{{ daWa.tujuan_pembiayaan }}</option>
+            <option selected value="123">123</option>
+            <option selected value="123">321</option>
           </select>
         </div>
       </div>
@@ -127,6 +145,18 @@
           data-placement="bottom"
           title="{{ daWa.margin }}"
         />
+
+        <input
+          type="hidden"
+          class="form-control"
+          value="{{ daWa.margin }}"
+          readonly
+          name="margin1"
+          id="margin1"
+          data-toggle="tooltip"
+          data-placement="bottom"
+          title="{{ daWa.margin }}"
+        />
       </div>
     </div>
     <br />
@@ -157,7 +187,7 @@
         <div class="input-group mb-3">
           <input type="text" class="form-control" name="uang_muka" id="uang_muka" value="{{ daWa.uang_muka }}" />
           <div class="input-group-append">
-            <button class="btn btn-outline-dark" type="button" id="rincihan" style="float: right" onclick="buatkirimstrukturdata()">
+            <button class="btn btn-outline-dark" type="button" id="rincihan" style="float: right" (click)="itungrincihan()">
               Rincian Pembayaran
             </button>
           </div>
@@ -207,7 +237,15 @@
 </div>
 <div class="row">
   <div class="col" style="text-align: center">
-    <button type="submit" id="btn" name="simpandata" value="simpandata" class="btn btn-dark" onclick="return validateFormStruktur()">
+    <button
+      type="submit"
+      (click)="simpanstruktur()"
+      id="btn"
+      name="simpandata"
+      value="simpandata"
+      class="btn btn-dark"
+      onclick="return validateFormStruktur()"
+    >
       Simpan Data
     </button>
     <button type="submit" (click)="goto()" id="selanjutnya" name="selanjutnya" value="selanjutnya" class="btn btn-warning">

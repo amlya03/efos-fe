@@ -13,7 +13,7 @@
           type="text"
           class="form-control"
           placeholder="app_no_de"
-          value="{{ daWa.app_no_de }}"
+          value="{{ daWa1.app_no_de }}"
           readonly
         />
       </div>
@@ -113,7 +113,7 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Alamat Tinggal</label>
       <div class="col-sm-8">
-        <textarea class="form-control h-150px" rows="6" id="alamat_ktp" name="alamat_ktp">{{ daWa.alamat_ktp }}</textarea>
+        <textarea class="form-control h-150px" rows="6" id="alamat_ktp" name="alamat_ktp">{{ daWa.alamat_tinggal }}</textarea>
       </div>
     </div>
     <br />
@@ -137,7 +137,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Pendidikan</label>
+      <label class="col-sm-4 col-form-label">Pendidikann</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" id="pendidikan" name="pendidikan">
@@ -352,7 +352,9 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Alamat</label>
       <div class="col-sm-8">
-        <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan" name="alamat_perusahaan"><?=$alamat_perusahaan?></textarea>
+        <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan" name="alamat_perusahaan">{{
+          daWa.alamat_perusahaan
+        }}</textarea>
       </div>
     </div>
     <br />
@@ -376,7 +378,7 @@
       <label class="col-sm-4 col-form-label">Kondisi Pandemik</label>
       <div class="form-group col-sm-8">
         <select class="form-control" id="kondisi_pandemik" name="kondisi_pandemik">
-          <option selected value="{{ daWa.kondisi_pandemik }}">{{ daWa.kondisi_pandemik }}</option>
+          <option selected value="{{ daWa.kondisi_pandemi }}">{{ daWa.kondisi_pandemi }}</option>
           <option value="Cukup Berdampak">Cukup Berdampak</option>
           <option value="Tidak Berdampak">Tidak Berdampak</option>
         </select>
@@ -411,7 +413,7 @@
         <label class="col-sm-4 col-form-label">Tipe Pekerjaan</label>
         <div class="form-group col-sm-8">
           <select class="form-control" id="tipe_pekerjaan_pasangan" name="tipe_pekerjaan_pasangan" value="">
-            <option value="{{ daWa.tipe_pekerjaan_pasangan }}"></option>
+            <option value="{{ daWa.tipe_pekerjaan_pasangan }}">{{ daWa.tipe_pekerjaan_pasangan }}</option>
             <!-- <option selected value="">Pilih Tipe Pekerjaan</option> -->
             <option value="Karyawan">Karyawan</option>
             <option value="Wiraswasta">Wiraswasta</option>
@@ -708,7 +710,7 @@
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" id="tercermin_rekening" name="tercermin_rekening">
-            <option value="{{ daWa.tercermin_rekening }}">{{ daWa.tercermin_rekening }}</option>
+            <option value="{{ daWa.validasi_rekening }}">{{ daWa.validasi_rekening }}</option>
             <option value="Ya">Ya</option>
             <option value="Tidak">Tidak</option>
           </select>
@@ -747,6 +749,7 @@
       <div class="col-md-8">
         <div class="form-group">
           <input type="text" class="form-control" id="no_wawancara" name="no_wawancara" value="{{ daWa.no_wawancara }}" readonly />
+          <input type="hidden" class="form-control" id="no_wawancara1" name="no_wawancara1" value="{{ daWa.no_wawancara }}" readonly />
         </div>
       </div>
     </div>
@@ -759,7 +762,7 @@
     <button type="submit" (click)="goto()" id="selanjutnya" name="selanjutnya" value="selanjutnya" class="btn mb-1 btn-warning">
       Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
     </button>
-    <button type="submit" id="buttonsimpan" name="buttonsimpan" value="buttonsimpan" class="btn mb-1 btn-dark">
+    <button type="submit" (click)="simpancallreport()" id="buttonsimpan" name="buttonsimpan" value="buttonsimpan" class="btn mb-1 btn-dark">
       Simpan Data<span class="btn-icon-right"><i class="fa fa-floppy-o"></i></span>
     </button>
   </div>

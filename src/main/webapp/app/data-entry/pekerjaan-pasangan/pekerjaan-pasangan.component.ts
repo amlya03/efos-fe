@@ -319,6 +319,31 @@ export class PekerjaanPasanganComponent implements OnInit {
     const id = document.getElementById('id') as HTMLInputElement | any;
     const curef = document.getElementById('curef') as HTMLInputElement | any;
 
+    var potonganprov = provinsi_cabang_swasta.value.split('|');
+    if (provinsi_cabang_swasta.value.indexOf('|') !== -1) {
+      var kirimanpro = potonganprov[1];
+    } else {
+      var kirimanpro = provinsi_cabang_swasta.value;
+    }
+    var potongankota = kabkota_cabang_swasta.value.split('|');
+    if (kabkota_cabang_swasta.value.indexOf('|') !== -1) {
+      var kirimankabkota = potongankota[1];
+    } else {
+      var kirimankabkota = kabkota_cabang_swasta.value;
+    }
+    var potongankec = kecamatan_swasta.value.split('|');
+    if (kecamatan_swasta.value.indexOf('|') !== -1) {
+      var kirimankec = potongankec[1];
+    } else {
+      var kirimankec = kecamatan_swasta.value;
+    }
+    var potongankel = kelurahan_swasta.value.split('|');
+    if (kelurahan_swasta.value.indexOf('|') !== -1) {
+      var kirimankel = potongankel[1];
+    } else {
+      var kirimankel = kelurahan_swasta.value;
+    }
+
     if (tipe_pekerjaan.value != 'Wiraswasta' || tipe_pekerjaan.value != 'Wiraswasta') {
       this.kirimansiup = '';
     } else {
@@ -340,10 +365,10 @@ export class PekerjaanPasanganComponent implements OnInit {
         jenis_bidang: jenis_bidang.value,
         // jenis_pekerjaan: id.value,
         jumlah_karyawan: jumlah_karyawan.value,
-        kabkota: kabkota_cabang_swasta.value,
+        kabkota: kirimankabkota,
         kategori_pekerjaan: kate_peker.value,
-        kecamatan: kecamatan_swasta.value,
-        kelurahan: kelurahan_swasta.value,
+        kecamatan: kirimankec,
+        kelurahan: kirimankel,
         kode_pos: kode_pos_swasta.value,
         lama_bekerja_bulan: lama_bekerja_bulan1.value,
         lama_bekerja_tahun: lama_bekerja_tahun1.value,
@@ -352,7 +377,7 @@ export class PekerjaanPasanganComponent implements OnInit {
         pendapatan: pendapatan.value,
         pendapatan_lain: pendapatan_lain.value,
         posisi: posisi1.value,
-        provinsi: provinsi_cabang_swasta.value,
+        provinsi: kirimanpro,
         // rt: provinsi_cabang.value,
         // rw: tanggal_exp_ktp_pasangan.value,
         sektor_ekonomi: sektor_ekonomi.value,

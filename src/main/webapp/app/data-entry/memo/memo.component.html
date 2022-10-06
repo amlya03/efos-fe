@@ -114,18 +114,26 @@
 <br />
 <div class="text-center">
   <!-- <button type="submit" class="fa fa-floppy-o btn btn-secondary">Simpan Memo</button> -->
-  <button onclick="return validateMemo()" type="submit" id="update_memo" name="update_memo" value="update_memo" class="btn mb-1 btn-dark">
+  <button (click)="simpanmemo()" type="submit" id="update_memo" name="update_memo" value="update_memo" class="btn mb-1 btn-dark">
     Simpan Memo<span class="btn-icon-right"><i class="fa fa-floppy-o"></i></span>
   </button>
-  <button type="button" id="cetakYuk" class="btn mb-1 btn-secondary">
+  <button type="button" (click)="cetakmemo()" id="cetakYuk" class="btn mb-1 btn-secondary">
     Cetak Memo<span class="btn-icon-right"><i class="fa fa-print"></i></span>
   </button>
-  <button type="submit" id="simpan_memo" name="simpan_memo" value="simpan_memo" class="btn mb-1 btn-warning" style="display: none">
+  <button
+    type="submit"
+    (click)="simpanmemo()"
+    id="simpan_memo"
+    name="simpan_memo"
+    value="simpan_memo"
+    class="btn mb-1 btn-warning"
+    style="display: none"
+  >
     Update Status Memo<span class="btn-icon-right"><i class="fa fa-check"></i></span>
   </button>
 
   <!--  and  $this->session->userdata('cekstrukturpembayaran')=='1'){?> -->
-  <button type="submit" id="kembalide" name="kembalide" value="kembalide" class="btn mb-1 btn-danger">
+  <button (click)="kembalikede()" type="submit" id="kembalide" name="kembalide" value="kembalide" class="btn mb-1 btn-danger">
     Kembali Ke De<span class="btn-icon-right"><i class="fa fa-chevron-circle-left"></i></span>
   </button>
   <button
@@ -145,7 +153,7 @@
 <br />
 <div class="row form-material">
   <div class="table-responsive">
-    <table class="table table-striped">
+    <table id="example" class="table table-striped">
       <thead style="background-color: grey">
         <tr>
           <th scope="col" style="text-align: center; color: #fff">

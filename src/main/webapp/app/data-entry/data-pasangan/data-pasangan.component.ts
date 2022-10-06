@@ -242,6 +242,31 @@ export class DataPasanganComponent implements OnInit {
     const app_no_ide = document.getElementById('app_no_ide') as HTMLInputElement | any;
     const curef = document.getElementById('curef') as HTMLInputElement | any;
 
+    var potonganprov = provinsi_pasangan.value.split('|');
+    if (provinsi_pasangan.value.indexOf('|') !== -1) {
+      var kirimanpro = potonganprov[1];
+    } else {
+      var kirimanpro = provinsi_pasangan.value;
+    }
+    var potongankota = kabkota_pasangan.value.split('|');
+    if (kabkota_pasangan.value.indexOf('|') !== -1) {
+      var kirimankabkota = potongankota[1];
+    } else {
+      var kirimankabkota = kabkota_pasangan.value;
+    }
+    var potongankec = kecamatan_pasangan.value.split('|');
+    if (kecamatan_pasangan.value.indexOf('|') !== -1) {
+      var kirimankec = potongankec[1];
+    } else {
+      var kirimankec = kecamatan_pasangan.value;
+    }
+    var potongankel = kelurahan_pasangan.value.split('|');
+    if (kelurahan_pasangan.value.indexOf('|') !== -1) {
+      var kirimankel = potongankel[1];
+    } else {
+      var kirimankel = kelurahan_pasangan.value;
+    }
+
     alert(id.value);
     alert(contohtampungancuref);
 
@@ -258,9 +283,9 @@ export class DataPasanganComponent implements OnInit {
         email_pasangan: email_pasangan.value,
         id: id.value,
         // jenis_kelamin_pasangan: tempat_lahir.value,
-        kabkota_pasangan: kabkota_pasangan.value,
-        kecamatan_pasangan: kecamatan_pasangan.value,
-        kelurahan_pasangan: kelurahan_pasangan.value,
+        kabkota_pasangan: kirimankabkota,
+        kecamatan_pasangan: kirimankec,
+        kelurahan_pasangan: kirimankel,
         kewarganegaraan_pasangan: kewarganegaraan_pasangan.value,
         kode_pos_pasangan: kode_pos_pasangan.value,
         // nama_ibu_kandung_pasangan: agama.value,
@@ -268,7 +293,7 @@ export class DataPasanganComponent implements OnInit {
         no_ktp_pasangan: no_ktp_pasangan.value,
         // nama_ibu_kandung: ' 1',
         pendidikan_pasangan: pendidikan_pasangan.value,
-        provinsi_pasangan: provinsi_pasangan.value,
+        provinsi_pasangan: kirimanpro,
         rt_pasangan: rt_pasangan.value,
         rw_pasangan: rw_pasangan.value,
         // status_ktp_pasangan: provinsi_cabang.value,

@@ -734,7 +734,15 @@
     <button (click)="goto()" type="submit" id="selanjutnya" name="selanjutnya" value="selanjutnya" class="btn mb-1 btn-warning">
       Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
     </button>
-    <button type="submit" id="buttonsimpan" name="buttonsimpan" value="buttonsimpan" class="btn mb-1 btn-dark" hidden>
+    <button
+      type="submit"
+      (click)="simpancallreport()"
+      id="buttonsimpan"
+      name="buttonsimpan"
+      value="buttonsimpan"
+      class="btn mb-1 btn-dark"
+      hidden
+    >
       Simpan Data<span class="btn-icon-right"><i class="fa fa-floppy-o"></i></span>
     </button>
   </div>

@@ -246,22 +246,6 @@ export class PersonalInfoComponent implements OnInit {
       var kirimankelurahand = kelurahan_domisili.value;
     }
 
-    // input?.addEventListener('input', function (event: { target: HTMLInputElement; }) {
-    //   const target = event.target as HTMLInputElement |any;
-    //   console.log(target.value);
-    // });
-
-    // alert(target.value);
-
-    //   const headers = {     'Content-Type': 'application/json',
-    //   'Accept': 'application/json',
-    //   // 'Access-Control-Allow-Origin': 'http://localhost:9000',
-    //   // 'Access-Control-Allow-Credentials': 'true',
-    //   // 'Access-Control-Allow-Methods' : "GET,POST,OPTIONS,DELETE,PUT",
-    //   // 'Access-Control-Allow-Headers': "Access-Control-Allow-Headers: *",
-    //   // Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar',
-
-    // };
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
     this.http
