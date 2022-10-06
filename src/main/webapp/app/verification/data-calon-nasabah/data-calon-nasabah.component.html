@@ -713,13 +713,14 @@
         <div class="col-sm-8">
           <div class="col">
             <!---cek-->
-            <input type="checkbox" [value]="'sertifikat'" formControlName="cek"/>Sertifikat &nbsp;&nbsp;
-            <input type="checkbox" [value]="'Rekening Listrik'" formControlName="cek" />Rekening Listrik &nbsp;&nbsp;
-            <input type="checkbox" [value]="'Akta Jual Beli'" formControlName="'cek'" />Akta Jual Beli
-          </div>
-          <div class="col">
-            <input type="checkbox" [value]="'Rekening Listrik'" formControlName="cek" />Rekening Listrik &nbsp;&nbsp;
-            <input type="checkbox" [value]="'Rekening Telepon'" formControlName="cek" />Rekening Telepon
+            <!-- <input type="text" value="{{this.dataCalonNasabahMap.cek}}"> -->
+            <input type="checkbox" value="Sertifikat" (change)="onCheckCek($event)" [checked]="this.checkboxCekSertif == 'Sertifikat'"/>Sertifikat &nbsp;&nbsp;
+            <input type="checkbox" value="Akta Jual Beli"  (change)="onCheckCek($event)" [checked]="this.checkboxCekAkte == 'Akta Jual Beli'"/>Akta Jual Beli &nbsp;&nbsp;
+            <input type="checkbox" value="Rekening Telepon" (change)="onCheckCek($event)" [checked]="this.checkboxCekRekTel == 'Rekening Telepon'"/>Rekening Telepon &nbsp;&nbsp;
+          <!-- </div> -->
+          <!-- <div class="col"> -->
+            <input type="checkbox" value="PBB" (change)="onCheckCek($event)" [checked]="this.checkboxCekPbb == 'PBB'"/>PBB &nbsp;&nbsp;
+            <input type="checkbox" value="Rekening Listrik" (change)="onCheckCek($event)" [checked]="this.checkboxCekRekLis == 'Rekening Listrik'"/>Rekening Listrik
           </div>
         </div>
       </div>
@@ -809,13 +810,13 @@
         <label class="col-sm-4 col-form-label">Isi Rumah</label>
         <div class="col">
           <!--isi_rumah-->
-          <input type="checkbox" id="isi_rumah_mobil" name="isi_rumah_mobil" />Mobil &nbsp;&nbsp;
-          <input type="checkbox" id="isi_rumah_motor" name="isi_rumah_motor" />Motor &nbsp;&nbsp;
-          <input type="checkbox" id="isi_rumah_tv" name="isi_rumah_tv" />TV
-        </div>
-        <div class="col">
-          <input type="checkbox" id="isi_rumah_sofa" name="isi_rumah_sofa" />Sofa &nbsp;&nbsp;
-          <input type="checkbox" id="isi_rumah_perabot_lainnya" name="isi_rumah_perabot_lainnya" />Perabot Lainnya
+          <input type="checkbox" value="Mobil" (change)="onCheckRumah($event)" [checked]="this.isiRumahMobil == 'Mobil'"/>Mobil &nbsp;&nbsp;
+          <input type="checkbox" value="Motor" (change)="onCheckRumah($event)" [checked]="this.isiRumahMotor == 'Motor'"/>Motor &nbsp;&nbsp;
+          <input type="checkbox" value="TV" (change)="onCheckRumah($event)" [checked]="this.isiRumahTV == 'TV'"/>TV &nbsp;&nbsp;
+        <!-- </div>
+        <div class="col"> -->
+          <input type="checkbox" value="Sofa" (change)="onCheckRumah($event)" [checked]="this.isiRumahSofa == 'Sofa'"/>Sofa &nbsp;&nbsp;
+          <input type="checkbox" value="Perabot Lainnya" (change)="onCheckRumah($event)" [checked]="this.isiRumahPerabot == 'Perabot Lainnya'"/>Perabot Lainnya
         </div>
       </div>
     </div>

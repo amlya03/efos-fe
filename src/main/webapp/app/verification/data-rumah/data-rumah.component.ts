@@ -47,7 +47,7 @@ export class DataRumahComponent implements OnInit {
     this.load();
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.analisaKeuanganForm = this.formBuilder.group({
-      // nama: ['', Validators.required],
+      nama_pemohon: ['', Validators.required],
       app_no_de: new FormControl(this.app_no_de),
       nama_perusahaan: ['', Validators.required],
       alamat_perusahaan: ['', Validators.required],
@@ -107,7 +107,7 @@ export class DataRumahComponent implements OnInit {
     } else if (this.analisaKeuanganMap == null) {
       this.http
         .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_keuangan', {
-          // nama: this.analisaKeuanganForm.get('nama')?.value,
+          nama_pemohon: this.analisaKeuanganForm.get('nama_pemohon')?.value,
           alamat_perusahaan: this.analisaKeuanganForm.get('alamat_perusahaan')?.value,
           app_no_de: this.analisaKeuanganForm.get('app_no_de')?.value,
           created_by: '',
@@ -161,7 +161,7 @@ export class DataRumahComponent implements OnInit {
     } else
       this.http
         .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_keuangan', {
-          // nama: this.analisaKeuanganForm.get('nama')?.value,
+          nama_pemohon: this.analisaKeuanganForm.get('nama_pemohon')?.value,
           alamat_perusahaan: this.analisaKeuanganForm.get('alamat_perusahaan')?.value,
           app_no_de: this.analisaKeuanganForm.get('app_no_de')?.value,
           created_by: '',
@@ -223,6 +223,7 @@ export class DataRumahComponent implements OnInit {
       // }
       let retriveAnalisaKeuangan = {
         // id: 1,
+        nama_pemohon: this.analisaKeuanganMap.nama_pemohon,
         app_no_de: this.analisaKeuanganMap.app_no_de,
         nama_perusahaan: this.analisaKeuanganMap.nama_perusahaan,
         alamat_perusahaan: this.analisaKeuanganMap.alamat_perusahaan,
