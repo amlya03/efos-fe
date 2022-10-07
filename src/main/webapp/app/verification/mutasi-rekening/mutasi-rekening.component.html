@@ -1,35 +1,35 @@
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Daftar Calon Nasabah</h3>
 </div>
-<form [formGroup]="mutasiForm" (ngSubmit)="submitForm()">
+<form [formGroup]="mutasiForm" (ngSubmit)="submitForm(nama_bank.value, no_rekening.value, tahun.value, bulan.value, debet.value, kredit.value, saldo.value)">
   <div class="row form-material">
     <!-- ////Colom ke 1\\\\\ -->
     <div class="col">
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Nasabah</label>
         <div class="col-sm-8">
-          <input readonly type="text" class="form-control" id="nama" name="nama" />
+          <input readonly type="text" class="form-control" formControlName="nama" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">No Aplikasi</label>
         <div class="col-sm-8">
-          <input type="text" formControlName="app_no_de" class="form-control" id="no_aplikasi" name="no_aplikasi" />
+          <input readonly type="text" formControlName="app_no_de" class="form-control" id="no_aplikasi" name="no_aplikasi" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Fasilitas</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="fasilitas" name="fasilitas" />
+          <input type="text" readonly class="form-control" formControlName="kode_fasilitas" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Program</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="program" name="program" />
+          <input type="text" readonly class="form-control" formControlName="program_pembiayaan" />
         </div>
       </div>
     </div>
@@ -38,28 +38,28 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Product</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="product" name="product" />
+          <input type="text" readonly class="form-control" formControlName="produk_pembiayaan" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Skema</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="skema" name="skema" />
+          <input type="text" readonly class="form-control" formControlName="kode_fasilitas" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tenor</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="tenor" name="tenor" />
+          <input type="text" readonly class="form-control" formControlName="jangka_waktu" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nilai_pembiayaan" name="nilai_pembiayaan" />
+          <input type="text" readonly class="form-control" formControlName="nilai_pembiayaan" />
         </div>
       </div>
     </div>
@@ -70,7 +70,7 @@
   </div>
   <p></p>
   <p></p>
-  <button class="btn btn-info" style="float: right">Tambah Data</button>
+  <button type="button" (click)="this.tambahTableMutasi = ''; this.lihatTableMutasi = ''; nama_bank.value = ''; no_rekening.value = ''; tahun.value = ''; bulan.value = ''; debet.value = ''; kredit.value = ''; saldo.value = ''; hubunganDenganBank.style.display = 'block'" class="btn btn-info" style="float: right">Tambah Data</button>
   <p></p>
   <table class="table table-striped">
     <thead>
@@ -97,87 +97,92 @@
         <td style="text-align: center">{{ mutasiRekening.kredit }}</td>
         <td style="text-align: center">{{ mutasiRekening.saldo }}</td>
         <td style="text-align: center">
-          {{ mutasiRekening.id }} <fa-icon icon="ellipsis"></fa-icon> &nbsp;&nbsp;&nbsp; <fa-icon icon="trash"></fa-icon> &nbsp;&nbsp;&nbsp;
-          <fa-icon icon="pencil-square"></fa-icon>
+          <a type="button" (click)="editMutasi(mutasiRekening.id); this.lihatTableMutasi = 1; this.tambahTableMutasi = 1; hubunganDenganBank.style.display = 'block'"><fa-icon icon="ellipsis"></fa-icon><br/>View</a>
+          &nbsp;&nbsp;&nbsp;
+          <a type="button"><fa-icon icon="trash"></fa-icon><br/>Hapus</a>
+          &nbsp;&nbsp;&nbsp;
+          <a type="button" (click)="editMutasi(mutasiRekening.id); this.lihatTableMutasi = ''; this.tambahTableMutasi = 1; hubunganDenganBank.style.display = 'block'"><fa-icon icon="pencil-square"></fa-icon><br/>Edit</a>
         </td>
       </tr>
     </tbody>
   </table>
   <p></p>
-  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-    <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pasangan)</h3>
-  </div>
-  <p></p>
-  <p></p>
-  <div class="row form-material">
-    <!-- ////Colom ke 1\\\\\ -->
-    <div class="col">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nama Bank</label>
-        <div class="col-sm-8">
-          <input type="text" formControlName="nama_bank" class="form-control" id="nama_bank" name="nama_bank" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">No Rekening</label>
-        <div class="col-sm-8">
-          <input type="text" formControlName="no_rekening" class="form-control" id="no_rekening" name="no_rekening" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tahun</label>
-        <div class="col-sm-8">
-          <select formControlName="tahun" name="view_data_tahun" id="view_data_tahun" class="form-control">
-            <!-- <option value="">Pilih Data</option> -->
-            <option value="2022">2022</option>
-            <option value="2023">2023</option>
-          </select>
-        </div>
-      </div>
+  <div #hubunganDenganBank style="display: none;">
+    <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+      <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pasangan)</h3>
     </div>
-    <!-- ////Colom ke 2\\\\\ -->
-    <div class="col">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Bulan</label>
-        <div class="col-sm-8">
-          <select formControlName="bulan" name="view_data_bulan" id="view_data_bulan" class="form-control">
-            <!-- <option value="">Pilih Data</option> -->
-            <option value="Januari">Januari</option>
-            <option value="Febuari">Febuari</option>
-            <option value="Maret">Maret</option>
-            <option value="April">April</option>
-            <option value="Mei">Mei</option>
-            <option value="Juni">Juni</option>
-            <option value="Juli">Juli</option>
-            <option value="Agustus">Agustus</option>
-            <option value="September">September</option>
-            <option value="Oktober">Oktober</option>
-            <option value="November">November</option>
-            <option value="Desember">Desember</option>
-          </select>
+    <p></p>
+    <p></p>
+    <div class="row form-material">
+      <!-- ////Colom ke 1\\\\\ -->
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Nama Bank</label>
+          <div class="col-sm-8">
+            <input #nama_bank type="text" value="{{this.getTableMutasi.nama_bank}}" [disabled]="this.lihatTableMutasi == 1" class="form-control"/>
+          </div>
+        </div>
+        <br />
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">No Rekening</label>
+          <div class="col-sm-8">
+            <input #no_rekening type="text" value="{{this.getTableMutasi.no_rekening}}" [disabled]="this.lihatTableMutasi == 1" class="form-control"/>
+          </div>
+        </div>
+        <br />
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Tahun</label>
+          <div class="col-sm-8">
+            <select #tahun name="view_data_tahun" id="view_data_tahun" class="form-control" [disabled]="this.lihatTableMutasi == 1">
+              <option value="{{this.getTableMutasi.tahun}}">{{this.getTableMutasi.tahun}}</option>
+              <option value="2022">2022</option>
+              <option value="2023">2023</option>
+            </select>
+          </div>
         </div>
       </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Debet</label>
-        <div class="col-sm-8">
-          <input formControlName="debet" type="text" class="form-control" id="debet" name="debet" />
+      <!-- ////Colom ke 2\\\\\ -->
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Bulan</label>
+          <div class="col-sm-8">
+            <select #bulan name="view_data_bulan" id="view_data_bulan" class="form-control" [disabled]="this.lihatTableMutasi == 1">
+              <option value="{{this.getTableMutasi.bulan}}">{{this.getTableMutasi.bulan}}</option>
+              <option value="Januari">Januari</option>
+              <option value="Febuari">Febuari</option>
+              <option value="Maret">Maret</option>
+              <option value="April">April</option>
+              <option value="Mei">Mei</option>
+              <option value="Juni">Juni</option>
+              <option value="Juli">Juli</option>
+              <option value="Agustus">Agustus</option>
+              <option value="September">September</option>
+              <option value="Oktober">Oktober</option>
+              <option value="November">November</option>
+              <option value="Desember">Desember</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Kredit</label>
-        <div class="col-sm-8">
-          <input formControlName="kredit" type="text" class="form-control" id="kredit" name="kredit" />
+        <br />
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Debet</label>
+          <div class="col-sm-8">
+            <input #debet value="{{this.getTableMutasi.debet}}" type="text" class="form-control" id="debet" name="debet" [disabled]="this.lihatTableMutasi == 1"/>
+          </div>
         </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Saldo</label>
-        <div class="col-sm-8">
-          <input formControlName="saldo" type="text" class="form-control" id="saldo" name="saldo" />
+        <br />
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Kredit</label>
+          <div class="col-sm-8">
+            <input #kredit value="{{this.getTableMutasi.kredit}}" type="text" class="form-control" id="kredit" name="kredit" [disabled]="this.lihatTableMutasi == 1"/>
+          </div>
+        </div>
+        <br />
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Saldo</label>
+          <div class="col-sm-8">
+            <input #saldo value="{{this.getTableMutasi.saldo}}" type="text" class="form-control" id="saldo" name="saldo" [disabled]="this.lihatTableMutasi == 1"/>
+          </div>
         </div>
       </div>
     </div>
@@ -185,7 +190,7 @@
   <p></p>
   <div class="row">
     <div class="col" style="text-align: center">
-      <button type="submit" class="btn btn-info" (click)="viewMutasiRek()">Simpan Data</button>
+      <button type="submit" class="btn btn-info">Simpan Data</button>
     </div>
   </div>
 </form>

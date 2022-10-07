@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DataTableDirective } from 'angular-datatables';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
-import { Observable } from 'rxjs';
+import { slik } from 'app/initial-data-entry/services/config/slik.model';
+import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { Observable, Subject } from 'rxjs';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { refAnalisaKeuangan } from './refAnalisaKeuangan.model';
-// import { daWuS } from '../daftar-aplikasi-waiting-update-status/daWuS.model';
 
 @Component({
   selector: 'jhi-data-rumah',
@@ -20,7 +22,13 @@ export class DataRumahComponent implements OnInit {
   submitted = false;
   app_no_de: any;
   analisaKeuanganMap: refAnalisaKeuangan = new refAnalisaKeuangan();
-  // dataRumahModel?: daWuS[];
+  dataEntry?: fetchAllDe = new fetchAllDe();
+  listSlik?: slik[];
+
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
 
   constructor(
     protected dataRumah: ServiceVerificationService,
@@ -43,7 +51,22 @@ export class DataRumahComponent implements OnInit {
     'http://10.20.34.178:8805/api/v1/efos-verif/getAnalisaKeuangan?sd='
   );
 
+  // DE
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+
+  // Slik
+  protected getSlik = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-ide/fetchDataSlik?sd='
+  );
+
+
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      processing: true,
+      responsive: true,
+    };
     this.load();
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.analisaKeuanganForm = this.formBuilder.group({
@@ -96,8 +119,20 @@ export class DataRumahComponent implements OnInit {
     });
   }
 
+  // Analisa
   fetchAnalisaKeuangan(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getAnalisaKeuangan + this.app_no_de);
+  }
+
+  // DE
+  getFetchSemuaData(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchSemuaData + this.app_no_de);
+  }
+
+  // Slik
+  fetchSlik(): Observable<ApiResponse> {
+    // return this.http.get<ApiResponse>(this.getSlik + this.dataEntry?.app_no_ide);
+    return this.http.get<ApiResponse>(this.getSlik + "app_20221006_644");
   }
 
   onSubmit(): void {
@@ -215,6 +250,21 @@ export class DataRumahComponent implements OnInit {
   }
 
   load(): void {
+    // ambil semua data DE
+    this.getFetchSemuaData().subscribe(data => {
+      this.dataEntry = data.result;
+      // console.log('DE '+ this.dataEntry?.app_no_ide)
+    });
+
+    // ambil semua data Slik
+    this.fetchSlik().subscribe(data => {
+      // if (data.code === 200) {
+        this.listSlik = data.result;
+        this.dtTrigger.next(data.result);
+        // console.log('slik '+ this.listSlik)
+      // }
+    });
+    // ambil semua data Analisa
     this.fetchAnalisaKeuangan().subscribe(data => {
       // if (data.message === "success") {
       this.analisaKeuanganMap = data.result;

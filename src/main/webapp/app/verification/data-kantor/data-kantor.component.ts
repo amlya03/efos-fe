@@ -76,7 +76,7 @@ export class DataKantorComponent implements OnInit {
 
   ngOnInit(): void {
     // this.postGetTokenDuckapil();
-    this.editor = new Editor();
+    // this.editor = new Editor();
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.dataKantorForm = this.formBuilder.group({
@@ -112,8 +112,8 @@ export class DataKantorComponent implements OnInit {
       tanggal_verifikasi: '', //['', Validators.required],
       pemberi_keterangan: '', //['', Validators.required],
       hubungan_pemberi_keterangan: '', //['', Validators.required],
-      // verif_fax: '',
-      // note_verif_fax: '',
+      verif_fax: '',
+      note_verif_fax: '',
       verif_no_telepon: '',
       note_verif_no_telepon: '',
       verif_alamat_perusahaan: '',
@@ -152,7 +152,7 @@ export class DataKantorComponent implements OnInit {
       note_verif_jabatan: '',
       verif_usia_pensiun: '',
       note_verif_usia_pensiun: '',
-      // divisi: '',
+      divisi: '',
       aspek_syariah: '',
       // created_date: '',
       // updated_date: '',
@@ -168,22 +168,22 @@ export class DataKantorComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // const getSekarang = new Date();
-    const getValueTanggal = +new Date(this.dataKantorForm.value.waktu_verification);
-    // alert(getValueTanggal.getTime());
-    // /////////////ini buat dapet bulan//////////////////////////
-    const getTahun = +~~((Date.now() - getValueTanggal) / 31557600000);
-    // const calculateSekarang = Math.abs(Date.now() - getValueTanggal.getTime());
-    // const getBulan = Math.floor(calculateSekarang / (1000 * 3600 * 24) / 365.25);
-    // alert('Bulannya ' + getTahun);
-    // /////////////ini buat dapet bulan/////////////////////////
-    // var getHariIni = Math.abs(getSekarang.getTime() / (1000 * 3600 * 24) / 365.25);
-    // const getHari = +~~(calculateSekarang / (24 * 60 * 60 * 1000));
-    // const getHari = calculateSekarang / (-86400000);
-    // let tanggalExpNya = "";
-    // var Bday = +new Date(this.dataKantorForm.value.tanggal_verification);
-    let tanggalExpNya = +~~((Date.now() - getValueTanggal) / 86400000);
-    let tanggalExpNyaPakeKoma = (Date.now() - getValueTanggal) / 86400000;
+    // // const getSekarang = new Date();
+    // const getValueTanggal = +new Date(this.dataKantorForm.value.waktu_verification);
+    // // alert(getValueTanggal.getTime());
+    // // /////////////ini buat dapet bulan//////////////////////////
+    // const getTahun = +~~((Date.now() - getValueTanggal) / 31557600000);
+    // // const calculateSekarang = Math.abs(Date.now() - getValueTanggal.getTime());
+    // // const getBulan = Math.floor(calculateSekarang / (1000 * 3600 * 24) / 365.25);
+    // // alert('Bulannya ' + getTahun);
+    // // /////////////ini buat dapet bulan/////////////////////////
+    // // var getHariIni = Math.abs(getSekarang.getTime() / (1000 * 3600 * 24) / 365.25);
+    // // const getHari = +~~(calculateSekarang / (24 * 60 * 60 * 1000));
+    // // const getHari = calculateSekarang / (-86400000);
+    // // let tanggalExpNya = "";
+    // // var Bday = +new Date(this.dataKantorForm.value.tanggal_verification);
+    // let tanggalExpNya = +~~((Date.now() - getValueTanggal) / 86400000);
+    // let tanggalExpNyaPakeKoma = (Date.now() - getValueTanggal) / 86400000;
     // alert("tanggal expnya "+ tanggalExpNya)
     // const getHari = getValueTanggal.getUTCDate()
     // alert(tanggalExpNyaPakeKoma)
@@ -317,15 +317,15 @@ export class DataKantorComponent implements OnInit {
         .subscribe({});
     this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de } });
 
-    // else{
-    if (tanggalExpNya > 30) {
-      alert('Data Sudah Expired / Data Sudah Melebihin 30 Hari');
-      return;
-    } else if (tanggalExpNyaPakeKoma < 0.1) {
-      alert('Data Tidak Boleh Melebihi Hari ini');
-      return;
-    }
+    // // else{
+    // if (tanggalExpNya > 30) {
+    //   alert('Data Sudah Expired / Data Sudah Melebihin 30 Hari');
+    //   return;
+    // } else if (tanggalExpNyaPakeKoma < 0.1) {
+    //   alert('Data Tidak Boleh Melebihi Hari ini');
+    //   return;
     // }
+    // // }
   }
 
   fetchDataKantor(): Observable<ApiResponse> {
@@ -337,7 +337,7 @@ export class DataKantorComponent implements OnInit {
     this.getFetchSemuaData().subscribe(data => {
       // if(data.code === 200) {
       this.dataEntry = data.result;
-      console.log('INI DE ',this.dataEntry);
+      // console.log('INI DE ',this.dataEntry);
       // console.log("ini data de "+this.fetchAllDe);
       // }
     });
@@ -365,15 +365,14 @@ export class DataKantorComponent implements OnInit {
         // status_kepegawaian: this.dataEntry.status_kepegawaian,
         // posisi: this.dataEntry.posisi,
         // usia_pensiun: this.dataEntry.usia_pensiun,
-        // badan_divisi: this.dataEntry.badan_divisi,
 
         // id: this.dataKantorMap.id,
         // app_no_de: this.dataKantorMap.app_no_de,
         tanggal_verifikasi: this.dataKantorMap.tanggal_verifikasi,
         pemberi_keterangan: this.dataKantorMap.pemberi_keterangan,
         hubungan_pemberi_keterangan: this.dataKantorMap.hubungan_pemberi_keterangan,
-        // verif_fax: this.dataKantorMap.verif_fax,
-        // note_verif_fax: this.dataKantorMap.note_verif_fax,
+        verif_fax: this.dataKantorMap.verif_fax,
+        note_verif_fax: this.dataKantorMap.note_verif_fax,
         verif_no_telepon: this.dataKantorMap.verif_no_telepon,
         note_verif_no_telepon: this.dataKantorMap.note_verif_no_telepon,
         verif_alamat_perusahaan: this.dataKantorMap.verif_alamat_perusahaan,
@@ -412,7 +411,7 @@ export class DataKantorComponent implements OnInit {
         note_verif_jabatan: this.dataKantorMap.note_verif_jabatan,
         verif_usia_pensiun: this.dataKantorMap.verif_usia_pensiun,
         note_verif_usia_pensiun: this.dataKantorMap.note_verif_usia_pensiun,
-        // divisi: this.dataKantorMap.divisi,
+        divisi: this.dataKantorMap.divisi,
 
         aspek_syariah: this.dataKantorMap.aspek_syariah,
         // created_date: this.dataKantorMap.created_date,

@@ -94,8 +94,8 @@
               <span routerLink="/data-kantor" [queryParams]="{ app_no_de: this.app_no_de }" hidden></span>
               <span routerLink="/mutasi-rekening" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
               <span routerLink="/sturktur-pembiayaan" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
-              <span routerLink="/checklist-document" hidden></span>
-              <span routerLink="/surat-persetujuan" hidden></span>
+              <span routerLink="/checklist-document" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
+              <span routerLink="/surat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
             </a>
           </li>
         </div>
@@ -541,7 +541,9 @@
       router.url === '/sturktur-pembiayaan' ||
       router.url === '/sturktur-pembiayaan?app_no_de=' + this.app_no_de ||
       router.url === '/checklist-document' ||
-      router.url === '/surat-persetujuan'
+      router.url === '/checklist-document?app_no_de=' + this.app_no_de ||
+      router.url === '/surat-persetujuan' ||
+      router.url === '/surat-persetujuan?app_no_de=' + this.app_no_de
     "
   >
     <a
@@ -597,6 +599,7 @@
     <a
       class="nav-item nav-link"
       routerLink="checklist-document"
+      [queryParams]="{ app_no_de: this.app_no_de }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'APPRAISAL'"
@@ -607,6 +610,7 @@
       hidden
       class="nav-item nav-link"
       routerLink="surat-persetujuan"
+      [queryParams]="{ app_no_de: this.app_no_de }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'APPRAISAL'"
