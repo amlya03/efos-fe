@@ -75,45 +75,45 @@ export class DataKantorComponent implements OnInit {
   protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   ngOnInit(): void {
-    this.postGetTokenDuckapil();
+    // this.postGetTokenDuckapil();
     this.editor = new Editor();
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.dataKantorForm = this.formBuilder.group({
       // tanggal_verification: ['', Validators.required],
-      waktu_verification: ['', Validators.required],
-      no_telepon: ['', Validators.required],
-      fax: ['', Validators.required],
+      // waktu_verification: '', //['', Validators.required],
+      no_telepon: '', //['', Validators.required],
+      fax: '', //['', Validators.required],
       // pemberi_keterangan: ['', Validators.required],
       // hungungan_pemohon_dengan_pemberi_keterangan: ['', Validators.required],
-      nama_perusahaan: ['', Validators.required],
-      alamat_perusahaan: ['', Validators.required],
-      provinsi: ['', Validators.required],
-      kota: ['', Validators.required],
-      kecamatan: ['', Validators.required],
-      kelurahan: ['', Validators.required],
-      kode_pos: ['', Validators.required],
-      lama_bekerja_tahun: ['', Validators.required],
-      lama_bekerja_bulan: ['', Validators.required],
-      lama_beroperasi_tahun: ['', Validators.required],
-      lama_beroperasi_bulan: ['', Validators.required],
-      bidang_usaha: ['', Validators.required],
-      sektor_ekonomi: ['', Validators.required],
-      tipe_pekerjaan: ['', Validators.required],
-      status_kepegawaian: ['', Validators.required],
-      bagian_atau_divisi: ['', Validators.required],
-      posisi: ['', Validators.required],
-      jumlah_karyawan: ['', Validators.required],
-      usia_pensiun: ['', Validators.required],
-      kesimpulan_hasil_investigasi: ['', Validators.required],
+      // nama_perusahaan: '', //['', Validators.required],
+      // alamat_perusahaan: '', //['', Validators.required],
+      provinsi: '', //['', Validators.required],
+      kabkota: '', //['', Validators.required],
+      kecamatan: '', //['', Validators.required],
+      kelurahan: '', //['', Validators.required],
+      kode_pos: '', //['', Validators.required],
+      // lama_bekerja_tahun: '', //['', Validators.required],
+      // lama_bekerja_bulan: '', //['', Validators.required],
+      // lama_beroperasi_tahun: '', //['', Validators.required],
+      // lama_beroperasi_bulan: '', //['', Validators.required],
+      // bidang_usaha: '', //['', Validators.required],
+      // sektor_ekonomi: '', //['', Validators.required],
+      // tipe_pekerjaan: '',//'', //['', Validators.required],
+      // status_kepegawaian: '', //['', Validators.required],
+      // bagian_atau_divisi: '', //['', Validators.required],
+      // posisi: '', //['', Validators.required],
+      // jumlah_karyawan: '', //['', Validators.required],
+      // usia_pensiun: '', //['', Validators.required],
+      // kesimpulan_hasil_investigasi: '', //['', Validators.required],
 
       // id: '',
-      app_no_de: '',
-      tanggal_verification: ['', Validators.required],
-      pemberi_keterangan: ['', Validators.required],
-      hubungan_pemberi_keterangan: ['', Validators.required],
-      verif_fax: '',
-      note_verif_fax: '',
+      // app_no_de: '',
+      tanggal_verifikasi: '', //['', Validators.required],
+      pemberi_keterangan: '', //['', Validators.required],
+      hubungan_pemberi_keterangan: '', //['', Validators.required],
+      // verif_fax: '',
+      // note_verif_fax: '',
       verif_no_telepon: '',
       note_verif_no_telepon: '',
       verif_alamat_perusahaan: '',
@@ -132,16 +132,16 @@ export class DataKantorComponent implements OnInit {
       note_verif_kode_pos: '',
       verif_lama_bekerja: '',
       note_verif_lama_bekerja: '',
-      verif_lama_beroperasi: '',
-      note_verif_lama_beroperasi: '',
+      // verif_lama_beroperasi: '',
+      // note_verif_lama_beroperasi: '',
       verif_bidang_usaha: '',
       note_verif_bidang_usaha: '',
-      verif_tipe_perusahaan: '',
-      note_verif_tipe_perusahaan: '',
-      verif_jenis_pekerjaan: '',
-      note_verif_jenis_pekerjaan: '',
-      verif_jumlah_karyawan: '',
-      note_verif_jumlah_karyawan: '',
+      // // verif_tipe_perusahaan: '',
+      // // note_verif_tipe_perusahaan: '',
+      // // verif_jenis_pekerjaan: '',
+      // // note_verif_jenis_pekerjaan: '',
+      // // verif_jumlah_karyawan: '',
+      // // note_verif_jumlah_karyawan: '',
       verif_sektor_ekonomi: '',
       note_verif_sektor_ekonomi: '',
       verif_tipe_pekerjaan: '',
@@ -152,7 +152,7 @@ export class DataKantorComponent implements OnInit {
       note_verif_jabatan: '',
       verif_usia_pensiun: '',
       note_verif_usia_pensiun: '',
-      divisi: '',
+      // divisi: '',
       aspek_syariah: '',
       // created_date: '',
       // updated_date: '',
@@ -196,47 +196,47 @@ export class DataKantorComponent implements OnInit {
           id: 0,
           app_no_de: this.app_no_de,
           aspek_syariah: this.dataKantorForm.get('aspek_syariah')?.value,
-          created_by: this.dataKantorForm.get('created_by')?.value,
-          created_date: this.dataKantorForm.get('created_date')?.value,
+          // created_by: this.dataKantorForm.get('created_by')?.value,
+          // created_date: this.dataKantorForm.get('created_date')?.value,
           divisi: this.dataKantorForm.get('divisi')?.value,
           hubungan_pemberi_keterangan: this.dataKantorForm.get('hubungan_pemberi_keterangan')?.value,
           note_verif_alamat_perusahan: this.dataKantorForm.get('note_verif_alamat_perusahan')?.value,
           note_verif_bidang_usaha: this.dataKantorForm.get('note_verif_bidang_usaha')?.value,
           note_verif_fax: this.dataKantorForm.get('note_verif_fax')?.value,
           note_verif_jabatan: this.dataKantorForm.get('note_verif_jabatan')?.value,
-          note_verif_jenis_pekerjaan: this.dataKantorForm.get('note_verif_jenis_pekerjaan')?.value,
-          note_verif_jumlah_karyawan: this.dataKantorForm.get('note_verif_jumlah_karyawan')?.value,
+          // note_verif_jenis_pekerjaan: this.dataKantorForm.get('note_verif_jenis_pekerjaan')?.value,
+          // note_verif_jumlah_karyawan: this.dataKantorForm.get('note_verif_jumlah_karyawan')?.value,
           note_verif_kabkota: this.dataKantorForm.get('note_verif_kabkota')?.value,
           note_verif_kecamatan: this.dataKantorForm.get('note_verif_kecamatan')?.value,
           note_verif_kelurahan: this.dataKantorForm.get('note_verif_kelurahan')?.value,
-          note_verif_kode_pos: this.dataKantorForm.get('note_verif_kelurahan')?.value,
+          note_verif_kode_pos: this.dataKantorForm.get('note_verif_kode_pos')?.value,
           note_verif_lama_bekerja: this.dataKantorForm.get('note_verif_lama_bekerja')?.value,
           note_verif_lama_beroperasi: this.dataKantorForm.get('note_verif_lama_beroperasi')?.value,
           note_verif_nama_perusahan: this.dataKantorForm.get('note_verif_nama_perusahan')?.value,
-          note_verif_no_telepon: this.dataKantorForm.get('note_verif_kelurahan')?.value,
+          note_verif_no_telepon: this.dataKantorForm.get('note_verif_no_telepon')?.value,
           note_verif_provinsi: this.dataKantorForm.get('note_verif_provinsi')?.value,
-          note_verif_rt_rw: this.dataKantorForm.get('note_verif_kelurahan')?.value,
-          note_verif_sektor_ekonomi: this.dataKantorForm.get('note_verif_kelurahan')?.value,
+          note_verif_rt_rw: this.dataKantorForm.get('note_verif_rt_rw')?.value,
+          note_verif_sektor_ekonomi: this.dataKantorForm.get('note_verif_sektor_ekonomi')?.value,
           note_verif_status_kepegawaian: this.dataKantorForm.get('note_verif_status_kepegawaian')?.value,
           note_verif_tipe_pekerjaan: this.dataKantorForm.get('note_verif_tipe_pekerjaan')?.value,
-          note_verif_tipe_perusahaan: this.dataKantorForm.get('note_verif_tipe_pekerjaan')?.value,
+          // note_verif_tipe_perusahaan: this.dataKantorForm.get('note_verif_tipe_perusahaan')?.value,
           note_verif_usia_pensiun: this.dataKantorForm.get('note_verif_usia_pensiun')?.value,
           pemberi_keterangan: this.dataKantorForm.get('pemberi_keterangan')?.value,
           tanggal_verifikasi: this.dataKantorForm.get('tanggal_verifikasi')?.value,
-          updated_by: this.dataKantorForm.get('updated_by')?.value,
-          updated_date: this.dataKantorForm.get('updated_date')?.value,
-          verif_alamat_perusahan: this.dataKantorForm.get('verif_alamat')?.value,
+          // updated_by: this.dataKantorForm.get('updated_by')?.value,
+          // updated_date: this.dataKantorForm.get('updated_date')?.value,
+          verif_alamat_perusahan: this.dataKantorForm.get('verif_alamat_perusahan')?.value,
           verif_bidang_usaha: this.dataKantorForm.get('verif_bidang_usaha')?.value,
           verif_fax: this.dataKantorForm.get('verif_fax')?.value,
           verif_jabatan: this.dataKantorForm.get('verif_jabatan')?.value,
-          verif_jenis_pekerjaan: this.dataKantorForm.get('verif_jenis_pekerjaan')?.value,
-          verif_jumlah_karyawan: this.dataKantorForm.get('verif_jumlah_karyawan')?.value,
+          // verif_jenis_pekerjaan: this.dataKantorForm.get('verif_jenis_pekerjaan')?.value,
+          // verif_jumlah_karyawan: this.dataKantorForm.get('verif_jumlah_karyawan')?.value,
           verif_kabkota: this.dataKantorForm.get('verif_kabkota')?.value,
           verif_kecamatan: this.dataKantorForm.get('verif_kecamatan')?.value,
           verif_kelurahan: this.dataKantorForm.get('verif_kelurahan')?.value,
           verif_kode_pos: this.dataKantorForm.get('verif_kode_pos')?.value,
           verif_lama_bekerja: this.dataKantorForm.get('verif_lama_bekerja')?.value,
-          verif_lama_beroperasi: this.dataKantorForm.get('verif_lama_bekerja')?.value,
+          verif_lama_beroperasi: this.dataKantorForm.get('verif_lama_beroperasi')?.value,
           verif_nama_perusahan: this.dataKantorForm.get('verif_nama_perusahan')?.value,
           verif_no_telepon: this.dataKantorForm.get('verif_no_telepon')?.value,
           verif_provinsi: this.dataKantorForm.get('verif_provinsi')?.value,
@@ -244,8 +244,12 @@ export class DataKantorComponent implements OnInit {
           verif_sektor_ekonomi: this.dataKantorForm.get('verif_sektor_ekonomi')?.value,
           verif_status_kepegawaian: this.dataKantorForm.get('verif_status_kepegawaian')?.value,
           verif_tipe_pekerjaan: this.dataKantorForm.get('verif_tipe_pekerjaan')?.value,
-          verif_tipe_perusahaan: this.dataKantorForm.get('verif_tipe_perusahaan')?.value,
+          // verif_tipe_perusahaan: this.dataKantorForm.get('verif_tipe_perusahaan')?.value,
           verif_usia_pensiun: this.dataKantorForm.get('verif_usia_pensiun')?.value,
+          verif_nama_perusahaan: this.dataKantorForm.get('verif_nama_perusahaan')?.value,
+          note_verif_nama_perusahaan: this.dataKantorForm.get('note_verif_nama_perusahaan')?.value,
+          verif_alamat_perusahaan: this.dataKantorForm.get('verif_alamat_perusahaan')?.value,
+          note_verif_alamat_perusahaan: this.dataKantorForm.get('note_verif_alamat_perusahaan')?.value
         })
         .subscribe({});
       this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de } });
@@ -255,47 +259,47 @@ export class DataKantorComponent implements OnInit {
           id: 0,
           app_no_de: this.app_no_de,
           aspek_syariah: this.dataKantorForm.get('aspek_syariah')?.value,
-          created_by: this.dataKantorForm.get('created_by')?.value,
-          created_date: this.dataKantorForm.get('created_date')?.value,
+          // created_by: this.dataKantorForm.get('created_by')?.value,
+          // created_date: this.dataKantorForm.get('created_date')?.value,
           divisi: this.dataKantorForm.get('divisi')?.value,
           hubungan_pemberi_keterangan: this.dataKantorForm.get('hubungan_pemberi_keterangan')?.value,
           note_verif_alamat_perusahan: this.dataKantorForm.get('note_verif_alamat_perusahan')?.value,
           note_verif_bidang_usaha: this.dataKantorForm.get('note_verif_bidang_usaha')?.value,
           note_verif_fax: this.dataKantorForm.get('note_verif_fax')?.value,
           note_verif_jabatan: this.dataKantorForm.get('note_verif_jabatan')?.value,
-          note_verif_jenis_pekerjaan: this.dataKantorForm.get('note_verif_jenis_pekerjaan')?.value,
-          note_verif_jumlah_karyawan: this.dataKantorForm.get('note_verif_jumlah_karyawan')?.value,
+          // note_verif_jenis_pekerjaan: this.dataKantorForm.get('note_verif_jenis_pekerjaan')?.value,
+          // note_verif_jumlah_karyawan: this.dataKantorForm.get('note_verif_jumlah_karyawan')?.value,
           note_verif_kabkota: this.dataKantorForm.get('note_verif_kabkota')?.value,
           note_verif_kecamatan: this.dataKantorForm.get('note_verif_kecamatan')?.value,
           note_verif_kelurahan: this.dataKantorForm.get('note_verif_kelurahan')?.value,
-          note_verif_kode_pos: this.dataKantorForm.get('note_verif_kelurahan')?.value,
+          note_verif_kode_pos: this.dataKantorForm.get('note_verif_kode_pos')?.value,
           note_verif_lama_bekerja: this.dataKantorForm.get('note_verif_lama_bekerja')?.value,
           note_verif_lama_beroperasi: this.dataKantorForm.get('note_verif_lama_beroperasi')?.value,
           note_verif_nama_perusahan: this.dataKantorForm.get('note_verif_nama_perusahan')?.value,
-          note_verif_no_telepon: this.dataKantorForm.get('note_verif_kelurahan')?.value,
+          note_verif_no_telepon: this.dataKantorForm.get('note_verif_no_telepon')?.value,
           note_verif_provinsi: this.dataKantorForm.get('note_verif_provinsi')?.value,
-          note_verif_rt_rw: this.dataKantorForm.get('note_verif_kelurahan')?.value,
-          note_verif_sektor_ekonomi: this.dataKantorForm.get('note_verif_kelurahan')?.value,
+          note_verif_rt_rw: this.dataKantorForm.get('note_verif_rt_rw')?.value,
+          note_verif_sektor_ekonomi: this.dataKantorForm.get('note_verif_sektor_ekonomi')?.value,
           note_verif_status_kepegawaian: this.dataKantorForm.get('note_verif_status_kepegawaian')?.value,
           note_verif_tipe_pekerjaan: this.dataKantorForm.get('note_verif_tipe_pekerjaan')?.value,
-          note_verif_tipe_perusahaan: this.dataKantorForm.get('note_verif_tipe_pekerjaan')?.value,
+          // note_verif_tipe_perusahaan: this.dataKantorForm.get('note_verif_tipe_perusahaan')?.value,
           note_verif_usia_pensiun: this.dataKantorForm.get('note_verif_usia_pensiun')?.value,
           pemberi_keterangan: this.dataKantorForm.get('pemberi_keterangan')?.value,
           tanggal_verifikasi: this.dataKantorForm.get('tanggal_verifikasi')?.value,
-          updated_by: this.dataKantorForm.get('updated_by')?.value,
-          updated_date: this.dataKantorForm.get('updated_date')?.value,
-          verif_alamat_perusahan: this.dataKantorForm.get('verif_alamat')?.value,
+          // updated_by: this.dataKantorForm.get('updated_by')?.value,
+          // updated_date: this.dataKantorForm.get('updated_date')?.value,
+          verif_alamat_perusahan: this.dataKantorForm.get('verif_alamat_perusahan')?.value,
           verif_bidang_usaha: this.dataKantorForm.get('verif_bidang_usaha')?.value,
           verif_fax: this.dataKantorForm.get('verif_fax')?.value,
           verif_jabatan: this.dataKantorForm.get('verif_jabatan')?.value,
-          verif_jenis_pekerjaan: this.dataKantorForm.get('verif_jenis_pekerjaan')?.value,
-          verif_jumlah_karyawan: this.dataKantorForm.get('verif_jumlah_karyawan')?.value,
+          // verif_jenis_pekerjaan: this.dataKantorForm.get('verif_jenis_pekerjaan')?.value,
+          // verif_jumlah_karyawan: this.dataKantorForm.get('verif_jumlah_karyawan')?.value,
           verif_kabkota: this.dataKantorForm.get('verif_kabkota')?.value,
           verif_kecamatan: this.dataKantorForm.get('verif_kecamatan')?.value,
           verif_kelurahan: this.dataKantorForm.get('verif_kelurahan')?.value,
           verif_kode_pos: this.dataKantorForm.get('verif_kode_pos')?.value,
           verif_lama_bekerja: this.dataKantorForm.get('verif_lama_bekerja')?.value,
-          verif_lama_beroperasi: this.dataKantorForm.get('verif_lama_bekerja')?.value,
+          verif_lama_beroperasi: this.dataKantorForm.get('verif_lama_beroperasi')?.value,
           verif_nama_perusahan: this.dataKantorForm.get('verif_nama_perusahan')?.value,
           verif_no_telepon: this.dataKantorForm.get('verif_no_telepon')?.value,
           verif_provinsi: this.dataKantorForm.get('verif_provinsi')?.value,
@@ -303,8 +307,12 @@ export class DataKantorComponent implements OnInit {
           verif_sektor_ekonomi: this.dataKantorForm.get('verif_sektor_ekonomi')?.value,
           verif_status_kepegawaian: this.dataKantorForm.get('verif_status_kepegawaian')?.value,
           verif_tipe_pekerjaan: this.dataKantorForm.get('verif_tipe_pekerjaan')?.value,
-          verif_tipe_perusahaan: this.dataKantorForm.get('verif_tipe_perusahaan')?.value,
+          // verif_tipe_perusahaan: this.dataKantorForm.get('verif_tipe_perusahaan')?.value,
           verif_usia_pensiun: this.dataKantorForm.get('verif_usia_pensiun')?.value,
+          verif_nama_perusahaan: this.dataKantorForm.get('verif_nama_perusahaan')?.value,
+          note_verif_nama_perusahaan: this.dataKantorForm.get('note_verif_nama_perusahaan')?.value,
+          verif_alamat_perusahaan: this.dataKantorForm.get('verif_alamat_perusahaan')?.value,
+          note_verif_alamat_perusahaan: this.dataKantorForm.get('note_verif_alamat_perusahaan')?.value
         })
         .subscribe({});
     this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de } });
@@ -329,13 +337,14 @@ export class DataKantorComponent implements OnInit {
     this.getFetchSemuaData().subscribe(data => {
       // if(data.code === 200) {
       this.dataEntry = data.result;
-      // console.log(this.dataEntry);
+      console.log('INI DE ',this.dataEntry);
       // console.log("ini data de "+this.fetchAllDe);
       // }
     });
 
     this.fetchDataKantor().subscribe(data => {
       this.dataKantorMap = data.result;
+      // alert(this.dataKantorMap.note_verif_alamat_perusahaan)
 
       let retriveDataKantor = {
         // retrive de
@@ -344,7 +353,7 @@ export class DataKantorComponent implements OnInit {
         // nama_perusahaan: this.dataEntry.nama_perusahaan,
         // alamat_perusahaan: this.dataEntry.alamat_perusahaan,
         provinsi: this.dataEntry.provinsi,
-        kota: this.dataEntry.kabkota,
+        kabkota: this.dataEntry.kabkota,
         kecamatan: this.dataEntry.kecamatan,
         kelurahan: this.dataEntry.kelurahan,
         kode_pos: this.dataEntry.kode_pos,
@@ -359,12 +368,12 @@ export class DataKantorComponent implements OnInit {
         // badan_divisi: this.dataEntry.badan_divisi,
 
         // id: this.dataKantorMap.id,
-        app_no_de: this.dataKantorMap.app_no_de,
+        // app_no_de: this.dataKantorMap.app_no_de,
         tanggal_verifikasi: this.dataKantorMap.tanggal_verifikasi,
         pemberi_keterangan: this.dataKantorMap.pemberi_keterangan,
         hubungan_pemberi_keterangan: this.dataKantorMap.hubungan_pemberi_keterangan,
-        verif_fax: this.dataKantorMap.verif_fax,
-        note_verif_fax: this.dataKantorMap.note_verif_fax,
+        // verif_fax: this.dataKantorMap.verif_fax,
+        // note_verif_fax: this.dataKantorMap.note_verif_fax,
         verif_no_telepon: this.dataKantorMap.verif_no_telepon,
         note_verif_no_telepon: this.dataKantorMap.note_verif_no_telepon,
         verif_alamat_perusahaan: this.dataKantorMap.verif_alamat_perusahaan,
@@ -383,16 +392,16 @@ export class DataKantorComponent implements OnInit {
         note_verif_kode_pos: this.dataKantorMap.note_verif_kode_pos,
         verif_lama_bekerja: this.dataKantorMap.verif_lama_bekerja,
         note_verif_lama_bekerja: this.dataKantorMap.note_verif_lama_bekerja,
-        verif_lama_beroperasi: this.dataKantorMap.verif_lama_beroperasi,
-        note_verif_lama_beroperasi: this.dataKantorMap.note_verif_lama_beroperasi,
+        // verif_lama_beroperasi: this.dataKantorMap.verif_lama_beroperasi,
+        // note_verif_lama_beroperasi: this.dataKantorMap.note_verif_lama_beroperasi,
         verif_bidang_usaha: this.dataKantorMap.verif_bidang_usaha,
         note_verif_bidang_usaha: this.dataKantorMap.note_verif_bidang_usaha,
-        verif_tipe_perusahaan: this.dataKantorMap.verif_tipe_perusahaan,
-        note_verif_tipe_perusahaan: this.dataKantorMap.note_verif_tipe_perusahaan,
-        verif_jenis_pekerjaan: this.dataKantorMap.verif_jenis_pekerjaan,
-        note_verif_jenis_pekerjaan: this.dataKantorMap.note_verif_jenis_pekerjaan,
-        verif_jumlah_karyawan: this.dataKantorMap.verif_jumlah_karyawan,
-        note_verif_jumlah_karyawan: this.dataKantorMap.note_verif_jumlah_karyawan,
+        // // verif_tipe_perusahaan: this.dataKantorMap.verif_tipe_perusahaan,
+        // // note_verif_tipe_perusahaan: this.dataKantorMap.note_verif_tipe_perusahaan,
+        // // verif_jenis_pekerjaan: this.dataKantorMap.verif_jenis_pekerjaan,
+        // // note_verif_jenis_pekerjaan: this.dataKantorMap.note_verif_jenis_pekerjaan,
+        // // verif_jumlah_karyawan: this.dataKantorMap.verif_jumlah_karyawan,
+        // // note_verif_jumlah_karyawan: this.dataKantorMap.note_verif_jumlah_karyawan,
         verif_sektor_ekonomi: this.dataKantorMap.verif_sektor_ekonomi,
         note_verif_sektor_ekonomi: this.dataKantorMap.note_verif_sektor_ekonomi,
         verif_tipe_pekerjaan: this.dataKantorMap.verif_tipe_pekerjaan,
@@ -403,12 +412,13 @@ export class DataKantorComponent implements OnInit {
         note_verif_jabatan: this.dataKantorMap.note_verif_jabatan,
         verif_usia_pensiun: this.dataKantorMap.verif_usia_pensiun,
         note_verif_usia_pensiun: this.dataKantorMap.note_verif_usia_pensiun,
-        divisi: this.dataKantorMap.divisi,
+        // divisi: this.dataKantorMap.divisi,
+
         aspek_syariah: this.dataKantorMap.aspek_syariah,
-        created_date: this.dataKantorMap.created_date,
-        updated_date: this.dataKantorMap.updated_date,
-        created_by: this.dataKantorMap.created_by,
-        updated_by: this.dataKantorMap.updated_by,
+        // created_date: this.dataKantorMap.created_date,
+        // updated_date: this.dataKantorMap.updated_date,
+        // created_by: this.dataKantorMap.created_by,
+        // updated_by: this.dataKantorMap.updated_by,
       };
       this.dataKantorForm.setValue(retriveDataKantor);
     });
@@ -421,27 +431,27 @@ export class DataKantorComponent implements OnInit {
       }
     });
 
-    // ref jabatan
-    this.dataKantor.getJabatan().subscribe(data => {
-      // console.warn('ref', data);
-      if (data.code === 200) {
-        this.refJabatan = data.result;
-      }
-    });
-    // ref Jumlah Karyawan
-    this.dataKantor.getJumlahKaryawan().subscribe(data => {
-      // console.warn('ref', data);
-      if (data.code === 200) {
-        this.refJumlahKaryawan = data.result;
-      }
-    });
-    // ref Jenis Bidang
-    this.IdeService.getBidang().subscribe(data => {
-      // console.log('jenis Bidang', data.result);
-      if (data.code === 200) {
-        this.refBidang = data.result;
-      }
-    });
+    // // ref jabatan
+    // this.dataKantor.getJabatan().subscribe(data => {
+    //   // console.warn('ref', data);
+    //   if (data.code === 200) {
+    //     this.refJabatan = data.result;
+    //   }
+    // });
+    // // ref Jumlah Karyawan
+    // this.dataKantor.getJumlahKaryawan().subscribe(data => {
+    //   // console.warn('ref', data);
+    //   if (data.code === 200) {
+    //     this.refJumlahKaryawan = data.result;
+    //   }
+    // });
+    // // ref Jenis Bidang
+    // this.IdeService.getBidang().subscribe(data => {
+    //   // console.log('jenis Bidang', data.result);
+    //   if (data.code === 200) {
+    //     this.refBidang = data.result;
+    //   }
+    // });
   }
 
   // Only Numbers
@@ -455,134 +465,134 @@ export class DataKantorComponent implements OnInit {
   }
 
   // Untuk Ducapil
-  postGetTokenDuckapil(): void {
-    this.http
-      .post<any>('http://10.20.82.12:8083/token/generate-token', {
-        password: '3foWeb@pp',
-        username: 'efo',
-      })
-      .subscribe({
-        next: data => {
-          this.getToken = data.result.token;
+  // postGetTokenDuckapil(): void {
+  //   this.http
+  //     .post<any>('http://10.20.82.12:8083/token/generate-token', {
+  //       password: '3foWeb@pp',
+  //       username: 'efo',
+  //     })
+  //     .subscribe({
+  //       next: data => {
+  //         this.getToken = data.result.token;
 
-          this.getProvinsiDukcapil(this.getToken).subscribe(data => {
-            console.warn('ref', data);
-            if (data.status === 200) {
-              this.getProvinsi = data.body?.result;
-            }
-          });
-        },
-      });
-  }
-  getProvinsiDukcapil(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
+  //         this.getProvinsiDukcapil(this.getToken).subscribe(data => {
+  //           console.warn('ref', data);
+  //           if (data.status === 200) {
+  //             this.getProvinsi = data.body?.result;
+  //           }
+  //         });
+  //       },
+  //     });
+  // }
+  // getProvinsiDukcapil(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
+  //   const options = createRequestOption(req);
+  //   const httpOptions = {
+  //     'Content-Type': 'application/json',
+  //     Authorization: `Bearer ${token}`,
+  //   };
 
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvinsi/', {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-  }
-  getkabkota(token: any, kodekota: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-    const kodepotongan = kodekota.split('|');
+  //   return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvinsi/', {
+  //     headers: httpOptions,
+  //     params: options,
+  //     observe: 'response',
+  //   });
+  // }
+  // getkabkota(token: any, kodekota: any, req?: any): Observable<EntityArrayResponseDaWa> {
+  //   const options = createRequestOption(req);
+  //   const httpOptions = {
+  //     'Content-Type': 'application/json',
+  //     Authorization: `Bearer ${token}`,
+  //   };
+  //   const kodepotongan = kodekota.split('|');
 
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKota/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-  }
+  //   return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKota/' + kodepotongan[0], {
+  //     headers: httpOptions,
+  //     params: options,
+  //     observe: 'response',
+  //   });
+  // }
 
-  getkecamatan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
+  // getkecamatan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
+  //   const options = createRequestOption(req);
+  //   const httpOptions = {
+  //     'Content-Type': 'application/json',
+  //     Authorization: `Bearer ${token}`,
+  //   };
 
-    const kodepotongan = kodekecamatan.split('|');
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKec/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-  }
+  //   const kodepotongan = kodekecamatan.split('|');
+  //   return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKec/' + kodepotongan[0], {
+  //     headers: httpOptions,
+  //     params: options,
+  //     observe: 'response',
+  //   });
+  // }
 
-  getkodepos(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-    const kodepotongan = kodekecamatan.split('|');
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKdPos/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-  }
+  // getkodepos(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
+  //   const options = createRequestOption(req);
+  //   const httpOptions = {
+  //     'Content-Type': 'application/json',
+  //     Authorization: `Bearer ${token}`,
+  //   };
+  //   const kodepotongan = kodekecamatan.split('|');
+  //   return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKdPos/' + kodepotongan[0], {
+  //     headers: httpOptions,
+  //     params: options,
+  //     observe: 'response',
+  //   });
+  // }
 
-  getkelurahan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-    const kodepotongan = kodekecamatan.split('|');
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKel/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-  }
-  onChangeProvinsi(valueProvinsi: any) {
-    this.getkabkota(this.getToken, valueProvinsi).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        this.getKota = res.body?.result;
-      },
-    });
-  }
+  // getkelurahan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
+  //   const options = createRequestOption(req);
+  //   const httpOptions = {
+  //     'Content-Type': 'application/json',
+  //     Authorization: `Bearer ${token}`,
+  //   };
+  //   const kodepotongan = kodekecamatan.split('|');
+  //   return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKel/' + kodepotongan[0], {
+  //     headers: httpOptions,
+  //     params: options,
+  //     observe: 'response',
+  //   });
+  // }
+  // onChangeProvinsi(valueProvinsi: any) {
+  //   this.getkabkota(this.getToken, valueProvinsi).subscribe({
+  //     next: (res: EntityArrayResponseDaWa) => {
+  //       this.getKota = res.body?.result;
+  //     },
+  //   });
+  // }
 
-  onChangekota(valueKota: any) {
-    this.getkecamatan(this.getToken, valueKota).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        this.getKecamatan = res.body?.result;
-      },
-    });
-  }
+  // onChangekota(valueKota: any) {
+  //   this.getkecamatan(this.getToken, valueKota).subscribe({
+  //     next: (res: EntityArrayResponseDaWa) => {
+  //       this.getKecamatan = res.body?.result;
+  //     },
+  //   });
+  // }
 
-  onChangekecamatan(valueKecamatan: any) {
-    this.getkelurahan(this.getToken, valueKecamatan).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        this.getKelurahan = res.body?.result;
-      },
-    });
-  }
+  // onChangekecamatan(valueKecamatan: any) {
+  //   this.getkelurahan(this.getToken, valueKecamatan).subscribe({
+  //     next: (res: EntityArrayResponseDaWa) => {
+  //       this.getKelurahan = res.body?.result;
+  //     },
+  //   });
+  // }
 
-  onChangekelurahan(valueKelurahan: any) {
-    const datakodepos = valueKelurahan.split('|');
-    this.getKodePos = datakodepos[0];
-  }
+  // onChangekelurahan(valueKelurahan: any) {
+  //   const datakodepos = valueKelurahan.split('|');
+  //   this.getKodePos = datakodepos[0];
+  // }
 
-  onChangeBidang(bidang: any) {
-    const poyonganGrupSektor = bidang.split('|');
-    // alert(poyonganGrupSektor[0])
-    return this.http
-      .get<ApiResponse>('http://10.20.34.110:8805/api/v1/efos-ide/list_sektor_ekonomi?se=' + poyonganGrupSektor[0])
-      .subscribe(data => {
-        // console.log('Sektor Ekonomi', data.result);
-        if (data.code === 200) {
-          this.refSektor = data.result;
-        }
-      });
-  }
+  // onChangeBidang(bidang: any) {
+  //   const poyonganGrupSektor = bidang.split('|');
+  //   // alert(poyonganGrupSektor[0])
+  //   return this.http
+  //     .get<ApiResponse>('http://10.20.34.110:8805/api/v1/efos-ide/list_sektor_ekonomi?se=' + poyonganGrupSektor[0])
+  //     .subscribe(data => {
+  //       // console.log('Sektor Ekonomi', data.result);
+  //       if (data.code === 200) {
+  //         this.refSektor = data.result;
+  //       }
+  //     });
+  // }
 }

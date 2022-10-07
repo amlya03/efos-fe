@@ -8,6 +8,7 @@ export class refAnalisaKeuangan {
   jabatan_dihubungi?: string;
   tanggal_permintaan?: string;
   tanggal_pemeriksa?: string;
+  nama_pemohon?: string;
   nama_pemeriksa?: string;
   gaji_kotor?: number;
   tunjangan?: number;

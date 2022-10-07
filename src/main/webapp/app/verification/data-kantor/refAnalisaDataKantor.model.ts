@@ -42,7 +42,7 @@ export class refAnalisaDataKantor {
   note_verif_status_kepegawaian?: string;
   verif_jabatan?: string;
   note_verif_jabatan?: string;
-  verif_usia_pensiun?: string;
+  verif_usia_pensiun?: number;
   note_verif_usia_pensiun?: string;
   divisi?: string;
   aspek_syariah?: number;

@@ -3,7 +3,7 @@ export class fetchAllDe {
   app_no_ide?: string | null;
   app_no_de?: string | null;
   curef?: string | null;
-  id_customer?: 742;
+  id_customer?: number;
   nama?: string | null;
   jenis_kelamin?: string | null;
   tanggal_lahir?: string | null;
