@@ -21,6 +21,7 @@ export class CallReportNonComponent implements OnInit {
   daWa: any;
   daWa1: any;
   nowawancara: any;
+  contohtex: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,6 +49,11 @@ export class CallReportNonComponent implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   load() {
+    $('#denganini').val(
+      'JALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALAN'
+    );
+    this.contohtex =
+      'Dengan ini saya menyatakan hasil wawancara yang diisi oleh saya "+Aoname+" dan pemberi Informasi yang disebut nasabah adalah benar adanya "+ userName';
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('callreportnon', res);
@@ -105,8 +111,7 @@ export class CallReportNonComponent implements OnInit {
     return this.http.get<ApiResponse>(this.apgetnowawancara, { params: options, observe: 'response' });
   }
 
-  simpancallreport() // contohtampungancuref: any,
-  // contohtampungstatuskawain: any,
+  simpancallreport() // contohtampungstatuskawain: any, // contohtampungancuref: any,
   // contohtampunganappde: any,
   // contohtampungankategoripekerjaan: any
   {

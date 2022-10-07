@@ -6,6 +6,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { createRequestOption } from 'app/core/request/request-util';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { DataEntryService } from '../services/data-entry.service';
 
 // export type EntityResponseDaWa = HttpResponse<dataentrymodel>;
@@ -86,7 +87,8 @@ export class PersonalInfoComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    private localStorageService: LocalStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.datakiriman = params['datakiriman'];
@@ -100,24 +102,53 @@ export class PersonalInfoComponent implements OnInit {
     this.load();
   }
   load(): void {
-    this.gettokendukcapil();
+    if (this.localStorageService.retrieve('sessionRole') == 'BM') {
+      this.getdataentry().subscribe({
+        next: (res: EntityArrayResponseDaWa) => {
+          // console.log(res.body?.result);
+          console.warn('tabel', res);
+          console.warn('!!!!!!!!!!!!!!!!!!!', this.app_no_de);
+          // console.warn('tabel', res);
+          // console.warn('!!!!!!!!!!!!!!!!!!!', this.datakiriman);
+          // console.warn('@@@@@@@@@@@@@', this.datakiriman);
+          // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
+          this.daWa = res.body?.result;
+          // this.onResponseSuccess(res);
+        },
+      });
 
-    // alert(personal_info_retrive)
-    // localStorage.setItem('daftar_aplikasi_de', personal_info_retrive);
-    this.getdataentry().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        // console.log(res.body?.result);
-        console.warn('tabel', res);
-        console.warn('!!!!!!!!!!!!!!!!!!!', this.app_no_de);
-        // console.warn('tabel', res);
-        // console.warn('!!!!!!!!!!!!!!!!!!!', this.datakiriman);
-        // console.warn('@@@@@@@@@@@@@', this.datakiriman);
-        // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
-        this.daWa = res.body?.result;
-        // this.onResponseSuccess(res);
-      },
-    });
+      $('#nama').attr('readonly', 'readonly');
+      $('#jenis_kelamin').attr('readonly', 'readonly');
+      $('#tanggal_lahir').attr('readonly', 'readonly');
+      $('#tempat_lahir').attr('readonly', 'readonly');
+      // this.readonly();
+    } else {
+      this.gettokendukcapil();
+
+      // alert(personal_info_retrive)
+      // localStorage.setItem('daftar_aplikasi_de', personal_info_retrive);
+      this.getdataentry().subscribe({
+        next: (res: EntityArrayResponseDaWa) => {
+          // console.log(res.body?.result);
+          console.warn('tabel', res);
+          console.warn('!!!!!!!!!!!!!!!!!!!', this.app_no_de);
+          // console.warn('tabel', res);
+          // console.warn('!!!!!!!!!!!!!!!!!!!', this.datakiriman);
+          // console.warn('@@@@@@@@@@@@@', this.datakiriman);
+          // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
+          this.daWa = res.body?.result;
+          // this.onResponseSuccess(res);
+        },
+      });
+
+      // $('#nama').attr('readonly', 'readonly');
+    }
   }
+
+  // readonly(): void {
+  //   document.getElementById('#nama').readOnly = true;
+  //   // $('#margin').;
+  // }
 
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);

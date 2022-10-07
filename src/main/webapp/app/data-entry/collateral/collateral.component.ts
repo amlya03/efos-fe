@@ -83,6 +83,7 @@ export class CollateralComponent implements OnInit {
         datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },
     });
+
     // if(this.datakirimanstatus === 'Menikah'){
     //   this.router.navigate(['/data-pasangan'], { queryParams: { datakiriman:this.datakirimanappde } });
     //   alert(' ini NIKAH');
@@ -92,5 +93,20 @@ export class CollateralComponent implements OnInit {
     //   alert('ini jomblo');
     //   this.router.navigate(['/collateral'], { queryParams: { datakiriman:this.datakirimanappde } });
     // }
+  }
+
+  gotoeditcollateral(idcollateral: any) {
+    // this.onResponseSuccess(res);
+    alert('ke editcollateral ');
+    alert(this.datakirimanakategoripekerjaan);
+    console.warn('INI ADA GK SIH', this.datakirimancuref, this.datakirimande);
+    this.router.navigate(['/data-entry/editcollateral'], {
+      queryParams: {
+        datakirimanappde: this.datakirimande,
+        datakirimiancure: this.datakirimancuref,
+        datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+        datakirimanidcollateral: idcollateral,
+      },
+    });
   }
 }

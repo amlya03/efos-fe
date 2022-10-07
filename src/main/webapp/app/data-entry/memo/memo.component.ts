@@ -6,6 +6,7 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { memomodel } from './memo-model';
 
 export type EntityResponseDaWa = HttpResponse<memomodel>;
@@ -26,7 +27,8 @@ export class MemoComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    private localStorageService: LocalStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.datakirimiancure = params['datakirimiancure'];
@@ -121,25 +123,22 @@ export class MemoComponent implements OnInit {
 
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
     //   // alert('CREATE NIH');
-    //   this.http
-    //     .post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_memo', {
+    this.http
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_status_back_de', {
+        app_no_de: this.datakirimanappde,
+        created_by: this.localStorageService.retrieve('sessionFullName'),
+        status_aplikasi: status_aplikasi_desc.value,
+      })
 
-    //   app_no_de:this.datakirimanappde,
-    //   // created_by:keterangan.value,
-    //     status_aplikasi: status_aplikasi_desc.value,
+      .subscribe({
+        next: bawaan => {
+          this.router.navigate(['/data-entry/memo'], {
+            queryParams: { datakirimanappde: this.datakirimanappde },
+          });
 
-    //     })
-
-    //     .subscribe({
-    //       next: bawaan => {
-
-    // // this.router.navigate(['/data-entry/memo'], {
-    // //   queryParams: { datakirimanappde: this.datakirimanappde}
-    // //  });
-
-    //         // window.location.reload();
-    //       },
-    //     });
+          // window.location.reload();
+        },
+      });
 
     // this.router.navigate(['/data-entry/memo'], {
     //   queryParams: { datakirimanappde: this.datakirimanappde}
@@ -170,6 +169,48 @@ export class MemoComponent implements OnInit {
     //   </html>`
     // );
     // popupWin.document.close();
+  }
+
+  updatekeupload(): void {
+    alert('cetak');
+    const status_aplikasi_desc = document.getElementById('status_aplikasi_desc') as HTMLInputElement | any;
+
+    this.http
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_status_dataentry', {
+        app_no_de: this.datakirimanappde,
+        created_by: this.localStorageService.retrieve('sessionFullName'),
+        status_aplikasi: status_aplikasi_desc.value,
+      })
+
+      .subscribe({
+        next: bawaan => {
+          // this.router.navigate(['/data-entry/memo'], {
+          //   queryParams: { datakirimanappde: this.datakirimanappde}
+          //  });
+
+          // window.location.reload();
+
+          this.router.navigate(['/upload_document'], {
+            queryParams: {
+              // datakirimanappde: this.datakirimande,
+              // datakirimiancure: this.datakirimancuref,
+              // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+            },
+          });
+        },
+      });
+
+    // this.router.navigate(['/data-entry/memo'], {
+    //   queryParams: { datakirimanappde: this.datakirimanappde}
+    //  });
+
+    // this.router.navigate(['/upload_document'], {
+    //   queryParams: {
+    //     // datakirimanappde: this.datakirimande,
+    //     // datakirimiancure: this.datakirimancuref,
+    //     // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+    //   },
+    // });
   }
 
   // http://10.20.34.110:8805/api/v1/efos-de/getMemoByDe?sd=

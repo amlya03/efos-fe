@@ -5,6 +5,7 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 
@@ -18,12 +19,18 @@ export class CallReportComponent implements OnInit {
   datakirimanappde: any;
   daWa: any;
   daWa1: any;
+  contohtex: any;
+  untukSessionRole: any;
+  untukSessionUserName: any;
+  untukSessionFullName: any;
+  untukSessionKodeCabang: any;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    private localStorageService: LocalStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.datakirimiancure = params['datakirimiancure'];
@@ -31,6 +38,10 @@ export class CallReportComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.datakirimanappde = params['datakirimanappde'];
     });
+
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+
+    this.untukSessionFullName = this.localStorageService.retrieve('sessionFullName');
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -43,14 +54,24 @@ export class CallReportComponent implements OnInit {
   }
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   load() {
+    $('#denganini').val(
+      'JALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALAN'
+    );
+
+    this.contohtex =
+      'Dengan ini saya menyatakan hasil wawancara yang diisi oleh saya "+Aoname+" dan pemberi Informasi yang disebut nasabah adalah benar adanya "+ userName';
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('callreportnon', res);
 
         if (res.body?.result == null) {
           this.daWa = 0;
+          this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
+          this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
         } else {
           this.daWa = res.body?.result;
+          this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
+          this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
         }
 
         // this.daWa = res.body?.result;
@@ -85,8 +106,7 @@ export class CallReportComponent implements OnInit {
     return this.http.get<ApiResponse>(this.resourceUrl1 + this.datakirimanappde, { params: options, observe: 'response' });
   }
 
-  simpancallreport() // contohtampungancuref: any,
-  // contohtampungstatuskawain: any,
+  simpancallreport() // contohtampungstatuskawain: any, // contohtampungancuref: any,
   // contohtampunganappde: any,
   // contohtampungankategoripekerjaan: any
   {

@@ -66,6 +66,7 @@ import { EditcollateralComponent } from './data-entry/editcollateral/editcollate
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { UploadDocumentDeComponent } from './upload-document/upload-document-de/upload-document-de.component';
 import { UploadDocumentAgunanComponent } from './upload-document/upload-document-agunan/upload-document-agunan.component';
+import { CollateralEditComponent } from './data-entry/collateral-edit/collateral-edit.component';
 
 @NgModule({
   imports: [
@@ -137,6 +138,7 @@ import { UploadDocumentAgunanComponent } from './upload-document/upload-document
     UploadDocumentComponent,
     UploadDocumentDeComponent,
     UploadDocumentAgunanComponent,
+    CollateralEditComponent,
   ],
   bootstrap: [
     MainComponent,

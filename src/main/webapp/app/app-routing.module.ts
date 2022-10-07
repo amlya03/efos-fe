@@ -43,6 +43,7 @@ import { UploadDocumentAgunanComponent } from './upload-document/upload-document
 import { EditjobinfoComponent } from './data-entry/editjobinfo/editjobinfo.component';
 import { initialdataentryfix } from './initial-data-entry/initial-data-entry-fix/initial-data-entry-model';
 import { InitialDataEntryComponent } from './initial-data-entry/initial-data-entry.component';
+import { CollateralEditComponent } from './data-entry/collateral-edit/collateral-edit.component';
 
 @NgModule({
   imports: [
@@ -151,6 +152,10 @@ import { InitialDataEntryComponent } from './initial-data-entry/initial-data-ent
         {
           path: 'data-entry/editjobinfo',
           component: EditjobinfoComponent,
+        },
+        {
+          path: 'data-entry/editcollateral',
+          component: CollateralEditComponent,
         },
         {
           path: 'data-entry/memo',

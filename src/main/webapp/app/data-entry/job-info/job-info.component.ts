@@ -103,11 +103,6 @@ export class JobInfoComponent implements OnInit {
         // console.log(res.body?.result);
         console.warn('tabel', res.body?.result);
         this.daWa = res.body?.result;
-
-        // this.tampunganid = this.daWa[0].id;
-        // alert(this.tampunganid);
-        console.warn('t1312abel', this.tampunganid);
-        console.warn('tabe123l', this.tampunganid);
       },
     });
 
@@ -494,7 +489,7 @@ export class JobInfoComponent implements OnInit {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  goto(contohtampungancuref: any) {
+  goto() {
     // this.onResponseSuccess(res);
 
     if (this.datakirimanstatus === 'Menikah') {

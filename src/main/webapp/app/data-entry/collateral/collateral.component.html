@@ -1,3 +1,994 @@
+<div class="content-body">
+  <div class="container-fluid">
+    <div id="hidden_collateral" class="hidden_collateral">
+      <form
+        id="data_entry_form"
+        method="post"
+        action="<?php echo site_url('data_entry/postcreatecollateral'); ?>"
+        onsubmit="return validateFormCollateral()"
+        required
+      >
+        <div class="card">
+          <h4 class="card card-body gradient-9" style="text-align: center">Collateral</h4>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <div class="form-group row">
+                  <input type="hidden" id="WADUH" name="WADUH" value="<?=$this->session->userdata('GROUP_NAME');?>" class="form-control" />
+                  <input
+                    id="app_no_de"
+                    name="app_no_de"
+                    type="hidden"
+                    class="form-control"
+                    placeholder="app_no_ide"
+                    value="<?=$app_no_de?>"
+                    hidden
+                  />
+                  <input type="hidden" id="curef_id" name="curef_id" value="<?=$curef?>" class="form-control" />
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Tipe Agunan<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <div class="form-group">
+                      <select class="form-control" id="tipe_anggunan" name="tipe_anggunan">
+                        <option selected value="">Pilih Tipe Agunan</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <div class="form-group">
+                      <select class="form-control" name="jenis_objek" id="jenis_objek">
+                        <option selected value="">Pilih Jenis Objek</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- untuk tanah dan bangunan colom 1 NO1 -->
+                <div id="hidden_tnb" class="hidden_tnb">
+                  <!--awal hidden tbn-->
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Tipe Property<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <div class="form-group">
+                        <select class="form-control" name="tipe_properti1" id="tipe_properti1">
+                          <option value="">Pilih Tipe Properti</option>
+                          <option>Rumah</option>
+                          <option>Apartement</option>
+                          <option>Ruko / Rukan</option>
+                          <option>Kos</option>
+                          <option>Villa</option>
+                          <option>Tanah / Kavling</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Status<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <div class="form-group">
+                        <div class="lihat_baru" id="ihide_baru">
+                          <label class="radio-inline mr-3" for="ibaru">
+                            <input type="radio" value="baru" name="statusCollateral" id="ibaru" />Baru
+                          </label>
+                        </div>
+                        <div class="lihat_second" id="ihide_second">
+                          <label class="radio-inline mr-3" for="isecond">
+                            <input type="radio" value="second" name="statusCollateral" id="isecond" />Second
+                          </label>
+                        </div>
+                        <div class="hide_pks" id="ihide_pks">
+                          <label class="radio-inline mr-3" for="ipks">
+                            <input type="radio" value="pks" name="statusBarusecond" id="ipks" />PKS
+                          </label>
+                        </div>
+                        <div class="hide_nonpks" id="ihide_nonpks">
+                          <label class="radio-inline mr-3" for="inonpks">
+                            <input type="radio" value="non" name="statusBarusecond" id="inonpks" />NON-PKS
+                          </label>
+                        </div>
+                        <div class="hide_perorangan" id="ihide_perorangan">
+                          <label class="radio-inline mr-3" for="iperorangan">
+                            <input type="radio" value="orang" name="statusBarusecond" id="iperorangan" />Perorangan
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="developer_pks">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <div class="form-group">
+                          <select class="form-control" name="developer_pks1" id="developer_pks1">
+                            <option value="">Pilih Nama Developer</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="developer_nonpks">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" placeholder="Developer" name="developer_non_pks1" id="developer_non_pks1" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Nama Perumahan</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" placeholder="Nama Perumahan" name="nama_perumahan1" id="nama_perumahan1" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Status Sama dengan Jaminan Sebelumnya<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <div class="form-group" id="radioButtonStatusJaminanSebelumTnb">
+                        <label class="radio-inline mr-3"> <input type="radio" value="ia" name="status_jaminan_sebelumnya1" />Ya</label>
+                        <label class="radio-inline mr-3">
+                          <input type="radio" value="tidak" name="status_jaminan_sebelumnya1" />Tidak</label
+                        >
+                        <!-- <p> <button type="submit" class="col-sm-12 btn btn-dark"><i class="icon-magnifier menu-icon"></i>Lihat Jaminan Sebelumnya</button></p> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label"
+                      >Hubungan antara Pemegang Hak dan calon Nasabah<span class="text-danger">*</span></label
+                    >
+                    <div class="col-sm-8">
+                      <div class="form-group">
+                        <select class="form-control" name="hubungan_pemegang_hak1" id="hubungan_pemegang_hak1">
+                          <option value="">Pilih Hubungan Pemegang Hak</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- </div> batas hidden colom tnb  NO 1-->
+
+                <!--awal hiden colom 1 tanah NO 4-->
+                <div id="hidden_tanahCol1" class="hidden_tanahCol1">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label"
+                      >Hubungan antar Pemegang Hak dan calon Nasabah<span class="text-danger">*</span></label
+                    >
+                    <div class="col-sm-8">
+                      <div class="form-group">
+                        <select class="form-control" name="hubungan_pemegang_hak4" id="hubungan_pemegang_hak4">
+                          <option selected value=""></option>
+                          <option value="Penjual (Develpoer dan Pembeli)">Penjual (Develpoer dan Pembeli)</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="hidden_bangunan" class="hidden_bangunan">
+                  <!--awal hidden bangunan colom 1 NO5-->
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Tipe Property<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <div class="form-group">
+                        <select class="form-control" name="tipe_properti5" id="tipe_properti5">
+                          <option>Rumah</option>
+                          <option>Apartement</option>
+                          <option>Ruko / Rukan</option>
+                          <option>Kos</option>
+                          <option>Villa</option>
+                          <option>Tanah / Kavling</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Status<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <div class="form-group" id="statusRadioButton">
+                        <div class="lihat_baru2" id="ihide_baru2">
+                          <label class="radio-inline mr-3" for="ibaru2">
+                            <input type="radio" value="baru" name="statusCollateral2" id="ibaru2" />Baru
+                          </label>
+                        </div>
+                        <div class="lihat_second2" id="ihide_second2">
+                          <label class="radio-inline mr-3" for="isecond2">
+                            <input type="radio" value="second" name="statusCollateral2" id="isecond2" />Second
+                          </label>
+                        </div>
+                        <div class="hide_pks2" id="ihide_pks2">
+                          <label class="radio-inline mr-3" for="ipks2">
+                            <input type="radio" value="pks" name="statusBarusecond2" id="ipks2" />PKS
+                          </label>
+                        </div>
+                        <div class="hide_nonpks2" id="ihide_nonpks2">
+                          <label class="radio-inline mr-3" for="inonpks2">
+                            <input type="radio" value="non" name="statusBarusecond2" id="inonpks2" />NON-PKS
+                          </label>
+                        </div>
+                        <div class="hide_perorangan2" id="ihide_perorangan2">
+                          <label class="radio-inline mr-3" for="iperorangan2">
+                            <input type="radio" value="orang" name="statusBarusecond2" id="iperorangan2" />Perorangan
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="developer_pks2">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <div class="form-group">
+                          <select class="form-control" name="developer_pks5" id="developer_pks5">
+                            <option value="">Pilih Nama Developer</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="developer_nonpks2">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" placeholder="Developer" name="developer_non_pks5" id="developer_non_pks5" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Nama Perumahan</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" placeholder="Nama Perumahan" name="nama_perumahan5" id="nama_perumahan5" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Sama dengan Jaminan Sebelumnya<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <div class="form-group" id="radioButtonStatusJaminanSebelum">
+                        <label class="radio-inline mr-3">
+                          <input type="radio" value="ia" id="status_jaminan_sebelumnya5" name="status_jaminan_sebelumnya5" />Ya</label
+                        >
+                        <label class="radio-inline mr-3">
+                          <input type="radio" value="tidak" id="status_jaminan_sebelumnya5" name="status_jaminan_sebelumnya5" />Tidak</label
+                        >
+                        <p>
+                          <button type="submit" class="col-sm-12 btn btn-dark">
+                            <i class="icon-magnifier menu-icon"></i>Lihat Jaminan Sebelumnya
+                          </button>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label"
+                      >Hubungan antara Pemegang Hak dan calon Nasabah<span class="text-danger">*</span></label
+                    >
+                    <div class="col-sm-8">
+                      <div class="form-group">
+                        <select class="form-control" name="hubungan_pemegang_hak5" id="hubungan_pemegang_hak5">
+                          <option value="">Pilih Hubungan Pemegang Hak</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- batas hidden bangunan NO5 -->
+                <!--batas colom 1 bangunan-->
+
+                <!--awal hidden kendaraan colom 1 NO 2-->
+                <div id="hidden_kendaraanCol1" class="hidden_kendaraanCol1">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Tipe Kendaraan<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <div class="form-group">
+                        <select class="form-control" name="tipe_kendaraan2" id="tipe_kendaraan2">
+                          <option value="">Pilih Tipe Kendaraan</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Merek<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" placeholder="Merek" name="merk2" id="merk2" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Model<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" placeholder="Model" name="model2" id="model2" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Seri<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" placeholder="Seri" name="seri2" id="seri2" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">No BPKB<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder="No BPKB"
+                        name="nomor_bpkb2"
+                        id="nomor_bpkb2"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- batas hidden kendaraan colom 1 NO2 -->
+              </div>
+              <!-- pembatas colom 1 dan 2 -->
+
+              <!-- hide show colom kendaraan NO2 -->
+              <div class="col hidden_kendaraanCol2" id="hidden_kendaraanCol2">
+                <!-- hide_kendaraan -->
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">No Plat<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      class="form-control"
+                      placeholder="No Plat"
+                      name="no_plat2"
+                      id="no_plat2"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Warna<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="Warna" name="warna2" id="warna2" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">No Mesin<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      class="form-control"
+                      placeholder="No Mesin"
+                      name="no_mesin2"
+                      id="no_mesin2"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">No Rangka<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      class="form-control"
+                      placeholder="No Rangka"
+                      name="no_rangka2"
+                      id="no_rangka2"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Nama BPKB<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="Nama BPKB" name="nama_bpkb2" id="nama_bpkb2" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input class="form-control" type="date" id="tanggal_terbit2" name="tanggal_terbit2" value="tanggal_terbit2" />
+                  </div>
+                </div>
+                <button
+                  id="selanjutnyakendaraan"
+                  name="selanjutnya"
+                  value="selanjutnya"
+                  type="submit"
+                  onclick="return window.validateFormCollateral()"
+                  class="btn btn-dark"
+                  style="float: right"
+                >
+                  selanjutnya
+                </button>
+              </div>
+              <!--akhir hide show colom kendaraan NO2 -->
+
+              <!-- hide show colom 2 tanah NO 4--->
+              <div class="col hidden_tanahCol2" id="hidden_tanahCol2">
+                <!-- <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label">Tahun Buat (YYYY)<span class="text-danger">*</span></label>
+                                      <div class="col-sm-8"> -->
+                <input
+                  hidden
+                  type="tel"
+                  onkeypress="return onlyNumberKey(event)"
+                  class="form-control"
+                  placeholder=""
+                  name="tahun_buat4"
+                  id=""
+                  minlength="4"
+                  maxlength="4"
+                />
+                <!-- </div>
+                                  </div> -->
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <div class="form-group">
+                      <select class="form-control" name="status_sertifikat4" id="status_sertifikat4">
+                        <option selected value="">Pilih Status Sertifikat</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Nomor Sertifikat<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      maxlength="20"
+                      class="form-control"
+                      placeholder="Nomor Sertifikat"
+                      name="nomor_sertifikat4"
+                      id="nomor_sertifikat4"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="" name="nama_pemegang_hak4" id="nama_pemegang_hak4" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">No Contact Person<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      class="form-control"
+                      placeholder=""
+                      name="no_contact_person4"
+                      id="no_contact_person4"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Nomor Identitas Pemegang Hak Setifikat<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      class="form-control"
+                      placeholder=""
+                      name="nomor_identitas_pemegang_hak4"
+                      id="nomor_identitas_pemegang_hak4"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input class="form-control" type="date" name="tanggal_lahir4" id="tanggal_lahir4" onchange="tanggalTerbitDay()" />
+                    <input class="form-control" id="hariTanggalnyaTerbitTanah" hidden />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Tanggal Exipred<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input class="form-control" type="date" id="tanggal_exipred4" name="tanggal_exipred4" onchange="tanggalExpDay()" />
+                    <input class="form-control" id="hariTanggalnyaExpTanah" hidden />
+                  </div>
+                </div>
+              </div>
+              <!-- hide show colom 2 tanah  NO 4-->
+
+              <!-- hide show colom 2 buat tnb dan bangunan  -->
+              <div class="col hidden_bangunanCol2" id="hidden_bangunanCol2">
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Tahun Buat (YYYY)<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      class="form-control"
+                      placeholder=""
+                      name="tahun_buatbiasa"
+                      id="tahun_buatbiasa"
+                      minlength="4"
+                      maxlength="4"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <div class="form-group">
+                      <select class="form-control" name="status_sertifikat5" id="status_sertifikat5">
+                        <option selected value="">Pilih Status Sertifikat</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Nomor Sertifikat<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      class="form-control"
+                      placeholder="Nomor Sertifikat"
+                      name="no_sertifikat5"
+                      id="no_sertifikat5"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="" name="nama_pemegang_hak5" id="nama_pemegang_hak5" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">No Contact Person<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      maxlength="12"
+                      class="form-control"
+                      placeholder=""
+                      name="no_handphone_cp5"
+                      id="no_handphone_cp5"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Nomor Identitas Pemegang Hak Setifikat<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      class="form-control"
+                      placeholder=""
+                      name="no_id_pemegang_hak_sertifikat5"
+                      id="no_id_pemegang_hak_sertifikat5"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      class="form-control"
+                      type="date"
+                      id="tanggal_terbit5"
+                      name="tanggal_terbit5"
+                      onchange="tanggalTerbitDayBangunan()"
+                    />
+                    <input class="form-control" id="hariTanggalnyaTerbitBangunan" hidden />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Tanggal Exipred<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      class="form-control"
+                      type="date"
+                      id="tanggal_expired5"
+                      name="tanggal_expired5"
+                      onchange="tanggalExpDayBangunan()"
+                    />
+                    <input class="form-control" id="hariTanggalnyaExpBagunan" hidden />
+                  </div>
+                </div>
+              </div>
+              <!--hide show colom biasa-->
+
+              <!-- hide show colom 2 buat tnb dan bangunan  -->
+              <div class="col hidden_tnbCol2" id="hidden_tnbCol2">
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Tahun Buat (YYYY)<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      class="form-control"
+                      placeholder=""
+                      name="tahun_buat1"
+                      id="tahun_buat1"
+                      minlength="4"
+                      maxlength="4"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <div class="form-group">
+                      <select class="form-control" name="status_sertifikat1" id="status_sertifikat1">
+                        <option selected value="">Pilih Status Sertifikat</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Nomor Sertifikat<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      class="form-control"
+                      placeholder="Nomor Sertifikat"
+                      name="no_sertifikat1"
+                      id="no_sertifikat1"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="" name="nama_pemegang_hak1" id="nama_pemegang_hak1" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">No Contact Person<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      maxlength="12"
+                      class="form-control"
+                      placeholder=""
+                      name="no_handphone_cp1"
+                      id="no_handphone_cp1"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Nomor Identitas Pemegang Hak Setifikat<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      type="tel"
+                      onkeypress="return onlyNumberKey(event)"
+                      class="form-control"
+                      placeholder=""
+                      name="no_id_pemegang_hak_sertifikat1"
+                      id="no_id_pemegang_hak_sertifikat1"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      class="form-control"
+                      type="date"
+                      id="tanggal_terbit1"
+                      name="tanggal_terbit1"
+                      onchange="tanggalTerbitDayTanahDanBangunan()"
+                    />
+                    <input class="form-control" id="hariTanggalnyaTerbitTanahDanBangunan" hidden />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Tanggal Exipred<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <input
+                      class="form-control"
+                      type="date"
+                      id="tanggal_expired1"
+                      name="tanggal_expired1"
+                      onchange="tanggalExpDayTanahDanBangunan()"
+                    />
+                    <input class="form-control" id="hariTanggalnyaExpTanahDanBagunan" hidden />
+                  </div>
+                </div>
+              </div>
+              <!--hide show colom biasa-->
+            </div>
+            <!-- batas colom 1 dan 2 -->
+
+            <!-- pembatas row ke 2 dan 3 -->
+            <div class="card-body" id="hide_row" class="hide_row">
+              <h4 class="card-body gradient-9" style="text-align: center">Alamat Agunan</h4>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Alamat<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <textarea class="form-control h-150px" rows="6" id="alamat_agunan" name="alamat_agunan"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select class="form-control" id="provinsi_agunan" name="provinsi_agunan">
+                          <option value="">Pilih Provinsi</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select class="form-control" id="kabkota_agunan" name="kabkota_agunan">
+                          <option value="">Pilih Kota</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select class="form-control" id="kecamatan_agunan" name="kecamatan_agunan">
+                          <option value="">Pilih Kecamatan</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select class="form-control" id="kelurahan_agunan" name="kelurahan_agunan">
+                          <option value="">Pilih Kelurahan</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="input-group-append">
+                        <input
+                          type="tel"
+                          onkeypress="return onlyNumberKey(event)"
+                          maxlength="8"
+                          class="form-control"
+                          id="kode_pos_agunan"
+                          name="kode_pos_agunan"
+                        />
+                        <button class="btn btn-outline-dark" onclick="buatisiagunan()" type="button">Cari Data</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">RT / RW<span class="text-danger">*</span></label>
+                    <div class="col">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        maxlength="3"
+                        class="form-control"
+                        placeholder="RT"
+                        id="rt_agunan"
+                        name="rt_agunan"
+                      />
+                    </div>
+                    <h2>/</h2>
+                    <div class="col">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder="RW"
+                        maxlength="3"
+                        id="rw_agunan"
+                        name="rw_agunan"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Alamat Agunan Sama Dengan Sertifikat?</label>
+                    <div class="col-sm-9">
+                      <input type="radio" name="samaDomisili" id="iyaSama" value="1" />Sama
+                      <input type="radio" name="samaDomisili" id="takSama" value="0" />Tidak Sama
+                    </div>
+                  </div>
+                  <div id="hiddenJikaTanah" class="form-group row">
+                    <label class="col-sm-3 col-form-label">Luas Bangunan<span class="text-danger">*</span></label>
+                    <div class="form-group col-md-8">
+                      <input
+                        type="tel"
+                        oninput="this.value = this.value.replace(/^0/g, '');"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder=""
+                        name="luas_bangunan_anggunan"
+                        id="luas_bangunan_anggunan"
+                      />
+                    </div>
+                    <span>M2</span>
+                  </div>
+                  <div id="hiddenJikaBangunan" class="form-group row">
+                    <label class="col-md-3 col-form-label">Luas Tanah<span class="text-danger">*</span></label>
+                    <div class="form-group col-md-8">
+                      <input
+                        type="tel"
+                        oninput="this.value = this.value.replace(/^0/g, '');"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder=""
+                        name="luas_tanah_anggunan"
+                        id="luas_tanah_anggunan"
+                      />
+                    </div>
+                    <span>M2</span>
+                  </div>
+                  <div id="hiddenJikaTanahHarga" class="form-group row">
+                    <label class="col-sm-3 col-form-label">Harga Objek<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <input
+                        type="tel"
+                        oninput="this.value = this.value.replace(/^0/g, '');"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder=""
+                        name="harga_objek"
+                        id="harga_objek"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- batas colom 1 dan 2 -->
+
+                <div class="col">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Alamat Sesuai Sertifikat<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <textarea
+                        class="form-control h-150px"
+                        rows="6"
+                        id="alamat_sesuai_sertifikat"
+                        name="alamat_sesuai_sertifikat"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select class="form-control" id="provinsi_sesuai_sertifikat" name="provinsi_sesuai_sertifikat">
+                          <option value="">Pilih Provinsi</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select class="form-control" id="kabkota_sesuai_sertifikat" name="kabkota_sesuai_sertifikat">
+                          <option value="">Pilih Kota</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select class="form-control" id="kecamatan_sesuai_sertifikat" name="kecamatan_sesuai_sertifikat">
+                          <option value="">Pilih Kecamatan</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select class="form-control" id="kelurahan_sesuai_sertifikat" name="kelurahan_sesuai_sertifikat">
+                          <option value="">Pilih Kelurahan</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="input-group-append">
+                        <input
+                          type="tel"
+                          onkeypress="return onlyNumberKey(event)"
+                          maxlength="8"
+                          class="form-control"
+                          id="kode_pos_sesuai_sertifikat"
+                          name="kode_pos_sesuai_sertifikat"
+                        />
+                        <button class="btn btn-outline-dark" onclick="buatisisertifikat()" type="button">Cari Data</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">RT / RW<span class="text-danger">*</span></label>
+                    <div class="col">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder="RT"
+                        id="rt_sertifikat"
+                        name="rt_sertifikat"
+                        maxlength="3"
+                      />
+                    </div>
+                    <h2>/</h2>
+                    <div class="col">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder="RW"
+                        maxlength="3"
+                        id="rw_sertifikat"
+                        name="rw_sertifikat"
+                      />
+                    </div>
+                  </div>
+                  <div id="adaKaloTnb">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">ID Rumah<span class="text-danger">*</span></label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="" name="id_rumah" id="id_rumah" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 col-form-label">Blok Rumah<span class="text-danger">*</span></label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="" name="blok_rumah" id="blok_rumah" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">No Rumah<span class="text-danger">*</span></label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="" name="no_rumah" id="no_rumah" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button
+                id="selanjutnyadata"
+                name="selanjutnyadata"
+                value="selanjutnyadata"
+                type="submit"
+                onclick="return window.validateFormCollateral()"
+                class="btn btn-dark"
+                style="float: right"
+              >
+                selanjutnya
+              </button>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-dark"
+              id="simpan4"
+              name="simpan5"
+              value="simpan5"
+              style="float: right"
+              onclick="return window.validateFormCollateral()"
+            >
+              Simpan Data
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Daftar Collateral</h3>
 </div>
@@ -35,7 +1026,7 @@
         <td style="text-align: center" scope="col">{{ daWa.tipe_agunan }}</td>
         <td style="text-align: center" scope="col">{{ daWa.harga_objek }}</td>
         <td style="text-align: center">
-          <button type="button" class="btn btn-outline-info">
+          <button type="button" (click)="gotoeditcollateral(daWa.id_collateral_detail)" class="btn btn-outline-info">
             <fa-icon icon="eye"></fa-icon>
             <span class="d-none d-md-inline">Detail</span>
           </button>
