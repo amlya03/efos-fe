@@ -67,8 +67,7 @@ export class EditjobinfoComponent implements OnInit {
     return this.http.get<ApiResponse>(this.resourceUrl + this.datakirimanid, { params: options, observe: 'response' });
   }
 
-  updatejobinfo() // contohtampungancuref: any,
-  // contohtampungstatuskawain: any,
+  updatejobinfo() // contohtampungstatuskawain: any, // contohtampungancuref: any,
   // contohtampunganappde: any,
   // contohtampungankategoripekerjaan: any
   {
@@ -184,7 +183,7 @@ export class EditjobinfoComponent implements OnInit {
         datakiriman: this.datakiriman,
         datakirimanstatus: this.datakirimanstatus,
         app_no_de: this.datakirimanappde,
-        datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+        // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },
     });
   }

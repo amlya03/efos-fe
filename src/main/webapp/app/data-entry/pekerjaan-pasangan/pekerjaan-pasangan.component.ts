@@ -276,7 +276,7 @@ export class PekerjaanPasanganComponent implements OnInit {
       queryParams: {
         datakirimande: this.datakirimanappde,
         datakirimancuref: this.datakirimancuref,
-        datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+        // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },
     });
   }
@@ -401,7 +401,7 @@ export class PekerjaanPasanganComponent implements OnInit {
             queryParams: {
               datakirimande: this.datakirimanappde,
               datakirimancuref: this.datakirimancuref,
-              datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+              // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
             },
           });
         },
@@ -411,7 +411,7 @@ export class PekerjaanPasanganComponent implements OnInit {
       queryParams: {
         datakirimande: this.datakirimanappde,
         datakirimancuref: this.datakirimancuref,
-        datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+        // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },
     });
   }

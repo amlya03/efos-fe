@@ -199,7 +199,7 @@ export class DataPasanganComponent implements OnInit {
       queryParams: {
         datakirimanappde: this.datakirimanappde,
         datakirimancuref: this.datakirimancuref,
-        datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+        // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },
     });
     // if(this.datakirimanstatus === 'Menikah'){
@@ -313,7 +313,7 @@ export class DataPasanganComponent implements OnInit {
             queryParams: {
               datakirimanappde: this.datakirimanappde,
               datakirimancuref: this.datakirimancuref,
-              datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+              // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
             },
           });
         },

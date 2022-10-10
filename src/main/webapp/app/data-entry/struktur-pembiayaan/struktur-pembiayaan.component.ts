@@ -118,18 +118,28 @@ export class StrukturPembiayaanComponent implements OnInit {
       queryParams: {
         datakirimanappde: this.datakirimanappde,
         datakirimiancure: this.datakirimiancure,
-        datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+        // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },
     });
   }
 
-  onchangefasilitas(selectedStatus: any) {
+  onchangefasilitas(kodefasilitasnya: any) {
     const provinsi_cabang = document.getElementById('kode_fasilitas') as HTMLInputElement | any;
 
+    var potongankodefasilitas = provinsi_cabang.value.split('|');
+
+    alert(potongankodefasilitas[0]);
     // alert(this.postId);
-    console.log('kode' + selectedStatus);
+    // console.log('kode' + selectedStatus);
     console.log('kode' + provinsi_cabang.value);
 
+    if (potongankodefasilitas[0] == 'U') {
+      $('#uang_muka').attr('hidden', 'hidden');
+      $('#siapsiap').attr('hidden', 'hidden');
+    } else {
+      $('#siapsiap').removeAttr('hidden');
+      $('#uang_muka').removeAttr('hidden');
+    }
     this.getkodeprogram(provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kodefasilitas', res);
@@ -348,8 +358,7 @@ export class StrukturPembiayaanComponent implements OnInit {
       });
   }
 
-  simpanstruktur() // contohtampungancuref: any,
-  // contohtampungstatuskawain: any,
+  simpanstruktur() // contohtampungstatuskawain: any, // contohtampungancuref: any,
   // contohtampunganappde: any,
   // contohtampungankategoripekerjaan: any
   {
@@ -393,7 +402,7 @@ export class StrukturPembiayaanComponent implements OnInit {
           fee_based: fee_based.value,
           harga_objek_pembiayaan: harga_objek_pembiayaan.value,
           id: 0,
-          jangka_waktu: kirimanjangwaktunya[1],
+          jangka_waktu: kirimanjangwaktunya[0],
           // joint_income: joint_income.value,
           kode_fasilitas: kirimanpotongkodefasilitas[0],
           kode_fasilitas_name: kirimanpotongkodefasilitas[1],
@@ -443,7 +452,7 @@ export class StrukturPembiayaanComponent implements OnInit {
           fee_based: fee_based.value,
           harga_objek_pembiayaan: harga_objek_pembiayaan.value,
           id: 0,
-          jangka_waktu: jangka_waktu.value,
+          jangka_waktu: kirimanjangwaktunya[0],
           joint_income: joint_income.value,
           kode_fasilitas: kirimanpotongkodefasilitas[0],
           kode_fasilitas_name: kirimanpotongkodefasilitas[1],

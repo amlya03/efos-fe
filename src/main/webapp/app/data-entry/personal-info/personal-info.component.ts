@@ -168,7 +168,7 @@ export class PersonalInfoComponent implements OnInit {
         datakiriman: contohtampungancuref,
         datakirimanstatus: contohtampungstatuskawain,
         datakirimanappde: contohtampunganappde,
-        datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
+        // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
       },
     });
   }
@@ -344,7 +344,7 @@ export class PersonalInfoComponent implements OnInit {
               datakiriman: contohtampungancuref,
               datakirimanstatus: contohtampungstatuskawain,
               datakirimanappde: contohtampunganappde,
-              datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
+              // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
             },
           });
         },

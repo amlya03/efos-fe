@@ -20,7 +20,7 @@
       <label class="col-sm-4 col-form-label">Kode Fasilitas<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" (change)="onchangefasilitas(0)" name="kode_fasilitas" id="kode_fasilitas">
+          <select class="form-control" (change)="onchangefasilitas(Kodefasilitas.fasilitas)" name="kode_fasilitas" id="kode_fasilitas">
             <option value="{{ daWa.kode_fasilitas_name }}">{{ daWa.kode_fasilitas_name }}</option>
             <option *ngFor="let Kodefasilitas of Kodefasilitas" value="{{ Kodefasilitas.kode_fasilitas }}|{{ Kodefasilitas.fasilitas }}">
               {{ Kodefasilitas.deskripsi }}

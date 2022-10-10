@@ -46,6 +46,7 @@ export class JobInfoComponent implements OnInit {
   getjabatandariapi: any;
   getjabatansebelum: any;
   getjumlahkaryawansebelumdariapi: any;
+  keteranganstatusnikah: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -83,6 +84,10 @@ export class JobInfoComponent implements OnInit {
   protected apijumlahkaryawan = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.110:8805/api/v1/efos-ref/list_jumlah_karyawan'
   );
+  protected apiuntukgetsemuadataebrdasarkande = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd='
+  );
+
   protected apilistjenisbidang = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/list_jenis_bidang');
 
   ngOnInit(): void {
@@ -93,9 +98,10 @@ export class JobInfoComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   load() {
     this.gettokendukcapil();
+    this.getstatuspernikahan();
     // alert(this.datakiriman);
     // alert(this.datakirimanstatus);
-    this.nampungdatakatagoripekerjaan = this.datakirimanakategoripekerjaan;
+    // this.nampungdatakatagoripekerjaan = this.datakirimanakategoripekerjaan;
     // alert(this.nampungdatakatagoripekerjaan);
 
     this.getdataentry().subscribe({
@@ -303,6 +309,13 @@ export class JobInfoComponent implements OnInit {
     const options = createRequestOption(req1);
     return this.http.get<ApiResponse>(this.apijumlahkaryawan, { params: options, observe: 'response' });
   }
+  getsemuadataberdasarkanappde(req1?: any): Observable<EntityArrayResponseDaWa1> {
+    const options = createRequestOption(req1);
+    return this.http.get<ApiResponse>(this.apiuntukgetsemuadataebrdasarkande + this.datakirimanappde, {
+      params: options,
+      observe: 'response',
+    });
+  }
 
   gettokendukcapil(): void {
     this.http
@@ -340,6 +353,17 @@ export class JobInfoComponent implements OnInit {
           // });
         },
       });
+  }
+
+  getstatuspernikahan(): void {
+    this.getsemuadataberdasarkanappde().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        // console.log(res.body?.result);
+        console.warn('cekstatuspernikahan', res.body?.result);
+        this.keteranganstatusnikah = res.body?.result.status_perkawinan;
+        alert(this.keteranganstatusnikah);
+      },
+    });
   }
 
   katagoripekerjaanselect() {
@@ -496,7 +520,7 @@ export class JobInfoComponent implements OnInit {
       this.router.navigate(['/data-entry/data-pasangan'], {
         queryParams: {
           datakirimanappde: this.datakirimanappde,
-          datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+          // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
           datakirimancuref: this.datakiriman,
         },
       });
@@ -508,7 +532,7 @@ export class JobInfoComponent implements OnInit {
       this.router.navigate(['/data-entry/collateral'], {
         queryParams: {
           datakirimanappde: this.datakirimanappde,
-          datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+          // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
           datakirimancuref: this.datakiriman,
         },
       });
@@ -628,11 +652,11 @@ export class JobInfoComponent implements OnInit {
           //   },
           // });
 
-          if (this.datakirimanstatus === 'Menikah') {
+          if (this.keteranganstatusnikah === 'Menikah') {
             this.router.navigate(['/data-entry/data-pasangan'], {
               queryParams: {
                 datakirimanappde: this.datakirimanappde,
-                datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+                // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
                 datakirimancuref: this.datakiriman,
               },
             });
@@ -644,7 +668,7 @@ export class JobInfoComponent implements OnInit {
             this.router.navigate(['/data-entry/collateral'], {
               queryParams: {
                 datakirimanappde: this.datakirimanappde,
-                datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+                // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
                 datakirimancuref: this.datakiriman,
               },
             });
@@ -660,7 +684,7 @@ export class JobInfoComponent implements OnInit {
       // queryParams: { app_no_de: getAppNoDe }
       queryParams: {
         datakirimanappde: this.datakirimanappde,
-        datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+        // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
         datakiriman: contohtampungancuref,
         datakirimanid: id,
         datakirimanstatus: this.datakirimanstatus,

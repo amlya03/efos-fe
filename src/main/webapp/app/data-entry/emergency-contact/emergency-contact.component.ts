@@ -29,6 +29,7 @@ export class EmergencyContactComponent implements OnInit {
   daWakodepos: any;
   kelurahan: any;
   gethubunganemergency1: any;
+  keteranganstatusnikah: any;
   constructor(
     protected datEntryService: DataEntryService,
     private route: ActivatedRoute,
@@ -52,6 +53,11 @@ export class EmergencyContactComponent implements OnInit {
   protected apigethubungan = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.178:8805/api/v1/efos-ref/list_hubungan_emergency'
   );
+
+  protected apiuntukgetsemuadataebrdasarkande = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd='
+  );
+
   // eslint-disable-next-line @typescript-eslint/member-ordering
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getEmergencyByCuref?sc=');
 
@@ -60,6 +66,7 @@ export class EmergencyContactComponent implements OnInit {
   }
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   load() {
+    this.getstatuspernikahan();
     this.gettokendukcapil();
 
     this.getdataentry().subscribe({
@@ -80,6 +87,25 @@ export class EmergencyContactComponent implements OnInit {
         console.warn('hubungan', res.body?.result);
         this.gethubunganemergency1 = res.body?.result;
       },
+    });
+  }
+
+  getstatuspernikahan(): void {
+    this.getsemuadataberdasarkanappde().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        // console.log(res.body?.result);
+        console.warn('cekstatuspernikahan', res.body?.result);
+        this.keteranganstatusnikah = res.body?.result.kategori_pekerjaan;
+        alert(this.keteranganstatusnikah);
+      },
+    });
+  }
+
+  getsemuadataberdasarkanappde(req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    return this.http.get<ApiResponse>(this.apiuntukgetsemuadataebrdasarkande + this.datakirimanappde, {
+      params: options,
+      observe: 'response',
     });
   }
 
@@ -191,16 +217,16 @@ export class EmergencyContactComponent implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto(appde: any) {
-    if (this.datakirimanakategoripekerjaan === 'Fix Income') {
+    if (this.keteranganstatusnikah === 'Fix Income') {
       alert('ini fix');
-      alert(this.datakirimanappde);
+      // alert(this.datakirimanappde);
       this.router.navigate(['/data-entry/call-report'], {
         queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure },
       });
     } else {
       alert('ini non fix');
-      alert(this.datakirimanappde);
-      alert(this.datakirimanakategoripekerjaan);
+      // alert(this.datakirimanappde);
+      // alert(this.datakirimanakategoripekerjaan);
       this.router.navigate(['/data-entry/call-report-non'], {
         queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure },
       });
@@ -210,8 +236,7 @@ export class EmergencyContactComponent implements OnInit {
     // this.router.navigate(['/call-report'], { queryParams: { datakiriman:this.datakirimiancure , datakirimiancure:this.datakiriman } });
   }
 
-  simpanemergency() // contohtampungancuref: any,
-  // contohtampungstatuskawain: any,
+  simpanemergency() // contohtampungstatuskawain: any, // contohtampungancuref: any,
   // contohtampunganappde: any,
   // contohtampungankategoripekerjaan: any
   {
