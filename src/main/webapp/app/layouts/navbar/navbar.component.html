@@ -95,7 +95,7 @@
               <span routerLink="/mutasi-rekening" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
               <span routerLink="/sturktur-pembiayaan" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
               <span routerLink="/checklist-document" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
-              <span routerLink="/surat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
+              <span routerLink="/syarat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
             </a>
           </li>
         </div>
@@ -542,8 +542,12 @@
       router.url === '/sturktur-pembiayaan?app_no_de=' + this.app_no_de ||
       router.url === '/checklist-document' ||
       router.url === '/checklist-document?app_no_de=' + this.app_no_de ||
-      router.url === '/surat-persetujuan' ||
-      router.url === '/surat-persetujuan?app_no_de=' + this.app_no_de
+      router.url === '/syarat-persetujuan' ||
+      router.url === '/syarat-persetujuan?app_no_de=' + this.app_no_de ||
+      router.url === '/kesimpulan' ||
+      router.url === '/kesimpulan?app_no_de=' + this.app_no_de ||
+      router.url === '/verification/memo' ||
+      router.url === '/verification/memo?app_no_de=' + this.app_no_de
     "
   >
     <a
@@ -607,15 +611,34 @@
       <h6>Checklist Document</h6>
     </a>
     <a
-      hidden
       class="nav-item nav-link"
-      routerLink="surat-persetujuan"
+      routerLink="syarat-persetujuan"
       [queryParams]="{ app_no_de: this.app_no_de }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'APPRAISAL'"
     >
-      <h6>Surat Persetujuan</h6>
+      <h6>Syarat Persetujuan</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="kesimpulan"
+      [queryParams]="{ app_no_de: this.app_no_de }"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'APPRAISAL'"
+    >
+      <h6>Kesimpulan</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="verification/memo"
+      [queryParams]="{ app_no_de: this.app_no_de }"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'APPRAISAL'"
+    >
+      <h6>Memo</h6>
     </a>
   </div>
   <div

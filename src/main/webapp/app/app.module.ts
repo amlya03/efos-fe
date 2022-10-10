@@ -37,7 +37,6 @@ import { DataCalonNasabahComponent } from './verification/data-calon-nasabah/dat
 import { DataRumahComponent } from './verification/data-rumah/data-rumah.component';
 import { DataKantorComponent } from './verification/data-kantor/data-kantor.component';
 import { MutasiRekeningComponent } from './verification/mutasi-rekening/mutasi-rekening.component';
-import { SuratPersetujuanComponent } from './verification/surat-persetujuan/surat-persetujuan.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { StukturPembiayaanComponent } from './verification/stuktur-pembiayaan/stuktur-pembiayaan.component';
 import { ChecklistDocumentComponent } from './verification/checklist-document/checklist-document.component';
@@ -67,6 +66,9 @@ import { UploadDocumentComponent } from './upload-document/upload-document.compo
 import { UploadDocumentDeComponent } from './upload-document/upload-document-de/upload-document-de.component';
 import { UploadDocumentAgunanComponent } from './upload-document/upload-document-agunan/upload-document-agunan.component';
 import { CollateralEditComponent } from './data-entry/collateral-edit/collateral-edit.component';
+import { SyaratPersetujuanComponent } from './verification/syarat-persetujuan/syarat-persetujuan.component';
+import { KesimpulanComponent } from './verification/kesimpulan/kesimpulan.component';
+import { MemoVerificationComponent } from './verification/memo-verification/memo-verification.component';
 
 @NgModule({
   imports: [
@@ -110,7 +112,6 @@ import { CollateralEditComponent } from './data-entry/collateral-edit/collateral
     DataRumahComponent,
     DataKantorComponent,
     MutasiRekeningComponent,
-    SuratPersetujuanComponent,
     StukturPembiayaanComponent,
     ChecklistDocumentComponent,
     DataEntryComponent,
@@ -139,6 +140,9 @@ import { CollateralEditComponent } from './data-entry/collateral-edit/collateral
     UploadDocumentDeComponent,
     UploadDocumentAgunanComponent,
     CollateralEditComponent,
+    SyaratPersetujuanComponent,
+    KesimpulanComponent,
+    MemoVerificationComponent,
   ],
   bootstrap: [
     MainComponent,
@@ -160,6 +164,8 @@ import { CollateralEditComponent } from './data-entry/collateral-edit/collateral
     EmergencyContactComponent,
     StrukturPembiayaanComponent,
     VerificationComponent,
+    SyaratPersetujuanComponent,
+    MemoVerificationComponent,
   ],
 })
 export class AppModule {

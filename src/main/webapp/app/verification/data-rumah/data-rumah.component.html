@@ -190,27 +190,25 @@
         <th scope="col" style="text-align: center;">Tanggal Mulai</th>
         <th scope="col" style="text-align: center;">Tanggal Berakhir</th>
         <th scope="col" style="text-align: center;">Status</th>
-        <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let dataSlik of listSlik; index as i">
+      <tr *ngFor="let listLajangSlik of listLajangSlik; index as i">
         <th scope="row" style="text-align: center">{{ i+1 }}</th>
-        <td style="text-align: center">{{dataSlik.id_number}}</td>
-        <td style="text-align: center">{{dataSlik.ljk_ket}}</td>
-        <td style="text-align: center">{{dataSlik.jenis_kredit_pembiayaan_ket}}</td>
-        <td style="text-align: center">{{dataSlik.kualitas_ket}}</td>
-        <td style="text-align: center">{{dataSlik.suku_bunga_imbalan}}</td>
-        <td style="text-align: center">{{dataSlik.suku_bunga_imbalan}}</td>
-        <td style="text-align: center">{{dataSlik.tanggal_mulai}}</td>
-        <td style="text-align: center">{{dataSlik.tanggal_jatuh_tempo}}</td>
-        <td style="text-align: center">{{dataSlik.kondisi_ket}}</td>
-        <td><input type="checkbox" name="" id="" /></td>
+        <td style="text-align: center">{{listLajangSlik.id_number}}</td>
+        <td style="text-align: center">{{listLajangSlik.ljk_ket}}</td>
+        <td style="text-align: center">{{listLajangSlik.jenis_kredit_pembiayaan_ket}}</td>
+        <td style="text-align: center">{{listLajangSlik.kualitas_ket}}</td>
+        <td style="text-align: center">{{listLajangSlik.suku_bunga_imbalan}}</td>
+        <td style="text-align: center">{{listLajangSlik.suku_bunga_imbalan}}</td>
+        <td style="text-align: center">{{listLajangSlik.tanggal_mulai}}</td>
+        <td style="text-align: center">{{listLajangSlik.tanggal_jatuh_tempo}}</td>
+        <td style="text-align: center">{{listLajangSlik.kondisi_ket}}</td>
       </tr>
     </tbody>
   </table>
   <p></p>
-  <button class="btn btn-info" type="button">Lihat Slik</button>
+  <button class="btn btn-info" type="button" (click)="printLajang(listLajangSlik[0].id_number)">Lihat Slik</button>
   <p></p>
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
     <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pasangan)</h3>
@@ -229,34 +227,32 @@
         <th scope="col" style="text-align: center;">Tanggal Mulai</th>
         <th scope="col" style="text-align: center;">Tanggal Berakhir</th>
         <th scope="col" style="text-align: center;">Status</th>
-        <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let dataSlik of listSlik; index as i">
+      <tr *ngFor="let listMenikahSlik of listMenikahSlik; index as i">
         <th scope="row" style="text-align: center">{{ i+1 }}</th>
-        <td style="text-align: center">{{dataSlik.id_number}}</td>
-        <td style="text-align: center">{{dataSlik.ljk_ket}}</td>
-        <td style="text-align: center">{{dataSlik.jenis_kredit_pembiayaan_ket}}</td>
-        <td style="text-align: center">{{dataSlik.kualitas_ket}}</td>
-        <td style="text-align: center">{{dataSlik.suku_bunga_imbalan}}</td>
-        <td style="text-align: center">{{dataSlik.suku_bunga_imbalan}}</td>
-        <td style="text-align: center">{{dataSlik.tanggal_mulai}}</td>
-        <td style="text-align: center">{{dataSlik.tanggal_jatuh_tempo}}</td>
-        <td style="text-align: center">{{dataSlik.kondisi_ket}}</td>
-        <td><input type="checkbox" name="" id="" /></td>
+        <td style="text-align: center">{{listMenikahSlik.id_number}}</td>
+        <td style="text-align: center">{{listMenikahSlik.ljk_ket}}</td>
+        <td style="text-align: center">{{listMenikahSlik.jenis_kredit_pembiayaan_ket}}</td>
+        <td style="text-align: center">{{listMenikahSlik.kualitas_ket}}</td>
+        <td style="text-align: center">{{listMenikahSlik.suku_bunga_imbalan}}</td>
+        <td style="text-align: center">{{listMenikahSlik.suku_bunga_imbalan}}</td>
+        <td style="text-align: center">{{listMenikahSlik.tanggal_mulai}}</td>
+        <td style="text-align: center">{{listMenikahSlik.tanggal_jatuh_tempo}}</td>
+        <td style="text-align: center">{{listMenikahSlik.kondisi_ket}}</td>
       </tr>
     </tbody>
   </table>
   <p></p>
-  <button class="btn btn-info" type="button">Lihat Slik</button>
+  <button class="btn btn-info" type="button" (click)="printMenikah(listMenikahSlik[0].id_number)">Lihat Slik</button>
   <p></p>
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
     <h3 style="color: #fff; text-align: center">Data Keuangan Nasabah</h3>
   </div>
   <p></p>
   <div class="row">
-    <div class="col" style="text-align: center"><input type="checkbox"/> Joint Income</div>
+    <div class="col" style="text-align: center"><input type="checkbox" [checked]="this.dataEntry?.status_perkawinan == 'Menikah'"/> Joint Income</div>
   </div>
   <p></p>
   <div id="fixIncome">
@@ -266,7 +262,7 @@
     <p></p>
     <h6 class="row" style="text-align: center">
       <div class="col">Pemohon</div>
-      <div class="col">Pasangan</div>
+      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">Pasangan</div>
       <div class="col">Total</div>
     </h6>
     <br />
@@ -287,7 +283,7 @@
         </div>
       </div>
       <br />
-      <div class="col">
+      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
         <div class="form-group row">
           <input
             formControlName="gaji_kotor_pasangan"
@@ -330,7 +326,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
         <div class="form-group row">
           <input
             formControlName="tunjangan_pasangan"
@@ -372,7 +368,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
         <div class="form-group row">
           <input
             formControlName="pendapatan_kotor_pasangan"
@@ -407,7 +403,7 @@
     </div>
     <h6 class="row" style="text-align: center">
       <div class="col">Pemohon</div>
-      <div class="col">Pasangan</div>
+      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">Pasangan</div>
       <div class="col">Total</div>
     </h6>
     <p></p>
@@ -427,7 +423,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
         <div class="form-group row">
           <input
             formControlName="pendapatan_usaha_pasangan"
@@ -468,7 +464,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
         <div class="form-group row">
           <input
             type="text"
@@ -512,7 +508,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
         <div class="form-group row">
           <div class="col">
             <input
@@ -561,7 +557,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
         <div class="form-group row">
           <div class="col">
             <input
@@ -611,7 +607,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
         <div class="form-group row">
           <div class="col">
             <input
@@ -660,7 +656,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
         <div class="form-group row">
           <div class="col">
             <input

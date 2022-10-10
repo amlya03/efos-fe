@@ -24,6 +24,8 @@ export class DataRumahComponent implements OnInit {
   analisaKeuanganMap: refAnalisaKeuangan = new refAnalisaKeuangan();
   dataEntry?: fetchAllDe = new fetchAllDe();
   listSlik?: slik[];
+  listLajangSlik: Array<slik> = new Array<slik>();
+  listMenikahSlik: Array<slik> = new Array<slik>();
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -253,16 +255,26 @@ export class DataRumahComponent implements OnInit {
     // ambil semua data DE
     this.getFetchSemuaData().subscribe(data => {
       this.dataEntry = data.result;
-      // console.log('DE '+ this.dataEntry?.app_no_ide)
     });
 
     // ambil semua data Slik
     this.fetchSlik().subscribe(data => {
       // if (data.code === 200) {
+        // console.log(data)
         this.listSlik = data.result;
+        // console.log(this.listSlik)
+
+        this.listSlik?.forEach(element => {
+          if(element.response_description=="get SLIK Result Success"){
+            if(element.status_applicant=="Debitur Utama Individu"){
+              this.listLajangSlik.push(element)
+            }
+            else if (element.status_applicant=="Pasangan Debitur"){
+              this.listMenikahSlik.push(element)
+            }
+          }
+        });
         this.dtTrigger.next(data.result);
-        // console.log('slik '+ this.listSlik)
-      // }
     });
     // ambil semua data Analisa
     this.fetchAnalisaKeuangan().subscribe(data => {
@@ -341,6 +353,15 @@ export class DataRumahComponent implements OnInit {
     //   }
     // });
     // get semua de
+  }
+
+  printLajang(ktp: any){
+    window.open('http://10.20.34.178:8805/api/v1/efos-ide/downloadSlik/'+ktp);
+  }
+
+  printMenikah(ktp: any){
+    console.log(ktp)
+    window.open('http://10.20.34.178:8805/api/v1/efos-ide/downloadSlik/'+ktp);
   }
 
   // Only Numbers

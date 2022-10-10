@@ -5,7 +5,6 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
-import { data } from 'jquery';
 // import { jobinfolist } from './job-info-modellist';
 // import { DataEntryService } from '../services/data-entry.service';
 
@@ -26,8 +25,22 @@ export class ChecklistDocumentComponent implements OnInit {
   datacontohid: Array<any> = [];
   newValue: any;
   rec: any;
-  constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDokumenUploadByCuref?');
+  app_no_de: any;
+
+
+  constructor(
+    protected activatedRoute: ActivatedRoute,
+    protected http: HttpClient,
+    protected applicationConfigService: ApplicationConfigService,
+    public router: Router,
+  ) {
+      // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+      this.activatedRoute.queryParams.subscribe(params => {
+        this.app_no_de = params.app_no_de;
+      });
+      // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    }
+    protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDokumenUploadByCuref?');
 
   ngOnInit(): void {
     this.load();
@@ -129,5 +142,10 @@ export class ChecklistDocumentComponent implements OnInit {
     //   };
     //   this.dtTrigger.next(this.daWa);
     // });
+  }
+
+  // update Status
+  updateStatus(){
+    this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de } });
   }
 }

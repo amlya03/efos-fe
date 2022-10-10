@@ -17,7 +17,6 @@ import { DataRumahComponent } from './verification/data-rumah/data-rumah.compone
 import { StukturPembiayaanComponent } from './verification/stuktur-pembiayaan/stuktur-pembiayaan.component';
 import { MutasiRekeningComponent } from './verification/mutasi-rekening/mutasi-rekening.component';
 import { ChecklistDocumentComponent } from './verification/checklist-document/checklist-document.component';
-import { SuratPersetujuanComponent } from './verification/surat-persetujuan/surat-persetujuan.component';
 import { DataEntryComponent } from './data-entry/data-entry.component';
 import { JobInfoComponent } from './data-entry/job-info/job-info.component';
 import { DataPasanganComponent } from './data-entry/data-pasangan/data-pasangan.component';
@@ -41,9 +40,11 @@ import { UploadDocumentComponent } from './upload-document/upload-document.compo
 import { UploadDocumentDeComponent } from './upload-document/upload-document-de/upload-document-de.component';
 import { UploadDocumentAgunanComponent } from './upload-document/upload-document-agunan/upload-document-agunan.component';
 import { EditjobinfoComponent } from './data-entry/editjobinfo/editjobinfo.component';
-import { initialdataentryfix } from './initial-data-entry/initial-data-entry-fix/initial-data-entry-model';
 import { InitialDataEntryComponent } from './initial-data-entry/initial-data-entry.component';
 import { CollateralEditComponent } from './data-entry/collateral-edit/collateral-edit.component';
+import { SyaratPersetujuanComponent } from './verification/syarat-persetujuan/syarat-persetujuan.component';
+import { KesimpulanComponent } from './verification/kesimpulan/kesimpulan.component';
+import { MemoVerificationComponent } from './verification/memo-verification/memo-verification.component';
 
 @NgModule({
   imports: [
@@ -106,8 +107,16 @@ import { CollateralEditComponent } from './data-entry/collateral-edit/collateral
           component: ChecklistDocumentComponent,
         },
         {
-          path: 'surat-persetujuan',
-          component: SuratPersetujuanComponent,
+          path: 'syarat-persetujuan',
+          component: SyaratPersetujuanComponent,
+        },
+        {
+          path: 'verification/memo',
+          component: MemoVerificationComponent,
+        },
+        {
+          path: 'kesimpulan',
+          component: KesimpulanComponent,
         },
         {
           path: 'data-entry',

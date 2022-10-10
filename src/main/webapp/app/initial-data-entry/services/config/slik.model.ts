@@ -7,7 +7,7 @@ export class slik{
   no_aplikasi?: string;
   request_id?: string;
   app_id?: string;
-  status_applicant?: string;
+  status_applicant?: String;
   sifat_kredit_pembiayaan?: number;
   sifat_kredit_pembiayaan_ket?: string;
   jenis_kredit_pembiayaan?: string;
