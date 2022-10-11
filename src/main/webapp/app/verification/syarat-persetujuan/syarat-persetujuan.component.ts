@@ -30,6 +30,16 @@ export class SyaratPersetujuanComponent implements OnInit {
 
   // Cek Uji Kepatuhan
   cekUjiKepatuhan: Array<cekUjiKepatuhan> = new Array<cekUjiKepatuhan>();
+    // keterangan Uji Kepatuhan
+    kepatuhanUji: any;
+    keteranganUji: any;
+
+  // Area Of Concern
+  areaOfConRadio: any;
+  areaOfConInput: any;
+
+  // simpan data
+  simpanDataUpdate: any;
 
 
   @ViewChild(DataTableDirective, { static: false })
@@ -52,7 +62,7 @@ export class SyaratPersetujuanComponent implements OnInit {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
   // URL DE
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   // URL List Syarat Persetujuan
   protected fetchSyaratPersetujuan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-verif/getSyaratPersetujuan?sd=');
@@ -90,6 +100,12 @@ export class SyaratPersetujuanComponent implements OnInit {
       this.syaratPersetujuan = data.result.syarat;
       this.cekUjiKepatuhan = data.result.cek_uji_kepatuhan;
       // console.log(this.cekUjiKepatuhan)
+      this.cekUjiKepatuhan?.forEach(element => {
+        // if(element.id == 1){
+          console.log(element)
+          // this.simpanDataUpdate.push(element)
+        // }
+      });
 
       this.syaratPersetujuan?.forEach(element => {
           if(element.kode_syarat == 1){
@@ -211,4 +227,55 @@ export class SyaratPersetujuanComponent implements OnInit {
     //       Swal.fire('Changes are not saved', '', 'info')
     //    }
     // });
+
+    // simpan data Syarat PErsetujuan
+    simpanData(){
+      for (let i = 0; i < this.cekUjiKepatuhan.length; i++) {
+        // get Radio Button Validasi
+        let kepatuhanUjiCoba = (<HTMLInputElement>document.getElementById("kepatuhan"+this.cekUjiKepatuhan[i].id)).checked;
+        if(kepatuhanUjiCoba == true){
+          this.kepatuhanUji = 1;
+        }
+        else{
+          this.kepatuhanUji = 0;
+        }
+        // alert(this.kepatuhanUji)
+
+        // get input Keterangan
+        this.keteranganUji = (<HTMLInputElement>document.getElementById("keterangan"+this.cekUjiKepatuhan[i].id)).value;
+        // alert(this.keteranganUji)
+
+      // Area Of Concern
+      this.areaOfConRadio = (<HTMLInputElement>document.getElementById("area-concern")).value;
+      this.areaOfConInput = (<HTMLInputElement>document.getElementById("deskripsiAreaConcern")).value;
+
+        // console.log(this.cekUjiKepatuhan[i]);
+        this.http
+          .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_cek_uji_kepatuhan', {
+            app_no_de: this.app_no_de,
+            created_by: this.untukSessionUserName,
+            created_date: '',
+            curef: this.dataEntry.curef,
+            id: this.cekUjiKepatuhan[i].id,
+            kegiatan: this.cekUjiKepatuhan[i].id,
+            kepatuhan: this.kepatuhanUji,
+            keterangan: this.keteranganUji,
+          })
+          .subscribe({});
+      }
+
+      // Area Of Concern
+      this.http
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_area_of_concern', {
+        app_no_de: this.app_no_de,
+        created_by: this.untukSessionUserName,
+        created_date: '',
+        deskripsi_area: this.areaOfConInput,
+        id: 0,
+        status_area: this.areaOfConRadio,
+        updated_by: '',
+        updated_date: '',
+      })
+      .subscribe({});
+    }
 }

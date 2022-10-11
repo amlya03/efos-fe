@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { createRequestOption } from 'app/core/request/request-util';
+import { Observable, Subject } from 'rxjs';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
-// import { jobinfolist } from './job-info-modellist';
-// import { DataEntryService } from '../services/data-entry.service';
+import { uploadDocument } from 'app/upload-document/services/config/uploadDocument.model';
+import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { DataTableDirective } from 'angular-datatables';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 
@@ -16,6 +16,9 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./checklist-document.component.scss'],
 })
 export class ChecklistDocumentComponent implements OnInit {
+  uploadDocument: Array<uploadDocument> = new Array<uploadDocument>();
+  uploadAgunan: Array<uploadDocument> = new Array<uploadDocument>();
+  dataEntry: fetchAllDe = new fetchAllDe();
   daWa: any;
   kirimDesesuai: Array<number> = [];
   kirimDetidak: any;
@@ -27,6 +30,18 @@ export class ChecklistDocumentComponent implements OnInit {
   rec: any;
   app_no_de: any;
 
+  //Radio Validasi Agunan
+  radioValidasiDE: any;
+  radioValidasiAgunan: any;
+  //Keterangan Agunan
+  keteranganDE: any;
+  keteranganAgunan: any;
+
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
+  idUpload: any;
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -40,110 +55,123 @@ export class ChecklistDocumentComponent implements OnInit {
       });
       // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     }
-    protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDokumenUploadByCuref?');
+
+  // URL DE
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+
+  // API url
+  protected FetchListUploadDocument = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDokumenUploadByCuref?sc=');
 
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      processing: true,
+      responsive: true,
+    };
     this.load();
   }
-  load() {
-    this.getdataentry().subscribe(data => {
-      console.warn('tabel', data.body?.result);
-      this.daWa = data.body?.result;
 
-      // this.daWa = (data as any).result;
-      // this.dtTrigger.next(data.result);
+  // DE
+  getFetchSemuaData(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchSemuaData + this.app_no_de);
+  }
+
+  // list Upload DE
+  getListUploadDocumentDE(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.FetchListUploadDocument + 'curef_20220816_322' + '&ss=DE');
+  }
+
+  // list Upload DEA
+  getListUploadAgunan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.FetchListUploadDocument + 'curef_20220816_322' + '&ss=DEA');
+  }
+
+  load() {
+    // ambil semua data DE
+    this.getFetchSemuaData().subscribe(data => {
+      this.dataEntry = data.result;
+      // alert('DE '+ this.dataEntry?.status_perkawinan)
+    });
+
+    // DE
+    this.getListUploadDocumentDE().subscribe(data => {
+      // console.warn('ini upload de' + data);
+      this.uploadDocument = data.result;
+      this.dtTrigger.next(data.result);
+    });
+
+    // Agunan
+    this.getListUploadAgunan().subscribe(data => {
+      // console.warn('ini upload de' + data);
+      this.uploadAgunan = data.result;
     });
   }
 
-  // keterangan: any;
-  container: any[] = [1];
-  keterangan: any = [{ key: 1, values: '' }];
-  // keterangan : boolean[] = [] ;
-
-  getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.resourceUrl + 'sc=curef_20220816_322' + '&ss=DE', { params: options, observe: 'response' });
+  // Kirim DE
+  detailDataEntry(nama_dokumen: any){
+    window.open('http://10.20.34.178:8805/api/v1/efos-de/downloadFile/'+ nama_dokumen)
   }
 
-  getsesuai(isSelected: any, iddokumen: any, statussesuaitidak: any, valueinout: any): void {
-    // for (var x = 1; x < 11; x++) {
-    //    const keteranganya = document.getElementById('keterangan'+x) as HTMLInputElement | any;
-    // }
-    // const keteranganyaa = document.getElementById('keterangan') as HTMLInputElement | any;
-    const checked = isSelected.target.checked;
-    if (checked) {
-      // const keteranganyaa = document.getElementById('rec') as HTMLInputElement | any;
-      this.kirimDesesuai.push(statussesuaitidak);
-      this.iddokumen.push(iddokumen);
-      this.store(valueinout, '1');
-      // this.keterangannya.push(keteranganyaa.value);
-    } else {
-      // const keteranganyaa = document.getElementById('rec') as HTMLInputElement | any;
-      this.store(valueinout, '0');
-      const index = this.kirimDesesuai.findIndex(list => list === statussesuaitidak);
-      const indexid = this.iddokumen.findIndex(list => list === iddokumen);
-      // const indexids = this.datacontoh.findIndex(list => list === newValue);
-
-      // this.datacontoh.splice(indexids,1)
-      this.kirimDesesuai.splice(index, 1);
-      this.iddokumen.splice(indexid, 1);
-    }
-    console.warn(this.kirimDesesuai);
-    console.warn(this.iddokumen);
-    // console.warn(this.keterangannya);
+  detailAgunan(nama_dokumen: any){
+    window.open('http://10.20.34.178:8805/api/v1/efos-de/downloadFile/'+ nama_dokumen)
   }
 
-  store(newValue: any, pemisah: any): void {
-    if (pemisah == 1) {
-      this.datacontoh.push(newValue);
-    } else {
-      const indexids = this.datacontoh.findIndex(list => list === newValue);
-      this.datacontoh.splice(indexids, 1);
-    }
-    console.log(this.datacontoh);
-    // this.datacontohid.push(iddokumen);
-    // this.datacontoh=newValue;
-
-    // let changes = this.newValue.diff(this.datacontoh);
-    // if (changes) {
-    //   alert('putetputer');
-    //     console.log('Changes detected!');
-    // }
-  }
-
-  postAssign(): void {
-    this.iddokumen;
-    for (let i = 0; i < this.iddokumen.length; i++) {
-      // alert(this.kirimDe[i]);
-      // alert(this.kirimStatusAplikasi[i])
-      // alert(this.kirimAssign)
-      if (this.datacontohid[i] == this.iddokumen[i]) {
-        var datakirimanketeranga = this.datacontoh[i];
+  postCeklis(): void {
+    // Upload Data Entry
+    for (let i = 0; i < this.uploadDocument.length; i++) {
+      // get Radio Button Validasi
+      let validasiDE = (<HTMLInputElement>document.getElementById("validasiDE"+[i+1])).checked;
+      if(validasiDE == true){
+        this.radioValidasiDE = 1;
+      }
+      else{
+        this.radioValidasiDE = 0;
       }
 
-      this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/verif_assignment', {
-          iddokumen: this.kirimDesesuai[i],
-          app_no_de: this.iddokumen[i],
-          keteranganya: datakirimanketeranga,
-          // 'created_by': '199183174'
-        })
-        .subscribe({});
-      // window.location.reload();
+      // keterangan
+      this.keteranganDE = (<HTMLInputElement>document.getElementById("keteranganDE"+[i+1])).value;
+
+
+    // Upload Agunan
+    for (let i = 0; i < this.uploadAgunan.length; i++) {
+      // get Radio Button Validasi
+      let validasiAgunan = (<HTMLInputElement>document.getElementById("validasiAgunan"+[i+1])).checked;
+      if(validasiAgunan == true){
+        this.radioValidasiAgunan = 1;
+      }
+      else{
+        this.radioValidasiAgunan = 0;
+      }
+      // alert(this.radioValidasiAgunan)
+
+      // get input Keterangan
+      this.keteranganAgunan = (<HTMLInputElement>document.getElementById("keteranganAgunan"+[i+1])).value;
+      // alert(this.keteranganAgunan)
     }
 
-    // this.dtElement.dtInstance.then((dtIntance: DataTables.Api) => {
-    //   dtIntance.destroy();
-    //   this.dtOptions = {
-    //     pagingType: 'full_numbers',
-    //     pageLength: 10,
-    //     processing: true,
-    //     responsive: true,
-    //   };
-    //   this.dtTrigger.next(this.daWa);
-    // });
-  }
 
+      // Post Data Entry
+      this.http
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_syarat_persetujuan', {
+        tipe_dokumen: this.uploadDocument[i].doc_description,
+        nama_file: this.uploadDocument[i].nama_dokumen,
+        validasi_DE: this.radioValidasiDE,
+        keterangan_DE: this.keteranganDE,
+      })
+      .subscribe({});
+
+      // Post Agunan
+      this.http
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_syarat_persetujuan', {
+        tipe_dokumen: this.uploadAgunan[i].doc_description,
+        nama_file: this.uploadAgunan[i].nama_dokumen,
+        validasi_DE: this.radioValidasiAgunan,
+        keterangan_DE: this.keteranganAgunan,
+      })
+      .subscribe({});
+    }
+  }
   // update Status
   updateStatus(){
     this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de } });

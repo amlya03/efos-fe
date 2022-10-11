@@ -59,7 +59,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     'http://10.20.34.178:8805/api/v1/efos-verif/get_verif_mutasi?si='
   );
   // De
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
 
   ngOnInit(): void {
