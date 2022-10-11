@@ -7,6 +7,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { DataEntryService } from '../services/data-entry.service';
 import { colateralmodel } from './collateral-model';
+import { any } from 'cypress/types/bluebird';
 // import { count } from 'console';
 
 export type EntityResponseDaWa = HttpResponse<colateralmodel>;
@@ -343,105 +344,322 @@ export class CollateralComponent implements OnInit {
   }
 
   createcollateral() {
-    const kategori_pekerjaan = document.getElementById('kategori_pekerjaan') as HTMLInputElement | any;
-    const curef_id = document.getElementById('curef_id') as HTMLInputElement | any;
-    const tipe_pekerjaan = document.getElementById('tipe_pekerjaan') as HTMLInputElement | any;
-    const payroll = document.getElementById('payroll') as HTMLInputElement | any;
-    const payroll1 = document.getElementById('payroll1') as HTMLInputElement | any;
-    const jabatan = document.getElementById('jabatan') as HTMLInputElement | any;
-    const jenis_pekerjaan = document.getElementById('jenis_pekerjaan') as HTMLInputElement | any;
-    const nama_perusahaan = document.getElementById('nama_perusahaan') as HTMLInputElement | any;
-    const alamat_perusahaan = document.getElementById('alamat_perusahaan') as HTMLInputElement | any;
-    const provinsi_cabang_perusahaan = document.getElementById('provinsi_cabang_perusahaan') as HTMLInputElement | any;
-    const kabkota_cabang_perusahaan = document.getElementById('kabkota_cabang_perusahaan') as HTMLInputElement | any;
-    const kecamatan_perusahaan = document.getElementById('kecamatan_perusahaan') as HTMLInputElement | any;
-    const kelurahan = document.getElementById('kelurahan') as HTMLInputElement | any;
-    const kode_pos = document.getElementById('kode_pos') as HTMLInputElement | any;
-    const rt = document.getElementById('rt') as HTMLInputElement | any;
-    const rw = document.getElementById('rw') as HTMLInputElement | any;
-    const no_siup = document.getElementById('no_siup') as HTMLInputElement | any;
-    const jenis_bidang_perusahaan = document.getElementById('jenis_bidang_perusahaan') as HTMLInputElement | any;
-    const jenis_sektor_perusahaan = document.getElementById('jenis_sektor_perusahaan') as HTMLInputElement | any;
-    const umur1 = document.getElementById('umur1') as HTMLInputElement | any;
-    const umur_pensiun = document.getElementById('umur_pensiun') as HTMLInputElement | any;
-    const lama_bekerja_tahun = document.getElementById('lama_bekerja_tahun') as HTMLInputElement | any;
-    const lama_bekerja_bulan = document.getElementById('lama_bekerja_bulan') as HTMLInputElement | any;
-    const jumlah_karyawan = document.getElementById('jumlah_karyawan') as HTMLInputElement | any;
-    const jumlah_karyawan2 = document.getElementById('jumlah_karyawan2') as HTMLInputElement | any;
-    const pendapatan = document.getElementById('pendapatan') as HTMLInputElement | any;
-    const pendapatan_lain = document.getElementById('pendapatan_lain') as HTMLInputElement | any;
-    const tunjangan = document.getElementById('tunjangan') as HTMLInputElement | any;
-    const total_pendapatan = document.getElementById('total_pendapatan') as HTMLInputElement | any;
-    const tipe_perusahaan = document.getElementById('tipe_perusahaan') as HTMLInputElement | any;
-    const tipe_kepegawaian = document.getElementById('tipe_kepegawaian') as HTMLInputElement | any;
-
+    alert(this.datakirimande);
+    alert(this.datakirimanappde);
+    const tipe_anggunan = document.getElementById('tipe_anggunan') as HTMLInputElement | any;
+    const tipe_kendaraan2 = document.getElementById('tipe_kendaraan2') as HTMLInputElement | any;
+    const merk2 = document.getElementById('merk2') as HTMLInputElement | any;
+    const model2 = document.getElementById('model2') as HTMLInputElement | any;
+    const seri2 = document.getElementById('seri2') as HTMLInputElement | any;
+    const nomor_bpkb2 = document.getElementById('nomor_bpkb2') as HTMLInputElement | any;
+    const no_plat = document.getElementById('no_plat') as HTMLInputElement | any;
+    const warna = document.getElementById('warna') as HTMLInputElement | any;
+    const no_mesin = document.getElementById('no_mesin') as HTMLInputElement | any;
+    const no_rangka = document.getElementById('no_rangka') as HTMLInputElement | any;
+    const nama_bpkb = document.getElementById('nama_bpkb') as HTMLInputElement | any;
+    const tanggal_terbit = document.getElementById('tanggal_terbit') as HTMLInputElement | any;
+    const tipe_properti = document.getElementById('tipe_properti') as HTMLInputElement | any;
+    const ibaru = document.getElementById('ibaru') as HTMLInputElement | any;
+    const isecond = document.getElementById('isecond') as HTMLInputElement | any;
+    const ipks = document.getElementById('ipks') as HTMLInputElement | any;
+    const inonpks = document.getElementById('inonpks') as HTMLInputElement | any;
+    const iperorangan = document.getElementById('iperorangan') as HTMLInputElement | any;
+    const developer_pks = document.getElementById('developer_pks') as HTMLInputElement | any;
+    const developer_non_pks = document.getElementById('developer_non_pks') as HTMLInputElement | any;
+    const nama_perumahan = document.getElementById('nama_perumahan') as HTMLInputElement | any;
+    const status_jaminan_sebelumnya = document.getElementById('status_jaminan_sebelumnya') as HTMLInputElement | any;
+    const hubungan_pemegang_hak = document.getElementById('hubungan_pemegang_hak') as HTMLInputElement | any;
+    const tahun_buat = document.getElementById('tahun_buat') as HTMLInputElement | any;
+    const status_sertifikat = document.getElementById('status_sertifikat') as HTMLInputElement | any;
+    const nama_pemegang_hak = document.getElementById('nama_pemegang_hak') as HTMLInputElement | any;
+    const no_handphone_cp = document.getElementById('no_handphone_cp') as HTMLInputElement | any;
+    const no_id_pemegang_hak_sertifikat = document.getElementById('no_id_pemegang_hak_sertifikat') as HTMLInputElement | any;
+    const nomor_sertifikat = document.getElementById('tanggal_terbit') as HTMLInputElement | any;
+    const no_contact_person = document.getElementById('tipe_perusahaan') as HTMLInputElement | any;
+    const nomor_identitas_pemegang_hak = document.getElementById('nomor_identitas_pemegang_hak') as HTMLInputElement | any;
+    const tanggal_lahir = document.getElementById('tanggal_lahir') as HTMLInputElement | any;
+    const tanggal_exipred = document.getElementById('tanggal_exipred') as HTMLInputElement | any;
+    const tahun_buatbiasa = document.getElementById('tahun_buatbiasa') as HTMLInputElement | any;
+    const alamat_agunan = document.getElementById('alamat_agunan') as HTMLInputElement | any;
+    const provinsi_agunan = document.getElementById('provinsi_agunan') as HTMLInputElement | any;
+    const kabkota_agunan = document.getElementById('kabkota_agunan') as HTMLInputElement | any;
+    const kecamatan_agunan = document.getElementById('kecamatan_agunan') as HTMLInputElement | any;
+    const kelurahan_agunan = document.getElementById('kelurahan_agunan') as HTMLInputElement | any;
+    const kode_pos_agunan = document.getElementById('kode_pos_agunan') as HTMLInputElement | any;
+    const rt_agunan = document.getElementById('rt_agunan') as HTMLInputElement | any;
+    const rw_agunan = document.getElementById('rw_agunan') as HTMLInputElement | any;
+    const iyaSama = document.getElementById('iyaSama') as HTMLInputElement | any;
+    const takSama = document.getElementById('takSama') as HTMLInputElement | any;
+    const luas_bangunan_anggunan = document.getElementById('luas_bangunan_anggunan') as HTMLInputElement | any;
+    const luas_tanah_anggunan = document.getElementById('luas_tanah_anggunan') as HTMLInputElement | any;
+    const harga_objek = document.getElementById('harga_objek') as HTMLInputElement | any;
+    const alamat_sesuai_sertifikat = document.getElementById('alamat_sesuai_sertifikat') as HTMLInputElement | any;
+    const provinsi_sesuai_sertifikat = document.getElementById('provinsi_sesuai_sertifikat') as HTMLInputElement | any;
+    const kabkota_sesuai_sertifikat = document.getElementById('kabkota_sesuai_sertifikat') as HTMLInputElement | any;
+    const kecamatan_sesuai_sertifikat = document.getElementById('kecamatan_sesuai_sertifikat') as HTMLInputElement | any;
+    const kelurahan_sesuai_sertifikat = document.getElementById('kelurahan_sesuai_sertifikat') as HTMLInputElement | any;
+    const kode_pos_sesuai_sertifikat = document.getElementById('kode_pos_sesuai_sertifikat') as HTMLInputElement | any;
+    const rt_sertifikat = document.getElementById('rt_sertifikat') as HTMLInputElement | any;
+    const rw_sertifikat = document.getElementById('rw_sertifikat') as HTMLInputElement | any;
+    const id_rumah = document.getElementById('id_rumah') as HTMLInputElement | any;
+    const blok_rumah = document.getElementById('blok_rumah') as HTMLInputElement | any;
+    const no_rumah = document.getElementById('no_rumah') as HTMLInputElement | any;
+    const no_sertifikat = document.getElementById('no_sertifikat') as HTMLInputElement | any;
+    // const blok_rumah = document.getElementById('blok_rumah') as HTMLInputElement | any;
+    // const blok_rumah = document.getElementById('blok_rumah') as HTMLInputElement | any;
+    // const blok_rumah = document.getElementById('blok_rumah') as HTMLInputElement | any;
     // alert(id.value);
     // alert(jenis_kelamin.value);
 
+    if (tipe_anggunan.value == 'Kendaraan') {
+      var kirimanmerek = merk2.value;
+      var kirimantipekendaraan = tipe_kendaraan2.value;
+      var kirimanmodel = model2.value;
+      var kirimanseri = seri2.value;
+      var kirimannobpkb = nomor_bpkb2.value;
+      var kirimannoplat = no_plat.value;
+      var kirimanwarna = warna.value;
+      var kirimannomesin = no_mesin.value;
+      var kirimannorangka = no_rangka.value;
+      var kirimannamabpkb = nama_bpkb.value;
+      var kirimanalamatagunan = null;
+      //  var kirimantanggalterbit=null;
+      var kirimanalamat_sesuai_sertifikat = null;
+      var kirimanblok_rumah = null;
+      var kirimanharga_objek = null;
+      var kirimanhubungan_pemegang_hak = null;
+      var kirimanid_rumah = null;
+      var kirimankabkota_agunan = null;
+      var kirimankabkota_sesuai_sertifikat = null;
+      var kirimankecamatan_agunan = null;
+      var kirimankecamatan_sesuai_sertifikat = null;
+      var kirimankelurahan_agunan = null;
+      var kirimankelurahan_sesuai_sertifikat = null;
+      var kirimankode_pos_agunan = null;
+      var kirimankode_pos_sesuai_sertifikat = null;
+      var kirimanluas_bangunan = null;
+      var kirimannama_pemegang_hak = null;
+      var kirimannama_perumahan = null;
+      var kirimanno_handphone_cp = null;
+      var kirimanno_id_pemegang_hak_sertifikat = null;
+      var kirimannomor_rumah = null;
+      var kirimanprovinsi_agunan = null;
+      var kirimanprovinsi_sesuai_sertifikat = null;
+      var kirimanrt = null;
+      var kirimanrw = null;
+      var kirimanrt_sertifikat = null;
+      var kirimanrw_sertifikat = null;
+      var kirimanstatus_jaminan_sebelumnya = null;
+      var kirimanstatus_sertifikat = null;
+      var kirimantahun_dibuat = null;
+      var kirimantanggal_expired = null;
+      var kirimantanggal_terbit = null;
+      var kirimantipe_agunan = null;
+      var kirimanno_sertifikat = null;
+      var kirimantipe_properti = null;
+    } else if (tipe_anggunan.value == 'Tanah dan Bangunan') {
+      var kirimanmerek = null;
+      var kirimantipekendaraan = null;
+      var kirimanmodel = null;
+      var kirimanseri = null;
+      var kirimannobpkb = null;
+      var kirimannoplat = null;
+      var kirimanwarna = null;
+      var kirimannomesin = null;
+      var kirimannorangka = null;
+      var kirimannamabpkb = null;
+      var kirimanalamatagunan = null;
+      //  var kirimantanggalterbit=null;
+      var kirimanalamat_sesuai_sertifikat = null;
+      var kirimanblok_rumah = null;
+      var kirimanharga_objek = null;
+      var kirimanhubungan_pemegang_hak = null;
+      var kirimanid_rumah = null;
+      var kirimankabkota_agunan = null;
+      var kirimankabkota_sesuai_sertifikat = null;
+      var kirimankecamatan_agunan = null;
+      var kirimankecamatan_sesuai_sertifikat = null;
+      var kirimankelurahan_agunan = null;
+      var kirimankelurahan_sesuai_sertifikat = null;
+      var kirimankode_pos_agunan = null;
+      var kirimankode_pos_sesuai_sertifikat = null;
+      var kirimanluas_bangunan = null;
+      var kirimannama_pemegang_hak = null;
+      var kirimannama_perumahan = null;
+      var kirimanno_handphone_cp = null;
+      var kirimanno_id_pemegang_hak_sertifikat = null;
+      var kirimannomor_rumah = null;
+      var kirimanprovinsi_agunan = null;
+      var kirimanprovinsi_sesuai_sertifikat = null;
+      var kirimanrt = null;
+      var kirimanrw = null;
+      var kirimanrt_sertifikat = null;
+      var kirimanrw_sertifikat = null;
+      var kirimanstatus_jaminan_sebelumnya = null;
+      var kirimanstatus_sertifikat = null;
+      var kirimantahun_dibuat = null;
+      var kirimantanggal_expired = null;
+      var kirimantanggal_terbit = null;
+      var kirimantipe_agunan = null;
+      var kirimanno_sertifikat = null;
+      var kirimantipe_properti = null;
+    } else if (tipe_anggunan.value == 'Tanah') {
+      var kirimanmerek = null;
+      var kirimantipekendaraan = null;
+      var kirimanmodel = null;
+      var kirimanseri = null;
+      var kirimannobpkb = null;
+      var kirimannoplat = null;
+      var kirimanwarna = null;
+      var kirimannomesin = null;
+      var kirimannorangka = null;
+      var kirimannamabpkb = null;
+      var kirimanalamatagunan = null;
+      //  var kirimantanggalterbit=null;
+      var kirimanalamat_sesuai_sertifikat = null;
+      var kirimanblok_rumah = null;
+      var kirimanharga_objek = null;
+      var kirimanhubungan_pemegang_hak = null;
+      var kirimanid_rumah = null;
+      var kirimankabkota_agunan = null;
+      var kirimankabkota_sesuai_sertifikat = null;
+      var kirimankecamatan_agunan = null;
+      var kirimankecamatan_sesuai_sertifikat = null;
+      var kirimankelurahan_agunan = null;
+      var kirimankelurahan_sesuai_sertifikat = null;
+      var kirimankode_pos_agunan = null;
+      var kirimankode_pos_sesuai_sertifikat = null;
+      var kirimanluas_bangunan = null;
+      var kirimannama_pemegang_hak = null;
+      var kirimannama_perumahan = null;
+      var kirimanno_handphone_cp = null;
+      var kirimanno_id_pemegang_hak_sertifikat = null;
+      var kirimannomor_rumah = null;
+      var kirimanprovinsi_agunan = null;
+      var kirimanprovinsi_sesuai_sertifikat = null;
+      var kirimanrt = null;
+      var kirimanrw = null;
+      var kirimanrt_sertifikat = null;
+      var kirimanrw_sertifikat = null;
+      var kirimanstatus_jaminan_sebelumnya = null;
+      var kirimanstatus_sertifikat = null;
+      var kirimantahun_dibuat = null;
+      var kirimantanggal_expired = null;
+      var kirimantanggal_terbit = null;
+      var kirimantipe_agunan = null;
+      var kirimanno_sertifikat = null;
+      var kirimantipe_properti = null;
+    } else if (tipe_anggunan.value == 'Bangunan') {
+      var kirimanmerek = null;
+      var kirimantipekendaraan = null;
+      var kirimanmodel = null;
+      var kirimanseri = null;
+      var kirimannobpkb = null;
+      var kirimannoplat = null;
+      var kirimanwarna = null;
+      var kirimannomesin = null;
+      var kirimannorangka = null;
+      var kirimannamabpkb = null;
+      var kirimanalamatagunan = null;
+      //  var kirimantanggalterbit=null;
+      var kirimanalamat_sesuai_sertifikat = null;
+      var kirimanblok_rumah = null;
+      var kirimanharga_objek = null;
+      var kirimanhubungan_pemegang_hak = null;
+      var kirimanid_rumah = null;
+      var kirimankabkota_agunan = null;
+      var kirimankabkota_sesuai_sertifikat = null;
+      var kirimankecamatan_agunan = null;
+      var kirimankecamatan_sesuai_sertifikat = null;
+      var kirimankelurahan_agunan = null;
+      var kirimankelurahan_sesuai_sertifikat = null;
+      var kirimankode_pos_agunan = null;
+      var kirimankode_pos_sesuai_sertifikat = null;
+      var kirimanluas_bangunan = null;
+      var kirimannama_pemegang_hak = null;
+      var kirimannama_perumahan = null;
+      var kirimanno_handphone_cp = null;
+      var kirimanno_id_pemegang_hak_sertifikat = null;
+      var kirimannomor_rumah = null;
+      var kirimanprovinsi_agunan = null;
+      var kirimanprovinsi_sesuai_sertifikat = null;
+      var kirimanrt = null;
+      var kirimanrw = null;
+      var kirimanrt_sertifikat = null;
+      var kirimanrw_sertifikat = null;
+      var kirimanstatus_jaminan_sebelumnya = null;
+      var kirimanstatus_sertifikat = null;
+      var kirimantahun_dibuat = null;
+      var kirimantanggal_expired = null;
+      var kirimantanggal_terbit = null;
+      var kirimantipe_agunan = null;
+      var kirimanno_sertifikat = null;
+      var kirimantipe_properti = null;
+    }
+
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
-    alert('CREATE NIH');
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_job_info', {
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_collateral', {
         // headers: headers,
         // alamat_perusahaan: alamat_perusahaan.value,
 
-        alamat_agunan: 'string',
-        alamat_sesuai_sertifikat: 'string',
-        app_no_de: 'string',
-        blok_rumah: 'string',
-        curef: 'string',
-        developer: 'string',
-        harga_objek: 'string',
+        alamat_agunan: kirimanalamatagunan,
+        alamat_sesuai_sertifikat: kirimanalamat_sesuai_sertifikat,
+        app_no_de: this.datakirimande,
+        blok_rumah: kirimanblok_rumah,
+        curef: this.datakirimancuref,
+        developer: 'cekcontohdevloper',
+        harga_objek: kirimanharga_objek,
         harga_objek_sertifikat: 'string',
-        hubungan_pemegang_hak: 'string',
-        id_collateral: 'string',
-        id_collateral_detail: 0,
-        id_rumah: 'string',
-        jenis_objek: 'string',
-        kabkota_agunan: 'string',
-        kabkota_sesuai_sertifikat: 'string',
-        kecamatan_agunan: 'string',
-        kecamatan_sesuai_sertifikat: 'string',
-        kelurahan_agunan: 'string',
-        kelurahan_sesuai_sertifikat: 'string',
-        kode_pos_agunan: 'string',
-        kode_pos_sesuai_sertifikat: 'string',
-        luas_bangunan: 'string',
+        hubungan_pemegang_hak: kirimanhubungan_pemegang_hak,
+        id_collateral: null,
+        id_collateral_detail: null,
+        id_rumah: kirimanid_rumah,
+        // jenis_objek: 'string',
+        kabkota_agunan: kirimankabkota_agunan,
+        kabkota_sesuai_sertifikat: kirimankabkota_sesuai_sertifikat,
+        kecamatan_agunan: kirimankecamatan_agunan,
+        kecamatan_sesuai_sertifikat: kirimankecamatan_sesuai_sertifikat,
+        kelurahan_agunan: kirimankelurahan_agunan,
+        kelurahan_sesuai_sertifikat: kirimankelurahan_sesuai_sertifikat,
+        kode_pos_agunan: kirimankode_pos_agunan,
+        kode_pos_sesuai_sertifikat: kirimankode_pos_sesuai_sertifikat,
+        luas_bangunan: kirimanluas_bangunan,
         luas_bangunan_sertifikat: 'string',
         luas_tanah: 'string',
         luas_tanah_sertifikat: 'string',
-        merk: 'string',
-        model: 'string',
-        nama_bpkb: 'string',
-        nama_pemegang_hak: 'string',
-        nama_perumahan: 'string',
-        no_handphone_cp: 'string',
-        no_id_pemegang_hak_sertifikat: 'string',
-        no_mesin: 'string',
-        no_plat: 'string',
-        no_rangka: 'string',
-        no_sertifikat: 'string',
-        nomor_bpkb: 'string',
-        nomor_rumah: 'string',
-        provinsi_agunan: 'string',
-        provinsi_sesuai_sertifikat: 'string',
-        rt: 'string',
-        rt_sertifikat: 'string',
-        rw: 'string',
-        rw_sertifikat: 'string',
-        seri: 'string',
-        status_active: 'string',
-        status_agunan: 'string',
-        status_developer: 'string',
-        status_jaminan_sebelumnya: 'string',
-        status_sertifikat: 'string',
-        tahun_dibuat: 'string',
-        tanggal_expired: 'string',
-        tanggal_terbit: 'string',
-        tipe_agunan: 'string',
-        tipe_kendaraan: 'string',
-        tipe_properti: 'string',
-        warna: 'string',
+        merk: kirimanmerek,
+        model: kirimanmodel,
+        nama_bpkb: kirimannamabpkb,
+        nama_pemegang_hak: kirimannama_pemegang_hak,
+        nama_perumahan: kirimannama_perumahan,
+        no_handphone_cp: kirimanno_handphone_cp,
+        no_id_pemegang_hak_sertifikat: kirimanno_id_pemegang_hak_sertifikat,
+        no_mesin: kirimannomesin,
+        no_plat: kirimannoplat,
+        no_rangka: kirimannorangka,
+        no_sertifikat: kirimanno_sertifikat,
+        nomor_bpkb: kirimannobpkb,
+        nomor_rumah: kirimannomor_rumah,
+        provinsi_agunan: kirimanprovinsi_agunan,
+        provinsi_sesuai_sertifikat: kirimanprovinsi_sesuai_sertifikat,
+        rt: kirimanrt,
+        rt_sertifikat: kirimanrt_sertifikat,
+        rw: kirimanrw,
+        rw_sertifikat: kirimanrw_sertifikat,
+        seri: kirimanseri,
+        // status_active: 'string',
+        // status_agunan: 'string',
+        // status_developer: 'string',
+        status_jaminan_sebelumnya: kirimanstatus_jaminan_sebelumnya,
+        status_sertifikat: kirimanstatus_sertifikat,
+        tahun_dibuat: kirimantahun_dibuat,
+        tanggal_expired: kirimantanggal_expired,
+        tanggal_terbit: kirimantanggal_terbit,
+        tipe_agunan: kirimantipe_agunan,
+        tipe_kendaraan: kirimantipekendaraan,
+        tipe_properti: kirimantipe_properti,
+        warna: kirimanwarna,
       })
 
       .subscribe({

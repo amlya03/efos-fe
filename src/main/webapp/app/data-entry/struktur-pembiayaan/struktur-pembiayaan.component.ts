@@ -339,7 +339,9 @@ export class StrukturPembiayaanComponent implements OnInit {
 
           if (anguran2 == null) {
             $('#angsuran').val(anguran1);
+            $('#angsurankirim').val(anguran1);
           } else {
+            $('#angsurankirim').val(anguran1);
             $('#angsuran').val('Angsuran ke1=' + anguran1 + 'Angsuran ke2=' + anguran2);
           }
 
@@ -358,8 +360,7 @@ export class StrukturPembiayaanComponent implements OnInit {
       });
   }
 
-  simpanstruktur() // contohtampungstatuskawain: any, // contohtampungancuref: any,
-  // contohtampunganappde: any,
+  simpanstruktur() // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
   // contohtampungankategoripekerjaan: any
   {
     const joint_income = document.getElementById('joint_income') as HTMLInputElement | any;
@@ -375,6 +376,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     const harga_objek_pembiayaan = document.getElementById('harga_objek_pembiayaan') as HTMLInputElement | any;
     const uang_muka = document.getElementById('uang_muka') as HTMLInputElement | any;
     const angsuran = document.getElementById('angsuran') as HTMLInputElement | any;
+    const angsurankiriman = document.getElementById('angsurankirim') as HTMLInputElement | any;
     const hasil_pembiayaan = document.getElementById('hasil_pembiayaan') as HTMLInputElement | any;
     const detail_objek_pembiayaan = document.getElementById('detail_objek_pembiayaan') as HTMLInputElement | any;
     const fee_based = document.getElementById('fee_based') as HTMLInputElement | any;
@@ -392,7 +394,7 @@ export class StrukturPembiayaanComponent implements OnInit {
       this.http
         .post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_struktur_pembiayaan', {
           // headers: headers,
-          angsuran: angsuran.value,
+          angsuran: angsurankiriman.value,
           app_no_de: this.datakirimanappde,
           created_by: 'string',
           // created_date: "",
@@ -403,7 +405,7 @@ export class StrukturPembiayaanComponent implements OnInit {
           harga_objek_pembiayaan: harga_objek_pembiayaan.value,
           id: 0,
           jangka_waktu: kirimanjangwaktunya[0],
-          // joint_income: joint_income.value,
+          joint_income: 'contoh',
           kode_fasilitas: kirimanpotongkodefasilitas[0],
           kode_fasilitas_name: kirimanpotongkodefasilitas[1],
           margin: margin1.value,
@@ -442,7 +444,7 @@ export class StrukturPembiayaanComponent implements OnInit {
       this.http
         .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_struktur_pembiayaan', {
           // headers: headers,
-          angsuran: angsuran.value,
+          angsuran: angsurankiriman.value,
           app_no_de: this.datakirimanappde,
           created_by: 'string',
           created_date: '',
