@@ -19,6 +19,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
   title = 'EFOS';
   numbers: Array<number> = [];
   daWa?: daWaModel[] = [];
+  getCheckDaWa: Array<daWaModel> = new Array<daWaModel>();
   // modelDawa: daWaModel = new daWaModel();
   daWaAprisal?: daWaModelAprisal[];
   onResponseSuccess: any;
@@ -27,6 +28,9 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
   kirimDe: Array<number> = [];
   kirimStatusAplikasi: Array<number> = [];
   kirimAssign: any;
+
+  // checklist dawa
+  checklistDaWa: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -70,6 +74,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
       console.warn(data);
       if (data.code === 200) {
         this.daWa = (data as any).result;
+        this.getCheckDaWa = data.result;
         this.dtTrigger.next(data.result);
       }
     });
@@ -94,12 +99,23 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
     $('#dataTables-example').DataTable().columns(3).search(listFasilitas).draw();
     $('#dataTables-example').DataTable().columns(5).search(listKategori).draw();
   }
+
   clearInput(): void {
     $('#dataTables-example').DataTable().columns().search('').draw();
   }
 
-  pilihSemuaCheck(): void {
-    alert('Pilih Semua Check!');
+  // ceklis semua
+  isChecked = false;
+  checkuncheckall() {
+    for (let i = 0; i < this.getCheckDaWa.length; i++) {
+      this.checklistDaWa = (<HTMLInputElement>document.getElementById("checkDaWa"+this.getCheckDaWa[i+1])).checked;
+      alert(this.checklistDaWa)
+    }
+    if(this.isChecked == true){
+      this.isChecked = false;
+    } else {
+      this.isChecked = true;
+    }
   }
 
   getProoduct(isSelected: any, appNoDe: any, statusAplikasi: any): void {

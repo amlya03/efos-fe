@@ -65,15 +65,4 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
   clearInput(): void {
     $('#dataTables-example').DataTable().columns().search('').draw();
   }
-  getProoduct(isSelected: any, product: any, id: any): void {
-    const checked = isSelected.target.checked;
-    if (checked) {
-      this.kirimDe.push(product);
-    } else {
-      const index = this.kirimDe.findIndex(list => list === product);
-      this.kirimDe.splice(index, 1);
-      console.warn(id);
-    }
-    console.warn(this.kirimDe);
-  }
 }

@@ -57,7 +57,6 @@
         <th style="text-align: center">Nama Analys</th>
         <th style="text-align: center">SLA Analys</th>
         <th></th>
-        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -70,7 +69,6 @@
         <td hidden>{{ daOp.kategori_pekerjaan === 'Fix Income' }}</td>
         <td style="text-align: center">{{ daOp.analis_verifikasi }}</td>
         <td style="text-align: center">{{ daOp.sla }} Hari</td>
-        <td style="text-align: center"><input (change)="getProoduct($event, daOp.app_no_de, daOp.id_sla_history)" type="checkbox" /></td>
         <td style="text-align: center">
           <button type="button" class="btn btn-outline-secondary"><fa-icon icon="ellipsis"></fa-icon><br />Detail</button>
         </td>

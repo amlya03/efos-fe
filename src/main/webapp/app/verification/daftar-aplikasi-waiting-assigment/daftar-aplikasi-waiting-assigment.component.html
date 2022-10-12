@@ -44,8 +44,7 @@
   </div>
   <p></p>
   <div>
-    <button class="btn btn-info" style="float: right" (click)="pilihSemuaCheck()">Pilih Semua</button>
-    <input type="checkbox" checked (change)="('buatCheck')" />
+    <button class="btn btn-info" style="float: right" (click)="checkuncheckall()">Pilih Semua</button>
   </div>
   <p></p>
   <table id="dataTables-example" class="table table-striped table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
@@ -71,7 +70,7 @@
         <td style="text-align: center">{{ daWa.kategori_pekerjaan }}</td>
         <td hidden>{{ daWa.kategori_pekerjaan === 'Fix Income' }}</td>
         <td style="text-align: center">{{ daWa.status_aplikasi_desc }}</td>
-        <td style="text-align: center"><input (change)="getProoduct($event, daWa.app_no_de, daWa.status_aplikasi)" type="checkbox" /></td>
+        <td style="text-align: center"><input id="checkDaWa{{ i + 1 }}" (change)="getProoduct($event, daWa.app_no_de, daWa.status_aplikasi)" type="checkbox" [checked]="isChecked"/></td>
         <td style="text-align: center">
           <button (click)="viewdataentry(daWa.app_no_de)" type="button" class="btn btn-outline-secondary">
             <fa-icon icon="ellipsis"></fa-icon><br />Detail

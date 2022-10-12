@@ -77,7 +77,7 @@ export class DataCalonNasabahComponent implements OnInit {
   protected getDataCalonNasabah = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.178:8805/api/v1/efos-verif/getAnalisaCalonNasabah?sd='
   );
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   ngOnInit(): void {
     this.editor = new Editor();
@@ -547,7 +547,7 @@ export class DataCalonNasabahComponent implements OnInit {
     });
 
     // ref Jenis Bangunan
-    this.http.get<ApiResponse>('http://10.20.34.110:8805/api/v1/efos-de/list_tipe_properti?sp=H03').subscribe(data => {
+    this.http.get<ApiResponse>('http://10.20.34.178:8805/api/v1/efos-de/list_tipe_properti?sp=H03').subscribe(data => {
       if (data.code === 200) {
         this.refListTipeProperti = data.result;
       }
