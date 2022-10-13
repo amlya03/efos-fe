@@ -47,6 +47,10 @@ export class JobInfoComponent implements OnInit {
   getjabatansebelum: any;
   getjumlahkaryawansebelumdariapi: any;
   keteranganstatusnikah: any;
+  contohkirimanpayrol: any;
+  contohkirimpyrol: any;
+  tampungantipepekerjaan: any;
+  tampungantipeagunan: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -109,6 +113,23 @@ export class JobInfoComponent implements OnInit {
         // console.log(res.body?.result);
         console.warn('tabel', res.body?.result);
         this.daWa = res.body?.result;
+        const provinsi_cabang = document.getElementById('kategori_pekerjaan_sebelum') as HTMLInputElement | any;
+        var pemisahjumlahkaryawan = provinsi_cabang.value.split('|');
+        if (provinsi_cabang.value.indexOf('|') !== -1) {
+          var pemisahnya = pemisahjumlahkaryawan[1];
+        } else {
+          var pemisahnya = provinsi_cabang.value;
+        }
+
+        if (pemisahnya == 1 || pemisahnya == 'Fix Income') {
+          this.tampungantipeagunan = '1';
+        } else if (pemisahnya == 2 || pemisahnya == 'Non Fix Income') {
+          this.tampungantipeagunan = '2';
+        } else if (pemisahnya == 2 || pemisahnya == 'Lain-lainnya') {
+          this.tampungantipeagunan = '3';
+        } else {
+          this.tampungantipeagunan = '4';
+        }
       },
     });
 
@@ -118,6 +139,15 @@ export class JobInfoComponent implements OnInit {
         console.warn('sebelum', res.body?.result);
         this.nampungsebelum = res.body?.result;
         this.tampunganid = this.nampungsebelum[0];
+
+        if (this.tampunganid.kategori_pekerjaan_sebelum == 'Non Fix Income') {
+          this.tampungantipepekerjaan = 'Non Fix Income';
+        } else if (this.tampunganid.kategori_pekerjaan_sebelum == 'Fix Income') {
+          this.tampungantipepekerjaan = 'Fix Income';
+        } else {
+          this.tampungantipepekerjaan = 'tolong pilih kategori pekerjaan yang benar';
+        }
+        // this.tampunganjobsebelumtipepekerjaan = this.nampungsebelum[0];
         // alert('ini masih hard code');
         console.warn('SEBELUMNYA', this.tampunganid);
 
@@ -338,8 +368,6 @@ export class JobInfoComponent implements OnInit {
               console.warn('PROVINSI', res);
 
               this.daWaprof = res.body?.result;
-              // alert(this.postId);
-              // this.onResponseSuccess(res);
             },
           });
 
@@ -369,6 +397,13 @@ export class JobInfoComponent implements OnInit {
   katagoripekerjaanselect() {
     const provinsi_cabang = document.getElementById('kategori_pekerjaan_sebelum') as HTMLInputElement | any;
 
+    var pemisahjumlahkaryawan = provinsi_cabang.value.split('|');
+    if (provinsi_cabang.value.indexOf('|') !== -1) {
+      var pemisahnya = pemisahjumlahkaryawan[1];
+    } else {
+      var pemisahnya = provinsi_cabang.value;
+    }
+
     // alert(this.postId);
 
     this.getjenispekerjaansebelum(provinsi_cabang.value).subscribe({
@@ -376,6 +411,16 @@ export class JobInfoComponent implements OnInit {
         console.warn('kota', res);
 
         this.daWakotasebelum = res.body?.result;
+
+        if (pemisahnya == 1 || pemisahnya == 'Fix Income') {
+          this.tampungantipeagunan = '1';
+        } else if (pemisahnya == 2 || pemisahnya == 'Non Fix Income') {
+          this.tampungantipeagunan = '2';
+        } else if (pemisahnya == 2 || pemisahnya == 'Lain-lainnya') {
+          this.tampungantipeagunan = '3';
+        } else {
+          this.tampungantipeagunan = '4';
+        }
         // alert(this.postId);
         // this.onResponseSuccess(res);
       },
@@ -568,6 +613,17 @@ export class JobInfoComponent implements OnInit {
     var cekpipejenisbidang = jenis_bidang_sebelum.value.indexOf('|');
     var kirimanjenisbidang1 = jenis_bidang_sebelum.value.split('|');
 
+    const kirimanpayrol = (<HTMLInputElement>document.getElementById('payrollid')).checked;
+    const kirimannonpayrol = (<HTMLInputElement>document.getElementById('nonpayrollid')).checked;
+
+    if (kirimanpayrol == true) {
+      this.contohkirimanpayrol = 1;
+    } else if (kirimannonpayrol == true) {
+      this.contohkirimanpayrol = 0;
+    } else {
+      this.contohkirimanpayrol = 9;
+    }
+
     if (cekdatapipe !== -1) {
       var kirimanprovinsi = kirimanpotonganprovinsi[1];
 
@@ -596,13 +652,26 @@ export class JobInfoComponent implements OnInit {
       var kirimankelurahan = kelurahan_sebelum.value;
     }
 
+    // if (jenis_bidang_sebelum.value.indexOf('|') !== -1) {
+    //   var jneisbidangsebelumnya = jenis_bidang_sebelum.value.split('|');
+    //   var kirimanjenisbidang = jneisbidangsebelumnya[1];
+    //   alert('ada piope nya' + jenis_bidang_sebelum.values + jneisbidangsebelumnya[1]);
+    // } else {
+    //   alert('gkada');
+    //   var kirimanjenisbidang = jenis_bidang_sebelum.value;
+    // }
+    var potonganjenisbidang = jenis_bidang_sebelum.value.split('|');
     if (jenis_bidang_sebelum.value.indexOf('|') !== -1) {
-      var jneisbidangsebelumnya = jenis_bidang_sebelum.value.split('|');
-      var kirimanjenisbidang = jneisbidangsebelumnya[1];
-      alert('ada piope nya' + jenis_bidang_sebelum.values + jneisbidangsebelumnya[1]);
+      var kirimanjenisbidang = potonganjenisbidang[1];
     } else {
-      alert('gkada');
       var kirimanjenisbidang = jenis_bidang_sebelum.value;
+    }
+
+    var potongansektor = sektor_ekonomi_sebelum.value.split('|');
+    if (sektor_ekonomi_sebelum.value.indexOf('|') !== -1) {
+      var kirimansektor = potongansektor[1];
+    } else {
+      var kirimansektor = sektor_ekonomi_sebelum.value;
     }
 
     this.http
@@ -623,13 +692,13 @@ export class JobInfoComponent implements OnInit {
         lama_bekerja_bulan_sebelum: lama_bekerja_bulan_sebelum.value,
         lama_bekerja_tahun_sebelum: lama_bekerja_tahun_sebelum.value,
         nama_perusahaan_sebelum: nama_perusahaan_sebelum.value,
-        payroll_sebelum: ' 1',
+        payroll_sebelum: this.contohkirimanpayrol,
         posisi_sebelum: posisi_sebelum.value,
         provinsi_sebelum: kirimanprovinsi,
         rt_sebelum: rt_sebelum.value,
         // nama_ibu_kandung: ' 1',
         rw_sebelum: rw_sebelum.value,
-        sektor_ekonomi_sebelum: sektor_ekonomi_sebelum.value,
+        sektor_ekonomi_sebelum: kirimansektor,
         // tahun_berdiri_sebelum: id.value,
         tipe_kepegawaian_sebelum: tipe_kepegawaian_sebelum.value,
         tipe_pekerjaan_sebelum: tipe_pekerjaan_sebelum.value,
@@ -640,18 +709,6 @@ export class JobInfoComponent implements OnInit {
 
       .subscribe({
         next: bawaan => {
-          //           this.contohdata = bawaan.result.app_no_de;
-          // this.databawaan = bawaan.result.app_no_de;
-
-          // this.router.navigate(['/data-entry/job-info'], {
-          //   queryParams: {
-          //     datakiriman:  this.datakiriman,
-          //     datakirimanstatus: this.datakirimanstatus,
-          //     datakirimanappde: this.datakirimanappde,
-          //     datakirimanakategoripekerjaan:   this.datakirimanakategoripekerjaan,
-          //   },
-          // });
-
           if (this.keteranganstatusnikah === 'Menikah') {
             this.router.navigate(['/data-entry/data-pasangan'], {
               queryParams: {
@@ -728,6 +785,17 @@ export class JobInfoComponent implements OnInit {
     // alert(id.value);
     // alert(jenis_kelamin.value);
 
+    const kirimanpyroljob = (<HTMLInputElement>document.getElementById('payroll')).checked;
+    const kirimanpyroljob1 = (<HTMLInputElement>document.getElementById('payroll1')).checked;
+
+    if (kirimanpyroljob == true) {
+      this.contohkirimpyrol = 1;
+    } else if (kirimanpyroljob1 == true) {
+      this.contohkirimpyrol = 0;
+    } else {
+      this.contohkirimpyrol = 9;
+    }
+
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
     alert('CREATE NIH');
     this.http
@@ -738,6 +806,7 @@ export class JobInfoComponent implements OnInit {
         // created_by: contohtampungancuref,
         curef: this.datakiriman,
         id: '',
+        payroll: this.contohkirimpyrol,
         jabatan: jabatan.value,
         jenis_bidang: alamat_perusahaan.value,
         jenis_pekerjaan: jenis_bidang_perusahaan.value,

@@ -181,8 +181,8 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label"> KTP Seumur Hidup</label>
       <div class="col-sm-9">
-        <input type="radio" id="ktp_seumur_hidup_ya" name="ktp_seumur_hidup" value="Ya" checked /> Ya
-        <input type="radio" id="ktp_seumur_hidup_tidak" name="ktp_seumur_hidup" value="Tidak" /> Tidak
+        <input type="radio" id="ktp_seumur_hidup_ya" name="ktp_seumur_hidup" value="Ya" [checked]="daWa.status_ktp == 1" /> Ya
+        <input type="radio" id="ktp_seumur_hidup_tidak" name="ktp_seumur_hidup" value="Tidak" [checked]="daWa.status_ktp == 0" /> Tidak
       </div>
     </div>
     <br />
@@ -411,8 +411,8 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Alamat Sama dengan Alamat KTP</label>
       <div class="col-sm-9">
-        <input type="radio" name="alamat_sama_ktp" id="alamat_sama_ktp_tidak" value="Tidak Sama" />Tidak Sama
-        <input type="radio" name="alamat_sama_ktp" id="alamat_sama_ktp_sama" value="Sama" />Sama
+        <input type="radio" name="alamat_sama_ktp" id="alamat_sama_ktp_tidak" value="0" [checked]="daWa.status_alamat == 0" />Tidak Sama
+        <input type="radio" name="alamat_sama_ktp" id="alamat_sama_ktp_sama" value="1" [checked]="daWa.status_alamat == 1" />Sama
       </div>
     </div>
     <br />

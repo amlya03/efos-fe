@@ -260,23 +260,48 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
       <div class="col-sm-4">
-        <input type="radio" value="Ya" id="ktp_seumur_hidup_pasangan_ya" name="ktp_seumur_hidup_pasangan" /> Ya
-        <input type="radio" value="Tidak" id="ktp_seumur_hidup_pasangan_tidak" name="ktp_seumur_hidup_pasangan" /> Tidak
+        <input
+          type="radio"
+          (click)="radiobbutton()"
+          value="Ya"
+          id="ktp_seumur_hidup_pasangan_ya"
+          name="ktp_seumur_hidup_pasangan"
+          [checked]="daWa.status_ktp_pasangan == 1"
+        />
+        Ya
+        <input
+          type="radio"
+          (click)="radiobbuttonktp()"
+          value="Tidak"
+          id="ktp_seumur_hidup_pasangan_tidak"
+          name="ktp_seumur_hidup_pasangan"
+          [checked]="daWa.status_ktp_pasangan == 0"
+        />
+        Tidak
       </div>
     </div>
     <br />
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Tanggal Expired KTP<span class="text-danger">*</span></label>
-      <div class="col-sm-9">
-        <input
-          class="form-control"
-          type="date"
-          id="tanggal_exp_ktp_pasangan"
-          value="{{ daWa.tanggal_exp_ktp_pasangan }} "
-          name="tanggal_exp_ktp_pasangan"
-        />
+    <div [ngSwitch]="untukktp">
+      <div *ngSwitchCase="'0'">
+        <div class="form-group row">
+          <label name="texttanggalex" id="texttanggalex" class="col-sm-3 col-form-label"
+            >Tanggal Expired KTP<span class="text-danger">*</span></label
+          >
+          <div class="col-sm-9">
+            <input
+              class="form-control"
+              type="date"
+              id="tanggal_exp_ktp_pasangan"
+              value="{{ daWa.tanggal_exp_ktp_pasangan }} "
+              name="tanggal_exp_ktp_pasangan"
+            />
+          </div>
+        </div>
       </div>
+
+      <div *ngSwitchDefault></div>
     </div>
+
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">NPWP<span class="text-danger">*</span></label>
       <div class="col-sm-9">

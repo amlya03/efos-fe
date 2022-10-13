@@ -32,6 +32,8 @@ export class PekerjaanPasanganComponent implements OnInit {
   kecamatan: any;
   kelurahan: any;
   daWakodepos: any;
+  getdatasektorekonomi: any;
+  getjenisbidangdariapi: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -53,6 +55,7 @@ export class PekerjaanPasanganComponent implements OnInit {
       this.datakirimanappde = params['datakirimanappde'];
     });
   }
+  protected apilistjenisbidang = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/list_jenis_bidang');
 
   protected apigetjenispekeraan = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_pekerjaan?sc='
@@ -170,6 +173,44 @@ export class PekerjaanPasanganComponent implements OnInit {
           });
         },
       });
+
+    this.getlistjenisbidang().subscribe({
+      next: (res: EntityArrayResponseDaWa1) => {
+        // console.log(res.body?.result);
+        console.warn('jenisbidang', res.body?.result);
+        this.getjenisbidangdariapi = res.body?.result;
+      },
+    });
+  }
+
+  jenisbidangsebelumselect() {
+    const id_sektor = document.getElementById('jenis_bidang') as HTMLInputElement | any;
+    const idsektorpotongan = id_sektor.value.split('|');
+    // alert(this.postId);
+    // console.log('kode' + selectedStatus);
+    this.getsektorekonomi(idsektorpotongan[0]).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kota', res);
+
+        this.getdatasektorekonomi = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+  }
+
+  getlistjenisbidang(req1?: any): Observable<EntityArrayResponseDaWa1> {
+    const options = createRequestOption(req1);
+    return this.http.get<ApiResponse>(this.apilistjenisbidang, { params: options, observe: 'response' });
+  }
+
+  getsektorekonomi(idsktor: any, req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+
+    return this.http.get<ApiResponse>('http://10.20.34.110:8805/api/v1/efos-ide/list_sektor_ekonomi?se=' + idsktor, {
+      params: options,
+      observe: 'response',
+    });
   }
 
   onChange(selectedStatus: any) {

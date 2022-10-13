@@ -181,8 +181,14 @@
       <label class="col-sm-3 col-form-label">Jenis Bidang Usaha</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="jenis_bidang" name="jenis_bidang">
+          <select class="form-control" (change)="jenisbidangsebelumselect()" id="jenis_bidang" name="jenis_bidang">
             <option value="{{ daWa.jenis_bidang }}">{{ daWa.jenis_bidang }}</option>
+            <option
+              *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
+              value="{{ getjenisbidangdariapi.group_sektor }}|{{ getjenisbidangdariapi.nama_group_sektor }}"
+            >
+              {{ getjenisbidangdariapi.nama_group_sektor }}
+            </option>
           </select>
         </div>
       </div>
@@ -194,6 +200,9 @@
         <div class="form-group">
           <select class="form-control" id="sektor_ekonomi" name="sektor_ekonomi">
             <option value="{{ daWa.sektor_ekonomi }}">{{ daWa.sektor_ekonomi }}</option>
+            <option *ngFor="let getdatasektorekonomi of getdatasektorekonomi" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
+              {{ getdatasektorekonomi.nama_sub_sektor }}
+            </option>
           </select>
         </div>
       </div>

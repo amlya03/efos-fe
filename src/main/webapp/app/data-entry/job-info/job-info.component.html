@@ -494,7 +494,7 @@
                 <div class="col-sm-9">
                   <div class="form-group">
                     <select class="form-control" name="tipe_pekerjaan_sebelum" id="tipe_pekerjaan_sebelum">
-                      <option value="">{{ tampunganid.tipe_pekerjaan_sebelum }}</option>
+                      <option value="{{ tampungantipepekerjaan }}">{{ tampungantipepekerjaan }}</option>
                       <option *ngFor="let daWakotasebelum of daWakotasebelum" value="{{ daWakotasebelum.job_desc }}">
                         {{ daWakotasebelum.job_desc }}
                       </option>
@@ -506,8 +506,13 @@
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Payroll :</label>
                 <div class="col-sm-9">
-                  <label class="radio-inline mr-3"> <input type="radio" />Payroll</label>
-                  <label class="radio-inline mr-3"> <input type="radio" />Non Payroll</label>
+                  <label class="radio-inline mr-3">
+                    <input type="radio" id="payrollid" name="payroll_sebelum" [checked]="tampunganid.payroll_sebelum == 1" />Payroll</label
+                  >
+                  <label class="radio-inline mr-3">
+                    <input type="radio" id="nonpayrollid" name="payroll_sebelum" [checked]="tampunganid.payroll_sebelum == 0" />Non
+                    Payroll</label
+                  >
                 </div>
               </div>
               <br />
@@ -682,7 +687,7 @@
                       id="jenis_bidang_sebelum"
                       name="jenis_bidang_sebelum"
                     >
-                      <option value="">{{ tampunganid.jenis_bidang_sebelum }}</option>
+                      <option value="{{ tampunganid.jenis_bidang_sebelum }}">{{ tampunganid.jenis_bidang_sebelum }}</option>
                       <option
                         *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
                         value="{{ getjenisbidangdariapi.group_sektor }}|{{ getjenisbidangdariapi.nama_group_sektor }}"
@@ -699,7 +704,7 @@
                 <div class="col-sm-8">
                   <div class="form-group">
                     <select class="form-control" id="sektor_ekonomi_sebelum" name="sektor_ekonomi_sebelum">
-                      <option value="">{{ tampunganid.sektor_ekonomi_sebelum }}</option>
+                      <option value="{{ tampunganid.sektor_ekonomi_sebelum }}">{{ tampunganid.sektor_ekonomi_sebelum }}</option>
                       <option *ngFor="let getdatasektorekonomi of getdatasektorekonomi" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
                         {{ getdatasektorekonomi.nama_sub_sektor }}
                       </option>
@@ -737,45 +742,61 @@
                 <div class="col">Bulan</div>
               </div>
               <br />
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
-                <div class="col-sm-8">
-                  <input
-                    type="tel"
-                    onkeypress="return onlyNumberKey(event)"
-                    maxlength="13"
-                    class="form-control"
-                    value="{{ tampunganid.jumlah_karyawan_sebelumnya }}"
-                    placeholder="Jumlah Karyawan"
-                    id="jumlah_karyawan_sebelum"
-                    name="jumlah_karyawan_sebelum"
-                  />
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <select class="form-control" id="jumlah_karyawan_sebelumnya" name="jumlah_karyawan_sebelumnya">
-                      <option>{{ tampunganid.jumlah_karyawan_sebelumnya }}</option>
-                      <option
-                        *ngFor="let getjumlahkaryawansebelumdariapi of getjumlahkaryawansebelumdariapi"
-                        value="{{ getjumlahkaryawansebelumdariapi.deskripsi }}"
-                      >
-                        {{ getjumlahkaryawansebelumdariapi.deskripsi }}
-                      </option>
-                    </select>
+              <div [ngSwitch]="tampungantipeagunan">
+                <div *ngSwitchCase="'1'">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Jumlah Karyawan1</label>
+                    <div class="col-sm-8">
+                      <input
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        maxlength="13"
+                        class="form-control"
+                        value="{{ tampunganid.jumlah_karyawan_sebelumnya }}"
+                        placeholder="Jumlah Karyawan"
+                        id="jumlah_karyawan_sebelum"
+                        name="jumlah_karyawan_sebelum"
+                      />
+                    </div>
                   </div>
+                  <br />
+                </div>
+
+                <div *ngSwitchCase="'2'">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Jumlah Karyawan2</label>
+                    <div class="col-sm-8">
+                      <div class="form-group">
+                        <select class="form-control" id="jumlah_karyawan_sebelumnya" name="jumlah_karyawan_sebelumnya">
+                          <option>{{ tampunganid.jumlah_karyawan_sebelumnya }}</option>
+                          <option
+                            *ngFor="let getjumlahkaryawansebelumdariapi of getjumlahkaryawansebelumdariapi"
+                            value="{{ getjumlahkaryawansebelumdariapi.deskripsi }}"
+                          >
+                            {{ getjumlahkaryawansebelumdariapi.deskripsi }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                </div>
+
+                <div *ngSwitchCase="'3'">
+                  <H1>TIDAK KERJA MANA ADA KARYAWAN </H1>
+                </div>
+
+                <div *ngSwitchDefault>
+                  <H1>tolong memilih kategori pekerjaan dengan benar</H1>
                 </div>
               </div>
-              <br />
+
               <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Tipe Perusahaan</label>
                 <div class="col-sm-8">
                   <div class="form-group">
                     <select class="form-control" id="tipe_perusahaan_sebelum" name="tipe_perusahaan_sebelum">
-                      <option value="">{{ tampunganid.tipe_perusahaan_sebelum }}</option>
+                      <option value="{{ tampunganid.tipe_perusahaan_sebelum }}">{{ tampunganid.tipe_perusahaan_sebelum }}</option>
                       <option
                         *ngFor="let gettipeperusahaandariapi of gettipeperusahaandariapi"
                         value="{{ gettipeperusahaandariapi.company_deskripsi }}"
@@ -792,7 +813,9 @@
                 <div class="col-sm-8">
                   <div class="form-group">
                     <select class="form-control" id="tipe_kepegawaian_sebelum" name="tipe_kepegawaian_sebelum">
-                      <option value="">{{ tampunganid.tipe_kepegawaian_sebelum }}</option>
+                      <option value="{{ tampunganid.tipe_kepegawaian_sebelum }}">{{ tampunganid.tipe_kepegawaian_sebelum }}</option>
+                      <option value="Pegawai tetap">Pegawai tetap</option>
+                      <option value="Pegawai kontrak">Pegawai kontrak</option>
                     </select>
                   </div>
                 </div>
