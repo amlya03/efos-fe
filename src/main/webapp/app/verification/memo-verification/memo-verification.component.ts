@@ -11,7 +11,7 @@ import { MemoModel } from '../service/config/memo.model';
 @Component({
   selector: 'jhi-memo-verification',
   templateUrl: './memo-verification.component.html',
-  styleUrls: ['./memo-verification.component.scss']
+  styleUrls: ['./memo-verification.component.scss'],
 })
 export class MemoVerificationComponent implements OnInit {
   dataEntry: fetchAllDe = new fetchAllDe();
@@ -28,7 +28,7 @@ export class MemoVerificationComponent implements OnInit {
     public router: Router,
     protected modalService: NgbModal,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService,
+    protected applicationConfigService: ApplicationConfigService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -37,9 +37,9 @@ export class MemoVerificationComponent implements OnInit {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
   // URL DE
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
   // URL Memo
-  protected fetchMemo = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getMemoByDe?sd=');
+  protected fetchMemo = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getMemoByDe?sd=');
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -70,19 +70,19 @@ export class MemoVerificationComponent implements OnInit {
 
     // List Table Memo
     this.getfetchMemo().subscribe(data => {
-      this.listMemo = data.result
-      console.log(this.listMemo)
-      console.log(data.result.keterangan)
+      this.listMemo = data.result;
+      console.log(this.listMemo);
+      console.log(data.result.keterangan);
       this.dtTrigger.next(this.listMemo);
-      if(data.code === 200){
+      if (data.code === 200) {
         // this.memo = data.result;
-        console.log('MEMo '+ data.result.keterangan)
+        console.log('MEMo ' + data.result.keterangan);
       }
     });
   }
 
   printData() {
-    const printTable = (<HTMLInputElement>document.getElementById('tableMemo'));
+    const printTable = <HTMLInputElement>document.getElementById('tableMemo');
     document.write(printTable.outerHTML);
     window.print();
     window.close();

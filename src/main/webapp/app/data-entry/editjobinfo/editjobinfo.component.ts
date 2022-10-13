@@ -24,12 +24,12 @@ export class EditjobinfoComponent implements OnInit {
 
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getJobById?si=');
   protected apigetjenispekeraan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_pekerjaan?sc='
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_tipe_pekerjaan?sc='
   );
   protected apilisttipeperusahaan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_perusahaan'
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_tipe_perusahaan'
   );
-  protected apilistjenisbidang = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/list_jenis_bidang');
+  protected apilistjenisbidang = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/list_jenis_bidang');
 
   protected apilistjabatan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_jabatan');
   daWa: any;
@@ -262,7 +262,7 @@ export class EditjobinfoComponent implements OnInit {
     //   Authorization: `Bearer ${token}`,
     // };
     // const kodepotongan = kodekota.split('|');
-    return this.http.get<ApiResponse>('http://10.20.34.110:8805/api/v1/efos-ide/list_sektor_ekonomi?se=' + idsktor, {
+    return this.http.get<ApiResponse>('http://10.20.34.178:8805/api/v1/efos-ide/list_sektor_ekonomi?se=' + idsktor, {
       params: options,
       observe: 'response',
     });
@@ -286,8 +286,7 @@ export class EditjobinfoComponent implements OnInit {
     });
   }
 
-  updatejobinfo() // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
-  // contohtampungankategoripekerjaan: any
+  updatejobinfo() // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
   {
     const kategori_pekerjaan = document.getElementById('kategori_pekerjaan') as HTMLInputElement | any;
     const tipe_pekerjaan = document.getElementById('tipe_pekerjaan') as HTMLInputElement | any;
@@ -359,7 +358,7 @@ export class EditjobinfoComponent implements OnInit {
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_job_info_de', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_job_info_de', {
         // headers: headers,
 
         // alamat_pekerjaan_sebelum: alamat_perusahaan.value,

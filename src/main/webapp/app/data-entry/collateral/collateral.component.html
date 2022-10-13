@@ -181,61 +181,108 @@
                               <div class="form-group">
                                 <div class="lihat_baru" id="ihide_baru">
                                   <label class="radio-inline mr-3" for="ibaru">
-                                    <input type="radio" value="baru" name="statusCollateral" id="ibaru" />Baru
+                                    <input (click)="radiobbuttonbaru()" type="radio" value="baru" name="statusCollateral" id="ibaru" />Baru
                                   </label>
                                 </div>
                                 <div class="lihat_second" id="ihide_second">
                                   <label class="radio-inline mr-3" for="isecond">
-                                    <input type="radio" value="second" name="statusCollateral" id="isecond" />Second
+                                    <input
+                                      (click)="radiobbuttonsecon()"
+                                      type="radio"
+                                      value="second"
+                                      name="statusCollateral"
+                                      id="isecond"
+                                    />Second
                                   </label>
                                 </div>
-                                <div class="hide_pks" id="ihide_pks">
-                                  <label class="radio-inline mr-3" for="ipks">
-                                    <input type="radio" value="pks" name="statusBarusecond" id="ipks" />PKS
-                                  </label>
-                                </div>
-                                <div class="hide_nonpks" id="ihide_nonpks">
-                                  <label class="radio-inline mr-3" for="inonpks">
-                                    <input type="radio" value="non" name="statusBarusecond" id="inonpks" />NON-PKS
-                                  </label>
-                                </div>
-                                <div class="hide_perorangan" id="ihide_perorangan">
-                                  <label class="radio-inline mr-3" for="iperorangan">
-                                    <input type="radio" value="orang" name="statusBarusecond" id="iperorangan" />Perorangan
-                                  </label>
+
+                                <div [ngSwitch]="untukstatusdev">
+                                  <div *ngSwitchCase="'baru'">
+                                    <div class="hide_pks" id="ihide_pks">
+                                      <label class="radio-inline mr-3" for="ipks">
+                                        <input (click)="radiobbuttonpks()" type="radio" value="pks" name="statusBarusecond" id="ipks" />PKS
+                                      </label>
+                                    </div>
+                                    <div class="hide_nonpks" id="ihide_nonpks">
+                                      <label class="radio-inline mr-3" for="inonpks">
+                                        <input
+                                          (click)="radiobbuttonnonpks()"
+                                          type="radio"
+                                          value="non"
+                                          name="statusBarusecond"
+                                          id="inonpks"
+                                        />NON-PKS
+                                      </label>
+                                    </div>
+                                    <div class="hide_perorangan" id="ihide_perorangan">
+                                      <label class="radio-inline mr-3" for="iperorangan">
+                                        <input
+                                          (click)="radiobbuttonorang()"
+                                          type="radio"
+                                          value="orang"
+                                          name="statusBarusecond"
+                                          id="iperorangan"
+                                        />Perorangan
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div *ngSwitchCase="'secon'">
+                                    <input (click)="radiobbuttonpks()" type="radio" value="pks" name="statusBarusecond" id="ipks" hidden />
+                                    <div class="hide_nonpks" id="ihide_nonpks">
+                                      <label class="radio-inline mr-3" for="inonpks">
+                                        <input type="radio" value="non" name="statusBarusecond" id="inonpks" />NON-PKS
+                                      </label>
+                                    </div>
+                                    <div class="hide_perorangan" id="ihide_perorangan">
+                                      <label class="radio-inline mr-3" for="iperorangan">
+                                        <input type="radio" value="orang" name="statusBarusecond" id="iperorangan" />Perorangan
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div *ngSwitchDefault></div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <div class="developer_pks">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
-                              <div class="col-sm-8">
-                                <div class="form-group">
-                                  <select class="form-control" name="developer_pks" id="developer_pks">
-                                    <option value="">Pilih Nama Developer</option>
-                                    <option *ngFor="let listagunan of listagunan" value="{{ listagunan.nama_developer }}">
-                                      {{ listagunan.nama_developer }}
-                                    </option>
-                                  </select>
+                          <div [ngSwitch]="pemisahuntukdevloper">
+                            <div *ngSwitchCase="'pks'">
+                              <div class="developer_pks">
+                                <div class="form-group row">
+                                  <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
+                                  <div class="col-sm-8">
+                                    <div class="form-group">
+                                      <select class="form-control" name="developer_pks" id="developer_pks">
+                                        <option value="">Pilih Nama Developer</option>
+                                        <option *ngFor="let listagunan of listagunan" value="{{ listagunan.nama_developer }}">
+                                          {{ listagunan.nama_developer }}
+                                        </option>
+                                      </select>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          <div class="developer_nonpks">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
-                              <div class="col-sm-8">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Developer"
-                                  name="developer_non_pks"
-                                  id="developer_non_pks"
-                                />
+                            <div *ngSwitchCase="'non pks'">
+                              <div class="developer_nonpks">
+                                <div class="form-group row">
+                                  <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
+                                  <div class="col-sm-8">
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      placeholder="Developer"
+                                      name="developer_non_pks"
+                                      id="developer_non_pks"
+                                    />
+                                  </div>
+                                </div>
                               </div>
                             </div>
+                            <div *ngSwitchCase="'perorang'"></div>
+                            <div *ngSwitchDefault></div>
                           </div>
+
                           <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Nama Perumahan</label>
                             <div class="col-sm-8">
@@ -255,14 +302,19 @@
                             <div class="col-sm-8">
                               <div class="form-group" id="radioButtonStatusJaminanSebelumTnb">
                                 <label class="radio-inline mr-3">
-                                  <input type="radio" value="ia" name="status_jaminan_sebelumnya" id="status_jaminan_sebelumnya" />Ya</label
+                                  <input
+                                    type="radio"
+                                    value="ia"
+                                    name="status_jaminan_sebelumnyaia"
+                                    id="status_jaminan_sebelumnyaia"
+                                  />Ya</label
                                 >
                                 <label class="radio-inline mr-3">
                                   <input
                                     type="radio"
                                     value="tidak"
-                                    name="status_jaminan_sebelumnya"
-                                    id="status_jaminan_sebelumnya"
+                                    name="status_jaminan_sebelumnyatidak"
+                                    id="status_jaminan_sebelumnyatidak"
                                   />Tidak</label
                                 >
                                 <!-- <p> <button type="submit" class="col-sm-12 btn btn-dark"><i class="icon-magnifier menu-icon"></i>Lihat Jaminan Sebelumnya</button></p> -->
@@ -549,60 +601,119 @@
                               <div class="form-group" id="statusRadioButton">
                                 <div class="lihat_baru2" id="ihide_baru2">
                                   <label class="radio-inline mr-3" for="ibaru2">
-                                    <input type="radio" value="baru" name="statusCollateral" id="ibaru" />Baru
+                                    <input (click)="radiobbuttonbaru()" type="radio" value="baru" name="statusCollateral" id="ibaru" />Baru
                                   </label>
                                 </div>
                                 <div class="lihat_second2" id="ihide_second2">
                                   <label class="radio-inline mr-3" for="isecond2">
-                                    <input type="radio" value="second" name="statusCollateral" id="isecond" />Second
+                                    <input
+                                      (click)="radiobbuttonsecon()"
+                                      type="radio"
+                                      value="second"
+                                      name="statusCollateral"
+                                      id="isecond"
+                                    />Second
                                   </label>
                                 </div>
-                                <div class="hide_pks2" id="ihide_pks2">
-                                  <label class="radio-inline mr-3" for="ipks2">
-                                    <input type="radio" value="pks" name="statusBarusecond" id="ipks" />PKS
-                                  </label>
-                                </div>
-                                <div class="hide_nonpks2" id="ihide_nonpks2">
-                                  <label class="radio-inline mr-3" for="inonpks2">
-                                    <input type="radio" value="non" name="statusBarusecond" id="inonpks" />NON-PKS
-                                  </label>
-                                </div>
-                                <div class="hide_perorangan2" id="ihide_perorangan2">
-                                  <label class="radio-inline mr-3" for="iperorangan2">
-                                    <input type="radio" value="orang" name="statusBarusecond" id="iperorangan" />Perorangan
-                                  </label>
+
+                                <div [ngSwitch]="untukstatusdev">
+                                  <div *ngSwitchCase="'baru'">
+                                    <div class="hide_pks" id="ihide_pks">
+                                      <label class="radio-inline mr-3" for="ipks">
+                                        <input (click)="radiobbuttonpks()" type="radio" value="pks" name="statusBarusecond" id="ipks" />PKS
+                                      </label>
+                                    </div>
+                                    <div class="hide_nonpks" id="ihide_nonpks">
+                                      <label class="radio-inline mr-3" for="inonpks">
+                                        <input
+                                          (click)="radiobbuttonnonpks()"
+                                          type="radio"
+                                          value="non"
+                                          name="statusBarusecond"
+                                          id="inonpks"
+                                        />NON-PKS
+                                      </label>
+                                    </div>
+                                    <div class="hide_perorangan" id="ihide_perorangan">
+                                      <label class="radio-inline mr-3" for="iperorangan">
+                                        <input
+                                          (click)="radiobbuttonorang()"
+                                          type="radio"
+                                          value="orang"
+                                          name="statusBarusecond"
+                                          id="iperorangan"
+                                        />Perorangan
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div *ngSwitchCase="'secon'">
+                                    <input (click)="radiobbuttonpks()" type="radio" value="pks" name="statusBarusecond" id="ipks" hidden />
+                                    <div class="hide_nonpks" id="ihide_nonpks">
+                                      <label class="radio-inline mr-3" for="inonpks">
+                                        <input
+                                          (click)="radiobbuttonnonpks()"
+                                          type="radio"
+                                          value="non"
+                                          name="statusBarusecond"
+                                          id="inonpks"
+                                        />NON-PKS
+                                      </label>
+                                    </div>
+                                    <div class="hide_perorangan" id="ihide_perorangan">
+                                      <label class="radio-inline mr-3" for="iperorangan">
+                                        <input
+                                          (click)="radiobbuttonorang()"
+                                          type="radio"
+                                          value="orang"
+                                          name="statusBarusecond"
+                                          id="iperorangan"
+                                        />Perorangan
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div *ngSwitchDefault></div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <div class="developer_pks2">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
-                              <div class="col-sm-8">
-                                <div class="form-group">
-                                  <select class="form-control" name="developer_pks" id="developer_pks">
-                                    <option value="">Pilih Nama Developer</option>
-                                    <option *ngFor="let listagunan of listagunan" value="{{ listagunan.nama_developer }}">
-                                      {{ listagunan.nama_developer }}
-                                    </option>
-                                  </select>
+
+                          <div [ngSwitch]="pemisahuntukdevloper">
+                            <div *ngSwitchCase="'pks'">
+                              <div class="developer_pks">
+                                <div class="form-group row">
+                                  <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
+                                  <div class="col-sm-8">
+                                    <div class="form-group">
+                                      <select class="form-control" name="developer_pks" id="developer_pks">
+                                        <option value="">Pilih Nama Developer</option>
+                                        <option *ngFor="let listagunan of listagunan" value="{{ listagunan.nama_developer }}">
+                                          {{ listagunan.nama_developer }}
+                                        </option>
+                                      </select>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          <div class="developer_nonpks2">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
-                              <div class="col-sm-8">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Developer"
-                                  name="developer_non_pks"
-                                  id="developer_non_pks"
-                                />
+                            <div *ngSwitchCase="'non pks'">
+                              <div class="developer_nonpks">
+                                <div class="form-group row">
+                                  <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
+                                  <div class="col-sm-8">
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      placeholder="Developer"
+                                      name="developer_non_pks"
+                                      id="developer_non_pks"
+                                    />
+                                  </div>
+                                </div>
                               </div>
                             </div>
+                            <div *ngSwitchCase="'perorang'"></div>
+                            <div *ngSwitchDefault></div>
                           </div>
                           <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Nama Perumahan</label>
@@ -621,14 +732,19 @@
                             <div class="col-sm-8">
                               <div class="form-group" id="radioButtonStatusJaminanSebelum">
                                 <label class="radio-inline mr-3">
-                                  <input type="radio" value="ia" id="status_jaminan_sebelumnya" name="status_jaminan_sebelumnya" />Ya</label
+                                  <input
+                                    type="radio"
+                                    value="1"
+                                    id="status_jaminan_sebelumnyaia"
+                                    name="status_jaminan_sebelumnyaia"
+                                  />Ya</label
                                 >
                                 <label class="radio-inline mr-3">
                                   <input
                                     type="radio"
                                     value="tidak"
-                                    id="status_jaminan_sebelumnya"
-                                    name="status_jaminan_sebelumnya"
+                                    id="status_jaminan_sebelumnyatidak"
+                                    name="status_jaminan_sebelumnyatidak"
                                   />Tidak</label
                                 >
                                 <p>
@@ -665,8 +781,8 @@
                                 onkeypress="return onlyNumberKey(event)"
                                 class="form-control"
                                 placeholder=""
-                                name="tahun_buatbiasa"
-                                id="tahun_buatbiasa"
+                                name="tahun_buat"
+                                id="tahun_buat"
                                 minlength="4"
                                 maxlength="4"
                               />

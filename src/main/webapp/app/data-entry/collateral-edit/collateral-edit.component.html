@@ -1,1082 +1,1367 @@
-<div class="form-group row">
-  <label class="col-sm-4 col-form-label">Tipe Agunan<span class="text-danger">*</span></label>
-  <div class="col-sm-8">
-    <div class="form-group">
-      <select class="form-control" (change)="changefom()" id="tipe_anggunan" name="tipe_anggunan">
-        <option selected value="{{ tampungantipeagunan }}">{{ tampungantipeagunan }}</option>
-        <option *ngFor="let datatipeagunan of datatipeagunan" value="{{ datatipeagunan.collateral_deskripsi }}">
-          {{ datatipeagunan.collateral_deskripsi }}
-        </option>
-      </select>
-    </div>
-  </div>
-</div>
-<div [ngSwitch]="tampungantipeagunan">
-  <div *ngSwitchCase="'Kendaraan'">
-    <!--awal hidden kendaraan colom 1 NO 2-->
-    <div id="hidden_kendaraanCol1" class="hidden_kendaraanCol1">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tipe Kendaraan<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <div class="form-group">
-            <select class="form-control" name="tipe_kendaraan2" id="tipe_kendaraan2">
-              <option value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Merek<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" placeholder="Merek" name="merk2" id="merk2" value="{{ daWa.tipe_agunan }}" />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Model<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" placeholder="Model" name="model2" id="model2" value="{{ daWa.tipe_agunan }}" />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Seri<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" placeholder="Seri" name="seri2" id="seri2" value="{{ daWa.tipe_agunan }}" />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">No BPKB<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            class="form-control"
-            placeholder="No BPKB"
-            name="nomor_bpkb2"
-            id="nomor_bpkb2"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-    </div>
-    <!-- batas hidden kendaraan colom 1 NO2 -->
+<div class="content-body">
+  <div class="container-fluid">
+    <div id="hidden_collateral" class="hidden_collateral">
+      <form id="data_entry_form" method="post" action="" onsubmit="return validateFormCollateral()" required>
+        <div class="card">
+          <h4 class="card card-body gradient-9" style="text-align: center">Collateral</h4>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <div class="form-group row">
+                  <input type="hidden" id="WADUH" name="WADUH" value="" class="form-control" />
+                  <input id="app_no_de" name="app_no_de" type="hidden" class="form-control" placeholder="app_no_ide" value="" hidden />
+                  <input type="hidden" id="curef_id" name="curef_id" value="" class="form-control" />
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Tipe Agunan<span class="text-danger">*</span></label>
+                  <div class="col-sm-8">
+                    <div class="form-group">
+                      <select class="form-control" (change)="changefom()" id="tipe_anggunan" name="tipe_anggunan">
+                        <option selected value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
+                        <option *ngFor="let datatipeagunan of datatipeagunan" value="{{ datatipeagunan.collateral_deskripsi }}">
+                          {{ datatipeagunan.collateral_deskripsi }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div [ngSwitch]="tampungantipeagunan">
+                  <div *ngSwitchCase="'Kendaraan'">
+                    <!--awal hidden kendaraan colom 1 NO 2-->
+                    <div id="hidden_kendaraanCol1" class="hidden_kendaraanCol1">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Tipe Kendaraan<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <div class="form-group">
+                            <select class="form-control" name="tipe_kendaraan2" id="tipe_kendaraan2">
+                              <option value="{{ daWa.tipe_kendaraan }}">{{ daWa.tipe_kendaraan }}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Merek<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" placeholder="Merek" name="merk2" id="merk2" value="{{ daWa.merk }}" />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Model<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" placeholder="Model" name="model2" id="model2" value="{{ daWa.model }}" />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Seri<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" placeholder="Seri" name="seri2" id="seri2" value="{{ daWa.seri }}" />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">No BPKB<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="tel"
+                            onkeypress="return onlyNumberKey(event)"
+                            class="form-control"
+                            placeholder="No BPKB"
+                            name="nomor_bpkb2"
+                            id="nomor_bpkb2"
+                            value="{{ daWa.nomor_bpkb }}"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- batas hidden kendaraan colom 1 NO2 -->
 
-    <!-- pembatas colom 1 dan 2 -->
+                    <!-- pembatas colom 1 dan 2 -->
 
-    <!-- hide show colom kendaraan NO2 -->
-    <div class="col hidden_kendaraanCol2" id="hidden_kendaraanCol2">
-      <!-- hide_kendaraan -->
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">No Plat<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            class="form-control"
-            placeholder="No Plat"
-            name="no_plat"
-            id="no_plat"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Warna<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" placeholder="Warna" name="warna" id="warna" value="{{ daWa.tipe_agunan }}" />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">No Mesin<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            class="form-control"
-            placeholder="No Mesin"
-            name="no_mesin"
-            id="no_mesin"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">No Rangka<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            class="form-control"
-            placeholder="No Rangka"
-            name="no_rangka"
-            id="no_rangka"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nama BPKB<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input type="text" value="{{ daWa.tipe_agunan }}" class="form-control" placeholder="Nama BPKB" name="nama_bpkb" id="nama_bpkb" />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input class="form-control" type="date" id="tanggal_terbit" name="tanggal_terbit" value="{{ daWa.tipe_agunan }}" />
-        </div>
-      </div>
-      <button id="selanjutnyakendaraan" name="selanjutnya" value="selanjutnya" type="submit" class="btn btn-dark" style="float: right">
-        selanjutnya
-      </button>
-    </div>
-    <!--akhir hide show colom kendaraan NO2 -->
+                    <!-- hide show colom kendaraan NO2 -->
+                    <div class="col hidden_kendaraanCol2" id="hidden_kendaraanCol2">
+                      <!-- hide_kendaraan -->
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">No Plat<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="tel"
+                            onkeypress="return onlyNumberKey(event)"
+                            class="form-control"
+                            placeholder="No Plat"
+                            name="no_plat"
+                            id="no_plat"
+                            value="{{ daWa.no_plat }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Warna<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" value="{{ daWa.warna }}" placeholder="Warna" name="warna" id="warna" />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">No Mesin<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="tel"
+                            onkeypress="return onlyNumberKey(event)"
+                            class="form-control"
+                            placeholder="No Mesin"
+                            name="no_mesin"
+                            id="no_mesin"
+                            value="{{ daWa.no_mesin }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">No Rangka<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="tel"
+                            onkeypress="return onlyNumberKey(event)"
+                            class="form-control"
+                            placeholder="No Rangka"
+                            name="no_rangka"
+                            id="no_rangka"
+                            value="{{ daWa.no_rangka }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Nama BPKB<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Nama BPKB"
+                            name="nama_bpkb"
+                            id="nama_bpkb"
+                            value="{{ daWa.nomor_bpkb }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            class="form-control"
+                            type="date"
+                            id="tanggal_terbit"
+                            name="tanggal_terbit"
+                            value="{{ daWa.tanggal_terbit }}"
+                          />
+                        </div>
+                      </div>
+                      <button
+                        id="selanjutnyakendaraan"
+                        name="selanjutnya"
+                        value="selanjutnya"
+                        type="submit"
+                        class="btn btn-dark"
+                        style="float: right"
+                        (click)="goto()"
+                      >
+                        selanjutnya
+                      </button>
+                    </div>
+                    <!--akhir hide show colom kendaraan NO2 -->
 
-    <!-- <h1>LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL</h1> -->
-  </div>
-  <div *ngSwitchCase="'Tanah dan Bangunan'">
-    <!-- untuk tanah dan bangunan colom 1 NO1 -->
-    <div id="hidden_tnb" class="hidden_tnb">
-      <!--awal hidden tbn-->
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tipe Property<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <div class="form-group">
-            <select class="form-control" name="tipe_properti" id="tipe_properti">
-              <option value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-              <option>Rumah</option>
-              <option>Apartement</option>
-              <option>Ruko / Rukan</option>
-              <option>Kos</option>
-              <option>Villa</option>
-              <option>Tanah / Kavling</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Status<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <div class="form-group">
-            <div class="lihat_baru" id="ihide_baru">
-              <label class="radio-inline mr-3" for="ibaru">
-                <input type="radio" value="baru" name="statusCollateral" id="ibaru" />Baru
-              </label>
-            </div>
-            <div class="lihat_second" id="ihide_second">
-              <label class="radio-inline mr-3" for="isecond">
-                <input type="radio" value="second" name="statusCollateral" id="isecond" />Second
-              </label>
-            </div>
-            <div class="hide_pks" id="ihide_pks">
-              <label class="radio-inline mr-3" for="ipks"> <input type="radio" value="pks" name="statusBarusecond" id="ipks" />PKS </label>
-            </div>
-            <div class="hide_nonpks" id="ihide_nonpks">
-              <label class="radio-inline mr-3" for="inonpks">
-                <input type="radio" value="non" name="statusBarusecond" id="inonpks" />NON-PKS
-              </label>
-            </div>
-            <div class="hide_perorangan" id="ihide_perorangan">
-              <label class="radio-inline mr-3" for="iperorangan">
-                <input type="radio" value="orang" name="statusBarusecond" id="iperorangan" />Perorangan
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="developer_pks">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
-          <div class="col-sm-8">
-            <div class="form-group">
-              <select class="form-control" name="developer_pks" id="developer_pks">
-                <option value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-                <!-- <option *ngFor="let listagunan of listagunan" value="{{ listagunan.nama_developer }}">
-                  {{ listagunan.nama_developer }}
-                </option> -->
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="developer_nonpks">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" placeholder="Developer" name="developer_non_pks" id="developer_non_pks" />
-          </div>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nama Perumahan</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Nama Perumahan"
-            name="nama_perumahan"
-            id="nama_perumahan"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Status Sama dengan Jaminan Sebelumnya<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <div class="form-group" id="radioButtonStatusJaminanSebelumTnb">
-            <label class="radio-inline mr-3">
-              <input type="radio" value="ia" name="status_jaminan_sebelumnya" id="status_jaminan_sebelumnya" />Ya</label
-            >
-            <label class="radio-inline mr-3">
-              <input type="radio" value="tidak" name="status_jaminan_sebelumnya" id="status_jaminan_sebelumnya" />Tidak</label
-            >
-            <!-- <p> <button type="submit" class="col-sm-12 btn btn-dark"><i class="icon-magnifier menu-icon"></i>Lihat Jaminan Sebelumnya</button></p> -->
-          </div>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Hubungan antara Pemegang Hak dan calon Nasabah<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <div class="form-group">
-            <select class="form-control" name="hubungan_pemegang_hak" id="hubungan_pemegang_hak">
-              <option value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- </div> batas hidden colom tnb  NO 1-->
+                    <!-- <h1>LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL</h1> -->
+                  </div>
+                  <div *ngSwitchCase="'Tanah dan Bangunan'">
+                    <!-- untuk tanah dan bangunan colom 1 NO1 -->
+                    <div id="hidden_tnb" class="hidden_tnb">
+                      <!--awal hidden tbn-->
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Tipe Property<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <div class="form-group">
+                            <select class="form-control" name="tipe_properti" id="tipe_properti">
+                              <option value="{{ daWa.tipe_properti }}">{{ daWa.tipe_properti }}</option>
+                              <option>Rumah</option>
+                              <option>Apartement</option>
+                              <option>Ruko / Rukan</option>
+                              <option>Kos</option>
+                              <option>Villa</option>
+                              <option>Tanah / Kavling</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Status<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <div class="form-group">
+                            <div class="lihat_baru" id="ihide_baru">
+                              <label class="radio-inline mr-3" for="ibaru">
+                                <input
+                                  (click)="radiobbuttonbaru()"
+                                  [checked]="daWa.status_agunan == 'baru'"
+                                  type="radio"
+                                  value="baru"
+                                  name="statusCollateral"
+                                  id="ibaru"
+                                />Baru
+                              </label>
+                            </div>
+                            <div class="lihat_second" id="ihide_second">
+                              <label class="radio-inline mr-3" for="isecond">
+                                <input
+                                  (click)="radiobbuttonsecon()"
+                                  type="radio"
+                                  [checked]="daWa.status_agunan == 'secon'"
+                                  value="second"
+                                  name="statusCollateral"
+                                  id="isecond"
+                                />Second
+                              </label>
+                            </div>
 
-    <!-- hide show colom 2 buat tnb dan bangunan  -->
-    <div class="col hidden_tnbCol2" id="hidden_tnbCol2">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tahun Buat (YYYY)<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            class="form-control"
-            placeholder=""
-            name="tahun_buat"
-            id="tahun_buat"
-            minlength="4"
-            maxlength="4"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <div class="form-group">
-            <select class="form-control" name="status_sertifikat" id="status_sertifikat">
-              <option selected value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-              <!-- <option
-                *ngFor="let statussertifikat of statussertifikat"
-                value="{{ statussertifikat.sertifikat_deskripsi }}"
-              >
-                {{ statussertifikat.sertifikat_deskripsi }}
-              </option> -->
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nomor Sertifikat<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            class="form-control"
-            placeholder="Nomor Sertifikat"
-            name="no_sertifikat"
-            id="no_sertifikat"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            class="form-control"
-            placeholder=""
-            name="nama_pemegang_hak"
-            id="nama_pemegang_hak"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">No Contact Person<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            maxlength="12"
-            class="form-control"
-            placeholder=""
-            name="no_handphone_cp"
-            id="no_handphone_cp"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nomor Identitas Pemegang Hak Setifikat<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            class="form-control"
-            placeholder=""
-            name="no_id_pemegang_hak_sertifikat"
-            id="no_id_pemegang_hak_sertifikat"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            class="form-control"
-            type="date"
-            id="tanggal_terbit"
-            name="tanggal_terbit"
-            onchange="tanggalTerbitDayTanahDanBangunan()"
-            value="{{ daWa.tipe_agunan }}"
-          />
-          <input class="form-control" id="hariTanggalnyaTerbitTanahDanBangunan" hidden />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tanggal Exipred<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            class="form-control"
-            type="date"
-            id="tanggal_expired"
-            name="tanggal_expired"
-            onchange="tanggalExpDayTanahDanBangunan()"
-            value="{{ daWa.tipe_agunan }}"
-          />
-          <input class="form-control" id="hariTanggalnyaExpTanahDanBagunan" hidden />
-        </div>
-      </div>
-    </div>
-    <!--hide show colom biasa-->
+                            <div [ngSwitch]="untukstatusdev">
+                              <div *ngSwitchCase="'baru'">
+                                <div class="hide_pks" id="ihide_pks">
+                                  <label class="radio-inline mr-3" for="ipks">
+                                    <input
+                                      (click)="radiobbuttonpks()"
+                                      type="radio"
+                                      value="pks"
+                                      [checked]="daWa.status_developer == 'pks'"
+                                      name="statusBarusecond"
+                                      id="ipks"
+                                    />PKS
+                                  </label>
+                                </div>
+                                <div class="hide_nonpks" id="ihide_nonpks">
+                                  <label class="radio-inline mr-3" for="inonpks">
+                                    <input
+                                      (click)="radiobbuttonnonpks()"
+                                      type="radio"
+                                      value="non"
+                                      [checked]="daWa.status_developer == 'non pks'"
+                                      name="statusBarusecond"
+                                      id="inonpks"
+                                    />NON-PKS
+                                  </label>
+                                </div>
+                                <div class="hide_perorangan" id="ihide_perorangan">
+                                  <label class="radio-inline mr-3" for="iperorangan">
+                                    <input
+                                      (click)="radiobbuttonorang()"
+                                      type="radio"
+                                      value="orang"
+                                      [checked]="daWa.status_developer == 'perorangan'"
+                                      name="statusBarusecond"
+                                      id="iperorangan"
+                                    />Perorangan
+                                  </label>
+                                </div>
+                              </div>
 
-    <!-- batas colom 1 dan 2 -->
-  </div>
-  <div *ngSwitchCase="'Tanah'">
-    <!--awal hiden colom 1 tanah NO 4-->
-    <div id="hidden_tanahCol1" class="hidden_tanahCol1">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Hubungan antar Pemegang Hak dan calon Nasabah<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <div class="form-group">
-            <select class="form-control" name="hubungan_pemegang_hak" id="hubungan_pemegang_hak">
-              <option selected value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-              <option value="Penjual (Develpoer dan Pembeli)">Penjual (Develpoer dan Pembeli)</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
+                              <div *ngSwitchCase="'secon'">
+                                <input (click)="radiobbuttonpks()" type="radio" value="pks" name="statusBarusecond" id="ipks" hidden />
+                                <div class="hide_nonpks" id="ihide_nonpks">
+                                  <label class="radio-inline mr-3" for="inonpks">
+                                    <input
+                                      type="radio"
+                                      value="non"
+                                      name="statusBarusecond"
+                                      [checked]="daWa.status_developer == 'non pks'"
+                                      id="inonpks"
+                                    />NON-PKS
+                                  </label>
+                                </div>
+                                <div class="hide_perorangan" id="ihide_perorangan">
+                                  <label class="radio-inline mr-3" for="iperorangan">
+                                    <input
+                                      type="radio"
+                                      value="orang"
+                                      name="statusBarusecond"
+                                      [checked]="daWa.status_developer == 'perorangan'"
+                                      id="iperorangan"
+                                    />Perorangan
+                                  </label>
+                                </div>
+                              </div>
+                              <div *ngSwitchDefault></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div [ngSwitch]="pemisahuntukdevloper">
+                        <div *ngSwitchCase="'pks'">
+                          <div class="developer_pks">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
+                              <div class="col-sm-8">
+                                <div class="form-group">
+                                  <select class="form-control" name="developer_pks" id="developer_pks">
+                                    <option value="{{ daWa.developer }}">{{ daWa.developer }}</option>
+                                    <option *ngFor="let datatipeagunan of datatipeagunan" value="{{ datatipeagunan.nama_developer }}">
+                                      {{ datatipeagunan.nama_developer }}
+                                    </option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngSwitchCase="'non pks'">
+                          <div class="developer_nonpks">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
+                              <div class="col-sm-8">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder="Developer"
+                                  name="developer_non_pks"
+                                  id="developer_non_pks"
+                                  value="{{ daWa.developer }}"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngSwitchCase="'perorang'"></div>
+                        <div *ngSwitchDefault></div>
+                      </div>
 
-    <!-- hide show colom 2 tanah NO 4--->
-    <div class="col hidden_tanahCol2" id="hidden_tanahCol2">
-      <!-- <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tahun Buat (YYYY)<span class="text-danger">*</span></label>
-        <div class="col-sm-8"> -->
-      <input
-        hidden
-        type="tel"
-        onkeypress="return onlyNumberKey(event)"
-        class="form-control"
-        placeholder=""
-        name="tahun_buat4"
-        id=""
-        minlength="4"
-        value="{{ daWa.tipe_agunan }}"
-        maxlength="4"
-      />
-      <!-- </div>
-    </div> -->
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <div class="form-group">
-            <select class="form-control" name="status_sertifikat" id="status_sertifikat">
-              <option selected value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-              <!-- <option
-                *ngFor="let statussertifikat of statussertifikat"
-                value="{{ statussertifikat.sertifikat_deskripsi }}"
-              >
-                {{ statussertifikat.sertifikat_deskripsi }}
-              </option> -->
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nomor Sertifikat<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            maxlength="20"
-            class="form-control"
-            placeholder="Nomor Sertifikat"
-            name="nomor_sertifikat"
-            id="nomor_sertifikat"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            class="form-control"
-            placeholder=""
-            name="nama_pemegang_hak"
-            value="{{ daWa.tipe_agunan }}"
-            id="nama_pemegang_hak"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">No Contact Person<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            class="form-control"
-            placeholder=""
-            name="no_contact_person"
-            id="no_contact_person"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nomor Identitas Pemegang Hak Setifikat<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            class="form-control"
-            placeholder=""
-            name="nomor_identitas_pemegang_hak"
-            id="nomor_identitas_pemegang_hak"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            class="form-control"
-            type="date"
-            name="tanggal_lahir"
-            value="{{ daWa.tipe_agunan }}"
-            id="tanggal_lahir"
-            onchange="tanggalTerbitDay()"
-          />
-          <input class="form-control" id="hariTanggalnyaTerbitTanah" hidden />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tanggal Exipred<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            class="form-control"
-            type="date"
-            id="tanggal_exipred"
-            name="tanggal_exipred"
-            value="{{ daWa.tipe_agunan }}"
-            onchange="tanggalExpDay()"
-          />
-          <input class="form-control" id="hariTanggalnyaExpTanah" hidden />
-        </div>
-      </div>
-    </div>
-    <!-- hide show colom 2 tanah  NO 4-->
-  </div>
-  <div *ngSwitchCase="'Bangunan'">
-    <div id="hidden_bangunan" class="hidden_bangunan">
-      <!--awal hidden bangunan colom 1 NO5-->
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tipe Property<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <div class="form-group">
-            <select class="form-control" name="tipe_properti" id="tipe_properti">
-              <option value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-              <option>Rumah</option>
-              <option>Apartement</option>
-              <option>Ruko / Rukan</option>
-              <option>Kos</option>
-              <option>Villa</option>
-              <option>Tanah / Kavling</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Status<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <div class="form-group" id="statusRadioButton">
-            <div class="lihat_baru2" id="ihide_baru2">
-              <label class="radio-inline mr-3" for="ibaru2">
-                <input type="radio" value="baru" name="statusCollateral" id="ibaru" />Baru
-              </label>
-            </div>
-            <div class="lihat_second2" id="ihide_second2">
-              <label class="radio-inline mr-3" for="isecond2">
-                <input type="radio" value="second" name="statusCollateral" id="isecond" />Second
-              </label>
-            </div>
-            <div class="hide_pks2" id="ihide_pks2">
-              <label class="radio-inline mr-3" for="ipks2"> <input type="radio" value="pks" name="statusBarusecond" id="ipks" />PKS </label>
-            </div>
-            <div class="hide_nonpks2" id="ihide_nonpks2">
-              <label class="radio-inline mr-3" for="inonpks2">
-                <input type="radio" value="non" name="statusBarusecond" id="inonpks" />NON-PKS
-              </label>
-            </div>
-            <div class="hide_perorangan2" id="ihide_perorangan2">
-              <label class="radio-inline mr-3" for="iperorangan2">
-                <input type="radio" value="orang" name="statusBarusecond" id="iperorangan" />Perorangan
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="developer_pks2">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
-          <div class="col-sm-8">
-            <div class="form-group">
-              <select class="form-control" name="developer_pks" id="developer_pks">
-                <option value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-                <!-- <option *ngFor="let listagunan of listagunan" value="{{ listagunan.nama_developer }}">
-                  {{ listagunan.nama_developer }}
-                </option> -->
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="developer_nonpks2">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
-          <div class="col-sm-8">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Developer"
-              name="developer_non_pks"
-              id="developer_non_pks"
-              value="{{ daWa.tipe_agunan }}"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nama Perumahan</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Nama Perumahan"
-            name="nama_perumahan"
-            id="nama_perumahan"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Sama dengan Jaminan Sebelumnya<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <div class="form-group" id="radioButtonStatusJaminanSebelum">
-            <label class="radio-inline mr-3">
-              <input type="radio" value="ia" id="status_jaminan_sebelumnya" name="status_jaminan_sebelumnya" />Ya</label
-            >
-            <label class="radio-inline mr-3">
-              <input type="radio" value="tidak" id="status_jaminan_sebelumnya" name="status_jaminan_sebelumnya" />Tidak</label
-            >
-            <p>
-              <button type="submit" class="col-sm-12 btn btn-dark"><i class="icon-magnifier menu-icon"></i>Lihat Jaminan Sebelumnya</button>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Hubungan antara Pemegang Hak dan calon Nasabah<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <div class="form-group">
-            <select class="form-control" name="hubungan_pemegang_hak" id="hubungan_pemegang_hak">
-              <option value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- batas hidden bangunan NO5 -->
-    <!--batas colom 1 bangunan-->
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Nama Perumahan</label>
+                        <div class="col-sm-8">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Nama Perumahan"
+                            name="nama_perumahan"
+                            id="nama_perumahan"
+                            value="{{ daWa.nama_perumahan }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"
+                          >Status Sama dengan Jaminan Sebelumnya<span class="text-danger">*</span></label
+                        >
+                        <div class="col-sm-8">
+                          <div class="form-group" id="radioButtonStatusJaminanSebelumTnb">
+                            <label class="radio-inline mr-3">
+                              <input
+                                type="radio"
+                                value="ia"
+                                [checked]="daWa.status_jaminan_sebelumnya == 'iya'"
+                                name="status_jaminan_sebelumnyaia"
+                                id="status_jaminan_sebelumnyaia"
+                              />Ya</label
+                            >
+                            <label class="radio-inline mr-3">
+                              <input
+                                type="radio"
+                                value="tidak"
+                                name="status_jaminan_sebelumnyatidak"
+                                id="status_jaminan_sebelumnyatidak"
+                                [checked]="daWa.status_jaminan_sebelumnya == 'tidak'"
+                              />Tidak</label
+                            >
+                            <!-- <p> <button type="submit" class="col-sm-12 btn btn-dark"><i class="icon-magnifier menu-icon"></i>Lihat Jaminan Sebelumnya</button></p> -->
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"
+                          >Hubungan antara Pemegang Hak dan calon Nasabah<span class="text-danger">*</span></label
+                        >
+                        <div class="col-sm-8">
+                          <div class="form-group">
+                            <select class="form-control" name="hubungan_pemegang_hak" id="hubungan_pemegang_hak">
+                              <option value="{{ daWa.hubungan_pemegang_hak }}">{{ daWa.hubungan_pemegang_hak }}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- </div> batas hidden colom tnb  NO 1-->
 
-    <!-- hide show colom 2 buat tnb dan bangunan  -->
-    <div class="col hidden_bangunanCol2" id="hidden_bangunanCol2">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tahun Buat (YYYY)<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            class="form-control"
-            placeholder=""
-            name="tahun_buatbiasa"
-            id="tahun_buatbiasa"
-            minlength="4"
-            maxlength="4"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <div class="form-group">
-            <select class="form-control" name="status_sertifikat" id="status_sertifikat">
-              <option selected value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-              <!-- <option
-                *ngFor="let statussertifikat of statussertifikat"
-                value="{{ statussertifikat.sertifikat_deskripsi }}"
-              >
-                {{ statussertifikat.sertifikat_deskripsi }}
-              </option> -->
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nomor Sertifikat<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            class="form-control"
-            placeholder="Nomor Sertifikat"
-            name="no_sertifikat"
-            id="no_sertifikat"
-            value="{{ daWa.tipe_agunan }}"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            class="form-control"
-            value="{{ daWa.tipe_agunan }}"
-            placeholder=""
-            name="nama_pemegang_hak"
-            id="nama_pemegang_hak"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">No Contact Person<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            maxlength="12"
-            class="form-control"
-            value="{{ daWa.tipe_agunan }}"
-            placeholder=""
-            name="no_handphone_cp"
-            id="no_handphone_cp"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nomor Identitas Pemegang Hak Setifikat<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            class="form-control"
-            value="{{ daWa.tipe_agunan }}"
-            placeholder=""
-            name="no_id_pemegang_hak_sertifikat"
-            id="no_id_pemegang_hak_sertifikat"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            class="form-control"
-            type="date"
-            id="tanggal_terbit"
-            value="{{ daWa.tipe_agunan }}"
-            name="tanggal_terbit"
-            onchange="tanggalTerbitDayBangunan()"
-          />
-          <input class="form-control" id="hariTanggalnyaTerbitBangunan" hidden />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tanggal Exipred<span class="text-danger">*</span></label>
-        <div class="col-sm-8">
-          <input
-            class="form-control"
-            type="date"
-            value="{{ daWa.tipe_agunan }}"
-            id="tanggal_expired"
-            name="tanggal_expired"
-            onchange="tanggalExpDayBangunan()"
-          />
-          <input class="form-control" id="hariTanggalnyaExpBagunan" hidden />
-        </div>
-      </div>
-    </div>
-    <!--hide show colom biasa-->
-  </div>
-  <div *ngSwitchCase="'Emas'">
-    <H1>untuk pilihan ini tidak tersedia</H1>
-  </div>
-  <div *ngSwitchDefault>
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <select class="form-control" name="jenis_objek" id="jenis_objek">
-            <option selected value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div [ngSwitch]="tampungantipeagunan">
-  <div *ngSwitchCase="'Kendaraan'"></div>
-  <div *ngSwitchCase="'Emas'"></div>
-  <div *ngSwitchDefault>
-    <!-- pembatas row ke 2 dan 3 -->
-    <div class="card-body" id="hide_row" class="hide_row">
-      <h4 class="card-body gradient-9" style="text-align: center">Alamat Agunan</h4>
-      <div class="row">
-        <div class="col">
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Alamat<span class="text-danger">*</span></label>
-            <div class="col-sm-9">
-              <textarea class="form-control h-150px" rows="6" id="alamat_agunan" name="alamat_agunan"></textarea>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="provinsi_agunan" name="provinsi_agunan">
-                  <option value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-                  <!-- <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
-                    {{ daWaprof.namaWilayah }}
-                  </option> -->
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="kabkota_agunan" name="kabkota_agunan">
-                  <option value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-                  <!-- <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
-                    {{ daWakota.namaWilayah }}
-                  </option> -->
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="kecamatan_agunan" name="kecamatan_agunan">
-                  <option value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-                  <!-- <option
-                    *ngFor="let daWakecamatan of kecamatan"
-                    value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}"
-                  >
-                    {{ daWakecamatan.namaWilayah }}
-                  </option> -->
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select id="kelurahan_agunan" name="kelurahan_agunan">
-                  <option value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-                  <!-- <option
-                    *ngFor="let daWakelurahan of kelurahan"
-                    value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}"
-                  >
-                    {{ daWakelurahan.namaWilayah }}
-                  </option> -->
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kode Pos<span class="text-danger">*</span></label>
-            <div class="col-sm-9">
-              <div class="input-group-append">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  maxlength="8"
-                  class="form-control"
-                  id="kode_pos_agunan"
-                  name="kode_pos_agunan"
-                  value="{{ daWa.tipe_agunan }}"
-                />
-                <button class="btn btn-outline-dark" onclick="buatisiagunan()" type="button">Cari Data</button>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">RT / RW<span class="text-danger">*</span></label>
-            <div class="col">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                maxlength="3"
-                class="form-control"
-                placeholder="RT"
-                value="{{ daWa.tipe_agunan }}"
-                id="rt_agunan"
-                name="rt_agunan"
-              />
-            </div>
-            <h2>/</h2>
-            <div class="col">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                class="form-control"
-                placeholder="RW"
-                maxlength="3"
-                value="{{ daWa.tipe_agunan }}"
-                id="rw_agunan"
-                name="rw_agunan"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Alamat Agunan Sama Dengan Sertifikat?</label>
-            <div class="col-sm-9">
-              <input type="radio" name="samaDomisili" id="iyaSama" value="1" />Sama
-              <input type="radio" name="samaDomisili" id="takSama" value="0" />Tidak Sama
-            </div>
-          </div>
-          <div id="hiddenJikaTanah" class="form-group row">
-            <label class="col-sm-3 col-form-label">Luas Bangunan<span class="text-danger">*</span></label>
-            <div class="form-group col-md-8">
-              <input
-                type="tel"
-                oninput="this.value = this.value.replace(/^0/g, '');"
-                onkeypress="return onlyNumberKey(event)"
-                class="form-control"
-                placeholder=""
-                value="{{ daWa.tipe_agunan }}"
-                name="luas_bangunan_anggunan"
-                id="luas_bangunan_anggunan"
-              />
-            </div>
-            <span>M2</span>
-          </div>
-          <div id="hiddenJikaBangunan" class="form-group row">
-            <label class="col-md-3 col-form-label">Luas Tanah<span class="text-danger">*</span></label>
-            <div class="form-group col-md-8">
-              <input
-                type="tel"
-                oninput="this.value = this.value.replace(/^0/g, '');"
-                onkeypress="return onlyNumberKey(event)"
-                class="form-control"
-                value="{{ daWa.tipe_agunan }}"
-                placeholder=""
-                name="luas_tanah_anggunan"
-                id="luas_tanah_anggunan"
-              />
-            </div>
-            <span>M2</span>
-          </div>
-          <div id="hiddenJikaTanahHarga" class="form-group row">
-            <label class="col-sm-3 col-form-label">Harga Objek<span class="text-danger">*</span></label>
-            <div class="col-sm-9">
-              <input
-                type="tel"
-                oninput="this.value = this.value.replace(/^0/g, '');"
-                onkeypress="return onlyNumberKey(event)"
-                class="form-control"
-                placeholder=""
-                name="harga_objek"
-                value="{{ daWa.tipe_agunan }}"
-                id="harga_objek"
-              />
-            </div>
-          </div>
-        </div>
-        <!-- batas colom 1 dan 2 -->
+                    <!-- hide show colom 2 buat tnb dan bangunan  -->
+                    <div class="col hidden_tnbCol2" id="hidden_tnbCol2">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Tahun Buat (YYYY)<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="tel"
+                            onkeypress="return onlyNumberKey(event)"
+                            class="form-control"
+                            placeholder=""
+                            name="tahun_buat"
+                            id="tahun_buat"
+                            minlength="4"
+                            maxlength="4"
+                            value="{{ daWa.tahun_dibuat }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <div class="form-group">
+                            <select class="form-control" name="status_sertifikat" id="status_sertifikat">
+                              <option selected value="{{ daWa.status_sertifikat }}">{{ daWa.status_sertifikat }}</option>
+                              <option *ngFor="let statussertifikat of statussertifikat" value="{{ statussertifikat.sertifikat_deskripsi }}">
+                                {{ statussertifikat.sertifikat_deskripsi }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Nomor Sertifikat<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="tel"
+                            onkeypress="return onlyNumberKey(event)"
+                            class="form-control"
+                            placeholder="Nomor Sertifikat"
+                            name="no_sertifikat"
+                            value="{{ daWa.no_sertifikat }}"
+                            id="no_sertifikat"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="text"
+                            value="{{ daWa.nama_pemegang_hak }}"
+                            class="form-control"
+                            placeholder=""
+                            name="nama_pemegang_hak"
+                            id="nama_pemegang_hak"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">No Contact Person<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="tel"
+                            onkeypress="return onlyNumberKey(event)"
+                            maxlength="12"
+                            class="form-control"
+                            placeholder=""
+                            name="no_handphone_cp"
+                            id="no_handphone_cp"
+                            value="{{ daWa.no_handphone_cp }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"
+                          >Nomor Identitas Pemegang Hak Setifikat<span class="text-danger">*</span></label
+                        >
+                        <div class="col-sm-8">
+                          <input
+                            type="tel"
+                            onkeypress="return onlyNumberKey(event)"
+                            class="form-control"
+                            placeholder=""
+                            value="{{ daWa.no_id_pemegang_hak_sertifikat }}"
+                            name="no_id_pemegang_hak_sertifikat"
+                            id="no_id_pemegang_hak_sertifikat"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            class="form-control"
+                            type="date"
+                            id="tanggal_terbit"
+                            name="tanggal_terbit"
+                            onchange="tanggalTerbitDayTanahDanBangunan()"
+                            value="{{ daWa.tanggal_terbit }}"
+                          />
+                          <input class="form-control" id="hariTanggalnyaTerbitTanahDanBangunan" hidden />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Tanggal Exipred<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            class="form-control"
+                            type="date"
+                            id="tanggal_expired"
+                            value="{{ daWa.tanggal_expired }}"
+                            name="tanggal_expired"
+                            onchange="tanggalExpDayTanahDanBangunan()"
+                          />
+                          <input class="form-control" id="hariTanggalnyaExpTanahDanBagunan" hidden />
+                        </div>
+                      </div>
+                    </div>
+                    <!--hide show colom biasa-->
 
-        <div class="col">
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Alamat Sesuai Sertifikat<span class="text-danger">*</span></label>
-            <div class="col-sm-9">
-              <textarea class="form-control h-150px" rows="6" id="alamat_sesuai_sertifikat" name="alamat_sesuai_sertifikat"></textarea>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="provinsi_sesuai_sertifikat" name="provinsi_sesuai_sertifikat">
-                  <option value="{{ daWa.tipe_agunan }}">{{ daWa.tipe_agunan }}</option>
-                  <!-- <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
-                    {{ daWaprof.namaWilayah }}
-                  </option> -->
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="kabkota_sesuai_sertifikat" name="kabkota_sesuai_sertifikat">
-                  <option value="">Pilih Kota</option>
-                  <!-- <option
-                    *ngFor="let daWakotas of daWakotas"
-                    value="{{ daWakotas.kdWilayah }}|{{ daWakotas.namaWilayah }}"
-                  >
-                    {{ daWakotas.namaWilayah }}
-                  </option> -->
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="kecamatan_sesuai_sertifikat" name="kecamatan_sesuai_sertifikat">
-                  <option value="">Pilih Kecamatan</option>
-                  <!-- <option
-                    *ngFor="let kecamatans of kecamatans"
-                    value="{{ kecamatans.kdWilayah }}|{{ kecamatans.namaWilayah }}"
-                  >
-                    {{ kecamatans.namaWilayah }}
-                  </option> -->
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select class="form-control" id="kelurahan_sesuai_sertifikat" name="kelurahan_sesuai_sertifikat">
-                  <option value="">Pilih Kelurahan</option>
-                  <!-- <option
-                    *ngFor="let kelurahans of kelurahans"
-                    value="{{ kelurahans.kdPos }}|{{ kelurahans.namaWilayah }}"
-                  >
-                    {{ kelurahans.namaWilayah }}
-                  </option> -->
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Kode Pos<span class="text-danger">*</span></label>
-            <div class="col-sm-9">
-              <div class="input-group-append">
-                <input
-                  type="tel"
-                  onkeypress="return onlyNumberKey(event)"
-                  maxlength="8"
-                  class="form-control"
-                  id="kode_pos_sesuai_sertifikat"
-                  name="kode_pos_sesuai_sertifikat"
-                />
-                <button class="btn btn-outline-dark" onclick="buatisisertifikat()" type="button">Cari Data</button>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">RT / RW<span class="text-danger">*</span></label>
-            <div class="col">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                class="form-control"
-                placeholder="RT"
-                id="rt_sertifikat"
-                name="rt_sertifikat"
-                maxlength="3"
-              />
-            </div>
-            <h2>/</h2>
-            <div class="col">
-              <input
-                type="tel"
-                onkeypress="return onlyNumberKey(event)"
-                class="form-control"
-                placeholder="RW"
-                maxlength="3"
-                id="rw_sertifikat"
-                name="rw_sertifikat"
-              />
-            </div>
-          </div>
-          <div id="adaKaloTnb">
-            <div class="form-group row">
-              <label class="col-sm-3 col-form-label">ID Rumah<span class="text-danger">*</span></label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" placeholder="" name="id_rumah" id="id_rumah" />
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3 col-form-label">Blok Rumah<span class="text-danger">*</span></label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" placeholder="" name="blok_rumah" id="blok_rumah" />
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-sm-3 col-form-label">No Rumah<span class="text-danger">*</span></label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" placeholder="" name="no_rumah" id="no_rumah" />
+                    <!-- batas colom 1 dan 2 -->
+                  </div>
+                  <div *ngSwitchCase="'Tanah'">
+                    <!--awal hiden colom 1 tanah NO 4-->
+                    <div id="hidden_tanahCol1" class="hidden_tanahCol1">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"
+                          >Hubungan antar Pemegang Hak dan calon Nasabah<span class="text-danger">*</span></label
+                        >
+                        <div class="col-sm-8">
+                          <div class="form-group">
+                            <select class="form-control" name="hubungan_pemegang_hak" id="hubungan_pemegang_hak">
+                              <option selected value="{{ daWa.hubungan_pemegang_hak }}">{{ daWa.hubungan_pemegang_hak }}</option>
+                              <option value="Penjual (Develpoer dan Pembeli)">Penjual (Develpoer dan Pembeli)</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- hide show colom 2 tanah NO 4--->
+                    <div class="col hidden_tanahCol2" id="hidden_tanahCol2">
+                      <!-- <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Tahun Buat (YYYY)<span class="text-danger">*</span></label>
+                        <div class="col-sm-8"> -->
+                      <input
+                        hidden
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder=""
+                        name="tahun_buat4"
+                        id=""
+                        minlength="4"
+                        maxlength="4"
+                        value="{{ daWa.tahun_dibuat }}"
+                      />
+                      <!-- </div>
+                    </div> -->
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <div class="form-group">
+                            <select class="form-control" name="status_sertifikat" id="status_sertifikat">
+                              <option selected value="{{ daWa.status_sertifikat }}">{{ daWa.status_sertifikat }}</option>
+                              <option *ngFor="let statussertifikat of statussertifikat" value="{{ statussertifikat.sertifikat_deskripsi }}">
+                                {{ statussertifikat.sertifikat_deskripsi }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Nomor Sertifikat<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="tel"
+                            onkeypress="return onlyNumberKey(event)"
+                            maxlength="20"
+                            class="form-control"
+                            placeholder="Nomor Sertifikat"
+                            name="nomor_sertifikat"
+                            id="nomor_sertifikat"
+                            value="{{ daWa.no_sertifikat }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="text"
+                            value="{{ daWa.nama_pemegang_hak }}"
+                            class="form-control"
+                            placeholder=""
+                            name="nama_pemegang_hak"
+                            id="nama_pemegang_hak"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">No Contact Person<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="tel"
+                            onkeypress="return onlyNumberKey(event)"
+                            class="form-control"
+                            placeholder=""
+                            name="no_contact_person"
+                            id="no_contact_person"
+                            value="{{ daWa.no_handphone_cp }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"
+                          >Nomor Identitas Pemegang Hak Setifikat<span class="text-danger">*</span></label
+                        >
+                        <div class="col-sm-8">
+                          <input
+                            type="tel"
+                            onkeypress="return onlyNumberKey(event)"
+                            class="form-control"
+                            placeholder=""
+                            name="nomor_identitas_pemegang_hak"
+                            id="nomor_identitas_pemegang_hak"
+                            value="{{ daWa.no_id_pemegang_hak_sertifikat }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            class="form-control"
+                            type="date"
+                            name="tanggal_lahir"
+                            id="tanggal_lahir"
+                            value="{{ daWa.tanggal_terbit }}"
+                            onchange="tanggalTerbitDay()"
+                          />
+                          <input class="form-control" id="hariTanggalnyaTerbitTanah" hidden />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Tanggal Exipred<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            class="form-control"
+                            type="date"
+                            id="tanggal_exipred"
+                            value="{{ daWa.tanggal_expired }}"
+                            name="tanggal_exipred"
+                            onchange="tanggalExpDay()"
+                          />
+                          <input class="form-control" id="hariTanggalnyaExpTanah" hidden />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- hide show colom 2 tanah  NO 4-->
+                  </div>
+                  <div *ngSwitchCase="'Bangunan'">
+                    <div id="hidden_bangunan" class="hidden_bangunan">
+                      <!--awal hidden bangunan colom 1 NO5-->
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Tipe Property<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <div class="form-group">
+                            <select class="form-control" name="tipe_properti" id="tipe_properti">
+                              <option value="{{ daWa.tipe_properti }}">{{ daWa.tipe_properti }}</option>
+                              <option>Rumah</option>
+                              <option>Apartement</option>
+                              <option>Ruko / Rukan</option>
+                              <option>Kos</option>
+                              <option>Villa</option>
+                              <option>Tanah / Kavling</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Status<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <div class="form-group" id="statusRadioButton">
+                            <div class="lihat_baru2" id="ihide_baru2">
+                              <label class="radio-inline mr-3" for="ibaru2">
+                                <input
+                                  (click)="radiobbuttonbaru()"
+                                  type="radio"
+                                  value="baru"
+                                  name="statusCollateral"
+                                  id="ibaru"
+                                  [checked]="daWa.status_agunan == 'baru'"
+                                />Baru
+                              </label>
+                            </div>
+                            <div class="lihat_second2" id="ihide_second2">
+                              <label class="radio-inline mr-3" for="isecond2">
+                                <input
+                                  (click)="radiobbuttonsecon()"
+                                  type="radio"
+                                  value="second"
+                                  name="statusCollateral"
+                                  id="isecond"
+                                  [checked]="daWa.status_agunan == 'secon'"
+                                />Second
+                              </label>
+                            </div>
+
+                            <div [ngSwitch]="untukstatusdev">
+                              <div *ngSwitchCase="'baru'">
+                                <div class="hide_pks" id="ihide_pks">
+                                  <label class="radio-inline mr-3" for="ipks">
+                                    <input (click)="radiobbuttonpks()" type="radio" value="pks" name="statusBarusecond" id="ipks" />PKS
+                                  </label>
+                                </div>
+                                <div class="hide_nonpks" id="ihide_nonpks">
+                                  <label class="radio-inline mr-3" for="inonpks">
+                                    <input
+                                      (click)="radiobbuttonnonpks()"
+                                      type="radio"
+                                      value="non"
+                                      name="statusBarusecond"
+                                      id="inonpks"
+                                    />NON-PKS
+                                  </label>
+                                </div>
+                                <div class="hide_perorangan" id="ihide_perorangan">
+                                  <label class="radio-inline mr-3" for="iperorangan">
+                                    <input
+                                      (click)="radiobbuttonorang()"
+                                      type="radio"
+                                      value="orang"
+                                      name="statusBarusecond"
+                                      id="iperorangan"
+                                    />Perorangan
+                                  </label>
+                                </div>
+                              </div>
+
+                              <div *ngSwitchCase="'secon'">
+                                <input (click)="radiobbuttonpks()" type="radio" value="pks" name="statusBarusecond" id="ipks" hidden />
+                                <div class="hide_nonpks" id="ihide_nonpks">
+                                  <label class="radio-inline mr-3" for="inonpks">
+                                    <input
+                                      (click)="radiobbuttonnonpks()"
+                                      type="radio"
+                                      value="non"
+                                      name="statusBarusecond"
+                                      id="inonpks"
+                                    />NON-PKS
+                                  </label>
+                                </div>
+                                <div class="hide_perorangan" id="ihide_perorangan">
+                                  <label class="radio-inline mr-3" for="iperorangan">
+                                    <input
+                                      (click)="radiobbuttonorang()"
+                                      type="radio"
+                                      value="orang"
+                                      name="statusBarusecond"
+                                      id="iperorangan"
+                                    />Perorangan
+                                  </label>
+                                </div>
+                              </div>
+                              <div *ngSwitchDefault></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div [ngSwitch]="pemisahuntukdevloper">
+                        <div *ngSwitchCase="'pks'">
+                          <div class="developer_pks">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
+                              <div class="col-sm-8">
+                                <div class="form-group">
+                                  <select class="form-control" name="developer_pks" id="developer_pks">
+                                    <option value="{{ daWa.developer }}">{{ daWa.developer }}</option>
+                                    <option *ngFor="let listagunan of listagunan" value="{{ listagunan.nama_developer }}">
+                                      {{ listagunan.nama_developer }}
+                                    </option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngSwitchCase="'non pks'">
+                          <div class="developer_nonpks">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
+                              <div class="col-sm-8">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder="Developer"
+                                  name="developer_non_pks"
+                                  id="developer_non_pks"
+                                  value="{{ daWa.developer }}"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngSwitchCase="'perorang'"></div>
+                        <div *ngSwitchDefault></div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Nama Perumahan</label>
+                        <div class="col-sm-8">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Nama Perumahan"
+                            name="nama_perumahan"
+                            id="nama_perumahan"
+                            value="{{ daWa.alamat_agunan }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Sama dengan Jaminan Sebelumnya<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <div class="form-group" id="radioButtonStatusJaminanSebelum">
+                            <label class="radio-inline mr-3">
+                              <input type="radio" value="1" id="status_jaminan_sebelumnyaia" name="status_jaminan_sebelumnyaia" />Ya</label
+                            >
+                            <label class="radio-inline mr-3">
+                              <input
+                                type="radio"
+                                value="tidak"
+                                id="status_jaminan_sebelumnyatidak"
+                                name="status_jaminan_sebelumnyatidak"
+                              />Tidak</label
+                            >
+                            <p>
+                              <button type="submit" class="col-sm-12 btn btn-dark">
+                                <i class="icon-magnifier menu-icon"></i>Lihat Jaminan Sebelumnya
+                              </button>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"
+                          >Hubungan antara Pemegang Hak dan calon Nasabah<span class="text-danger">*</span></label
+                        >
+                        <div class="col-sm-8">
+                          <div class="form-group">
+                            <select class="form-control" name="hubungan_pemegang_hak" id="hubungan_pemegang_hak">
+                              <option value="{{ daWa.hubungan_pemegang_hak }}">{{ daWa.hubungan_pemegang_hak }}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- batas hidden bangunan NO5 -->
+                    <!--batas colom 1 bangunan-->
+
+                    <!-- hide show colom 2 buat tnb dan bangunan  -->
+                    <div class="col hidden_bangunanCol2" id="hidden_bangunanCol2">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Tahun Buat (YYYY)<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="tel"
+                            onkeypress="return onlyNumberKey(event)"
+                            class="form-control"
+                            placeholder=""
+                            name="tahun_buat"
+                            id="tahun_buat"
+                            minlength="4"
+                            maxlength="4"
+                            value="{{ daWa.tahun_dibuat }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <div class="form-group">
+                            <select class="form-control" name="status_sertifikat" id="status_sertifikat">
+                              <option selected value="{{ daWa.status_sertifikat }}">{{ daWa.status_sertifikat }}</option>
+                              <option *ngFor="let statussertifikat of statussertifikat" value="{{ statussertifikat.sertifikat_deskripsi }}">
+                                {{ statussertifikat.sertifikat_deskripsi }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Nomor Sertifikat<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="tel"
+                            onkeypress="return onlyNumberKey(event)"
+                            class="form-control"
+                            placeholder="Nomor Sertifikat"
+                            name="no_sertifikat"
+                            id="no_sertifikat"
+                            value="{{ daWa.no_sertifikat }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="text"
+                            value="{{ daWa.nama_pemegang_hak }}"
+                            class="form-control"
+                            placeholder=""
+                            name="nama_pemegang_hak"
+                            id="nama_pemegang_hak"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">No Contact Person<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            type="tel"
+                            onkeypress="return onlyNumberKey(event)"
+                            maxlength="12"
+                            class="form-control"
+                            placeholder=""
+                            name="no_handphone_cp"
+                            id="no_handphone_cp"
+                            value="{{ daWa.no_handphone_cp }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"
+                          >Nomor Identitas Pemegang Hak Setifikat<span class="text-danger">*</span></label
+                        >
+                        <div class="col-sm-8">
+                          <input
+                            type="tel"
+                            onkeypress="return onlyNumberKey(event)"
+                            class="form-control"
+                            placeholder=""
+                            value="{{ daWa.no_id_pemegang_hak_sertifikat }}"
+                            name="no_id_pemegang_hak_sertifikat"
+                            id="no_id_pemegang_hak_sertifikat"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            class="form-control"
+                            type="date"
+                            id="tanggal_terbit"
+                            value="{{ daWa.tanggal_terbit }}"
+                            name="tanggal_terbit"
+                            onchange="tanggalTerbitDayBangunan()"
+                          />
+                          <input class="form-control" id="hariTanggalnyaTerbitBangunan" hidden />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Tanggal Exipred<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                          <input
+                            class="form-control"
+                            type="date"
+                            id="tanggal_expired"
+                            name="tanggal_expired"
+                            value="{{ daWa.tanggal_expired }}"
+                            onchange="tanggalExpDayBangunan()"
+                          />
+                          <input class="form-control" id="hariTanggalnyaExpBagunan" hidden />
+                        </div>
+                      </div>
+                    </div>
+                    <!--hide show colom biasa-->
+                  </div>
+                  <div *ngSwitchCase="'Emas'">
+                    <H1>untuk pilihan ini tidak tersedia</H1>
+                  </div>
+                  <div *ngSwitchDefault>
+                    <h4>bila data kurang silahkan memilih tipeagunan yg baru</h4>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <div class="form-group">
+                          <select class="form-control" name="jenis_objek" id="jenis_objek">
+                            <option selected value="{{ daWa.jenis_objek_deskripsi }}">{{ daWa.jenis_objek_deskripsi }}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div [ngSwitch]="tampungantipeagunan">
+                  <div *ngSwitchCase="'Kendaraan'"></div>
+                  <div *ngSwitchCase="'Emas'"></div>
+                  <div *ngSwitchDefault>
+                    <!-- pembatas row ke 2 dan 3 -->
+                    <div class="card-body" id="hide_row" class="hide_row">
+                      <h4 class="card-body gradient-9" style="text-align: center">Alamat Agunan</h4>
+                      <div class="row">
+                        <div class="col">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Alamat<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                              <textarea class="form-control h-150px" rows="6" id="alamat_agunan" name="alamat_agunan">{{
+                                daWa.alamat_agunan
+                              }}</textarea>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                              <div class="form-group">
+                                <select class="form-control" (change)="onChange(0)" id="provinsi_agunan" name="provinsi_agunan">
+                                  <option value="{{ daWa.provinsi_agunan }}">{{ daWa.provinsi_agunan }}</option>
+                                  <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+                                    {{ daWaprof.namaWilayah }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                              <div class="form-group">
+                                <select class="form-control" (change)="onChangekota(0)" id="kabkota_agunan" name="kabkota_agunan">
+                                  <option value="{{ daWa.kabkota_agunan }}">{{ daWa.kabkota_agunan }}</option>
+                                  <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
+                                    {{ daWakota.namaWilayah }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                              <div class="form-group">
+                                <select class="form-control" (change)="onChangekecamatan(0)" id="kecamatan_agunan" name="kecamatan_agunan">
+                                  <option value="{{ daWa.kecamatan_agunan }}">{{ daWa.kecamatan_agunan }}</option>
+                                  <option
+                                    *ngFor="let daWakecamatan of kecamatan"
+                                    value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}"
+                                  >
+                                    {{ daWakecamatan.namaWilayah }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                              <div class="form-group">
+                                <select class="form-control" (change)="onChangekelurahan(0)" id="kelurahan_agunan" name="kelurahan_agunan">
+                                  <option value="{{ daWa.kelurahan_agunan }}">{{ daWa.kelurahan_agunan }}</option>
+                                  <option
+                                    *ngFor="let daWakelurahan of kelurahan"
+                                    value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}"
+                                  >
+                                    {{ daWakelurahan.namaWilayah }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                              <div class="input-group-append">
+                                <input
+                                  type="tel"
+                                  onkeypress="return onlyNumberKey(event)"
+                                  maxlength="8"
+                                  class="form-control"
+                                  id="kode_pos_agunan"
+                                  value="{{ daWa.kode_pos_agunan }}"
+                                  name="kode_pos_agunan"
+                                />
+                                <button class="btn btn-outline-dark" onclick="buatisiagunan()" type="button">Cari Data</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">RT / RW<span class="text-danger">*</span></label>
+                            <div class="col">
+                              <input
+                                type="tel"
+                                onkeypress="return onlyNumberKey(event)"
+                                maxlength="3"
+                                value="{{ daWa.rt }}"
+                                class="form-control"
+                                placeholder="RT"
+                                id="rt_agunan"
+                                name="rt_agunan"
+                              />
+                            </div>
+                            <h2>/</h2>
+                            <div class="col">
+                              <input
+                                type="tel"
+                                onkeypress="return onlyNumberKey(event)"
+                                class="form-control"
+                                placeholder="RW"
+                                maxlength="3"
+                                id="rw_agunan"
+                                value="{{ daWa.rw }}"
+                                name="rw_agunan"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Alamat Agunan Sama Dengan Sertifikat?</label>
+                            <div class="col-sm-9">
+                              <input type="radio" name="samaDomisili" id="iyaSama" value="1" />Sama
+                              <input type="radio" name="samaDomisili" id="takSama" value="0" />Tidak Sama
+                            </div>
+                          </div>
+                          <div id="hiddenJikaTanah" class="form-group row">
+                            <label class="col-sm-3 col-form-label">Luas Bangunan<span class="text-danger">*</span></label>
+                            <div class="form-group col-md-8">
+                              <input
+                                type="tel"
+                                value="{{ daWa.luas_bangunan }}"
+                                oninput="this.value = this.value.replace(/^0/g, '');"
+                                onkeypress="return onlyNumberKey(event)"
+                                class="form-control"
+                                placeholder=""
+                                name="luas_bangunan_anggunan"
+                                id="luas_bangunan_anggunan"
+                              />
+                            </div>
+                            <span>M2</span>
+                          </div>
+                          <div id="hiddenJikaBangunan" class="form-group row">
+                            <label class="col-md-3 col-form-label">Luas Tanah<span class="text-danger">*</span></label>
+                            <div class="form-group col-md-8">
+                              <input
+                                type="tel"
+                                oninput="this.value = this.value.replace(/^0/g, '');"
+                                onkeypress="return onlyNumberKey(event)"
+                                class="form-control"
+                                placeholder=""
+                                value="{{ daWa.luas_tanah }}"
+                                name="luas_tanah_anggunan"
+                                id="luas_tanah_anggunan"
+                              />
+                            </div>
+                            <span>M2</span>
+                          </div>
+                          <div id="hiddenJikaTanahHarga" class="form-group row">
+                            <label class="col-sm-3 col-form-label">Harga Objek<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                              <input
+                                type="tel"
+                                oninput="this.value = this.value.replace(/^0/g, '');"
+                                onkeypress="return onlyNumberKey(event)"
+                                class="form-control"
+                                placeholder=""
+                                value="{{ daWa.harga_objek }}"
+                                name="harga_objek"
+                                id="harga_objek"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <!-- batas colom 1 dan 2 -->
+
+                        <div class="col">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Alamat Sesuai Sertifikat<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                              <textarea
+                                class="form-control h-150px"
+                                rows="6"
+                                id="alamat_sesuai_sertifikat"
+                                name="alamat_sesuai_sertifikat"
+                                >{{ daWa.alamat_sesuai_sertifikat }}</textarea
+                              >
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                              <div class="form-group">
+                                <select
+                                  class="form-control"
+                                  (change)="onChanges(0)"
+                                  id="provinsi_sesuai_sertifikat"
+                                  name="provinsi_sesuai_sertifikat"
+                                >
+                                  <option value="{{ daWa.provinsi_sesuai_sertifikat }}">{{ daWa.provinsi_sesuai_sertifikat }}</option>
+                                  <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+                                    {{ daWaprof.namaWilayah }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                              <div class="form-group">
+                                <select
+                                  class="form-control"
+                                  (change)="onChangekotas(0)"
+                                  id="kabkota_sesuai_sertifikat"
+                                  name="kabkota_sesuai_sertifikat"
+                                >
+                                  <option value="{{ daWa.kabkota_sesuai_sertifikat }}">{{ daWa.kabkota_sesuai_sertifikat }}</option>
+                                  <option *ngFor="let daWakotas of daWakotas" value="{{ daWakotas.kdWilayah }}|{{ daWakotas.namaWilayah }}">
+                                    {{ daWakotas.namaWilayah }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                              <div class="form-group">
+                                <select
+                                  class="form-control"
+                                  (change)="onChangekecamatans(0)"
+                                  id="kecamatan_sesuai_sertifikat"
+                                  name="kecamatan_sesuai_sertifikat"
+                                >
+                                  <option value="{{ daWa.kecamatan_sesuai_sertifikat }}">{{ daWa.kecamatan_sesuai_sertifikat }}</option>
+                                  <option
+                                    *ngFor="let kecamatans of kecamatans"
+                                    value="{{ kecamatans.kdWilayah }}|{{ kecamatans.namaWilayah }}"
+                                  >
+                                    {{ kecamatans.namaWilayah }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                              <div class="form-group">
+                                <select
+                                  (change)="onChangekelurahans(0)"
+                                  class="form-control"
+                                  id="kelurahan_sesuai_sertifikat"
+                                  name="kelurahan_sesuai_sertifikat"
+                                >
+                                  <option value="{{ daWa.kelurahan_sesuai_sertifikat }}">{{ daWa.kelurahan_sesuai_sertifikat }}</option>
+                                  <option *ngFor="let kelurahans of kelurahans" value="{{ kelurahans.kdPos }}|{{ kelurahans.namaWilayah }}">
+                                    {{ kelurahans.namaWilayah }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                              <div class="input-group-append">
+                                <input
+                                  type="tel"
+                                  onkeypress="return onlyNumberKey(event)"
+                                  maxlength="8"
+                                  class="form-control"
+                                  id="kode_pos_sesuai_sertifikat"
+                                  name="kode_pos_sesuai_sertifikat"
+                                  value="{{ daWa.kode_pos_sesuai_sertifikat }}"
+                                />
+                                <button class="btn btn-outline-dark" onclick="buatisisertifikat()" type="button">Cari Data</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">RT / RW<span class="text-danger">*</span></label>
+                            <div class="col">
+                              <input
+                                type="tel"
+                                onkeypress="return onlyNumberKey(event)"
+                                class="form-control"
+                                placeholder="RT"
+                                id="rt_sertifikat"
+                                name="rt_sertifikat"
+                                value="{{ daWa.rt_sertifikat }}"
+                                maxlength="3"
+                              />
+                            </div>
+                            <h2>/</h2>
+                            <div class="col">
+                              <input
+                                type="tel"
+                                onkeypress="return onlyNumberKey(event)"
+                                class="form-control"
+                                placeholder="RW"
+                                maxlength="3"
+                                id="rw_sertifikat"
+                                name="rw_sertifikat"
+                                value="{{ daWa.rw_sertifikat }}"
+                              />
+                            </div>
+                          </div>
+                          <div id="adaKaloTnb">
+                            <div class="form-group row">
+                              <label class="col-sm-3 col-form-label">ID Rumah<span class="text-danger">*</span></label>
+                              <div class="col-sm-9">
+                                <input
+                                  type="text"
+                                  value="{{ daWa.id_rumah }}"
+                                  class="form-control"
+                                  placeholder=""
+                                  name="id_rumah"
+                                  id="id_rumah"
+                                />
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label class="col-md-3 col-form-label">Blok Rumah<span class="text-danger">*</span></label>
+                              <div class="col-sm-9">
+                                <input
+                                  type="text"
+                                  value="{{ daWa.blok_rumah }}"
+                                  class="form-control"
+                                  placeholder=""
+                                  name="blok_rumah"
+                                  id="blok_rumah"
+                                />
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label class="col-sm-3 col-form-label">No Rumah<span class="text-danger">*</span></label>
+                              <div class="col-sm-9">
+                                <input
+                                  type="text"
+                                  value="{{ daWa.nomor_rumah }}"
+                                  class="form-control"
+                                  placeholder=""
+                                  name="no_rumah"
+                                  id="no_rumah"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        id="selanjutnyadata"
+                        name="selanjutnyadata"
+                        value="selanjutnyadata"
+                        type="button"
+                        class="btn btn-dark"
+                        style="float: right"
+                      >
+                        selanjutnya1
+                      </button>
+                    </div>
+                    <button
+                      type="button"
+                      class="btn btn-dark"
+                      id="simpan4"
+                      name="simpan5"
+                      value="simpan5"
+                      style="float: right"
+                      (click)="updatecollateralnih()"
+                    >
+                      Simpan Data1
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <button id="selanjutnyadata" name="selanjutnyadata" value="selanjutnyadata" type="button" class="btn btn-dark" style="float: right">
-        selanjutnya1
-      </button>
+      </form>
     </div>
-    <button type="button" class="btn btn-dark" id="simpan4" name="simpan5" value="simpan5" style="float: right">Simpan Data1</button>
   </div>
 </div>

@@ -19,7 +19,7 @@ export class DaftarAplikasiWaitingAssigmentService {
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   protected daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-de/list_app_de?sc=20000'
+    'http://10.20.34.178:8805/api/v1/efos-de/list_app_de?sc=20000'
   );
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
 
