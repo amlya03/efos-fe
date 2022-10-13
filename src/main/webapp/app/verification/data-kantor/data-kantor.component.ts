@@ -3,20 +3,19 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Editor } from 'ngx-editor';
-import { EntityArrayResponseDaWa, ServiceVerificationService } from '../service/service-verification.service';
+import { ServiceVerificationService } from '../service/service-verification.service';
 import { refHubunganAgunan } from '../service/config/refHubunganAgunan.model';
 import { refJabatan } from '../service/config/refJabatan.model';
 import { refJumlahKaryawan } from '../service/config/refJumlahKaryawan.model';
 import { refBidang } from 'app/initial-data-entry/services/config/refBidang.model';
 import { refSektor } from 'app/initial-data-entry/services/config/refSektor.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { createRequestOption } from 'app/core/request/request-util';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { Observable } from 'rxjs';
-import { InitialDataEntryService } from 'app/initial-data-entry/services/initial-data-entry.service';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { refAnalisaDataKantor } from './refAnalisaDataKantor.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 
 @Component({
   selector: 'jhi-data-kantor',
@@ -60,7 +59,7 @@ export class DataKantorComponent implements OnInit {
     protected http: HttpClient,
     private formBuilder: FormBuilder,
     protected applicationConfigService: ApplicationConfigService,
-    protected IdeService: InitialDataEntryService
+    protected dataEntryService: DataEntryService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -69,12 +68,6 @@ export class DataKantorComponent implements OnInit {
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
-
-  // API url
-  protected getDataKantor = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-verif/getAnalisaDataKantor?sd='
-  );
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   ngOnInit(): void {
     // this.postGetTokenDuckapil();
@@ -163,10 +156,6 @@ export class DataKantorComponent implements OnInit {
     });
 
     this.load();
-  }
-
-  getFetchSemuaData(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.fetchSemuaData + this.app_no_de);
   }
 
   onSubmit(): void {
@@ -330,13 +319,9 @@ export class DataKantorComponent implements OnInit {
     // // }
   }
 
-  fetchDataKantor(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.getDataKantor + this.app_no_de);
-  }
-
   load(): void {
     // ambil semua data
-    this.getFetchSemuaData().subscribe(data => {
+    this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       // if(data.code === 200) {
       this.dataEntry = data.result;
       // console.log('INI DE ',this.dataEntry);
@@ -344,7 +329,7 @@ export class DataKantorComponent implements OnInit {
       // }
     });
 
-    this.fetchDataKantor().subscribe(data => {
+    this.dataKantor.fetchDataKantor(this.app_no_de).subscribe(data => {
       this.dataKantorMap = data.result;
       // alert(this.dataKantorMap.note_verif_alamat_perusahaan)
 

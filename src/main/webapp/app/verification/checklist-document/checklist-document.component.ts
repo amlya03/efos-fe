@@ -8,6 +8,8 @@ import { uploadDocument } from 'app/upload-document/services/config/uploadDocume
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { DataTableDirective } from 'angular-datatables';
 import { LocalStorageService } from 'ngx-webstorage';
+import { ServicesUploadDocumentService } from 'app/upload-document/services/services-upload-document.service';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 
@@ -51,7 +53,9 @@ export class ChecklistDocumentComponent implements OnInit {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     public router: Router,
-    protected localStorageService: LocalStorageService
+    protected localStorageService: LocalStorageService,
+    protected dataEntryService: DataEntryService,
+    protected uploadService: ServicesUploadDocumentService
   ) {
       // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
       this.activatedRoute.queryParams.subscribe(params => {
@@ -60,12 +64,6 @@ export class ChecklistDocumentComponent implements OnInit {
       });
       // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     }
-
-  // URL DE
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
-
-  // API url
-  protected FetchListUploadDocument = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDokumenUploadByCuref?sc=');
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -78,37 +76,22 @@ export class ChecklistDocumentComponent implements OnInit {
     this.load();
   }
 
-  // DE
-  getFetchSemuaData(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.fetchSemuaData + this.app_no_de);
-  }
-
-  // list Upload DE
-  getListUploadDocumentDE(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.FetchListUploadDocument + 'curef_20220816_322' + '&ss=DE');
-  }
-
-  // list Upload DEA
-  getListUploadAgunan(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.FetchListUploadDocument + 'curef_20220816_322' + '&ss=DEA');
-  }
-
   load() {
     // ambil semua data DE
-    this.getFetchSemuaData().subscribe(data => {
+    this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
       // alert('DE '+ this.dataEntry?.status_perkawinan)
     });
 
     // DE
-    this.getListUploadDocumentDE().subscribe(data => {
+    this.uploadService.getListUploadDocument('curef_20220816_322', 'DE').subscribe(data => {
       console.warn('ini upload de' + data);
       this.uploadDocument = data.result;
       this.dtTrigger.next(data.result);
     });
 
     // Agunan
-    this.getListUploadAgunan().subscribe(data => {
+    this.uploadService.getListUploadDocument('curef_20220816_322', 'DEA').subscribe(data => {
       // console.warn('ini upload de' + data);
       this.uploadAgunan = data.result;
     });
@@ -156,16 +139,9 @@ export class ChecklistDocumentComponent implements OnInit {
       // alert(this.keteranganAgunan)
     }
 
-    // console.log(this.uploadDocument[i].id)
-    // console.log(this.uploadAgunan[i].id)
       // Post Data Entry
       this.http
       .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/checklist_dokumen', {
-        // tipe_dokumen: this.uploadDocument[i].doc_description,
-        // nama_file: this.uploadDocument[i].nama_dokumen,
-        // validasi_DE: this.radioValidasiDE,
-        // keterangan_DE: this.keteranganDE,
-        // jadi
         created_by: this.untukSessionUserName,
         id: this.uploadDocument[i].id_upload,
         note_validasi: this.keteranganDE,
@@ -176,11 +152,6 @@ export class ChecklistDocumentComponent implements OnInit {
       // Post Agunan
       this.http
       .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/checklist_dokumen', {
-        // tipe_dokumen: this.uploadAgunan[i].doc_description,
-        // nama_file: this.uploadAgunan[i].nama_dokumen,
-        // validasi_DE: this.radioValidasiAgunan,
-        // keterangan_DE: this.keteranganAgunan,
-        // jadi
         created_by: this.untukSessionUserName,
         id: this.uploadAgunan[i].id_upload,
         note_validasi: this.keteranganAgunan,

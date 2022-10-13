@@ -5,4 +5,5 @@ export class cekUjiKepatuhan{
   id_cek?: Number;
   created_date?: String;
   kepatuhan?: Number;
+  keterangan?: String;
 }

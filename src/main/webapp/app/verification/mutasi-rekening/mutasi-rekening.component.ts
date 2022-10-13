@@ -11,6 +11,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { listMutasi } from './listMutasi.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 
 @Component({
   selector: 'jhi-mutasi-rekening',
@@ -41,7 +42,8 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal,
     private formBuilder: FormBuilder,
     protected applicationConfigService: ApplicationConfigService,
-    private http: HttpClient
+    private http: HttpClient,
+    protected dataEntryService: DataEntryService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -51,18 +53,6 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     // alert(this.app_no_de)
   }
-
-  // API url
-  protected allDataMutasiRekening = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-verif/list_verif_mutasi?si='
-  );
-
-  protected getMutasi = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-verif/get_verif_mutasi?si='
-  );
-  // De
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
-
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -99,23 +89,9 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     this.load();
   }
 
-  // /////////////////////get mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getMutasiRekening(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.allDataMutasiRekening + this.app_no_de);
-  }
-  // //////////////////////get mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-  getFetchSemuaData(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.fetchSemuaData + this.app_no_de);
-  }
-
-  // fetchMutasi(): Observable<ApiResponse> {
-  //   return this.http.get<ApiResponse>(this.getMutasi + this.idTableMutasi); // by id dari table atas
-  // }
-
   load(): void {
     // ambil semua data
-    this.getFetchSemuaData().subscribe(data => {
+    this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
 
       let retriveMutasi = {
@@ -146,7 +122,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     });
 
     // list Table
-    this.getMutasiRekening().subscribe(data => {
+    this.mutasiRekeningService.fetchListMutasiRekening(this.app_no_de).subscribe(data => {
       console.warn(data);
       if (data.code === 200) {
         this.mutasiRekening = data.result;
@@ -245,7 +221,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   editMutasi(id: any){
     this.idTableMutasi = id;
     // data
-    return this.http.get<ApiResponse>(this.getMutasi + id) // by id dari table atas
+    this.mutasiRekeningService.getMutasiRekening(id) // by id dari table atas
     .subscribe(data => {
       this.getTableMutasi = data.result;
     });

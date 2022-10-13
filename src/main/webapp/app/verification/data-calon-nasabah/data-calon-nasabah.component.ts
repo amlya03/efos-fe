@@ -7,7 +7,6 @@ import { Editor } from 'ngx-editor';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { refHubunganEmergency } from '../service/config/refHubunganEmergency.model';
 import { refStatusPerkawinan } from '../service/config/refStatusPerkawinan.model';
-import { InitialDataEntryService } from 'app/initial-data-entry/services/initial-data-entry.service';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { Observable } from 'rxjs';
 import { refBidang } from 'app/initial-data-entry/services/config/refBidang.model';
@@ -17,6 +16,7 @@ import { refListTipeProperti } from '../service/config/refListTipeProperti.model
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { refAnalisaCalonNasabah } from './refAnalisaCalonNasabah.model';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 
 @Component({
   selector: 'jhi-data-calon-nasabah',
@@ -65,7 +65,7 @@ export class DataCalonNasabahComponent implements OnInit {
     protected http: HttpClient,
     private formBuilder: FormBuilder,
     protected applicationConfigService: ApplicationConfigService,
-    protected IdeService: InitialDataEntryService
+    protected dataEntryService: DataEntryService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -74,12 +74,6 @@ export class DataCalonNasabahComponent implements OnInit {
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
-
-  // API url
-  protected getDataCalonNasabah = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-verif/getAnalisaCalonNasabah?sd='
-  );
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   ngOnInit(): void {
     this.editor = new Editor();
@@ -377,17 +371,9 @@ export class DataCalonNasabahComponent implements OnInit {
     this.router.navigate(['/data-kantor'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 
-  fetchDataNasabah(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.getDataCalonNasabah + this.app_no_de);
-  }
-
-  getFetchSemuaData(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.fetchSemuaData + this.app_no_de);
-  }
-
   load(): void {
     // ambil semua data
-    this.getFetchSemuaData().subscribe(data => {
+    this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       // if(data.code === 200) {
       this.dataEntry = data.result;
       // console.log(this.dataEntry);
@@ -395,7 +381,7 @@ export class DataCalonNasabahComponent implements OnInit {
       // }
     });
 
-    this.fetchDataNasabah().subscribe(data => {
+    this.dataCalonNasabah.fetchDataNasabah(this.app_no_de).subscribe(data => {
       this.dataCalonNasabahMap = data.result;
       let retriveCalonNasabah = {
         /// tambahan dari de

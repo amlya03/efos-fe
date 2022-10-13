@@ -38,10 +38,17 @@
   </div>
 </div>
 <br/>
+<div class="form-group row">
+  <label class="col-sm-2 col-form-label">Isi Memo</label>
+  <div class="col-sm-9">
+      <textarea class="form-control" rows="6" #keterangan></textarea>
+  </div>
+</div>
+<br/>
 
 <div class="row" style="text-align: center;">
   <div class="col">
-    <button type="button"class="btn btn-info">Update Data</button>
+    <button type="button"class="btn btn-info" (click)="simpanMemo(keterangan.value)">Update Data</button>
     <button type="button"class="btn btn-info" (click)="printData()">Cetak Memo</button>
   </div>
 </div>
@@ -67,8 +74,8 @@
       <td style="text-align: center">{{listMemo.users}}</td>
       <td style="text-align: center">{{listMemo.role}}</td>
       <td style="text-align: center">
-        <a>
-          <fa-icon icon="ellipsis"></fa-icon><br />Detail
+        <a (click)="detailMemo()">
+          <fa-icon icon="ellipsis"></fa-icon><br/>Detail
         </a>
       </td>
     </tr>
