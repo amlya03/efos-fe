@@ -11,6 +11,7 @@ import { Observable, Subject } from 'rxjs';
 import { syaratPersetujuanModel } from '../service/config/syaratPersetujuanModel.model';
 import Swal from 'sweetalert2';
 import { cekUjiKepatuhan } from '../service/config/cekUjiKepatuhan.model';
+import { areaOfConcern } from '../service/config/areaOfConcern.model';
 
 @Component({
   selector: 'jhi-syarat-persetujuan',
@@ -35,8 +36,9 @@ export class SyaratPersetujuanComponent implements OnInit {
     keteranganUji: any;
 
   // Area Of Concern
-  areaOfConRadio: any;
-  areaOfConInput: any;
+  areaOfConcernModel: areaOfConcern = new areaOfConcern();
+    areaOfConRadio: any;
+    areaOfConInput: any;
 
   // simpan data
   simpanDataUpdate: any;
@@ -46,6 +48,7 @@ export class SyaratPersetujuanComponent implements OnInit {
   dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
+  curef: any;
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -58,11 +61,12 @@ export class SyaratPersetujuanComponent implements OnInit {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
       this.app_no_de = params.app_no_de;
+      this.curef = params.curef;
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
   // URL DE
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   // URL List Syarat Persetujuan
   protected fetchSyaratPersetujuan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-verif/getSyaratPersetujuan?sd=');
@@ -97,16 +101,8 @@ export class SyaratPersetujuanComponent implements OnInit {
 
     // ambil semua data Syarat Persetujuan
     this.getfetchSyaratPersetujuan().subscribe(data => {
+      // Syarat Persetujuan
       this.syaratPersetujuan = data.result.syarat;
-      this.cekUjiKepatuhan = data.result.cek_uji_kepatuhan;
-      // console.log(this.cekUjiKepatuhan)
-      this.cekUjiKepatuhan?.forEach(element => {
-        // if(element.id == 1){
-          console.log(element)
-          // this.simpanDataUpdate.push(element)
-        // }
-      });
-
       this.syaratPersetujuan?.forEach(element => {
           if(element.kode_syarat == 1){
             this.syaratAkad.push(element)
@@ -118,6 +114,17 @@ export class SyaratPersetujuanComponent implements OnInit {
             this.syaratLainLain.push(element)
           }
       });
+
+      //Cek Uji Kepatuhan
+      this.cekUjiKepatuhan = data.result.cek_uji_kepatuhan;
+      // this.cekUjiKepatuhan?.forEach(element => {
+      //     console.log(element.keterangan)
+      // });
+
+      //Area Of Concern
+      this.areaOfConcernModel = data.result.area_of_concern;
+      // console.log("area "+ (this.areaOfConcernModel.deskripsi_area))
+
       this.dtTrigger.next(data.result.syarat);
       // console.log(this.syaratAkad)
     });
@@ -128,7 +135,7 @@ export class SyaratPersetujuanComponent implements OnInit {
     const { value: email } = await Swal.fire({
       title: 'Input Syarat Akad',
       input: 'text',
-        confirmButtonText: `Simpan`,
+      confirmButtonText: `Simpan`,
       inputPlaceholder: 'Input Syarat'
     })
     if(email) {
@@ -156,9 +163,9 @@ export class SyaratPersetujuanComponent implements OnInit {
   // POST sYARAT Cair
   async simpanSyaratCair(){
     const { value: email } = await Swal.fire({
-      title: 'Input Syarat Akad',
+      title: 'Input Syarat Cair',
       input: 'text',
-        confirmButtonText: `Simpan`,
+      confirmButtonText: `Simpan`,
       inputPlaceholder: 'Input Syarat'
     })
     if(email) {
@@ -186,7 +193,7 @@ export class SyaratPersetujuanComponent implements OnInit {
   // POST sYARAT Lain -Lain
   async simpanSyaratLain(){
     const { value: email } = await Swal.fire({
-      title: 'Input Syarat Akad',
+      title: 'Input Syarat Lain - lain',
       input: 'text',
         confirmButtonText: `Simpan`,
       inputPlaceholder: 'Input Syarat'
@@ -230,6 +237,11 @@ export class SyaratPersetujuanComponent implements OnInit {
 
     // simpan data Syarat PErsetujuan
     simpanData(){
+      // Area Of Concern
+      this.areaOfConRadio = (<HTMLInputElement>document.getElementById("area-concern")).value;
+      this.areaOfConInput = (<HTMLInputElement>document.getElementById("deskripsiAreaConcern")).value;
+
+
       for (let i = 0; i < this.cekUjiKepatuhan.length; i++) {
         // get Radio Button Validasi
         let kepatuhanUjiCoba = (<HTMLInputElement>document.getElementById("kepatuhan"+this.cekUjiKepatuhan[i].id)).checked;
@@ -245,12 +257,9 @@ export class SyaratPersetujuanComponent implements OnInit {
         this.keteranganUji = (<HTMLInputElement>document.getElementById("keterangan"+this.cekUjiKepatuhan[i].id)).value;
         // alert(this.keteranganUji)
 
-      // Area Of Concern
-      this.areaOfConRadio = (<HTMLInputElement>document.getElementById("area-concern")).value;
-      this.areaOfConInput = (<HTMLInputElement>document.getElementById("deskripsiAreaConcern")).value;
-
-        // console.log(this.cekUjiKepatuhan[i]);
-        this.http
+        // post Uji Kepatuhan Dan ASrea Of Concren
+        if(this.areaOfConcernModel == null){
+          this.http
           .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_cek_uji_kepatuhan', {
             app_no_de: this.app_no_de,
             created_by: this.untukSessionUserName,
@@ -260,22 +269,26 @@ export class SyaratPersetujuanComponent implements OnInit {
             kegiatan: this.cekUjiKepatuhan[i].id,
             kepatuhan: this.kepatuhanUji,
             keterangan: this.keteranganUji,
+            deskripsi_area: this.areaOfConInput,
+            status_area: this.areaOfConRadio,
           })
           .subscribe({});
+        }else{
+          this.http
+          .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_uji_cek_kepatuhan', {
+            app_no_de: this.app_no_de,
+            created_by: this.untukSessionUserName,
+            created_date: '',
+            curef: this.dataEntry.curef,
+            kegiatan: this.cekUjiKepatuhan[i].id,
+            kepatuhan: this.kepatuhanUji,
+            keterangan: this.keteranganUji,
+            deskripsi_area: this.areaOfConInput,
+            status_area: this.areaOfConRadio,
+          })
+          .subscribe({});
+        }
       }
-
-      // Area Of Concern
-      this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_area_of_concern', {
-        app_no_de: this.app_no_de,
-        created_by: this.untukSessionUserName,
-        created_date: '',
-        deskripsi_area: this.areaOfConInput,
-        id: 0,
-        status_area: this.areaOfConRadio,
-        updated_by: '',
-        updated_date: '',
-      })
-      .subscribe({});
+      this.router.navigate(['/kesimpulan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     }
 }

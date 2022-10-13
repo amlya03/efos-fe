@@ -7,6 +7,7 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { jobinfolist } from './job-info-modellist';
 import { DataEntryService } from '../services/data-entry.service';
+import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 
 export type EntityResponseDaWa = HttpResponse<jobinfolist>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -19,10 +20,11 @@ export type EntityArrayResponseDaWa1 = HttpResponse<ApiResponse>;
 })
 export class JobInfoComponent implements OnInit {
   datakiriman!: string;
-  datakirimanstatus!: string;
-  datakirimanappde!: string;
+  statusPerkawinan!: string;
+  app_no_de!: string;
   datakirimanakategoripekerjaan!: string;
   daWa: any;
+  dataEntry: fetchAllDe = new fetchAllDe();
   nampungsebelum: any;
   tampunganid: any;
   bawaidjob: any;
@@ -47,6 +49,7 @@ export class JobInfoComponent implements OnInit {
   getjabatansebelum: any;
   getjumlahkaryawansebelumdariapi: any;
   keteranganstatusnikah: any;
+  curef: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -56,23 +59,17 @@ export class JobInfoComponent implements OnInit {
     protected applicationConfigService: ApplicationConfigService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.datakiriman = params['datakiriman'];
-    });
-    this.route.queryParams.subscribe(params => {
-      this.datakirimanstatus = params['datakirimanstatus'];
-    });
-    this.route.queryParams.subscribe(params => {
-      this.datakirimanappde = params['datakirimanappde'];
-    });
-    this.route.queryParams.subscribe(params => {
-      this.datakirimanakategoripekerjaan = params['datakirimanakategoripekerjaan'];
+      this.curef = params.curef;
+      this.statusPerkawinan = params['statusPerkawinan'];
+      this.app_no_de = params['app_no_de'];
     });
   }
-  //  http://10.20.34.178:8805/api/v1/efos-de/getJobById?si=572
-  // eslint-disable-next-line @typescript-eslint/member-ordering
+  // URL DE
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+
+  // Get Job Sebelum
   protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobByCurefDe?sj=');
-  //  protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getJobById?si=');
-  // eslint-disable-next-line @typescript-eslint/member-ordering
+
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobByCurefDe?sj=');
   protected apigetjenispekeraan = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_pekerjaan?sc='
@@ -95,20 +92,37 @@ export class JobInfoComponent implements OnInit {
     // localStorage.setItem('daftar_aplikasi_de', job_info_retrive)
     this.load();
   }
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
+  // DE
+  getFetchSemuaData(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchSemuaData + this.app_no_de);
+  }
+
   load() {
+    // ambil semua data DE
+    this.getFetchSemuaData().subscribe(data => {
+      this.dataEntry = data.result;
+      // alert('DE '+ this.dataEntry?.status_perkawinan)
+    });
+
+    alert(this.app_no_de)
     this.gettokendukcapil();
     this.getstatuspernikahan();
-    // alert(this.datakiriman);
-    // alert(this.datakirimanstatus);
-    // this.nampungdatakatagoripekerjaan = this.datakirimanakategoripekerjaan;
+    // alert(this.curef);
+    // alert(this.statusPerkawinan);
+    // this.nampungdatakatagoripekerjaan = this.curefakategoripekerjaan;
     // alert(this.nampungdatakatagoripekerjaan);
 
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        // console.log(res.body?.result);
-        console.warn('tabel', res.body?.result);
         this.daWa = res.body?.result;
+        console.warn('tabel', this.daWa);
+
+        // get Job
+        this.nampungsebelum = res.body?.result;
+        this.tampunganid = this.nampungsebelum[0];
+        console.warn('Get Job ', this.nampungsebelum);
+        console.warn('SEBELUMNYA', this.tampunganid);
       },
     });
 
@@ -201,13 +215,13 @@ export class JobInfoComponent implements OnInit {
 
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.resourceUrl + this.datakiriman, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.resourceUrl + this.curef, { params: options, observe: 'response' });
   }
 
   sebelum(req1?: any): Observable<EntityArrayResponseDaWa1> {
     const options = createRequestOption(req1);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl1 + this.datakiriman, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.resourceUrl1 + this.curef, { params: options, observe: 'response' });
   }
 
   getjenispekerjaan(katagori_pekerjaan: any, req1?: any): Observable<EntityArrayResponseDaWa1> {
@@ -311,7 +325,7 @@ export class JobInfoComponent implements OnInit {
   }
   getsemuadataberdasarkanappde(req1?: any): Observable<EntityArrayResponseDaWa1> {
     const options = createRequestOption(req1);
-    return this.http.get<ApiResponse>(this.apiuntukgetsemuadataebrdasarkande + this.datakirimanappde, {
+    return this.http.get<ApiResponse>(this.apiuntukgetsemuadataebrdasarkande + this.app_no_de, {
       params: options,
       observe: 'response',
     });
@@ -516,24 +530,26 @@ export class JobInfoComponent implements OnInit {
   goto() {
     // this.onResponseSuccess(res);
 
-    if (this.datakirimanstatus === 'Menikah') {
+    if (this.statusPerkawinan === 'Menikah') {
       this.router.navigate(['/data-entry/data-pasangan'], {
         queryParams: {
-          datakirimanappde: this.datakirimanappde,
-          // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
-          datakirimancuref: this.datakiriman,
+          curef: this.curef,
+          statusPerkawinan: this.statusPerkawinan,
+          app_no_de: this.app_no_de,
         },
       });
       // alert(' ini NIKAH');
-      console.warn(this.datakiriman);
+      console.warn(this.curef);
     } else {
       // alert('ini jomblo');
       // alert(contohtampungancuref);
       this.router.navigate(['/data-entry/collateral'], {
         queryParams: {
-          datakirimanappde: this.datakirimanappde,
-          // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
-          datakirimancuref: this.datakiriman,
+          queryParams: {
+            curef: this.curef,
+            statusPerkawinan: this.statusPerkawinan,
+            app_no_de: this.app_no_de,
+          },
         },
       });
     }
@@ -645,31 +661,31 @@ export class JobInfoComponent implements OnInit {
 
           // this.router.navigate(['/data-entry/job-info'], {
           //   queryParams: {
-          //     datakiriman:  this.datakiriman,
-          //     datakirimanstatus: this.datakirimanstatus,
-          //     datakirimanappde: this.datakirimanappde,
-          //     datakirimanakategoripekerjaan:   this.datakirimanakategoripekerjaan,
+          //     datakiriman:  this.curef,
+          //     statusPerkawinan: this.statusPerkawinan,
+          //     app_no_de: this.app_no_de,
+          //     datakirimanakategoripekerjaan:   this.curefakategoripekerjaan,
           //   },
           // });
 
           if (this.keteranganstatusnikah === 'Menikah') {
             this.router.navigate(['/data-entry/data-pasangan'], {
               queryParams: {
-                datakirimanappde: this.datakirimanappde,
-                // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
-                datakirimancuref: this.datakiriman,
+                app_no_de: this.app_no_de,
+                // datakirimanakategoripekerjaan: this.curefakategoripekerjaan,
+                curef: this.curef,
               },
             });
             // alert(' ini NIKAH');
-            console.warn(this.datakiriman);
+            console.warn(this.curef);
           } else {
             // alert('ini jomblo');
             // alert(contohtampungancuref);
             this.router.navigate(['/data-entry/collateral'], {
               queryParams: {
-                datakirimanappde: this.datakirimanappde,
-                // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
-                datakirimancuref: this.datakiriman,
+                app_no_de: this.app_no_de,
+                // datakirimanakategoripekerjaan: this.curefakategoripekerjaan,
+                curef: this.curef,
               },
             });
           }
@@ -683,47 +699,47 @@ export class JobInfoComponent implements OnInit {
     this.router.navigate(['/data-entry/editjobinfo'], {
       // queryParams: { app_no_de: getAppNoDe }
       queryParams: {
-        datakirimanappde: this.datakirimanappde,
-        // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
-        datakiriman: contohtampungancuref,
+        app_no_de: this.app_no_de,
+        // datakirimanakategoripekerjaan: this.curefakategoripekerjaan,
+        curef: this.curef,
         datakirimanid: id,
-        datakirimanstatus: this.datakirimanstatus,
+        statusPerkawinan: this.statusPerkawinan,
       },
     });
   }
 
   buatcreatejobinfo() {
-    const kategori_pekerjaan = document.getElementById('kategori_pekerjaan') as HTMLInputElement | any;
-    const curef_id = document.getElementById('curef_id') as HTMLInputElement | any;
-    const tipe_pekerjaan = document.getElementById('tipe_pekerjaan') as HTMLInputElement | any;
-    const payroll = document.getElementById('payroll') as HTMLInputElement | any;
-    const payroll1 = document.getElementById('payroll1') as HTMLInputElement | any;
+    // const kategori_pekerjaan = document.getElementById('kategori_pekerjaan') as HTMLInputElement | any;
+    // const curef_id = document.getElementById('curef_id') as HTMLInputElement | any;
+    // const tipe_pekerjaan = document.getElementById('tipe_pekerjaan') as HTMLInputElement | any;
+    // const payroll = document.getElementById('payroll') as HTMLInputElement | any;
+    // const payroll1 = document.getElementById('payroll1') as HTMLInputElement | any;
     const jabatan = document.getElementById('jabatan') as HTMLInputElement | any;
-    const jenis_pekerjaan = document.getElementById('jenis_pekerjaan') as HTMLInputElement | any;
-    const nama_perusahaan = document.getElementById('nama_perusahaan') as HTMLInputElement | any;
+    // const jenis_pekerjaan = document.getElementById('jenis_pekerjaan') as HTMLInputElement | any;
+    // const nama_perusahaan = document.getElementById('nama_perusahaan') as HTMLInputElement | any;
     const alamat_perusahaan = document.getElementById('alamat_perusahaan') as HTMLInputElement | any;
-    const provinsi_cabang_perusahaan = document.getElementById('provinsi_cabang_perusahaan') as HTMLInputElement | any;
-    const kabkota_cabang_perusahaan = document.getElementById('kabkota_cabang_perusahaan') as HTMLInputElement | any;
-    const kecamatan_perusahaan = document.getElementById('kecamatan_perusahaan') as HTMLInputElement | any;
-    const kelurahan = document.getElementById('kelurahan') as HTMLInputElement | any;
-    const kode_pos = document.getElementById('kode_pos') as HTMLInputElement | any;
-    const rt = document.getElementById('rt') as HTMLInputElement | any;
-    const rw = document.getElementById('rw') as HTMLInputElement | any;
-    const no_siup = document.getElementById('no_siup') as HTMLInputElement | any;
+    // const provinsi_cabang_perusahaan = document.getElementById('provinsi_cabang_perusahaan') as HTMLInputElement | any;
+    // const kabkota_cabang_perusahaan = document.getElementById('kabkota_cabang_perusahaan') as HTMLInputElement | any;
+    // const kecamatan_perusahaan = document.getElementById('kecamatan_perusahaan') as HTMLInputElement | any;
+    // const kelurahan = document.getElementById('kelurahan') as HTMLInputElement | any;
+    // const kode_pos = document.getElementById('kode_pos') as HTMLInputElement | any;
+    // const rt = document.getElementById('rt') as HTMLInputElement | any;
+    // const rw = document.getElementById('rw') as HTMLInputElement | any;
+    // const no_siup = document.getElementById('no_siup') as HTMLInputElement | any;
     const jenis_bidang_perusahaan = document.getElementById('jenis_bidang_perusahaan') as HTMLInputElement | any;
-    const jenis_sektor_perusahaan = document.getElementById('jenis_sektor_perusahaan') as HTMLInputElement | any;
-    const umur1 = document.getElementById('umur1') as HTMLInputElement | any;
-    const umur_pensiun = document.getElementById('umur_pensiun') as HTMLInputElement | any;
-    const lama_bekerja_tahun = document.getElementById('lama_bekerja_tahun') as HTMLInputElement | any;
-    const lama_bekerja_bulan = document.getElementById('lama_bekerja_bulan') as HTMLInputElement | any;
+    // const jenis_sektor_perusahaan = document.getElementById('jenis_sektor_perusahaan') as HTMLInputElement | any;
+    // const umur1 = document.getElementById('umur1') as HTMLInputElement | any;
+    // const umur_pensiun = document.getElementById('umur_pensiun') as HTMLInputElement | any;
+    // const lama_bekerja_tahun = document.getElementById('lama_bekerja_tahun') as HTMLInputElement | any;
+    // const lama_bekerja_bulan = document.getElementById('lama_bekerja_bulan') as HTMLInputElement | any;
     const jumlah_karyawan = document.getElementById('jumlah_karyawan') as HTMLInputElement | any;
-    const jumlah_karyawan2 = document.getElementById('jumlah_karyawan2') as HTMLInputElement | any;
-    const pendapatan = document.getElementById('pendapatan') as HTMLInputElement | any;
-    const pendapatan_lain = document.getElementById('pendapatan_lain') as HTMLInputElement | any;
-    const tunjangan = document.getElementById('tunjangan') as HTMLInputElement | any;
-    const total_pendapatan = document.getElementById('total_pendapatan') as HTMLInputElement | any;
-    const tipe_perusahaan = document.getElementById('tipe_perusahaan') as HTMLInputElement | any;
-    const tipe_kepegawaian = document.getElementById('tipe_kepegawaian') as HTMLInputElement | any;
+    // const jumlah_karyawan2 = document.getElementById('jumlah_karyawan2') as HTMLInputElement | any;
+    // const pendapatan = document.getElementById('pendapatan') as HTMLInputElement | any;
+    // const pendapatan_lain = document.getElementById('pendapatan_lain') as HTMLInputElement | any;
+    // const tunjangan = document.getElementById('tunjangan') as HTMLInputElement | any;
+    // const total_pendapatan = document.getElementById('total_pendapatan') as HTMLInputElement | any;
+    // const tipe_perusahaan = document.getElementById('tipe_perusahaan') as HTMLInputElement | any;
+    // const tipe_kepegawaian = document.getElementById('tipe_kepegawaian') as HTMLInputElement | any;
 
     // alert(id.value);
     // alert(jenis_kelamin.value);
@@ -736,7 +752,7 @@ export class JobInfoComponent implements OnInit {
         alamat_perusahaan: alamat_perusahaan.value,
         // bulan_berdiri: contohtampungankategoripekerjaan,
         // created_by: contohtampungancuref,
-        curef: this.datakiriman,
+        curef: this.curef,
         id: '',
         jabatan: jabatan.value,
         jenis_bidang: alamat_perusahaan.value,
@@ -779,8 +795,8 @@ export class JobInfoComponent implements OnInit {
           // this.router.navigate(['/data-entry/job-info'], {
           //   // queryParams: {
           //   //   datakiriman: contohtampungancuref,
-          //   //   datakirimanstatus: contohtampungstatuskawain,
-          //   //   datakirimanappde: contohtampunganappde,
+          //   //   statusPerkawinan: contohtampungstatuskawain,
+          //   //   app_no_de: contohtampunganappde,
           //   //   datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
           //   // },
           // });

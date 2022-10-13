@@ -21,6 +21,7 @@ export class DataRumahComponent implements OnInit {
   analisaKeuanganForm!: FormGroup;
   submitted = false;
   app_no_de: any;
+  curef: any;
   analisaKeuanganMap: refAnalisaKeuangan = new refAnalisaKeuangan();
   dataEntry?: fetchAllDe = new fetchAllDe();
   listSlik?: slik[];
@@ -44,6 +45,7 @@ export class DataRumahComponent implements OnInit {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
       this.app_no_de = params.app_no_de;
+      this.curef = params.curef;
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
@@ -194,7 +196,7 @@ export class DataRumahComponent implements OnInit {
           tunjangan_total: this.analisaKeuanganForm.get('tunjangan_total')?.value,
         })
         .subscribe({});
-      this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de } });
+      this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     } else
       this.http
         .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_keuangan', {
@@ -248,7 +250,7 @@ export class DataRumahComponent implements OnInit {
           tunjangan_total: this.analisaKeuanganForm.get('tunjangan_total')?.value,
         })
         .subscribe({});
-    this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de } });
+    this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 
   load(): void {

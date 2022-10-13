@@ -19,7 +19,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 })
 export class MemoComponent implements OnInit {
   datakirimiancure: any;
-  datakirimanappde: any;
+  app_no_de: any;
   daWa: any;
   daWa1: any;
 
@@ -35,7 +35,7 @@ export class MemoComponent implements OnInit {
     });
 
     this.route.queryParams.subscribe(params => {
-      this.datakirimanappde = params['datakirimanappde'];
+      this.app_no_de = params['app_no_de'];
     });
   }
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -67,13 +67,13 @@ export class MemoComponent implements OnInit {
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl + this.datakirimanappde, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.resourceUrl + this.app_no_de, { params: options, observe: 'response' });
   }
 
   getdataentrynama(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl1 + this.datakirimanappde, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.resourceUrl1 + this.app_no_de, { params: options, observe: 'response' });
   }
 
   simpanmemo(): void {
@@ -98,7 +98,7 @@ export class MemoComponent implements OnInit {
         // users: alamat_perusahaan.value,
         // role: jenis_bidang_perusahaan.value,
         // created_by: jumlah_karyawan.value,
-        app_no_de: this.datakirimanappde,
+        app_no_de: this.app_no_de,
       })
 
       .subscribe({
@@ -108,7 +108,7 @@ export class MemoComponent implements OnInit {
       });
 
     // this.router.navigate(['/data-entry/memo'], {
-    //   queryParams: { datakirimanappde: this.datakirimanappde}
+    //   queryParams: { app_no_de: this.app_no_de}
     //  });
   }
 
@@ -125,7 +125,7 @@ export class MemoComponent implements OnInit {
     //   // alert('CREATE NIH');
     this.http
       .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_status_back_de', {
-        app_no_de: this.datakirimanappde,
+        app_no_de: this.app_no_de,
         created_by: this.localStorageService.retrieve('sessionFullName'),
         status_aplikasi: status_aplikasi_desc.value,
       })
@@ -133,7 +133,7 @@ export class MemoComponent implements OnInit {
       .subscribe({
         next: bawaan => {
           this.router.navigate(['/data-entry/memo'], {
-            queryParams: { datakirimanappde: this.datakirimanappde },
+            queryParams: { app_no_de: this.app_no_de },
           });
 
           // window.location.reload();
@@ -141,7 +141,7 @@ export class MemoComponent implements OnInit {
       });
 
     // this.router.navigate(['/data-entry/memo'], {
-    //   queryParams: { datakirimanappde: this.datakirimanappde}
+    //   queryParams: { app_no_de: this.app_no_de}
     //  });
   }
 
@@ -177,7 +177,7 @@ export class MemoComponent implements OnInit {
 
     this.http
       .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_status_dataentry', {
-        app_no_de: this.datakirimanappde,
+        app_no_de: this.app_no_de,
         created_by: this.localStorageService.retrieve('sessionFullName'),
         status_aplikasi: status_aplikasi_desc.value,
       })
@@ -185,15 +185,15 @@ export class MemoComponent implements OnInit {
       .subscribe({
         next: bawaan => {
           // this.router.navigate(['/data-entry/memo'], {
-          //   queryParams: { datakirimanappde: this.datakirimanappde}
+          //   queryParams: { app_no_de: this.app_no_de}
           //  });
 
           // window.location.reload();
 
           this.router.navigate(['/upload_document'], {
             queryParams: {
-              // datakirimanappde: this.datakirimande,
-              // datakirimiancure: this.datakirimancuref,
+              // app_no_de: this.app_no_de,
+              // datakirimiancure: this.curef,
               // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
             },
           });
@@ -201,13 +201,13 @@ export class MemoComponent implements OnInit {
       });
 
     // this.router.navigate(['/data-entry/memo'], {
-    //   queryParams: { datakirimanappde: this.datakirimanappde}
+    //   queryParams: { app_no_de: this.app_no_de}
     //  });
 
     // this.router.navigate(['/upload_document'], {
     //   queryParams: {
-    //     // datakirimanappde: this.datakirimande,
-    //     // datakirimiancure: this.datakirimancuref,
+    //     // app_no_de: this.app_no_de,
+    //     // datakirimiancure: this.curef,
     //     // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
     //   },
     // });

@@ -43,7 +43,7 @@
         <td style="text-align: center">{{ dataEntry.nama }}</td>
         <td style="text-align: center">{{ dataEntry.app_no_de }}</td>
         <td style="text-align: center">
-          <button type="button" (click)="viewdataentry(dataEntry.app_no_de)" class="btn btn-outline-info">
+          <button type="button" (click)="viewdataentry(dataEntry.app_no_de, dataEntry.status_perkawinan, dataEntry.curef)" class="btn btn-outline-info">
             <fa-icon icon="eye"></fa-icon>
             <span class="d-none d-md-inline">Detail</span>
           </button>

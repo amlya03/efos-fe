@@ -18,7 +18,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 export class EmergencyContactComponent implements OnInit {
   datakirimiancure: any;
   datakiriman: any;
-  datakirimanappde: any;
+  app_no_de: any;
   datakirimanakategoripekerjaan: any;
   daWa: any;
   databawaan: any;
@@ -42,7 +42,7 @@ export class EmergencyContactComponent implements OnInit {
     });
 
     this.route.queryParams.subscribe(params => {
-      this.datakirimanappde = params['datakirimanappde'];
+      this.app_no_de = params['app_no_de'];
     });
 
     this.route.queryParams.subscribe(params => {
@@ -103,7 +103,7 @@ export class EmergencyContactComponent implements OnInit {
 
   getsemuadataberdasarkanappde(req1?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req1);
-    return this.http.get<ApiResponse>(this.apiuntukgetsemuadataebrdasarkande + this.datakirimanappde, {
+    return this.http.get<ApiResponse>(this.apiuntukgetsemuadataebrdasarkande + this.app_no_de, {
       params: options,
       observe: 'response',
     });
@@ -219,16 +219,16 @@ export class EmergencyContactComponent implements OnInit {
   goto(appde: any) {
     if (this.keteranganstatusnikah === 'Fix Income') {
       alert('ini fix');
-      // alert(this.datakirimanappde);
+      // alert(this.app_no_de);
       this.router.navigate(['/data-entry/call-report'], {
-        queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure },
+        queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
       });
     } else {
       alert('ini non fix');
-      // alert(this.datakirimanappde);
+      // alert(this.app_no_de);
       // alert(this.datakirimanakategoripekerjaan);
       this.router.navigate(['/data-entry/call-report-non'], {
-        queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure },
+        queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
       });
     }
     // this.onResponseSuccess(res);
@@ -322,16 +322,16 @@ export class EmergencyContactComponent implements OnInit {
           next: bawaan => {
             if (this.datakirimanakategoripekerjaan === 'Fix Income') {
               alert('ini fix');
-              alert(this.datakirimanappde);
+              alert(this.app_no_de);
               this.router.navigate(['/data-entry/call-report'], {
-                queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure },
+                queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
               });
             } else {
               alert('ini non fix');
-              alert(this.datakirimanappde);
+              alert(this.app_no_de);
               alert(this.datakirimanakategoripekerjaan);
               this.router.navigate(['/data-entry/call-report-non'], {
-                queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure },
+                queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
               });
             }
 
@@ -341,8 +341,8 @@ export class EmergencyContactComponent implements OnInit {
             // this.router.navigate(['/data-entry/data-entry/emergency-contact'], {
             //   queryParams: {
             //     // datakiriman: contohtampungancuref,
-            //     // datakirimanstatus: contohtampungstatuskawain,
-            //     // datakirimanappde: contohtampunganappde,
+            //     // statusPerkawinan: contohtampungstatuskawain,
+            //     // app_no_de: contohtampunganappde,
             //     // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
             //   },
             // });
@@ -377,16 +377,16 @@ export class EmergencyContactComponent implements OnInit {
           next: bawaan => {
             if (this.datakirimanakategoripekerjaan === 'Fix Income') {
               alert('ini fix');
-              alert(this.datakirimanappde);
+              alert(this.app_no_de);
               this.router.navigate(['/data-entry/call-report'], {
-                queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure },
+                queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
               });
             } else {
               alert('ini non fix');
-              alert(this.datakirimanappde);
+              alert(this.app_no_de);
               alert(this.datakirimanakategoripekerjaan);
               this.router.navigate(['/data-entry/call-report-non'], {
-                queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure },
+                queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
               });
             }
 
@@ -396,8 +396,8 @@ export class EmergencyContactComponent implements OnInit {
             // this.router.navigate(['/data-entry/emergency-contact'], {
             //   queryParams: {
             //     // datakiriman: contohtampungancuref,
-            //     // datakirimanstatus: contohtampungstatuskawain,
-            //     // datakirimanappde: contohtampunganappde,
+            //     // statusPerkawinan: contohtampungstatuskawain,
+            //     // app_no_de: contohtampunganappde,
             //     // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
             //   },
             // });

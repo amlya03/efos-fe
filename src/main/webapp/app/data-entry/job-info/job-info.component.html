@@ -1,814 +1,816 @@
-<!-- <input type="text" id="job_info" value="jobInfo"> -->
-
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Job Info</h3>
 </div>
 <p></p>
 <p></p>
 
-<div class="content-body">
-  <div class="container-fluid">
-    <form
-      id="data_entry_form"
-      method="post"
-      action="<?php echo site_url('data_entry/posttambahpekerjaan'); ?>"
-      onsubmit="return validateFormJob()"
-      required
-    >
-      <div class="card">
-        <h4 class="card card-body gradient-9" style="text-align: center">Informasi Pekerjaan Nasabah</h4>
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Kategori Pekerjaan<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <input
-                      class="form-control"
-                      id="kategori_pekerjaan"
-                      name="kategori_pekerjaan"
-                      value="{{ nampungdatakatagoripekerjaan }}"
-                      readonly
-                    />
-                  </div>
-                </div>
-                <div class="col-sm-9">
-                  <input type="hidden" id="curef_id" name="curef_id" class="form-control" value="" />
-                  <input type="hidden" id="WADUH" name="WADUH" value="<?=$this->session->userdata('GROUP_NAME');?>" class="form-control" />
-                </div>
-                <div class="col-sm-9">
-                  <input type="hidden" id="status1" name="status1" class="form-control" value="" />
-                  <input id="app_no_de" name="app_no_de" type="hidden" class="form-control" placeholder="app_no_ide" value="" readonly />
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Tipe Pekerjaan<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" id="tipe_pekerjaan" name="tipe_pekerjaan">
-                      <option value="">Pilih Tipe Pekerjaan</option>
-                      <option
-                        *ngFor="let getjenispekerjaandariapi of getjenispekerjaandariapi"
-                        value="{{ getjenispekerjaandariapi.job_desc }}"
-                      >
-                        {{ getjenispekerjaandariapi.job_desc }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Payroll :<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <label class="radio-inline mr-3"> <input type="radio" name="optradio" id="payroll" value="1" />Payroll</label>
-                    <label class="radio-inline mr-3"> <input type="radio" name="optradio" id="payroll1" value="0" />Non Payroll</label>
-                  </div>
-                </div>
-              </div>
-              <!-- <div id="fixPosisi" class="form-group row" style="display: none;">
-                              <label class="col-sm-3 col-form-label">Posisi<span class="text-danger">*</span></label>
-                              <div class="col-sm-9"> -->
-              <input hidden id="posisi" name="posisifix" class="form-control" />
-              <!-- </div>
-                          </div> -->
-              <div id="proHidePosisi" class="form-group row">
-                <label class="col-sm-3 col-form-label">Posisi<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" id="jabatan" name="posisi">
-                      <option selected value="">Pilih Posisi</option>
+<form
+  id="data_entry_form"
+  method="post"
+>
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h6 style="color: #fff; text-align: center">Informasi Pekerjaan Nasabah</h6>
+  </div>
+  <br/>
+  <div class="row form-material">
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Kategori Pekerjaan<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <input
+              class="form-control"
+              id="kategori_pekerjaan"
+              name="kategori_pekerjaan"
+              value="{{ nampungdatakatagoripekerjaan }}"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Tipe Pekerjaan<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" id="tipe_pekerjaan" name="tipe_pekerjaan">
+              <option value="">Pilih Tipe Pekerjaan</option>
+              <option
+                *ngFor="let getjenispekerjaandariapi of getjenispekerjaandariapi"
+                value="{{ getjenispekerjaandariapi.job_desc }}"
+              >
+                {{ getjenispekerjaandariapi.job_desc }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Payroll :<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <label class="radio-inline mr-3"> <input type="radio" name="optradio" id="payroll" value="1" />Payroll</label>
+            <label class="radio-inline mr-3"> <input type="radio" name="optradio" id="payroll1" value="0" />Non Payroll</label>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Posisi<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" id="jabatan" name="posisi">
+              <option selected value="">Pilih Posisi</option>
 
-                      <option *ngFor="let getjabatandariapi of getjabatandariapi" value="{{ getjabatandariapi.jabatan_deskripsi }}">
-                        {{ getjabatandariapi.jabatan_deskripsi }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div id="proShowJenis" class="form-group row" style="display: none">
-                <label class="col-sm-3 col-form-label">Jenis Pekerjaan<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" id="jenis_pekerjaan" name="jenis_pekerjaan">
-                      <option selected value="">Pilih Jenis Pekerjaan</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Nama Perusahaan<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="nama_perusahaan" name="nama_perusahaan" placeholder="Nama Perusahaan" />
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Alamat<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan" name="alamat_perusahaan"></textarea>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" (change)="onChange()" id="provinsi_cabang_perusahaan" name="provinsi">
-                      <option value="">Pilih Provinsi</option>
-                      <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
-                        {{ daWaprof.namaWilayah }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" (change)="onChangekota()" id="kabkota_cabang_perusahaan" name="kabkota">
-                      <option value="">Pilih Kota</option>
-                      <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
-                        {{ daWakota.namaWilayah }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" (change)="onChangekecamatan()" id="kecamatan_perusahaan" name="kecamatan">
-                      <option value="">Pilih Kecamatan</option>
-                      <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
-                        {{ daWakecamatan.namaWilayah }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" (change)="onChangekelurahan()" id="kelurahan" name="kelurahan">
-                      <option value="">Pilih Kelurahan</option>
-                      <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
-                        {{ daWakelurahan.namaWilayah }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Kode Pos<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <div class="input-group mb-3">
-                    <input
-                      type="tel"
-                      onkeypress="return onlyNumberKey(event)"
-                      maxlength="8"
-                      class="form-control"
-                      id="kode_pos"
-                      name="kode_pos"
-                    />
-                    <div class="input-group-append">
-                      <button onclick="buatisi()" class="btn btn-outline-dark" id="kode_poshilang" type="button">Cari Data</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">RT / RW<span class="text-danger">*</span></label>
-                <div class="col">
-                  <input
-                    type="tel"
-                    onkeypress="return onlyNumberKey(event)"
-                    class="form-control"
-                    placeholder="RT"
-                    id="rt"
-                    name="rt"
-                    maxlength="3"
-                  />
-                </div>
-                <h2>/</h2>
-                <div class="col">
-                  <input
-                    type="tel"
-                    onkeypress="return onlyNumberKey(event)"
-                    class="form-control"
-                    placeholder="RW"
-                    maxlength="3"
-                    id="rw"
-                    name="rw"
-                  />
-                </div>
-              </div>
-              <div id="hidden_siup" style="display: none">
-                <div class="form-group row">
-                  <label id="changeLabelSiup" class="col-sm-3 col-form-label">Nomor SIUP<span class="text-danger">*</span></label>
-                  <div class="col-sm-9">
-                    <input
-                      type="tel"
-                      onkeypress="return onlyNumberKey(event)"
-                      id="no_siup"
-                      name="no_siup"
-                      class="form-control"
-                      maxlength="16"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Jenis Bidang<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" (change)="jenisbidangselect()" id="jenis_bidang_perusahaan" name="jenis_bidang">
-                      <option value="">Pilih Jenis Bidang</option>
-                      <option
-                        *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
-                        value="{{ getjenisbidangdariapi.group_sektor }}|{{ getjenisbidangdariapi.nama_group_sektor }}"
-                      >
-                        {{ getjenisbidangdariapi.nama_group_sektor }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Sektor Ekonomi<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" id="jenis_sektor_perusahaan" name="sektor_ekonomi">
-                      <option value="">Pilih Sektor Ekonomi</option>
-                      <option *ngFor="let getdatasektorekonomi of getdatasektorekonomi" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
-                        {{ getdatasektorekonomi.nama_sub_sektor }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row" hidden>
-                <label class="col-sm-3 col-form-label">Umur</label>
-                <div class="col-sm-9">
-                  <input
-                    type="tel"
-                    class="form-control"
-                    placeholder="Umur"
-                    maxlength="90"
-                    id="umur1"
-                    name="umur1"
-                    value="<?=$this->session->userdata('usia');?>"
-                  />
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Umur Pensiun<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <input
-                    type="tel"
-                    onkeypress="return onlyNumberKey(event)"
-                    class="form-control"
-                    placeholder="Umur Pensiun"
-                    oninput="MinimumNValidate()"
-                    maxlength="2"
-                    id="umur_pensiun"
-                    name="umur_pensiun"
-                  />
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Lama Bekerja<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <div class="form-row">
-                    <div class="col">
-                      <input
-                        type="tel"
-                        onkeypress="return onlyNumberKey(event)"
-                        class="form-control"
-                        placeholder="Tahun"
-                        id="lama_bekerja_tahun"
-                        name="lama_bekerja_tahun"
-                        onkeyup="MinimumNValidateKerja()"
-                        maxlength="2"
-                      />
-                    </div>
-                    <span>Tahun</span><span class="text-danger">*</span>
-                    <div class="col">
-                      <input
-                        type="tel"
-                        onkeypress="return onlyNumberKey(event)"
-                        class="form-control"
-                        placeholder="Bulan"
-                        id="lama_bekerja_bulan"
-                        name="lama_bekerja_bulan"
-                        maxlength="2"
-                      />
-                    </div>
-                    <span>Bulan</span><span class="text-danger">*</span>
-                  </div>
-                </div>
-              </div>
-              <div id="jumlahKaryawanFix">
-                <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
-                  <div class="col-sm-9">
-                    <input
-                      type="tel"
-                      oninput="this.value = this.value.replace(/^0/g, '');"
-                      onkeypress="return onlyNumberKey(event)"
-                      maxlength="13"
-                      class="form-control"
-                      placeholder="Jumlah Karyawan"
-                      id="jumlah_karyawan"
-                      name="jumlah_karyawan"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div id="jumlahKaryawanNon" class="hidden_jumlahKaryawanNon">
-                <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
-                  <div class="col-sm-9">
-                    <div class="form-group">
-                      <select class="form-control" id="jumlah_karyawan2" name="jumlah_karyawan2">
-                        <option value="">Pilih Jumalah Karyawan</option>
-                        <option
-                          *ngFor="let getjumlahkaryawandariapi of getjumlahkaryawandariapi"
-                          value="{{ getjumlahkaryawandariapi.deskripsi }}"
-                        >
-                          {{ getjumlahkaryawandariapi.deskripsi }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Pendapatan<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="Pendapatan" id="pendapatan" name="pendapatan" />
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Pendapatan Lain</label>
-                <div class="col-sm-9">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Pendapatan Lain"
-                    id="pendapatan_lain"
-                    name="pendapatan_lain"
-                    value="0"
-                  />
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Tunjangan<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="Tunjangan" id="tunjangan" name="tunjangan" />
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Total Pendapatan<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Total Pendapatan"
-                    id="total_pendapatan"
-                    name="total_pendapatan"
-                    readonly
-                  />
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Tipe Perusahaan<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" id="tipe_perusahaan" name="tipe_perusahaan">
-                      <option value="">Pilih Tipe Perusahaan</option>
-                      <option
-                        *ngFor="let gettipeperusahaandariapi of gettipeperusahaandariapi"
-                        value="{{ gettipeperusahaandariapi.company_deskripsi }}"
-                      >
-                        {{ gettipeperusahaandariapi.company_deskripsi }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div id="hideJikaNFiTipeKepegawaian" class="form-group row">
-                <label class="col-sm-3 col-form-label">Tipe Kepegawaian<span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" id="tipe_kepegawaian" name="tipe_kepegawaian">
-                      <option value="">Pilih Tipe Pekerjaan</option>
-                      <option value="1">Pegawai tetap</option>
-                      <option value="2">Pegawai kontrak</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <button id="btn" name="btn" (click)="buatcreatejobinfo()" class="btn btn-dark" style="float: right">Simpan</button>
+              <option *ngFor="let getjabatandariapi of getjabatandariapi" value="{{ getjabatandariapi.jabatan_deskripsi }}">
+                {{ getjabatandariapi.jabatan_deskripsi }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row" style="display: none">
+        <label class="col-sm-3 col-form-label">Jenis Pekerjaan<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" id="jenis_pekerjaan" name="jenis_pekerjaan">
+              <option selected value="">Pilih Jenis Pekerjaan</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Nama Perusahaan<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="nama_perusahaan" name="nama_perusahaan" placeholder="Nama Perusahaan" />
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Alamat<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan" name="alamat_perusahaan"></textarea>
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" (change)="onChange()" id="provinsi_cabang_perusahaan" name="provinsi">
+              <option value="">Pilih Provinsi</option>
+              <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+                {{ daWaprof.namaWilayah }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" (change)="onChangekota()" id="kabkota_cabang_perusahaan" name="kabkota">
+              <option value="">Pilih Kota</option>
+              <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
+                {{ daWakota.namaWilayah }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" (change)="onChangekecamatan()" id="kecamatan_perusahaan" name="kecamatan">
+              <option value="">Pilih Kecamatan</option>
+              <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
+                {{ daWakecamatan.namaWilayah }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" (change)="onChangekelurahan()" id="kelurahan" name="kelurahan">
+              <option value="">Pilih Kelurahan</option>
+              <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
+                {{ daWakelurahan.namaWilayah }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <div class="input-group mb-3">
+            <input
+              type="tel"
+              onkeypress="return onlyNumberKey(event)"
+              maxlength="8"
+              class="form-control"
+              id="kode_pos"
+              name="kode_pos"
+            />
+            <div class="input-group-append">
+              <button onclick="buatisi()" class="btn btn-outline-dark" id="kode_poshilang" type="button">Cari Data</button>
             </div>
           </div>
-          <p></p>
-          <p></p>
-          <!-- data table pekerjaan nasabah -->
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead style="background-color: grey">
-                <tr>
-                  <th scope="col" style="text-align: center; color: #fff">
-                    <span>Nama Perusahaan</span>
-                  </th>
-                  <th scope="col" style="text-align: center; color: #fff">
-                    <span>Kategori Pekerjaan</span>
-                  </th>
-                  <th scope="col" style="text-align: center; color: #fff">
-                    <span>Posisi / Jabatan</span>
-                  </th>
-                  <th scope="col" style="text-align: center; color: #fff">
-                    <span>Curef</span>
-                  </th>
-                  <th scope="col" style="text-align: center; color: #fff">
-                    <span>Id</span>
-                  </th>
-                  <th></th>
-                </tr>
-              </thead>
-              <form action=""></form>
-              <tbody>
-                <tr *ngFor="let daWa of daWa">
-                  <!-- <td style="text-align: center" scope="col">{{ i + 1 }}</td> -->
-                  <!-- <td style="text-align: center;" scope="col">{{ daWa.id }}</td> -->
-                  <td style="text-align: center" scope="col">{{ daWa.nama_perusahaan }}</td>
-                  <td style="text-align: center" scope="col">{{ daWa.kategori_pekerjaan }}</td>
-                  <td style="text-align: center" scope="col">{{ daWa.posisi_sebelum }}</td>
-                  <td style="text-align: center" scope="col">{{ daWa.curef }}</td>
-                  <td style="text-align: center" scope="col">{{ daWa.id }}</td>
-                  <!-- (change)="getProoduct(daWa.isSelected, daWa.app_no_de)" -->
-                  <!-- <td> <input   (change)="getProoduct($event, daWa.app_no_de ,i+1)"  type="checkbox" > </td> -->
-                  <td class="text-end">
-                    <div class="btn-group">
-                      <button type="button" (click)="vieweditjobinfo(daWa.curef, daWa.id)" class="btn btn-outline-info">
-                        <fa-icon icon="eye"></fa-icon>
-                        <span class="d-none d-md-inline">Detail</span>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">RT / RW</label>
+        <div class="col">
+          <input
+            maxlength="3"
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            class="form-control"
+            value="{{ tampunganid.rt_sebelum }}"
+            placeholder="RT"
+            id="rt_sebelum"
+            name="rt_sebelum"
+          />
+        </div>
+        <div class="col">RT</div>
+        <div class="col">
+          <input
+            maxlength="3"
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            class="form-control"
+            placeholder="RW"
+            id="rw_sebelum"
+            value="{{ tampunganid.rw_sebelum }}"
+            name="rw_sebelum"
+          />
+        </div>
+        <div class="col">RW</div>
+      </div>
+      <br/>
+      <div id="hidden_siup" style="display: none">
+        <div class="form-group row">
+          <label id="changeLabelSiup" class="col-sm-3 col-form-label">Nomor SIUP<span class="text-danger">*</span></label>
+          <div class="col-sm-9">
+            <input
+              type="tel"
+              onkeypress="return onlyNumberKey(event)"
+              id="no_siup"
+              name="no_siup"
+              class="form-control"
+              maxlength="16"
+            />
           </div>
-          <p></p>
-          <p></p>
-          <div class="row form-material">
-            <div class="col">
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Kategori Pekerjaan</label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select
-                      class="form-control"
-                      (change)="katagoripekerjaanselect()"
-                      name="kategori_pekerjaan_sebelum"
-                      id="kategori_pekerjaan_sebelum"
-                    >
-                      <option value="{{ tampunganid.kategori_pekerjaan_sebelum }}">{{ tampunganid.kategori_pekerjaan_sebelum }}</option>
-                      <option value="1|Fix Income">Fix Income</option>
-                      <option value="2|Non Fix Income">Non Fix Income</option>
-                      <option value="3|Lain-lainnya">Lain-lainnyatest</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Tipe Pekerjaan</label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" name="tipe_pekerjaan_sebelum" id="tipe_pekerjaan_sebelum">
-                      <option value="">{{ tampunganid.tipe_pekerjaan_sebelum }}</option>
-                      <option *ngFor="let daWakotasebelum of daWakotasebelum" value="{{ daWakotasebelum.job_desc }}">
-                        {{ daWakotasebelum.job_desc }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Payroll :</label>
-                <div class="col-sm-9">
-                  <label class="radio-inline mr-3"> <input type="radio" />Payroll</label>
-                  <label class="radio-inline mr-3"> <input type="radio" />Non Payroll</label>
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Posisi</label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" id="posisi_sebelum" name="posisi_sebelum">
-                      <option>{{ tampunganid.posisi_sebelum }}</option>
-
-                      <option *ngFor="let getjabatansebelum of getjabatansebelum" value="{{ getjabatansebelum.jabatan_deskripsi }}">
-                        {{ getjabatansebelum.jabatan_deskripsi }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Nama Perusahaan</label>
-                <div class="col-sm-9">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Nama Perusahaan"
-                    id="nama_perusahaan_sebelum"
-                    name="nama_perusahaan_sebelum"
-                    value="{{ tampunganid.nama_perusahaan_sebelum }}"
-                  />
-                  <input type="text" class="form-control" placeholder="Nama Perusahaan" id="id" name="id" value="{{ tampunganid.id }}" />
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Nama Perusahaan"
-                    id="curef"
-                    name="curef"
-                    value="{{ tampunganid.curef }}"
-                  />
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Alamat sebelum</label>
-                <div class="col-sm-9">
-                  <textarea class="form-control h-150px" rows="6" id="alamat_pekerjaan_sebelum" name="alamat_pekerjaan_sebelum">
-          {{ tampunganid.alamat_pekerjaan_sebelum }}
-        </textarea
-                  >
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Provinsi</label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" id="provinsi_sebelum" (change)="onChangeD()" name="provinsi_sebelum">
-                      <option value="{{ tampunganid.provinsi_sebelum }}">{{ tampunganid.provinsi_sebelum }}</option>
-                      <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
-                        {{ daWaprof.namaWilayah }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Kota</label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" id="kabkota_sebelum" (change)="onChangekotaD()" name="kabkota_sebelum">
-                      <option value="{{ tampunganid.kabkota_sebelum }}">{{ tampunganid.kabkota_sebelum }}</option>
-                      <option *ngFor="let daWakotaD of daWakotaD" value="{{ daWakotaD.kdWilayah }}|{{ daWakotaD.namaWilayah }}">
-                        {{ daWakotaD.namaWilayah }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Kecamatan</label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" (change)="onChangekecamatanD()" id="kecamatan_sebelum" name="kecamatan_sebelum">
-                      <option value="{{ tampunganid.kecamatan_sebelum }}">{{ tampunganid.kecamatan_sebelum }}</option>
-                      <option
-                        *ngFor="let daWakecamatanD of kecamatanD"
-                        value="{{ daWakecamatanD.kdWilayah }}|{{ daWakecamatanD.namaWilayah }}"
-                      >
-                        {{ daWakecamatanD.namaWilayah }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Kelurahan</label>
-                <div class="col-sm-9">
-                  <div class="form-group">
-                    <select class="form-control" (change)="onChangekelurahanD()" id="kelurahan_sebelum" name="kelurahan_sebelum">
-                      <option value="{{ tampunganid.kelurahan_sebelum }}">{{ tampunganid.kelurahan_sebelum }}</option>
-                      <option *ngFor="let daWakelurahanD of kelurahanD" value="{{ daWakelurahanD.kdPos }}|{{ daWakelurahanD.namaWilayah }}">
-                        {{ daWakelurahanD.namaWilayah }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Kode Pos</label>
-                <div class="col-sm-9">
-                  <div class="input-group mb-3">
-                    <input
-                      type="tel"
-                      onkeypress="return onlyNumberKey(event)"
-                      maxlength="8"
-                      class="form-control"
-                      id="kode_pos_sebelum"
-                      name="kode_pos_sebelum"
-                      value="{{ tampunganid.kode_pos_sebelum }}"
-                    />
-                    <div class="input-group-append">
-                      <button onclick="buatisisebelum()" class="btn btn-outline-dark" id="kode_pos_sebelumhilang" type="button">
-                        Cari Data
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">RT / RW</label>
-                <div class="col">
-                  <input
-                    maxlength="3"
-                    type="tel"
-                    onkeypress="return onlyNumberKey(event)"
-                    class="form-control"
-                    value="{{ tampunganid.rt_sebelum }}"
-                    placeholder="RT"
-                    id="rt_sebelum"
-                    name="rt_sebelum"
-                  />
-                </div>
-                <div class="col">RT</div>
-                <div class="col">
-                  <input
-                    maxlength="3"
-                    type="tel"
-                    onkeypress="return onlyNumberKey(event)"
-                    class="form-control"
-                    placeholder="RW"
-                    id="rw_sebelum"
-                    value="{{ tampunganid.rw_sebelum }}"
-                    name="rw_sebelum"
-                  />
-                </div>
-                <div class="col">RW</div>
-              </div>
-              <br />
-            </div>
-            <div class="col">
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Jenis Bidang</label>
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <select
-                      class="form-control"
-                      (change)="jenisbidangsebelumselect()"
-                      id="jenis_bidang_sebelum"
-                      name="jenis_bidang_sebelum"
-                    >
-                      <option value="">{{ tampunganid.jenis_bidang_sebelum }}</option>
-                      <option
-                        *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
-                        value="{{ getjenisbidangdariapi.group_sektor }}|{{ getjenisbidangdariapi.nama_group_sektor }}"
-                      >
-                        {{ getjenisbidangdariapi.nama_group_sektor }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Sektor Ekonomi</label>
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <select class="form-control" id="sektor_ekonomi_sebelum" name="sektor_ekonomi_sebelum">
-                      <option value="">{{ tampunganid.sektor_ekonomi_sebelum }}</option>
-                      <option *ngFor="let getdatasektorekonomi of getdatasektorekonomi" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
-                        {{ getdatasektorekonomi.nama_sub_sektor }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Lama Bekerja</label>
-
-                <div class="col">
-                  <input
-                    type="tel"
-                    onkeypress="return onlyNumberKey(event)"
-                    class="form-control"
-                    id="lama_bekerja_tahun_sebelum"
-                    name="lama_bekerja_tahun_sebelum"
-                    maxlength="2"
-                    value="{{ tampunganid.lama_bekerja_tahun_sebelum }}"
-                  />
-                </div>
-                <div class="col">Tahun</div>
-                <div class="col">
-                  <input
-                    type="tel"
-                    onkeypress="return onlyNumberKey(event)"
-                    class="form-control"
-                    id="lama_bekerja_bulan_sebelum"
-                    name="lama_bekerja_bulan_sebelum"
-                    maxlength="2"
-                    value="{{ tampunganid.lama_bekerja_bulan_sebelum }}"
-                  />
-                </div>
-                <div class="col">Bulan</div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
-                <div class="col-sm-8">
-                  <input
-                    type="tel"
-                    onkeypress="return onlyNumberKey(event)"
-                    maxlength="13"
-                    class="form-control"
-                    value="{{ tampunganid.jumlah_karyawan_sebelumnya }}"
-                    placeholder="Jumlah Karyawan"
-                    id="jumlah_karyawan_sebelum"
-                    name="jumlah_karyawan_sebelum"
-                  />
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <select class="form-control" id="jumlah_karyawan_sebelumnya" name="jumlah_karyawan_sebelumnya">
-                      <option>{{ tampunganid.jumlah_karyawan_sebelumnya }}</option>
-                      <option
-                        *ngFor="let getjumlahkaryawansebelumdariapi of getjumlahkaryawansebelumdariapi"
-                        value="{{ getjumlahkaryawansebelumdariapi.deskripsi }}"
-                      >
-                        {{ getjumlahkaryawansebelumdariapi.deskripsi }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Tipe Perusahaan</label>
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <select class="form-control" id="tipe_perusahaan_sebelum" name="tipe_perusahaan_sebelum">
-                      <option value="">{{ tampunganid.tipe_perusahaan_sebelum }}</option>
-                      <option
-                        *ngFor="let gettipeperusahaandariapi of gettipeperusahaandariapi"
-                        value="{{ gettipeperusahaandariapi.company_deskripsi }}"
-                      >
-                        {{ gettipeperusahaandariapi.company_deskripsi }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Tipe Kepegawaian</label>
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <select class="form-control" id="tipe_kepegawaian_sebelum" name="tipe_kepegawaian_sebelum">
-                      <option value="">{{ tampunganid.tipe_kepegawaian_sebelum }}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Jenis Bidang<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" (change)="jenisbidangselect()" id="jenis_bidang_perusahaan" name="jenis_bidang">
+              <option value="">Pilih Jenis Bidang</option>
+              <option
+                *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
+                value="{{ getjenisbidangdariapi.group_sektor }}|{{ getjenisbidangdariapi.nama_group_sektor }}"
+              >
+                {{ getjenisbidangdariapi.nama_group_sektor }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Sektor Ekonomi<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" id="jenis_sektor_perusahaan" name="sektor_ekonomi">
+              <option value="">Pilih Sektor Ekonomi</option>
+              <option *ngFor="let getdatasektorekonomi of getdatasektorekonomi" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
+                {{ getdatasektorekonomi.nama_sub_sektor }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row" hidden>
+        <label class="col-sm-3 col-form-label">Umur</label>
+        <div class="col-sm-9">
+          <input
+            type="tel"
+            class="form-control"
+            placeholder="Umur"
+            maxlength="90"
+            id="umur1"
+            name="umur1"
+          />
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Umur Pensiun<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <input
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            class="form-control"
+            placeholder="Umur Pensiun"
+            oninput="MinimumNValidate()"
+            maxlength="2"
+            id="umur_pensiun"
+            name="umur_pensiun"
+          />
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Lama Bekerja</label>
+        <div class="col">
+          <input
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            class="form-control"
+            id="lama_bekerja_tahun"
+            name="lama_bekerja_tahun"
+            maxlength="2"
+            value="{{ tampunganid.lama_bekerja_tahun }}"
+          />
+        </div>
+        <div class="col">Tahun</div>
+        <div class="col">
+          <input
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            class="form-control"
+            id="lama_bekerja_bulan"
+            name="lama_bekerja_bulan"
+            maxlength="2"
+            value="{{ tampunganid.lama_bekerja_bulan }}"
+          />
+        </div>
+        <div class="col">Bulan</div>
+      </div>
+      <br/>
+      <div id="jumlahKaryawanFix">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
+          <div class="col-sm-9">
+            <input
+              type="tel"
+              oninput="this.value = this.value.replace(/^0/g, '');"
+              onkeypress="return onlyNumberKey(event)"
+              maxlength="13"
+              class="form-control"
+              placeholder="Jumlah Karyawan"
+              id="jumlah_karyawan"
+              name="jumlah_karyawan"
+            />
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div id="jumlahKaryawanNon" class="hidden_jumlahKaryawanNon">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
+          <div class="col-sm-9">
+            <div class="form-group">
+              <select class="form-control" id="jumlah_karyawan2" name="jumlah_karyawan2">
+                <option value="">Pilih Jumalah Karyawan</option>
+                <option
+                  *ngFor="let getjumlahkaryawandariapi of getjumlahkaryawandariapi"
+                  value="{{ getjumlahkaryawandariapi.deskripsi }}"
+                >
+                  {{ getjumlahkaryawandariapi.deskripsi }}
+                </option>
+              </select>
             </div>
           </div>
-          <div class="row">
-            <div class="col" style="text-align: center">
-              <button (click)="updatejobsebelum()" class="btn btn-dark">Simpan Data</button>
-              <button id="selanjutnya" name="selanjutnya" (click)="goto()" value="selanjutnya" class="btn btn-warning">
-                Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Pendapatan<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" placeholder="Pendapatan" id="pendapatan" name="pendapatan" />
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Pendapatan Lain</label>
+        <div class="col-sm-9">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Pendapatan Lain"
+            id="pendapatan_lain"
+            name="pendapatan_lain"
+            value="0"
+          />
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Tunjangan<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" placeholder="Tunjangan" id="tunjangan" name="tunjangan" />
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Total Pendapatan<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Total Pendapatan"
+            id="total_pendapatan"
+            name="total_pendapatan"
+            readonly
+          />
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Tipe Perusahaan<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" id="tipe_perusahaan" name="tipe_perusahaan">
+              <option value="">Pilih Tipe Perusahaan</option>
+              <option
+                *ngFor="let gettipeperusahaandariapi of gettipeperusahaandariapi"
+                value="{{ gettipeperusahaandariapi.company_deskripsi }}"
+              >
+                {{ gettipeperusahaandariapi.company_deskripsi }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div id="hideJikaNFiTipeKepegawaian" class="form-group row">
+        <label class="col-sm-3 col-form-label">Tipe Kepegawaian<span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" id="tipe_kepegawaian" name="tipe_kepegawaian">
+              <option value="">Pilih Tipe Pekerjaan</option>
+              <option value="1">Pegawai tetap</option>
+              <option value="2">Pegawai kontrak</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br/>
+
+      <button id="btn" name="btn" (click)="buatcreatejobinfo()" class="btn btn-dark" style="float: right">Simpan</button>
+    </div>
+  </div>
+  <p></p>
+  <p></p>
+  <!-- data table pekerjaan nasabah -->
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead style="background-color: grey">
+        <tr>
+          <th scope="col" style="text-align: center; color: #fff">
+            <span>Nama Perusahaan</span>
+          </th>
+          <th scope="col" style="text-align: center; color: #fff">
+            <span>Kategori Pekerjaan</span>
+          </th>
+          <th scope="col" style="text-align: center; color: #fff">
+            <span>Posisi / Jabatan</span>
+          </th>
+          <th scope="col" style="text-align: center; color: #fff">
+            <span>Curef</span>
+          </th>
+          <th scope="col" style="text-align: center; color: #fff">
+            <span>Id</span>
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+      <form action=""></form>
+      <tbody>
+        <tr *ngFor="let daWa of daWa">
+          <!-- <td style="text-align: center" scope="col">{{ i + 1 }}</td> -->
+          <!-- <td style="text-align: center;" scope="col">{{ daWa.id }}</td> -->
+          <td style="text-align: center" scope="col">{{ daWa.nama_perusahaan }}</td>
+          <td style="text-align: center" scope="col">{{ daWa.kategori_pekerjaan }}</td>
+          <td style="text-align: center" scope="col">{{ daWa.posisi_sebelum }}</td>
+          <td style="text-align: center" scope="col">{{ daWa.curef }}</td>
+          <td style="text-align: center" scope="col">{{ daWa.id }}</td>
+          <!-- (change)="getProoduct(daWa.isSelected, daWa.app_no_de)" -->
+          <!-- <td> <input   (change)="getProoduct($event, daWa.app_no_de ,i+1)"  type="checkbox" > </td> -->
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="button" (click)="vieweditjobinfo(daWa.curef, daWa.id)" class="btn btn-outline-info">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Detail</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p></p>
+  <p></p>
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h6 style="color: #fff; text-align: center">Informasi Pekerjaan Sebelum</h6>
+  </div>
+  <br/>
+  <div class="row form-material">
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Kategori Pekerjaan</label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select
+              class="form-control"
+              (change)="katagoripekerjaanselect()"
+              name="kategori_pekerjaan_sebelum"
+              id="kategori_pekerjaan_sebelum"
+            >
+              <option value="{{ tampunganid.kategori_pekerjaan_sebelum }}">{{ tampunganid.kategori_pekerjaan_sebelum }}</option>
+              <option value="1|Fix Income">Fix Income</option>
+              <option value="2|Non Fix Income">Non Fix Income</option>
+              <option value="3|Lain-lainnya">Lain-lainnyatest</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Tipe Pekerjaan</label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" name="tipe_pekerjaan_sebelum" id="tipe_pekerjaan_sebelum">
+              <option value="">{{ tampunganid.tipe_pekerjaan_sebelum }}</option>
+              <option *ngFor="let daWakotasebelum of daWakotasebelum" value="{{ daWakotasebelum.job_desc }}">
+                {{ daWakotasebelum.job_desc }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Payroll :</label>
+        <div class="col-sm-9">
+          <label class="radio-inline mr-3"> <input type="radio" />Payroll</label>
+          <label class="radio-inline mr-3"> <input type="radio" />Non Payroll</label>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Posisi</label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" id="posisi_sebelum" name="posisi_sebelum">
+              <option>{{ tampunganid.posisi_sebelum }}</option>
+
+              <option *ngFor="let getjabatansebelum of getjabatansebelum" value="{{ getjabatansebelum.jabatan_deskripsi }}">
+                {{ getjabatansebelum.jabatan_deskripsi }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Nama Perusahaan</label>
+        <div class="col-sm-9">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Nama Perusahaan"
+            id="nama_perusahaan_sebelum"
+            name="nama_perusahaan_sebelum"
+            value="{{ tampunganid.nama_perusahaan_sebelum }}"
+          />
+          <input hidden type="text" class="form-control" placeholder="Nama Perusahaan" id="id" name="id" value="{{ tampunganid.id }}" />
+          <input
+            hidden
+            type="text"
+            class="form-control"
+            placeholder="Nama Perusahaan"
+            id="curef"
+            name="curef"
+            value="{{ tampunganid.curef }}"
+          />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Alamat sebelum</label>
+        <div class="col-sm-9">
+          <textarea class="form-control h-150px" rows="6" id="alamat_pekerjaan_sebelum" name="alamat_pekerjaan_sebelum">
+            {{ tampunganid.alamat_pekerjaan_sebelum }}
+          </textarea>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Provinsi</label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" id="provinsi_sebelum" (change)="onChangeD()" name="provinsi_sebelum">
+              <option value="{{ tampunganid.provinsi_sebelum }}">{{ tampunganid.provinsi_sebelum }}</option>
+              <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+                {{ daWaprof.namaWilayah }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Kota</label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" id="kabkota_sebelum" (change)="onChangekotaD()" name="kabkota_sebelum">
+              <option value="{{ tampunganid.kabkota_sebelum }}">{{ tampunganid.kabkota_sebelum }}</option>
+              <option *ngFor="let daWakotaD of daWakotaD" value="{{ daWakotaD.kdWilayah }}|{{ daWakotaD.namaWilayah }}">
+                {{ daWakotaD.namaWilayah }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Kecamatan</label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" (change)="onChangekecamatanD()" id="kecamatan_sebelum" name="kecamatan_sebelum">
+              <option value="{{ tampunganid.kecamatan_sebelum }}">{{ tampunganid.kecamatan_sebelum }}</option>
+              <option
+                *ngFor="let daWakecamatanD of kecamatanD"
+                value="{{ daWakecamatanD.kdWilayah }}|{{ daWakecamatanD.namaWilayah }}"
+              >
+                {{ daWakecamatanD.namaWilayah }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Kelurahan</label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select class="form-control" (change)="onChangekelurahanD()" id="kelurahan_sebelum" name="kelurahan_sebelum">
+              <option value="{{ tampunganid.kelurahan_sebelum }}">{{ tampunganid.kelurahan_sebelum }}</option>
+              <option *ngFor="let daWakelurahanD of kelurahanD" value="{{ daWakelurahanD.kdPos }}|{{ daWakelurahanD.namaWilayah }}">
+                {{ daWakelurahanD.namaWilayah }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Kode Pos</label>
+        <div class="col-sm-9">
+          <div class="input-group mb-3">
+            <input
+              type="tel"
+              onkeypress="return onlyNumberKey(event)"
+              maxlength="8"
+              class="form-control"
+              id="kode_pos_sebelum"
+              name="kode_pos_sebelum"
+              value="{{ tampunganid.kode_pos_sebelum }}"
+            />
+            <div class="input-group-append">
+              <button onclick="buatisisebelum()" class="btn btn-outline-dark" id="kode_pos_sebelumhilang" type="button">
+                Cari Data
               </button>
             </div>
           </div>
         </div>
       </div>
-    </form>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">RT / RW</label>
+        <div class="col">
+          <input
+            maxlength="3"
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            class="form-control"
+            value="{{ tampunganid.rt_sebelum }}"
+            placeholder="RT"
+            id="rt_sebelum"
+            name="rt_sebelum"
+          />
+        </div>
+        <div class="col">RT</div>
+        <div class="col">
+          <input
+            maxlength="3"
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            class="form-control"
+            placeholder="RW"
+            id="rw_sebelum"
+            value="{{ tampunganid.rw_sebelum }}"
+            name="rw_sebelum"
+          />
+        </div>
+        <div class="col">RW</div>
+      </div>
+      <br />
+    </div>
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Jenis Bidang</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select
+              class="form-control"
+              (change)="jenisbidangsebelumselect()"
+              id="jenis_bidang_sebelum"
+              name="jenis_bidang_sebelum"
+            >
+              <option value="">{{ tampunganid.jenis_bidang_sebelum }}</option>
+              <option
+                *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
+                value="{{ getjenisbidangdariapi.group_sektor }}|{{ getjenisbidangdariapi.nama_group_sektor }}"
+              >
+                {{ getjenisbidangdariapi.nama_group_sektor }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Sektor Ekonomi</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" id="sektor_ekonomi_sebelum" name="sektor_ekonomi_sebelum">
+              <option value="">{{ tampunganid.sektor_ekonomi_sebelum }}</option>
+              <option *ngFor="let getdatasektorekonomi of getdatasektorekonomi" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
+                {{ getdatasektorekonomi.nama_sub_sektor }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Lama Bekerja</label>
+        <div class="col">
+          <input
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            class="form-control"
+            id="lama_bekerja_tahun_sebelum"
+            name="lama_bekerja_tahun_sebelum"
+            maxlength="2"
+            value="{{ tampunganid.lama_bekerja_tahun_sebelum }}"
+          />
+        </div>
+        <div class="col">Tahun</div>
+        <div class="col">
+          <input
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            class="form-control"
+            id="lama_bekerja_bulan_sebelum"
+            name="lama_bekerja_bulan_sebelum"
+            maxlength="2"
+            value="{{ tampunganid.lama_bekerja_bulan_sebelum }}"
+          />
+        </div>
+        <div class="col">Bulan</div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
+        <div class="col-sm-8">
+          <input
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            maxlength="13"
+            class="form-control"
+            value="{{ tampunganid.jumlah_karyawan_sebelumnya }}"
+            placeholder="Jumlah Karyawan"
+            id="jumlah_karyawan_sebelum"
+            name="jumlah_karyawan_sebelum"
+          />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" id="jumlah_karyawan_sebelumnya" name="jumlah_karyawan_sebelumnya">
+              <option>{{ tampunganid.jumlah_karyawan_sebelumnya }}</option>
+              <option
+                *ngFor="let getjumlahkaryawansebelumdariapi of getjumlahkaryawansebelumdariapi"
+                value="{{ getjumlahkaryawansebelumdariapi.deskripsi }}"
+              >
+                {{ getjumlahkaryawansebelumdariapi.deskripsi }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tipe Perusahaan</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" id="tipe_perusahaan_sebelum" name="tipe_perusahaan_sebelum">
+              <option value="">{{ tampunganid.tipe_perusahaan_sebelum }}</option>
+              <option
+                *ngFor="let gettipeperusahaandariapi of gettipeperusahaandariapi"
+                value="{{ gettipeperusahaandariapi.company_deskripsi }}"
+              >
+                {{ gettipeperusahaandariapi.company_deskripsi }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tipe Kepegawaian</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" id="tipe_kepegawaian_sebelum" name="tipe_kepegawaian_sebelum">
+              <option value="">{{ tampunganid.tipe_kepegawaian_sebelum }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+  <div class="row">
+    <div class="col" style="text-align: center">
+      <button (click)="updatejobsebelum()" class="btn btn-dark">Simpan Data</button>
+      <button id="selanjutnya" name="selanjutnya" (click)="goto()" value="selanjutnya" class="btn btn-warning">
+        Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
+      </button>
+    </div>
+  </div>
+</form>

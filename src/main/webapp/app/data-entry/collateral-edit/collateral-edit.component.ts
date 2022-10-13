@@ -16,8 +16,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 })
 export class CollateralEditComponent implements OnInit {
   datakirimanidcollateral: any;
-  datakirimanappde: any;
-  datakirimande: any;
+  app_no_de: any;
   datakirimiancure: any;
   datakirimanakategoripekerjaan: any;
   daWa: any;
@@ -35,13 +34,10 @@ export class CollateralEditComponent implements OnInit {
       this.datakirimiancure = params['datakirimiancure'];
     });
     this.route.queryParams.subscribe(params => {
-      this.datakirimanappde = params['datakirimanappde'];
+      this.app_no_de = params['app_no_de'];
     });
     this.route.queryParams.subscribe(params => {
       this.datakirimanakategoripekerjaan = params['datakirimanakategoripekerjaan'];
-    });
-    this.route.queryParams.subscribe(params => {
-      this.datakirimande = params['datakirimande'];
     });
   }
 
@@ -52,8 +48,8 @@ export class CollateralEditComponent implements OnInit {
   }
 
   load() {
-    alert('123' + this.datakirimande);
-    alert('321' + this.datakirimanappde);
+    alert('123' + this.app_no_de);
+    alert('321' + this.app_no_de);
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         // console.log(res.body?.result);
@@ -77,11 +73,11 @@ export class CollateralEditComponent implements OnInit {
     // this.onResponseSuccess(res);
     // alert('ke editcollateral ');
     // alert(this.datakirimanakategoripekerjaan);
-    // console.warn('INI ADA GK SIH', this.datakirimancuref, this.datakirimande);
+    // console.warn('INI ADA GK SIH', this.curef, this.app_no_de);
     this.router.navigate(['/data-entry/collateral'], {
       queryParams: {
-        datakirimande: this.datakirimanappde,
-        datakirimancuref: this.datakirimiancure,
+        app_no_de: this.app_no_de,
+        curef: this.datakirimiancure,
         datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
         // datakirimanidcollateral:idcollateral,
       },
@@ -92,11 +88,11 @@ export class CollateralEditComponent implements OnInit {
     // this.onResponseSuccess(res);
     // alert('ke editcollateral ');
     // alert(this.datakirimanakategoripekerjaan);
-    // console.warn('INI ADA GK SIH', this.datakirimancuref, this.datakirimande);
+    // console.warn('INI ADA GK SIH', this.curef, this.app_no_de);
     this.router.navigate(['/data-entry/collateral'], {
       queryParams: {
-        datakirimande: this.datakirimanappde,
-        datakirimancuref: this.datakirimiancure,
+        app_no_de: this.app_no_de,
+        curef: this.datakirimiancure,
         datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
         // datakirimanidcollateral:idcollateral,
       },

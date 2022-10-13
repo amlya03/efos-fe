@@ -17,7 +17,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 })
 export class CallReportNonComponent implements OnInit {
   datakirimiancure: any;
-  datakirimanappde: any;
+  app_no_de: any;
   daWa: any;
   daWa1: any;
   nowawancara: any;
@@ -33,7 +33,7 @@ export class CallReportNonComponent implements OnInit {
       this.datakirimiancure = params['datakirimiancure'];
     });
     this.route.queryParams.subscribe(params => {
-      this.datakirimanappde = params['datakirimanappde'];
+      this.app_no_de = params['app_no_de'];
     });
   }
 
@@ -78,7 +78,7 @@ export class CallReportNonComponent implements OnInit {
         next: (res: EntityArrayResponseDaWa) => {
           console.warn('contohwawancarano', res);
           this.nowawancara = res.body?.result;
-          $('#no_wawancara').val('CR' + '_' + this.datakirimanappde + '_' + this.nowawancara);
+          $('#no_wawancara').val('CR' + '_' + this.app_no_de + '_' + this.nowawancara);
           $('#no_wawancara1').val(this.nowawancara);
         },
       });
@@ -88,22 +88,22 @@ export class CallReportNonComponent implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto() {
-    alert(this.datakirimanappde);
+    alert(this.app_no_de);
     // this.router.navigate(['/memo'], { queryParams: {  } });
     this.router.navigate(['/data-entry/memo'], {
-      queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure },
+      queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
     });
   }
 
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl + this.datakirimanappde, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.resourceUrl + this.app_no_de, { params: options, observe: 'response' });
   }
   getdataentrynama(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl1 + this.datakirimanappde, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.resourceUrl1 + this.app_no_de, { params: options, observe: 'response' });
   }
   getnomorwawancara(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
@@ -174,7 +174,7 @@ export class CallReportNonComponent implements OnInit {
         alamat_perusahaan: alamat_perusahaan.value,
         alamat_perusahaan_pasangan: alamat_perusahaan_pasangan.value,
         alamat_tinggal: alamat_ktp.value,
-        app_no_de: this.datakirimanappde,
+        app_no_de: this.app_no_de,
         bidang_usaha: bidang_usaha.value,
         bidang_usaha_pasangan: bidang_usaha_pasangan.value,
         // bulan_berdiri_perusahaan: "string",
@@ -244,8 +244,8 @@ export class CallReportNonComponent implements OnInit {
           this.router.navigate(['/data-entry/memo'], {
             queryParams: {
               // datakiriman: contohtampungancuref,
-              // datakirimanstatus: contohtampungstatuskawain,
-              // datakirimanappde: contohtampunganappde,
+              // statusPerkawinan: contohtampungstatuskawain,
+              // app_no_de: contohtampunganappde,
               // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
             },
           });

@@ -50,6 +50,7 @@ export class DataKantorComponent implements OnInit {
   app_no_de: any;
   dataKantorMap: refAnalisaDataKantor = new refAnalisaDataKantor();
   dataEntry: fetchAllDe = new fetchAllDe();
+  curef: any;
 
   constructor(
     protected dataKantor: ServiceVerificationService,
@@ -64,6 +65,7 @@ export class DataKantorComponent implements OnInit {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
       this.app_no_de = params.app_no_de;
+      this.curef = params.curef;
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
@@ -252,7 +254,7 @@ export class DataKantorComponent implements OnInit {
           note_verif_alamat_perusahaan: this.dataKantorForm.get('note_verif_alamat_perusahaan')?.value
         })
         .subscribe({});
-      this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de } });
+      this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     } else
       this.http
         .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_data_kantor', {
@@ -315,7 +317,7 @@ export class DataKantorComponent implements OnInit {
           note_verif_alamat_perusahaan: this.dataKantorForm.get('note_verif_alamat_perusahaan')?.value
         })
         .subscribe({});
-    this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de } });
+    this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
 
     // // else{
     // if (tanggalExpNya > 30) {

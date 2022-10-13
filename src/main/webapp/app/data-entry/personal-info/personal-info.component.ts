@@ -19,7 +19,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 })
 export class PersonalInfoComponent implements OnInit {
   numbers: number[] | undefined;
-  datakiriman!: string;
+  curef!: string;
   tampungandataygdibawa: any;
   app_no_de: any;
   daWa: any;
@@ -79,6 +79,7 @@ export class PersonalInfoComponent implements OnInit {
   kecamatanD: any;
   kelurahanD: any;
   daWakodeposD: any;
+  statusPerkawinan: any;
 
   /////
 
@@ -91,10 +92,9 @@ export class PersonalInfoComponent implements OnInit {
     private localStorageService: LocalStorageService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.datakiriman = params['datakiriman'];
-    });
-    this.route.queryParams.subscribe(params => {
+      this.curef = params['curef'];
       this.app_no_de = params['app_no_de'];
+      this.statusPerkawinan = params.statusPerkawinan;
     });
   }
 
@@ -159,16 +159,15 @@ export class PersonalInfoComponent implements OnInit {
     contohtampungancuref: any,
     contohtampungstatuskawain: any,
     contohtampunganappde: any,
-    contohtampungankategoripekerjaan: any
   ): void {
+    // alert(this.statusPerkawinan)
     // this.onResponseSuccess(res);
     // alert(contohtampungancuref);
     this.router.navigate(['/data-entry/job-info'], {
       queryParams: {
-        datakiriman: contohtampungancuref,
-        datakirimanstatus: contohtampungstatuskawain,
-        datakirimanappde: contohtampunganappde,
-        // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
+        curef: contohtampungancuref,
+        statusPerkawinan: contohtampungstatuskawain,
+        app_no_de: contohtampunganappde,
       },
     });
   }
@@ -341,9 +340,9 @@ export class PersonalInfoComponent implements OnInit {
           // alert('MASUKAJAHSUSAH');
           this.router.navigate(['/data-entry/job-info'], {
             queryParams: {
-              datakiriman: contohtampungancuref,
-              datakirimanstatus: contohtampungstatuskawain,
-              datakirimanappde: contohtampunganappde,
+              curef: contohtampungancuref,
+              statusPerkawinan: contohtampungstatuskawain,
+              app_no_de: contohtampunganappde,
               // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
             },
           });
@@ -354,15 +353,15 @@ export class PersonalInfoComponent implements OnInit {
     // this.router.navigate(['/data-entry/job-info'], {
     //   queryParams: {
     //     datakiriman: contohtampungancuref,
-    //     datakirimanstatus: contohtampungstatuskawain,
-    //     datakirimanappde: contohtampunganappde,
+    //     statusPerkawinan: contohtampungstatuskawain,
+    //     app_no_de: contohtampunganappde,
     //     datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
     //   },
     // });
     // this.router.navigate(['/data-entry/job-info'], {
     //   queryParams: {
     //     datakiriman: contohtampungancuref,
-    //     datakirimanstatus: contohtampungstatuskawain,
+    //     statusPerkawinan: contohtampungstatuskawain,
     //     app_no_de: contohtampunganappde,
     //     datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
     //   },

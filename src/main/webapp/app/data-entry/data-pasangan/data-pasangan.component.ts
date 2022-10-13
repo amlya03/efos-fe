@@ -19,15 +19,16 @@ export class DataPasanganComponent implements OnInit {
   datakiriman: any;
   datakirimanakategoripekerjaan: any;
   daWa: any;
-  datakirimanappde: any;
+  app_no_de: any;
 
-  datakirimancuref: any;
+  curef: any;
   postId: any;
   daWaprof: any;
   daWakota: any;
   kecamatan: any;
   kelurahan: any;
   daWakodepos: any;
+  statusPerkawinan: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -37,21 +38,10 @@ export class DataPasanganComponent implements OnInit {
     protected applicationConfigService: ApplicationConfigService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.datakiriman = params['datakiriman'];
+      this.statusPerkawinan = params.statusPerkawinan;
+      this.app_no_de = params['app_no_de'];
+      this.curef = params['curef'];
     });
-    this.route.queryParams.subscribe(params => {
-      this.datakirimanakategoripekerjaan = params['datakirimanakategoripekerjaan'];
-    });
-    this.route.queryParams.subscribe(params => {
-      this.datakirimanappde = params['datakirimanappde'];
-    });
-    this.route.queryParams.subscribe(params => {
-      this.datakirimancuref = params['datakirimancuref'];
-    });
-
-    // this.route.queryParams.subscribe(params => {
-    //   this.datakiriman = params['datakiriman'];
-    // });
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -186,38 +176,38 @@ export class DataPasanganComponent implements OnInit {
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl + this.datakirimanappde, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.resourceUrl + this.app_no_de, { params: options, observe: 'response' });
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto(contohtampungancuref: any) {
     // this.onResponseSuccess(res);
     alert(contohtampungancuref);
-    alert(this.datakirimanappde);
-    alert(this.datakirimancuref);
+    alert(this.app_no_de);
+    alert(this.curef);
     this.router.navigate(['/data-entry/pekerjaan-pasangan'], {
       queryParams: {
-        datakirimanappde: this.datakirimanappde,
-        datakirimancuref: this.datakirimancuref,
-        // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de,
       },
     });
-    // if(this.datakirimanstatus === 'Menikah'){
-    //   this.router.navigate(['/data-pasangan'], { queryParams: { datakiriman:this.datakirimanappde } });
+    // if(this.statusPerkawinan === 'Menikah'){
+    //   this.router.navigate(['/data-pasangan'], { queryParams: { datakiriman:this.app_no_de } });
     //   alert(' ini NIKAH');
     //   console.warn(this.datakiriman);
     // }
     // else{
     //   alert('ini jomblo');
-    //   this.router.navigate(['/collateral'], { queryParams: { datakiriman:this.datakirimanappde } });
+    //   this.router.navigate(['/collateral'], { queryParams: { datakiriman:this.app_no_de } });
     // }
   }
 
   updatedatapasngan(contohtampungancuref: any) {
     // this.onResponseSuccess(res);
     // alert(contohtampungancuref);
-    // alert(this.datakirimanappde);
-    // alert(this.datakirimancuref);
+    // alert(this.app_no_de);
+    // alert(this.curef);
 
     const nama_pasangan = document.getElementById('nama_pasangan') as HTMLInputElement | any;
     const jenis_kelamin_pasangan = document.getElementById('jenis_kelamin_pasangan') as HTMLInputElement | any;
@@ -311,8 +301,8 @@ export class DataPasanganComponent implements OnInit {
           // alert('MASUKAJAHSUSAH');
           this.router.navigate(['/data-entry/pekerjaan-pasangan'], {
             queryParams: {
-              datakirimanappde: this.datakirimanappde,
-              datakirimancuref: this.datakirimancuref,
+              app_no_de: this.app_no_de,
+              curef: this.curef,
               // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
             },
           });
@@ -321,8 +311,8 @@ export class DataPasanganComponent implements OnInit {
 
     // this.router.navigate(['/data-entry/pekerjaan-pasangan'], {
     //   // queryParams: {
-    //   //   datakirimanappde: this.datakirimanappde,
-    //   //   datakirimancuref: this.datakirimancuref,
+    //   //   app_no_de: this.app_no_de,
+    //   //   curef: this.curef,
     //   //   datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
     //   // },
     // });

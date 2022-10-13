@@ -18,7 +18,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   datakiriman: any;
   datakirimiancure: any;
   datakirimanakategoripekerjaan: any;
-  datakirimanappde: any;
+  app_no_de: any;
 
   daWa: any;
   Kodefasilitas: any;
@@ -37,7 +37,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     protected applicationConfigService: ApplicationConfigService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.datakirimanappde = params['datakirimanappde'];
+      this.app_no_de = params['app_no_de'];
     });
 
     this.route.queryParams.subscribe(params => {
@@ -102,7 +102,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl + 'sc=' + this.datakirimiancure + '&sd=' + this.datakirimanappde, {
+    return this.http.get<ApiResponse>(this.resourceUrl + 'sc=' + this.datakirimiancure + '&sd=' + this.app_no_de, {
       params: options,
       observe: 'response',
     });
@@ -113,10 +113,10 @@ export class StrukturPembiayaanComponent implements OnInit {
     // this.onResponseSuccess(res);
     alert('ke emergency');
     alert(this.datakirimanakategoripekerjaan);
-    alert(this.datakirimanappde);
+    alert(this.app_no_de);
     this.router.navigate(['/data-entry/emergency-contact'], {
       queryParams: {
-        datakirimanappde: this.datakirimanappde,
+        app_no_de: this.app_no_de,
         datakirimiancure: this.datakirimiancure,
         // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },
@@ -317,7 +317,7 @@ export class StrukturPembiayaanComponent implements OnInit {
       .post<any>('http://10.20.34.178:8805/api/v1/efos-de/hitung_angsuran', {
         // headers: headers,
 
-        app_no_de: this.datakirimanappde,
+        app_no_de: this.app_no_de,
         curef: this.datakirimiancure,
         dp: uang_muka.value,
         fasilitas: fasilitas_ke.value,
@@ -393,7 +393,7 @@ export class StrukturPembiayaanComponent implements OnInit {
         .post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_struktur_pembiayaan', {
           // headers: headers,
           angsuran: angsuran.value,
-          app_no_de: this.datakirimanappde,
+          app_no_de: this.app_no_de,
           created_by: 'string',
           // created_date: "",
           curef: this.datakirimiancure,
@@ -428,8 +428,8 @@ export class StrukturPembiayaanComponent implements OnInit {
             this.router.navigate(['/data-entry/data-entry/emergency-contact'], {
               queryParams: {
                 // datakiriman: contohtampungancuref,
-                // datakirimanstatus: contohtampungstatuskawain,
-                // datakirimanappde: contohtampunganappde,
+                // statusPerkawinan: contohtampungstatuskawain,
+                // app_no_de: contohtampunganappde,
                 // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
               },
             });
@@ -443,7 +443,7 @@ export class StrukturPembiayaanComponent implements OnInit {
         .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_struktur_pembiayaan', {
           // headers: headers,
           angsuran: angsuran.value,
-          app_no_de: this.datakirimanappde,
+          app_no_de: this.app_no_de,
           created_by: 'string',
           created_date: '',
           curef: this.datakirimiancure,
@@ -478,8 +478,8 @@ export class StrukturPembiayaanComponent implements OnInit {
             this.router.navigate(['/data-entry/emergency-contact'], {
               queryParams: {
                 // datakiriman: contohtampungancuref,
-                // datakirimanstatus: contohtampungstatuskawain,
-                // datakirimanappde: contohtampunganappde,
+                // statusPerkawinan: contohtampungstatuskawain,
+                // app_no_de: contohtampunganappde,
                 // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
               },
             });

@@ -7,6 +7,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { uploadDocument } from 'app/upload-document/services/config/uploadDocument.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { DataTableDirective } from 'angular-datatables';
+import { LocalStorageService } from 'ngx-webstorage';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 
@@ -29,6 +30,7 @@ export class ChecklistDocumentComponent implements OnInit {
   newValue: any;
   rec: any;
   app_no_de: any;
+  untukSessionUserName: any;
 
   //Radio Validasi Agunan
   radioValidasiDE: any;
@@ -42,16 +44,19 @@ export class ChecklistDocumentComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
   idUpload: any;
+  curef: any;
 
   constructor(
     protected activatedRoute: ActivatedRoute,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     public router: Router,
+    protected localStorageService: LocalStorageService
   ) {
       // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
       this.activatedRoute.queryParams.subscribe(params => {
         this.app_no_de = params.app_no_de;
+        this.curef = params.curef;
       });
       // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     }
@@ -69,6 +74,7 @@ export class ChecklistDocumentComponent implements OnInit {
       processing: true,
       responsive: true,
     };
+    this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
     this.load();
   }
 
@@ -96,7 +102,7 @@ export class ChecklistDocumentComponent implements OnInit {
 
     // DE
     this.getListUploadDocumentDE().subscribe(data => {
-      // console.warn('ini upload de' + data);
+      console.warn('ini upload de' + data);
       this.uploadDocument = data.result;
       this.dtTrigger.next(data.result);
     });
@@ -150,30 +156,41 @@ export class ChecklistDocumentComponent implements OnInit {
       // alert(this.keteranganAgunan)
     }
 
-
+    // console.log(this.uploadDocument[i].id)
+    // console.log(this.uploadAgunan[i].id)
       // Post Data Entry
       this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_syarat_persetujuan', {
-        tipe_dokumen: this.uploadDocument[i].doc_description,
-        nama_file: this.uploadDocument[i].nama_dokumen,
-        validasi_DE: this.radioValidasiDE,
-        keterangan_DE: this.keteranganDE,
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/checklist_dokumen', {
+        // tipe_dokumen: this.uploadDocument[i].doc_description,
+        // nama_file: this.uploadDocument[i].nama_dokumen,
+        // validasi_DE: this.radioValidasiDE,
+        // keterangan_DE: this.keteranganDE,
+        // jadi
+        created_by: this.untukSessionUserName,
+        id: this.uploadDocument[i].id_upload,
+        note_validasi: this.keteranganDE,
+        validasi: this.radioValidasiDE
       })
       .subscribe({});
 
       // Post Agunan
       this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_syarat_persetujuan', {
-        tipe_dokumen: this.uploadAgunan[i].doc_description,
-        nama_file: this.uploadAgunan[i].nama_dokumen,
-        validasi_DE: this.radioValidasiAgunan,
-        keterangan_DE: this.keteranganAgunan,
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/checklist_dokumen', {
+        // tipe_dokumen: this.uploadAgunan[i].doc_description,
+        // nama_file: this.uploadAgunan[i].nama_dokumen,
+        // validasi_DE: this.radioValidasiAgunan,
+        // keterangan_DE: this.keteranganAgunan,
+        // jadi
+        created_by: this.untukSessionUserName,
+        id: this.uploadAgunan[i].id_upload,
+        note_validasi: this.keteranganAgunan,
+        validasi: this.radioValidasiAgunan
       })
       .subscribe({});
     }
   }
   // update Status
   updateStatus(){
-    this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de } });
+    this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

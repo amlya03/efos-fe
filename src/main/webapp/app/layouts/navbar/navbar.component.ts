@@ -38,8 +38,8 @@ export class NavbarComponent implements OnInit {
   navbarPersonalInfo: any;
   app_no_de: any;
   daWa: any;
-  datakiriman: any;
-  datakirimanstatus: any;
+  curef: any;
+  statusPerkawinan: any;
   datakirimanakategoripekerjaan: any;
   datakirimanakategoripekerjaanNav: any;
   datakirimanid: any;
@@ -71,28 +71,23 @@ export class NavbarComponent implements OnInit {
       this.datakirimanidcustomer = params.datakirimanidcustomer;
 
       // ///////////////// Data Entry //////////////////////////////////
-      this.datakiriman = params['datakiriman'];
+      this.curef = params['curef'];
       this.app_no_de = params['app_no_de'];
-      this.datakirimanstatus = params.datakirimanstatus;
+      this.statusPerkawinan = params.statusPerkawinan;
       this.datakirimanakategoripekerjaan = params.datakirimanakategoripekerjaan;
       this.datakirimanakategoripekerjaanNav = params.datakirimanakategoripekerjaan;
-      if (this.datakirimanakategoripekerjaan === 'Fix Income') {
-        this.datakirimanakategoripekerjaan = this.datakirimanakategoripekerjaan.replace(' ', '%20');
-      }
-      if (this.datakirimanakategoripekerjaan === 'Non Fix Income') {
-        this.datakirimanakategoripekerjaan = 'Non%20Fix%20Income';
-      }
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
 
   ngOnInit(): void {
+    // alert(this.curef)
     // alert(this.datakirimanid)
     // alert(this.datakirimantgllahir)
     // alert(this.datakirimanappide)
     // alert(this.datakiriman);
     // alert(this.app_no_de);
-    // alert(this.datakirimanstatus);
+    // alert(this.statusPerkawinan);
     // alert(this.datakirimanidcustomer);
     // const personal_info_retrive = (<HTMLInputElement>document.getElementById("personal_info")).value;
     // alert((<HTMLInputElement>document.getElementById("personal_info")).value)

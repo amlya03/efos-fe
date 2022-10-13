@@ -55,6 +55,7 @@ export class DataCalonNasabahComponent implements OnInit {
   isiRumahTV: any;
   isiRumahSofa: any;
   isiRumahPerabot: any;
+  curef: any;
 
   constructor(
     protected dataCalonNasabah: ServiceVerificationService,
@@ -69,6 +70,7 @@ export class DataCalonNasabahComponent implements OnInit {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
       this.app_no_de = params.app_no_de;
+      this.curef = params.curef
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
@@ -293,7 +295,7 @@ export class DataCalonNasabahComponent implements OnInit {
           verif_tanggal_lahir: this.dataCalonNasabahForm.get('verif_tanggal_lahir')?.value,
         })
         .subscribe({});
-      this.router.navigate(['/data-kantor'], { queryParams: { app_no_de: this.app_no_de } });
+      this.router.navigate(['/data-kantor'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
       // alert('Coba Validasi');
     } else
       // Cek Ke
@@ -372,7 +374,7 @@ export class DataCalonNasabahComponent implements OnInit {
         verif_status_menikah: this.dataCalonNasabahForm.get('verif_status_menikah')?.value,
         verif_tanggal_lahir: this.dataCalonNasabahForm.get('verif_tanggal_lahir')?.value,
       }).subscribe({});
-    this.router.navigate(['/data-kantor'], { queryParams: { app_no_de: this.app_no_de } });
+    this.router.navigate(['/data-kantor'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 
   fetchDataNasabah(): Observable<ApiResponse> {

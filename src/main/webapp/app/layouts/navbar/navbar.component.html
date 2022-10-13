@@ -89,13 +89,13 @@
               <fa-icon icon="user-check"></fa-icon>
               <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
               <p>Verification</p>
-              <span routerLink="/analisa-keuangan" [queryParams]="{ app_no_de: this.app_no_de }" hidden></span>
-              <span routerLink="/data-calon-nasabah" [queryParams]="{ app_no_de: this.app_no_de }" hidden></span>
-              <span routerLink="/data-kantor" [queryParams]="{ app_no_de: this.app_no_de }" hidden></span>
-              <span routerLink="/mutasi-rekening" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
-              <span routerLink="/sturktur-pembiayaan" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
-              <span routerLink="/checklist-document" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
-              <span routerLink="/syarat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
+              <span routerLink="/analisa-keuangan" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+              <span routerLink="/data-calon-nasabah" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+              <span routerLink="/data-kantor" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+              <span routerLink="/mutasi-rekening" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/sturktur-pembiayaan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/checklist-document" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/syarat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
             </a>
           </li>
         </div>
@@ -118,57 +118,110 @@
               <span
                 class="col nav-link"
                 [routerLink]="['/data-entry/personalinfo']"
-                [queryParams]="{ app_no_de: this.app_no_de }"
+                [queryParams]="{
+                  curef: this.curef,
+                  statusPerkawinan: this.statusPerkawinan,
+                  app_no_de: this.app_no_de
+                }"
                 hidden
               ></span>
               <span
                 class="col nav-link"
                 [routerLink]="['/data-entry/job-info']"
                 [queryParams]="{
-                  datakiriman: this.datakiriman,
-                  datakirimanstatus: this.datakirimanstatus,
-                  app_no_de: this.app_no_de,
-                  datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav
+                  curef: this.curef,
+                  statusPerkawinan: this.statusPerkawinan,
+                  app_no_de: this.app_no_de
                 }"
                 hidden
               ></span>
               <span
                 class="col nav-link"
-                [queryParams]="{ datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav, datakiriman: this.datakiriman }"
+                [routerLink]="['/data-entry/editjobinfo']"
+                [queryParams]="{
+                  datakirimanid: this.datakirimanid,
+                  curef: this.curef,
+                  statusPerkawinan: this.statusPerkawinan,
+                  app_no_de: this.app_no_de
+                }"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                [queryParams]="{
+                  curef: this.curef,
+                  statusPerkawinan: this.statusPerkawinan,
+                  app_no_de: this.app_no_de
+                }"
                 routerLink="data-entry/data-pasangan"
                 hidden
               ></span>
               <span
                 class="col nav-link"
-                [queryParams]="{ datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav }"
+                [queryParams]="{
+                  curef: this.curef,
+                  statusPerkawinan: this.statusPerkawinan,
+                  app_no_de: this.app_no_de
+                }"
                 routerLink="data-entry/pekerjaan-pasangan"
                 hidden
               ></span>
               <span
                 class="col nav-link"
-                [queryParams]="{ datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav }"
+                [queryParams]="{
+                  curef: this.curef,
+                  statusPerkawinan: this.statusPerkawinan,
+                  app_no_de: this.app_no_de
+                }"
                 routerLink="data-entry/collateral"
                 hidden
               ></span>
               <span
                 class="col nav-link"
-                [queryParams]="{ datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav }"
+                [queryParams]="{
+                  curef: this.curef,
+                  statusPerkawinan: this.statusPerkawinan,
+                  app_no_de: this.app_no_de
+                }"
                 routerLink="data-entry/struktur-pembiayaan"
                 hidden
               ></span>
               <span
                 class="col nav-link"
-                [queryParams]="{ datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav }"
+                [queryParams]="{
+                  curef: this.curef,
+                  statusPerkawinan: this.statusPerkawinan,
+                  app_no_de: this.app_no_de
+                }"
                 routerLink="data-entry/emergency-contact"
                 hidden
               ></span>
-              <span class="col nav-link" routerLink="data-entry/call-report" hidden></span>
-              <span class="col nav-link" routerLink="data-entry/call-report-non" hidden></span>
+              <span
+                class="col nav-link"
+                routerLink="data-entry/call-report"
+                [queryParams]="{
+                  curef: this.curef,
+                  statusPerkawinan: this.statusPerkawinan,
+                  app_no_de: this.app_no_de
+                }"
+                hidden
+              >
+              </span>
+              <span
+                class="col nav-link"
+                routerLink="data-entry/call-report-non"
+                [queryParams]="{
+                  curef: this.curef,
+                  statusPerkawinan: this.statusPerkawinan,
+                  app_no_de: this.app_no_de
+                }"
+                hidden
+              ></span>
               <div *ngIf="untukSessionRole == 'BRANCHMANAGER'">
                 <span
                   class="col nav-link"
                   routerLink="upload_document/upload_document_de"
-                  [queryParams]="{ datakiriman: this.datakiriman }"
+                  [queryParams]="{ datakiriman: this.curef }"
                   hidden
                 ></span>
                 <span class="col nav-link" routerLink="upload_document/upload_document_agunan" hidden></span>
@@ -194,13 +247,13 @@
               <span
                 class="col nav-link"
                 [routerLink]="['/upload_document/upload_document_de']"
-                [queryParams]="{ datakiriman: this.datakiriman, app_no_de: this.app_no_de }"
+                [queryParams]="{ datakiriman: this.curef, app_no_de: this.app_no_de }"
                 hidden
               ></span>
               <span
                 class="col nav-link"
                 [routerLink]="['/upload_document/upload_document_agunan']"
-                [queryParams]="{ datakiriman: this.datakiriman, app_no_de: this.app_no_de }"
+                [queryParams]="{ datakiriman: this.curef, app_no_de: this.app_no_de }"
                 hidden
               ></span>
             </a>
@@ -225,9 +278,9 @@
                 [routerLink]="['/upload_document/upload_document_agunan']"
                 [queryParams]="{
                   datakiriman: this.datakiriman,
-                  datakirimanstatus: this.datakirimanstatus,
+                  statusPerkawinan: this.statusPerkawinan,
                   app_no_de: this.app_no_de,
-                  datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav
+                  datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan
                 }"
                 hidden
               ></span> -->
@@ -253,9 +306,9 @@
                 [routerLink]="['/upload_document/upload_document_agunan']"
                 [queryParams]="{
                   datakiriman: this.datakiriman,
-                  datakirimanstatus: this.datakirimanstatus,
+                  statusPerkawinan: this.statusPerkawinan,
                   app_no_de: this.app_no_de,
-                  datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav
+                  datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan
                 }"
                 hidden
               ></span> -->
@@ -281,9 +334,9 @@
                 [routerLink]="['/upload_document/upload_document_agunan']"
                 [queryParams]="{
                   datakiriman: this.datakiriman,
-                  datakirimanstatus: this.datakirimanstatus,
+                  statusPerkawinan: this.statusPerkawinan,
                   app_no_de: this.app_no_de,
-                  datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav
+                  datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan
                 }"
                 hidden
               ></span> -->
@@ -531,29 +584,29 @@
   <div
     *ngIf="
       router.url === '/analisa-keuangan' ||
-      router.url === '/analisa-keuangan?app_no_de=' + this.app_no_de ||
+      router.url === '/analisa-keuangan?app_no_de='+ this.app_no_de +'&curef='+ this.curef ||
       router.url === '/data-calon-nasabah' ||
-      router.url === '/data-calon-nasabah?app_no_de=' + this.app_no_de ||
+      router.url === '/data-calon-nasabah?app_no_de=' + this.app_no_de + '&curef=' + this.curef ||
       router.url === '/data-kantor' ||
-      router.url === '/data-kantor?app_no_de=' + this.app_no_de ||
+      router.url === '/data-kantor?app_no_de=' + this.app_no_de + '&curef=' + this.curef ||
       router.url === '/mutasi-rekening' ||
-      router.url === '/mutasi-rekening?app_no_de=' + this.app_no_de ||
+      router.url === '/mutasi-rekening?app_no_de=' + this.app_no_de + '&curef=' + this.curef ||
       router.url === '/sturktur-pembiayaan' ||
-      router.url === '/sturktur-pembiayaan?app_no_de=' + this.app_no_de ||
+      router.url === '/sturktur-pembiayaan?app_no_de=' + this.app_no_de + '&curef=' + this.curef ||
       router.url === '/checklist-document' ||
-      router.url === '/checklist-document?app_no_de=' + this.app_no_de ||
+      router.url === '/checklist-document?app_no_de=' + this.app_no_de + '&curef=' + this.curef ||
       router.url === '/syarat-persetujuan' ||
-      router.url === '/syarat-persetujuan?app_no_de=' + this.app_no_de ||
+      router.url === '/syarat-persetujuan?app_no_de=' + this.app_no_de + '&curef=' + this.curef ||
       router.url === '/kesimpulan' ||
-      router.url === '/kesimpulan?app_no_de=' + this.app_no_de ||
+      router.url === '/kesimpulan?app_no_de=' + this.app_no_de + '&curef=' + this.curef ||
       router.url === '/verification/memo' ||
-      router.url === '/verification/memo?app_no_de=' + this.app_no_de
+      router.url === '/verification/memo?app_no_de=' + this.app_no_de + '&curef=' + this.curef
     "
   >
     <a
       class="nav-item nav-link"
       routerLink="analisa-keuangan"
-      [queryParams]="{ app_no_de: this.app_no_de }"
+      [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'APPRAISAL'"
@@ -564,7 +617,7 @@
       class="nav-item nav-link"
       routerLink="data-calon-nasabah"
       [routerLinkActive]="'active'"
-      [queryParams]="{ app_no_de: this.app_no_de }"
+      [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'APPRAISAL'"
     >
@@ -573,7 +626,7 @@
     <a
       class="nav-item nav-link"
       routerLink="data-kantor"
-      [queryParams]="{ app_no_de: this.app_no_de }"
+      [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'APPRAISAL'"
@@ -583,7 +636,7 @@
     <a
       class="nav-item nav-link"
       routerLink="mutasi-rekening"
-      [queryParams]="{ app_no_de: this.app_no_de }"
+      [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'APPRAISAL'"
@@ -593,7 +646,7 @@
     <a
       class="nav-item nav-link"
       routerLink="sturktur-pembiayaan"
-      [queryParams]="{ app_no_de: this.app_no_de }"
+      [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'APPRAISAL'"
@@ -603,7 +656,7 @@
     <a
       class="nav-item nav-link"
       routerLink="checklist-document"
-      [queryParams]="{ app_no_de: this.app_no_de }"
+      [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'APPRAISAL'"
@@ -613,7 +666,7 @@
     <a
       class="nav-item nav-link"
       routerLink="syarat-persetujuan"
-      [queryParams]="{ app_no_de: this.app_no_de }"
+      [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'APPRAISAL'"
@@ -623,7 +676,7 @@
     <a
       class="nav-item nav-link"
       routerLink="kesimpulan"
-      [queryParams]="{ app_no_de: this.app_no_de }"
+      [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'APPRAISAL'"
@@ -633,7 +686,7 @@
     <a
       class="nav-item nav-link"
       routerLink="verification/memo"
-      [queryParams]="{ app_no_de: this.app_no_de }"
+      [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'APPRAISAL'"
@@ -688,7 +741,7 @@
     </a>
   </div>
   <!-- <input type="text" #buatCek value="dsgs"/> -->
-  <!-- <input type="text" [value]="'/data-entry/job-info?datakiriman='+this.datakiriman+'&datakirimanstatus='+this.datakirimanstatus+'&app_no_de='+this.app_no_de+'&datakirimanakategoripekerjaan='+this.datakirimanakategoripekerjaan"> -->
+  <!-- <input type="text" [value]="'/data-entry/job-info?datakiriman='+this.datakiriman+'&statusPerkawinan='+this.statusPerkawinan+'&app_no_de='+this.app_no_de+'&datakirimanakategoripekerjaan='+this.datakirimanakategoripekerjaan"> -->
   <div
     *ngIf="
       router.url === '/data-entry/personalinfo' ||
@@ -701,25 +754,16 @@
       router.url === '/data-entry/call-report' ||
       router.url === '/data-entry/call-report-non' ||
       router.url === '/data-entry/memo' ||
-      router.url === '/data-entry/personalinfo?app_no_de=' + this.app_no_de ||
-      router.url ===
-        '/data-entry/job-info?datakiriman=' +
-          this.datakiriman +
-          '&datakirimanstatus=' +
-          this.datakirimanstatus +
-          '&app_no_de=' +
-          this.app_no_de +
-          '&datakirimanakategoripekerjaan=' +
-          this.datakirimanakategoripekerjaan ||
-      router.url ===
-        '/data-entry/data-pasangan?datakirimanakategoripekerjaan=' +
-          this.datakirimanakategoripekerjaan +
-          '&datakiriman=' +
-          this.datakiriman ||
-      router.url === '/data-entry/pekerjaan-pasangan?datakirimanakategoripekerjaan=' + this.datakirimanakategoripekerjaan ||
-      router.url === '/data-entry/collateral?datakirimanakategoripekerjaan=' + this.datakirimanakategoripekerjaan ||
-      router.url === '/data-entry/struktur-pembiayaan?datakirimanakategoripekerjaan=' + this.datakirimanakategoripekerjaan ||
-      router.url === '/data-entry/emergency-contact?datakirimanakategoripekerjaan=' + this.datakirimanakategoripekerjaan
+      router.url === '/data-entry/personalinfo?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
+      router.url === '/data-entry/job-info?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de  ||
+      router.url === '/data-entry/data-pasangan?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
+      router.url === '/data-entry/pekerjaan-pasangan?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
+      router.url === '/data-entry/collateral?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
+      router.url === '/data-entry/struktur-pembiayaan?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
+      router.url === '/data-entry/emergency-contact?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
+      router.url === '/data-entry/call-report?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
+      router.url === '/data-entry/call-report-non?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
+      router.url === '/data-entry/editjobinfo?app_no_de='+ this.app_no_de +'&curef=' + this.curef + '&datakirimanid=' + this.datakirimanid + '&statusPerkawinan=' + this.statusPerkawinan
     "
   >
     <!-- <div>
@@ -729,7 +773,11 @@
     <a
       class="nav-item nav-link"
       [routerLink]="['/data-entry/personalinfo']"
-      [queryParams]="{ app_no_de: this.app_no_de }"
+      [queryParams]="{
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de
+      }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'AO'"
@@ -740,21 +788,35 @@
       class="nav-item nav-link"
       [routerLink]="['/data-entry/job-info']"
       [queryParams]="{
-        datakiriman: this.datakiriman,
-        datakirimanstatus: this.datakirimanstatus,
-        app_no_de: this.app_no_de,
-        datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de
       }"
       routerLink="data-entry/job-info"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'AO'"
     >
+    <span
+      class="col nav-link"
+      [routerLink]="['/data-entry/editjobinfo']"
+      [queryParams]="{
+        datakirimanid: this.datakirimanid,
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de
+      }"
+      hidden
+    ></span>
       <h6>Job Info</h6>
     </a>
     <a
       class="nav-item nav-link"
-      [queryParams]="{ datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav, datakiriman: this.datakiriman }"
+      [queryParams]="{
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de
+      }"
       routerLink="data-entry/data-pasangan"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
@@ -764,7 +826,11 @@
     </a>
     <a
       class="nav-item nav-link"
-      [queryParams]="{ datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav }"
+      [queryParams]="{
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de
+      }"
       routerLink="data-entry/pekerjaan-pasangan"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
@@ -774,7 +840,11 @@
     </a>
     <a
       class="nav-item nav-link"
-      [queryParams]="{ datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav }"
+      [queryParams]="{
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de
+      }"
       routerLink="data-entry/collateral"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
@@ -784,7 +854,11 @@
     </a>
     <a
       class="nav-item nav-link"
-      [queryParams]="{ datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav }"
+      [queryParams]="{
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de
+      }"
       routerLink="data-entry/struktur-pembiayaan"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
@@ -794,7 +868,11 @@
     </a>
     <a
       class="nav-item nav-link"
-      [queryParams]="{ datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaanNav }"
+      [queryParams]="{
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de
+      }"
       routerLink="data-entry/emergency-contact"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
@@ -826,6 +904,11 @@
       class="nav-item nav-link"
       routerLink="data-entry/call-report"
       routerLink="data-entry/call-report-non"
+      [queryParams]="{
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de
+      }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'AO'"
@@ -864,15 +947,15 @@
   <div
     *ngIf="
       router.url === '/upload_document/upload_document_de' ||
-      router.url === '/upload_document/upload_document_de?datakiriman=' + this.datakiriman + '&app_no_de=' + this.app_no_de ||
-      router.url === '/upload_document/upload_document_agunan?datakiriman=' + this.datakiriman + '&app_no_de=' + this.app_no_de ||
+      router.url === '/upload_document/upload_document_de?datakiriman=' + this.curef + '&app_no_de=' + this.app_no_de ||
+      router.url === '/upload_document/upload_document_agunan?datakiriman=' + this.curef + '&app_no_de=' + this.app_no_de ||
       router.url === '/upload_document/upload_document_agunan'
     "
   >
     <a
       class="nav-item nav-link"
       routerLink="upload_document/upload_document_de"
-      [queryParams]="{ datakiriman: this.datakiriman, app_no_de: this.app_no_de }"
+      [queryParams]="{ datakiriman: this.curef, app_no_de: this.app_no_de }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'AO'"
@@ -882,7 +965,7 @@
     <a
       class="nav-item nav-link"
       routerLink="upload_document/upload_document_agunan"
-      [queryParams]="{ datakiriman: this.datakiriman, app_no_de: this.app_no_de }"
+      [queryParams]="{ datakiriman: this.curef, app_no_de: this.app_no_de }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'AO'"

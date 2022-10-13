@@ -18,10 +18,9 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./collateral.component.scss'],
 })
 export class CollateralComponent implements OnInit {
-  datakirimande: any;
-  datakirimancuref: any;
+  app_no_de: any;
+  curef: any;
   datakirimanakategoripekerjaan: any;
-  datakirimanappde: any;
   daWa: any;
   datatipeagunan: any;
   tampungantipeagunan: any;
@@ -45,13 +44,10 @@ export class CollateralComponent implements OnInit {
     protected applicationConfigService: ApplicationConfigService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.datakirimande = params['datakirimande'];
+      this.app_no_de = params['app_no_de'];
     });
     this.route.queryParams.subscribe(params => {
-      this.datakirimancuref = params['datakirimancuref'];
-    });
-    this.route.queryParams.subscribe(params => {
-      this.datakirimanappde = params['datakirimanappde'];
+      this.curef = params['curef'];
     });
     this.route.queryParams.subscribe(params => {
       this.datakirimanakategoripekerjaan = params['datakirimanakategoripekerjaan'];
@@ -73,8 +69,8 @@ export class CollateralComponent implements OnInit {
   load() {
     this.gettokendukcapil();
 
-    alert('colalteral' + this.datakirimande);
-    alert(this.datakirimancuref);
+    alert('colalteral' + this.app_no_de);
+    alert(this.curef);
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         // console.log(res.body?.result);
@@ -269,7 +265,7 @@ export class CollateralComponent implements OnInit {
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl + this.datakirimancuref, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.resourceUrl + this.curef, { params: options, observe: 'response' });
   }
 
   gettipeagunan(req?: any): Observable<EntityArrayResponseDaWa> {
@@ -307,23 +303,23 @@ export class CollateralComponent implements OnInit {
     // this.onResponseSuccess(res);
     alert('ke struktur ');
     alert(this.datakirimanakategoripekerjaan);
-    console.warn('INI ADA GK SIH', this.datakirimancuref, this.datakirimande);
+    console.warn('INI ADA GK SIH', this.curef, this.app_no_de);
     this.router.navigate(['/data-entry/struktur-pembiayaan'], {
       queryParams: {
-        datakirimanappde: this.datakirimande,
-        datakirimiancure: this.datakirimancuref,
+        app_no_de: this.app_no_de,
+        datakirimiancure: this.curef,
         // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },
     });
 
-    // if(this.datakirimanstatus === 'Menikah'){
-    //   this.router.navigate(['/data-pasangan'], { queryParams: { datakiriman:this.datakirimanappde } });
+    // if(this.statusPerkawinan === 'Menikah'){
+    //   this.router.navigate(['/data-pasangan'], { queryParams: { datakiriman:this.app_no_de } });
     //   alert(' ini NIKAH');
     //   console.warn(this.datakiriman);
     // }
     // else{
     //   alert('ini jomblo');
-    //   this.router.navigate(['/collateral'], { queryParams: { datakiriman:this.datakirimanappde } });
+    //   this.router.navigate(['/collateral'], { queryParams: { datakiriman:this.app_no_de } });
     // }
   }
 
@@ -331,11 +327,11 @@ export class CollateralComponent implements OnInit {
     // this.onResponseSuccess(res);
     alert('ke editcollateral ');
     alert(this.datakirimanakategoripekerjaan);
-    console.warn('INI ADA GK SIH', this.datakirimancuref, this.datakirimande);
+    console.warn('INI ADA GK SIH', this.curef, this.app_no_de);
     this.router.navigate(['/data-entry/editcollateral'], {
       queryParams: {
-        datakirimanappde: this.datakirimande,
-        datakirimiancure: this.datakirimancuref,
+        app_no_de: this.app_no_de,
+        datakirimiancure: this.curef,
         // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
         datakirimanidcollateral: idcollateral,
       },
@@ -452,8 +448,8 @@ export class CollateralComponent implements OnInit {
           // this.router.navigate(['/data-entry/job-info'], {
           //   // queryParams: {
           //   //   datakiriman: contohtampungancuref,
-          //   //   datakirimanstatus: contohtampungstatuskawain,
-          //   //   datakirimanappde: contohtampunganappde,
+          //   //   statusPerkawinan: contohtampungstatuskawain,
+          //   //   app_no_de: contohtampunganappde,
           //   //   datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
           //   // },
           // });

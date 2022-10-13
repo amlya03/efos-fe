@@ -15,11 +15,11 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./editjobinfo.component.scss'],
 })
 export class EditjobinfoComponent implements OnInit {
-  datakirimanappde: any;
+  app_no_de: any;
   datakirimanakategoripekerjaan: any;
   datakiriman: any;
   datakirimanid: any;
-  datakirimanstatus: any;
+  statusPerkawinan: any;
 
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getJobById?si=');
   daWa: any;
@@ -30,7 +30,7 @@ export class EditjobinfoComponent implements OnInit {
     protected applicationConfigService: ApplicationConfigService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.datakirimanappde = params['datakirimanappde'];
+      this.app_no_de = params['app_no_de'];
     });
     this.route.queryParams.subscribe(params => {
       this.datakirimanakategoripekerjaan = params['datakirimanakategoripekerjaan'];
@@ -42,7 +42,7 @@ export class EditjobinfoComponent implements OnInit {
       this.datakirimanid = params['datakirimanid'];
     });
     this.route.queryParams.subscribe(params => {
-      this.datakirimanstatus = params['datakirimanstatus'];
+      this.statusPerkawinan = params['statusPerkawinan'];
     });
   }
 
@@ -161,8 +161,8 @@ export class EditjobinfoComponent implements OnInit {
           this.router.navigate(['/data-entry/job-info'], {
             // queryParams: {
             //   datakiriman: contohtampungancuref,
-            //   datakirimanstatus: contohtampungstatuskawain,
-            //   datakirimanappde: contohtampunganappde,
+            //   statusPerkawinan: contohtampungstatuskawain,
+            //   app_no_de: contohtampunganappde,
             //   datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
             // },
           });
@@ -173,16 +173,16 @@ export class EditjobinfoComponent implements OnInit {
     // this.router.navigate(['/data-entry/job-info'], {
     //   queryParams: {
     //     datakiriman: contohtampungancuref,
-    //     datakirimanstatus: contohtampungstatuskawain,
-    //     datakirimanappde: contohtampunganappde,
+    //     statusPerkawinan: contohtampungstatuskawain,
+    //     app_no_de: contohtampunganappde,
     //     datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
     //   },
     // });
     this.router.navigate(['/data-entry/job-info'], {
       queryParams: {
         datakiriman: this.datakiriman,
-        datakirimanstatus: this.datakirimanstatus,
-        app_no_de: this.datakirimanappde,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de,
         // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },
     });

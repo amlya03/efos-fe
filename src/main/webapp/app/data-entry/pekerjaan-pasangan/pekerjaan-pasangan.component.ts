@@ -17,10 +17,9 @@ export type EntityArrayResponseDaWa1 = HttpResponse<ApiResponse>;
 export class PekerjaanPasanganComponent implements OnInit {
   datakirimiancure: any;
 
-  datakirimande: any;
-  datakirimancuref: any;
-  datakirimanakategoripekerjaan: any;
-  datakirimanappde: any;
+  app_no_de: any;
+  curef: any;
+  statusPerkawinan: any;
   daWa: any;
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobPasanganByCuref?sc=');
   kirimansiup: any;
@@ -41,16 +40,9 @@ export class PekerjaanPasanganComponent implements OnInit {
     protected applicationConfigService: ApplicationConfigService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.datakirimande = params['datakirimande'];
-    });
-    this.route.queryParams.subscribe(params => {
-      this.datakirimancuref = params['datakirimancuref'];
-    });
-    this.route.queryParams.subscribe(params => {
-      this.datakirimanakategoripekerjaan = params['datakirimanakategoripekerjaan'];
-    });
-    this.route.queryParams.subscribe(params => {
-      this.datakirimanappde = params['datakirimanappde'];
+      this.app_no_de = params['app_no_de'];
+      this.curef = params['curef'];
+      this.statusPerkawinan = params.statusPerkawinan;
     });
   }
 
@@ -65,7 +57,7 @@ export class PekerjaanPasanganComponent implements OnInit {
 
   load(): void {
     this.gettokendukcapil();
-    // alert(this.datakirimancuref);
+    // alert(this.curef);
 
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
@@ -271,11 +263,12 @@ export class PekerjaanPasanganComponent implements OnInit {
   goto(): void {
     // this.onResponseSuccess(res);
     alert('otw collateral1 ');
-    console.warn('colalteral', this.datakirimanappde, this.datakirimancuref, this.datakirimanakategoripekerjaan);
+    // console.warn('colalteral', this.app_no_de, this.curef, this.datakirimanakategoripekerjaan);
     this.router.navigate(['/data-entry/collateral'], {
       queryParams: {
-        datakirimande: this.datakirimanappde,
-        datakirimancuref: this.datakirimancuref,
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de,
         // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },
     });
@@ -284,14 +277,14 @@ export class PekerjaanPasanganComponent implements OnInit {
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl + this.datakirimancuref, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.resourceUrl + this.curef, { params: options, observe: 'response' });
   }
 
   updatejobpasangan(contohtampungancuref: any) {
     // this.onResponseSuccess(res);
     // alert(contohtampungancuref);
-    // alert(this.datakirimanappde);
-    // alert(this.datakirimancuref);
+    // alert(this.app_no_de);
+    // alert(this.curef);
 
     const kate_peker = document.getElementById('kate_peker') as HTMLInputElement | any;
     const tipe_pekerjaan = document.getElementById('tipe_pekerjaan') as HTMLInputElement | any;
@@ -356,7 +349,7 @@ export class PekerjaanPasanganComponent implements OnInit {
       .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_job_info_pasangan', {
         // headers: headers,
 
-        curef: this.datakirimancuref,
+        curef: this.curef,
         alamat_perusahaan: alamat_perusahaan1.value,
         // created_by: app_no_ide.value,
         // created_date: jenis_kelamin.value,
@@ -399,8 +392,8 @@ export class PekerjaanPasanganComponent implements OnInit {
           // alert('MASUKAJAHSUSAH');
           this.router.navigate(['/data-entry/collateral'], {
             queryParams: {
-              datakirimande: this.datakirimanappde,
-              datakirimancuref: this.datakirimancuref,
+              app_no_de: this.app_no_de,
+              curef: this.curef,
               // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
             },
           });
@@ -409,8 +402,8 @@ export class PekerjaanPasanganComponent implements OnInit {
 
     this.router.navigate(['/data-entry/collateral'], {
       queryParams: {
-        datakirimande: this.datakirimanappde,
-        datakirimancuref: this.datakirimancuref,
+        app_no_de: this.app_no_de,
+        curef: this.curef,
         // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },
     });

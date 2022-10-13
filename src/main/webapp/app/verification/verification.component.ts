@@ -1,8 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
-import { Subject } from 'rxjs';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { ApiResponse } from 'app/entities/book/ApiResponse';
+import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { Observable, Subject } from 'rxjs';
 declare let $: any;
 import { daWuS } from './daftar-aplikasi-waiting-update-status/daWuS.model';
 import { ServiceVerificationService } from './service/service-verification.service';
@@ -13,7 +17,9 @@ import { ServiceVerificationService } from './service/service-verification.servi
   styleUrls: ['./verification.component.scss'],
 })
 export class VerificationComponent implements OnInit, OnDestroy {
+  dataEntry?: fetchAllDe = new fetchAllDe();
   daftarAplikasiVerif?: daWuS[];
+  curef: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -24,8 +30,13 @@ export class VerificationComponent implements OnInit, OnDestroy {
     protected DaftarAplikasiVerifServices: ServiceVerificationService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
+    protected http: HttpClient,
+    protected applicationConfigService: ApplicationConfigService,
     protected modalService: NgbModal
   ) {}
+
+  // DE
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -36,6 +47,10 @@ export class VerificationComponent implements OnInit, OnDestroy {
     };
     this.load();
   }
+  // DE
+  // getFetchSemuaData(): Observable<ApiResponse> {
+  //   return this.http.get<ApiResponse>(this.fetchSemuaData + this.app_no_de);
+  // }
 
   load(): void {
     this.DaftarAplikasiVerifServices.getDaWuS().subscribe(data => {
@@ -44,6 +59,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
         this.daftarAplikasiVerif = data.result;
         this.dtTrigger.next(data.result);
       }
+      console.log(this.daftarAplikasiVerif)
     });
   }
 
@@ -64,7 +80,11 @@ export class VerificationComponent implements OnInit, OnDestroy {
   }
 
   viewVerification(app_no_de: any): void {
-    // alert(getAppNoDe);
-    this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: app_no_de } });
+    this.http.get<ApiResponse>(this.fetchSemuaData + app_no_de)
+    .subscribe(data => {
+      this.dataEntry = data.result;
+      this.curef = this.dataEntry?.curef;
+      this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: app_no_de, curef: this.curef } });
+    })
   }
 }

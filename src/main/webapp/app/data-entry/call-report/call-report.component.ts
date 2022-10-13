@@ -16,7 +16,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 })
 export class CallReportComponent implements OnInit {
   datakirimiancure: any;
-  datakirimanappde: any;
+  app_no_de: any;
   daWa: any;
   daWa1: any;
   contohtex: any;
@@ -36,7 +36,7 @@ export class CallReportComponent implements OnInit {
       this.datakirimiancure = params['datakirimiancure'];
     });
     this.route.queryParams.subscribe(params => {
-      this.datakirimanappde = params['datakirimanappde'];
+      this.app_no_de = params['app_no_de'];
     });
 
     this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
@@ -89,21 +89,21 @@ export class CallReportComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto() {
     // this.router.navigate(['/memo'], { queryParams: {  } });
-    alert(this.datakirimanappde);
+    alert(this.app_no_de);
     this.router.navigate(['/data-entry/memo'], {
-      queryParams: { datakirimanappde: this.datakirimanappde, datakirimiancure: this.datakirimiancure },
+      queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
     });
   }
 
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl + this.datakirimanappde, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.resourceUrl + this.app_no_de, { params: options, observe: 'response' });
   }
   getdataentrynama(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl1 + this.datakirimanappde, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.resourceUrl1 + this.app_no_de, { params: options, observe: 'response' });
   }
 
   simpancallreport() // contohtampungstatuskawain: any, // contohtampungancuref: any,
@@ -239,8 +239,8 @@ export class CallReportComponent implements OnInit {
           this.router.navigate(['data-entry/memo'], {
             queryParams: {
               // datakiriman: contohtampungancuref,
-              // datakirimanstatus: contohtampungstatuskawain,
-              // datakirimanappde: contohtampunganappde,
+              // statusPerkawinan: contohtampungstatuskawain,
+              // app_no_de: contohtampunganappde,
               // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
             },
           });

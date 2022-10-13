@@ -32,6 +32,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
+  curef: any;
 
   constructor(
     protected mutasiRekeningService: ServiceVerificationService,
@@ -45,6 +46,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
       this.app_no_de = params.app_no_de;
+      this.curef = params.curef;
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     // alert(this.app_no_de)
@@ -212,7 +214,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           next: response => console.warn(response),
           error: error => console.warn(error),
         });
-        this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de } });
+        this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     }
     else{
       this.http
@@ -235,7 +237,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           next: response => console.warn(response),
           error: error => console.warn(error),
         });
-        this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de } });
+        this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     }
   }
 
