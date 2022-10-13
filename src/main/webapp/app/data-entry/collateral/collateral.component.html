@@ -12,23 +12,9 @@
                 <div class="row">
                   <div class="col">
                     <div class="form-group row">
-                      <input
-                        type="hidden"
-                        id="WADUH"
-                        name="WADUH"
-                        value="<?=$this->session->userdata('GROUP_NAME');?>"
-                        class="form-control"
-                      />
-                      <input
-                        id="app_no_de"
-                        name="app_no_de"
-                        type="hidden"
-                        class="form-control"
-                        placeholder="app_no_ide"
-                        value="<?=$app_no_de?>"
-                        hidden
-                      />
-                      <input type="hidden" id="curef_id" name="curef_id" value="<?=$curef?>" class="form-control" />
+                      <input type="hidden" id="WADUH" name="WADUH" value="" class="form-control" />
+                      <input id="app_no_de" name="app_no_de" type="hidden" class="form-control" placeholder="app_no_ide" value="" hidden />
+                      <input type="hidden" id="curef_id" name="curef_id" value="" class="form-control" />
                     </div>
                     <div class="form-group row">
                       <label class="col-sm-4 col-form-label">Tipe Agunan<span class="text-danger">*</span></label>
@@ -104,15 +90,15 @@
                                 onkeypress="return onlyNumberKey(event)"
                                 class="form-control"
                                 placeholder="No Plat"
-                                name="no_plat2"
-                                id="no_plat2"
+                                name="no_plat"
+                                id="no_plat"
                               />
                             </div>
                           </div>
                           <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Warna<span class="text-danger">*</span></label>
                             <div class="col-sm-8">
-                              <input type="text" class="form-control" placeholder="Warna" name="warna2" id="warna2" />
+                              <input type="text" class="form-control" placeholder="Warna" name="warna" id="warna" />
                             </div>
                           </div>
                           <div class="form-group row">
@@ -123,8 +109,8 @@
                                 onkeypress="return onlyNumberKey(event)"
                                 class="form-control"
                                 placeholder="No Mesin"
-                                name="no_mesin2"
-                                id="no_mesin2"
+                                name="no_mesin"
+                                id="no_mesin"
                               />
                             </div>
                           </div>
@@ -136,21 +122,21 @@
                                 onkeypress="return onlyNumberKey(event)"
                                 class="form-control"
                                 placeholder="No Rangka"
-                                name="no_rangka2"
-                                id="no_rangka2"
+                                name="no_rangka"
+                                id="no_rangka"
                               />
                             </div>
                           </div>
                           <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Nama BPKB<span class="text-danger">*</span></label>
                             <div class="col-sm-8">
-                              <input type="text" class="form-control" placeholder="Nama BPKB" name="nama_bpkb2" id="nama_bpkb2" />
+                              <input type="text" class="form-control" placeholder="Nama BPKB" name="nama_bpkb" id="nama_bpkb" />
                             </div>
                           </div>
                           <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
                             <div class="col-sm-8">
-                              <input class="form-control" type="date" id="tanggal_terbit2" name="tanggal_terbit2" value="tanggal_terbit2" />
+                              <input class="form-control" type="date" id="tanggal_terbit" name="tanggal_terbit" value="" />
                             </div>
                           </div>
                           <button
@@ -158,9 +144,9 @@
                             name="selanjutnya"
                             value="selanjutnya"
                             type="submit"
-                            onclick="return window.validateFormCollateral()"
                             class="btn btn-dark"
                             style="float: right"
+                            (click)="createcollateral()"
                           >
                             selanjutnya
                           </button>
@@ -177,7 +163,7 @@
                             <label class="col-sm-4 col-form-label">Tipe Property<span class="text-danger">*</span></label>
                             <div class="col-sm-8">
                               <div class="form-group">
-                                <select class="form-control" name="tipe_properti1" id="tipe_properti1">
+                                <select class="form-control" name="tipe_properti" id="tipe_properti">
                                   <option value="">Pilih Tipe Properti</option>
                                   <option>Rumah</option>
                                   <option>Apartement</option>
@@ -226,7 +212,7 @@
                               <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
                               <div class="col-sm-8">
                                 <div class="form-group">
-                                  <select class="form-control" name="developer_pks1" id="developer_pks1">
+                                  <select class="form-control" name="developer_pks" id="developer_pks">
                                     <option value="">Pilih Nama Developer</option>
                                     <option *ngFor="let listagunan of listagunan" value="{{ listagunan.nama_developer }}">
                                       {{ listagunan.nama_developer }}
@@ -244,8 +230,8 @@
                                   type="text"
                                   class="form-control"
                                   placeholder="Developer"
-                                  name="developer_non_pks1"
-                                  id="developer_non_pks1"
+                                  name="developer_non_pks"
+                                  id="developer_non_pks"
                                 />
                               </div>
                             </div>
@@ -257,8 +243,8 @@
                                 type="text"
                                 class="form-control"
                                 placeholder="Nama Perumahan"
-                                name="nama_perumahan1"
-                                id="nama_perumahan1"
+                                name="nama_perumahan"
+                                id="nama_perumahan"
                               />
                             </div>
                           </div>
@@ -269,10 +255,15 @@
                             <div class="col-sm-8">
                               <div class="form-group" id="radioButtonStatusJaminanSebelumTnb">
                                 <label class="radio-inline mr-3">
-                                  <input type="radio" value="ia" name="status_jaminan_sebelumnya1" />Ya</label
+                                  <input type="radio" value="ia" name="status_jaminan_sebelumnya" id="status_jaminan_sebelumnya" />Ya</label
                                 >
                                 <label class="radio-inline mr-3">
-                                  <input type="radio" value="tidak" name="status_jaminan_sebelumnya1" />Tidak</label
+                                  <input
+                                    type="radio"
+                                    value="tidak"
+                                    name="status_jaminan_sebelumnya"
+                                    id="status_jaminan_sebelumnya"
+                                  />Tidak</label
                                 >
                                 <!-- <p> <button type="submit" class="col-sm-12 btn btn-dark"><i class="icon-magnifier menu-icon"></i>Lihat Jaminan Sebelumnya</button></p> -->
                               </div>
@@ -284,7 +275,7 @@
                             >
                             <div class="col-sm-8">
                               <div class="form-group">
-                                <select class="form-control" name="hubungan_pemegang_hak1" id="hubungan_pemegang_hak1">
+                                <select class="form-control" name="hubungan_pemegang_hak" id="hubungan_pemegang_hak">
                                   <option value="">Pilih Hubungan Pemegang Hak</option>
                                 </select>
                               </div>
@@ -303,8 +294,8 @@
                                 onkeypress="return onlyNumberKey(event)"
                                 class="form-control"
                                 placeholder=""
-                                name="tahun_buat1"
-                                id="tahun_buat1"
+                                name="tahun_buat"
+                                id="tahun_buat"
                                 minlength="4"
                                 maxlength="4"
                               />
@@ -314,7 +305,7 @@
                             <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
                             <div class="col-sm-8">
                               <div class="form-group">
-                                <select class="form-control" name="status_sertifikat1" id="status_sertifikat1">
+                                <select class="form-control" name="status_sertifikat" id="status_sertifikat">
                                   <option selected value="">Pilih Status Sertifikat</option>
                                   <option
                                     *ngFor="let statussertifikat of statussertifikat"
@@ -334,15 +325,15 @@
                                 onkeypress="return onlyNumberKey(event)"
                                 class="form-control"
                                 placeholder="Nomor Sertifikat"
-                                name="no_sertifikat1"
-                                id="no_sertifikat1"
+                                name="no_sertifikat"
+                                id="no_sertifikat"
                               />
                             </div>
                           </div>
                           <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
                             <div class="col-sm-8">
-                              <input type="text" class="form-control" placeholder="" name="nama_pemegang_hak1" id="nama_pemegang_hak1" />
+                              <input type="text" class="form-control" placeholder="" name="nama_pemegang_hak" id="nama_pemegang_hak" />
                             </div>
                           </div>
                           <div class="form-group row">
@@ -354,8 +345,8 @@
                                 maxlength="12"
                                 class="form-control"
                                 placeholder=""
-                                name="no_handphone_cp1"
-                                id="no_handphone_cp1"
+                                name="no_handphone_cp"
+                                id="no_handphone_cp"
                               />
                             </div>
                           </div>
@@ -369,8 +360,8 @@
                                 onkeypress="return onlyNumberKey(event)"
                                 class="form-control"
                                 placeholder=""
-                                name="no_id_pemegang_hak_sertifikat1"
-                                id="no_id_pemegang_hak_sertifikat1"
+                                name="no_id_pemegang_hak_sertifikat"
+                                id="no_id_pemegang_hak_sertifikat"
                               />
                             </div>
                           </div>
@@ -380,8 +371,8 @@
                               <input
                                 class="form-control"
                                 type="date"
-                                id="tanggal_terbit1"
-                                name="tanggal_terbit1"
+                                id="tanggal_terbit"
+                                name="tanggal_terbit"
                                 onchange="tanggalTerbitDayTanahDanBangunan()"
                               />
                               <input class="form-control" id="hariTanggalnyaTerbitTanahDanBangunan" hidden />
@@ -393,8 +384,8 @@
                               <input
                                 class="form-control"
                                 type="date"
-                                id="tanggal_expired1"
-                                name="tanggal_expired1"
+                                id="tanggal_expired"
+                                name="tanggal_expired"
                                 onchange="tanggalExpDayTanahDanBangunan()"
                               />
                               <input class="form-control" id="hariTanggalnyaExpTanahDanBagunan" hidden />
@@ -414,7 +405,7 @@
                             >
                             <div class="col-sm-8">
                               <div class="form-group">
-                                <select class="form-control" name="hubungan_pemegang_hak4" id="hubungan_pemegang_hak4">
+                                <select class="form-control" name="hubungan_pemegang_hak" id="hubungan_pemegang_hak">
                                   <option selected value=""></option>
                                   <option value="Penjual (Develpoer dan Pembeli)">Penjual (Develpoer dan Pembeli)</option>
                                 </select>
@@ -445,7 +436,7 @@
                             <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
                             <div class="col-sm-8">
                               <div class="form-group">
-                                <select class="form-control" name="status_sertifikat4" id="status_sertifikat4">
+                                <select class="form-control" name="status_sertifikat" id="status_sertifikat">
                                   <option selected value="">Pilih Status Sertifikat</option>
                                   <option
                                     *ngFor="let statussertifikat of statussertifikat"
@@ -466,15 +457,15 @@
                                 maxlength="20"
                                 class="form-control"
                                 placeholder="Nomor Sertifikat"
-                                name="nomor_sertifikat4"
-                                id="nomor_sertifikat4"
+                                name="nomor_sertifikat"
+                                id="nomor_sertifikat"
                               />
                             </div>
                           </div>
                           <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
                             <div class="col-sm-8">
-                              <input type="text" class="form-control" placeholder="" name="nama_pemegang_hak4" id="nama_pemegang_hak4" />
+                              <input type="text" class="form-control" placeholder="" name="nama_pemegang_hak" id="nama_pemegang_hak" />
                             </div>
                           </div>
                           <div class="form-group row">
@@ -485,8 +476,8 @@
                                 onkeypress="return onlyNumberKey(event)"
                                 class="form-control"
                                 placeholder=""
-                                name="no_contact_person4"
-                                id="no_contact_person4"
+                                name="no_contact_person"
+                                id="no_contact_person"
                               />
                             </div>
                           </div>
@@ -500,8 +491,8 @@
                                 onkeypress="return onlyNumberKey(event)"
                                 class="form-control"
                                 placeholder=""
-                                name="nomor_identitas_pemegang_hak4"
-                                id="nomor_identitas_pemegang_hak4"
+                                name="nomor_identitas_pemegang_hak"
+                                id="nomor_identitas_pemegang_hak"
                               />
                             </div>
                           </div>
@@ -511,8 +502,8 @@
                               <input
                                 class="form-control"
                                 type="date"
-                                name="tanggal_lahir4"
-                                id="tanggal_lahir4"
+                                name="tanggal_lahir"
+                                id="tanggal_lahir"
                                 onchange="tanggalTerbitDay()"
                               />
                               <input class="form-control" id="hariTanggalnyaTerbitTanah" hidden />
@@ -524,8 +515,8 @@
                               <input
                                 class="form-control"
                                 type="date"
-                                id="tanggal_exipred4"
-                                name="tanggal_exipred4"
+                                id="tanggal_exipred"
+                                name="tanggal_exipred"
                                 onchange="tanggalExpDay()"
                               />
                               <input class="form-control" id="hariTanggalnyaExpTanah" hidden />
@@ -541,7 +532,7 @@
                             <label class="col-sm-4 col-form-label">Tipe Property<span class="text-danger">*</span></label>
                             <div class="col-sm-8">
                               <div class="form-group">
-                                <select class="form-control" name="tipe_properti5" id="tipe_properti5">
+                                <select class="form-control" name="tipe_properti" id="tipe_properti">
                                   <option>Rumah</option>
                                   <option>Apartement</option>
                                   <option>Ruko / Rukan</option>
@@ -558,27 +549,27 @@
                               <div class="form-group" id="statusRadioButton">
                                 <div class="lihat_baru2" id="ihide_baru2">
                                   <label class="radio-inline mr-3" for="ibaru2">
-                                    <input type="radio" value="baru" name="statusCollateral2" id="ibaru2" />Baru
+                                    <input type="radio" value="baru" name="statusCollateral" id="ibaru" />Baru
                                   </label>
                                 </div>
                                 <div class="lihat_second2" id="ihide_second2">
                                   <label class="radio-inline mr-3" for="isecond2">
-                                    <input type="radio" value="second" name="statusCollateral2" id="isecond2" />Second
+                                    <input type="radio" value="second" name="statusCollateral" id="isecond" />Second
                                   </label>
                                 </div>
                                 <div class="hide_pks2" id="ihide_pks2">
                                   <label class="radio-inline mr-3" for="ipks2">
-                                    <input type="radio" value="pks" name="statusBarusecond2" id="ipks2" />PKS
+                                    <input type="radio" value="pks" name="statusBarusecond" id="ipks" />PKS
                                   </label>
                                 </div>
                                 <div class="hide_nonpks2" id="ihide_nonpks2">
                                   <label class="radio-inline mr-3" for="inonpks2">
-                                    <input type="radio" value="non" name="statusBarusecond2" id="inonpks2" />NON-PKS
+                                    <input type="radio" value="non" name="statusBarusecond" id="inonpks" />NON-PKS
                                   </label>
                                 </div>
                                 <div class="hide_perorangan2" id="ihide_perorangan2">
                                   <label class="radio-inline mr-3" for="iperorangan2">
-                                    <input type="radio" value="orang" name="statusBarusecond2" id="iperorangan2" />Perorangan
+                                    <input type="radio" value="orang" name="statusBarusecond" id="iperorangan" />Perorangan
                                   </label>
                                 </div>
                               </div>
@@ -589,7 +580,7 @@
                               <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
                               <div class="col-sm-8">
                                 <div class="form-group">
-                                  <select class="form-control" name="developer_pks5" id="developer_pks5">
+                                  <select class="form-control" name="developer_pks" id="developer_pks">
                                     <option value="">Pilih Nama Developer</option>
                                     <option *ngFor="let listagunan of listagunan" value="{{ listagunan.nama_developer }}">
                                       {{ listagunan.nama_developer }}
@@ -607,8 +598,8 @@
                                   type="text"
                                   class="form-control"
                                   placeholder="Developer"
-                                  name="developer_non_pks5"
-                                  id="developer_non_pks5"
+                                  name="developer_non_pks"
+                                  id="developer_non_pks"
                                 />
                               </div>
                             </div>
@@ -620,8 +611,8 @@
                                 type="text"
                                 class="form-control"
                                 placeholder="Nama Perumahan"
-                                name="nama_perumahan5"
-                                id="nama_perumahan5"
+                                name="nama_perumahan"
+                                id="nama_perumahan"
                               />
                             </div>
                           </div>
@@ -630,19 +621,14 @@
                             <div class="col-sm-8">
                               <div class="form-group" id="radioButtonStatusJaminanSebelum">
                                 <label class="radio-inline mr-3">
-                                  <input
-                                    type="radio"
-                                    value="ia"
-                                    id="status_jaminan_sebelumnya5"
-                                    name="status_jaminan_sebelumnya5"
-                                  />Ya</label
+                                  <input type="radio" value="ia" id="status_jaminan_sebelumnya" name="status_jaminan_sebelumnya" />Ya</label
                                 >
                                 <label class="radio-inline mr-3">
                                   <input
                                     type="radio"
                                     value="tidak"
-                                    id="status_jaminan_sebelumnya5"
-                                    name="status_jaminan_sebelumnya5"
+                                    id="status_jaminan_sebelumnya"
+                                    name="status_jaminan_sebelumnya"
                                   />Tidak</label
                                 >
                                 <p>
@@ -659,7 +645,7 @@
                             >
                             <div class="col-sm-8">
                               <div class="form-group">
-                                <select class="form-control" name="hubungan_pemegang_hak5" id="hubungan_pemegang_hak5">
+                                <select class="form-control" name="hubungan_pemegang_hak" id="hubungan_pemegang_hak">
                                   <option value="">Pilih Hubungan Pemegang Hak</option>
                                 </select>
                               </div>
@@ -690,7 +676,7 @@
                             <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
                             <div class="col-sm-8">
                               <div class="form-group">
-                                <select class="form-control" name="status_sertifikat5" id="status_sertifikat5">
+                                <select class="form-control" name="status_sertifikat" id="status_sertifikat">
                                   <option selected value="">Pilih Status Sertifikat</option>
                                   <option
                                     *ngFor="let statussertifikat of statussertifikat"
@@ -710,15 +696,15 @@
                                 onkeypress="return onlyNumberKey(event)"
                                 class="form-control"
                                 placeholder="Nomor Sertifikat"
-                                name="no_sertifikat5"
-                                id="no_sertifikat5"
+                                name="no_sertifikat"
+                                id="no_sertifikat"
                               />
                             </div>
                           </div>
                           <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
                             <div class="col-sm-8">
-                              <input type="text" class="form-control" placeholder="" name="nama_pemegang_hak5" id="nama_pemegang_hak5" />
+                              <input type="text" class="form-control" placeholder="" name="nama_pemegang_hak" id="nama_pemegang_hak" />
                             </div>
                           </div>
                           <div class="form-group row">
@@ -730,8 +716,8 @@
                                 maxlength="12"
                                 class="form-control"
                                 placeholder=""
-                                name="no_handphone_cp5"
-                                id="no_handphone_cp5"
+                                name="no_handphone_cp"
+                                id="no_handphone_cp"
                               />
                             </div>
                           </div>
@@ -745,8 +731,8 @@
                                 onkeypress="return onlyNumberKey(event)"
                                 class="form-control"
                                 placeholder=""
-                                name="no_id_pemegang_hak_sertifikat5"
-                                id="no_id_pemegang_hak_sertifikat5"
+                                name="no_id_pemegang_hak_sertifikat"
+                                id="no_id_pemegang_hak_sertifikat"
                               />
                             </div>
                           </div>
@@ -756,8 +742,8 @@
                               <input
                                 class="form-control"
                                 type="date"
-                                id="tanggal_terbit5"
-                                name="tanggal_terbit5"
+                                id="tanggal_terbit"
+                                name="tanggal_terbit"
                                 onchange="tanggalTerbitDayBangunan()"
                               />
                               <input class="form-control" id="hariTanggalnyaTerbitBangunan" hidden />
@@ -769,8 +755,8 @@
                               <input
                                 class="form-control"
                                 type="date"
-                                id="tanggal_expired5"
-                                name="tanggal_expired5"
+                                id="tanggal_expired"
+                                name="tanggal_expired"
                                 onchange="tanggalExpDayBangunan()"
                               />
                               <input class="form-control" id="hariTanggalnyaExpBagunan" hidden />

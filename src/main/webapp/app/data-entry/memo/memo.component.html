@@ -120,31 +120,24 @@
   <button type="button" (click)="cetakmemo()" id="cetakYuk" class="btn mb-1 btn-secondary">
     Cetak Memo<span class="btn-icon-right"><i class="fa fa-print"></i></span>
   </button>
-  <button
-    type="submit"
-    (click)="kembalikede()"
-    id="simpan_memo"
-    name="simpan_memo"
-    value="simpan_memo"
-    class="btn mb-1 btn-warning"
-    style="display: none"
-  >
-    Update Status Memo<span class="btn-icon-right"><i class="fa fa-check"></i></span>
+
+  <button type="button" (click)="updatestatus()" id="simpan_memo" name="simpan_memo" value="simpan_memo" class="btn mb-1 btn-warning">
+    Update Status Memo untuk ao<span class="btn-icon-right"><i class="fa fa-check"></i></span>
   </button>
 
   <!--  and  $this->session->userdata('cekstrukturpembayaran')=='1'){?> -->
-  <button (click)="kembalikede()" type="submit" id="kembalide" name="kembalide" value="kembalide" class="btn mb-1 btn-danger">
+  <button (click)="kembalikede()" type="button" id="kembalide" name="kembalide" value="kembalide" class="btn mb-1 btn-danger">
     Kembali Ke De<span class="btn-icon-right"><i class="fa fa-chevron-circle-left"></i></span>
   </button>
   <button
     (click)="updatekeupload()"
-    type="submit"
+    type="button"
     id="selanjutnyauntukbm"
     name="selanjutnyauntukbm"
     value="selanjutnyauntukbm"
     class="btn mb-1 btn-warning"
   >
-    Update Status<span class="btn-icon-right"><i class="fa fa-check"></i></span>
+    Update Status untuk bm <span class="btn-icon-right"><i class="fa fa-check"></i></span>
   </button>
 
   <!-- <button class="btn mb-1 btn-warning" id="btn_bm_selesai" name="btn_bm_selesai" value="btn_bm_selesai">Update Status<span>&nbsp;<i class="fa fa-check"></i></span></button>  -->

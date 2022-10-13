@@ -79,8 +79,9 @@ export class PersonalInfoComponent implements OnInit {
   kecamatanD: any;
   kelurahanD: any;
   daWakodeposD: any;
+  contohcontoh: any;
+  kirimanstatusktp: any;
   statusPerkawinan: any;
-
   /////
 
   constructor(
@@ -218,8 +219,39 @@ export class PersonalInfoComponent implements OnInit {
     const tanggal_exp_ktp = document.getElementById('tanggal_exp_ktp') as HTMLInputElement | any;
     const no_handphone = document.getElementById('no_handphone') as HTMLInputElement | any;
     const id = document.getElementById('id') as HTMLInputElement | any;
+
+    const statusktpia = (<HTMLInputElement>document.getElementById('ktp_seumur_hidup_ya')).checked;
+    const statusktptidak = (<HTMLInputElement>document.getElementById('ktp_seumur_hidup_tidak')).checked;
+    const radiobuttonia = (<HTMLInputElement>document.getElementById('alamat_sama_ktp_sama')).checked;
+    const radiobuttontidak = (<HTMLInputElement>document.getElementById('alamat_sama_ktp_tidak')).checked;
+    // const radiobuttonia=document.getElementById('alamat_sama_ktp_sama') as HTMLInputElement | any;
+    // const radiobuttontidak=document.getElementById('alamat_sama_ktp_tidak') as HTMLInputElement | any;
     alert(id.value);
     alert(contohtampungancuref);
+
+    if (radiobuttonia == true) {
+      this.contohcontoh = 1;
+    } else if (radiobuttontidak == true) {
+      this.contohcontoh = 0;
+    } else {
+      this.contohcontoh = 9;
+    }
+
+    if (statusktpia == true) {
+      this.kirimanstatusktp = 1;
+    } else if (statusktptidak == true) {
+      this.kirimanstatusktp = 0;
+    } else {
+      this.kirimanstatusktp = 9;
+    }
+
+    //  alert('gajeals'+ contohcontoh)
+    // else if(radiobuttontidak==true){
+    // //   var statusktp='0';
+    // //  }
+    // // else{
+    // // //   var statusktp='tidak dipilih';
+    // // // }
 
     var kirimanpotonganprovinsi = provinsi_cabang.value.split('|');
     var cekdatapipe = provinsi_cabang.value.indexOf('|');
@@ -292,9 +324,9 @@ export class PersonalInfoComponent implements OnInit {
         tanggal_lahir: tanggal_lahir.value,
         tempat_lahir: tempat_lahir.value,
         status_perkawinan: status_perkawinan.value,
-        status_alamat: ' 1',
+        status_alamat: this.contohcontoh,
         status_kendaraan: '1 ',
-        status_ktp: ' 1',
+        status_ktp: this.kirimanstatusktp,
         status_rumah: ' 1',
         agama: agama.value,
         pendidikan: pendidikan.value,

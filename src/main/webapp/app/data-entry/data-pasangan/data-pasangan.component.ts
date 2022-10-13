@@ -29,6 +29,8 @@ export class DataPasanganComponent implements OnInit {
   kelurahan: any;
   daWakodepos: any;
   statusPerkawinan: any;
+  kirimanstatusktp: any;
+  untukktp: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -62,6 +64,8 @@ export class DataPasanganComponent implements OnInit {
         // console.warn('@@@@@@@@@@@@@', this.datakiriman);
         // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
         this.daWa = res.body?.result;
+
+        this.untukktp = res.body?.result.status_ktp_pasangan;
         // this.onResponseSuccess(res);
       },
     });
@@ -232,6 +236,9 @@ export class DataPasanganComponent implements OnInit {
     const app_no_ide = document.getElementById('app_no_ide') as HTMLInputElement | any;
     const curef = document.getElementById('curef') as HTMLInputElement | any;
 
+    const statusktpia = (<HTMLInputElement>document.getElementById('ktp_seumur_hidup_pasangan_ya')).checked;
+    const statusktptidak = (<HTMLInputElement>document.getElementById('ktp_seumur_hidup_pasangan_tidak')).checked;
+
     var potonganprov = provinsi_pasangan.value.split('|');
     if (provinsi_pasangan.value.indexOf('|') !== -1) {
       var kirimanpro = potonganprov[1];
@@ -257,6 +264,21 @@ export class DataPasanganComponent implements OnInit {
       var kirimankel = kelurahan_pasangan.value;
     }
 
+    if (statusktpia == true) {
+      this.kirimanstatusktp = 1;
+    } else if (statusktptidak == true) {
+      this.kirimanstatusktp = 0;
+    } else {
+      this.kirimanstatusktp = 9;
+    }
+
+    if (this.kirimanstatusktp == 1) {
+      var kirimantanggalex = null;
+    } else {
+      alert(this.kirimanstatusktp);
+      var kirimantanggalex = tanggal_exp_ktp_pasangan.value;
+    }
+
     alert(id.value);
     alert(contohtampungancuref);
 
@@ -272,7 +294,7 @@ export class DataPasanganComponent implements OnInit {
         curef: curef.value,
         email_pasangan: email_pasangan.value,
         id: id.value,
-        // jenis_kelamin_pasangan: tempat_lahir.value,
+        npwp_pasangan: npwp_pasangan.value,
         kabkota_pasangan: kirimankabkota,
         kecamatan_pasangan: kirimankec,
         kelurahan_pasangan: kirimankel,
@@ -286,8 +308,8 @@ export class DataPasanganComponent implements OnInit {
         provinsi_pasangan: kirimanpro,
         rt_pasangan: rt_pasangan.value,
         rw_pasangan: rw_pasangan.value,
-        // status_ktp_pasangan: provinsi_cabang.value,
-        tanggal_exp_ktp_pasangan: tanggal_exp_ktp_pasangan.value,
+        status_ktp_pasangan: this.kirimanstatusktp,
+        tanggal_exp_ktp_pasangan: kirimantanggalex,
         tanggal_lahir_pasangan: tanggal_lahir_pasangan.value,
         tanggal_terbit_ktp_pasangan: tanggal_terbit_ktp_pasangan.value,
         //  tempat_lahir_pasangan: kecamatan.value,
@@ -316,5 +338,11 @@ export class DataPasanganComponent implements OnInit {
     //   //   datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
     //   // },
     // });
+  }
+  radiobbuttonktp() {
+    this.untukktp = 1;
+  }
+  radiobbutton() {
+    this.untukktp = 0;
   }
 }

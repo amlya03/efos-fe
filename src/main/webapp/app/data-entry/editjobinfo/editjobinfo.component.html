@@ -1,33 +1,4 @@
 <body>
-  <!--*******************
-      Preloader start
-  ********************-->
-
-  <!--*******************
-      Preloader end
-  ********************-->
-
-  <!--**********************************
-      Main wrapper start
-  ***********************************-->
-
-  <!--**********************************
-          Nav header start
-      ***********************************-->
-  <!--**********************************
-          Nav header end
-      ***********************************-->
-
-  <!--**********************************
-          Header start
-      ***********************************-->
-
-  <!--**********************************
-          Header end ti-comment-alt
-      ***********************************-->
-  <!--**********************************
-          Content body start
-      ***********************************-->
   <div class="content-body">
     <div class="container-fluid">
       <form
@@ -72,28 +43,37 @@
                   <div class="col-sm-9">
                     <div class="form-group">
                       <select class="form-control" id="tipe_pekerjaan" name="tipe_pekerjaan">
-                        <option value="{{ daWa.kategori_pekerjaan }}"></option>
+                        <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
+                        <option *ngFor="let edittipepekerjaan of edittipepekerjaan" value="{{ edittipepekerjaan.job_desc }}">
+                          {{ edittipepekerjaan.job_desc }}
+                        </option>
                         <!-- <option><?=$tipe_pekerjaan?></option> -->
                       </select>
                     </div>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Payroll :</label>
-                  <div class="col-sm-9"></div>
+                  <label class="col-sm-3 col-form-label">Payroll :<span class="text-danger">*</span></label>
+                  <div class="col-sm-9">
+                    <div class="form-group">
+                      <label class="radio-inline mr-3">
+                        <input type="radio" name="optradio" id="payroll" value="1" [checked]="daWa.payroll == 1" />Payroll</label
+                      >
+                      <label class="radio-inline mr-3">
+                        <input type="radio" name="optradio" id="payroll1" value="0" [checked]="daWa.payroll == 0" />Non Payroll</label
+                      >
+                    </div>
+                  </div>
                 </div>
-                <!-- <div id="fixPosisi" class="form-group row" style="display: none;">
-                                      <label class="col-sm-3 col-form-label">Posisi<span class="text-danger">*</span></label> -->
-                <!-- <div class="col-sm-9"> -->
-                <input id="posisi" hidden name="posisifix" class="form-control" value="" />
-                <!-- </div>
-                                  </div> -->
                 <div id="proHidePosisi" class="form-group row">
                   <label class="col-sm-3 col-form-label">Posisi</label>
                   <div class="col-sm-9">
                     <div class="form-group">
                       <select class="form-control" id="jabatan" name="posisi">
-                        <option value="111"></option>
+                        <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
+                        <option *ngFor="let getjabatandariapi of getjabatandariapi" value="{{ getjabatandariapi.jabatan_deskripsi }}">
+                          {{ getjabatandariapi.jabatan_deskripsi }}
+                        </option>
                         <!-- note -->
                       </select>
                     </div>
@@ -104,7 +84,7 @@
                   <div class="col-sm-9">
                     <div class="form-group">
                       <select class="form-control" id="jenis_pekerjaan" name="jenis_pekerjaan">
-                        <option value=""></option>
+                        <option value="{{ daWa.jenis_pekerjaan }}">{{ daWa.jenis_pekerjaan }}</option>
                       </select>
                     </div>
                   </div>
@@ -118,7 +98,7 @@
                       id="nama_perusahaan"
                       name="nama_perusahaan"
                       placeholder="Nama Perusahaan"
-                      value="{{ daWa.kategori_pekerjaan }}"
+                      value="{{ daWa.nama_perusahaan }}"
                     />
                   </div>
                 </div>
@@ -126,7 +106,7 @@
                   <label class="col-sm-3 col-form-label">Alamat</label>
                   <div class="col-sm-9">
                     <textarea class="form-control h-150px" rows="6" id="comment" id="alamat_perusahaan" name="alamat_perusahaan">
-                      {{ daWa.kategori_pekerjaan }}</textarea
+                      {{ daWa.alamat_perusahaan }}</textarea
                     >
                   </div>
                 </div>
@@ -134,8 +114,11 @@
                   <label class="col-sm-3 col-form-label">Provinsi</label>
                   <div class="col-sm-9">
                     <div class="form-group">
-                      <select class="form-control" id="provinsi_cabang" name="provinsi">
-                        <option>{{ daWa.kategori_pekerjaan }}</option>
+                      <select class="form-control" (change)="onChange()" id="provinsi_cabang" name="provinsi">
+                        <option value="{{ daWa.provinsi }}">{{ daWa.provinsi }}</option>
+                        <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+                          {{ daWaprof.namaWilayah }}
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -144,8 +127,11 @@
                   <label class="col-sm-3 col-form-label">Kota</label>
                   <div class="col-sm-9">
                     <div class="form-group">
-                      <select class="form-control" id="kabkota_cabang" name="kabkota">
-                        <option>{{ daWa.kabkota }}</option>
+                      <select class="form-control" (change)="onChangekota()" id="kabkota_cabang" name="kabkota">
+                        <option value="{{ daWa.kabkota }}">{{ daWa.kabkota }}</option>
+                        <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
+                          {{ daWakota.namaWilayah }}
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -154,8 +140,14 @@
                   <label class="col-sm-3 col-form-label">Kecamatan</label>
                   <div class="col-sm-9">
                     <div class="form-group">
-                      <select class="form-control" id="kecamatan" name="kecamatan">
-                        <option>{{ daWa.kategori_pekerjaan }}</option>
+                      <select class="form-control" (change)="onChangekecamatan()" id="kecamatan" name="kecamatan">
+                        <option value="{{ daWa.kecamatan }}">{{ daWa.kecamatan }}</option>
+                        <option
+                          *ngFor="let daWakecamatan of kecamatan"
+                          value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}"
+                        >
+                          {{ daWakecamatan.namaWilayah }}
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -164,8 +156,11 @@
                   <label class="col-sm-3 col-form-label">Kelurahan</label>
                   <div class="col-sm-9">
                     <div class="form-group">
-                      <select class="form-control" id="kelurahan" name="kelurahan">
-                        <option>{{ daWa.kategori_pekerjaan }}</option>
+                      <select class="form-control" (change)="onChangekelurahan()" id="kelurahan" name="kelurahan">
+                        <option value="{{ daWa.kelurahan }}">{{ daWa.kelurahan }}</option>
+                        <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
+                          {{ daWakelurahan.namaWilayah }}
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -181,7 +176,7 @@
                         class="form-control"
                         id="kode_pos"
                         name="kode_pos"
-                        value="{{ daWa.kategori_pekerjaan }}"
+                        value="{{ daWa.kode_pos }}"
                       />
                       <div class="input-group-append">
                         <button onclick="buatisi()" class="btn btn-outline-dark" id="kode_poshilang" type="button">Cari Data</button>
@@ -202,7 +197,7 @@
                           placeholder="RT"
                           id="rt"
                           name="rt"
-                          value="{{ daWa.kategori_pekerjaan }}"
+                          value="{{ daWa.rt }}"
                         />
                       </div>
                       <h2>/</h2>
@@ -215,7 +210,7 @@
                           maxlength="3"
                           id="rw"
                           name="rw"
-                          value="{{ daWa.kategori_pekerjaan }}"
+                          value="{{ daWa.rw }}"
                         />
                       </div>
                     </div>
@@ -231,7 +226,7 @@
                         maxlength="16"
                         id="no_siup"
                         name="no_siup"
-                        value="{{ daWa.kategori_pekerjaan }}"
+                        value="{{ daWa.no_siup }}"
                         class="form-control"
                       />
                     </div>
@@ -243,8 +238,14 @@
                   <label class="col-sm-3 col-form-label">Jenis Bidang</label>
                   <div class="col-sm-9">
                     <div class="form-group">
-                      <select class="form-control" id="jenis_bidang" name="jenis_bidang">
-                        <option>{{ daWa.kabkota }}</option>
+                      <select (change)="jenisbidangselect()" class="form-control" id="jenis_bidang" name="jenis_bidang">
+                        <option value="{{ daWa.jenis_bidang }}">{{ daWa.jenis_bidang }}</option>
+                        <option
+                          *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
+                          value="{{ getjenisbidangdariapi.group_sektor }}|{{ getjenisbidangdariapi.nama_group_sektor }}"
+                        >
+                          {{ getjenisbidangdariapi.nama_group_sektor }}
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -254,7 +255,13 @@
                   <div class="col-sm-9">
                     <div class="form-group">
                       <select class="form-control" id="jenis_sektor" name="sektor_ekonomi">
-                        <option>{{ daWa.kabkota }}</option>
+                        <option value="{{ daWa.sektor_ekonomi }}">{{ daWa.sektor_ekonomi }}</option>
+                        <option
+                          *ngFor="let getdatasektorekonomi of getdatasektorekonomi"
+                          value="{{ getdatasektorekonomi.nama_sub_sektor }}"
+                        >
+                          {{ getdatasektorekonomi.nama_sub_sektor }}
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -282,7 +289,7 @@
                       maxlength="2"
                       class="form-control"
                       placeholder="Umur Pensiun"
-                      value="{{ daWa.kabkota }}"
+                      value="{{ daWa.umur_pensiun }}"
                       id="umur_pensiun"
                       name="umur_pensiun"
                     />
@@ -301,7 +308,7 @@
                           placeholder="Tahun"
                           id="lama_bekerja_tahun"
                           name="lama_bekerja_tahun"
-                          value="{{ daWa.kabkota }}"
+                          value="{{ daWa.lama_bekerja_tahun }}"
                         />
                       </div>
                       <span>Tahun</span><span class="text-danger">*</span>
@@ -314,7 +321,7 @@
                           placeholder="Bulan"
                           id="lama_bekerja_bulan"
                           name="lama_bekerja_bulan"
-                          value="{{ daWa.kabkota }}"
+                          value="{{ daWa.lama_bekerja_bulan }}"
                         />
                       </div>
                       <span>Bulan</span><span class="text-danger">*</span>
@@ -330,7 +337,7 @@
                       maxlength="13"
                       class="form-control"
                       placeholder="Jumlah Karyawan"
-                      value="{{ daWa.kabkota }}"
+                      value="{{ daWa.jumlah_karyawan }}"
                       id="jumlah_karyawan"
                       name="jumlah_karyawan"
                     />
@@ -341,7 +348,7 @@
                   <div class="col-sm-9">
                     <div class="form-group">
                       <select class="form-control" id="jumlah_karyawan2" name="jumlah_karyawan2">
-                        <option value="{{ daWa.kabkota }}">{{ daWa.kabkota }}</option>
+                        <option value="{{ daWa.kabkota }}">{{ daWa.jumlah_karyawan }}</option>
                       </select>
                     </div>
                   </div>
@@ -353,7 +360,7 @@
                       type="text"
                       class="form-control"
                       placeholder="Pendapatan"
-                      value="{{ daWa.kabkota }}"
+                      value="{{ daWa.pendapatan }}"
                       id="pendapatan"
                       name="pendapatan"
                     />
@@ -366,7 +373,7 @@
                       type="text"
                       class="form-control"
                       placeholder="Pendapatan Lain"
-                      value="{{ daWa.kabkota }}"
+                      value="{{ daWa.pendapatan_lain }}"
                       id="pendapatan_lain"
                       name="pendapatan_lain"
                     />
@@ -379,7 +386,7 @@
                       type="text"
                       class="form-control"
                       placeholder="Tunjangan"
-                      value="{{ daWa.kabkota }}"
+                      value="{{ daWa.tunjangan }}"
                       id="tunjangan"
                       name="tunjangan"
                       onchange="dagu()"
@@ -393,7 +400,7 @@
                       type="text"
                       class="form-control"
                       placeholder="Total Pendapatan"
-                      value="{{ daWa.kabkota }}"
+                      value="{{ daWa.total_pendapatan }}"
                       id="total_pendapatan"
                       name="total_pendapatan"
                       readonly
@@ -405,7 +412,13 @@
                   <div class="col-sm-9">
                     <div class="form-group">
                       <select class="form-control" id="tipe_perusahaan" name="tipe_perusahaan">
-                        <option value="{{ daWa.kabkota }}"></option>
+                        <option value="{{ daWa.tipe_perusahaan }}">{{ daWa.tipe_perusahaan }}</option>
+                        <option
+                          *ngFor="let gettipeperusahaandariapi of gettipeperusahaandariapi"
+                          value="{{ gettipeperusahaandariapi.company_deskripsi }}"
+                        >
+                          {{ gettipeperusahaandariapi.company_deskripsi }}
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -415,8 +428,8 @@
                   <div class="col-sm-9">
                     <div class="form-group">
                       <select class="form-control" id="tipe_kepegawaian" name="tipe_kepegawaian">
-                        <option value="{{ daWa.kabkota }}">
-                          {{ daWa.kabkota }}
+                        <option value="{{ daWa.tipe_kepegawaian }}">
+                          {{ daWa.tipe_kepegawaian }}
                         </option>
                         <option value="1">Pegawai tetap</option>
                         <option value="2">Pegawai kontrak</option>
@@ -455,954 +468,4 @@
     </div>
     <!-- #/ container -->
   </div>
-  <!--**********************************
-          Content body end
-      ***********************************-->
-
-  <!--**********************************
-      Main wrapper end
-  ***********************************-->
-
-  <!--**********************************
-      Scripts
-  ***********************************-->
-
-  <script src="<?php echo base_url();?>/asset/e-fos/plugins/common/common.min.js"></script>
-  <script src="<?php echo base_url();?>/asset/e-fos/js/custom.min.js"></script>
-  <script src="<?php echo base_url();?>/asset/e-fos/js/settings.js"></script>
-  <script src="<?php echo base_url();?>/asset/e-fos/js/gleek.js"></script>
-  <script src="<?php echo base_url();?>/asset/e-fos/js/styleSwitcher.js"></script>
-  <script>
-    $(document).ready(function () {
-      var kategoriPekerjaanJumlahKaryawan = document.getElementById('kategori_pekerjaan').value;
-      // alert(kategoriPekerjaanJumlahKaryawan);
-      if (kategoriPekerjaanJumlahKaryawan == 'Non Fix Income') {
-        $('#jumlahKaryawanNon').show();
-        $('#jumlahKaryawanFix').hide();
-        $('#hideJikaNFITipeKep').hide();
-      }
-      if (kategoriPekerjaanJumlahKaryawan == 'Fix Income') {
-        $('#jumlahKaryawanFix').show();
-        $('#jumlahKaryawanNon').hide();
-        $('#hideJikaNFITipeKep').show();
-      }
-      /////////////////////buat pro
-      var retriveUntukPro = document.getElementById('tipe_pekerjaan').value;
-      if (retriveUntukPro == 4) {
-        $('#proHidePosisi').hide();
-        $('#proShowJenis').show();
-        $('#hidden_siup').show();
-      } else if (retriveUntukPro == 3) {
-        $('#proHidePosisi').hide();
-        $('#proShowJenis').show();
-        $('#hidden_siup').show();
-      } else {
-        $('#proHidePosisi').show();
-        $('#proShowJenis').hide();
-        $('#hidden_siup').hide();
-      }
-    });
-  </script>
-
-  <!-- tambahan buat pro -->
-  <script>
-    $('#tipe_pekerjaan').change(function (e) {
-      e.preventDefault();
-      if (this.value == 4) {
-        $('#proHidePosisi').hide();
-        $('#proShowJenis').show();
-        document.getElementById('changeLabelSiup').innerHTML = 'Nomor SIP';
-      } else if (this.value == 3) {
-        $('#proHidePosisi').hide();
-        $('#proShowJenis').show();
-        document.getElementById('changeLabelSiup').innerHTML = 'Nomor SIP';
-      }
-      // else if(this.value == 2)
-      // {
-      //     $("#fixPosisi").show();
-      //     $("#proHidePosisi").hide();
-      // }
-      // else if(this.value == 7)
-      // {
-      //     $("#fixPosisi").show();
-      //     $("#proHidePosisi").hide();
-      // }
-      // else if(this.value == 8)
-      // {
-      //     $("#fixPosisi").show();
-      //     $("#proHidePosisi").hide();
-      // }
-      else {
-        $('#proHidePosisi').show();
-        $('#proShowJenis').hide();
-        document.getElementById('changeLabelSiup').innerHTML = 'Nomor SIUP';
-      }
-    });
-    // $(document).ready(function () {
-    //     var untukPosisiDiFixIncome = document.getElementById("kategori_pekerjaan").value;
-    //     if (untukPosisiDiFixIncome == "Fix Income")
-    //     {
-    //         // $("#fixPosisi").show();
-    //         $("#proHidePosisi").show();
-    //     }
-    //     else if(untukPosisiDiFixIncome == "Non Fix Income")
-    //     {
-    //         $("#proShowJenis").show();
-    //     }
-    //     else
-    //     {
-    //         // $("#fixPosisi").hide();
-    //         $("#proHidePosisi").show();
-    //     }
-    // });
-  </script>
-  <!-- tambahan buat pro -->
-
-  <!-- untuk hidden Nomor SIUP sebelum -->
-  <script>
-    document.getElementById('tipe_pekerjaan').addEventListener('change', function () {
-      if (this.value == 4) $('#hidden_siup').show();
-      else if (this.value == 3) $('#hidden_siup').show();
-      else $('#hidden_siup').hide();
-    });
-  </script>
-  <!-- untuk hidden Nomor SIUP sebelum -->
-
-  <!-- hide show ktp -->
-  <script>
-    $("input[name='chkPinNo']").click(function () {
-      if ($('#chkNo').is(':checked')) {
-        $('.driveingL').addClass('show-DIV');
-      } else {
-        $('.driveingL').removeClass('show-DIV');
-      }
-    });
-
-    $("input[name='chkPinNo1']").click(function () {
-      if ($('#chkNo1').is(':checked')) {
-        $('.panDeatils').show();
-      } else {
-        $('.panDeatils').hide();
-      }
-    });
-  </script>
-  <!-- akhir hide show ktp -->
-
-  <!-- get data dukcapil untuk informasi data enty -->
-  <script>
-    $(document).ready(function () {
-      // $('#total_pendapatan').val(formatRupiahtotal(<?=$total_pendapatan?>, 'Rp. '));
-      // $('#pendapatan').val(formatRupiahtotal(<?=$pendapatan?>, 'Rp. '));
-      // $('#pendapatan_lain').val(formatRupiahtotal(<?=$pendapatan_lain?>, 'Rp. '));
-      // $('#tunjangan').val(formatRupiahtotal(<?=$tunjangan?>, 'Rp. '));
-      //  AJAX request
-      $.ajax({
-        url: 'http://10.20.34.183:8080/new-efos/data_entry/getTokenDukcapil',
-        dataType: 'json',
-        type: 'post',
-        data: { ket: 'prov', provid: '0' },
-        success: function (response) {
-          console.log(response);
-          $province = '';
-          $.each(response, function (i, n) {
-            console.log(n['kdWilayah']);
-            province = '<option value="' + n['kdWilayah'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
-            province = province + '';
-            $('#provinsi_cabang').append(province);
-          });
-        },
-      });
-
-      $('#provinsi_cabang').change(function () {
-        var provid = $(this).val().substring(0, 2);
-        $.ajax({
-          url: 'http://10.20.34.183:8080/new-efos/data_entry/getTokenDukcapil',
-          dataType: 'json',
-          type: 'post',
-          data: { ket: 'kabkota', provid: provid },
-          success: function (response) {
-            console.log(response);
-            $kabkota = '';
-            $('#kabkota_cabang').empty();
-            kabkota = '<option value="">Pilih Kota</option>';
-            $('#kabkota_cabang').append(kabkota);
-            $.each(response, function (i, n) {
-              console.log('tes' + n['kdWilayah']);
-              kabkota = '<option value="' + n['kdWilayah'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
-              kabkota = kabkota + '';
-              $('#kabkota_cabang').append(kabkota);
-            });
-          },
-        });
-      });
-
-      $('#kabkota_cabang').change(function () {
-        var kabkotaid = $(this).val().substring(0, 4);
-        $.ajax({
-          url: 'http://10.20.34.183:8080/new-efos/data_entry/getTokenDukcapil',
-          dataType: 'json',
-          type: 'post',
-          data: { ket: 'kecamatan', provid: kabkotaid },
-          success: function (response) {
-            console.log(response);
-            $kecamatan = '';
-            $('#kecamatan').empty();
-            kecamatan = '<option value="">Pilih Kecamatan</option>';
-            $('#kecamatan').append(kecamatan);
-            $.each(response, function (i, n) {
-              console.log(n['kdWilayah']);
-              kecamatan = '<option value="' + n['kdWilayah'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
-              kecamatan = kecamatan + '';
-              $('#kecamatan').append(kecamatan);
-            });
-          },
-        });
-      });
-
-      $('#kecamatan').change(function () {
-        var kecamatanid = $(this).val().substring(0, 6);
-        $.ajax({
-          url: 'http://10.20.34.183:8080/new-efos/data_entry/getTokenDukcapil',
-          dataType: 'json',
-          type: 'post',
-          data: { ket: 'kelurahan', provid: kecamatanid },
-          success: function (response) {
-            console.log(response);
-            $kelurahan = '';
-            $('#kelurahan').empty();
-            kelurahan = '<option value="">Pilih Kelurahan</option>';
-            $('#kelurahan').append(kelurahan);
-            $.each(response, function (i, n) {
-              console.log(n['kdWilayah']);
-              kelurahan = '<option value="' + n['kdPos'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
-              kelurahan = kelurahan + '';
-              $('#kelurahan').append(kelurahan);
-            });
-          },
-        });
-      });
-
-      $('#kelurahan').change(function () {
-        var kelurahanid = $(this).val().substring(0, 5);
-        document.getElementById('kode_pos').value = kelurahanid;
-      });
-    });
-
-    function buatisi() {
-      var x = kode_pos.value;
-      $.ajax({
-        // url: 'http://10.20.34.178:8087/efo/getWilByKdPos/' + x,
-        url: 'http://10.20.34.183:8080/new-efos/data_entry/getTokenDukcapil',
-        dataType: 'json',
-        type: 'post',
-        data: {
-          ket: 'kodpos',
-          provid: x,
-        },
-        success: function (response) {
-          console.log(response);
-          var da = JSON.parse(JSON.stringify(response));
-          //var result_ = JSON.parse(JSON.stringify(da.result))
-          var data_wilayah = JSON.parse(JSON.stringify(da.provKec));
-          var data_list_kelurahan = JSON.parse(JSON.stringify(da.kels));
-          console.log('data:' + data_list_kelurahan[0].kdWilayah);
-          $kelurahan = '';
-          $('#kelurahan').empty();
-          $.each(data_list_kelurahan, function (i, n) {
-            console.log(n['kdPos']);
-            if (n['kdPos'] == x) {
-              console.log(n['namaWilayah']);
-              kelurahan = '<option value="' + n['kdPos'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
-              kelurahan = kelurahan + '';
-              $('#kelurahan').append(kelurahan);
-            }
-          });
-          var namaprov = data_wilayah.nm_prov;
-          var namakota = data_wilayah.nm_kota;
-          var namakecamatan = data_wilayah.nm_kec;
-          var namakelurahan = data_wilayah.nm_kel;
-          var kodeprov = data_wilayah.kd_prov;
-          var kodekota = data_wilayah.kd_kota;
-          var kodekecamatan = data_wilayah.kd_kec;
-          var kodekelurahan = data_wilayah.kd_kel;
-          $('#provinsi_cabang')
-            .attr('selected', 'selected')
-            .val(kodeprov + '|' + namaprov);
-          $('#provinsi_cabang option:first').text(namaprov);
-          $('#kabkota_cabang option:selected').val(kodekota + '|' + namakota);
-          $('#kabkota_cabang option:selected').text(namakota);
-          $('#kecamatan option:selected').val(kodekecamatan + '|' + namakecamatan);
-          $('#kecamatan option:selected').text(namakecamatan);
-          //    $('#kelurahan option:first').val(x + '|' + namakelurahan);
-          //     $('#kelurahan option:first').text(namakelurahan);
-        },
-      });
-    }
-  </script>
-  <!-- penutup get data dukcapil untuk informasi data entry -->
-
-  <!--untuk menampilkan jenis bidang dan sektor-->
-  <script>
-    $(document).ready(function () {
-      //  AJAX request
-      $.ajax({
-        url: 'http://10.20.34.183:8080/new-efos/data_entry/postgetBidang',
-        dataType: 'json',
-        type: 'post',
-        //	data: {ket: 'jenisBidang',provid: '0'},
-        success: function (response) {
-          console.log(response);
-          //alert(response);
-          $jenisBidang = '';
-          // $('#jenis_bidang').empty();
-          $.each(response, function (i, n) {
-            console.log(n['nama_group_sektor']);
-            //kelurahan = '<option value="'+n['kdPos']+'|'+n['namaWilayah']+'">'+n['namaWilayah']+'</option>';
-            jenisBidang =
-              '<option value="' + n['group_sektor'] + '|' + n['nama_group_sektor'] + '">' + n['nama_group_sektor'] + '</option>';
-            jenisBidang = jenisBidang + '';
-            $('#jenis_bidang').append(jenisBidang);
-          });
-          //	alert(response);
-          //	console.log(response);
-        },
-      });
-
-      $('#jenis_bidang').change(function () {
-        var group_sektor = $(this).val().substring(0, 2);
-        //alert(group_sektor);
-        $.ajax({
-          url: 'http://10.20.34.183:8080/new-efos/data_entry/postgetSektor',
-          dataType: 'json',
-          type: 'post',
-          data: { group_sektor: group_sektor },
-          success: function (response) {
-            console.log(response);
-            $jenisSektor = '';
-            $('#jenis_sektor').empty();
-            $.each(response, function (i, n) {
-              console.log(n['nama_sub_sektor']);
-              jenisSektor = '<option value="' + n['group_sektor'] + '|' + n['nama_sub_sektor'] + '">' + n['nama_sub_sektor'] + '</option>';
-              jenisSektor = jenisSektor + '';
-              $('#jenis_sektor').append(jenisSektor);
-            });
-            //	alert(response);
-            //	console.log(response);
-          },
-        });
-      });
-    });
-  </script>
-  <!--penutup untuk menampilkan jenis bidang dan sektor-->
-
-  <!--untuk menampilkan jenis bidang dan sektor sebelum-->
-  <script>
-    $(document).ready(function () {
-      //  AJAX request
-      $.ajax({
-        url: 'http://10.20.34.183:8080/new-efos/data_entry/postgetBidang',
-        dataType: 'json',
-        type: 'post',
-        //	data: {ket: 'jenisBidang',provid: '0'},
-        success: function (response) {
-          console.log(response);
-          $jenisBidang = '';
-          $.each(response, function (i, n) {
-            console.log(n['nama_group_sektor']);
-            jenisBidang =
-              '<option value="' + n['group_sektor'] + '|' + n['nama_group_sektor'] + '">' + n['nama_group_sektor'] + '</option>';
-            jenisBidang = jenisBidang + '';
-            $('#jenis_bidang_sebelum').append(jenisBidang);
-          });
-          //	alert(response);
-          //	console.log(response);
-        },
-      });
-
-      $('#jenis_bidang_sebelum').change(function () {
-        var group_sektor = $(this).val().substring(0, 2);
-
-        $.ajax({
-          url: 'http://10.20.34.183:8080/new-efos/data_entry/postgetSektor',
-          dataType: 'json',
-          type: 'post',
-          data: { group_sektor: group_sektor },
-          success: function (response) {
-            console.log(response);
-            $jenisSektor = '';
-            $.each(response, function (i, n) {
-              console.log(n['nama_sub_sektor']);
-              jenisSektor = '<option value="' + n['group_sektor'] + '|' + n['nama_sub_sektor'] + '">' + n['nama_sub_sektor'] + '</option>';
-              jenisSektor = jenisSektor + '';
-              $('#jenis_sektor_sebelum').append(jenisSektor);
-            });
-            //	alert(response);
-            //	console.log(response);
-          },
-        });
-      });
-    });
-
-    //// buat duit
-
-    var dengan_rupiah = document.getElementById('pendapatan');
-    var dengan_rupia = document.getElementById('pendapatan_lain');
-    var dengan_rupi = document.getElementById('tunjangan');
-
-    // var noa=Integer.parseInt(dengan_rupiah);
-    // var nob=Integer.parseInt(dengan_rupia);
-    // //var result = Number(dengan_rupiah.replaceAll('.', '')) + Number(dengan_rupia.replaceAll('.', ''));
-    //result = noa + nob;
-
-    var no2 = dengan_rupia.value.replace(/[^,\d]/g, '').toString();
-
-    var totalpendapatan = 0;
-    var totalseluru = parseInt(totalpendapatan.value) + parseInt(dengan_rupi.value);
-    totalpendapatan = dengan_rupiah.value.replace(/[^,\d]/g, '').toString() + dengan_rupia.value.replace(/[^,\d]/g, '').toString();
-
-    dengan_rupiah.addEventListener('keyup', function (e) {
-      dengan_rupiah.value = formatRupiah(this.value, 'Rp. ');
-      var total2 =
-        parseInt(dengan_rupiah.value.replace(/[^,\d]/g, '').toString()) +
-        parseInt(dengan_rupia.value.replace(/[^,\d]/g, '').toString()) +
-        parseInt(dengan_rupi.value.replace(/[^,\d]/g, '').toString());
-      $('#total_pendapatan').val(formatRupiahtotal(total2, 'Rp. '));
-    });
-    var no1 = dengan_rupiah.value.replace(/[^,\d]/g, '').toString();
-    dengan_rupia.addEventListener('keyup', function (e) {
-      dengan_rupia.value = formatRupiah(this.value, 'Rp. ');
-      var total1 =
-        parseInt(dengan_rupiah.value.replace(/[^,\d]/g, '').toString()) +
-        parseInt(dengan_rupia.value.replace(/[^,\d]/g, '').toString()) +
-        parseInt(dengan_rupi.value.replace(/[^,\d]/g, '').toString());
-      $('#total_pendapatan').val(formatRupiahtotal(total1, 'Rp. '));
-    });
-
-    dengan_rupi.addEventListener('keyup', function (e) {
-      dengan_rupi.value = formatRupiah(this.value, 'Rp. ');
-      var total =
-        parseInt(dengan_rupiah.value.replace(/[^,\d]/g, '').toString()) +
-        parseInt(dengan_rupia.value.replace(/[^,\d]/g, '').toString()) +
-        parseInt(dengan_rupi.value.replace(/[^,\d]/g, '').toString());
-
-      $('#total_pendapatan').val(formatRupiahtotal(total, 'Rp. '));
-      //    $('#total_pendapatan').val(parseInt(dengan_rupiah.value.replace(/[^,\d]/g, '').toString())+parseInt(dengan_rupia.value.replace(/[^,\d]/g, '').toString())+parseInt(dengan_rupi.value.replace(/[^,\d]/g, '').toString()) );
-
-      dengan_rup = formatRupiah(this.value, 'Rp. ');
-    });
-
-    // // /* Fungsi */
-    function formatRupiah(angka, prefix) {
-      var number_string = angka.replace(/[^,\d]/g, '').toString(),
-        split = number_string.split(','),
-        sisa = split[0].length % 3,
-        rupiah = split[0].substr(0, sisa),
-        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-      if (ribuan) {
-        separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
-      }
-
-      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-      return prefix == undefined ? rupiah : rupiah ? 'Rp. ' + rupiah : '';
-    }
-
-    function formatRupiahtotal(angka, prefix) {
-      var number_string = angka
-          .toString()
-          .replace(/[^,\d]/g, '')
-          .toString(),
-        split = number_string.split(','),
-        sisa = split[0].length % 3,
-        rupiah = split[0].substr(0, sisa),
-        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-      if (ribuan) {
-        separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
-      }
-
-      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-      return prefix == undefined ? rupiah : rupiah ? 'Rp. ' + rupiah : '';
-    }
-    //// buat uang
-  </script>
-  <!-- untuk umur pensiun tidak boleh kurang atau sama dengan umur pemohon -->
-  <script>
-    var buatFokus = document.getElementById('umur_pensiun');
-    buatFokus.addEventListener('mouseout', function () {
-      var min = parseInt(document.getElementById('umur1').value);
-      var max = parseInt(buatFokus.value);
-      if (max <= min) {
-        alert('Umur pension tidak boleh sama dengan atau kurang dari umur pemohon ' + max + ' <= ' + min);
-        buatFokus.focus();
-        return false;
-      } else removeEventListener;
-    });
-  </script>
-  <!-- untuk umur pensiun tidak boleh kurang atau sama dengan umur pemohon -->
-
-  <!-- buat validasi pekerjaan sekarang-->
-  <script>
-    ///////////////buat Lama bekerja\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    const bulanBediri = document.getElementById('lama_bekerja_bulan');
-    const tahunBerdiri = document.getElementById('lama_bekerja_tahun');
-    bulanBediri.addEventListener('input', updateValueBerdiri);
-    tahunBerdiri.addEventListener('input', updateValueBerdiri2);
-
-    function updateValueBerdiri2(t) {
-      tahunBerdiri.textContent = t.target.value;
-      // alert("jsdgh" + tahunBerdiri.textContent)
-    }
-    function updateValueBerdiri(b) {
-      bulanBediri.textContent = b.target.value;
-      var totalBulan = parseInt(tahunBerdiri.textContent) * 12 + parseInt(bulanBediri.textContent);
-      // alert('dh'+ totalBulan)
-      // alert("jsdgh" + validasiUmurPosisi)
-      // alert(validasiLamaBekerjaTahun)
-    }
-    // alert('f')
-    var validasiUmurPosisi = document.getElementById('posisi').value;
-    /////////////////untuk Validasi Job\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    function validateFormJob() {
-      var validasiKategori = document.forms['data_entry_form']['kategori_pekerjaan'].value;
-      if (validasiKategori == null || validasiKategori == '') {
-        document.getElementById('kategori_pekerjaan').focus();
-        alert('Kategori Pekerjaan Harus diisi');
-        return false;
-      }
-      var validasiTipePekerjaan = document.forms['data_entry_form']['tipe_pekerjaan'].value;
-      if (validasiTipePekerjaan == '' || validasiTipePekerjaan == null) {
-        document.getElementById('tipe_pekerjaan').focus();
-        alert('Tipe Pekerjaan Harus diisi');
-        return false;
-      }
-      // alert('df'+totalBulan)
-      // var validasiPayroll = document.forms["data_entry_form"]["payroll"].value;
-      // if (validasiPayroll=="" || validasiPayroll== null) {
-      //     document.getElementById("payroll").focus();
-      //     alert("Payroll Harus diisi");
-      //     return false;
-      // }
-      var validasiJabatan = document.forms['data_entry_form']['jabatan'].value;
-      // if (validasiJabatan=="" || validasiJabatan== null) {
-      //     document.getElementById("jabatan").focus();
-      //     alert("Jabatan Harus diisi");
-      //     return false;
-      // }
-      var validasiPosisi = document.forms['data_entry_form']['posisi'].value;
-      // if (validasiPosisi=="" || validasiPosisi== null) {
-      //     document.getElementById("posisi").focus();
-      //     alert("Posisi Harus diisi");
-      //     return false;
-      // }
-      var validasiNamaPerusahaan = document.forms['data_entry_form']['nama_perusahaan'].value;
-      if (validasiNamaPerusahaan == '' || validasiNamaPerusahaan == null) {
-        document.getElementById('nama_perusahaan').focus();
-        alert('Nama Perusahaan Harus diisi');
-        return false;
-      }
-      var validasiAlamatPerusahaan = document.forms['data_entry_form']['alamat_perusahaan'].value;
-      if (validasiAlamatPerusahaan == '' || validasiAlamatPerusahaan == null) {
-        document.getElementById('alamat_perusahaan').focus();
-        alert('Alamat Harus diisi');
-        return false;
-      }
-      var validasiProvinsi = document.forms['data_entry_form']['provinsi_cabang'].value;
-      if (validasiProvinsi == '' || validasiProvinsi == null) {
-        document.getElementById('provinsi_cabang').focus();
-        alert('Provinsi Harus diisi');
-        return false;
-      }
-      var validasiKota = document.forms['data_entry_form']['kabkota_cabang'].value;
-      if (validasiKota == '' || validasiKota == null) {
-        document.getElementById('kabkota_cabang').focus();
-        alert('Kota Harus diisi');
-        return false;
-      }
-      var validasiKecamatan = document.forms['data_entry_form']['kecamatan'].value;
-      if (validasiKecamatan == '' || validasiKecamatan == null) {
-        document.getElementById('kecamatan').focus();
-        alert('Kecamatan Harus diisi');
-        return false;
-      }
-      var validasiKelurahan = document.forms['data_entry_form']['kelurahan'].value;
-      if (validasiKelurahan == '' || validasiKelurahan == null) {
-        document.getElementById('kelurahan').focus();
-        alert('Kelurahan Harus diisi');
-        return false;
-      }
-      var validasiKodePos = document.forms['data_entry_form']['kode_pos'].value;
-      if (validasiKodePos == '' || validasiKodePos == null) {
-        document.getElementById('kode_pos').focus();
-        alert('Kode Pos Harus diisi');
-        return false;
-      }
-      var validasiRt = document.forms['data_entry_form']['rt'].value;
-      if (validasiRt == '' || validasiRt == null) {
-        document.getElementById('rt').focus();
-        alert('RT Harus diisi');
-        return false;
-      }
-      var validasiRw = document.forms['data_entry_form']['rw'].value;
-      if (validasiRw == '' || validasiRw == null) {
-        document.getElementById('rw').focus();
-        alert('RW Harus diisi');
-        return false;
-      }
-      // var validasiNoSiup = document.forms["data_entry_form"]["no_siup"].value;
-      // if (validasiNoSiup=="" || validasiNoSiup== null) {
-      //     alert("Kode Pos Harus diisi");
-      //     return false;
-      // }
-      var validasiJenisBidang = document.forms['data_entry_form']['jenis_bidang'].value;
-      if (validasiJenisBidang == '' || validasiJenisBidang == null) {
-        document.getElementById('jenis_bidang').focus();
-        alert('Jenis Bidang Harus diisi');
-        return false;
-      }
-      var validasiJenisSektor = document.forms['data_entry_form']['sektor_ekonomi'].value;
-      if (validasiJenisSektor == '' || validasiJenisSektor == null) {
-        document.getElementById('sektor_ekonomi').focus();
-        alert('Sektor Ekonomi Harus diisi');
-        return false;
-      }
-      var usiaPemohon = document.getElementById('umur1').value;
-      var validasiUmurPensiun = document.forms['data_entry_form']['umur_pensiun'].value;
-      if (validasiUmurPensiun == '' || validasiUmurPensiun == null || validasiUmurPensiun <= usiaPemohon) {
-        document.getElementById('umur_pensiun').focus();
-        alert('Umur Pensiunan Harus diisi dan Umur Pensiun tidak boleh sama dengan atau kurang dari umur pemohon');
-        return false;
-      }
-      ////////////////////////////////////////////////////////////////////////////////////////
-      var validasiLamaBekerjaTahun = document.forms['data_entry_form']['lama_bekerja_tahun'].value;
-      var validasiLamaBekerjaBulan = document.forms['data_entry_form']['lama_bekerja_bulan'].value;
-      var totalValidasiBuatTahunBulan = parseInt(validasiLamaBekerjaTahun) * 12 + parseInt(validasiLamaBekerjaBulan);
-      if (validasiLamaBekerjaTahun == '' || validasiLamaBekerjaTahun == null) {
-        document.getElementById('lama_bekerja_tahun').focus();
-        alert('Lama Bekerja Tahun Harus diisi');
-        return false;
-      }
-      if (validasiLamaBekerjaBulan == '' || validasiLamaBekerjaBulan == null) {
-        document.getElementById('lama_bekerja_bulan').focus();
-        alert('Lama Bekerja Bulan Harus diisi');
-        return false;
-      }
-      /////////////////////////////////////////////////////////////////////////////////////////////
-      var validasiPendapatan = document.forms['data_entry_form']['pendapatan'].value;
-      if (validasiPendapatan == '' || validasiPendapatan == null) {
-        document.getElementById('pendapatan').focus();
-        alert('Pendapatan Harus diisi');
-        return false;
-      }
-      var validasiTunjangan = document.forms['data_entry_form']['tunjangan'].value;
-      if (validasiTunjangan == '' || validasiTunjangan == null) {
-        document.getElementById('tunjangan').focus();
-        alert('Tunjangan Harus diisi');
-        return false;
-      }
-      var validasiTotalTunjangan = document.forms['data_entry_form']['total_pendapatan'].value;
-      if (validasiTotalTunjangan == '' || validasiTotalTunjangan == null) {
-        document.getElementById('total_pendapatan').focus();
-        alert('Total Pendapatan Harus diisi');
-        return false;
-      }
-      var validasiTipePerusahaan = document.forms['data_entry_form']['tipe_perusahaan'].value;
-      if (validasiTipePerusahaan == '' || validasiTipePerusahaan == null) {
-        document.getElementById('tipe_perusahaan').focus();
-        alert('Tipe Perusahaan Harus diisi');
-        return false;
-      }
-      var validasiTipeKepegawaian = document.forms['data_entry_form']['tipe_kepegawaian'].value;
-      // if (validasiTipeKepegawaian=="" || validasiTipeKepegawaian== null) {
-      //     document.getElementById("tipe_kepegawaian").focus();
-      //     alert("Kepegawaian Harus diisi");
-      //     return false;
-      // }
-      var validasiJumlahKaryawan = document.forms['data_entry_form']['jumlah_karyawan'].value;
-      var validasiJumlahKaryawan2 = document.forms['data_entry_form']['jumlah_karyawan2'].value;
-      ///////////jika pegawai swasta atau bumn kurang dari 12 bulan\\\\\\\\\\\\\\\\\\\\\\\
-      if (validasiTipePekerjaan == 1 && totalValidasiBuatTahunBulan <= 12 && validasiTipeKepegawaian != 1) {
-        //pns
-        alert('Aplikasi tidak bisa dilanjutkan, total lama bekerja tidak valid');
-        return false;
-      }
-      if (validasiTipePekerjaan == 8 && totalValidasiBuatTahunBulan < 12) {
-        alert('Untuk Pegawai BUMN/BUMD atau Pegawai Swasta, Minmal lama bekerja 1 tahun');
-        return false;
-      }
-      if (validasiTipePekerjaan == 3 && totalValidasiBuatTahunBulan < 12) {
-        alert('Aplikasi tidak bisa dilanjutkan, lama bekerja < 1 tahun');
-        return false;
-      }
-      if (validasiTipePekerjaan == 4 && totalValidasiBuatTahunBulan < 12) {
-        alert('Aplikasi tidak bisa dilanjutkan, lama bekerja < 1 tahun');
-        return false;
-      }
-      if (validasiTipePekerjaan == 2 && validasiJabatan != 'Direktur' && totalValidasiBuatTahunBulan < 12) {
-        alert('Untuk Pegawai Swasta, Minimal lama bekerja 1 tahun');
-        return false;
-      }
-      ///done///
-      // if((validasiTipePekerjaan == 2 ) && (totalValidasiBuatTahunBulan >= 12) && validasiTipePerusahaan != 2){
-      //     alert('Total Lama Bekerja Tidak Valid');
-      //     return false;
-      // }
-      ///done///
-      if (validasiJabatan != 'Direktur' && usiaPemohon > 55) {
-        // alert("yuksemua cek "+ (validasiTipePekerjaan == 2 ) && (totalValidasiBuatTahunBulan >= 12) && validasiTipePerusahaan != 2)
-        // alert("pekerja "+ (validasiTipePekerjaan == 2));
-        // alert("bulan "+ (totalValidasiBuatTahunBulan >= 12));
-        // alert("perushaa "+ validasiTipePerusahaan != 2);
-        alert('Usia Tidak Valid');
-        return false;
-      }
-      ///done///
-      if (validasiJabatan == 'Direktur' && usiaPemohon > 65) {
-        alert('Usia Tidak Valid');
-        return false;
-      }
-
-      ////////////////////////////////////////jumalh karyawan/////////////////////////////////////
-      if (validasiKategori == 'Fix Income') {
-        if (validasiJumlahKaryawan == '' || validasiJumlahKaryawan == null) {
-          document.getElementById('jumlah_karyawan').focus();
-          alert('Jumlah Karyawan Harus diisi');
-          return false;
-        }
-        if (validasiJumlahKaryawan < 25) {
-          document.getElementById('jumlah_karyawan').focus();
-          alert('Jumalah Karyawan Tidak Boleh Kurang Dari 25');
-          return false;
-        }
-      }
-      var untukJumlahKaryawan = validasiJumlahKaryawan2.split('-').pop();
-      if (validasiKategori == 'Non Fix Income') {
-        if (untukJumlahKaryawan < 25) {
-          document.getElementById('jumlah_karyawan2').focus();
-          alert('Jumlah Karyawan Tidak Boleh Kurang Dari 25');
-          return false;
-        }
-      }
-      // alert(untukJumlahKaryawan < 25)
-    }
-  </script>
-  <!-- buat validasi pekerjaan sekarang -->
-
-  <!-- buat biar inpunya number -->
-  <script>
-    function onlyNumberKey(evt) {
-      var ASCIICode = evt.which ? evt.which : evt.keyCode;
-      if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) return false;
-      return true;
-    }
-  </script>
-
-  <script>
-    $(document).ready(function () {
-      var grupname = WADUH.value;
-
-      // var grupname=$this->session->userdata('GROUP_NAME');
-      // alert(grupname);
-      if (grupname == 'BRANCHMANAGER') {
-        $('#kategori_pekerjaan').attr('disabled', 'disabled');
-        $('#tipe_pekerjaan').attr('disabled', 'disabled');
-        $('#payroll').attr('disabled', 'disabled');
-        $('#nonpayroll').attr('disabled', 'disabled');
-        $('#jabatan').attr('disabled', 'disabled');
-        $('#posisi').attr('disabled', 'disabled');
-        $('#nama_perusahaan').attr('disabled', 'disabled');
-        $('#comment').attr('disabled', 'disabled');
-        $('#provinsi_cabang').attr('disabled', 'disabled');
-        $('#kabkota_cabang').attr('disabled', 'disabled');
-        $('#kecamatan').attr('disabled', 'disabled');
-        $('#kelurahan').attr('disabled', 'disabled');
-        $('#kode_pos').attr('disabled', 'disabled');
-        $('#rt').attr('disabled', 'disabled');
-        $('#rw').attr('disabled', 'disabled');
-        $('#no_siup').attr('disabled', 'disabled');
-        $('#jenis_bidang').attr('disabled', 'disabled');
-        $('#jenis_sektor').attr('disabled', 'disabled');
-        $('#umur1').attr('disabled', 'disabled');
-        $('#umur_pensiun').attr('disabled', 'disabled');
-        $('#lama_bekerja_tahun').attr('disabled', 'disabled');
-        $('#lama_bekerja_bulan').attr('disabled', 'disabled');
-        $('#jumlah_karyawan').attr('disabled', 'disabled');
-        $('#jumlah_karyawan2').attr('disabled', 'disabled');
-        $('#pendapatan').attr('disabled', 'disabled');
-        $('#pendapatan_lain').attr('disabled', 'disabled');
-        $('#tunjangan').attr('disabled', 'disabled');
-        $('#total_pendapatan').attr('disabled', 'disabled');
-        $('#kategori_pekerjaan_sebelum').attr('disabled', 'disabled');
-        $('#tipe_pekerjaan_sebelum').attr('disabled', 'disabled');
-        $('#payroll_sebelum').attr('disabled', 'disabled');
-        $('#payroll_sebeluma').attr('disabled', 'disabled');
-        $('#posisi_sebelum').attr('disabled', 'disabled');
-        $('#nama_perusahaan_sebelum').attr('disabled', 'disabled');
-        $('#alamat_pekerjaan_sebelum').attr('disabled', 'disabled');
-        $('#provinsi_sebelum').attr('disabled', 'disabled');
-        $('#kabkota_sebelum').attr('disabled', 'disabled');
-        $('#kecamatan_sebelum').attr('disabled', 'disabled');
-        $('#kelurahan_sebelum').attr('hidden', 'hidden');
-        $('#kode_pos_sebelum').attr('disabled', 'disabled');
-        $('#rt_sebelum').attr('disabled', 'disabled');
-        $('#rw_sebelum').attr('disabled', 'disabled');
-        $('#no_siup_sebelum').attr('disabled', 'disabled');
-        $('#jenis_bidang_sebelum').attr('disabled', 'disabled');
-        $('#sektor_ekonomi_sebelum').attr('disabled', 'disabled');
-        $('#lama_bekerja_tahun_sebelum').attr('disabled', 'disabled');
-        $('#lama_bekerja_bulan_sebelum').attr('disabled', 'disabled');
-        $('#tipe_perusahaan').attr('disabled', 'disabled');
-        $('#tipe_kepegawaian').attr('disabled', 'disabled');
-        $('#jumlah_karyawan_sebelum').attr('disabled', 'disabled');
-        $('#jenis_pekerjaan').attr('disabled', 'disabled');
-        $('#simpanData').attr('hidden', 'hidden');
-        $('#btn').attr('hidden', 'hidden');
-        $('#kode_poshilang').attr('hidden', 'hidden');
-        // a = document.getElementById("nama").value;
-        // a.readonly=true;
-        // alert(a);
-      } else {
-        $('#selanjutnya').attr('hidden', 'hidden');
-      }
-    });
-  </script>
-
-  <script>
-    $(document).ready(function () {
-      //  AJAX request
-      $.ajax({
-        url: 'http://10.20.34.183:8080/new-efos/data_entry/gettipeperusahaan',
-        dataType: 'json',
-        type: 'post',
-        success: function (response) {
-          console.log(response);
-          $province = '';
-          $.each(response, function (i, n) {
-            console.log(n['deskripsi']);
-            province = '<option value="' + n['company_code'] + '">' + n['company_deskripsi'] + '</option>';
-            province = province + '';
-            $('#tipe_perusahaan').append(province);
-          });
-        },
-      });
-    });
-  </script>
-
-  <script>
-    $(document).ready(function () {
-      var codekategori = kategori_pekerjaan.value;
-
-      if (codekategori == 'Fix Income') {
-        var codenya = '1';
-      } else {
-        var codenya = '2';
-      }
-      // alert(codenya);
-      //  AJAX request
-      $.ajax({
-        url: 'http://10.20.34.183:8080/new-efos/data_entry/gettipepekerjaan',
-        dataType: 'json',
-        type: 'post',
-        data: {
-          codenya: codenya,
-        },
-        success: function (response) {
-          console.log(response);
-          $province = '';
-
-          $.each(response, function (i, n) {
-            console.log(n['deskripsi']);
-            province = '<option value="' + n['job_type_id'] + '">' + n['job_desc'] + '</option>';
-            province = province + '';
-            $('#tipe_pekerjaan').append(province);
-          });
-        },
-      });
-    });
-  </script>
-
-  <script>
-    $(document).ready(function () {
-      //  AJAX request
-      $.ajax({
-        url: 'http://10.20.34.183:8080/new-efos/data_entry/getjabatan',
-        dataType: 'json',
-        type: 'post',
-        success: function (response) {
-          console.log(response);
-          $province = '';
-          $.each(response, function (i, n) {
-            console.log(n['deskripsi']);
-            province = '<option value="' + n['jabatan_deskripsi'] + '">' + n['jabatan_deskripsi'] + '</option>';
-            province = province + '';
-            $('#jabatan').append(province);
-          });
-        },
-      });
-    });
-
-    $.ajax({
-      url: 'http://10.20.34.183:8080/new-efos/data_entry/getjumlahkaryawan',
-      dataType: 'json',
-      type: 'post',
-      success: function (response) {
-        console.log(response);
-        $getjumlahkaryawan = '';
-
-        $.each(response, function (i, n) {
-          console.log(n['deskripsi']);
-          getjumlahkaryawan = '<option value="' + n['deskripsi'] + '">' + n['deskripsi'] + '</option>';
-          getjumlahkaryawan = getjumlahkaryawan + '';
-          $('#jumlah_karyawan2').append(getjumlahkaryawan);
-        });
-      },
-    });
-  </script>
-
-  <script>
-    $('#tipe_pekerjaan').change(function () {
-      $.ajax({
-        url: 'http://10.20.34.183:8080/new-efos/data_entry/getjabatan',
-        dataType: 'json',
-        type: 'post',
-        success: function (response) {
-          console.log(response);
-          $kabkota = '';
-          $('#jabatan').empty();
-          kabkota = '<option value="">Pilih posisi</option>';
-          $('#jabatan').append(kabkota);
-          $.each(response, function (i, n) {
-            console.log('tes' + n['kdWilayah']);
-            kabkota = '<option value="' + n['jabatan_deskripsi'] + '">' + n['jabatan_deskripsi'] + '</option>';
-            kabkota = kabkota + '';
-            $('#jabatan').append(kabkota);
-          });
-        },
-      });
-    });
-  </script>
-
-  <script>
-    $(document).ready(function () {
-      //  AJAX request
-      $.ajax({
-        url: 'http://10.20.34.183:8080/new-efos/data_entry/getjenispekerjaan',
-        dataType: 'json',
-        type: 'post',
-        success: function (response) {
-          console.log(response);
-          $province = '';
-          $.each(response, function (i, n) {
-            console.log(n['deskripsi']);
-            province = '<option value="' + n['deskripsi'] + '">' + n['deskripsi'] + '</option>';
-            province = province + '';
-            $('#jenis_pekerjaan').append(province);
-          });
-        },
-      });
-    });
-  </script>
-  <!-- buat biar inpunya number -->
 </body>
