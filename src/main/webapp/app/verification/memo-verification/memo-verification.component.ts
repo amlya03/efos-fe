@@ -94,7 +94,7 @@ export class MemoVerificationComponent implements OnInit {
 
   // Simpan
   simpanMemo(keterangan:any){
-    this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_memo', {
+    this.http.post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_memo', {
       id: 0,
       keterangan: keterangan,
       users: this.untukSessionUserName,

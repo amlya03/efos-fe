@@ -228,7 +228,7 @@ export class DataCalonNasabahComponent implements OnInit {
       return;
     } else if (this.dataCalonNasabahMap == null) {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_nasabah', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_nasabah', {
           nama: this.dataCalonNasabahForm.get('nama')?.value,
           no_handphone: this.dataCalonNasabahForm.get('no_handphone')?.value,
           jenis_kelamin: this.dataCalonNasabahForm.get('jenis_kelamin')?.value,
@@ -308,7 +308,7 @@ export class DataCalonNasabahComponent implements OnInit {
       else{
         this.dataCalonNasabahMap.isi_rumah = this.dataCalonNasabahMap.isi_rumah
       }
-      this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_calon_nasabah', {
+      this.http.post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_calon_nasabah', {
         nama: this.dataCalonNasabahForm.get('nama')?.value,
         no_handphone: this.dataCalonNasabahForm.get('no_handphone')?.value,
         jenis_kelamin: this.dataCalonNasabahForm.get('jenis_kelamin')?.value,
@@ -535,7 +535,7 @@ export class DataCalonNasabahComponent implements OnInit {
     });
 
     // ref Jenis Bangunan
-    this.http.get<ApiResponse>('http://10.20.34.178:8805/api/v1/efos-de/list_tipe_properti?sp=H03').subscribe(data => {
+    this.http.get<ApiResponse>('http://10.20.34.110:8805/api/v1/efos-de/list_tipe_properti?sp=H03').subscribe(data => {
       if (data.code === 200) {
         this.refListTipeProperti = data.result;
       }

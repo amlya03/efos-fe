@@ -125,7 +125,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   // Delete
   deleteDataUpload(doc:any, id:any, id_upload:any, nama:any){
     this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/deleteDocUpload', {
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/deleteDocUpload', {
         created_date: '',
         doc_description: doc,
         id: id,
@@ -139,10 +139,10 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   viewData( nama_dok:any ){
     let buatPdf = nama_dok.split('.').pop();
     if(buatPdf == 'pdf'){
-      window.open('http://10.20.34.178:8805/api/v1/efos-de/downloadFile/'+nama_dok+'');
+      window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/'+nama_dok+'');
     }
     else{
-        let url = 'http://10.20.34.178:8805/api/v1/efos-de/downloadFile/'+nama_dok+'';
+        let url = 'http://10.20.34.110:8805/api/v1/efos-de/downloadFile/'+nama_dok+'';
         let img = '<img src="'+url+'">';
         this.popup = window.open('');
         this.popup.document.write(img);

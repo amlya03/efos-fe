@@ -125,7 +125,7 @@ export class SyaratPersetujuanComponent implements OnInit {
     });
     if (email) {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_syarat_persetujuan', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_syarat_persetujuan', {
           app_no_de: this.app_no_de,
           created_by: this.untukSessionUserName,
           created_date: '',
@@ -153,7 +153,7 @@ export class SyaratPersetujuanComponent implements OnInit {
     });
     if (email) {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_syarat_persetujuan', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_syarat_persetujuan', {
           app_no_de: this.app_no_de,
           created_by: this.untukSessionUserName,
           created_date: '',
@@ -181,7 +181,7 @@ export class SyaratPersetujuanComponent implements OnInit {
     });
     if (email) {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_syarat_persetujuan', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_syarat_persetujuan', {
           app_no_de: this.app_no_de,
           created_by: this.untukSessionUserName,
           created_date: '',
@@ -237,7 +237,7 @@ export class SyaratPersetujuanComponent implements OnInit {
       // post Uji Kepatuhan Dan ASrea Of Concren
       if (this.areaOfConcernModel == null) {
         this.http
-          .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_cek_uji_kepatuhan', {
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_cek_uji_kepatuhan', {
             app_no_de: this.app_no_de,
             created_by: this.untukSessionUserName,
             curef: this.dataEntry.curef,
@@ -251,7 +251,7 @@ export class SyaratPersetujuanComponent implements OnInit {
           .subscribe({});
         }else{
           this.http
-          .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_cek_uji_kepatuhan', {
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_cek_uji_kepatuhan', {
             app_no_de: this.app_no_de,
             created_by: this.untukSessionUserName,
             curef: this.dataEntry.curef,

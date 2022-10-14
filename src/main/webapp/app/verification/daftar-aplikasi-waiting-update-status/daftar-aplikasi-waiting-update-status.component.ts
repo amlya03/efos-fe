@@ -105,7 +105,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
       // alert(this.kirimDe[i]);
       // alert(this.kirimStatusAplikasi[i])
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_status_tracking', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
           app_no_de: this.kirimDe[i],
           status_aplikasi: this.kirimStatusAplikasi[i],
           created_by: '199183174',
@@ -123,7 +123,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
       // alert(this.kirimStatusAplikasi[i]);
       // alert('created_by: 199183174 hardcode');
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_status_back_analis', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_status_back_analis', {
           app_no_de: this.kirimDe[i],
           status_aplikasi: this.kirimStatusAplikasi[i],
           created_by: '199183174',
@@ -149,7 +149,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
           alert(this.kirimDe[i]);
           alert(this.kirimStatusAplikasi[i]);
           this.http
-            .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_status_reject', {
+            .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_reject', {
               app_no_de: this.kirimDe[i],
               status_aplikasi: this.kirimStatusAplikasi[i],
               created_by: '199183174',

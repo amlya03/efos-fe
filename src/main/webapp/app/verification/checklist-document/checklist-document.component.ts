@@ -99,11 +99,11 @@ export class ChecklistDocumentComponent implements OnInit {
 
   // Kirim DE
   detailDataEntry(nama_dokumen: any){
-    window.open('http://10.20.34.178:8805/api/v1/efos-de/downloadFile/'+ nama_dokumen)
+    window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/'+ nama_dokumen)
   }
 
   detailAgunan(nama_dokumen: any){
-    window.open('http://10.20.34.178:8805/api/v1/efos-de/downloadFile/'+ nama_dokumen)
+    window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/'+ nama_dokumen)
   }
 
   postCeklis(): void {
@@ -141,7 +141,7 @@ export class ChecklistDocumentComponent implements OnInit {
 
       // Post Data Entry
       this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/checklist_dokumen', {
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/checklist_dokumen', {
         created_by: this.untukSessionUserName,
         id: this.uploadDocument[i].id_upload,
         note_validasi: this.keteranganDE,
@@ -151,7 +151,7 @@ export class ChecklistDocumentComponent implements OnInit {
 
       // Post Agunan
       this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/checklist_dokumen', {
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/checklist_dokumen', {
         created_by: this.untukSessionUserName,
         id: this.uploadAgunan[i].id_upload,
         note_validasi: this.keteranganAgunan,
