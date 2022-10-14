@@ -14,13 +14,9 @@
             class="form-control"
             id="nama"
             name="nama"
-            placeholder=""
-            formControlName="nama_pemohon"
-            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.nama.errors }"
+            readonly
+            [value]="this.dataEntry.nama"
           />
-          <div *ngIf="submitted && analisaKeuanganForm.controls.nama.errors" class="text-danger">
-            <div *ngIf="submitted && analisaKeuanganForm.controls.nama.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
@@ -31,14 +27,9 @@
             type="text"
             class="form-control"
             id="nama_perusahaan"
-            name="nama_perusahaan"
-            placeholder=""
-            formControlName="nama_perusahaan"
-            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.nama_perusahaan.errors }"
+            [value]="this.dataJob.nama_perusahaan"
+            readonly
           />
-          <div *ngIf="submitted && analisaKeuanganForm.controls.nama_perusahaan.errors" class="text-danger">
-            <div *ngIf="submitted && analisaKeuanganForm.controls.nama_perusahaan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
@@ -51,13 +42,10 @@
             id="alamat_perusahaan"
             cols="49"
             rows="4"
-            formControlName="alamat_perusahaan"
-            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.alamat_perusahaan.errors }"
+            [value]="this.dataJob.alamat_perusahaan"
+            readonly
           >
           </textarea>
-          <div *ngIf="submitted && analisaKeuanganForm.controls.alamat_perusahaan.errors" class="text-danger">
-            <div *ngIf="submitted && analisaKeuanganForm.controls.alamat_perusahaan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
@@ -70,12 +58,9 @@
             id="no_telepon_perusahaan"
             name="no_telepon_perusahaan"
             placeholder=""
-            formControlName="no_telepon_perusahaan"
-            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.no_telepon_perusahaan.errors }"
+            [value]="this.dataJob.no_telepon"
+            readonly
           />
-          <div *ngIf="submitted && analisaKeuanganForm.controls.no_telepon_perusahaan.errors" class="text-danger">
-            <div *ngIf="submitted && analisaKeuanganForm.controls.no_telepon_perusahaan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
     </div>
@@ -252,7 +237,7 @@
   </div>
   <p></p>
   <div class="row">
-    <div class="col" style="text-align: center"><input type="checkbox" [checked]="this.dataEntry?.status_perkawinan == 'Menikah'"/> Joint Income</div>
+    <div class="col" style="text-align: center"><input type="checkbox" [checked]="this.dataEntry.joint_income == 1"/> Joint Income</div>
   </div>
   <p></p>
   <div id="fixIncome">
@@ -262,7 +247,7 @@
     <p></p>
     <h6 class="row" style="text-align: center">
       <div class="col">Pemohon</div>
-      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">Pasangan</div>
+      <div class="col" [hidden]="this.dataEntry.joint_income == 0">Pasangan</div>
       <div class="col">Total</div>
     </h6>
     <br />
@@ -283,7 +268,7 @@
         </div>
       </div>
       <br />
-      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
+      <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <input
             formControlName="gaji_kotor_pasangan"
@@ -326,7 +311,7 @@
           </div>
         </div>
       </div>
-      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
+      <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <input
             formControlName="tunjangan_pasangan"
@@ -368,7 +353,7 @@
           </div>
         </div>
       </div>
-      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
+      <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <input
             formControlName="pendapatan_kotor_pasangan"
@@ -403,7 +388,7 @@
     </div>
     <h6 class="row" style="text-align: center">
       <div class="col">Pemohon</div>
-      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">Pasangan</div>
+      <div class="col" [hidden]="this.dataEntry.joint_income == 0">Pasangan</div>
       <div class="col">Total</div>
     </h6>
     <p></p>
@@ -423,7 +408,7 @@
           </div>
         </div>
       </div>
-      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
+      <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <input
             formControlName="pendapatan_usaha_pasangan"
@@ -464,7 +449,7 @@
           </div>
         </div>
       </div>
-      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
+      <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <input
             type="text"
@@ -508,7 +493,7 @@
           </div>
         </div>
       </div>
-      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
+      <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <div class="col">
             <input
@@ -557,7 +542,7 @@
           </div>
         </div>
       </div>
-      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
+      <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <div class="col">
             <input
@@ -607,7 +592,7 @@
           </div>
         </div>
       </div>
-      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
+      <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <div class="col">
             <input
@@ -656,7 +641,7 @@
           </div>
         </div>
       </div>
-      <div class="col" [hidden]="this.dataEntry?.status_perkawinan == 'Lajang'">
+      <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <div class="col">
             <input

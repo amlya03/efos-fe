@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { Observable, Subject } from 'rxjs';
@@ -32,11 +33,9 @@ export class VerificationComponent implements OnInit, OnDestroy {
     public router: Router,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected dataEntryService: DataEntryService
   ) {}
-
-  // DE
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -80,7 +79,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
   }
 
   viewVerification(app_no_de: any): void {
-    this.http.get<ApiResponse>(this.fetchSemuaData + app_no_de).subscribe(data => {
+    this.dataEntryService.getFetchSemuaDataDE(app_no_de).subscribe(data => {
       this.dataEntry = data.result;
       this.curef = this.dataEntry?.curef;
       this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: app_no_de, curef: this.curef } });

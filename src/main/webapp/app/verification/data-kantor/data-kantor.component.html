@@ -88,7 +88,7 @@
             type="text"
             class="form-control"
             placeholder=""
-            formControlName="no_telepon"
+            [value]="this.dataEntry.no_telepon"
             readonly
           />
         </div>
@@ -117,7 +117,7 @@
           <input
             type="text"
             class="form-control"
-            formControlName="fax"
+            [value]="this.dataEntry.no_telepon"
           />
         </div>
       </div>
@@ -145,7 +145,8 @@
           <input
             type="text"
             class="form-control"
-            formControlName="nama_perusahaan"
+            [value]="this.dataJob.nama_perusahaan"
+            readonly
           />
         </div>
       </div>
@@ -171,7 +172,8 @@
         <div class="col-sm-8">
           <textarea
             class="form-control"
-            formControlName="alamat_perusahaan"
+            [value]="this.dataJob.alamat_perusahaan"
+            readonly
           ></textarea>
         </div>
       </div>
@@ -201,7 +203,7 @@
         <div class="col-sm-8">
           <input
             class="form-control"
-            formControlName="provinsi"
+            [value]="this.dataEntry.provinsi"
             readonly
           />
             <!-- <option *ngFor="let getProvinsi of getProvinsi" value="{{ getProvinsi.kdWilayah }}|{{ getProvinsi.namaWilayah }}">
@@ -232,7 +234,7 @@
         <div class="col-sm-8">
           <input
             class="form-control"
-            formControlName="kabkota"
+            [value]="this.dataEntry.kabkota"
             readonly
           />
             <!-- <option *ngFor="let getKota of getKota" value="{{ getKota.kdWilayah }}|{{ getKota.namaWilayah }}">
@@ -263,7 +265,7 @@
         <div class="col-sm-8">
           <input
             class="form-control"
-            formControlName="kecamatan"
+            [value]="this.dataEntry.kecamatan"
             readonly
           />
             <!-- <option *ngFor="let getKecamatan of getKecamatan" value="{{ getKecamatan.kdWilayah }}|{{ getKecamatan.namaWilayah }}">
@@ -294,7 +296,7 @@
         <div class="col-sm-8">
           <input
             class="form-control"
-            formControlName="kelurahan"
+            [value]="this.dataEntry.kelurahan"
             readonly
           />
             <!-- <option *ngFor="let getKelurahan of getKelurahan" value="{{ getKelurahan.kdPos }}|{{ getKelurahan.namaWilayah }}">
@@ -329,7 +331,7 @@
               class="form-control"
               id="kode_pos"
               name="kode_pos"
-              formControlName="kode_pos"
+              [value]="this.dataEntry.kode_pos"
               (keypress)="keyPressNumbers($event)"
               maxlength="8"
               readonly
@@ -366,7 +368,7 @@
             id="lama_bekerja_tahun"
             name="lama_bekerja_tahun"
             placeholder=""
-            formControlName="lama_bekerja_tahun"
+            [value]="this.dataJob.lama_bekerja_tahun"
             (keypress)="keyPressNumbers($event)"
             maxlength="4"
           />
@@ -381,7 +383,7 @@
             id="lama_bekerja_bulan"
             name="lama_bekerja_bulan"
             placeholder=""
-            formControlName="lama_bekerja_bulan"
+            [value]="this.dataJob.lama_bekerja_bulan"
           />
         </div>
         <div class="col"><label>Bulan</label></div>
@@ -415,7 +417,7 @@
             name="bidang_usaha"
             id="bidang_usaha"
             class="form-control"
-            formControlName="bidang_usaha"
+            [value]="this.dataJob.jenis_bidang"
             readonly
           />
             <!-- <option selected value="">Pilih Data</option>
@@ -449,7 +451,7 @@
             name="sektor_ekonomi"
             id="sektor_ekonomi"
             class="form-control"
-            formControlName="sektor_ekonomi"
+            [value]="this.dataJob.sektor_ekonomi"
             readonly
           />
             <!-- <option selected value="">Pilih Data</option>
@@ -481,7 +483,7 @@
         <div class="col-sm-8">
           <input
             class="form-control"
-            formControlName="tipe_pekerjaan"
+            [value]="this.tipe_pekerjaanGet"
             readonly
           />
             <!-- <option value="">Pilih Data</option>
@@ -510,7 +512,7 @@
         <div class="col-sm-8">
           <input
             class="form-control"
-            formControlName="status_kepegawaian"
+            [value]="this.dataJob.tipe_kepegawaian"
             readonly
           />
         </div>
@@ -537,7 +539,7 @@
         <div class="col-sm-8">
           <input
             class="form-control"
-            formControlName="posisi"
+            [value]="this.dataJob.posisi"
             readonly
           />
         </div>
@@ -565,7 +567,7 @@
           <input
             type="text"
             class="form-control"
-            formControlName="usia_pensiun"
+            [value]="this.dataJob.umur_pensiun"
             readonly
           />
         </div>

@@ -10,12 +10,11 @@ import { refJumlahKaryawan } from '../service/config/refJumlahKaryawan.model';
 import { refBidang } from 'app/initial-data-entry/services/config/refBidang.model';
 import { refSektor } from 'app/initial-data-entry/services/config/refSektor.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
-import { Observable } from 'rxjs';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { refAnalisaDataKantor } from './refAnalisaDataKantor.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { getJob } from 'app/data-entry/services/config/getJob.model';
 
 @Component({
   selector: 'jhi-data-kantor',
@@ -49,7 +48,11 @@ export class DataKantorComponent implements OnInit {
   app_no_de: any;
   dataKantorMap: refAnalisaDataKantor = new refAnalisaDataKantor();
   dataEntry: fetchAllDe = new fetchAllDe();
+  dataJob: getJob = new getJob();
   curef: any;
+
+  // logic get Number
+  tipe_pekerjaanGet: any;
 
   constructor(
     protected dataKantor: ServiceVerificationService,
@@ -75,35 +78,6 @@ export class DataKantorComponent implements OnInit {
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.dataKantorForm = this.formBuilder.group({
-      // tanggal_verification: ['', Validators.required],
-      // waktu_verification: '', //['', Validators.required],
-      no_telepon: '', //['', Validators.required],
-      fax: '', //['', Validators.required],
-      // pemberi_keterangan: ['', Validators.required],
-      // hungungan_pemohon_dengan_pemberi_keterangan: ['', Validators.required],
-      // nama_perusahaan: '', //['', Validators.required],
-      // alamat_perusahaan: '', //['', Validators.required],
-      provinsi: '', //['', Validators.required],
-      kabkota: '', //['', Validators.required],
-      kecamatan: '', //['', Validators.required],
-      kelurahan: '', //['', Validators.required],
-      kode_pos: '', //['', Validators.required],
-      // lama_bekerja_tahun: '', //['', Validators.required],
-      // lama_bekerja_bulan: '', //['', Validators.required],
-      // lama_beroperasi_tahun: '', //['', Validators.required],
-      // lama_beroperasi_bulan: '', //['', Validators.required],
-      // bidang_usaha: '', //['', Validators.required],
-      // sektor_ekonomi: '', //['', Validators.required],
-      // tipe_pekerjaan: '',//'', //['', Validators.required],
-      // status_kepegawaian: '', //['', Validators.required],
-      // bagian_atau_divisi: '', //['', Validators.required],
-      // posisi: '', //['', Validators.required],
-      // jumlah_karyawan: '', //['', Validators.required],
-      // usia_pensiun: '', //['', Validators.required],
-      // kesimpulan_hasil_investigasi: '', //['', Validators.required],
-
-      // id: '',
-      // app_no_de: '',
       tanggal_verifikasi: '', //['', Validators.required],
       pemberi_keterangan: '', //['', Validators.required],
       hubungan_pemberi_keterangan: '', //['', Validators.required],
@@ -127,16 +101,8 @@ export class DataKantorComponent implements OnInit {
       note_verif_kode_pos: '',
       verif_lama_bekerja: '',
       note_verif_lama_bekerja: '',
-      // verif_lama_beroperasi: '',
-      // note_verif_lama_beroperasi: '',
       verif_bidang_usaha: '',
       note_verif_bidang_usaha: '',
-      // // verif_tipe_perusahaan: '',
-      // // note_verif_tipe_perusahaan: '',
-      // // verif_jenis_pekerjaan: '',
-      // // note_verif_jenis_pekerjaan: '',
-      // // verif_jumlah_karyawan: '',
-      // // note_verif_jumlah_karyawan: '',
       verif_sektor_ekonomi: '',
       note_verif_sektor_ekonomi: '',
       verif_tipe_pekerjaan: '',
@@ -149,6 +115,7 @@ export class DataKantorComponent implements OnInit {
       note_verif_usia_pensiun: '',
       divisi: '',
       aspek_syariah: '',
+
       // created_date: '',
       // updated_date: '',
       // created_by: '',
@@ -320,41 +287,46 @@ export class DataKantorComponent implements OnInit {
   }
 
   load(): void {
-    // ambil semua data
+    // ambil semua data DE
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
-      // if(data.code === 200) {
       this.dataEntry = data.result;
-      // console.log('INI DE ',this.dataEntry);
-      // console.log("ini data de "+this.fetchAllDe);
-      // }
     });
 
+    // ambil Semua Data Job
+    this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(job => {
+      this.dataJob = job.result[0];
+      // alert("data JOb "+this.dataJob.tipe_kepegawaian)
+      if(this.dataJob.tipe_pekerjaan == 1){
+        this.tipe_pekerjaanGet = 'Pegawai Negeri Sipil'
+      }
+      else if(this.dataJob.tipe_pekerjaan == 2){
+        this.tipe_pekerjaanGet = 'Pegawai Swasta'
+      }
+      else if(this.dataJob.tipe_pekerjaan == 3){
+        this.tipe_pekerjaanGet = 'Wiraswasta'
+      }
+      else if(this.dataJob.tipe_pekerjaan == 4){
+        this.tipe_pekerjaanGet = 'Profesional'
+      }
+      else if(this.dataJob.tipe_pekerjaan == 5){
+        this.tipe_pekerjaanGet = 'Pensiunan'
+      }
+      else if(this.dataJob.tipe_pekerjaan == 6){
+        this.tipe_pekerjaanGet = 'Tidak Bekerja'
+      }
+      else if(this.dataJob.tipe_pekerjaan == 7){
+        this.tipe_pekerjaanGet = 'TNI / Polri'
+      }
+      else if(this.dataJob.tipe_pekerjaan == 8){
+        this.tipe_pekerjaanGet = 'BUMN / BUMD'
+      }
+    })
+
+    // ambil data Kantor
     this.dataKantor.fetchDataKantor(this.app_no_de).subscribe(data => {
       this.dataKantorMap = data.result;
       // alert(this.dataKantorMap.note_verif_alamat_perusahaan)
-
       let retriveDataKantor = {
-        // retrive de
-        no_telepon: this.dataEntry.no_telepon,
-        fax: this.dataEntry.no_telepon,
-        // nama_perusahaan: this.dataEntry.nama_perusahaan,
-        // alamat_perusahaan: this.dataEntry.alamat_perusahaan,
-        provinsi: this.dataEntry.provinsi,
-        kabkota: this.dataEntry.kabkota,
-        kecamatan: this.dataEntry.kecamatan,
-        kelurahan: this.dataEntry.kelurahan,
-        kode_pos: this.dataEntry.kode_pos,
-        // lama_bekerja_tahun: this.dataEntry.lama_bekerja_tahun,
-        // lama_bekerja_bulan: this.dataEntry.lama_bekerja_bulan,
-        // bidang_usaha: this.dataEntry.bidang_usaha,
-        // sektor_ekonomi: this.dataEntry.sektor_ekonomi,
-        // tipe_pekerjaan: this.dataEntry.tipe_pekerjaan,
-        // status_kepegawaian: this.dataEntry.status_kepegawaian,
-        // posisi: this.dataEntry.posisi,
-        // usia_pensiun: this.dataEntry.usia_pensiun,
-
-        // id: this.dataKantorMap.id,
-        // app_no_de: this.dataKantorMap.app_no_de,
         tanggal_verifikasi: this.dataKantorMap.tanggal_verifikasi,
         pemberi_keterangan: this.dataKantorMap.pemberi_keterangan,
         hubungan_pemberi_keterangan: this.dataKantorMap.hubungan_pemberi_keterangan,
@@ -378,16 +350,8 @@ export class DataKantorComponent implements OnInit {
         note_verif_kode_pos: this.dataKantorMap.note_verif_kode_pos,
         verif_lama_bekerja: this.dataKantorMap.verif_lama_bekerja,
         note_verif_lama_bekerja: this.dataKantorMap.note_verif_lama_bekerja,
-        // verif_lama_beroperasi: this.dataKantorMap.verif_lama_beroperasi,
-        // note_verif_lama_beroperasi: this.dataKantorMap.note_verif_lama_beroperasi,
         verif_bidang_usaha: this.dataKantorMap.verif_bidang_usaha,
         note_verif_bidang_usaha: this.dataKantorMap.note_verif_bidang_usaha,
-        // // verif_tipe_perusahaan: this.dataKantorMap.verif_tipe_perusahaan,
-        // // note_verif_tipe_perusahaan: this.dataKantorMap.note_verif_tipe_perusahaan,
-        // // verif_jenis_pekerjaan: this.dataKantorMap.verif_jenis_pekerjaan,
-        // // note_verif_jenis_pekerjaan: this.dataKantorMap.note_verif_jenis_pekerjaan,
-        // // verif_jumlah_karyawan: this.dataKantorMap.verif_jumlah_karyawan,
-        // // note_verif_jumlah_karyawan: this.dataKantorMap.note_verif_jumlah_karyawan,
         verif_sektor_ekonomi: this.dataKantorMap.verif_sektor_ekonomi,
         note_verif_sektor_ekonomi: this.dataKantorMap.note_verif_sektor_ekonomi,
         verif_tipe_pekerjaan: this.dataKantorMap.verif_tipe_pekerjaan,
@@ -399,8 +363,8 @@ export class DataKantorComponent implements OnInit {
         verif_usia_pensiun: this.dataKantorMap.verif_usia_pensiun,
         note_verif_usia_pensiun: this.dataKantorMap.note_verif_usia_pensiun,
         divisi: this.dataKantorMap.divisi,
-
         aspek_syariah: this.dataKantorMap.aspek_syariah,
+
         // created_date: this.dataKantorMap.created_date,
         // updated_date: this.dataKantorMap.updated_date,
         // created_by: this.dataKantorMap.created_by,

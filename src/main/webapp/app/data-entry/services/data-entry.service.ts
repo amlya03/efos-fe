@@ -13,7 +13,7 @@ import { createRequestOption } from 'app/core/request/request-util';
 export class DataEntryService {
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   // protected daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
-  //   'http://10.20.34.178:8805/api/v1/efos-de/list_app_de?su=199183174 '
+  //   'http://10.20.34.110:8805/api/v1/efos-de/list_app_de?su=199183174 '
   // );
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   untukSessionRole: any;
@@ -39,18 +39,22 @@ export class DataEntryService {
   // ///////////////////////////// Data Entry \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ///////////////////////////// Get Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  protected fetchSemuaJob = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getJobByCurefDe?sj=');
+  protected fetchSemuaJob = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobByCurefDe?sj=');
   // ///////////////////////////// Get Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // ///////////////////////////// Get View Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected getViewJob = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getVJobByCuref?sj=');
+  // ///////////////////////////// Get ViewJob \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // ///////////////////////////// Get MEMO \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  protected fetchMemo = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getMemoByDe?sd=');
+  protected fetchMemo = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getMemoByDe?sd=');
   // ///////////////////////////// Get MEMO \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
     this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
-      // 'http://10.20.34.178:8805/api/v1/efos-de/list_app_de?sc='+this.untukSessionKodeCabang+'&su='+this.untukSessionUserName
-      'http://10.20.34.178:8805/api/v1/efos-de/list_app_de?sc=&su=' + this.untukSessionUserName
+      // 'http://10.20.34.110:8805/api/v1/efos-de/list_app_de?sc='+this.untukSessionKodeCabang+'&su='+this.untukSessionUserName
+      'http://10.20.34.110:8805/api/v1/efos-de/list_app_de?sc=&su=' + this.untukSessionUserName
     );
     return this.http.get<ApiResponse>(this.daftarAplikasiDataEntry);
   }
@@ -67,6 +71,12 @@ export class DataEntryService {
     return this.http.get<ApiResponse>(this.fetchSemuaJob + curef);
   }
   // /////////////////////////// Ref Semua Data Job ////////////////////////////////////////////
+
+  // /////////////////////////// Ref View Job ////////////////////////////////////////////
+  getGetViewDataJob(curef: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getViewJob + curef);
+  }
+  // /////////////////////////// Ref View Job ////////////////////////////////////////////
 
   // /////////////////////////// MEMO ////////////////////////////////////////////
   getfetchMemo(app_no_de: any): Observable<ApiResponse> {

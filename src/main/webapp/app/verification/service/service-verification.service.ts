@@ -10,13 +10,13 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 })
 export class ServiceVerificationService {
   // //////////////////////service daftar aplikasi waiting assign\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  protected allDataVerif = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-verif/list_app_verif');
-  protected listAprisal = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-verif/list_appraisal');
+  protected allDataVerif = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_app_verif');
+  protected listAprisal = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_appraisal');
   // //////////////////////service daftar aplikasi waiting assign\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////////////////////GET ANALISA KEUANGAN///////////////////////////////////////////////////////////
   protected getAnalisaKeuangan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-verif/getAnalisaKeuangan?sd='
+    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaKeuangan?sd='
   );
   // ////////////////////////////////////GET ANALISA KEUANGAN///////////////////////////////////////////////////////////
 
@@ -26,19 +26,19 @@ export class ServiceVerificationService {
 
   // //////////////////////////////////// DATA CALON NASABAH ///////////////////////////////////////////////////////////
   protected getDataCalonNasabah = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-verif/getAnalisaCalonNasabah?sd='
+    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaCalonNasabah?sd='
   );
   // //////////////////////////////////// DATA CALON NASABAH ///////////////////////////////////////////////////////////
 
   // //////////////////////////////////// DATA KANTOR ///////////////////////////////////////////////////////////
   protected getDataKantor = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-verif/getAnalisaDataKantor?sd='
+    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaDataKantor?sd='
   );
   // //////////////////////////////////// DATA KANTOR ///////////////////////////////////////////////////////////
 
   // //////////////////////////////////// LIST MUTASI ///////////////////////////////////////////////////////////
   protected allDataMutasiRekening = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-verif/list_verif_mutasi?si='
+    'http://10.20.34.110:8805/api/v1/efos-verif/list_verif_mutasi?si='
   );
   // //////////////////////////////////// LIST MUTASI ///////////////////////////////////////////////////////////
 
@@ -66,7 +66,7 @@ export class ServiceVerificationService {
 
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected allDataWaitingUpdateStatus = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-verif/list_app_analisa_review'
+    'http://10.20.34.110:8805/api/v1/efos-verif/list_app_analisa_review'
   );
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 

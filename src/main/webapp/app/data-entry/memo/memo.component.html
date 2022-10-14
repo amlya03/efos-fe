@@ -3,38 +3,11 @@
 </div>
 <br />
 <div class="row form-material">
-  <tr *ngFor="let daWa1; for: daWa1"></tr>
   <div class="col">
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Nomor Aplikasi</label>
       <div class="col-sm-8">
-        <input type="hidden" id="WADUH" name="WADUH" value="<?=$this->session->userdata('GROUP_NAME');?>" class="form-control" />
         <input type="text" class="form-control" value="{{ daWa1.app_no_de }}" placeholder="Nomor Aplikasi" readonly />
-        <input
-          type="hidden"
-          class="form-control"
-          name="status_aplikasi"
-          id="status_aplikasi"
-          value="<?=$status_aplikasi?>"
-          placeholder="Nomor Aplikasi"
-          readonly
-        />
-        <input type="hidden" class="form-control" name="curef" id="curef" value="<?=$curef?>" placeholder="Nomor Aplikasi" readonly />
-      </div>
-      <div class="col-sm-9">
-        <input
-          id="app_no_de"
-          name="app_no_de"
-          type="hidden"
-          class="form-control"
-          placeholder="app_no_ide"
-          value="<?=$app_no_de?>"
-          readonly
-        />
-      </div>
-      <div class="col-sm-9">
-        <!-- <input type="hidden" id="WADUH" name="WADUH" value="<?=$this->session->userdata('GROUP_NAME');?>" class="form-control" > -->
-        <input type="hidden" id="id" name="id" value="" class="form-control" />
       </div>
     </div>
     <br />
@@ -72,7 +45,6 @@
       <label class="col-sm-4 col-form-label">Product</label>
       <div class="col-sm-8">
         <input type="text" class="form-control" value="{{ daWa1.produk_pembiayaan }}" placeholder="Product" readonly />
-        <input type="hidden" id="kategoriUntukUpload" value="<?=$kategori_pekerjaan?>" />
       </div>
     </div>
     <br />
@@ -94,10 +66,8 @@
           <button class="btn btn-outline-dark" type="button" id="cobaButton" name="cobaButton" onclick="thisFileUpload()">
             Upload Document
           </button>
-          <input type="hidden" class="form-control" id="untukupload" name="untukupload" placeholder="" />
         </div>
-        <input type="text" id="uploadUntukMemo" name="uploadUntukMemo" class="form-control" hidden />
-        <button style="display: none" type="button" class="btn mb-1 btn-rounded btn-secondary" id="testButton" onclick="getArchiveAjax();">
+        <button type="button" class="btn mb-1 btn-rounded btn-secondary" id="testButton" onclick="getArchiveAjax();">
           <span class="btn-icon-left"><i class="fa fa-download color-warning"></i> </span>View
         </button>
       </div>

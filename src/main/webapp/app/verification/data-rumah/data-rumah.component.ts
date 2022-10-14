@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { getJob } from 'app/data-entry/services/config/getJob.model';
+import { viewJobModel } from 'app/data-entry/services/config/viewJobModel.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { slik } from 'app/initial-data-entry/services/config/slik.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
@@ -23,7 +25,9 @@ export class DataRumahComponent implements OnInit {
   app_no_de: any;
   curef: any;
   analisaKeuanganMap: refAnalisaKeuangan = new refAnalisaKeuangan();
-  dataEntry?: fetchAllDe = new fetchAllDe();
+  dataEntry: fetchAllDe = new fetchAllDe();
+  dataJob: getJob = new getJob();
+  getViewJob: viewJobModel = new viewJobModel();
   listSlik?: slik[];
   listLajangSlik: Array<slik> = new Array<slik>();
   listMenikahSlik: Array<slik> = new Array<slik>();
@@ -62,11 +66,6 @@ export class DataRumahComponent implements OnInit {
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.analisaKeuanganForm = this.formBuilder.group({
       nama_pemohon: ['', Validators.required],
-      app_no_de: new FormControl(this.app_no_de),
-      nama_perusahaan: ['', Validators.required],
-      alamat_perusahaan: ['', Validators.required],
-      no_telepon_perusahaan: ['', Validators.required],
-      nama_dihubungi: ['', Validators.required],
       jabatan_dihubungi: ['', Validators.required],
       tanggal_permintaan: ['', Validators.required],
       tanggal_pemeriksa: ['', Validators.required],
@@ -110,126 +109,19 @@ export class DataRumahComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
-    this.submitted = true;
-    if (this.analisaKeuanganForm.invalid) {
-      return;
-    } else if (this.analisaKeuanganMap == null) {
-      this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_keuangan', {
-          nama_pemohon: this.analisaKeuanganForm.get('nama_pemohon')?.value,
-          alamat_perusahaan: this.analisaKeuanganForm.get('alamat_perusahaan')?.value,
-          app_no_de: this.analisaKeuanganForm.get('app_no_de')?.value,
-          created_by: '',
-          created_date: '',
-          gaji_kotor: this.analisaKeuanganForm.get('gaji_kotor')?.value,
-          gaji_kotor_pasangan: this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value,
-          gaji_kotor_total: this.analisaKeuanganForm.get('gaji_kotor_total')?.value,
-          jabatan_dihubungi: this.analisaKeuanganForm.get('jabatan_dihubungi')?.value,
-          kewajiban_bank: this.analisaKeuanganForm.get('kewajiban_bank')?.value,
-          kewajiban_bank_pasangan: this.analisaKeuanganForm.get('kewajiban_bank_pasangan')?.value,
-          kewajiban_bank_total: this.analisaKeuanganForm.get('kewajiban_bank_total')?.value,
-          kewajiban_lainnya: this.analisaKeuanganForm.get('kewajiban_lainnya')?.value,
-          kewajiban_lainnya_pasangan: this.analisaKeuanganForm.get('ewajiban_lainnya_pasangan')?.value,
-          kewajiban_lainnya_total: this.analisaKeuanganForm.get('kewajiban_lainnya_total')?.value,
-          nama_dihubungi: this.analisaKeuanganForm.get('nama_dihubungi')?.value,
-          nama_pemeriksa: this.analisaKeuanganForm.get('nama_pemeriksa')?.value,
-          nama_perusahaan: this.analisaKeuanganForm.get('nama_perusahaan')?.value,
-          no_telepon_perusahaan: this.analisaKeuanganForm.get('no_telepon_perusahaan')?.value,
-          pendapatan_bersih: this.analisaKeuanganForm.get('pendapatan_bersih')?.value,
-          pendapatan_bersih_pasangan: this.analisaKeuanganForm.get('pendapatan_bersih_pasangan')?.value,
-          pendapatan_bersih_total: this.analisaKeuanganForm.get('pendapatan_bersih_total')?.value,
-          pendapatan_kantor_lainnya: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value,
-          pendapatan_kantor_lainnya_pasangan: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value,
-          pendapatan_kantor_lainnya_total: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_total')?.value,
-          pendapatan_kotor: this.analisaKeuanganForm.get('pendapatan_kotor')?.value,
-          pendapatan_kotor_pasangan: this.analisaKeuanganForm.get('pendapatan_kotor_pasangan')?.value,
-          pendapatan_kotor_total: this.analisaKeuanganForm.get('pendapatan_kotor_total')?.value,
-          pendapatan_profesional: this.analisaKeuanganForm.get('pendapatan_profesional')?.value,
-          pendapatan_profesional_pasangan: this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value,
-          pendapatan_profesional_total: this.analisaKeuanganForm.get('pendapatan_profesional_total')?.value,
-          pendapatan_usaha: this.analisaKeuanganForm.get('pendapatan_usaha')?.value,
-          pendapatan_usaha_pasangan: this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value,
-          pendapatan_usaha_total: this.analisaKeuanganForm.get('pendapatan_usaha_total')?.value,
-          tanggal_pemeriksa: this.analisaKeuanganForm.get('tanggal_pemeriksa')?.value,
-          tanggal_permintaan: this.analisaKeuanganForm.get('tanggal_permintaan')?.value,
-          total_angsuran_kantor: this.analisaKeuanganForm.get('total_angsuran_kantor')?.value,
-          total_angsuran_kantor_akumulasi: this.analisaKeuanganForm.get('total_angsuran_kantor_akumulasi')?.value,
-          total_angsuran_kantor_pasangan: this.analisaKeuanganForm.get('total_angsuran_kantor_pasangan')?.value,
-          total_penghasilan_bersih: this.analisaKeuanganForm.get('total_penghasilan_bersih')?.value,
-          total_penghasilan_bersih_akumulasi: this.analisaKeuanganForm.get('total_penghasilan_bersih_akumulasi')?.value,
-          total_penghasilan_bersih_pasangan: this.analisaKeuanganForm.get('total_penghasilan_bersih_pasangan')?.value,
-          total_penghasilan_kotor: this.analisaKeuanganForm.get('total_penghasilan_kotor')?.value,
-          total_penghasilan_kotor_akumulasi: this.analisaKeuanganForm.get('total_penghasilan_kotor_akumulasi')?.value,
-          total_penghasilan_kotor_pasangan: this.analisaKeuanganForm.get('total_penghasilan_kotor_pasangan')?.value,
-          tunjangan: this.analisaKeuanganForm.get('tunjangan')?.value,
-          tunjangan_pasangan: this.analisaKeuanganForm.get('tunjangan_pasangan')?.value,
-          tunjangan_total: this.analisaKeuanganForm.get('tunjangan_total')?.value,
-        })
-        .subscribe({});
-      this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
-    } else
-      this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_keuangan', {
-          nama_pemohon: this.analisaKeuanganForm.get('nama_pemohon')?.value,
-          alamat_perusahaan: this.analisaKeuanganForm.get('alamat_perusahaan')?.value,
-          app_no_de: this.analisaKeuanganForm.get('app_no_de')?.value,
-          created_by: '',
-          created_date: '',
-          gaji_kotor: this.analisaKeuanganForm.get('gaji_kotor')?.value,
-          gaji_kotor_pasangan: this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value,
-          gaji_kotor_total: this.analisaKeuanganForm.get('gaji_kotor_total')?.value,
-          jabatan_dihubungi: this.analisaKeuanganForm.get('jabatan_dihubungi')?.value,
-          kewajiban_bank: this.analisaKeuanganForm.get('kewajiban_bank')?.value,
-          kewajiban_bank_pasangan: this.analisaKeuanganForm.get('kewajiban_bank_pasangan')?.value,
-          kewajiban_bank_total: this.analisaKeuanganForm.get('kewajiban_bank_total')?.value,
-          kewajiban_lainnya: this.analisaKeuanganForm.get('kewajiban_lainnya')?.value,
-          kewajiban_lainnya_pasangan: this.analisaKeuanganForm.get('ewajiban_lainnya_pasangan')?.value,
-          kewajiban_lainnya_total: this.analisaKeuanganForm.get('kewajiban_lainnya_total')?.value,
-          nama_dihubungi: this.analisaKeuanganForm.get('nama_dihubungi')?.value,
-          nama_pemeriksa: this.analisaKeuanganForm.get('nama_pemeriksa')?.value,
-          nama_perusahaan: this.analisaKeuanganForm.get('nama_perusahaan')?.value,
-          no_telepon_perusahaan: this.analisaKeuanganForm.get('no_telepon_perusahaan')?.value,
-          pendapatan_bersih: this.analisaKeuanganForm.get('pendapatan_bersih')?.value,
-          pendapatan_bersih_pasangan: this.analisaKeuanganForm.get('pendapatan_bersih_pasangan')?.value,
-          pendapatan_bersih_total: this.analisaKeuanganForm.get('pendapatan_bersih_total')?.value,
-          pendapatan_kantor_lainnya: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value,
-          pendapatan_kantor_lainnya_pasangan: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value,
-          pendapatan_kantor_lainnya_total: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_total')?.value,
-          pendapatan_kotor: this.analisaKeuanganForm.get('pendapatan_kotor')?.value,
-          pendapatan_kotor_pasangan: this.analisaKeuanganForm.get('pendapatan_kotor_pasangan')?.value,
-          pendapatan_kotor_total: this.analisaKeuanganForm.get('pendapatan_kotor_total')?.value,
-          pendapatan_profesional: this.analisaKeuanganForm.get('pendapatan_profesional')?.value,
-          pendapatan_profesional_pasangan: this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value,
-          pendapatan_profesional_total: this.analisaKeuanganForm.get('pendapatan_profesional_total')?.value,
-          pendapatan_usaha: this.analisaKeuanganForm.get('pendapatan_usaha')?.value,
-          pendapatan_usaha_pasangan: this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value,
-          pendapatan_usaha_total: this.analisaKeuanganForm.get('pendapatan_usaha_total')?.value,
-          tanggal_pemeriksa: this.analisaKeuanganForm.get('tanggal_pemeriksa')?.value,
-          tanggal_permintaan: this.analisaKeuanganForm.get('tanggal_permintaan')?.value,
-          total_angsuran_kantor: this.analisaKeuanganForm.get('total_angsuran_kantor')?.value,
-          total_angsuran_kantor_akumulasi: this.analisaKeuanganForm.get('total_angsuran_kantor_akumulasi')?.value,
-          total_angsuran_kantor_pasangan: this.analisaKeuanganForm.get('total_angsuran_kantor_pasangan')?.value,
-          total_penghasilan_bersih: this.analisaKeuanganForm.get('total_penghasilan_bersih')?.value,
-          total_penghasilan_bersih_akumulasi: this.analisaKeuanganForm.get('total_penghasilan_bersih_akumulasi')?.value,
-          total_penghasilan_bersih_pasangan: this.analisaKeuanganForm.get('total_penghasilan_bersih_pasangan')?.value,
-          total_penghasilan_kotor: this.analisaKeuanganForm.get('total_penghasilan_kotor')?.value,
-          total_penghasilan_kotor_akumulasi: this.analisaKeuanganForm.get('total_penghasilan_kotor_akumulasi')?.value,
-          total_penghasilan_kotor_pasangan: this.analisaKeuanganForm.get('total_penghasilan_kotor_pasangan')?.value,
-          tunjangan: this.analisaKeuanganForm.get('tunjangan')?.value,
-          tunjangan_pasangan: this.analisaKeuanganForm.get('tunjangan_pasangan')?.value,
-          tunjangan_total: this.analisaKeuanganForm.get('tunjangan_total')?.value,
-        })
-        .subscribe({});
-    this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
-  }
-
   load(): void {
     // get Semua DE
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
       // console.log(this.dataEntry);
+      // alert(this.dataEntry.joint_income)
     });
+
+    // get Semua JOB
+    this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(job => {
+      this.dataJob = job.result[0];
+    })
+
 
     // ambil semua data Slik
     this.dataRumah.fetchSlik('app_20221006_644').subscribe(data => {
@@ -252,18 +144,11 @@ export class DataRumahComponent implements OnInit {
 
     // ambil semua data Analisa
     this.dataRumah.fetchAnalisaKeuangan(this.app_no_de).subscribe(data => {
-      // if (data.message === "success") {
       this.analisaKeuanganMap = data.result;
-      // alert('sdhgfhsghfgdh ' +this.analisaKeuanganMap.nama_perusahaan);
-      // console.log('sdhgfhsghfgdh ' +this.analisaKeuanganMap.app_no_de);
       // }
       let retriveAnalisaKeuangan = {
         // id: 1,
-        nama_pemohon: this.analisaKeuanganMap.nama_pemohon,
-        app_no_de: this.analisaKeuanganMap.app_no_de,
-        nama_perusahaan: this.analisaKeuanganMap.nama_perusahaan,
-        alamat_perusahaan: this.analisaKeuanganMap.alamat_perusahaan,
-        no_telepon_perusahaan: this.analisaKeuanganMap.no_telepon_perusahaan,
+        app_no_de: this.app_no_de,
         nama_dihubungi: this.analisaKeuanganMap.nama_dihubungi,
         jabatan_dihubungi: this.analisaKeuanganMap.jabatan_dihubungi,
         tanggal_permintaan: this.analisaKeuanganMap.tanggal_permintaan,
@@ -327,6 +212,120 @@ export class DataRumahComponent implements OnInit {
     //   }
     // });
     // get semua de
+  }
+
+  onSubmit(): void {
+    this.submitted = true;
+    if (this.analisaKeuanganForm.invalid) {
+      return;
+    } else if (this.analisaKeuanganMap == null) {
+      this.http
+        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_keuangan', {
+          nama_pemohon: this.analisaKeuanganForm.get('nama_pemohon')?.value,
+          alamat_perusahaan: this.analisaKeuanganForm.get('alamat_perusahaan')?.value,
+          app_no_de: this.app_no_de,
+          created_by: '',
+          created_date: '',
+          gaji_kotor: this.analisaKeuanganForm.get('gaji_kotor')?.value,
+          gaji_kotor_pasangan: this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value,
+          gaji_kotor_total: this.analisaKeuanganForm.get('gaji_kotor_total')?.value,
+          jabatan_dihubungi: this.analisaKeuanganForm.get('jabatan_dihubungi')?.value,
+          kewajiban_bank: this.analisaKeuanganForm.get('kewajiban_bank')?.value,
+          kewajiban_bank_pasangan: this.analisaKeuanganForm.get('kewajiban_bank_pasangan')?.value,
+          kewajiban_bank_total: this.analisaKeuanganForm.get('kewajiban_bank_total')?.value,
+          kewajiban_lainnya: this.analisaKeuanganForm.get('kewajiban_lainnya')?.value,
+          kewajiban_lainnya_pasangan: this.analisaKeuanganForm.get('ewajiban_lainnya_pasangan')?.value,
+          kewajiban_lainnya_total: this.analisaKeuanganForm.get('kewajiban_lainnya_total')?.value,
+          nama_dihubungi: this.analisaKeuanganForm.get('nama_dihubungi')?.value,
+          nama_pemeriksa: this.analisaKeuanganForm.get('nama_pemeriksa')?.value,
+          nama_perusahaan: this.dataJob.nama_perusahaan,
+          no_telepon_perusahaan: this.dataJob.no_telepon,
+          pendapatan_bersih: this.analisaKeuanganForm.get('pendapatan_bersih')?.value,
+          pendapatan_bersih_pasangan: this.analisaKeuanganForm.get('pendapatan_bersih_pasangan')?.value,
+          pendapatan_bersih_total: this.analisaKeuanganForm.get('pendapatan_bersih_total')?.value,
+          pendapatan_kantor_lainnya: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value,
+          pendapatan_kantor_lainnya_pasangan: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value,
+          pendapatan_kantor_lainnya_total: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_total')?.value,
+          pendapatan_kotor: this.analisaKeuanganForm.get('pendapatan_kotor')?.value,
+          pendapatan_kotor_pasangan: this.analisaKeuanganForm.get('pendapatan_kotor_pasangan')?.value,
+          pendapatan_kotor_total: this.analisaKeuanganForm.get('pendapatan_kotor_total')?.value,
+          pendapatan_profesional: this.analisaKeuanganForm.get('pendapatan_profesional')?.value,
+          pendapatan_profesional_pasangan: this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value,
+          pendapatan_profesional_total: this.analisaKeuanganForm.get('pendapatan_profesional_total')?.value,
+          pendapatan_usaha: this.analisaKeuanganForm.get('pendapatan_usaha')?.value,
+          pendapatan_usaha_pasangan: this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value,
+          pendapatan_usaha_total: this.analisaKeuanganForm.get('pendapatan_usaha_total')?.value,
+          tanggal_pemeriksa: this.analisaKeuanganForm.get('tanggal_pemeriksa')?.value,
+          tanggal_permintaan: this.analisaKeuanganForm.get('tanggal_permintaan')?.value,
+          total_angsuran_kantor: this.analisaKeuanganForm.get('total_angsuran_kantor')?.value,
+          total_angsuran_kantor_akumulasi: this.analisaKeuanganForm.get('total_angsuran_kantor_akumulasi')?.value,
+          total_angsuran_kantor_pasangan: this.analisaKeuanganForm.get('total_angsuran_kantor_pasangan')?.value,
+          total_penghasilan_bersih: this.analisaKeuanganForm.get('total_penghasilan_bersih')?.value,
+          total_penghasilan_bersih_akumulasi: this.analisaKeuanganForm.get('total_penghasilan_bersih_akumulasi')?.value,
+          total_penghasilan_bersih_pasangan: this.analisaKeuanganForm.get('total_penghasilan_bersih_pasangan')?.value,
+          total_penghasilan_kotor: this.analisaKeuanganForm.get('total_penghasilan_kotor')?.value,
+          total_penghasilan_kotor_akumulasi: this.analisaKeuanganForm.get('total_penghasilan_kotor_akumulasi')?.value,
+          total_penghasilan_kotor_pasangan: this.analisaKeuanganForm.get('total_penghasilan_kotor_pasangan')?.value,
+          tunjangan: this.analisaKeuanganForm.get('tunjangan')?.value,
+          tunjangan_pasangan: this.analisaKeuanganForm.get('tunjangan_pasangan')?.value,
+          tunjangan_total: this.analisaKeuanganForm.get('tunjangan_total')?.value,
+        })
+        .subscribe({});
+      this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+    } else
+      this.http
+        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_keuangan', {
+          nama_pemohon: this.analisaKeuanganForm.get('nama_pemohon')?.value,
+          alamat_perusahaan: this.dataJob.alamat_perusahaan,
+          app_no_de: this.app_no_de,
+          created_by: '',
+          created_date: '',
+          gaji_kotor: this.analisaKeuanganForm.get('gaji_kotor')?.value,
+          gaji_kotor_pasangan: this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value,
+          gaji_kotor_total: this.analisaKeuanganForm.get('gaji_kotor_total')?.value,
+          jabatan_dihubungi: this.analisaKeuanganForm.get('jabatan_dihubungi')?.value,
+          kewajiban_bank: this.analisaKeuanganForm.get('kewajiban_bank')?.value,
+          kewajiban_bank_pasangan: this.analisaKeuanganForm.get('kewajiban_bank_pasangan')?.value,
+          kewajiban_bank_total: this.analisaKeuanganForm.get('kewajiban_bank_total')?.value,
+          kewajiban_lainnya: this.analisaKeuanganForm.get('kewajiban_lainnya')?.value,
+          kewajiban_lainnya_pasangan: this.analisaKeuanganForm.get('ewajiban_lainnya_pasangan')?.value,
+          kewajiban_lainnya_total: this.analisaKeuanganForm.get('kewajiban_lainnya_total')?.value,
+          nama_dihubungi: this.analisaKeuanganForm.get('nama_dihubungi')?.value,
+          nama_pemeriksa: this.analisaKeuanganForm.get('nama_pemeriksa')?.value,
+          nama_perusahaan: this.dataJob.nama_perusahaan,
+          no_telepon_perusahaan: this.dataJob.no_telepon,
+          pendapatan_bersih: this.analisaKeuanganForm.get('pendapatan_bersih')?.value,
+          pendapatan_bersih_pasangan: this.analisaKeuanganForm.get('pendapatan_bersih_pasangan')?.value,
+          pendapatan_bersih_total: this.analisaKeuanganForm.get('pendapatan_bersih_total')?.value,
+          pendapatan_kantor_lainnya: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value,
+          pendapatan_kantor_lainnya_pasangan: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value,
+          pendapatan_kantor_lainnya_total: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_total')?.value,
+          pendapatan_kotor: this.analisaKeuanganForm.get('pendapatan_kotor')?.value,
+          pendapatan_kotor_pasangan: this.analisaKeuanganForm.get('pendapatan_kotor_pasangan')?.value,
+          pendapatan_kotor_total: this.analisaKeuanganForm.get('pendapatan_kotor_total')?.value,
+          pendapatan_profesional: this.analisaKeuanganForm.get('pendapatan_profesional')?.value,
+          pendapatan_profesional_pasangan: this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value,
+          pendapatan_profesional_total: this.analisaKeuanganForm.get('pendapatan_profesional_total')?.value,
+          pendapatan_usaha: this.analisaKeuanganForm.get('pendapatan_usaha')?.value,
+          pendapatan_usaha_pasangan: this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value,
+          pendapatan_usaha_total: this.analisaKeuanganForm.get('pendapatan_usaha_total')?.value,
+          tanggal_pemeriksa: this.analisaKeuanganForm.get('tanggal_pemeriksa')?.value,
+          tanggal_permintaan: this.analisaKeuanganForm.get('tanggal_permintaan')?.value,
+          total_angsuran_kantor: this.analisaKeuanganForm.get('total_angsuran_kantor')?.value,
+          total_angsuran_kantor_akumulasi: this.analisaKeuanganForm.get('total_angsuran_kantor_akumulasi')?.value,
+          total_angsuran_kantor_pasangan: this.analisaKeuanganForm.get('total_angsuran_kantor_pasangan')?.value,
+          total_penghasilan_bersih: this.analisaKeuanganForm.get('total_penghasilan_bersih')?.value,
+          total_penghasilan_bersih_akumulasi: this.analisaKeuanganForm.get('total_penghasilan_bersih_akumulasi')?.value,
+          total_penghasilan_bersih_pasangan: this.analisaKeuanganForm.get('total_penghasilan_bersih_pasangan')?.value,
+          total_penghasilan_kotor: this.analisaKeuanganForm.get('total_penghasilan_kotor')?.value,
+          total_penghasilan_kotor_akumulasi: this.analisaKeuanganForm.get('total_penghasilan_kotor_akumulasi')?.value,
+          total_penghasilan_kotor_pasangan: this.analisaKeuanganForm.get('total_penghasilan_kotor_pasangan')?.value,
+          tunjangan: this.analisaKeuanganForm.get('tunjangan')?.value,
+          tunjangan_pasangan: this.analisaKeuanganForm.get('tunjangan_pasangan')?.value,
+          tunjangan_total: this.analisaKeuanganForm.get('tunjangan_total')?.value,
+        })
+        .subscribe({});
+    this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 
   printLajang(ktp: any) {
