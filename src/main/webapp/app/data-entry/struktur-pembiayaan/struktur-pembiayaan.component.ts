@@ -18,6 +18,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 export class StrukturPembiayaanComponent implements OnInit {
   datakiriman: any;
   datakirimiancure: any;
+  curef: any;
   datakirimanakategoripekerjaan: any;
   app_no_de: any;
 
@@ -53,6 +54,9 @@ export class StrukturPembiayaanComponent implements OnInit {
     });
     this.route.queryParams.subscribe(params => {
       this.datakirimanakategoripekerjaan = params['datakirimanakategoripekerjaan'];
+    });
+    this.route.queryParams.subscribe(params => {
+      this.curef = params['curef'];
     });
   }
   protected getekodefasilitas = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_fasilitas');
@@ -107,7 +111,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl + 'sc=' + this.datakirimiancure + '&sd=' + this.app_no_de, {
+    return this.http.get<ApiResponse>(this.resourceUrl + 'sc=' + this.curef + '&sd=' + this.app_no_de, {
       params: options,
       observe: 'response',
     });
@@ -365,7 +369,8 @@ export class StrukturPembiayaanComponent implements OnInit {
       });
   }
 
-  simpanstruktur() { // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
+  simpanstruktur() {
+    // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
     const joint_income = document.getElementById('joint_income') as HTMLInputElement | any;
     const kode_fasilitas = document.getElementById('kode_fasilitas') as HTMLInputElement | any;
     const program = document.getElementById('program') as HTMLInputElement | any;
@@ -383,12 +388,57 @@ export class StrukturPembiayaanComponent implements OnInit {
     const hasil_pembiayaan = document.getElementById('hasil_pembiayaan') as HTMLInputElement | any;
     const detail_objek_pembiayaan = document.getElementById('detail_objek_pembiayaan') as HTMLInputElement | any;
     const fee_based = document.getElementById('fee_based') as HTMLInputElement | any;
+    const codekodefasilitas = document.getElementById('codekodefasilitas') as HTMLInputElement | any;
+    const codeprogram = document.getElementById('codeprogram') as HTMLInputElement | any;
+    const codeproduk = document.getElementById('codeproduk') as HTMLInputElement | any;
+    const codeskemamaster = document.getElementById('codeskemamaster') as HTMLInputElement | any;
+    const codeskemaid = document.getElementById('codeskemaid') as HTMLInputElement | any;
+    const idstruktur = document.getElementById('idstruktur') as HTMLInputElement | any;
 
     var kirimanpotongkodefasilitas = kode_fasilitas.value.split('|');
+    if (kode_fasilitas.value.indexOf('|') !== -1) {
+      var kirimankodefasilitas = kirimanpotongkodefasilitas[0];
+      var kirimankodefasilitasname = kirimanpotongkodefasilitas[1];
+    } else {
+      var kirimankodefasilitas = codekodefasilitas.value;
+      var kirimankodefasilitasname = kode_fasilitas.value;
+    }
+
     var kirimanpotongproduk = produk.value.split('|');
+    if (produk.value.indexOf('|') !== -1) {
+      var kirimanproduk = kirimanpotongproduk[0];
+      var kirimanprodukname = kirimanpotongproduk[1];
+    } else {
+      var kirimanproduk = codeproduk.value;
+      var kirimanprodukname = produk.value;
+    }
+
     var kirimanpotongprogram = program.value.split('|');
+    if (program.value.indexOf('|') !== -1) {
+      var kirimprogram = kirimanpotongprogram[0];
+      var kirimprogramname = kirimanpotongprogram[1];
+    } else {
+      var kirimprogram = codeprogram.value;
+      var kirimprogramname = program.value;
+    }
+
     var kirimanpotongskema = skema.value.split('|');
+    if (skema.value.indexOf('|') !== -1) {
+      var kirimanskema = kirimanpotongskema[0];
+      var kirimanskemanama = kirimanpotongskema[2];
+      var kirimanskemmaster = kirimanpotongskema[1];
+    } else {
+      var kirimanskema = codeskemaid.value;
+      var kirimanskemanama = skema.value;
+      var kirimanskemmaster = codeskemamaster.value;
+    }
+
     var kirimanjangwaktunya = jangka_waktu.value.split('|');
+    if (jangka_waktu.value.indexOf('|') !== -1) {
+      var kirimanjangkawaktu = kirimanjangwaktunya[0];
+    } else {
+      var kirimanjangkawaktu = jangka_waktu.value;
+    }
 
     if (this.daWa == 0) {
       alert('ini create');
@@ -401,25 +451,25 @@ export class StrukturPembiayaanComponent implements OnInit {
           app_no_de: this.app_no_de,
           created_by: 'string',
           // created_date: "",
-          curef: this.datakirimiancure,
+          curef: this.curef,
           detail_objek_pembiayaan: detail_objek_pembiayaan.value,
           fasilitas_ke: fasilitas_ke.value,
           fee_based: fee_based.value,
           harga_objek_pembiayaan: harga_objek_pembiayaan.value,
-          id: 0,
-          jangka_waktu: kirimanjangwaktunya[0],
+          // id: 0,
+          jangka_waktu: kirimanjangkawaktu,
           joint_income: 'contoh',
-          kode_fasilitas: kirimanpotongkodefasilitas[0],
-          kode_fasilitas_name: kirimanpotongkodefasilitas[1],
+          kode_fasilitas: kirimankodefasilitas,
+          kode_fasilitas_name: kirimankodefasilitasname,
           margin: margin1.value,
           nilai_pembiayaan: hasil_pembiayaan.value,
-          produk: kirimanpotongproduk[0],
-          produk_name: kirimanpotongproduk[1],
-          program: kirimanpotongprogram[0],
-          program_name: kirimanpotongprogram[1],
-          skema: kirimanpotongskema[0],
-          skema_master: kirimanpotongskema[1],
-          skema_name: kirimanpotongskema[2],
+          produk: kirimanproduk,
+          produk_name: kirimanprodukname,
+          program: kirimprogram,
+          program_name: kirimprogramname,
+          skema: kirimanskema,
+          skema_master: kirimanskemmaster,
+          skema_name: kirimanskemanama,
           tipe_margin: tipe_margin.value,
           tujuan_pembiayaan: tujuan_pembiayaan.value,
           uang_muka: uang_muka.value,
@@ -432,10 +482,8 @@ export class StrukturPembiayaanComponent implements OnInit {
             // alert('MASUKAJAHSUSAH');
             this.router.navigate(['/data-entry/data-entry/emergency-contact'], {
               queryParams: {
-                // datakiriman: contohtampungancuref,
-                // statusPerkawinan: contohtampungstatuskawain,
-                // app_no_de: contohtampunganappde,
-                // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
+                app_no_de: this.app_no_de,
+                curef: this.curef,
               },
             });
           },
@@ -451,25 +499,25 @@ export class StrukturPembiayaanComponent implements OnInit {
           app_no_de: this.app_no_de,
           created_by: 'string',
           created_date: '',
-          curef: this.datakirimiancure,
+          curef: this.curef,
           detail_objek_pembiayaan: detail_objek_pembiayaan.value,
           fasilitas_ke: fasilitas_ke.value,
           fee_based: fee_based.value,
           harga_objek_pembiayaan: harga_objek_pembiayaan.value,
-          id: 0,
-          jangka_waktu: kirimanjangwaktunya[0],
+          // id: idstruktur.value,
+          jangka_waktu: kirimanjangkawaktu,
           joint_income: joint_income.value,
-          kode_fasilitas: kirimanpotongkodefasilitas[0],
-          kode_fasilitas_name: kirimanpotongkodefasilitas[1],
+          kode_fasilitas: kirimankodefasilitas,
+          kode_fasilitas_name: kirimankodefasilitasname,
           margin: margin1.value,
           nilai_pembiayaan: hasil_pembiayaan.value,
-          produk: kirimanpotongproduk[0],
-          produk_name: kirimanpotongproduk[1],
-          program: kirimanpotongprogram[0],
-          program_name: kirimanpotongprogram[1],
-          skema: kirimanpotongskema[0],
-          skema_master: kirimanpotongskema[1],
-          skema_name: kirimanpotongskema[2],
+          produk: kirimanproduk,
+          produk_name: kirimanprodukname,
+          program: kirimprogram,
+          program_name: kirimprogramname,
+          skema: kirimanskema,
+          skema_master: kirimanskemmaster,
+          skema_name: kirimanskemanama,
           tipe_margin: tipe_margin.value,
           tujuan_pembiayaan: tujuan_pembiayaan.value,
           uang_muka: uang_muka.value,
@@ -482,10 +530,8 @@ export class StrukturPembiayaanComponent implements OnInit {
             // alert('MASUKAJAHSUSAH');
             this.router.navigate(['/data-entry/emergency-contact'], {
               queryParams: {
-                // datakiriman: contohtampungancuref,
-                // statusPerkawinan: contohtampungstatuskawain,
-                // app_no_de: contohtampunganappde,
-                // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
+                app_no_de: this.app_no_de,
+                curef: this.curef,
               },
             });
           },

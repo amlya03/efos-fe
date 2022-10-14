@@ -253,7 +253,7 @@ export class PersonalInfoComponent implements OnInit {
 
     var kirimanpotonganprovinsi = provinsi_cabang.value.split('|');
     var cekdatapipe = provinsi_cabang.value.indexOf('|');
-    alert(cekdatapipe + 'inidatanya');
+
     if (cekdatapipe !== -1) {
       var kirimanprovinsi = kirimanpotonganprovinsi[1];
 
