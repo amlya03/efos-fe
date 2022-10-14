@@ -155,10 +155,10 @@
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" name="fasilitas_ke" id="fasilitas_ke" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
-            <option value="{{ daWa.kode_fasilitas }}" selected>{{ daWa.fasilitas_ke }}</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
+            <option value="{{ daWa.fasilitas_ke }}" selected>{{ daWa.fasilitas_ke }}</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
           </select>
         </div>
       </div>
@@ -222,6 +222,51 @@
           name="fee_based"
           id="fee_based"
           value="{{ daWa.fee_based }}"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        />
+        <input
+          type="hidden"
+          class="form-control"
+          placeholder="Rp"
+          name="codekodefasilitas"
+          id="codekodefasilitas"
+          value="{{ daWa.kode_fasilitas }}"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        />
+        <input
+          type="hidden"
+          class="form-control"
+          placeholder="Rp"
+          name="codeprogram"
+          id="codeprogram"
+          value="{{ daWa.program }}"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        />
+        <input
+          type="hidden"
+          class="form-control"
+          placeholder="Rp"
+          name="codeproduk"
+          id="codeproduk"
+          value="{{ daWa.produk }}"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        />
+        <input
+          type="hidden"
+          class="form-control"
+          placeholder="Rp"
+          name="codeskemamaster"
+          id="codeskemamaster"
+          value="{{ daWa.skema_master }}"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        />
+        <input
+          type="hidden"
+          class="form-control"
+          placeholder="Rp"
+          name="codeskemaid"
+          id="codeskemaid"
+          value="{{ daWa.skema }}"
           [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
         />
       </div>
@@ -294,6 +339,16 @@
           readonly
           name="hasil_pembiayaan"
           id="hasil_pembiayaan"
+        />
+
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          type="hidden"
+          class="form-control"
+          value="{{ daWa.id }}"
+          readonly
+          name="idstruktur"
+          id="idstruktur"
         />
       </div>
     </div>

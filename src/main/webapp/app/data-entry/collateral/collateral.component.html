@@ -61,6 +61,25 @@
                     <div [ngSwitch]="tampungantipeagunan">
                       <div *ngSwitchCase="'Kendaraan'">
                         <!--awal hidden kendaraan colom 1 NO 2-->
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
+                          <div class="col-sm-8">
+                            <div class="form-group">
+                              <select
+                                class="form-control"
+                                name="jenis_objek"
+                                id="jenis_objek"
+                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                              >
+                                <option selected value="">Pilih Jenis Objek</option>
+                                <option *ngFor="let getjenisobjek of getjenisobjek" value="{{ getjenisobjek.jenis_objek_code }}">
+                                  {{ getjenisobjek.jenis_objek_deskripsi }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
                         <div id="hidden_kendaraanCol1" class="hidden_kendaraanCol1">
                           <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Tipe Kendaraan<span class="text-danger">*</span></label>
@@ -237,6 +256,25 @@
                       </div>
                       <div *ngSwitchCase="'Tanah dan Bangunan'">
                         <!-- untuk tanah dan bangunan colom 1 NO1 -->
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
+                          <div class="col-sm-8">
+                            <div class="form-group">
+                              <select
+                                class="form-control"
+                                name="jenis_objek"
+                                id="jenis_objek"
+                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                              >
+                                <option selected value="">Pilih Jenis Objek</option>
+                                <option *ngFor="let getjenisobjek of getjenisobjek" value="{{ getjenisobjek.jenis_objek_code }}">
+                                  {{ getjenisobjek.jenis_objek_deskripsi }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
                         <div id="hidden_tnb" class="hidden_tnb">
                           <!--awal hidden tbn-->
                           <div class="form-group row">
@@ -608,6 +646,24 @@
                         <!-- batas colom 1 dan 2 -->
                       </div>
                       <div *ngSwitchCase="'Tanah'">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
+                          <div class="col-sm-8">
+                            <div class="form-group">
+                              <select
+                                class="form-control"
+                                name="jenis_objek"
+                                id="jenis_objek"
+                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                              >
+                                <option selected value="">Pilih Jenis Objek</option>
+                                <option *ngFor="let getjenisobjek of getjenisobjek" value="{{ getjenisobjek.jenis_objek_code }}">
+                                  {{ getjenisobjek.jenis_objek_deskripsi }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
                         <!--awal hiden colom 1 tanah NO 4-->
                         <div id="hidden_tanahCol1" class="hidden_tanahCol1">
                           <div class="form-group row">
@@ -760,6 +816,25 @@
                         <!-- hide show colom 2 tanah  NO 4-->
                       </div>
                       <div *ngSwitchCase="'Bangunan'">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
+                          <div class="col-sm-8">
+                            <div class="form-group">
+                              <select
+                                class="form-control"
+                                name="jenis_objek"
+                                id="jenis_objek"
+                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                              >
+                                <option selected value="">Pilih Jenis Objek</option>
+                                <option *ngFor="let getjenisobjek of getjenisobjek" value="{{ getjenisobjek.jenis_objek_code }}">
+                                  {{ getjenisobjek.jenis_objek_deskripsi }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
                         <div id="hidden_bangunan" class="hidden_bangunan">
                           <!--awal hidden bangunan colom 1 NO5-->
                           <div class="form-group row">
@@ -1139,23 +1214,7 @@
                       <div *ngSwitchCase="'Emas'">
                         <H1>untuk pilihan ini tidak tersedia</H1>
                       </div>
-                      <div *ngSwitchDefault>
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
-                          <div class="col-sm-8">
-                            <div class="form-group">
-                              <select
-                                class="form-control"
-                                name="jenis_objek"
-                                id="jenis_objek"
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              >
-                                <option selected value="">Pilih Jenis Objek</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <div *ngSwitchDefault></div>
                     </div>
                     <div [ngSwitch]="tampungantipeagunan">
                       <div *ngSwitchCase="'Kendaraan'"></div>

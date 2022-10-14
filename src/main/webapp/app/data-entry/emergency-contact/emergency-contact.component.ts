@@ -17,7 +17,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./emergency-contact.component.scss'],
 })
 export class EmergencyContactComponent implements OnInit {
-  datakirimiancure: any;
+  curef: any;
   datakiriman: any;
   app_no_de: any;
   datakirimanakategoripekerjaan: any;
@@ -42,7 +42,7 @@ export class EmergencyContactComponent implements OnInit {
     private localStorageService: LocalStorageService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.datakirimiancure = params['datakirimiancure'];
+      this.curef = params['curef'];
     });
 
     this.route.queryParams.subscribe(params => {
@@ -217,7 +217,7 @@ export class EmergencyContactComponent implements OnInit {
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl + this.datakirimiancure, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.resourceUrl + this.curef, { params: options, observe: 'response' });
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -226,14 +226,14 @@ export class EmergencyContactComponent implements OnInit {
       alert('ini fix');
       // alert(this.app_no_de);
       this.router.navigate(['/data-entry/call-report'], {
-        queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
+        queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.curef },
       });
     } else {
       alert('ini non fix');
       // alert(this.app_no_de);
       // alert(this.datakirimanakategoripekerjaan);
       this.router.navigate(['/data-entry/call-report-non'], {
-        queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
+        queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.curef },
       });
     }
     // this.onResponseSuccess(res);
@@ -241,7 +241,8 @@ export class EmergencyContactComponent implements OnInit {
     // this.router.navigate(['/call-report'], { queryParams: { datakiriman:this.datakirimiancure , datakirimiancure:this.datakiriman } });
   }
 
-  simpanemergency() { // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
+  simpanemergency() {
+    // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
     const id = document.getElementById('id') as HTMLInputElement | any;
     const nama = document.getElementById('nama') as HTMLInputElement | any;
     const alamat = document.getElementById('alamat') as HTMLInputElement | any;
@@ -293,7 +294,7 @@ export class EmergencyContactComponent implements OnInit {
         .post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_emergency_contact', {
           // headers: headers,
           id: '',
-          curef: this.datakirimiancure,
+          curef: this.curef,
           nama: nama.value,
           alamat: alamat.value,
           provinsi: kirimanprov,
@@ -326,14 +327,14 @@ export class EmergencyContactComponent implements OnInit {
               alert('ini fix');
               alert(this.app_no_de);
               this.router.navigate(['/data-entry/call-report'], {
-                queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
+                queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.curef },
               });
             } else {
               alert('ini non fix');
               alert(this.app_no_de);
               alert(this.datakirimanakategoripekerjaan);
               this.router.navigate(['/data-entry/call-report-non'], {
-                queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
+                queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.curef },
               });
             }
 
@@ -358,7 +359,7 @@ export class EmergencyContactComponent implements OnInit {
         .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_emergency_contact', {
           // headers: headers,
           id: id.value,
-          curef: this.datakirimiancure,
+          curef: this.curef,
           nama: nama.value,
           alamat: alamat.value,
           provinsi: kirimanprov,
@@ -381,14 +382,14 @@ export class EmergencyContactComponent implements OnInit {
               alert('ini fix');
               alert(this.app_no_de);
               this.router.navigate(['/data-entry/call-report'], {
-                queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
+                queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.curef },
               });
             } else {
               alert('ini non fix');
               alert(this.app_no_de);
               alert(this.datakirimanakategoripekerjaan);
               this.router.navigate(['/data-entry/call-report-non'], {
-                queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
+                queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.curef },
               });
             }
 
