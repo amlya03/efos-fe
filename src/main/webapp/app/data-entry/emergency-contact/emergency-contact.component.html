@@ -8,15 +8,15 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Nama<span class="text-danger">*</span></label>
       <div class="col-sm-8">
-        <input type="hidden" class="form-control" placeholder="Nama" name="id" id="id" value="{{ daWa.id }}" />
-        <input type="text" class="form-control" placeholder="Nama" name="nama" id="nama" value="{{ daWa.nama }}" />
+        <input type="hidden" class="form-control" placeholder="Nama" name="id" id="id" value="{{ daWa.id }}"  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
+        <input type="text" class="form-control" placeholder="Nama" name="nama" id="nama" value="{{ daWa.nama }}"  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Alamat<span class="text-danger">*</span></label>
       <div class="col-sm-8">
-        <textarea class="form-control h-150px" rows="6" name="alamat" id="alamat">{{ daWa.alamat }}</textarea>
+        <textarea class="form-control h-150px" rows="6" name="alamat" id="alamat" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">{{ daWa.alamat }}</textarea>
       </div>
     </div>
     <br />
@@ -24,7 +24,7 @@
       <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" (change)="onChange(0)" id="provinsi_cabang" name="provinsi">
+          <select class="form-control" (change)="onChange(0)" id="provinsi_cabang" name="provinsi" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option>{{ daWa.provinsi }}</option>
             <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
               {{ daWaprof.namaWilayah }}
@@ -38,7 +38,7 @@
       <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" (change)="onChangekota(0)" id="kabkota_cabang" name="kabkota">
+          <select class="form-control" (change)="onChangekota(0)" id="kabkota_cabang" name="kabkota" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option>{{ daWa.kabkota }}</option>
             <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
               {{ daWakota.namaWilayah }}
@@ -52,7 +52,7 @@
       <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" (change)="onChangekecamatan(kecamatan)" id="kecamatan" name="kecamatan">
+          <select class="form-control" (change)="onChangekecamatan(kecamatan)" id="kecamatan" name="kecamatan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option>{{ daWa.kecamatan }}</option>
             <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
               {{ daWakecamatan.namaWilayah }}
@@ -66,7 +66,7 @@
       <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" (change)="onChangekelurahan(kelurahan)" id="kelurahan" name="kelurahan">
+          <select class="form-control" (change)="onChangekelurahan(kelurahan)" id="kelurahan" name="kelurahan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option>{{ daWa.kelurahan }}</option>
             <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
               {{ daWakelurahan.namaWilayah }}
@@ -80,7 +80,7 @@
       <label class="col-sm-4 col-form-label">Kode Pos<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="input-group mb-3">
-          <input
+          <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             maxlength="8"
@@ -90,7 +90,7 @@
             value="{{ daWa.kode_pos }}"
           />
           <div class="input-group-append">
-            <button class="btn btn-outline-dark" id="kode_poshilang" onclick="buatisi()" type="button">Cari Data</button>
+            <button class="btn btn-outline-dark" id="kode_poshilang" onclick="buatisi()" type="button" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">Cari Data</button>
           </div>
         </div>
       </div>
@@ -100,7 +100,7 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
       <div class="col">
-        <input
+        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           class="form-control"
@@ -113,7 +113,7 @@
       </div>
       <div class="col">RT</div>
       <div class="col">
-        <input
+        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           class="form-control"
@@ -130,7 +130,7 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Nomor Telepon<span class="text-danger">*</span></label>
       <div class="col-sm-8">
-        <input
+        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           class="form-control"
@@ -149,7 +149,7 @@
       <label class="col-sm-4 col-form-label">Hubungan<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" id="hubungan" name="hubungan">
+          <select class="form-control" id="hubungan" name="hubungan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option>{{ daWa.hubungan }}</option>
 
             <option *ngFor="let gethubunganemergency1 of gethubunganemergency1" value="{{ gethubunganemergency1.deskripsi }}">
@@ -163,7 +163,7 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Email<span class="text-danger">*</span></label>
       <div class="col-sm-8">
-        <input type="email" class="form-control" placeholder="Email" id="email" name="email" value=" {{ daWa.email }}" />
+        <input type="email" class="form-control" placeholder="Email" id="email" name="email" value=" {{ daWa.email }}"  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
       </div>
     </div>
   </div>
@@ -172,7 +172,7 @@
 <p></p>
 <div class="row">
   <div class="col" style="text-align: center">
-    <button type="submit" (click)="simpanemergency()" id="btn" name="simpandata" value="simpandata" class="btn btn-dark">
+    <button type="submit" (click)="simpanemergency()" id="btn" name="simpandata" value="simpandata" class="btn btn-dark" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
       Simpan Data
     </button>
     <button type="submit" (click)="goto(0)" id="selanjutnya" name="selanjutnya" value="selanjutnya" class="btn btn-warning">

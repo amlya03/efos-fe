@@ -61,7 +61,6 @@ import { InitialDataEntryFixEditComponent } from './initial-data-entry/initial-d
 import { DaftarAplikasiPilihComponent } from './initial-data-entry/daftar-aplikasi-pilih/daftar-aplikasi-pilih.component';
 import { VerificationComponent } from './verification/verification.component';
 import { EditjobinfoComponent } from './data-entry/editjobinfo/editjobinfo.component';
-import { EditcollateralComponent } from './data-entry/editcollateral/editcollateral.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { UploadDocumentDeComponent } from './upload-document/upload-document-de/upload-document-de.component';
 import { UploadDocumentAgunanComponent } from './upload-document/upload-document-agunan/upload-document-agunan.component';
@@ -135,7 +134,6 @@ import { MemoVerificationComponent } from './verification/memo-verification/memo
     DaftarAplikasiPilihComponent,
     VerificationComponent,
     EditjobinfoComponent,
-    EditcollateralComponent,
     UploadDocumentComponent,
     UploadDocumentDeComponent,
     UploadDocumentAgunanComponent,

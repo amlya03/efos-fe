@@ -9,7 +9,7 @@
       <label class="col-sm-3 col-form-label">Kategori Pekerjaan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select (change)="katagoripekerjaanselect()" class="form-control" name="kate_peker" id="kate_peker">
+          <select (change)="katagoripekerjaanselect()" class="form-control" name="kate_peker" id="kate_peker" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option value=" {{ daWa.kategori_pekerjaan }}">
               {{ daWa.kategori_pekerjaan }}
             </option>
@@ -25,7 +25,7 @@
       <label class="col-sm-3 col-form-label">Tipe Pekerjaan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="tipe_pekerjaan" name="tipe_pekerjaan">
+          <select class="form-control" id="tipe_pekerjaan" name="tipe_pekerjaan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option value=" {{ daWa.tipe_pekerjaan }}">
               {{ daWa.tipe_pekerjaan }}
             </option>
@@ -42,7 +42,7 @@
       <label class="col-sm-3 col-form-label">Posisi</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" name="posisi1" id="posisi1">
+          <select class="form-control" name="posisi1" id="posisi1" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option value="{{ daWa.posisi }}">{{ daWa.posisi }}</option>
             <option *ngFor="let getjabatan of getjabatan" value="{{ getjabatan.jabatan_deskripsi }}">
               {{ getjabatan.jabatan_deskripsi }}
@@ -63,14 +63,14 @@
           name="nama_perusahaan"
           value="{{ daWa.nama_perusahaan }}"
         />
-        <input type="text" class="form-control" placeholder="Nama Perusahaan" id="id" name="id" value="{{ daWa.id }}" />
+        <input type="text" class="form-control" placeholder="Nama Perusahaan" id="id" name="id" value="{{ daWa.id }}"  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Alamat Perusahaan</label>
       <div class="col-sm-9">
-        <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan1" name="alamat_perusahaan1">{{
+        <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan1" name="alamat_perusahaan1" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">{{
           daWa.alamat_perusahaan
         }}</textarea>
       </div>
@@ -80,7 +80,7 @@
       <label class="col-sm-3 col-form-label">Provinsi</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" (change)="onChange(0)" id="provinsi_cabang_swasta" name="provinsi1">
+          <select class="form-control" (change)="onChange(0)" id="provinsi_cabang_swasta" name="provinsi1" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option value="{{ daWa.provinsi }}">{{ daWa.provinsi }}</option>
             <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
               {{ daWaprof.namaWilayah }}
@@ -94,7 +94,7 @@
       <label class="col-sm-3 col-form-label">Kota</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" (change)="onChangekota(0)" id="kabkota_cabang_swasta" name="kabkota1">
+          <select class="form-control" (change)="onChangekota(0)" id="kabkota_cabang_swasta" name="kabkota1" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option value="{{ daWa.kabkota }}">{{ daWa.kabkota }}</option>
             <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
               {{ daWakota.namaWilayah }}
@@ -108,7 +108,7 @@
       <label class="col-sm-3 col-form-label">Kecamatan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" (change)="onChangekecamatan(kecamatan)" id="kecamatan_swasta" name="kecamatan1">
+          <select class="form-control" (change)="onChangekecamatan(kecamatan)" id="kecamatan_swasta" name="kecamatan1" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option value="{{ daWa.kecamatan }}">{{ daWa.kecamatan }}</option>
             <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
               {{ daWakecamatan.namaWilayah }}
@@ -122,7 +122,7 @@
       <label class="col-sm-3 col-form-label">Kelurahan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select (change)="onChangekelurahan(kelurahan)" class="form-control" id="kelurahan_swasta" name="kelurahan1">
+          <select (change)="onChangekelurahan(kelurahan)" class="form-control" id="kelurahan_swasta" name="kelurahan1" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option value="{{ daWa.kelurahan }}">{{ daWa.kelurahan }}</option>
             <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
               {{ daWakelurahan.namaWilayah }}
@@ -136,7 +136,7 @@
       <label class="col-sm-3 col-form-label">Kode Pos</label>
       <div class="col-sm-9">
         <div class="input-group mb-3">
-          <input
+          <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             maxlength="8"
@@ -146,7 +146,7 @@
             name="kode_pos1"
           />
           <div class="input-group-append">
-            <button id="btnisi1" onclick="buatisi1()" class="btn btn-outline-dark" type="button">Cari Data</button>
+            <button id="btnisi1" onclick="buatisi1()" class="btn btn-outline-dark" type="button" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">Cari Data</button>
           </div>
         </div>
       </div>
@@ -158,7 +158,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Nomor SIUP</label>
           <div class="col-sm-9">
-            <input type="tel" class="form-control" value="{{ daWa.no_siup }}" id="siup2" name="siup2" maxlength="16" />
+            <input type="tel" class="form-control" value="{{ daWa.no_siup }}" id="siup2" name="siup2" maxlength="16"  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
           </div>
         </div>
       </div>
@@ -169,7 +169,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Nomor SIP</label>
           <div class="col-sm-9">
-            <input type="tel" class="form-control" value="{{ daWa.no_siup }}" id="siup2" name="siup2" maxlength="16" />
+            <input type="tel" class="form-control" value="{{ daWa.no_siup }}" id="siup2" name="siup2" maxlength="16"  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
           </div>
         </div>
       </div>
@@ -181,7 +181,7 @@
       <label class="col-sm-3 col-form-label">Jenis Bidang Usaha</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" (change)="jenisbidangsebelumselect()" id="jenis_bidang" name="jenis_bidang">
+          <select class="form-control" (change)="jenisbidangsebelumselect()" id="jenis_bidang" name="jenis_bidang" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option value="{{ daWa.jenis_bidang }}">{{ daWa.jenis_bidang }}</option>
             <option
               *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
@@ -198,7 +198,7 @@
       <label class="col-sm-3 col-form-label">Jenis Sub Bidang Usaha</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="sektor_ekonomi" name="sektor_ekonomi">
+          <select class="form-control" id="sektor_ekonomi" name="sektor_ekonomi" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option value="{{ daWa.sektor_ekonomi }}">{{ daWa.sektor_ekonomi }}</option>
             <option *ngFor="let getdatasektorekonomi of getdatasektorekonomi" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
               {{ getdatasektorekonomi.nama_sub_sektor }}
@@ -215,7 +215,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Jumlah karyawan</label>
           <div class="col-sm-9">
-            <input
+            <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
               type="tel"
               class="form-control"
               value="{{ daWa.jumlah_karyawan }}"
@@ -233,7 +233,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Jumlah karyawan</label>
           <div class="col-sm-9">
-            <input
+            <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
               type="tel"
               class="form-control"
               value="{{ daWa.jumlah_karyawan }}"
@@ -250,7 +250,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Jumlah karyawan</label>
           <div class="col-sm-9">
-            <input
+            <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
               type="tel"
               class="form-control"
               value="{{ daWa.jumlah_karyawan }}"
@@ -267,7 +267,7 @@
       <label class="col-sm-3 col-form-label">Tipe Perusahaan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="tipe_perusahaan" name="tipe_perusahaan">
+          <select class="form-control" id="tipe_perusahaan" name="tipe_perusahaan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option value="{{ daWa.tipe_perusahaan }}">{{ daWa.tipe_perusahaan }}</option>
           </select>
         </div>
@@ -277,7 +277,7 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Lama Bekerja</label>
       <div class="col">
-        <input
+        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           class="form-control"
           value="{{ daWa.lama_bekerja_bulan }}"
@@ -288,7 +288,7 @@
       </div>
       <div class="col">Tahun</div>
       <div class="col">
-        <input
+        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           class="form-control"
           value="{{ daWa.lama_bekerja_tahun }}"
@@ -304,7 +304,7 @@
       <label class="col-sm-3 col-form-label">Status Kepegawaian</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="status_kepegawaian" name="status_kepegawaian">
+          <select class="form-control" id="status_kepegawaian" name="status_kepegawaian" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
             <option value="{{ daWa.status_kepegawaian }}">{{ daWa.status_kepegawaian }}</option>
           </select>
         </div>
@@ -314,21 +314,21 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Pendapatan</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" value="{{ daWa.pendapatan }}" id="pendapatan" name="pendapatan" />
+        <input type="text" class="form-control" value="{{ daWa.pendapatan }}" id="pendapatan" name="pendapatan"  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Tunjangan</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" placeholder="Tunjangan" value="{{ daWa.tunjangan }}" id="tunjangan" name="tunjangan" />
+        <input type="text" class="form-control" placeholder="Tunjangan" value="{{ daWa.tunjangan }}" id="tunjangan" name="tunjangan"  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Pendapatan Lain</label>
       <div class="col-sm-9">
-        <input
+        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="text"
           class="form-control"
           placeholder="Pendapatan Lain"
@@ -342,7 +342,7 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Total Pendapatan</label>
       <div class="col-sm-9">
-        <input
+        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="text"
           class="form-control"
           placeholder="Total Pendapatan"
@@ -360,7 +360,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Usia</label>
           <div class="col-sm-9">
-            <input type="tel" class="form-control" value="{{ daWa.usia }}" id="usia" name="usia" maxlength="2" />
+            <input type="tel" class="form-control" value="{{ daWa.usia }}" id="usia" name="usia" maxlength="2"  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
           </div>
         </div>
       </div>
@@ -372,7 +372,7 @@
 <p></p>
 <div class="row">
   <div class="col" style="text-align: center">
-    <button type="button" (click)="updatejobpasangan('0')" class="btn btn-dark">Simpan Data</button>
+    <button type="button" (click)="updatejobpasangan('0')" class="btn btn-dark" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">Simpan Data</button>
     <button class="btn btn-warning" (click)="goto()">
       Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
     </button>

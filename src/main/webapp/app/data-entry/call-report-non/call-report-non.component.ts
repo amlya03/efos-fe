@@ -6,6 +6,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { callreportnon } from './call-report-nonmodel';
+import { LocalStorageService } from 'ngx-webstorage';
 
 export type EntityResponseDaWa = HttpResponse<callreportnon>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -22,12 +23,14 @@ export class CallReportNonComponent implements OnInit {
   daWa1: any;
   nowawancara: any;
   contohtex: any;
+  untukSessionRole: any;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    private localStorageService: LocalStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.datakirimiancure = params['datakirimiancure'];
@@ -44,6 +47,7 @@ export class CallReportNonComponent implements OnInit {
   protected apgetnowawancara = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/get_call_report_seq');
 
   ngOnInit(): void {
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     this.load();
   }
 

@@ -6,6 +6,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { DataEntryService } from '../services/data-entry.service';
+import { LocalStorageService } from 'ngx-webstorage';
 // import { colateralmodel } from './collateral-model';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -45,13 +46,15 @@ export class CollateralEditComponent implements OnInit {
   status_developer: any;
   idcollateralnyadetail: any;
   idcollateral: any;
+  untukSessionRole: any;
 
   constructor(
     protected datEntryService: DataEntryService,
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    private localStorageService: LocalStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.datakirimanidcollateral = params['datakirimanidcollateral'];
@@ -77,6 +80,7 @@ export class CollateralEditComponent implements OnInit {
   }
 
   load() {
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     this.gettokendukcapil();
 
     // alert('123' + this.app_no_de);

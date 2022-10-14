@@ -8,6 +8,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { jobinfolist } from './job-info-modellist';
 import { DataEntryService } from '../services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { LocalStorageService } from 'ngx-webstorage';
 
 export type EntityResponseDaWa = HttpResponse<jobinfolist>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -54,13 +55,15 @@ export class JobInfoComponent implements OnInit {
   tampungantipeagunan: any;
   contohkirimanpayrol: any;
   contohkirimpyrol: any;
+  untukSessionRole: any;
 
   constructor(
     protected datEntryService: DataEntryService,
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    private localStorageService: LocalStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.curef = params.curef;
@@ -92,6 +95,7 @@ export class JobInfoComponent implements OnInit {
   protected apilistjenisbidang = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/list_jenis_bidang');
 
   ngOnInit(): void {
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     // const job_info_retrive = (<HTMLInputElement>document.getElementById("job_info")).value;
     // localStorage.setItem('daftar_aplikasi_de', job_info_retrive)
     this.load();

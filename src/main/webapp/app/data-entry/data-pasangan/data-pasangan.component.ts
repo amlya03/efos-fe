@@ -7,6 +7,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { datapasangamodel } from './data-pasangan-model';
 import { Observable } from 'rxjs';
 import { DataEntryService } from '../services/data-entry.service';
+import { LocalStorageService } from 'ngx-webstorage';
 
 export type EntityResponseDaWa = HttpResponse<datapasangamodel>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -31,13 +32,15 @@ export class DataPasanganComponent implements OnInit {
   statusPerkawinan: any;
   kirimanstatusktp: any;
   untukktp: any;
+  untukSessionRole: any;
 
   constructor(
     protected datEntryService: DataEntryService,
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    private localStorageService: LocalStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.statusPerkawinan = params.statusPerkawinan;
@@ -50,6 +53,7 @@ export class DataPasanganComponent implements OnInit {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   ngOnInit(): void {
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     this.load();
   }
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
