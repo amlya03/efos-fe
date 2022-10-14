@@ -4,14 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { LocalStorageService } from 'ngx-webstorage';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { syaratPersetujuanModel } from '../service/config/syaratPersetujuanModel.model';
 import Swal from 'sweetalert2';
 import { cekUjiKepatuhan } from '../service/config/cekUjiKepatuhan.model';
 import { areaOfConcern } from '../service/config/areaOfConcern.model';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { ServiceVerificationService } from '../service/service-verification.service';
 
 @Component({
   selector: 'jhi-syarat-persetujuan',
@@ -55,7 +56,9 @@ export class SyaratPersetujuanComponent implements OnInit {
     protected modalService: NgbModal,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    protected localStorageService: LocalStorageService
+    protected localStorageService: LocalStorageService,
+    protected dataEntryService: DataEntryService,
+    protected serviceVerificationService: ServiceVerificationService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -64,13 +67,6 @@ export class SyaratPersetujuanComponent implements OnInit {
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
-  // URL DE
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
-
-  // URL List Syarat Persetujuan
-  protected fetchSyaratPersetujuan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-verif/getSyaratPersetujuan?sd='
-  );
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -83,25 +79,15 @@ export class SyaratPersetujuanComponent implements OnInit {
     this.load();
   }
 
-  // DE
-  getFetchSemuaData(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.fetchSemuaData + this.app_no_de);
-  }
-
-  // Syarat Persetujuan
-  getfetchSyaratPersetujuan(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.fetchSyaratPersetujuan + this.app_no_de);
-  }
-
   load(): void {
     // ambil semua data DE
-    this.getFetchSemuaData().subscribe(data => {
+    this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
       // alert('DE '+ this.dataEntry?.status_perkawinan)
     });
 
     // ambil semua data Syarat Persetujuan
-    this.getfetchSyaratPersetujuan().subscribe(data => {
+    this.serviceVerificationService.getfetchSyaratPersetujuan(this.app_no_de).subscribe(data => {
       // Syarat Persetujuan
       this.syaratPersetujuan = data.result.syarat;
       this.syaratPersetujuan?.forEach(element => {
@@ -254,9 +240,8 @@ export class SyaratPersetujuanComponent implements OnInit {
           .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_cek_uji_kepatuhan', {
             app_no_de: this.app_no_de,
             created_by: this.untukSessionUserName,
-            created_date: '',
             curef: this.dataEntry.curef,
-            id: this.cekUjiKepatuhan[i].id,
+            // id: this.cekUjiKepatuhan[i].id,
             kegiatan: this.cekUjiKepatuhan[i].id,
             kepatuhan: this.kepatuhanUji,
             keterangan: this.keteranganUji,
@@ -266,10 +251,9 @@ export class SyaratPersetujuanComponent implements OnInit {
           .subscribe({});
       } else {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_uji_cek_kepatuhan', {
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_cek_uji_kepatuhan', {
             app_no_de: this.app_no_de,
             created_by: this.untukSessionUserName,
-            created_date: '',
             curef: this.dataEntry.curef,
             kegiatan: this.cekUjiKepatuhan[i].id,
             kepatuhan: this.kepatuhanUji,

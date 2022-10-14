@@ -14,6 +14,50 @@ export class ServiceVerificationService {
   protected listAprisal = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_appraisal');
   // //////////////////////service daftar aplikasi waiting assign\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // ////////////////////////////////////GET ANALISA KEUANGAN///////////////////////////////////////////////////////////
+  protected getAnalisaKeuangan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaKeuangan?sd='
+  );
+  // ////////////////////////////////////GET ANALISA KEUANGAN///////////////////////////////////////////////////////////
+
+  // //////////////////////////////////// SILK ///////////////////////////////////////////////////////////
+  protected getSlik = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/fetchDataSlik?sd=');
+  // //////////////////////////////////// SILK ///////////////////////////////////////////////////////////
+
+  // //////////////////////////////////// DATA CALON NASABAH ///////////////////////////////////////////////////////////
+  protected getDataCalonNasabah = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaCalonNasabah?sd='
+  );
+  // //////////////////////////////////// DATA CALON NASABAH ///////////////////////////////////////////////////////////
+
+  // //////////////////////////////////// DATA KANTOR ///////////////////////////////////////////////////////////
+  protected getDataKantor = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaDataKantor?sd='
+  );
+  // //////////////////////////////////// DATA KANTOR ///////////////////////////////////////////////////////////
+
+  // //////////////////////////////////// LIST MUTASI ///////////////////////////////////////////////////////////
+  protected allDataMutasiRekening = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-verif/list_verif_mutasi?si='
+  );
+  // //////////////////////////////////// LIST MUTASI ///////////////////////////////////////////////////////////
+
+  // //////////////////////////////////// GET MUTASI ///////////////////////////////////////////////////////////
+  protected getMutasi = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/get_verif_mutasi?si=');
+  // //////////////////////////////////// GET MUTASI ///////////////////////////////////////////////////////////
+
+  // ////////////////////// Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected getKesimpulan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-verif/getKesimpulanVerifikasi?sd='
+  );
+  // ////////////////////// Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // //////////////////////////////////// URL List Syarat Persetujuan ///////////////////////////////////////////////////////////
+  protected fetchSyaratPersetujuan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-verif/getSyaratPersetujuan?sd='
+  );
+  // //////////////////////////////////// URL List Syarat Persetujuan ///////////////////////////////////////////////////////////
+
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected allDataOnProcess = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.110:8805/api/v1/efos-verif/list_appraisal_process'
@@ -89,6 +133,54 @@ export class ServiceVerificationService {
     return this.http.get<ApiResponse>(this.allDataWaitingUpdateStatus);
   }
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////////////////// Analisa \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  fetchAnalisaKeuangan(app_no_de: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getAnalisaKeuangan + app_no_de);
+  }
+  // ////////////////////////////////// Analisa \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // //////////////////////////// Slik \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  fetchSlik(app_no_de: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getSlik + app_no_de);
+  }
+  // //////////////////////////// Slik \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // //////////////////////////////////// DATA CALON NASABAH ///////////////////////////////////////////////////////////
+  fetchDataNasabah(app_no_de: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getDataCalonNasabah + app_no_de);
+  }
+  // //////////////////////////////////// DATA CALON NASABAH ///////////////////////////////////////////////////////////
+
+  // //////////////////////////////////// DATA KANTOR ///////////////////////////////////////////////////////////
+  fetchDataKantor(app_no_de: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getDataKantor + app_no_de);
+  }
+  // //////////////////////////////////// DATA KANTOR ///////////////////////////////////////////////////////////
+
+  // /////////////////////LIST mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  fetchListMutasiRekening(app_no_de: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.allDataMutasiRekening + app_no_de);
+  }
+  // //////////////////////LIST mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // /////////////////////get mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getMutasiRekening(id: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getMutasi + id);
+  }
+  // //////////////////////get mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////// Syarat Persetujuan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getfetchSyaratPersetujuan(app_no_de: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchSyaratPersetujuan + app_no_de);
+  }
+  // ////////////////////// Syarat Persetujuan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////// get Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  fetchKesimpulan(app_no_de: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getKesimpulan + app_no_de);
+  }
+  // ////////////////////// get Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ///////////////////// REF ////////////////////////////////////////////////
   // ////////////////////// Ref Hubungan Agunan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

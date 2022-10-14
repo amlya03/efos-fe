@@ -54,10 +54,39 @@
           <td style="text-align: center">{{ uploadDocument.status != null ? 'Sudah Upload' : 'Belum Upload' }}</td>
           <td style="text-align: center">{{ uploadDocument.created_date }}</td>
           <td style="text-align: center">
-            <button type="button" class="btn btn-outline-info">
-              <fa-icon icon="eye"></fa-icon>
-              <span class="d-none d-md-inline">Detail</span>
-            </button>
+            <div class="text-center">
+              <input
+                id="inputDocument{{ uploadDocument.id }}"
+                class="form-control"
+                type="file"
+                (change)="onChange($event, uploadDocument.id)"
+                multiple
+                [hidden]="this.buttonUpload == uploadDocument.id || uploadDocument.status != null"
+              />
+              <button
+                [hidden]="uploadDocument.status != null"
+                [value]="uploadDocument.id"
+                id="uploadData{{ uploadDocument.id }}"
+                (click)="uploadData(this.app_no_de, this.fetchAllAgunan.curef, uploadDocument.id, file)"
+                class="btn btn-success"
+              >
+                Upload
+              </button>
+              <button
+                [hidden]="uploadDocument.status == null"
+                id="hapusData{{ uploadDocument.id }}"
+                [value]="uploadDocument.id"
+                class="btn btn-warning"
+                (click)="
+                  deleteDataUpload(uploadDocument.doc_description, uploadDocument.id, uploadDocument.id_upload, uploadDocument.nama_dokumen)
+                "
+              >
+                Delete
+              </button>
+              <button [hidden]="uploadDocument.status == null" class="btn btn-danger" (click)="viewData(uploadDocument.nama_dokumen)">
+                Lihat Data
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>

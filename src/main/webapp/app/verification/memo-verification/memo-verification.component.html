@@ -13,7 +13,7 @@
         <input #kategori readonly type="text" class="form-control" value="{{ dataEntry.program_pembiayaan }}" />
       </div>
     </div>
-    <br/>
+    <br />
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Track / Aktifitas</label>
       <div class="col-sm-8">
@@ -37,39 +37,44 @@
     </div>
   </div>
 </div>
-<br/>
+<br />
+<div class="form-group row">
+  <label class="col-sm-2 col-form-label">Isi Memo</label>
+  <div class="col-sm-9">
+    <textarea class="form-control" rows="6" #keterangan></textarea>
+  </div>
+</div>
+<br />
 
-<div class="row" style="text-align: center;">
+<div class="row" style="text-align: center">
   <div class="col">
-    <button type="button"class="btn btn-info">Update Data</button>
-    <button type="button"class="btn btn-info" (click)="printData()">Cetak Memo</button>
+    <button type="button" class="btn btn-info" (click)="simpanMemo(keterangan.value)">Update Data</button>
+    <button type="button" class="btn btn-info" (click)="printData()">Cetak Memo</button>
   </div>
 </div>
 
-<br/>
+<br />
 <p></p>
 <table id="tableMemo" class="table table-striped table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
   <thead>
     <tr class="table-dark">
-      <th scope="col" style="text-align: center;">#</th>
-      <th scope="col" style="text-align: center;">Tanggal</th>
-      <th scope="col" style="text-align: center;">Keterangan</th>
-      <th scope="col" style="text-align: center;">Oleh</th>
-      <th scope="col" style="text-align: center;">Role</th>
+      <th scope="col" style="text-align: center">#</th>
+      <th scope="col" style="text-align: center">Tanggal</th>
+      <th scope="col" style="text-align: center">Keterangan</th>
+      <th scope="col" style="text-align: center">Oleh</th>
+      <th scope="col" style="text-align: center">Role</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let listMemo of listMemo; index as i">
-      <th scope="row" style="text-align: center">{{ i+1 }}</th>
-      <td style="text-align: center">{{listMemo.created_date}}</td>
-      <td style="text-align: center">{{listMemo.keterangan}}</td>
-      <td style="text-align: center">{{listMemo.users}}</td>
-      <td style="text-align: center">{{listMemo.role}}</td>
+      <th scope="row" style="text-align: center">{{ i + 1 }}</th>
+      <td style="text-align: center">{{ listMemo.created_date }}</td>
+      <td style="text-align: center">{{ listMemo.keterangan }}</td>
+      <td style="text-align: center">{{ listMemo.users }}</td>
+      <td style="text-align: center">{{ listMemo.role }}</td>
       <td style="text-align: center">
-        <a>
-          <fa-icon icon="ellipsis"></fa-icon><br />Detail
-        </a>
+        <a (click)="detailMemo()"> <fa-icon icon="ellipsis"></fa-icon><br />Detail </a>
       </td>
     </tr>
   </tbody>

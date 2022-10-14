@@ -7,6 +7,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { createRequestOption } from 'app/core/request/request-util';
 import { DataEntryService } from '../services/data-entry.service';
+import { LocalStorageService } from 'ngx-webstorage';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 
@@ -46,12 +47,15 @@ export class EditjobinfoComponent implements OnInit {
   getdatasektorekonomi: any;
   getjenisbidangdariapi: any;
   gettipeperusahaandariapi: any;
+  untukSessionRole: any;
+
   constructor(
     protected datEntryService: DataEntryService,
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    private localStorageService: LocalStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
@@ -71,6 +75,7 @@ export class EditjobinfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     this.load();
     // this.load2();
   }
@@ -286,7 +291,8 @@ export class EditjobinfoComponent implements OnInit {
     });
   }
 
-  updatejobinfo() { // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
+  updatejobinfo() {
+    // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
     const kategori_pekerjaan = document.getElementById('kategori_pekerjaan') as HTMLInputElement | any;
     const tipe_pekerjaan = document.getElementById('tipe_pekerjaan') as HTMLInputElement | any;
     const posisi = document.getElementById('posisi') as HTMLInputElement | any;

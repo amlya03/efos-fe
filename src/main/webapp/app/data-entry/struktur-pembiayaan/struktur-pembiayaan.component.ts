@@ -6,6 +6,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { strukturpembiayaanmodel } from './struktur-pembiayaan-model';
+import { LocalStorageService } from 'ngx-webstorage';
 
 export type EntityResponseDaWa = HttpResponse<strukturpembiayaanmodel>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -30,11 +31,14 @@ export class StrukturPembiayaanComponent implements OnInit {
   databawaan: any;
   postId: any;
   errorMessage: any;
+  untukSessionRole: any;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    private localStorageService: LocalStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
@@ -66,6 +70,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getStrukturBiayaByDe?');
 
   ngOnInit(): void {
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     this.load();
     // console.warn('strukturdata', this.datakirimiancure);
   }
@@ -360,8 +365,7 @@ export class StrukturPembiayaanComponent implements OnInit {
       });
   }
 
-  simpanstruktur() // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
-  {
+  simpanstruktur() { // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
     const joint_income = document.getElementById('joint_income') as HTMLInputElement | any;
     const kode_fasilitas = document.getElementById('kode_fasilitas') as HTMLInputElement | any;
     const program = document.getElementById('program') as HTMLInputElement | any;

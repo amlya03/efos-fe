@@ -50,6 +50,7 @@ export class CallReportComponent implements OnInit {
   protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   ngOnInit(): void {
+    this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
     this.load();
   }
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -106,8 +107,7 @@ export class CallReportComponent implements OnInit {
     return this.http.get<ApiResponse>(this.resourceUrl1 + this.app_no_de, { params: options, observe: 'response' });
   }
 
-  simpancallreport() // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
-  {
+  simpancallreport() { // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
     const tipe_nasabah = document.getElementById('tipe_nasabah') as HTMLInputElement | any;
     const alamat_ktp = document.getElementById('alamat_ktp') as HTMLInputElement | any;
     const tanggal_lahir = document.getElementById('tanggal_lahir') as HTMLInputElement | any;

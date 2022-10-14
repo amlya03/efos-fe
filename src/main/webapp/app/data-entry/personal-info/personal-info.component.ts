@@ -82,6 +82,7 @@ export class PersonalInfoComponent implements OnInit {
   contohcontoh: any;
   kirimanstatusktp: any;
   statusPerkawinan: any;
+  untukSessionRole: any;
   /////
 
   constructor(
@@ -100,6 +101,7 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     this.load();
   }
   load(): void {

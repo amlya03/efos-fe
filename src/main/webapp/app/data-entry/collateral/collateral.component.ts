@@ -8,6 +8,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { DataEntryService } from '../services/data-entry.service';
 import { colateralmodel } from './collateral-model';
 import { any } from 'cypress/types/bluebird';
+import { LocalStorageService } from 'ngx-webstorage';
 // import { count } from 'console';
 
 export type EntityResponseDaWa = HttpResponse<colateralmodel>;
@@ -44,12 +45,15 @@ export class CollateralComponent implements OnInit {
   untukjaminansebelum: any;
   untukstatussertifikat: any;
   kirimandatadevloper: any;
+  untukSessionRole: any;
+
   constructor(
     private route: ActivatedRoute,
     protected datEntryService: DataEntryService,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    private localStorageService: LocalStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
@@ -71,6 +75,7 @@ export class CollateralComponent implements OnInit {
   protected apigetlistagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_developer');
 
   ngOnInit(): void {
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     this.load();
   }
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

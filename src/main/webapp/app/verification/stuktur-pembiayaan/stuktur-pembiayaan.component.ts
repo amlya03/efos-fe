@@ -2,11 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
-import { Observable } from 'rxjs';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { getJob } from 'app/data-entry/services/config/getJob.model';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 
 @Component({
   selector: 'jhi-stuktur-pembiayaan',
@@ -27,7 +26,8 @@ export class StukturPembiayaanComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    protected dataEntryService: DataEntryService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -36,12 +36,6 @@ export class StukturPembiayaanComponent implements OnInit {
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
-
-  // URL DE
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
-
-  // Get Job
-  protected fetchSemuaJob = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobByCurefDe?sj=');
 
   ngOnInit(): void {
     this.load();
@@ -132,19 +126,9 @@ export class StukturPembiayaanComponent implements OnInit {
     });
   }
 
-  // DE
-  getFetchSemuaData(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.fetchSemuaData + this.app_no_de);
-  }
-
-  // Job By Curef
-  getfetchSemuaJob(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.fetchSemuaJob + 'curef_20220816_322');
-  }
-
   load(): void {
     // ambil semua data Job by Curef
-    this.getfetchSemuaJob().subscribe(Job => {
+    this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(Job => {
       this.fetchJob = Job.result;
       // this.getDataJob = Job.result
       // console.log("DAta "+ this.fetchJob[0].total_pendapatan)
@@ -156,7 +140,7 @@ export class StukturPembiayaanComponent implements OnInit {
     });
 
     // ambil semua data DE
-    this.getFetchSemuaData().subscribe(data => {
+    this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
       console.log(this.dataEntry);
       let retriveStruktur = {

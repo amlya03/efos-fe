@@ -5,10 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { slik } from 'app/initial-data-entry/services/config/slik.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { refAnalisaKeuangan } from './refAnalisaKeuangan.model';
 
@@ -40,7 +40,8 @@ export class DataRumahComponent implements OnInit {
     protected modalService: NgbModal,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    protected dataEntryService: DataEntryService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -49,17 +50,6 @@ export class DataRumahComponent implements OnInit {
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
-
-  // API url
-  protected getAnalisaKeuangan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaKeuangan?sd='
-  );
-
-  // DE
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
-
-  // Slik
-  protected getSlik = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/fetchDataSlik?sd=');
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -118,22 +108,6 @@ export class DataRumahComponent implements OnInit {
       kewajiban_lainnya_total: '',
       total_penghasilan_bersih_akumulasi: '',
     });
-  }
-
-  // Analisa
-  fetchAnalisaKeuangan(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.getAnalisaKeuangan + this.app_no_de);
-  }
-
-  // DE
-  getFetchSemuaData(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.fetchSemuaData + this.app_no_de);
-  }
-
-  // Slik
-  fetchSlik(): Observable<ApiResponse> {
-    // return this.http.get<ApiResponse>(this.getSlik + this.dataEntry?.app_no_ide);
-    return this.http.get<ApiResponse>(this.getSlik + 'app_20221006_644');
   }
 
   onSubmit(): void {
@@ -251,13 +225,14 @@ export class DataRumahComponent implements OnInit {
   }
 
   load(): void {
-    // ambil semua data DE
-    this.getFetchSemuaData().subscribe(data => {
+    // get Semua DE
+    this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
+      // console.log(this.dataEntry);
     });
 
     // ambil semua data Slik
-    this.fetchSlik().subscribe(data => {
+    this.dataRumah.fetchSlik('app_20221006_644').subscribe(data => {
       // if (data.code === 200) {
       // console.log(data)
       this.listSlik = data.result;
@@ -274,8 +249,9 @@ export class DataRumahComponent implements OnInit {
       });
       this.dtTrigger.next(data.result);
     });
+
     // ambil semua data Analisa
-    this.fetchAnalisaKeuangan().subscribe(data => {
+    this.dataRumah.fetchAnalisaKeuangan(this.app_no_de).subscribe(data => {
       // if (data.message === "success") {
       this.analisaKeuanganMap = data.result;
       // alert('sdhgfhsghfgdh ' +this.analisaKeuanganMap.nama_perusahaan);

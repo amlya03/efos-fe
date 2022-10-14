@@ -34,18 +34,45 @@ export class DataEntryService {
     this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
   }
 
-  // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  // ///////////////////////////// Data Entry \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchSemuaDataDE = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  // ///////////////////////////// Data Entry \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ///////////////////////////// Get Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchSemuaJob = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobByCurefDe?sj=');
+  // ///////////////////////////// Get Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ///////////////////////////// Get MEMO \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchMemo = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getMemoByDe?sd=');
+  // ///////////////////////////// Get MEMO \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
-    // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
     this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
       // 'http://10.20.34.110:8805/api/v1/efos-de/list_app_de?sc='+this.untukSessionKodeCabang+'&su='+this.untukSessionUserName
       'http://10.20.34.110:8805/api/v1/efos-de/list_app_de?sc=&su=' + this.untukSessionUserName
     );
-    // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
-
     return this.http.get<ApiResponse>(this.daftarAplikasiDataEntry);
   }
-  // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
+
+  // /////////////////////////// Ref Semua Data DE ////////////////////////////////////////////
+  getFetchSemuaDataDE(app_no_de: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchSemuaDataDE + app_no_de);
+  }
+  // /////////////////////////// Ref Semua Data DE ////////////////////////////////////////////
+
+  // /////////////////////////// Ref Semua Data Job ////////////////////////////////////////////
+  getFetchSemuaDataJob(curef: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchSemuaJob + curef);
+  }
+  // /////////////////////////// Ref Semua Data Job ////////////////////////////////////////////
+
+  // /////////////////////////// MEMO ////////////////////////////////////////////
+  getfetchMemo(app_no_de: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchMemo + app_no_de);
+  }
+  // /////////////////////////// MEMO ////////////////////////////////////////////
 
   getprovinsi(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
