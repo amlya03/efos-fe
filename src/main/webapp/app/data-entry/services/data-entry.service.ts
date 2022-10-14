@@ -13,7 +13,7 @@ import { createRequestOption } from 'app/core/request/request-util';
 export class DataEntryService {
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   // protected daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
-  //   'http://10.20.34.110:8805/api/v1/efos-de/list_app_de?su=199183174 '
+  //   'http://10.20.34.178:8805/api/v1/efos-de/list_app_de?su=199183174 '
   // );
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   untukSessionRole: any;
@@ -49,8 +49,8 @@ export class DataEntryService {
     // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
     this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
-      // 'http://10.20.34.110:8805/api/v1/efos-de/list_app_de?sc='+this.untukSessionKodeCabang+'&su='+this.untukSessionUserName
-      'http://10.20.34.110:8805/api/v1/efos-de/list_app_de?sc=&su=' + this.untukSessionUserName
+      // 'http://10.20.34.178:8805/api/v1/efos-de/list_app_de?sc='+this.untukSessionKodeCabang+'&su='+this.untukSessionUserName
+      'http://10.20.34.178:8805/api/v1/efos-de/list_app_de?sc=&su=' + this.untukSessionUserName
     );
     return this.http.get<ApiResponse>(this.daftarAplikasiDataEntry);
   }

@@ -45,8 +45,8 @@ export class HasilPrescreeningComponent implements OnInit {
     });
   }
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getCustomerByAppId?sc=');
-  protected getdhn = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/cekDhn');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/getCustomerByAppId?sc=');
+  protected getdhn = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/cekDhn');
 
   ngOnInit(): void {
     this.load();
@@ -131,7 +131,7 @@ export class HasilPrescreeningComponent implements OnInit {
     }
 
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-ide/dukcapil_verify', {
         no_id: this.datakirimanappide,
         tanggal_lahir: this.datakirimanappide,
 
@@ -194,7 +194,7 @@ export class HasilPrescreeningComponent implements OnInit {
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_app_de', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_app_de', {
         headers: headers,
         app_no_ide: app_no_ide,
         curef: curef,
@@ -223,7 +223,7 @@ export class HasilPrescreeningComponent implements OnInit {
 
   postUpdateStatus(): void {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/cekDhn', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-ide/cekDhn', {
         no_id: this.datakirimanappide,
         tanggal_lahir: this.datakirimanappide,
         // password_dukcapil: '3foWeb@pp',

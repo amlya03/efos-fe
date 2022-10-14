@@ -142,7 +142,7 @@ export class StukturPembiayaanComponent implements OnInit {
     // ambil semua data DE
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
-      console.log(this.dataEntry)
+      console.log(this.dataEntry);
       let retriveStruktur = {
         id: this.dataEntry.id,
         app_no_ide: this.dataEntry.app_no_ide,
@@ -233,7 +233,7 @@ export class StukturPembiayaanComponent implements OnInit {
   }
   onSubmit(): void {
     this.submitted = true;
-    alert("Belum Di Tambah Validasi")
+    alert('Belum Di Tambah Validasi');
   }
   // pindah
   viewStruktur(): void {

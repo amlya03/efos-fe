@@ -108,10 +108,10 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
   isChecked = false;
   checkuncheckall() {
     for (let i = 0; i < this.getCheckDaWa.length; i++) {
-      this.checklistDaWa = (<HTMLInputElement>document.getElementById("checkDaWa"+this.getCheckDaWa[i+1])).checked;
-      alert(this.checklistDaWa)
+      this.checklistDaWa = (<HTMLInputElement>document.getElementById('checkDaWa' + this.getCheckDaWa[i + 1])).checked;
+      alert(this.checklistDaWa);
     }
-    if(this.isChecked == true){
+    if (this.isChecked == true) {
       this.isChecked = false;
     } else {
       this.isChecked = true;
@@ -139,7 +139,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
       // alert(this.kirimStatusAplikasi[i])
       // alert(this.kirimAssign)
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/verif_assignment', {
+        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/verif_assignment', {
           analis_verifikasi: this.kirimAssign,
           app_no_de: this.kirimDe[i],
           status_aplikasi: this.kirimStatusAplikasi[i],

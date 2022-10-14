@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'jhi-memo-verification',
   templateUrl: './memo-verification.component.html',
-  styleUrls: ['./memo-verification.component.scss']
+  styleUrls: ['./memo-verification.component.scss'],
 })
 export class MemoVerificationComponent implements OnInit {
   dataEntry: fetchAllDe = new fetchAllDe();
@@ -78,15 +78,15 @@ export class MemoVerificationComponent implements OnInit {
       console.log(this.listMemo)
       console.log(data.result.keterangan)
       this.dtTrigger.next(this.listMemo);
-      if(data.code === 200){
+      if (data.code === 200) {
         // this.memo = data.result;
-        console.log('MEMo '+ data.result.keterangan)
+        console.log('MEMo ' + data.result.keterangan);
       }
     });
   }
 
   printData() {
-    const printTable = (<HTMLInputElement>document.getElementById('tableMemo'));
+    const printTable = <HTMLInputElement>document.getElementById('tableMemo');
     document.write(printTable.outerHTML);
     window.print();
     window.close();
