@@ -66,8 +66,8 @@ export class InitialDataEntryFixComponent implements OnInit {
     protected ideFixServices: InitialDataEntryService
   ) {}
 
-  protected getcuref = this.applicationConfigService.getEndpointFor(' http://10.20.34.110:8805/api/v1/efos-ide/getCuref');
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getAppId');
+  protected getcuref = this.applicationConfigService.getEndpointFor(' http://10.20.34.178:8805/api/v1/efos-ide/getCuref');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/getAppId');
   protected getprovinsi = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/wilayahSvc/getProvinsi/');
   protected gettokenducapil = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/token/generate-token');
   ngOnInit(): void {
@@ -276,7 +276,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     };
     // alert(kodeposget);
     // alert(this.provinsi_cabang);
-    // this.http.post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', body, { headers }).subscribe({
+    // this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ide/create_app_ide', body, { headers }).subscribe({
     //     next: data => {
     //   //     this.router.navigate(['/hasilprescreening'], {
     //   //       queryParams: {},
@@ -295,7 +295,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     //       });
 
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-ide/create_app_ide', {
         headers: headers,
         nama: this.nama,
         nama_pasangan: '',
@@ -451,14 +451,14 @@ export class InitialDataEntryFixComponent implements OnInit {
 
     // alert(this.provinsi_cabang);
 
-    // this.http.post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', body, { headers })
-    // http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide
-    // http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide
+    // this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ide/create_app_ide', body, { headers })
+    // http://10.20.34.178:8805/api/v1/efos-ide/create_app_ide
+    // http://10.20.34.178:8805/api/v1/efos-ide/create_app_ide
     // this.http
-    //   .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', body,{headers: httpOptions} )
+    //   .post<any>('http://10.20.34.178:8805/api/v1/efos-ide/create_app_ide', body,{headers: httpOptions} )
 
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-ide/create_app_ide', {
         headers: headers,
         nama: this.nama,
         nama_pasangan: '',

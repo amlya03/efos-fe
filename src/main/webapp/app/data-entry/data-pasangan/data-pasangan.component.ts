@@ -50,7 +50,7 @@ export class DataPasanganComponent implements OnInit {
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   ngOnInit(): void {
     this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
@@ -287,7 +287,7 @@ export class DataPasanganComponent implements OnInit {
     alert(contohtampungancuref);
 
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_pasangan', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_pasangan', {
         // headers: headers,
 
         nama_pasangan: nama_pasangan.value,

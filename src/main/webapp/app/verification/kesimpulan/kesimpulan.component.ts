@@ -66,7 +66,7 @@ export class KesimpulanComponent implements OnInit {
     this.submitted = true;
     if (this.kesimpulanModel == null) {
     this.http
-    .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_kesimpulan_verifikasi', {
+    .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_kesimpulan_verifikasi', {
           id: 0,
           app_no_de: this.app_no_de,
           created_date: '',
@@ -85,7 +85,7 @@ export class KesimpulanComponent implements OnInit {
     }
     // else
     //   this.http
-    //     .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_keuangan', {
+    //     .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_keuangan', {
 
     //     })
     //     .subscribe({});

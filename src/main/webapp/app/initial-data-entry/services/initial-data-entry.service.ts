@@ -12,16 +12,16 @@ export class InitialDataEntryService {
   koderetirvt = '';
   // /////////////////////////// DAFTAR APLIKASI INITIAL DATA ENTRY ////////////////////////////////////////////
   protected daftarAplikasiInitialDataEntry = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ide/list_app_ide?sc='
+    'http://10.20.34.178:8805/api/v1/efos-ide/list_app_ide?sc='
   );
   // /////////////////////////// DAFTAR APLIKASI INITIAL DATA ENTRY ////////////////////////////////////////////
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
-  protected ideByCuref = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getCuref');
+  protected ideByCuref = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/getCuref');
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
-  protected ideByAppId = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getAppId');
+  protected ideByAppId = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/getAppId');
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
@@ -33,7 +33,7 @@ export class InitialDataEntryService {
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
 
   // /////////////////////////// Reff Jenis Bidang ////////////////////////////////////////////
-  protected getJenisBidang = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/list_jenis_bidang');
+  protected getJenisBidang = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/list_jenis_bidang');
   // /////////////////////////// Reff Jenis Bidang ////////////////////////////////////////////
 
   constructor(

@@ -10,99 +10,99 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 })
 export class ServiceVerificationService {
   // //////////////////////service daftar aplikasi waiting assign\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  protected allDataVerif = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_app_verif');
-  protected listAprisal = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_appraisal');
+  protected allDataVerif = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-verif/list_app_verif');
+  protected listAprisal = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-verif/list_appraisal');
   // //////////////////////service daftar aplikasi waiting assign\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////////////////////GET ANALISA KEUANGAN///////////////////////////////////////////////////////////
   protected getAnalisaKeuangan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaKeuangan?sd='
+    'http://10.20.34.178:8805/api/v1/efos-verif/getAnalisaKeuangan?sd='
   );
   // ////////////////////////////////////GET ANALISA KEUANGAN///////////////////////////////////////////////////////////
 
   // //////////////////////////////////// SILK ///////////////////////////////////////////////////////////
   protected getSlik = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ide/fetchDataSlik?sd='
+    'http://10.20.34.178:8805/api/v1/efos-ide/fetchDataSlik?sd='
   );
   // //////////////////////////////////// SILK ///////////////////////////////////////////////////////////
 
   // //////////////////////////////////// DATA CALON NASABAH ///////////////////////////////////////////////////////////
   protected getDataCalonNasabah = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaCalonNasabah?sd='
+    'http://10.20.34.178:8805/api/v1/efos-verif/getAnalisaCalonNasabah?sd='
   );
   // //////////////////////////////////// DATA CALON NASABAH ///////////////////////////////////////////////////////////
 
   // //////////////////////////////////// DATA KANTOR ///////////////////////////////////////////////////////////
   protected getDataKantor = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaDataKantor?sd='
+    'http://10.20.34.178:8805/api/v1/efos-verif/getAnalisaDataKantor?sd='
   );
   // //////////////////////////////////// DATA KANTOR ///////////////////////////////////////////////////////////
 
   // //////////////////////////////////// LIST MUTASI ///////////////////////////////////////////////////////////
   protected allDataMutasiRekening = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-verif/list_verif_mutasi?si='
+    'http://10.20.34.178:8805/api/v1/efos-verif/list_verif_mutasi?si='
   );
   // //////////////////////////////////// LIST MUTASI ///////////////////////////////////////////////////////////
 
   // //////////////////////////////////// GET MUTASI ///////////////////////////////////////////////////////////
   protected getMutasi = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-verif/get_verif_mutasi?si='
+    'http://10.20.34.178:8805/api/v1/efos-verif/get_verif_mutasi?si='
   );
   // //////////////////////////////////// GET MUTASI ///////////////////////////////////////////////////////////
 
   // ////////////////////// Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected getKesimpulan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-verif/getKesimpulanVerifikasi?sd='
+    'http://10.20.34.178:8805/api/v1/efos-verif/getKesimpulanVerifikasi?sd='
   );
   // ////////////////////// Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // //////////////////////////////////// URL List Syarat Persetujuan ///////////////////////////////////////////////////////////
-  protected fetchSyaratPersetujuan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/getSyaratPersetujuan?sd=');
+  protected fetchSyaratPersetujuan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-verif/getSyaratPersetujuan?sd=');
   // //////////////////////////////////// URL List Syarat Persetujuan ///////////////////////////////////////////////////////////
 
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected allDataOnProcess = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-verif/list_appraisal_process'
+    'http://10.20.34.178:8805/api/v1/efos-verif/list_appraisal_process'
   );
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected allDataWaitingUpdateStatus = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-verif/list_app_analisa_review'
+    'http://10.20.34.178:8805/api/v1/efos-verif/list_app_analisa_review'
   );
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// REFF \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   // ////////////////////// Ref Hubungan Angunan /////////////////////////////
   protected refHubunganAgunan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ref/list_hubungan_agunan'
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_hubungan_agunan'
   );
   // ////////////////////// Ref Hubungan Angunan /////////////////////////////
 
   // ////////////////////// Ref Jabatan /////////////////////////////
-  protected refJabatan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_jabatan');
+  protected refJabatan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_jabatan');
   // ////////////////////// Ref Jabatan /////////////////////////////
 
   // ////////////////////// Ref Jumlah Karyawan /////////////////////////////
   protected refJumlahKaryawan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ref/list_jumlah_karyawan'
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_jumlah_karyawan'
   );
   // ////////////////////// Ref Jumlah Karyawan /////////////////////////////
 
   // ////////////////////// Ref Hubungan Emergency /////////////////////////////
   protected refHubunganEmergency = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ref/list_hubungan_emergency'
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_hubungan_emergency'
   );
   // ////////////////////// Ref Hubungan Emergency /////////////////////////////
 
   // ////////////////////// Ref Hubungan Emergency /////////////////////////////
   protected refStatusPerkawinan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ref/list_status_perkawinan'
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_status_perkawinan'
   );
   // ////////////////////// Ref Hubungan Emergency /////////////////////////////
 
   // ////////////////////// Ref Status Rumah  /////////////////////////////
-  protected refStatusRumah = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_status_rumah');
+  protected refStatusRumah = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_status_rumah');
   // ////////////////////// Ref Status Rumah /////////////////////////////
   // ////////////////////// REFF \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 

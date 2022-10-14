@@ -116,7 +116,7 @@ export class DataRumahComponent implements OnInit {
       return;
     } else if (this.analisaKeuanganMap == null) {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_keuangan', {
+        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_keuangan', {
           nama_pemohon: this.analisaKeuanganForm.get('nama_pemohon')?.value,
           alamat_perusahaan: this.analisaKeuanganForm.get('alamat_perusahaan')?.value,
           app_no_de: this.analisaKeuanganForm.get('app_no_de')?.value,
@@ -170,7 +170,7 @@ export class DataRumahComponent implements OnInit {
       this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     } else
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_keuangan', {
+        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_keuangan', {
           nama_pemohon: this.analisaKeuanganForm.get('nama_pemohon')?.value,
           alamat_perusahaan: this.analisaKeuanganForm.get('alamat_perusahaan')?.value,
           app_no_de: this.analisaKeuanganForm.get('app_no_de')?.value,
@@ -331,12 +331,12 @@ export class DataRumahComponent implements OnInit {
   }
 
   printLajang(ktp: any){
-    window.open('http://10.20.34.110:8805/api/v1/efos-ide/downloadSlik/'+ktp);
+    window.open('http://10.20.34.178:8805/api/v1/efos-ide/downloadSlik/'+ktp);
   }
 
   printMenikah(ktp: any){
     console.log(ktp)
-    window.open('http://10.20.34.110:8805/api/v1/efos-ide/downloadSlik/'+ktp);
+    window.open('http://10.20.34.178:8805/api/v1/efos-ide/downloadSlik/'+ktp);
   }
 
   // Only Numbers

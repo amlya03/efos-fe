@@ -221,7 +221,7 @@
                 <span
                   class="col nav-link"
                   routerLink="upload_document/upload_document_de"
-                  [queryParams]="{ datakiriman: this.curef }"
+                  [queryParams]="{ curef: this.curef }"
                   hidden
                 ></span>
                 <span class="col nav-link" routerLink="upload_document/upload_document_agunan" hidden></span>
@@ -247,13 +247,13 @@
               <span
                 class="col nav-link"
                 [routerLink]="['/upload_document/upload_document_de']"
-                [queryParams]="{ datakiriman: this.curef, app_no_de: this.app_no_de }"
+                [queryParams]="{ curef: this.curef, app_no_de: this.app_no_de }"
                 hidden
               ></span>
               <span
                 class="col nav-link"
                 [routerLink]="['/upload_document/upload_document_agunan']"
-                [queryParams]="{ datakiriman: this.curef, app_no_de: this.app_no_de }"
+                [queryParams]="{ curef: this.curef, app_no_de: this.app_no_de }"
                 hidden
               ></span>
             </a>
@@ -947,15 +947,15 @@
   <div
     *ngIf="
       router.url === '/upload_document/upload_document_de' ||
-      router.url === '/upload_document/upload_document_de?datakiriman=' + this.curef + '&app_no_de=' + this.app_no_de ||
-      router.url === '/upload_document/upload_document_agunan?datakiriman=' + this.curef + '&app_no_de=' + this.app_no_de ||
+      router.url === '/upload_document/upload_document_de?curef=' + this.curef + '&app_no_de=' + this.app_no_de ||
+      router.url === '/upload_document/upload_document_agunan?curef=' + this.curef + '&app_no_de=' + this.app_no_de ||
       router.url === '/upload_document/upload_document_agunan'
     "
   >
     <a
       class="nav-item nav-link"
       routerLink="upload_document/upload_document_de"
-      [queryParams]="{ datakiriman: this.curef, app_no_de: this.app_no_de }"
+      [queryParams]="{ curef: this.curef, app_no_de: this.app_no_de }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'AO'"
@@ -965,7 +965,7 @@
     <a
       class="nav-item nav-link"
       routerLink="upload_document/upload_document_agunan"
-      [queryParams]="{ datakiriman: this.curef, app_no_de: this.app_no_de }"
+      [queryParams]="{ curef: this.curef, app_no_de: this.app_no_de }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'AO'"

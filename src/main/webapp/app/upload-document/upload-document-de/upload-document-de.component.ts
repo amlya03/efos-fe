@@ -17,7 +17,7 @@ import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   uploadDocument: Array<uploadDocument> = new Array<uploadDocument>();
   dataEntry: fetchAllDe = new fetchAllDe();
-  datakiriman: any;
+  curef: any;
   app_no_de: any;
 
   // Variable to store shortLink from api response
@@ -45,7 +45,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     protected dataEntryService: DataEntryService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.datakiriman = params.datakiriman;
+      this.curef = params.curef;
       this.app_no_de = params.app_no_de;
     });
   }
@@ -68,7 +68,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     });
 
     // get List DE
-    this.fileUploadService.getListUploadDocument(this.datakiriman, 'DE').subscribe(dE => {
+    this.fileUploadService.getListUploadDocument(this.curef, 'DE').subscribe(dE => {
       this.uploadDocument = (dE as any).result;
       this.dtTrigger.next(dE.result);
     });
@@ -81,7 +81,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
 
   viewUploadDEA(): void {
     this.router.navigate(['/upload_document/upload_document_agunan'], {
-      queryParams: { datakiriman: this.datakiriman, app_no_de: this.app_no_de },
+      queryParams: { curef: this.curef, app_no_de: this.app_no_de },
     });
   }
 
@@ -125,7 +125,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   // Delete
   deleteDataUpload(doc:any, id:any, id_upload:any, nama:any){
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/deleteDocUpload', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/deleteDocUpload', {
         created_date: '',
         doc_description: doc,
         id: id,
@@ -139,10 +139,10 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   viewData( nama_dok:any ){
     let buatPdf = nama_dok.split('.').pop();
     if(buatPdf == 'pdf'){
-      window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/'+nama_dok+'');
+      window.open('http://10.20.34.178:8805/api/v1/efos-de/downloadFile/'+nama_dok+'');
     }
     else{
-        let url = 'http://10.20.34.110:8805/api/v1/efos-de/downloadFile/'+nama_dok+'';
+        let url = 'http://10.20.34.178:8805/api/v1/efos-de/downloadFile/'+nama_dok+'';
         let img = '<img src="'+url+'">';
         this.popup = window.open('');
         this.popup.document.write(img);

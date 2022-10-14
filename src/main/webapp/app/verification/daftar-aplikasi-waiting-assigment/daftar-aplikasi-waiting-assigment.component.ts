@@ -139,7 +139,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
       // alert(this.kirimStatusAplikasi[i])
       // alert(this.kirimAssign)
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/verif_assignment', {
+        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/verif_assignment', {
           analis_verifikasi: this.kirimAssign,
           app_no_de: this.kirimDe[i],
           status_aplikasi: this.kirimStatusAplikasi[i],

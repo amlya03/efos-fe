@@ -70,11 +70,11 @@ export class CollateralEditComponent implements OnInit {
     });
   }
   protected apistatussertifikat = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ref/list_status_sertifikat'
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_status_sertifikat'
   );
-  protected apigettipeagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_tipe_agunan');
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getCollateralById?si=');
-  protected apigetlistagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_developer');
+  protected apigettipeagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_tipe_agunan');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getCollateralById?si=');
+  protected apigetlistagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_developer');
   ngOnInit(): void {
     this.load();
   }
@@ -678,7 +678,7 @@ export class CollateralEditComponent implements OnInit {
 
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_collateral', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_collateral', {
         // headers: headers,
         // alamat_perusahaan: alamat_perusahaan.value,
 

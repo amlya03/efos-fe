@@ -183,7 +183,7 @@ export class DataKantorComponent implements OnInit {
       return;
     } else if (this.dataKantor == null) {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_kantor', {
+        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_kantor', {
           id: 0,
           app_no_de: this.app_no_de,
           aspek_syariah: this.dataKantorForm.get('aspek_syariah')?.value,
@@ -246,7 +246,7 @@ export class DataKantorComponent implements OnInit {
       this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     } else
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_data_kantor', {
+        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_data_kantor', {
           id: 0,
           app_no_de: this.app_no_de,
           aspek_syariah: this.dataKantorForm.get('aspek_syariah')?.value,
@@ -573,7 +573,7 @@ export class DataKantorComponent implements OnInit {
   //   const poyonganGrupSektor = bidang.split('|');
   //   // alert(poyonganGrupSektor[0])
   //   return this.http
-  //     .get<ApiResponse>('http://10.20.34.110:8805/api/v1/efos-ide/list_sektor_ekonomi?se=' + poyonganGrupSektor[0])
+  //     .get<ApiResponse>('http://10.20.34.178:8805/api/v1/efos-ide/list_sektor_ekonomi?se=' + poyonganGrupSektor[0])
   //     .subscribe(data => {
   //       // console.log('Sektor Ekonomi', data.result);
   //       if (data.code === 200) {

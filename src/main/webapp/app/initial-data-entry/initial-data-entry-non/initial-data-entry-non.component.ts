@@ -32,8 +32,8 @@ export class InitialDataEntryNonComponent implements OnInit {
     protected ideNonServices: InitialDataEntryService
   ) {}
 
-  // protected getcuref = this.applicationConfigService.getEndpointFor(' http://10.20.34.110:8805/api/v1/efos-ide/getCuref');
-  // protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getAppId');
+  // protected getcuref = this.applicationConfigService.getEndpointFor(' http://10.20.34.178:8805/api/v1/efos-ide/getCuref');
+  // protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/getAppId');
   // protected getprovinsi = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/wilayahSvc/getProvinsi/');
   // protected gettokenducapil = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/token/generate-token');
 
@@ -316,7 +316,7 @@ export class InitialDataEntryNonComponent implements OnInit {
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-ide/create_app_ide', {
         headers: headers,
         nama: this.nama,
         nama_pasangan: this.nama_pasangan,
@@ -398,7 +398,7 @@ export class InitialDataEntryNonComponent implements OnInit {
       });
 
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_job_info', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-ide/create_job_info', {
         headers: headers,
         alamat_perusahaan: this.alamat_perusahaan,
         barang_jasa: this.barang_jasa,
@@ -489,7 +489,7 @@ export class InitialDataEntryNonComponent implements OnInit {
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-ide/create_app_ide', {
         headers: headers,
         nama: this.nama,
         nama_pasangan: this.nama_pasangan,
@@ -571,7 +571,7 @@ export class InitialDataEntryNonComponent implements OnInit {
       });
 
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_job_info', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-ide/create_job_info', {
         headers: headers,
         alamat_perusahaan: this.alamat_perusahaan,
         barang_jasa: this.barang_jasa,

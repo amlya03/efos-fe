@@ -16,7 +16,7 @@ export type EntityArrayResponseType = HttpResponse<ApiResponse>;
 @Injectable({ providedIn: 'root' })
 export class BookService {
   // protected resourceUrl = this.applicationConfigService.getEndpointFor('api/books');
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_app_verif');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-verif/list_app_verif');
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(book: NewBook): Observable<EntityResponseType> {

@@ -94,6 +94,6 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     this.fasilitas = fasilitas;
     this.kategoriPekerjaan = kategori;
     // alert(this.appNoDe);
-    this.router.navigate(['/upload_document/upload_document_de'], { queryParams: { datakiriman: this.curef, app_no_de: this.appNoDe } });
+    this.router.navigate(['/upload_document/upload_document_de'], { queryParams: { curef: this.curef, app_no_de: this.appNoDe } });
   }
 }
