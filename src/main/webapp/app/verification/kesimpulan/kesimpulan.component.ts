@@ -11,7 +11,7 @@ import { ServiceVerificationService } from '../service/service-verification.serv
 @Component({
   selector: 'jhi-kesimpulan',
   templateUrl: './kesimpulan.component.html',
-  styleUrls: ['./kesimpulan.component.scss']
+  styleUrls: ['./kesimpulan.component.scss'],
 })
 export class KesimpulanComponent implements OnInit {
   kesimpulanForm!: FormGroup;
@@ -29,7 +29,7 @@ export class KesimpulanComponent implements OnInit {
     protected applicationConfigService: ApplicationConfigService,
     private formBuilder: FormBuilder,
     protected localStorageService: LocalStorageService,
-    protected serviceVerificationService: ServiceVerificationService,
+    protected serviceVerificationService: ServiceVerificationService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -65,8 +65,8 @@ export class KesimpulanComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
     if (this.kesimpulanModel == null) {
-    this.http
-    .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_kesimpulan_verifikasi', {
+      this.http
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_kesimpulan_verifikasi', {
           id: 0,
           app_no_de: this.app_no_de,
           created_date: '',
@@ -75,13 +75,13 @@ export class KesimpulanComponent implements OnInit {
           rekomendasi: this.kesimpulanForm.get('rekomendasi')?.value,
           updated_date: '',
           updated_by: this.untukSessionUserName,
-      // updated_by: this.mutasiForm.get('updated_by')?.value,
-      // updated_date: this.mutasiForm.get('updated_date')?.value,
-    })
-    .subscribe({
-      next: response => console.warn(response),
-      error: error => console.warn(error),
-    });
+          // updated_by: this.mutasiForm.get('updated_by')?.value,
+          // updated_date: this.mutasiForm.get('updated_date')?.value,
+        })
+        .subscribe({
+          next: response => console.warn(response),
+          error: error => console.warn(error),
+        });
     }
     // else
     //   this.http

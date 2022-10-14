@@ -169,7 +169,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
 
   submitForm(nama_bank: any, no_rekening: any, tahun: any, bulan: any, debet: any, kredit: any, saldo: any): void {
     // alert(this.lihatTableMutasi)
-    if(this.tambahTableMutasi == ''){
+    if (this.tambahTableMutasi == '') {
       this.http
         .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_verif_mutasi', {
           id: this.idTableMutasi,
@@ -190,9 +190,8 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           next: response => console.warn(response),
           error: error => console.warn(error),
         });
-        this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
-    }
-    else{
+      this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+    } else {
       this.http
         .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_verif_mutasi', {
           id: this.idTableMutasi,
@@ -213,18 +212,18 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           next: response => console.warn(response),
           error: error => console.warn(error),
         });
-        this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+      this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     }
   }
 
   // edit mutasi
-  editMutasi(id: any){
+  editMutasi(id: any) {
     this.idTableMutasi = id;
     // data
-    this.mutasiRekeningService.getMutasiRekening(id) // by id dari table atas
-    .subscribe(data => {
-      this.getTableMutasi = data.result;
-    });
-
+    this.mutasiRekeningService
+      .getMutasiRekening(id) // by id dari table atas
+      .subscribe(data => {
+        this.getTableMutasi = data.result;
+      });
   }
 }

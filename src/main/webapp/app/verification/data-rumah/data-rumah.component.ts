@@ -232,23 +232,22 @@ export class DataRumahComponent implements OnInit {
     });
 
     // ambil semua data Slik
-    this.dataRumah.fetchSlik("app_20221006_644").subscribe(data => {
+    this.dataRumah.fetchSlik('app_20221006_644').subscribe(data => {
       // if (data.code === 200) {
-        // console.log(data)
-        this.listSlik = data.result;
-        // console.log(this.listSlik)
+      // console.log(data)
+      this.listSlik = data.result;
+      // console.log(this.listSlik)
 
-        this.listSlik?.forEach(element => {
-          if(element.response_description=="get SLIK Result Success"){
-            if(element.status_applicant=="Debitur Utama Individu"){
-              this.listLajangSlik.push(element)
-            }
-            else if (element.status_applicant=="Pasangan Debitur"){
-              this.listMenikahSlik.push(element)
-            }
+      this.listSlik?.forEach(element => {
+        if (element.response_description == 'get SLIK Result Success') {
+          if (element.status_applicant == 'Debitur Utama Individu') {
+            this.listLajangSlik.push(element);
+          } else if (element.status_applicant == 'Pasangan Debitur') {
+            this.listMenikahSlik.push(element);
           }
-        });
-        this.dtTrigger.next(data.result);
+        }
+      });
+      this.dtTrigger.next(data.result);
     });
 
     // ambil semua data Analisa
@@ -330,13 +329,13 @@ export class DataRumahComponent implements OnInit {
     // get semua de
   }
 
-  printLajang(ktp: any){
-    window.open('http://10.20.34.178:8805/api/v1/efos-ide/downloadSlik/'+ktp);
+  printLajang(ktp: any) {
+    window.open('http://10.20.34.110:8805/api/v1/efos-ide/downloadSlik/' + ktp);
   }
 
-  printMenikah(ktp: any){
-    console.log(ktp)
-    window.open('http://10.20.34.178:8805/api/v1/efos-ide/downloadSlik/'+ktp);
+  printMenikah(ktp: any) {
+    console.log(ktp);
+    window.open('http://10.20.34.110:8805/api/v1/efos-ide/downloadSlik/' + ktp);
   }
 
   // Only Numbers

@@ -240,7 +240,7 @@ export class DataKantorComponent implements OnInit {
           verif_nama_perusahaan: this.dataKantorForm.get('verif_nama_perusahaan')?.value,
           note_verif_nama_perusahaan: this.dataKantorForm.get('note_verif_nama_perusahaan')?.value,
           verif_alamat_perusahaan: this.dataKantorForm.get('verif_alamat_perusahaan')?.value,
-          note_verif_alamat_perusahaan: this.dataKantorForm.get('note_verif_alamat_perusahaan')?.value
+          note_verif_alamat_perusahaan: this.dataKantorForm.get('note_verif_alamat_perusahaan')?.value,
         })
         .subscribe({});
       this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
@@ -303,7 +303,7 @@ export class DataKantorComponent implements OnInit {
           verif_nama_perusahaan: this.dataKantorForm.get('verif_nama_perusahaan')?.value,
           note_verif_nama_perusahaan: this.dataKantorForm.get('note_verif_nama_perusahaan')?.value,
           verif_alamat_perusahaan: this.dataKantorForm.get('verif_alamat_perusahaan')?.value,
-          note_verif_alamat_perusahaan: this.dataKantorForm.get('note_verif_alamat_perusahaan')?.value
+          note_verif_alamat_perusahaan: this.dataKantorForm.get('note_verif_alamat_perusahaan')?.value,
         })
         .subscribe({});
     this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });

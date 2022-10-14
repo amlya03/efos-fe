@@ -74,9 +74,9 @@ export class MemoVerificationComponent implements OnInit {
 
     // List Table Memo
     this.dataEntryService.getfetchMemo(this.app_no_de).subscribe(data => {
-      this.listMemo = data.result
-      console.log(this.listMemo)
-      console.log(data.result.keterangan)
+      this.listMemo = data.result;
+      console.log(this.listMemo);
+      console.log(data.result.keterangan);
       this.dtTrigger.next(this.listMemo);
       if (data.code === 200) {
         // this.memo = data.result;
@@ -93,20 +93,21 @@ export class MemoVerificationComponent implements OnInit {
   }
 
   // Simpan
-  simpanMemo(keterangan:any){
-    this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_memo', {
-      id: 0,
-      keterangan: keterangan,
-      users: this.untukSessionUserName,
-      role: this.untukSessionRole,
-      app_no_de: this.app_no_de,
-      created_date: '',
-      created_by: this.untukSessionUserName
-    })
-    .subscribe({
-      next: response => console.warn(response),
-      error: error => console.warn(error),
-    });
+  simpanMemo(keterangan: any) {
+    this.http
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_memo', {
+        id: 0,
+        keterangan: keterangan,
+        users: this.untukSessionUserName,
+        role: this.untukSessionRole,
+        app_no_de: this.app_no_de,
+        created_date: '',
+        created_by: this.untukSessionUserName,
+      })
+      .subscribe({
+        next: response => console.warn(response),
+        error: error => console.warn(error),
+      });
     window.location.reload();
   }
 
@@ -127,20 +128,20 @@ export class MemoVerificationComponent implements OnInit {
     //      }
     //   });
 
-      Swal.fire({
-        title: "Memo",
-        // text: " - lkdzflkxcbxbxcvbcvbcvsd",
-        html: "Testno  sporocilo za objekt: <p>test</p>",
-        imageUrl: "../../../content/images/bank-mega-syariah.png",
-        imageWidth: 100,
-        imageHeight: 70,
-        imageAlt: "Eagle Image",
-        showCancelButton: true,
-        confirmButtonText: "Yes",
-        cancelButtonText: "No",
-        confirmButtonColor: "#00ff55",
-        cancelButtonColor: "#999999",
-        reverseButtons: true,
-      });
-  };
+    Swal.fire({
+      title: 'Memo',
+      // text: " - lkdzflkxcbxbxcvbcvbcvsd",
+      html: 'Testno  sporocilo za objekt: <p>test</p>',
+      imageUrl: '../../../content/images/bank-mega-syariah.png',
+      imageWidth: 100,
+      imageHeight: 70,
+      imageAlt: 'Eagle Image',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      confirmButtonColor: '#00ff55',
+      cancelButtonColor: '#999999',
+      reverseButtons: true,
+    });
+  }
 }

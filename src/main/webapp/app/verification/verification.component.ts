@@ -59,7 +59,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
         this.daftarAplikasiVerif = data.result;
         this.dtTrigger.next(data.result);
       }
-      console.log(this.daftarAplikasiVerif)
+      console.log(this.daftarAplikasiVerif);
     });
   }
 
@@ -80,11 +80,10 @@ export class VerificationComponent implements OnInit, OnDestroy {
   }
 
   viewVerification(app_no_de: any): void {
-    this.http.get<ApiResponse>(this.fetchSemuaData + app_no_de)
-    .subscribe(data => {
+    this.http.get<ApiResponse>(this.fetchSemuaData + app_no_de).subscribe(data => {
       this.dataEntry = data.result;
       this.curef = this.dataEntry?.curef;
       this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: app_no_de, curef: this.curef } });
-    })
+    });
   }
 }

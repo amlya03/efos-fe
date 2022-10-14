@@ -8,7 +8,8 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Nama Lengkap<span class="text-danger">*</span></label>
       <div class="col-sm-9">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="text"
           class="form-control"
           placeholder="Nama Lengkap"
@@ -16,9 +17,18 @@
           id="nama_pasangan"
           value="{{ daWa.nama_pasangan }}"
         />
-        <input type="hidden" class="form-control" placeholder="Nama Lengkap" name="id" id="id" value="{{ daWa.id_customer }}"  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
+        <input
+          type="hidden"
+          class="form-control"
+          placeholder="Nama Lengkap"
+          name="id"
+          id="id"
+          value="{{ daWa.id_customer }}"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        />
 
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="hidden"
           class="form-control"
           placeholder="Nama Lengkap"
@@ -27,7 +37,15 @@
           value="{{ daWa.app_no_ide }}"
         />
 
-        <input type="hidden" class="form-control" placeholder="Nama Lengkap" name="curef" id="curef" value="{{ daWa.curef }}"  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
+        <input
+          type="hidden"
+          class="form-control"
+          placeholder="Nama Lengkap"
+          name="curef"
+          id="curef"
+          value="{{ daWa.curef }}"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        />
       </div>
     </div>
     <br />
@@ -35,7 +53,12 @@
       <label class="col-sm-3 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="jenis_kelamin_pasangan" name="jenis_kelamin_pasangan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            id="jenis_kelamin_pasangan"
+            name="jenis_kelamin_pasangan"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          >
             <option value="{{ daWa.jenis_kelamin_pasangan }}">{{ daWa.jenis_kelamin_pasangan }}</option>
           </select>
         </div>
@@ -46,7 +69,7 @@
       <label class="col-sm-3 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <textarea class="form-control h-150px" rows="6" id="comment" name="alamat_ktp_pasangan" id="alamat_ktp_pasangan"
-        >{{ daWa.alamat_ktp_pasangan }}
+          >{{ daWa.alamat_ktp_pasangan }}
         </textarea>
       </div>
     </div>
@@ -55,7 +78,13 @@
       <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select (change)="onChange(0)" class="form-control" id="provinsi_pasangan" name="provinsi_pasangan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            (change)="onChange(0)"
+            class="form-control"
+            id="provinsi_pasangan"
+            name="provinsi_pasangan"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          >
             <option>{{ daWa.provinsi_pasangan }}</option>
             <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
               {{ daWaprof.namaWilayah }}
@@ -69,7 +98,13 @@
       <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" (change)="onChangekota(0)" id="kabkota_pasangan" name="kabkota_pasangan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            (change)="onChangekota(0)"
+            id="kabkota_pasangan"
+            name="kabkota_pasangan"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          >
             <option>{{ daWa.kabkota_pasangan }}</option>
             <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
               {{ daWakota.namaWilayah }}
@@ -83,7 +118,13 @@
       <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" (change)="onChangekecamatan(kecamatan)" id="kecamatan_pasangan" name="kecamatan_pasangan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            (change)="onChangekecamatan(kecamatan)"
+            id="kecamatan_pasangan"
+            name="kecamatan_pasangan"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          >
             <option>{{ daWa.kecamatan_pasangan }}</option>
             <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
               {{ daWakecamatan.namaWilayah }}
@@ -97,7 +138,13 @@
       <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select (change)="onChangekelurahan(kelurahan)" class="form-control" id="kelurahan_pasangan" name="kelurahan_pasangan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            (change)="onChangekelurahan(kelurahan)"
+            class="form-control"
+            id="kelurahan_pasangan"
+            name="kelurahan_pasangan"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          >
             <option>{{ daWa.kelurahan_pasangan }}</option>
             <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
               {{ daWakelurahan.namaWilayah }}
@@ -111,7 +158,8 @@
       <label class="col-sm-3 col-form-label">Kode Pos<span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <div class="input-group mb-3">
-          <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          <input
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             maxlength="8"
@@ -121,7 +169,14 @@
             value="{{ daWa.kode_pos_pasangan }}"
           />
           <div class="input-group-append">
-            <button id="btnkdphilang" onclick="buatisi()" class="btn btn-outline-dark" type="button" value="{{ daWa.kode_pos_pasangan }}" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+            <button
+              id="btnkdphilang"
+              onclick="buatisi()"
+              class="btn btn-outline-dark"
+              type="button"
+              value="{{ daWa.kode_pos_pasangan }}"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+            >
               Cari Data
             </button>
           </div>
@@ -132,7 +187,8 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">RT / RW<span class="text-danger">*</span></label>
       <div class="col">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           maxlength="3"
@@ -145,7 +201,8 @@
       </div>
       <div class="col">RT</div>
       <div class="col">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           class="form-control"
@@ -164,7 +221,8 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
       <div class="col-sm-9">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           class="form-control"
           type="date"
           id="tanggal_lahir_pasangan"
@@ -178,7 +236,12 @@
       <label class="col-sm-3 col-form-label">Kewarganegaraan<span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="kewarganegaraan_pasangan" name="kewarganegaraan_pasangan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            id="kewarganegaraan_pasangan"
+            name="kewarganegaraan_pasangan"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          >
             <option>{{ daWa.kewarganegaraan_pasangan }}</option>
           </select>
         </div>
@@ -189,7 +252,12 @@
       <label class="col-sm-3 col-form-label">Pendidikan<span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" name="pendidikan_pasangan" id="pendidikan_pasangan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            name="pendidikan_pasangan"
+            id="pendidikan_pasangan"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          >
             <option>{{ daWa.pendidikan_pasangan }}</option>
           </select>
         </div>
@@ -200,7 +268,8 @@
       <label class="col-sm-3 col-form-label">Email<span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <!-- <?=$email_pasangan?>" -->
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="email"
           class="form-control"
           placeholder="Email"
@@ -214,7 +283,8 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">No Handphone<span class="text-danger">*</span></label>
       <div class="col-sm-9">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           maxlength="12"
@@ -231,7 +301,8 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">No KTP<span class="text-danger">*</span></label>
       <div class="col-sm-9">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           maxlength="16"
@@ -247,7 +318,8 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
       <div class="col-sm-9">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           class="form-control"
           type="date"
           id="tanggal_terbit_ktp_pasangan"
@@ -260,7 +332,8 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
       <div class="col-sm-4">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="radio"
           (click)="radiobbutton()"
           value="Ya"
@@ -269,7 +342,8 @@
           [checked]="daWa.status_ktp_pasangan == 1"
         />
         Ya
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="radio"
           (click)="radiobbuttonktp()"
           value="Tidak"
@@ -288,7 +362,8 @@
             >Tanggal Expired KTP<span class="text-danger">*</span></label
           >
           <div class="col-sm-9">
-            <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+            <input
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
               class="form-control"
               type="date"
               id="tanggal_exp_ktp_pasangan"
@@ -305,7 +380,8 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">NPWP<span class="text-danger">*</span></label>
       <div class="col-sm-9">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           class="form-control"

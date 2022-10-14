@@ -291,8 +291,8 @@ export class EditjobinfoComponent implements OnInit {
     });
   }
 
-  updatejobinfo() // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
-  {
+  updatejobinfo() {
+    // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
     const kategori_pekerjaan = document.getElementById('kategori_pekerjaan') as HTMLInputElement | any;
     const tipe_pekerjaan = document.getElementById('tipe_pekerjaan') as HTMLInputElement | any;
     const posisi = document.getElementById('posisi') as HTMLInputElement | any;

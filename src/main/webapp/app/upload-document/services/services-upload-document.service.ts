@@ -22,9 +22,7 @@ export class ServicesUploadDocumentService {
   );
 
   // // /////////////////////////// Upload  ////////////////////////////////////////////
-  protected uploadDataEntry = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-de/upload_doc?app_no_de='
-  );
+  protected uploadDataEntry = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/upload_doc?app_no_de=');
   // // /////////////////////////// Upload  ////////////////////////////////////////////
 
   constructor(
@@ -55,19 +53,18 @@ export class ServicesUploadDocumentService {
     return this.http.post(this.baseApiUrl, formData);
   }
 
-  getListUploadDocument(curef:any, type:any): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.FetchListUploadDocument + curef + '&ss='+ type);
+  getListUploadDocument(curef: any, type: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.FetchListUploadDocument + curef + '&ss=' + type);
   }
 
-
   // Returns an observable
-  uploadDocument(file: any, deUpload:any, curefUpload:any , doc_type: any): Observable<any> {
+  uploadDocument(file: any, deUpload: any, curefUpload: any, doc_type: any): Observable<any> {
     // Create form data
     const formData = new FormData();
 
     // Store form name as "file" with file data
-    formData.append("fileUpload", file);
-    return this.http.post(this.uploadDataEntry+ deUpload +'&curef='+ curefUpload +'&doc_type='+ doc_type, formData);
+    formData.append('fileUpload', file);
+    return this.http.post(this.uploadDataEntry + deUpload + '&curef=' + curefUpload + '&doc_type=' + doc_type, formData);
   }
   // // ////////////////////// Ref Upload Document DE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   // getListUploadDocumentDE(): Observable<ApiResponse> {

@@ -46,7 +46,7 @@ export class DataEntryService {
   protected fetchMemo = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getMemoByDe?sd=');
   // ///////////////////////////// Get MEMO \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-    // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
+  // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
     this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
       // 'http://10.20.34.178:8805/api/v1/efos-de/list_app_de?sc='+this.untukSessionKodeCabang+'&su='+this.untukSessionUserName
@@ -57,23 +57,22 @@ export class DataEntryService {
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
 
   // /////////////////////////// Ref Semua Data DE ////////////////////////////////////////////
-  getFetchSemuaDataDE(app_no_de:any): Observable<ApiResponse> {
+  getFetchSemuaDataDE(app_no_de: any): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.fetchSemuaDataDE + app_no_de);
   }
   // /////////////////////////// Ref Semua Data DE ////////////////////////////////////////////
 
   // /////////////////////////// Ref Semua Data Job ////////////////////////////////////////////
-  getFetchSemuaDataJob(curef:any): Observable<ApiResponse> {
+  getFetchSemuaDataJob(curef: any): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.fetchSemuaJob + curef);
   }
   // /////////////////////////// Ref Semua Data Job ////////////////////////////////////////////
 
   // /////////////////////////// MEMO ////////////////////////////////////////////
-  getfetchMemo(app_no_de:any): Observable<ApiResponse> {
+  getfetchMemo(app_no_de: any): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.fetchMemo + app_no_de);
   }
   // /////////////////////////// MEMO ////////////////////////////////////////////
-
 
   getprovinsi(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);

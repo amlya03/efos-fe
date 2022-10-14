@@ -348,7 +348,7 @@ export class PersonalInfoComponent implements OnInit {
         // cabang: '1',
         // created_by: '1',
         // created_date: '1',
-        email: 'emaik',
+        email: null,
         jumlah_anak: jumlah_anak.value,
         rt: rt.value,
         rt_domisili: rt_domisili.value,

@@ -58,7 +58,7 @@ export class SyaratPersetujuanComponent implements OnInit {
     protected applicationConfigService: ApplicationConfigService,
     protected localStorageService: LocalStorageService,
     protected dataEntryService: DataEntryService,
-    protected serviceVerificationService: ServiceVerificationService,
+    protected serviceVerificationService: ServiceVerificationService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -249,9 +249,9 @@ export class SyaratPersetujuanComponent implements OnInit {
             status_area: this.areaOfConRadio,
           })
           .subscribe({});
-        }else{
-          this.http
-          .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_cek_uji_kepatuhan', {
+      } else {
+        this.http
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_cek_uji_kepatuhan', {
             app_no_de: this.app_no_de,
             created_by: this.untukSessionUserName,
             curef: this.dataEntry.curef,

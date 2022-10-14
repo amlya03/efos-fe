@@ -1,4 +1,4 @@
-export class kesimpulanVerification{
+export class kesimpulanVerification {
   id?: number;
   app_no_de?: string;
   kesimpulan?: string;

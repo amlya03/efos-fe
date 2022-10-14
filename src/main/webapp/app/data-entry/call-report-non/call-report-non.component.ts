@@ -115,9 +115,7 @@ export class CallReportNonComponent implements OnInit {
     return this.http.get<ApiResponse>(this.apgetnowawancara, { params: options, observe: 'response' });
   }
 
-  simpancallreport() // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
-  // contohtampungankategoripekerjaan: any
-  {
+  simpancallreport() { // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
     const tipe_nasabah = document.getElementById('tipe_nasabah') as HTMLInputElement | any;
     const alamat_ktp = document.getElementById('alamat_ktp') as HTMLInputElement | any;
     const tanggal_lahir = document.getElementById('tanggal_lahir') as HTMLInputElement | any;

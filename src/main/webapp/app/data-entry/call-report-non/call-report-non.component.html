@@ -7,7 +7,8 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Nomor Aplikasi</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           id="app_no_de"
           name="app_no_de"
           type="text"
@@ -22,14 +23,24 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Nama Nasabah</label>
       <div class="col-sm-8">
-        <input type="text" class="form-control" placeholder="Nama Nasabah" name="nama" id="nama" value="{{ daWa1.nama }}" readonly  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Nama Nasabah"
+          name="nama"
+          id="nama"
+          value="{{ daWa1.nama }}"
+          readonly
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        />
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Fasilitas</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="text"
           class="form-control"
           placeholder="Fasilitas"
@@ -44,7 +55,8 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Tenor Pengajuan</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="text"
           class="form-control"
           placeholder="Tenor Pengajuan"
@@ -59,7 +71,8 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Platform Pengajuan</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="text"
           class="form-control"
           placeholder="Platform Pengajuan"
@@ -75,21 +88,40 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Cabang</label>
       <div class="col-sm-8">
-        <input type="text" class="form-control" placeholder="Nama AO" id="cabang" name="cabang" value="{{ daWa.cabang }}" readonly [disabled]="this.untukSessionRole == 'BRANCHMANAGER'" />
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Nama AO"
+          id="cabang"
+          name="cabang"
+          value="{{ daWa.cabang }}"
+          readonly
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        />
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Nama AO</label>
       <div class="col-sm-8">
-        <input type="text" class="form-control" placeholder="Nama AO" id="nama_ao" name="nama_ao" value="{{ daWa.nama_ao }}" readonly  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Nama AO"
+          id="nama_ao"
+          name="nama_ao"
+          value="{{ daWa.nama_ao }}"
+          readonly
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        />
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Kategori Nasabah</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="text"
           class="form-control"
           placeholder="Tipe Nasabah"
@@ -113,14 +145,28 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Alamat Tinggal</label>
       <div class="col-sm-8">
-        <textarea class="form-control h-150px" rows="6" id="alamat_ktp" name="alamat_ktp" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">{{ daWa.alamat_tinggal }}</textarea>
+        <textarea
+          class="form-control h-150px"
+          rows="6"
+          id="alamat_ktp"
+          name="alamat_ktp"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          >{{ daWa.alamat_tinggal }}</textarea
+        >
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
       <div class="col-sm-8">
-        <input class="form-control" type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ daWa.tanggal_lahir }}"  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
+        <input
+          class="form-control"
+          type="date"
+          id="tanggal_lahir"
+          name="tanggal_lahir"
+          value="{{ daWa.tanggal_lahir }}"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        />
       </div>
     </div>
   </div>
@@ -129,7 +175,12 @@
       <label class="col-sm-4 col-form-label">Status Perkawinan</label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" id="status_perkawinan" name="status_perkawinan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            id="status_perkawinan"
+            name="status_perkawinan"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          >
             <option value="{{ daWa.status_perkawinan }}"></option>
           </select>
         </div>
@@ -156,7 +207,13 @@
       <label class="col-sm-4 col-form-label">Tipe Kendaraan</label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" value="" id="tipe_kendaraan1" name="tipe_kendaraan1" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            value=""
+            id="tipe_kendaraan1"
+            name="tipe_kendaraan1"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          >
             <option value="{{ daWa.kendaraan }}">{{ daWa.kendaraan }}</option>
             <option value="Mobil">Mobil</option>
             <option value="Motor">Motor</option>
@@ -187,7 +244,8 @@
         </select>
       </div>
       <div id="catatanLainnyaAnggunan" class="form-group col-md-4" style="display: none">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           data-toggle="tooltip"
           data-placement="bottom"
           title="<?=$catatan_status_agunan?>"
@@ -203,7 +261,12 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Dokumen Kepemilikan</label>
       <div class="form-group col-md-4">
-        <select class="form-control" id="dokumen_kepemilikan" name="dokumen_kepemilikan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+        <select
+          class="form-control"
+          id="dokumen_kepemilikan"
+          name="dokumen_kepemilikan"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        >
           <option selected value="{{ daWa.dokumen_agunan }}">{{ daWa.dokumen_agunan }}</option>
           <option value="SHM">SHM</option>
           <option value="SHGB">SHGB</option>
@@ -212,7 +275,8 @@
         </select>
       </div>
       <div id="catatanLainnyaDokumen" class="form-group col-md-4" style="display: none">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           data-toggle="tooltip"
           data-placement="bottom"
           title="{{ daWa.catatan_dokumen_agunan }}"
@@ -237,7 +301,8 @@
         </select>
       </div>
       <div id="catatanLainnyaPosisi_dokumen" class="form-group col-md-4" style="display: none">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           data-toggle="tooltip"
           data-placement="bottom"
           title="{{ daWa.catatan_posisi_dokumen }}"
@@ -273,7 +338,8 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Lama Usaha</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           maxlength="2"
@@ -293,14 +359,23 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Bidang Usaha</label>
       <div class="col-sm-8">
-        <input type="text" class="form-control" placeholder="" id="bidang_usaha" name="bidang_usaha" value="{{ daWa.bidang_usaha }}" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'" />
+        <input
+          type="text"
+          class="form-control"
+          placeholder=""
+          id="bidang_usaha"
+          name="bidang_usaha"
+          value="{{ daWa.bidang_usaha }}"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        />
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Nama Perusahaan (Badan Usaha)</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="text"
           class="form-control"
           placeholder=""
@@ -335,7 +410,8 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Tahun Berdiri</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           minlength="4"
@@ -352,16 +428,22 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Alamat</label>
       <div class="col-sm-8">
-        <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan" name="alamat_perusahaan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">{{
-          daWa.alamat_perusahaan
-        }}</textarea>
+        <textarea
+          class="form-control h-150px"
+          rows="6"
+          id="alamat_perusahaan"
+          name="alamat_perusahaan"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          >{{ daWa.alamat_perusahaan }}</textarea
+        >
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           class="form-control"
@@ -388,7 +470,8 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Kepemilikan Usaha</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="text"
           class="form-control"
           placeholder=""
@@ -412,7 +495,13 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tipe Pekerjaan</label>
         <div class="form-group col-sm-8">
-          <select class="form-control" id="tipe_pekerjaan_pasangan" name="tipe_pekerjaan_pasangan" value="" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            id="tipe_pekerjaan_pasangan"
+            name="tipe_pekerjaan_pasangan"
+            value=""
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          >
             <option value="{{ daWa.tipe_pekerjaan_pasangan }}">{{ daWa.tipe_pekerjaan_pasangan }}</option>
             <!-- <option selected value="">Pilih Tipe Pekerjaan</option> -->
             <option value="Karyawan">Karyawan</option>
@@ -425,7 +514,8 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Status Pekerjaan</label>
         <div class="form-group col-sm-8">
-          <select [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          <select
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             class="form-control"
             id="status_pekerjaan_pasangan"
             name="status_pekerjaan_pasangan"
@@ -441,7 +531,13 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Lama Bekerja</label>
         <div class="col">
-          <select class="form-control" id="lama_bekerja_bulan_pasangan" name="lama_bekerja_bulan_pasangan" value="" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            id="lama_bekerja_bulan_pasangan"
+            name="lama_bekerja_bulan_pasangan"
+            value=""
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          >
             <option selected value="{{ daWa.lama_bekerja_bulan_pasangan }}">
               {{ daWa.lama_bekerja_bulan_pasangan }}
             </option>
@@ -460,7 +556,8 @@
         </div>
         <div class="col">Tahun</div>
         <div class="col">
-          <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          <input
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             class="form-control"
@@ -477,7 +574,8 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jabatan Terakhir</label>
         <div class="col-sm-8">
-          <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          <input
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             type="text"
             class="form-control"
             placeholder=""
@@ -491,7 +589,8 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Perusahaan</label>
         <div class="col-sm-8">
-          <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          <input
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             type="text"
             class="form-control"
             placeholder=""
@@ -505,7 +604,8 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Bidang Usaha</label>
         <div class="col-sm-8">
-          <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          <input
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             type="text"
             class="form-control"
             placeholder=""
@@ -519,7 +619,8 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Skala Perorangan</label>
         <div class="col-sm-8">
-          <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          <input
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             type="text"
             class="form-control"
             placeholder=""
@@ -534,7 +635,8 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tahun Berdiri</label>
         <div class="col-sm-8">
-          <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          <input
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             minlength="4"
@@ -551,16 +653,22 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Alamat</label>
         <div class="col-sm-8">
-          <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan_pasangan" name="alamat_perusahaan_pasangan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">{{
-            daWa.alamat_perusahaan_pasangan
-          }}</textarea>
+          <textarea
+            class="form-control h-150px"
+            rows="6"
+            id="alamat_perusahaan_pasangan"
+            name="alamat_perusahaan_pasangan"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+            >{{ daWa.alamat_perusahaan_pasangan }}</textarea
+          >
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
         <div class="col-sm-8">
-          <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          <input
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             class="form-control"
             type="tel"
             onkeypress="return onlyNumberKey(event)"
@@ -577,7 +685,12 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kondisi Pandemik</label>
         <div class="form-group col-sm-8">
-          <select class="form-control" id="kondisi_pandemi_pasangan" name="kondisi_pandemi_perusahaan_pasangan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            id="kondisi_pandemi_pasangan"
+            name="kondisi_pandemi_perusahaan_pasangan"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          >
             <!-- <option selected value="">Pilih Kondisi Pamdemik</option> -->
             <option selected value="{{ daWa.kondisi_pandemi_perusahaan_pasangan }}">
               {{ daWa.kondisi_pandemi_perusahaan_pasangan }}
@@ -591,7 +704,8 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">No Kontak HR</label>
         <div class="col-sm-8">
-          <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          <input
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
@@ -618,7 +732,8 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode I (Per Tahun)</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           class="form-control"
@@ -633,7 +748,8 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode II (Per Tahun)</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           class="form-control"
@@ -648,7 +764,8 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode III (Per Tahun)</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           class="form-control"
@@ -663,7 +780,8 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode IIII (Per Tahun)</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           class="form-control"
@@ -678,7 +796,8 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Rata Rata Laba Bersih Setelah Pajak (Per Bulan)</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           class="form-control"
@@ -693,7 +812,8 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Estimasi Angsuran Saat Ini</label>
       <div class="col-sm-8">
-        <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           type="tel"
           onkeypress="return onlyNumberKey(event)"
           class="form-control"
@@ -709,7 +829,12 @@
       <label class="col-sm-4 col-form-label">Tercermin di Rekening</label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" id="tercermin_rekening" name="tercermin_rekening" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            id="tercermin_rekening"
+            name="tercermin_rekening"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          >
             <option value="{{ daWa.validasi_rekening }}">{{ daWa.validasi_rekening }}</option>
             <option value="Ya">Ya</option>
             <option value="Tidak">Tidak</option>
@@ -731,7 +856,8 @@
       <label class="col-sm-4 col-form-label">Tanggal wawancara</label>
       <div class="col-md-8">
         <div class="form-group">
-          <input [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          <input
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             class="form-control"
             type="date"
             id="tanggal_wawancara"
@@ -739,7 +865,7 @@
             value="{{ daWa.tanggal_wawancara }}"
             onchange="tanggalWawancara()"
           />
-          <input class="form-control" id="hariWawancara" hidden  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
+          <input class="form-control" id="hariWawancara" hidden [disabled]="this.untukSessionRole == 'BRANCHMANAGER'" />
         </div>
       </div>
     </div>
@@ -748,8 +874,24 @@
       <label class="col-sm-4 col-form-label">No wawancara</label>
       <div class="col-md-8">
         <div class="form-group">
-          <input type="text" class="form-control" id="no_wawancara" name="no_wawancara" value="{{ daWa.no_wawancara }}" readonly  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
-          <input type="hidden" class="form-control" id="no_wawancara1" name="no_wawancara1" value="{{ daWa.no_wawancara }}" readonly  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"/>
+          <input
+            type="text"
+            class="form-control"
+            id="no_wawancara"
+            name="no_wawancara"
+            value="{{ daWa.no_wawancara }}"
+            readonly
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            id="no_wawancara1"
+            name="no_wawancara1"
+            value="{{ daWa.no_wawancara }}"
+            readonly
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          />
         </div>
       </div>
     </div>
@@ -762,7 +904,15 @@
     <button type="submit" (click)="goto()" id="selanjutnya" name="selanjutnya" value="selanjutnya" class="btn mb-1 btn-warning">
       Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
     </button>
-    <button type="submit" (click)="simpancallreport()" id="buttonsimpan" name="buttonsimpan" value="buttonsimpan" class="btn mb-1 btn-dark" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+    <button
+      type="submit"
+      (click)="simpancallreport()"
+      id="buttonsimpan"
+      name="buttonsimpan"
+      value="buttonsimpan"
+      class="btn mb-1 btn-dark"
+      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+    >
       Simpan Data<span class="btn-icon-right"><i class="fa fa-floppy-o"></i></span>
     </button>
   </div>

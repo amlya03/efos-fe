@@ -365,9 +365,7 @@ export class StrukturPembiayaanComponent implements OnInit {
       });
   }
 
-  simpanstruktur() // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
-  // contohtampungankategoripekerjaan: any
-  {
+  simpanstruktur() { // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
     const joint_income = document.getElementById('joint_income') as HTMLInputElement | any;
     const kode_fasilitas = document.getElementById('kode_fasilitas') as HTMLInputElement | any;
     const program = document.getElementById('program') as HTMLInputElement | any;

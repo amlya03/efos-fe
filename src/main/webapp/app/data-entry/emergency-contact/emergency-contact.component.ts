@@ -241,9 +241,7 @@ export class EmergencyContactComponent implements OnInit {
     // this.router.navigate(['/call-report'], { queryParams: { datakiriman:this.datakirimiancure , datakirimiancure:this.datakiriman } });
   }
 
-  simpanemergency() // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
-  // contohtampungankategoripekerjaan: any
-  {
+  simpanemergency() { // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
     const id = document.getElementById('id') as HTMLInputElement | any;
     const nama = document.getElementById('nama') as HTMLInputElement | any;
     const alamat = document.getElementById('alamat') as HTMLInputElement | any;

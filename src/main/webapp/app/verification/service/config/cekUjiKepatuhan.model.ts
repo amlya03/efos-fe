@@ -1,4 +1,4 @@
-export class cekUjiKepatuhan{
+export class cekUjiKepatuhan {
   id?: Number;
   app_no_de?: String;
   kegiatan_deskripsi?: String;
