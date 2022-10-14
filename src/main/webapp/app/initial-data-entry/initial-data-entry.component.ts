@@ -33,7 +33,7 @@ export class InitialDataEntryComponent implements OnInit {
       this.datakirimanidcustomer = params['datakirimanidcustomer'];
     });
   }
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/getCustomerByAppId?sc=');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getCustomerByAppId?sc=');
   ngOnInit(): void {
     this.load();
   }

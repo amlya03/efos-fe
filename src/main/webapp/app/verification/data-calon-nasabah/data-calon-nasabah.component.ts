@@ -70,16 +70,16 @@ export class DataCalonNasabahComponent implements OnInit {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
       this.app_no_de = params.app_no_de;
-      this.curef = params.curef
+      this.curef = params.curef;
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
 
   // API url
   protected getDataCalonNasabah = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-verif/getAnalisaCalonNasabah?sd='
+    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaCalonNasabah?sd='
   );
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   ngOnInit(): void {
     this.editor = new Editor();
@@ -199,7 +199,7 @@ export class DataCalonNasabahComponent implements OnInit {
     this.load();
   }
 
-  onCheckCek(e:any) {
+  onCheckCek(e: any) {
     this.checkboxCekSertif = '';
     this.checkboxCekAkte = '';
     this.checkboxCekRekTel = '';
@@ -212,7 +212,7 @@ export class DataCalonNasabahComponent implements OnInit {
     }
   }
 
-  onCheckRumah(e:any) {
+  onCheckRumah(e: any) {
     this.isiRumahMobil = '';
     this.isiRumahMotor = '';
     this.isiRumahTV = '';
@@ -226,15 +226,15 @@ export class DataCalonNasabahComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let cekKe = this.tempunganCek.join(", ")
-    let isiRumahCek = this.tampunganIsiRum.join(", ")
+    let cekKe = this.tempunganCek.join(', ');
+    let isiRumahCek = this.tampunganIsiRum.join(', ');
     // alert(this.dataCalonNasabahForm.get('cek')?.value)
     this.submitted = true;
     if (this.dataCalonNasabahForm.invalid) {
       return;
     } else if (this.dataCalonNasabahMap == null) {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_nasabah', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_nasabah', {
           nama: this.dataCalonNasabahForm.get('nama')?.value,
           no_handphone: this.dataCalonNasabahForm.get('no_handphone')?.value,
           jenis_kelamin: this.dataCalonNasabahForm.get('jenis_kelamin')?.value,
@@ -249,7 +249,7 @@ export class DataCalonNasabahComponent implements OnInit {
           garasi: this.dataCalonNasabahForm.get('garasi')?.value,
           hubungan_pemberi_keterangan: this.dataCalonNasabahForm.get('hubungan_pemberi_keterangan')?.value,
           // id: this.dataCalonNasabahForm.get('id')?.value,
-          isi_rumah: isiRumahCek,//this.dataCalonNasabahForm.get('isi_rumah')?.value,
+          isi_rumah: isiRumahCek, //this.dataCalonNasabahForm.get('isi_rumah')?.value,
           jenis_bangunan: this.dataCalonNasabahForm.get('jenis_bangunan')?.value,
           jumlah_kendaraan: this.dataCalonNasabahForm.get('jumlah_kendaraan')?.value,
           karakter_calon_nasabah: this.dataCalonNasabahForm.get('karakter_calon_nasabah')?.value,
@@ -297,24 +297,23 @@ export class DataCalonNasabahComponent implements OnInit {
         .subscribe({});
       this.router.navigate(['/data-kantor'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
       // alert('Coba Validasi');
-    } else
-      // Cek Ke
-      // alert(cekKe != '')
-      if(cekKe != ''){
-        this.dataCalonNasabahMap.cek = cekKe;
-      }
-      else{
-        this.dataCalonNasabahMap.cek = this.dataCalonNasabahMap.cek
-      }
+    }
+    // Cek Ke
+    // alert(cekKe != '')
+    else if (cekKe != '') {
+      this.dataCalonNasabahMap.cek = cekKe;
+    } else {
+      this.dataCalonNasabahMap.cek = this.dataCalonNasabahMap.cek;
+    }
 
-      // Isi Rumah
-      if(cekKe != ''){
-        this.dataCalonNasabahMap.isi_rumah = isiRumahCek;
-      }
-      else{
-        this.dataCalonNasabahMap.isi_rumah = this.dataCalonNasabahMap.isi_rumah
-      }
-      this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_calon_nasabah', {
+    // Isi Rumah
+    if (cekKe != '') {
+      this.dataCalonNasabahMap.isi_rumah = isiRumahCek;
+    } else {
+      this.dataCalonNasabahMap.isi_rumah = this.dataCalonNasabahMap.isi_rumah;
+    }
+    this.http
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_calon_nasabah', {
         nama: this.dataCalonNasabahForm.get('nama')?.value,
         no_handphone: this.dataCalonNasabahForm.get('no_handphone')?.value,
         jenis_kelamin: this.dataCalonNasabahForm.get('jenis_kelamin')?.value,
@@ -373,7 +372,8 @@ export class DataCalonNasabahComponent implements OnInit {
         verif_rt_rw: this.dataCalonNasabahForm.get('verif_rt_rw')?.value,
         verif_status_menikah: this.dataCalonNasabahForm.get('verif_status_menikah')?.value,
         verif_tanggal_lahir: this.dataCalonNasabahForm.get('verif_tanggal_lahir')?.value,
-      }).subscribe({});
+      })
+      .subscribe({});
     this.router.navigate(['/data-kantor'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 
@@ -481,24 +481,20 @@ export class DataCalonNasabahComponent implements OnInit {
       this.checkboxCek = this.dataCalonNasabahMap.cek?.split(', ');
       for (let i = 0; i < this.checkboxCek.length; i++) {
         // alert(this.checkboxCek[i] == "Sertifikat")
-        if(this.checkboxCek[i] == "Sertifikat"){
-          this.checkboxCekSertif = "Sertifikat"
+        if (this.checkboxCek[i] == 'Sertifikat') {
+          this.checkboxCekSertif = 'Sertifikat';
           // alert("1 "+ this.checkboxCekSertif)
-        }
-        else if(this.checkboxCek[i] == "Akta Jual Beli"){
-          this.checkboxCekAkte = "Akta Jual Beli"
+        } else if (this.checkboxCek[i] == 'Akta Jual Beli') {
+          this.checkboxCekAkte = 'Akta Jual Beli';
           // alert("2 "+ this.checkboxCekAkte)
-        }
-        else if(this.checkboxCek[i] == "Rekening Telepon"){
-          this.checkboxCekRekTel = "Rekening Telepon"
+        } else if (this.checkboxCek[i] == 'Rekening Telepon') {
+          this.checkboxCekRekTel = 'Rekening Telepon';
           // alert("3 "+ this.checkboxCekRekTel)
-        }
-        else if(this.checkboxCek[i] == "PBB"){
-          this.checkboxCekPbb = "PBB"
+        } else if (this.checkboxCek[i] == 'PBB') {
+          this.checkboxCekPbb = 'PBB';
           // alert("4 "+ this.checkboxCekPbb)
-        }
-        else if(this.checkboxCek[i] == "Rekening Listrik"){
-          this.checkboxCekRekLis = "Rekening Listrik"
+        } else if (this.checkboxCek[i] == 'Rekening Listrik') {
+          this.checkboxCekRekLis = 'Rekening Listrik';
           // alert("5 "+ this.checkboxCekRekLis)
         }
       }
@@ -506,20 +502,16 @@ export class DataCalonNasabahComponent implements OnInit {
       // Checkbox Isi Rumah
       this.checkboxIsiRumah = this.dataCalonNasabahMap.isi_rumah?.split(', ');
       for (let i = 0; i < this.checkboxIsiRumah.length; i++) {
-        if(this.checkboxIsiRumah[i] == "Mobil"){
-          this.isiRumahMobil = "Mobil"
-        }
-        else if(this.checkboxIsiRumah[i] == "Motor"){
-          this.isiRumahMotor = "Motor"
-        }
-        else if(this.checkboxIsiRumah[i] == "TV"){
-          this.isiRumahTV = "TV"
-        }
-        else if(this.checkboxIsiRumah[i] == "Sofa"){
-          this.isiRumahSofa = "Sofa"
-        }
-        else if(this.checkboxIsiRumah[i] == "Perabot Lainnya"){
-          this.isiRumahPerabot = "Perabot Lainnya"
+        if (this.checkboxIsiRumah[i] == 'Mobil') {
+          this.isiRumahMobil = 'Mobil';
+        } else if (this.checkboxIsiRumah[i] == 'Motor') {
+          this.isiRumahMotor = 'Motor';
+        } else if (this.checkboxIsiRumah[i] == 'TV') {
+          this.isiRumahTV = 'TV';
+        } else if (this.checkboxIsiRumah[i] == 'Sofa') {
+          this.isiRumahSofa = 'Sofa';
+        } else if (this.checkboxIsiRumah[i] == 'Perabot Lainnya') {
+          this.isiRumahPerabot = 'Perabot Lainnya';
         }
       }
     });
@@ -549,7 +541,7 @@ export class DataCalonNasabahComponent implements OnInit {
     });
 
     // ref Jenis Bangunan
-    this.http.get<ApiResponse>('http://10.20.34.178:8805/api/v1/efos-de/list_tipe_properti?sp=H03').subscribe(data => {
+    this.http.get<ApiResponse>('http://10.20.34.110:8805/api/v1/efos-de/list_tipe_properti?sp=H03').subscribe(data => {
       if (data.code === 200) {
         this.refListTipeProperti = data.result;
       }

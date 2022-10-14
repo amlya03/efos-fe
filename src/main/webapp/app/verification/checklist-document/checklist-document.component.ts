@@ -53,19 +53,21 @@ export class ChecklistDocumentComponent implements OnInit {
     public router: Router,
     protected localStorageService: LocalStorageService
   ) {
-      // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-      this.activatedRoute.queryParams.subscribe(params => {
-        this.app_no_de = params.app_no_de;
-        this.curef = params.curef;
-      });
-      // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    }
+    // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.app_no_de = params.app_no_de;
+      this.curef = params.curef;
+    });
+    // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  }
 
   // URL DE
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   // API url
-  protected FetchListUploadDocument = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDokumenUploadByCuref?sc=');
+  protected FetchListUploadDocument = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-de/getDokumenUploadByCuref?sc='
+  );
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -115,82 +117,79 @@ export class ChecklistDocumentComponent implements OnInit {
   }
 
   // Kirim DE
-  detailDataEntry(nama_dokumen: any){
-    window.open('http://10.20.34.178:8805/api/v1/efos-de/downloadFile/'+ nama_dokumen)
+  detailDataEntry(nama_dokumen: any) {
+    window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dokumen);
   }
 
-  detailAgunan(nama_dokumen: any){
-    window.open('http://10.20.34.178:8805/api/v1/efos-de/downloadFile/'+ nama_dokumen)
+  detailAgunan(nama_dokumen: any) {
+    window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dokumen);
   }
 
   postCeklis(): void {
     // Upload Data Entry
     for (let i = 0; i < this.uploadDocument.length; i++) {
       // get Radio Button Validasi
-      let validasiDE = (<HTMLInputElement>document.getElementById("validasiDE"+[i+1])).checked;
-      if(validasiDE == true){
+      let validasiDE = (<HTMLInputElement>document.getElementById('validasiDE' + [i + 1])).checked;
+      if (validasiDE == true) {
         this.radioValidasiDE = 1;
-      }
-      else{
+      } else {
         this.radioValidasiDE = 0;
       }
 
       // keterangan
-      this.keteranganDE = (<HTMLInputElement>document.getElementById("keteranganDE"+[i+1])).value;
+      this.keteranganDE = (<HTMLInputElement>document.getElementById('keteranganDE' + [i + 1])).value;
 
+      // Upload Agunan
+      for (let i = 0; i < this.uploadAgunan.length; i++) {
+        // get Radio Button Validasi
+        let validasiAgunan = (<HTMLInputElement>document.getElementById('validasiAgunan' + [i + 1])).checked;
+        if (validasiAgunan == true) {
+          this.radioValidasiAgunan = 1;
+        } else {
+          this.radioValidasiAgunan = 0;
+        }
+        // alert(this.radioValidasiAgunan)
 
-    // Upload Agunan
-    for (let i = 0; i < this.uploadAgunan.length; i++) {
-      // get Radio Button Validasi
-      let validasiAgunan = (<HTMLInputElement>document.getElementById("validasiAgunan"+[i+1])).checked;
-      if(validasiAgunan == true){
-        this.radioValidasiAgunan = 1;
+        // get input Keterangan
+        this.keteranganAgunan = (<HTMLInputElement>document.getElementById('keteranganAgunan' + [i + 1])).value;
+        // alert(this.keteranganAgunan)
       }
-      else{
-        this.radioValidasiAgunan = 0;
-      }
-      // alert(this.radioValidasiAgunan)
 
-      // get input Keterangan
-      this.keteranganAgunan = (<HTMLInputElement>document.getElementById("keteranganAgunan"+[i+1])).value;
-      // alert(this.keteranganAgunan)
-    }
-
-    // console.log(this.uploadDocument[i].id)
-    // console.log(this.uploadAgunan[i].id)
+      // console.log(this.uploadDocument[i].id)
+      // console.log(this.uploadAgunan[i].id)
       // Post Data Entry
       this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/checklist_dokumen', {
-        // tipe_dokumen: this.uploadDocument[i].doc_description,
-        // nama_file: this.uploadDocument[i].nama_dokumen,
-        // validasi_DE: this.radioValidasiDE,
-        // keterangan_DE: this.keteranganDE,
-        // jadi
-        created_by: this.untukSessionUserName,
-        id: this.uploadDocument[i].id_upload,
-        note_validasi: this.keteranganDE,
-        validasi: this.radioValidasiDE
-      })
-      .subscribe({});
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/checklist_dokumen', {
+          // tipe_dokumen: this.uploadDocument[i].doc_description,
+          // nama_file: this.uploadDocument[i].nama_dokumen,
+          // validasi_DE: this.radioValidasiDE,
+          // keterangan_DE: this.keteranganDE,
+          // jadi
+          created_by: this.untukSessionUserName,
+          id: this.uploadDocument[i].id_upload,
+          note_validasi: this.keteranganDE,
+          validasi: this.radioValidasiDE,
+        })
+        .subscribe({});
 
       // Post Agunan
       this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/checklist_dokumen', {
-        // tipe_dokumen: this.uploadAgunan[i].doc_description,
-        // nama_file: this.uploadAgunan[i].nama_dokumen,
-        // validasi_DE: this.radioValidasiAgunan,
-        // keterangan_DE: this.keteranganAgunan,
-        // jadi
-        created_by: this.untukSessionUserName,
-        id: this.uploadAgunan[i].id_upload,
-        note_validasi: this.keteranganAgunan,
-        validasi: this.radioValidasiAgunan
-      })
-      .subscribe({});
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/checklist_dokumen', {
+          // tipe_dokumen: this.uploadAgunan[i].doc_description,
+          // nama_file: this.uploadAgunan[i].nama_dokumen,
+          // validasi_DE: this.radioValidasiAgunan,
+          // keterangan_DE: this.keteranganAgunan,
+          // jadi
+          created_by: this.untukSessionUserName,
+          id: this.uploadAgunan[i].id_upload,
+          note_validasi: this.keteranganAgunan,
+          validasi: this.radioValidasiAgunan,
+        })
+        .subscribe({});
     }
   }
   // update Status
-  updateStatus(){
+  updateStatus() {
     this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

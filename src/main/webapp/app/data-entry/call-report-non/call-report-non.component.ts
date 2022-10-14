@@ -38,10 +38,10 @@ export class CallReportNonComponent implements OnInit {
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getCallReportByDe?sd=');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getCallReportByDe?sd=');
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
-  protected apgetnowawancara = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/get_call_report_seq');
+  protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected apgetnowawancara = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/get_call_report_seq');
 
   ngOnInit(): void {
     this.load();
@@ -111,8 +111,7 @@ export class CallReportNonComponent implements OnInit {
     return this.http.get<ApiResponse>(this.apgetnowawancara, { params: options, observe: 'response' });
   }
 
-  simpancallreport() // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
-  // contohtampungankategoripekerjaan: any
+  simpancallreport() // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
   {
     const tipe_nasabah = document.getElementById('tipe_nasabah') as HTMLInputElement | any;
     const alamat_ktp = document.getElementById('alamat_ktp') as HTMLInputElement | any;
@@ -167,7 +166,7 @@ export class CallReportNonComponent implements OnInit {
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
     this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_call_report', {
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_call_report', {
         // headers: headers,
 
         alamat_perusahaan: alamat_perusahaan.value,

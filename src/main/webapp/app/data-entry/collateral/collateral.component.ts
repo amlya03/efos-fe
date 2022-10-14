@@ -63,12 +63,12 @@ export class CollateralComponent implements OnInit {
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getCollateralByCuref?sc=');
-  protected apigettipeagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_tipe_agunan');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getCollateralByCuref?sc=');
+  protected apigettipeagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_tipe_agunan');
   protected apistatussertifikat = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-ref/list_status_sertifikat'
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_status_sertifikat'
   );
-  protected apigetlistagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_developer');
+  protected apigetlistagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_developer');
 
   ngOnInit(): void {
     this.load();
@@ -570,7 +570,7 @@ export class CollateralComponent implements OnInit {
       var kirimantanggal_terbit = null;
       var kirimantipe_agunan = null;
       var kirimanno_sertifikat = null;
-      var kirimantipe_properti = null;
+      var kirimantipe_properti = tipe_anggunan.value;
       var kirimanstatus_agunan = null;
       var kirimanstatus_developer = null;
     } else if (tipe_anggunan.value == 'Tanah dan Bangunan') {
@@ -672,7 +672,7 @@ export class CollateralComponent implements OnInit {
       var kirimantahun_dibuat = null;
       var kirimantanggal_expired = null;
       var kirimantanggal_terbit = null;
-      var kirimantipe_agunan = null;
+      var kirimantipe_agunan = tipe_anggunan.value;
       var kirimanno_sertifikat = null;
       var kirimanstatus_agunan = null;
       var kirimanstatus_developer = null;
@@ -724,7 +724,7 @@ export class CollateralComponent implements OnInit {
       var kirimantahun_dibuat = tahun_buat.value;
       var kirimantanggal_expired = tanggal_exipred.value;
       var kirimantanggal_terbit = tanggal_terbit.value;
-      var kirimantipe_agunan = null;
+      var kirimantipe_agunan = tipe_anggunan.value;
       var kirimanno_sertifikat = no_sertifikat.value;
       var kirimantipe_properti = tipe_properti.value;
       var kirimanstatus_agunan = this.untukstatusagunan;
@@ -734,8 +734,8 @@ export class CollateralComponent implements OnInit {
 
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
     this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_collateral', {
-        // headers: headers,
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_collateral', {
+        //  headers: headers,
         // alamat_perusahaan: alamat_perusahaan.value,
 
         alamat_agunan: kirimanalamatagunan,
@@ -745,11 +745,11 @@ export class CollateralComponent implements OnInit {
         curef: this.curef,
         developer: this.kirimandatadevloper,
         harga_objek: kirimanharga_objek,
-        harga_objek_sertifikat: 'string',
+        harga_objek_sertifikat: '',
         hubungan_pemegang_hak: kirimanhubungan_pemegang_hak,
-        id_collateral: '',
-        id_collateral_detail: '',
-        id_rumah: kirimanid_rumah,
+        // id_collateral: null,
+        // id_collateral_detail: null,
+        // id_rumah: kirimanid_rumah,
         // jenis_objek: 'string',
         kabkota_agunan: kirimankabkota_agunan,
         kabkota_sesuai_sertifikat: kirimankabkota_sesuai_sertifikat,

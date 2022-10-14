@@ -39,10 +39,10 @@ export class MemoComponent implements OnInit {
     });
   }
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl = this.applicationConfigService.getEndpointFor(' http://10.20.34.178:8805/api/v1/efos-de/getMemoByDe?sd=');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor(' http://10.20.34.110:8805/api/v1/efos-de/getMemoByDe?sd=');
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
   ngOnInit(): void {
     this.load();
   }
@@ -87,7 +87,7 @@ export class MemoComponent implements OnInit {
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
     // alert('CREATE NIH');
     this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_memo', {
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_memo', {
         // headers: headers,
         // alamat_perusahaan: alamat_perusahaan.value,
         // bulan_berdiri: contohtampungankategoripekerjaan,
@@ -124,7 +124,7 @@ export class MemoComponent implements OnInit {
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
     //   // alert('CREATE NIH');
     this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_status_back_de', {
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_back_de', {
         app_no_de: this.app_no_de,
         created_by: this.localStorageService.retrieve('sessionFullName'),
         status_aplikasi: status_aplikasi_desc.value,
@@ -176,7 +176,7 @@ export class MemoComponent implements OnInit {
     const status_aplikasi_desc = document.getElementById('status_aplikasi_desc') as HTMLInputElement | any;
 
     this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_status_dataentry', {
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_dataentry', {
         app_no_de: this.app_no_de,
         created_by: this.localStorageService.retrieve('sessionFullName'),
         status_aplikasi: status_aplikasi_desc.value,
@@ -218,7 +218,7 @@ export class MemoComponent implements OnInit {
     const status_aplikasi_desc = document.getElementById('status_aplikasi_desc') as HTMLInputElement | any;
 
     this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_status_dataentry', {
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_dataentry', {
         app_no_de: this.app_no_de,
         created_by: this.localStorageService.retrieve('sessionFullName'),
         status_aplikasi: status_aplikasi_desc.value,

@@ -17,7 +17,7 @@ export class ServicesUploadDocumentService {
   baseApiUrl = 'https://file.io';
   // // /////////////////////////// DAFTAR APLIKASI INITIAL DATA ENTRY ////////////////////////////////////////////
   // protected FetchListUploadDocument = this.applicationConfigService.getEndpointFor(
-  //   'http://10.20.34.178:8805/api/v1/efos-de/getDokumenUploadByCuref?sc='
+  //   'http://10.20.34.110:8805/api/v1/efos-de/getDokumenUploadByCuref?sc='
   // );
   // // /////////////////////////// DAFTAR APLIKASI INITIAL DATA ENTRY ////////////////////////////////////////////
 

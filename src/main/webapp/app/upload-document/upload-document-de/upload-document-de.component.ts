@@ -48,9 +48,9 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
 
   // API url
   protected FetchListUploadDocument = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-de/getDokumenUploadByCuref?sc='
+    'http://10.20.34.110:8805/api/v1/efos-de/getDokumenUploadByCuref?sc='
   );
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -63,7 +63,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
 
     // API url Upload
     this.apiUploadDocument =
-      'http://10.20.34.178:8805/api/v1/efos-de/upload_doc?app_no_de=' + this.app_no_de + '&curef=' + this.datakiriman + '&doc_type=';
+      'http://10.20.34.110:8805/api/v1/efos-de/upload_doc?app_no_de=' + this.app_no_de + '&curef=' + this.datakiriman + '&doc_type=';
   }
 
   // Returns an observable

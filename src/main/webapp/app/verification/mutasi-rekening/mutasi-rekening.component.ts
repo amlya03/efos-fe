@@ -54,15 +54,12 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
 
   // API url
   protected allDataMutasiRekening = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-verif/list_verif_mutasi?si='
+    'http://10.20.34.110:8805/api/v1/efos-verif/list_verif_mutasi?si='
   );
 
-  protected getMutasi = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-verif/get_verif_mutasi?si='
-  );
+  protected getMutasi = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/get_verif_mutasi?si=');
   // De
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
-
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -193,9 +190,9 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
 
   submitForm(nama_bank: any, no_rekening: any, tahun: any, bulan: any, debet: any, kredit: any, saldo: any): void {
     // alert(this.lihatTableMutasi)
-    if(this.tambahTableMutasi == ''){
+    if (this.tambahTableMutasi == '') {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_verif_mutasi', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_verif_mutasi', {
           id: this.idTableMutasi,
           app_no_de: this.app_no_de,
           bulan: bulan,
@@ -214,11 +211,10 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           next: response => console.warn(response),
           error: error => console.warn(error),
         });
-        this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
-    }
-    else{
+      this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+    } else {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_verif_mutasi', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_verif_mutasi', {
           id: this.idTableMutasi,
           app_no_de: this.app_no_de,
           bulan: bulan,
@@ -237,18 +233,18 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           next: response => console.warn(response),
           error: error => console.warn(error),
         });
-        this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+      this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     }
   }
 
   // edit mutasi
-  editMutasi(id: any){
+  editMutasi(id: any) {
     this.idTableMutasi = id;
     // data
-    return this.http.get<ApiResponse>(this.getMutasi + id) // by id dari table atas
-    .subscribe(data => {
-      this.getTableMutasi = data.result;
-    });
-
+    return this.http
+      .get<ApiResponse>(this.getMutasi + id) // by id dari table atas
+      .subscribe(data => {
+        this.getTableMutasi = data.result;
+      });
   }
 }

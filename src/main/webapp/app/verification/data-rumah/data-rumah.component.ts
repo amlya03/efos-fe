@@ -52,17 +52,14 @@ export class DataRumahComponent implements OnInit {
 
   // API url
   protected getAnalisaKeuangan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-verif/getAnalisaKeuangan?sd='
+    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaKeuangan?sd='
   );
 
   // DE
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
 
   // Slik
-  protected getSlik = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-ide/fetchDataSlik?sd='
-  );
-
+  protected getSlik = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/fetchDataSlik?sd=');
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -136,7 +133,7 @@ export class DataRumahComponent implements OnInit {
   // Slik
   fetchSlik(): Observable<ApiResponse> {
     // return this.http.get<ApiResponse>(this.getSlik + this.dataEntry?.app_no_ide);
-    return this.http.get<ApiResponse>(this.getSlik + "app_20221006_644");
+    return this.http.get<ApiResponse>(this.getSlik + 'app_20221006_644');
   }
 
   onSubmit(): void {
@@ -145,7 +142,7 @@ export class DataRumahComponent implements OnInit {
       return;
     } else if (this.analisaKeuanganMap == null) {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_keuangan', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_keuangan', {
           nama_pemohon: this.analisaKeuanganForm.get('nama_pemohon')?.value,
           alamat_perusahaan: this.analisaKeuanganForm.get('alamat_perusahaan')?.value,
           app_no_de: this.analisaKeuanganForm.get('app_no_de')?.value,
@@ -199,7 +196,7 @@ export class DataRumahComponent implements OnInit {
       this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     } else
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_keuangan', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_keuangan', {
           nama_pemohon: this.analisaKeuanganForm.get('nama_pemohon')?.value,
           alamat_perusahaan: this.analisaKeuanganForm.get('alamat_perusahaan')?.value,
           app_no_de: this.analisaKeuanganForm.get('app_no_de')?.value,
@@ -262,21 +259,20 @@ export class DataRumahComponent implements OnInit {
     // ambil semua data Slik
     this.fetchSlik().subscribe(data => {
       // if (data.code === 200) {
-        // console.log(data)
-        this.listSlik = data.result;
-        // console.log(this.listSlik)
+      // console.log(data)
+      this.listSlik = data.result;
+      // console.log(this.listSlik)
 
-        this.listSlik?.forEach(element => {
-          if(element.response_description=="get SLIK Result Success"){
-            if(element.status_applicant=="Debitur Utama Individu"){
-              this.listLajangSlik.push(element)
-            }
-            else if (element.status_applicant=="Pasangan Debitur"){
-              this.listMenikahSlik.push(element)
-            }
+      this.listSlik?.forEach(element => {
+        if (element.response_description == 'get SLIK Result Success') {
+          if (element.status_applicant == 'Debitur Utama Individu') {
+            this.listLajangSlik.push(element);
+          } else if (element.status_applicant == 'Pasangan Debitur') {
+            this.listMenikahSlik.push(element);
           }
-        });
-        this.dtTrigger.next(data.result);
+        }
+      });
+      this.dtTrigger.next(data.result);
     });
     // ambil semua data Analisa
     this.fetchAnalisaKeuangan().subscribe(data => {
@@ -357,13 +353,13 @@ export class DataRumahComponent implements OnInit {
     // get semua de
   }
 
-  printLajang(ktp: any){
-    window.open('http://10.20.34.178:8805/api/v1/efos-ide/downloadSlik/'+ktp);
+  printLajang(ktp: any) {
+    window.open('http://10.20.34.110:8805/api/v1/efos-ide/downloadSlik/' + ktp);
   }
 
-  printMenikah(ktp: any){
-    console.log(ktp)
-    window.open('http://10.20.34.178:8805/api/v1/efos-ide/downloadSlik/'+ktp);
+  printMenikah(ktp: any) {
+    console.log(ktp);
+    window.open('http://10.20.34.110:8805/api/v1/efos-ide/downloadSlik/' + ktp);
   }
 
   // Only Numbers

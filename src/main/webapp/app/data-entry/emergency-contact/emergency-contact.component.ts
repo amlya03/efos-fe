@@ -51,15 +51,15 @@ export class EmergencyContactComponent implements OnInit {
   }
 
   protected apigethubungan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-ref/list_hubungan_emergency'
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_hubungan_emergency'
   );
 
   protected apiuntukgetsemuadataebrdasarkande = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd='
+    'http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd='
   );
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getEmergencyByCuref?sc=');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getEmergencyByCuref?sc=');
 
   ngOnInit(): void {
     this.load();
@@ -236,8 +236,7 @@ export class EmergencyContactComponent implements OnInit {
     // this.router.navigate(['/call-report'], { queryParams: { datakiriman:this.datakirimiancure , datakirimiancure:this.datakiriman } });
   }
 
-  simpanemergency() // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
-  // contohtampungankategoripekerjaan: any
+  simpanemergency() // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
   {
     const id = document.getElementById('id') as HTMLInputElement | any;
     const nama = document.getElementById('nama') as HTMLInputElement | any;
@@ -287,7 +286,7 @@ export class EmergencyContactComponent implements OnInit {
       const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_emergency_contact', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_emergency_contact', {
           // headers: headers,
           id: '',
           curef: this.datakirimiancure,
@@ -352,7 +351,7 @@ export class EmergencyContactComponent implements OnInit {
       const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_emergency_contact', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_emergency_contact', {
           // headers: headers,
           id: id.value,
           curef: this.datakirimiancure,
