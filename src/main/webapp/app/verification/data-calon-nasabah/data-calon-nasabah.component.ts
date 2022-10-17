@@ -17,6 +17,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { refAnalisaCalonNasabah } from './refAnalisaCalonNasabah.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-data-calon-nasabah',
@@ -56,6 +57,8 @@ export class DataCalonNasabahComponent implements OnInit {
   isiRumahSofa: any;
   isiRumahPerabot: any;
   curef: any;
+  // Role
+  untukSessionRole: any;
 
   constructor(
     protected dataCalonNasabah: ServiceVerificationService,
@@ -65,7 +68,8 @@ export class DataCalonNasabahComponent implements OnInit {
     protected http: HttpClient,
     private formBuilder: FormBuilder,
     protected applicationConfigService: ApplicationConfigService,
-    protected dataEntryService: DataEntryService
+    protected dataEntryService: DataEntryService,
+    private localStorageService: LocalStorageService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -76,6 +80,7 @@ export class DataCalonNasabahComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     this.editor = new Editor();
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.dataCalonNasabahForm = this.formBuilder.group({

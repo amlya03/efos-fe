@@ -21,6 +21,8 @@ export class KesimpulanComponent implements OnInit {
   curef: any;
   kesimpulanModel: kesimpulanVerification = new kesimpulanVerification();
   untukSessionUserName: any;
+  // Role
+  untukSessionRole: any;
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -40,6 +42,7 @@ export class KesimpulanComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
     this.editor = new Editor();
     this.load();

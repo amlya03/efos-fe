@@ -3,16 +3,16 @@
     <label class="col-sm-3 col-form-label">Kesimpulan Hasil Investigasi</label>
     <div class="col-sm-9">
       <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
-      <ngx-editor [editor]="editor" [disabled]="false" [placeholder]="'Tulis Disini. . .'" formControlName="kesimpulan"> </ngx-editor>
+      <ngx-editor [editor]="editor" [disabled]="this.untukSessionRole == 'VER_PRESCR'" [placeholder]="'Tulis Disini. . .'" formControlName="kesimpulan"> </ngx-editor>
     </div>
   </div>
   <br />
   <div class="row form-material">
     <div class="col" style="text-align: center">
       <label>Di Rekomendasikan</label>
-      <input type="radio" formControlName="rekomendasi" value="1" />
+      <input type="radio" formControlName="rekomendasi" value="1" [disabled]="this.untukSessionRole == 'VER_PRESCR'"/>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" formControlName="rekomendasi" value="0" />
+      <input type="radio" formControlName="rekomendasi" value="0" [disabled]="this.untukSessionRole == 'VER_PRESCR'"/>
       <label>Tidak Di Rekomendasikan</label>
     </div>
   </div>

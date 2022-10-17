@@ -8,10 +8,10 @@ import { mutasiRekening } from './mutasiRekening.model';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { listMutasi } from './listMutasi.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-mutasi-rekening',
@@ -35,6 +35,9 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
   curef: any;
 
+  // Role
+  untukSessionRole: any;
+
   constructor(
     protected mutasiRekeningService: ServiceVerificationService,
     protected activatedRoute: ActivatedRoute,
@@ -43,7 +46,8 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     protected applicationConfigService: ApplicationConfigService,
     private http: HttpClient,
-    protected dataEntryService: DataEntryService
+    protected dataEntryService: DataEntryService,
+    private localStorageService: LocalStorageService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -55,6 +59,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,

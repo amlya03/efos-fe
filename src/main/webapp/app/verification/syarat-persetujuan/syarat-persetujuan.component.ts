@@ -43,6 +43,8 @@ export class SyaratPersetujuanComponent implements OnInit {
 
   // simpan data
   simpanDataUpdate: any;
+  // Role
+  untukSessionRole: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -69,6 +71,7 @@ export class SyaratPersetujuanComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,

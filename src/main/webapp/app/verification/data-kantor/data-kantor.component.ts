@@ -15,6 +15,7 @@ import { refAnalisaDataKantor } from './refAnalisaDataKantor.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { getJob } from 'app/data-entry/services/config/getJob.model';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-data-kantor',
@@ -51,6 +52,9 @@ export class DataKantorComponent implements OnInit {
   dataJob: getJob = new getJob();
   curef: any;
 
+  // Role
+  untukSessionRole: any;
+
   // logic get Number
   tipe_pekerjaanGet: any;
 
@@ -62,7 +66,8 @@ export class DataKantorComponent implements OnInit {
     protected http: HttpClient,
     private formBuilder: FormBuilder,
     protected applicationConfigService: ApplicationConfigService,
-    protected dataEntryService: DataEntryService
+    protected dataEntryService: DataEntryService,
+    private localStorageService: LocalStorageService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -73,6 +78,7 @@ export class DataKantorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     // this.postGetTokenDuckapil();
     // this.editor = new Editor();
 

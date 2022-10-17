@@ -128,7 +128,7 @@
 </div>
 <div class="row">
   <div class="col" style="text-align: center">
-    <button (click)="postCeklis()" class="btn btn-info">Simpan Data</button>
+    <button [disabled]="this.untukSessionRole == 'VER_PRESCR'" (click)="postCeklis()" class="btn btn-info">Simpan Data</button>
     <button class="btn btn-info" (click)="updateStatus()">Update Status</button>
   </div>
 </div>

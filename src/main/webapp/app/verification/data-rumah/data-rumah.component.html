@@ -69,7 +69,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama yang Dihubungi</label>
         <div class="col-sm-8">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="text"
             class="form-control"
             id="nama_yang_dihubungi"
@@ -87,7 +87,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jabatan yang Dihubungi</label>
         <div class="col-sm-8">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="text"
             class="form-control"
             id="jabatan_yang_dihubungi"
@@ -105,7 +105,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tanggal Permintaan</label>
         <div class="col-sm-8">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="date"
             class="form-control"
             id="tanggal_permintaan"
@@ -123,7 +123,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tanggal Pemeriksa</label>
         <div class="col-sm-8">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="date"
             class="form-control"
             id="tanggal_pemeriksa"
@@ -141,7 +141,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Pemeriksa</label>
         <div class="col-sm-8">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="text"
             class="form-control"
             id="nama_pemeriksa"
@@ -237,7 +237,7 @@
   </div>
   <p></p>
   <div class="row">
-    <div class="col" style="text-align: center"><input type="checkbox" [checked]="this.dataEntry.joint_income == 1"/> Joint Income</div>
+    <div class="col" style="text-align: center"><input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="checkbox" [checked]="this.dataEntry.joint_income == 1"/> Joint Income</div>
   </div>
   <p></p>
   <div id="fixIncome">
@@ -256,7 +256,7 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Gaji Kotor</label>
           <div class="col-sm-7">
-            <input
+            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
               formControlName="gaji_kotor"
               type="text"
               class="form-control"
@@ -270,7 +270,7 @@
       <br />
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             formControlName="gaji_kotor_pasangan"
             type="text"
             class="form-control"
@@ -283,7 +283,7 @@
       <br />
       <div class="col">
         <div class="form-group row">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             formControlName="gaji_kotor_total"
             type="text"
             class="form-control"
@@ -300,7 +300,7 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Tunjangan</label>
           <div class="col-sm-7">
-            <input
+            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
               formControlName="tunjangan"
               type="text"
               class="form-control"
@@ -313,7 +313,7 @@
       </div>
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             formControlName="tunjangan_pasangan"
             type="text"
             class="form-control"
@@ -325,7 +325,7 @@
       </div>
       <div class="col">
         <div class="form-group row">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             formControlName="tunjangan_total"
             type="text"
             class="form-control"
@@ -342,7 +342,7 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Pendapatan Kotor</label>
           <div class="col-sm-7">
-            <input
+            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
               formControlName="pendapatan_kotor"
               type="text"
               class="form-control"
@@ -355,7 +355,7 @@
       </div>
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             formControlName="pendapatan_kotor_pasangan"
             type="text"
             class="form-control"
@@ -367,7 +367,7 @@
       </div>
       <div class="col">
         <div class="form-group row">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             formControlName="pendapatan_kotor_total"
             type="text"
             class="form-control"
@@ -397,7 +397,7 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Pendapatan Usaha</label>
           <div class="col-sm-7">
-            <input
+            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
               formControlName="pendapatan_usaha"
               type="text"
               class="form-control"
@@ -410,7 +410,7 @@
       </div>
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             formControlName="pendapatan_usaha_pasangan"
             type="text"
             class="form-control"
@@ -422,7 +422,7 @@
       </div>
       <div class="col">
         <div class="form-group row">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             formControlName="pendapatan_usaha_total"
             type="text"
             class="form-control"
@@ -439,7 +439,7 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Pendapatan Profesional</label>
           <div class="col-sm-7">
-            <input
+            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
               type="text"
               class="form-control"
               id="pendapatan_profesional_pemohon"
@@ -451,7 +451,7 @@
       </div>
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="text"
             class="form-control"
             id="pendapatan_profesional_pasangan"
@@ -462,7 +462,7 @@
       </div>
       <div class="col">
         <div class="form-group row">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="text"
             class="form-control"
             id="pendapatan_profesional_total"
@@ -482,7 +482,7 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label" style="color: #fff">TPK</label>
           <div class="col">
-            <input
+            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
               type="text"
               readonly
               class="form-control"
@@ -496,7 +496,7 @@
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <div class="col">
-            <input
+            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
               type="text"
               readonly
               class="form-control"
@@ -509,7 +509,7 @@
       </div>
       <div class="col">
         <div class="form-group row">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="text"
             readonly
             class="form-control"
@@ -530,7 +530,7 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label" style="color: #fff">KB</label>
           <div class="col-sm-7">
-            <input
+            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
               formControlName="kewajiban_bank"
               type="text"
               readonly
@@ -545,7 +545,7 @@
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <div class="col">
-            <input
+            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
               formControlName="kewajiban_bank_pasangan"
               type="text"
               readonly
@@ -559,7 +559,7 @@
       </div>
       <div class="col">
         <div class="form-group row">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             formControlName="kewajiban_bank_total"
             type="text"
             readonly
@@ -581,7 +581,7 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label" style="color: #fff">KL</label>
           <div class="col-sm-7">
-            <input
+            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
               formControlName=""
               type="text"
               class="form-control"
@@ -595,7 +595,7 @@
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <div class="col">
-            <input
+            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
               formControlName="kewajiban_lainnya_pasangan"
               type="text"
               class="form-control"
@@ -608,7 +608,7 @@
       </div>
       <div class="col">
         <div class="form-group row">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             formControlName=""
             type="text"
             readonly
@@ -630,7 +630,7 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label" style="color: #fff">TPB</label>
           <div class="col-sm-7">
-            <input
+            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
               type="text"
               readonly
               class="form-control"
@@ -644,7 +644,7 @@
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <div class="col">
-            <input
+            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
               type="text"
               readonly
               class="form-control"
@@ -657,7 +657,7 @@
       </div>
       <div class="col">
         <div class="form-group row">
-          <input
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="text"
             readonly
             class="form-control"

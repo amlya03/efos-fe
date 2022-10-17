@@ -10,6 +10,7 @@ import { viewJobModel } from 'app/data-entry/services/config/viewJobModel.model'
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { slik } from 'app/initial-data-entry/services/config/slik.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { LocalStorageService } from 'ngx-webstorage';
 import { Subject } from 'rxjs';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { refAnalisaKeuangan } from './refAnalisaKeuangan.model';
@@ -31,6 +32,8 @@ export class DataRumahComponent implements OnInit {
   listSlik?: slik[];
   listLajangSlik: Array<slik> = new Array<slik>();
   listMenikahSlik: Array<slik> = new Array<slik>();
+  // Role
+  untukSessionRole: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -45,7 +48,8 @@ export class DataRumahComponent implements OnInit {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     private formBuilder: FormBuilder,
-    protected dataEntryService: DataEntryService
+    protected dataEntryService: DataEntryService,
+    private localStorageService: LocalStorageService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -56,6 +60,7 @@ export class DataRumahComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
