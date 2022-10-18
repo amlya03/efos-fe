@@ -47,6 +47,9 @@ export class CollateralEditComponent implements OnInit {
   idcollateralnyadetail: any;
   idcollateral: any;
   untukSessionRole: any;
+  kirimandatadevloper: any;
+  getlistkendaraan: any;
+  listhubunganagunan: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -60,7 +63,7 @@ export class CollateralEditComponent implements OnInit {
       this.datakirimanidcollateral = params['datakirimanidcollateral'];
     });
     this.route.queryParams.subscribe(params => {
-      this.curef = params['datakirimiancure'];
+      this.curef = params['curef'];
     });
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
@@ -72,6 +75,13 @@ export class CollateralEditComponent implements OnInit {
   protected apistatussertifikat = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.178:8805/api/v1/efos-ref/list_status_sertifikat'
   );
+  protected apigetlistkendraan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_tipe_kendaraan'
+  );
+  protected apigethubunganagunan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_hubungan_agunan'
+  );
+
   protected apigettipeagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_tipe_agunan');
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getCollateralById?si=');
   protected apigetlistagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_developer');
@@ -97,8 +107,10 @@ export class CollateralEditComponent implements OnInit {
         this.untukstatusdev = res.body?.result.status_agunan;
         this.idcollateralnyadetail = res.body?.result.id_collateral_detail;
         this.idcollateral = res.body?.result.id_collateral;
+        this.pemisahuntukdevloper = res.body?.result.status_developer;
         // this.status_developer=res.body?.result.status_agunan;
         alert(this.tampungantipeagunan);
+        alert(this.untukstatusdev);
         // this.onResponseSuccess(res);
       },
     });
@@ -122,6 +134,22 @@ export class CollateralEditComponent implements OnInit {
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('listagunan', res);
         this.listagunan = res.body?.result;
+        this.tampungantipeagunan = 0;
+      },
+    });
+
+    this.getlistkendaraanload().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        // console.log(res.body?.result);
+        console.warn('kendaraan', res.body?.result);
+        this.getlistkendaraan = res.body?.result;
+      },
+    });
+
+    this.gethubunganagunan().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('hubunganagunana', res);
+        this.listhubunganagunan = res.body?.result;
         this.tampungantipeagunan = 0;
       },
     });
@@ -156,6 +184,16 @@ export class CollateralEditComponent implements OnInit {
           });
         },
       });
+  }
+
+  gethubunganagunan(req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    return this.http.get<ApiResponse>(this.apigethubunganagunan, { params: options, observe: 'response' });
+  }
+
+  getlistkendaraanload(req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    return this.http.get<ApiResponse>(this.apigetlistkendraan, { params: options, observe: 'response' });
   }
 
   onChange(selectedStatus: any) {
@@ -359,8 +397,6 @@ export class CollateralEditComponent implements OnInit {
   }
 
   updatecollateralnih() {
-    // alert(this.datakirimande);
-    // alert(this.datakirimanappde);
     const tipe_anggunan = document.getElementById('tipe_anggunan') as HTMLInputElement | any;
     const tipe_kendaraan2 = document.getElementById('tipe_kendaraan2') as HTMLInputElement | any;
     const merk2 = document.getElementById('merk2') as HTMLInputElement | any;
@@ -374,7 +410,7 @@ export class CollateralEditComponent implements OnInit {
     const nama_bpkb = document.getElementById('nama_bpkb') as HTMLInputElement | any;
     const tanggal_terbit = document.getElementById('tanggal_terbit') as HTMLInputElement | any;
     const tipe_properti = document.getElementById('tipe_properti') as HTMLInputElement | any;
-    // const ibaru = document.getElementById('ibaru') as HTMLInputElement | any;
+    const nomor_sertifikat = document.getElementById('nomor_sertifikat') as HTMLInputElement | any;
     // const isecond = document.getElementById('isecond') as HTMLInputElement | any;
     // const ipks = document.getElementById('ipks') as HTMLInputElement | any;
     // const inonpks = document.getElementById('inonpks') as HTMLInputElement | any;
@@ -385,16 +421,16 @@ export class CollateralEditComponent implements OnInit {
     // const status_jaminan_sebelumnya = document.getElementById('status_jaminan_sebelumnya') as HTMLInputElement | any;
     const hubungan_pemegang_hak = document.getElementById('hubungan_pemegang_hak') as HTMLInputElement | any;
     const tahun_buat = document.getElementById('tahun_buat') as HTMLInputElement | any;
-    // const status_sertifikat = document.getElementById('status_sertifikat') as HTMLInputElement | any;
+    const status_sertifikat = document.getElementById('status_sertifikat') as HTMLInputElement | any;
     const nama_pemegang_hak = document.getElementById('nama_pemegang_hak') as HTMLInputElement | any;
     const no_handphone_cp = document.getElementById('no_handphone_cp') as HTMLInputElement | any;
     const no_id_pemegang_hak_sertifikat = document.getElementById('no_id_pemegang_hak_sertifikat') as HTMLInputElement | any;
     // const tanggal_terbit = document.getElementById('tanggal_terbit') as HTMLInputElement | any;
     // const no_contact_person = document.getElementById('tipe_perusahaan') as HTMLInputElement | any;
-    // const nomor_identitas_pemegang_hak = document.getElementById('nomor_identitas_pemegang_hak') as HTMLInputElement | any;
+    const nomor_identitas_pemegang_hak = document.getElementById('nomor_identitas_pemegang_hak') as HTMLInputElement | any;
     // const tanggal_lahir = document.getElementById('tanggal_lahir') as HTMLInputElement | any;
     const tanggal_exipred = document.getElementById('tanggal_expired') as HTMLInputElement | any;
-    // const tahun_buat = document.getElementById('tahun_buat') as HTMLInputElement | any;
+    const tanggal_exipredd = document.getElementById('tanggal_exipred') as HTMLInputElement | any;
     const alamat_agunan = document.getElementById('alamat_agunan') as HTMLInputElement | any;
     const provinsi_agunan = document.getElementById('provinsi_agunan') as HTMLInputElement | any;
     const kabkota_agunan = document.getElementById('kabkota_agunan') as HTMLInputElement | any;
@@ -426,48 +462,116 @@ export class CollateralEditComponent implements OnInit {
     // alert(id.value);
     // alert(jenis_kelamin.value);
 
-    const statusagunanbaru = (<HTMLInputElement>document.getElementById('ibaru')).checked;
-    const statusagunansecon = (<HTMLInputElement>document.getElementById('isecond')).checked;
-    const statusdevpks = (<HTMLInputElement>document.getElementById('ipks')).checked;
-    const statusdevnonpks = (<HTMLInputElement>document.getElementById('inonpks')).checked;
-    const statusdevorang = (<HTMLInputElement>document.getElementById('iperorangan')).checked;
-    const statusjaminansebelumia = (<HTMLInputElement>document.getElementById('status_jaminan_sebelumnyaia')).checked;
-    const statusjaminansebelumtidak = (<HTMLInputElement>document.getElementById('status_jaminan_sebelumnyatidak')).checked;
-    const statussertifikatia = (<HTMLInputElement>document.getElementById('iyaSama')).checked;
-    const statussertifikattidak = (<HTMLInputElement>document.getElementById('takSama')).checked;
+    if (tipe_anggunan.value == 'Tanah') {
+      const statussertifikatia = (<HTMLInputElement>document.getElementById('iyaSama')).checked;
+      const statussertifikattidak = (<HTMLInputElement>document.getElementById('takSama')).checked;
 
-    if (statusagunanbaru == true) {
-      this.untukstatusagunan = 'baru';
-    } else if (statusagunansecon == true) {
-      this.untukstatusagunan = 'secon';
-    } else {
-      this.untukstatusagunan = 9;
-    }
+      if (statussertifikatia == true) {
+        this.untukstatussertifikat = 'iya';
+      } else if (statussertifikattidak == true) {
+        this.untukstatussertifikat = 'tidak';
+      } else {
+        this.untukstatussertifikat = 9;
+      }
+    } else if (tipe_anggunan.value == 'Kendaraan') {
+    } else if (tipe_anggunan.value == 'Bangunan') {
+      const statusagunanbaru = (<HTMLInputElement>document.getElementById('ibaru')).checked;
+      const statusagunansecon = (<HTMLInputElement>document.getElementById('isecond')).checked;
+      const statusdevpks = (<HTMLInputElement>document.getElementById('ipks')).checked;
+      const statusdevnonpks = (<HTMLInputElement>document.getElementById('inonpks')).checked;
+      const statusdevorang = (<HTMLInputElement>document.getElementById('iperorangan')).checked;
+      const statusjaminansebelumia = (<HTMLInputElement>document.getElementById('status_jaminan_sebelumnyaia')).checked;
+      const statusjaminansebelumtidak = (<HTMLInputElement>document.getElementById('status_jaminan_sebelumnyatidak')).checked;
 
-    if (statusdevnonpks == true) {
-      this.untukstatusdevini = 'non pks';
-    } else if (statusdevpks == true) {
-      this.untukstatusdevini = 'pks';
-    } else if (statusdevorang == true) {
-      this.untukstatusdevini = 'perseorangan';
-    } else {
-      this.untukstatusdevini = 9;
-    }
+      const statussertifikatia = (<HTMLInputElement>document.getElementById('iyaSama')).checked;
+      const statussertifikattidak = (<HTMLInputElement>document.getElementById('takSama')).checked;
 
-    if (statusjaminansebelumia == true) {
-      this.untukjaminansebelum = 'iya';
-    } else if (statusjaminansebelumtidak == true) {
-      this.untukjaminansebelum = 'tidak';
-    } else {
-      this.untukjaminansebelum = 9;
-    }
+      if (statussertifikatia == true) {
+        this.untukstatussertifikat = 'iya';
+      } else if (statussertifikattidak == true) {
+        this.untukstatussertifikat = 'tidak';
+      } else {
+        this.untukstatussertifikat = 9;
+      }
 
-    if (statussertifikatia == true) {
-      this.untukstatussertifikat = 'iya';
-    } else if (statussertifikattidak == true) {
-      this.untukstatussertifikat = 'tidak';
-    } else {
-      this.untukstatussertifikat = 9;
+      if (statusagunanbaru == true) {
+        this.untukstatusagunan = 'baru';
+      } else if (statusagunansecon == true) {
+        this.untukstatusagunan = 'secon';
+      } else {
+        this.untukstatusagunan = 9;
+      }
+
+      if (statusdevnonpks == true) {
+        this.untukstatusdevini = 'non pks';
+        const developer_non_pks = document.getElementById('developer_non_pks') as HTMLInputElement | any;
+        this.kirimandatadevloper = developer_non_pks.value;
+      } else if (statusdevpks == true) {
+        this.untukstatusdevini = 'pks';
+        const developer_pks = document.getElementById('developer_pks') as HTMLInputElement | any;
+        this.kirimandatadevloper = developer_pks.value;
+      } else if (statusdevorang == true) {
+        this.untukstatusdevini = 'perseorangan';
+      } else {
+        this.untukstatusdevini = 9;
+      }
+
+      if (statusjaminansebelumia == true) {
+        this.untukjaminansebelum = 'iya';
+      } else if (statusjaminansebelumtidak == true) {
+        this.untukjaminansebelum = 'tidak';
+      } else {
+        this.untukjaminansebelum = 9;
+      }
+    } else if (tipe_anggunan.value == 'Tanah dan Bangunan') {
+      const statusagunanbaru = (<HTMLInputElement>document.getElementById('ibaru')).checked;
+      const statusagunansecon = (<HTMLInputElement>document.getElementById('isecond')).checked;
+      const statusdevpks = (<HTMLInputElement>document.getElementById('ipks')).checked;
+      const statusdevnonpks = (<HTMLInputElement>document.getElementById('inonpks')).checked;
+      const statusdevorang = (<HTMLInputElement>document.getElementById('iperorangan')).checked;
+      const statusjaminansebelumia = (<HTMLInputElement>document.getElementById('status_jaminan_sebelumnyaia')).checked;
+      const statusjaminansebelumtidak = (<HTMLInputElement>document.getElementById('status_jaminan_sebelumnyatidak')).checked;
+
+      const statussertifikatia = (<HTMLInputElement>document.getElementById('iyaSama')).checked;
+      const statussertifikattidak = (<HTMLInputElement>document.getElementById('takSama')).checked;
+
+      if (statussertifikatia == true) {
+        this.untukstatussertifikat = 'iya';
+      } else if (statussertifikattidak == true) {
+        this.untukstatussertifikat = 'tidak';
+      } else {
+        this.untukstatussertifikat = 9;
+      }
+
+      if (statusagunanbaru == true) {
+        this.untukstatusagunan = 'baru';
+      } else if (statusagunansecon == true) {
+        this.untukstatusagunan = 'secon';
+      } else {
+        this.untukstatusagunan = 9;
+      }
+
+      if (statusdevnonpks == true) {
+        this.untukstatusdevini = 'non pks';
+        const developer_non_pks = document.getElementById('developer_non_pks') as HTMLInputElement | any;
+        this.kirimandatadevloper = developer_non_pks.value;
+      } else if (statusdevpks == true) {
+        this.untukstatusdevini = 'pks';
+        const developer_pks = document.getElementById('developer_pks') as HTMLInputElement | any;
+        this.kirimandatadevloper = developer_pks.value;
+      } else if (statusdevorang == true) {
+        this.untukstatusdevini = 'perseorangan';
+      } else {
+        this.untukstatusdevini = 9;
+      }
+
+      if (statusjaminansebelumia == true) {
+        this.untukjaminansebelum = 'iya';
+      } else if (statusjaminansebelumtidak == true) {
+        this.untukjaminansebelum = 'tidak';
+      } else {
+        this.untukjaminansebelum = 9;
+      }
     }
 
     if (tipe_anggunan.value == 'Kendaraan') {
@@ -498,7 +602,7 @@ export class CollateralEditComponent implements OnInit {
       var kirimankode_pos_sesuai_sertifikat = null;
       var kirimanluas_bangunan = null;
       var kirimannama_pemegang_hak = null;
-      var kirimannama_perumahan = nama_perumahan.value;
+      var kirimannama_perumahan = null;
       var kirimanno_handphone_cp = null;
       var kirimanno_id_pemegang_hak_sertifikat = null;
       var kirimannomor_rumah = null;
@@ -512,8 +616,8 @@ export class CollateralEditComponent implements OnInit {
       var kirimanstatus_sertifikat = null;
       var kirimantahun_dibuat = null;
       var kirimantanggal_expired = null;
-      var kirimantanggal_terbit = null;
-      var kirimantipe_agunan = null;
+      var kirimantanggal_terbit = tanggal_terbit.value;
+      var kirimantipe_agunan = tipe_anggunan.value;
       var kirimanno_sertifikat = null;
       var kirimantipe_properti = null;
       var kirimanstatus_agunan = null;
@@ -549,7 +653,7 @@ export class CollateralEditComponent implements OnInit {
       var kirimanluas_tanah = luas_tanah_anggunan.value;
       // var kirimanluas_tanah_sertifikat=;
       var kirimannama_pemegang_hak = nama_pemegang_hak.value;
-      var kirimannama_perumahan = null;
+      var kirimannama_perumahan = nama_perumahan.value;
       var kirimanno_handphone_cp = no_handphone_cp.value;
       var kirimanno_id_pemegang_hak_sertifikat = no_id_pemegang_hak_sertifikat.value;
       var kirimannomor_rumah = no_rumah.value;
@@ -564,7 +668,7 @@ export class CollateralEditComponent implements OnInit {
       var kirimantahun_dibuat = tahun_buat.value;
       var kirimantanggal_expired = tanggal_exipred.value;
       var kirimantanggal_terbit = tanggal_terbit.value;
-      var kirimantipe_agunan = null;
+      var kirimantipe_agunan = tipe_anggunan.value;
       var kirimanno_sertifikat = no_sertifikat.value;
       var kirimantipe_properti = tipe_properti.value;
       var kirimanstatus_agunan = this.untukstatusagunan;
@@ -601,9 +705,9 @@ export class CollateralEditComponent implements OnInit {
       var kirimanluas_tanah = luas_tanah_anggunan.value;
       // var kirimanluas_tanah_sertifikat=;
       var kirimannama_pemegang_hak = nama_pemegang_hak.value;
-      var kirimannama_perumahan = nama_perumahan.value;
+      var kirimannama_perumahan = null;
       var kirimanno_handphone_cp = no_handphone_cp.value;
-      var kirimanno_id_pemegang_hak_sertifikat = no_id_pemegang_hak_sertifikat.value;
+      var kirimanno_id_pemegang_hak_sertifikat = nomor_identitas_pemegang_hak.value;
       var kirimannomor_rumah = no_rumah.value;
       var kirimanprovinsi_agunan = provinsi_agunan.value;
       var kirimanprovinsi_sesuai_sertifikat = provinsi_sesuai_sertifikat.value;
@@ -612,15 +716,15 @@ export class CollateralEditComponent implements OnInit {
       var kirimanrt_sertifikat = rt_sertifikat.value;
       var kirimanrw_sertifikat = rw_sertifikat.value;
       var kirimanstatus_jaminan_sebelumnya = null;
-      var kirimanstatus_sertifikat = this.untukstatussertifikat;
-      var kirimantahun_dibuat = tahun_buat.value;
-      var kirimantanggal_expired = tanggal_exipred.value;
+      var kirimanstatus_sertifikat = status_sertifikat.value;
+      var kirimantahun_dibuat = null;
+      var kirimantanggal_expired = tanggal_exipredd.value;
       var kirimantanggal_terbit = tanggal_terbit.value;
-      var kirimantipe_agunan = null;
-      var kirimanno_sertifikat = no_sertifikat.value;
+      var kirimantipe_agunan = tipe_anggunan.value;
+      var kirimanno_sertifikat = nomor_sertifikat.value;
       var kirimanstatus_agunan = null;
       var kirimanstatus_developer = null;
-      var kirimantipe_properti = tipe_properti.value;
+      var kirimantipe_properti = null;
     } else if (tipe_anggunan.value == 'Bangunan') {
       var kirimanmerek = null;
       var kirimantipekendaraan = null;
@@ -668,7 +772,7 @@ export class CollateralEditComponent implements OnInit {
       var kirimantahun_dibuat = tahun_buat.value;
       var kirimantanggal_expired = tanggal_exipred.value;
       var kirimantanggal_terbit = tanggal_terbit.value;
-      var kirimantipe_agunan = null;
+      var kirimantipe_agunan = tipe_anggunan.value;
       var kirimanno_sertifikat = no_sertifikat.value;
       var kirimantipe_properti = tipe_properti.value;
       var kirimanstatus_agunan = this.untukstatusagunan;
@@ -687,9 +791,9 @@ export class CollateralEditComponent implements OnInit {
         app_no_de: this.app_no_de,
         blok_rumah: kirimanblok_rumah,
         curef: this.curef,
-        developer: 'cekcontohdevloper',
+        developer: this.kirimandatadevloper,
         harga_objek: kirimanharga_objek,
-        harga_objek_sertifikat: 'string',
+        harga_objek_sertifikat: 'hardcode',
         hubungan_pemegang_hak: kirimanhubungan_pemegang_hak,
         id_collateral: this.idcollateral,
         id_collateral_detail: this.idcollateralnyadetail,
@@ -758,13 +862,13 @@ export class CollateralEditComponent implements OnInit {
           this.router.navigate(['/data-entry/collateral'], {
             queryParams: {
               app_no_de: this.app_no_de,
-              curef: this.datakirimiancure,
+              curef: this.curef,
               datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
               // datakirimanidcollateral:idcollateral,
             },
           });
 
-          window.location.reload();
+          // window.location.reload();
         },
       });
   }

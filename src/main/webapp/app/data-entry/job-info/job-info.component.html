@@ -28,7 +28,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Tipe Pekerjaan<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">T2ipe Pekerjaan<span class="text-danger">*</span></label>
         <div class="col-sm-9">
           <div class="form-group">
             <select class="form-control" id="tipe_pekerjaan" name="tipe_pekerjaan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
@@ -232,10 +232,10 @@
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             class="form-control"
-            value="{{ tampunganid.rt_sebelum }}"
+            value=""
             placeholder="RT"
-            id="rt_sebelum"
-            name="rt_sebelum"
+            id="rt"
+            name="rt"
           />
         </div>
         <div class="col">RT</div>
@@ -247,9 +247,9 @@
             onkeypress="return onlyNumberKey(event)"
             class="form-control"
             placeholder="RW"
-            id="rw_sebelum"
-            value="{{ tampunganid.rw_sebelum }}"
-            name="rw_sebelum"
+            id="rw"
+            value=""
+            name="rw"
           />
         </div>
         <div class="col">RW</div>
@@ -358,7 +358,7 @@
             id="lama_bekerja_tahun"
             name="lama_bekerja_tahun"
             maxlength="2"
-            value="{{ tampunganid.lama_bekerja_tahun }}"
+            value=""
           />
         </div>
         <div class="col">Tahun</div>
@@ -371,7 +371,7 @@
             id="lama_bekerja_bulan"
             name="lama_bekerja_bulan"
             maxlength="2"
-            value="{{ tampunganid.lama_bekerja_bulan }}"
+            value=""
           />
         </div>
         <div class="col">Bulan</div>
@@ -583,7 +583,6 @@
               name="kategori_pekerjaan_sebelum"
               id="kategori_pekerjaan_sebelum"
             >
-              <option value="{{ tampunganid.kategori_pekerjaan_sebelum }}">{{ tampunganid.kategori_pekerjaan_sebelum }}</option>
               <option value="1|Fix Income">Fix Income</option>
               <option value="2|Non Fix Income">Non Fix Income</option>
               <option value="3|Lain-lainnya">Lain-lainnyatest</option>
@@ -602,9 +601,12 @@
               id="tipe_pekerjaan_sebelum"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             >
-              <option value="">{{ tampunganid.tipe_pekerjaan_sebelum }}</option>
               <option *ngFor="let daWakotasebelum of daWakotasebelum" value="{{ daWakotasebelum.job_desc }}">
                 {{ daWakotasebelum.job_desc }}
+              </option>
+
+              <option *ngFor="let daWakotasebelum of daWakotasebelum" value="{{ daWakotasebelum.id }}|{{ daWakotasebelum.id }}">
+                {{ daWakotasebelum.id }}
               </option>
             </select>
           </div>
@@ -624,8 +626,6 @@
         <div class="col-sm-9">
           <div class="form-group">
             <select class="form-control" id="posisi_sebelum" name="posisi_sebelum" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
-              <option>{{ tampunganid.posisi_sebelum }}</option>
-
               <option *ngFor="let getjabatansebelum of getjabatansebelum" value="{{ getjabatansebelum.jabatan_deskripsi }}">
                 {{ getjabatansebelum.jabatan_deskripsi }}
               </option>
@@ -644,7 +644,6 @@
             placeholder="Nama Perusahaan"
             id="nama_perusahaan_sebelum"
             name="nama_perusahaan_sebelum"
-            value="{{ tampunganid.nama_perusahaan_sebelum }}"
           />
           <input
             hidden
@@ -653,7 +652,6 @@
             placeholder="Nama Perusahaan"
             id="id"
             name="id"
-            value="{{ tampunganid.id }}"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           />
           <input
@@ -664,7 +662,6 @@
             placeholder="Nama Perusahaan"
             id="curef"
             name="curef"
-            value="{{ tampunganid.curef }}"
           />
         </div>
       </div>
@@ -678,8 +675,7 @@
             id="alamat_pekerjaan_sebelum"
             name="alamat_pekerjaan_sebelum"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-            >{{ tampunganid.alamat_pekerjaan_sebelum }}</textarea
-          >
+          ></textarea>
         </div>
       </div>
       <br />
@@ -694,7 +690,6 @@
               name="provinsi_sebelum"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             >
-              <option value="{{ tampunganid.provinsi_sebelum }}">{{ tampunganid.provinsi_sebelum }}</option>
               <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                 {{ daWaprof.namaWilayah }}
               </option>
@@ -714,7 +709,6 @@
               name="kabkota_sebelum"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             >
-              <option value="{{ tampunganid.kabkota_sebelum }}">{{ tampunganid.kabkota_sebelum }}</option>
               <option *ngFor="let daWakotaD of daWakotaD" value="{{ daWakotaD.kdWilayah }}|{{ daWakotaD.namaWilayah }}">
                 {{ daWakotaD.namaWilayah }}
               </option>
@@ -734,7 +728,6 @@
               name="kecamatan_sebelum"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             >
-              <option value="{{ tampunganid.kecamatan_sebelum }}">{{ tampunganid.kecamatan_sebelum }}</option>
               <option *ngFor="let daWakecamatanD of kecamatanD" value="{{ daWakecamatanD.kdWilayah }}|{{ daWakecamatanD.namaWilayah }}">
                 {{ daWakecamatanD.namaWilayah }}
               </option>
@@ -754,7 +747,6 @@
               name="kelurahan_sebelum"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             >
-              <option value="{{ tampunganid.kelurahan_sebelum }}">{{ tampunganid.kelurahan_sebelum }}</option>
               <option *ngFor="let daWakelurahanD of kelurahanD" value="{{ daWakelurahanD.kdPos }}|{{ daWakelurahanD.namaWilayah }}">
                 {{ daWakelurahanD.namaWilayah }}
               </option>
@@ -775,7 +767,6 @@
               class="form-control"
               id="kode_pos_sebelum"
               name="kode_pos_sebelum"
-              value="{{ tampunganid.kode_pos_sebelum }}"
             />
             <div class="input-group-append">
               <button
@@ -801,7 +792,6 @@
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             class="form-control"
-            value="{{ tampunganid.rt_sebelum }}"
             placeholder="RT"
             id="rt_sebelum"
             name="rt_sebelum"
@@ -817,7 +807,6 @@
             class="form-control"
             placeholder="RW"
             id="rw_sebelum"
-            value="{{ tampunganid.rw_sebelum }}"
             name="rw_sebelum"
           />
         </div>
@@ -837,7 +826,6 @@
               id="jenis_bidang_sebelum"
               name="jenis_bidang_sebelum"
             >
-              <option value="">{{ tampunganid.jenis_bidang_sebelum }}</option>
               <option
                 *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
                 value="{{ getjenisbidangdariapi.group_sektor }}|{{ getjenisbidangdariapi.nama_group_sektor }}"
@@ -859,7 +847,6 @@
               name="sektor_ekonomi_sebelum"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             >
-              <option value="">{{ tampunganid.sektor_ekonomi_sebelum }}</option>
               <option *ngFor="let getdatasektorekonomi of getdatasektorekonomi" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
                 {{ getdatasektorekonomi.nama_sub_sektor }}
               </option>
@@ -879,7 +866,6 @@
             id="lama_bekerja_tahun_sebelum"
             name="lama_bekerja_tahun_sebelum"
             maxlength="2"
-            value="{{ tampunganid.lama_bekerja_tahun_sebelum }}"
           />
         </div>
         <div class="col">Tahun</div>
@@ -892,7 +878,6 @@
             id="lama_bekerja_bulan_sebelum"
             name="lama_bekerja_bulan_sebelum"
             maxlength="2"
-            value="{{ tampunganid.lama_bekerja_bulan_sebelum }}"
           />
         </div>
         <div class="col">Bulan</div>
@@ -907,7 +892,6 @@
             onkeypress="return onlyNumberKey(event)"
             maxlength="13"
             class="form-control"
-            value="{{ tampunganid.jumlah_karyawan_sebelumnya }}"
             placeholder="Jumlah Karyawan"
             id="jumlah_karyawan_sebelum"
             name="jumlah_karyawan_sebelum"
@@ -925,7 +909,6 @@
               name="jumlah_karyawan_sebelumnya"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             >
-              <option>{{ tampunganid.jumlah_karyawan_sebelumnya }}</option>
               <option
                 *ngFor="let getjumlahkaryawansebelumdariapi of getjumlahkaryawansebelumdariapi"
                 value="{{ getjumlahkaryawansebelumdariapi.deskripsi }}"
@@ -947,7 +930,6 @@
               name="tipe_perusahaan_sebelum"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
             >
-              <option value="">{{ tampunganid.tipe_perusahaan_sebelum }}</option>
               <option
                 *ngFor="let gettipeperusahaandariapi of gettipeperusahaandariapi"
                 value="{{ gettipeperusahaandariapi.company_deskripsi }}"
@@ -968,9 +950,7 @@
               id="tipe_kepegawaian_sebelum"
               name="tipe_kepegawaian_sebelum"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-            >
-              <option value="">{{ tampunganid.tipe_kepegawaian_sebelum }}</option>
-            </select>
+            ></select>
           </div>
         </div>
       </div>

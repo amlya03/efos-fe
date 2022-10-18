@@ -105,47 +105,25 @@ export class PersonalInfoComponent implements OnInit {
     this.load();
   }
   load(): void {
-    if (this.localStorageService.retrieve('sessionRole') == 'BM') {
-      this.getdataentry().subscribe({
-        next: (res: EntityArrayResponseDaWa) => {
-          // console.log(res.body?.result);
-          console.warn('tabel', res);
-          console.warn('!!!!!!!!!!!!!!!!!!!', this.app_no_de);
-          // console.warn('tabel', res);
-          // console.warn('!!!!!!!!!!!!!!!!!!!', this.datakiriman);
-          // console.warn('@@@@@@@@@@@@@', this.datakiriman);
-          // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
-          this.daWa = res.body?.result;
-          // this.onResponseSuccess(res);
-        },
-      });
+    this.gettokendukcapil();
 
-      $('#nama').attr('readonly', 'readonly');
-      $('#jenis_kelamin').attr('readonly', 'readonly');
-      $('#tanggal_lahir').attr('readonly', 'readonly');
-      $('#tempat_lahir').attr('readonly', 'readonly');
-      // this.readonly();
-    } else {
-      this.gettokendukcapil();
+    // alert(personal_info_retrive)
+    // localStorage.setItem('daftar_aplikasi_de', personal_info_retrive);
+    this.getdataentry().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        // console.log(res.body?.result);
+        console.warn('tabel', res);
+        console.warn('!!!!!!!!!!!!!!!!!!!', this.app_no_de);
+        // console.warn('tabel', res);
+        // console.warn('!!!!!!!!!!!!!!!!!!!', this.datakiriman);
+        // console.warn('@@@@@@@@@@@@@', this.datakiriman);
+        // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
+        this.daWa = res.body?.result;
+        // this.onResponseSuccess(res);
+      },
+    });
 
-      // alert(personal_info_retrive)
-      // localStorage.setItem('daftar_aplikasi_de', personal_info_retrive);
-      this.getdataentry().subscribe({
-        next: (res: EntityArrayResponseDaWa) => {
-          // console.log(res.body?.result);
-          console.warn('tabel', res);
-          console.warn('!!!!!!!!!!!!!!!!!!!', this.app_no_de);
-          // console.warn('tabel', res);
-          // console.warn('!!!!!!!!!!!!!!!!!!!', this.datakiriman);
-          // console.warn('@@@@@@@@@@@@@', this.datakiriman);
-          // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
-          this.daWa = res.body?.result;
-          // this.onResponseSuccess(res);
-        },
-      });
-
-      // $('#nama').attr('readonly', 'readonly');
-    }
+    // $('#nama').attr('readonly', 'readonly');
   }
 
   // readonly(): void {

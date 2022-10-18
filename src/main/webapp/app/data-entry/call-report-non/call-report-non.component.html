@@ -181,7 +181,9 @@
             name="status_perkawinan"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           >
-            <option value="{{ daWa.status_perkawinan }}"></option>
+            <option value="{{ daWa.status_kawin }}">{{ daWa.status_kawin }}</option>
+            <option value="Lajang">Lajang</option>
+            <option value="Menikah">Menikah</option>
           </select>
         </div>
       </div>
@@ -353,7 +355,50 @@
     </div>
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Legalitas Usaha</label>
-      <div class="form-group col-sm-8"></div>
+      <div class="form-group col-sm-8">
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          type="checkbox"
+          value="SIU"
+          (change)="onCheckCek($event)"
+          [checked]="this.checkboxCeksiu == 'SIU'"
+        />SIU &nbsp;&nbsp;
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          type="checkbox"
+          value="SIUP"
+          (change)="onCheckCek($event)"
+          [checked]="this.checkboxCeksiup == 'SIUP'"
+        />SIUP &nbsp;&nbsp;
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          type="checkbox"
+          value="NIB"
+          (change)="onCheckCek($event)"
+          [checked]="this.checkboxCeknib == 'NIB'"
+        />NIB &nbsp;&nbsp;
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          type="checkbox"
+          value="SKDU"
+          (change)="onCheckCek($event)"
+          [checked]="this.checkboxCekskdu == 'SKDU'"
+        />SKDU &nbsp;&nbsp;
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          type="checkbox"
+          value="SKDP"
+          (change)="onCheckCek($event)"
+          [checked]="this.checkboxCekskdp == 'SKDP'"
+        />SKDP &nbsp;&nbsp;
+        <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          type="checkbox"
+          value="Akta Pendirian"
+          (change)="onCheckCek($event)"
+          [checked]="this.checkboxCekaktapendirian == 'Akta Pendirian'"
+        />Akta Pendirian &nbsp;&nbsp;
+      </div>
     </div>
     <br />
     <div class="form-group row">
@@ -391,6 +436,9 @@
       <div class="form-group col-sm-8">
         <select class="form-control" id="skala_perusahaan" name="skala_perusahaan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
           <option selected value="{{ daWa.skala_perusahaan }}">{{ daWa.skala_perusahaan }}</option>
+          <option *ngFor="let skalaprusahaan of skalaprusahaan" value="{{ skalaprusahaan.deskripsi }}">
+            {{ skalaprusahaan.deskripsi }}
+          </option>
         </select>
       </div>
     </div>
@@ -519,7 +567,6 @@
             class="form-control"
             id="status_pekerjaan_pasangan"
             name="status_pekerjaan_pasangan"
-            value="<?=@$status_pekerjaan_pasangan?>"
           >
             <option selected value="{{ daWa.status_pekerjaan_pasangan }}">{{ daWa.status_pekerjaan_pasangan }}</option>
             <option value="Tetap">Tetap</option>
@@ -847,7 +894,10 @@
       <label class="col-sm-4 col-form-label"></label>
       <div class="col-md-8">
         <div class="form-group">
-          <p id="denganini"></p>
+          <p id="denganini">
+            <input type="checkbox" (click)="onclikwawancara($event)" />
+            {{ textwawancara }}
+          </p>
         </div>
       </div>
     </div>
@@ -911,6 +961,7 @@
       name="buttonsimpan"
       value="buttonsimpan"
       class="btn mb-1 btn-dark"
+      hidden
       [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
     >
       Simpan Data<span class="btn-icon-right"><i class="fa fa-floppy-o"></i></span>

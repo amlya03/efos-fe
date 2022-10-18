@@ -22,6 +22,10 @@ export class MemoComponent implements OnInit {
   app_no_de: any;
   daWa: any;
   daWa1: any;
+  tampilanfixornon: any;
+  untukSessionRole: any;
+  untukSessionusername: any;
+  untukSessionfullname: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,6 +48,10 @@ export class MemoComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
   ngOnInit(): void {
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionusername = this.localStorageService.retrieve('sessionUserName');
+    this.untukSessionfullname = this.localStorageService.retrieve('sessionFullName');
+
     this.load();
   }
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -60,6 +68,10 @@ export class MemoComponent implements OnInit {
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('callreportnon', res);
         this.daWa1 = res.body?.result;
+
+        this.tampilanfixornon = res.body?.result.kategori_pekerjaan;
+
+        alert(this.tampilanfixornon);
       },
     });
   }
@@ -95,9 +107,9 @@ export class MemoComponent implements OnInit {
         // curef: this.datakiriman,
         id: '',
         keterangan: keterangan.value,
-        // users: alamat_perusahaan.value,
-        // role: jenis_bidang_perusahaan.value,
-        // created_by: jumlah_karyawan.value,
+        users: this.untukSessionfullname,
+        role: this.untukSessionRole,
+        created_by: this.untukSessionusername,
         app_no_de: this.app_no_de,
       })
 
