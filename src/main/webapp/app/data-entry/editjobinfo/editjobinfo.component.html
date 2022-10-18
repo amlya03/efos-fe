@@ -89,8 +89,8 @@
                   <label class="col-sm-3 col-form-label">Posisi</label>
                   <div class="col-sm-9">
                     <div class="form-group">
-                      <select class="form-control" id="jabatan" name="posisi" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
-                        <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
+                      <select class="form-control" id="posisi" name="posisi" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+                        <option value="{{ daWa.jabatan }}">{{ daWa.jabatan }}</option>
                         <option *ngFor="let getjabatandariapi of getjabatandariapi" value="{{ getjabatandariapi.jabatan_deskripsi }}">
                           {{ getjabatandariapi.jabatan_deskripsi }}
                         </option>
@@ -410,37 +410,45 @@
                     </div>
                   </div>
                 </div>
-                <div id="jumlahKaryawanFix" class="form-group row">
-                  <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
-                  <div class="col-sm-9">
-                    <input
-                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                      type="tel"
-                      onkeypress="return onlyNumberKey(event)"
-                      maxlength="13"
-                      class="form-control"
-                      placeholder="Jumlah Karyawan"
-                      value="{{ daWa.jumlah_karyawan }}"
-                      id="jumlah_karyawan"
-                      name="jumlah_karyawan"
-                    />
+
+                <div [ngSwitch]="nampungdatakatagoripekerjaan">
+                  <div *ngSwitchCase="'Fix Income'">
+                    <div id="jumlahKaryawanFix" class="form-group row">
+                      <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
+                      <div class="col-sm-9">
+                        <input
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          type="tel"
+                          onkeypress="return onlyNumberKey(event)"
+                          maxlength="13"
+                          class="form-control"
+                          placeholder="Jumlah Karyawan"
+                          value="{{ daWa.jumlah_karyawan }}"
+                          id="jumlah_karyawan"
+                          name="jumlah_karyawan"
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div id="jumlahKaryawanNon" class="form-group row">
-                  <label class="col-sm-3 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
-                  <div class="col-sm-9">
-                    <div class="form-group">
-                      <select
-                        class="form-control"
-                        id="jumlah_karyawan2"
-                        name="jumlah_karyawan2"
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                      >
-                        <option value="{{ daWa.kabkota }}">{{ daWa.jumlah_karyawan }}</option>
-                      </select>
+                  <div *ngSwitchCase="'Non Fix Income'">
+                    <div id="jumlahKaryawanNon" class="form-group row">
+                      <label class="col-sm-3 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
+                      <div class="col-sm-9">
+                        <div class="form-group">
+                          <select
+                            class="form-control"
+                            id="jumlah_karyawan2"
+                            name="jumlah_karyawan2"
+                            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          >
+                            <option value="{{ daWa.kabkota }}">{{ daWa.jumlah_karyawan }}</option>
+                          </select>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
+
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Pendapatan</label>
                   <div class="col-sm-9">
@@ -449,7 +457,7 @@
                       type="text"
                       class="form-control"
                       placeholder="Pendapatan"
-                      value="{{ daWa.pendapatan }}"
+                      value="{{ daWa.pendapatan | currency: 'Rp':'symbol':'3.0' }}"
                       id="pendapatan"
                       name="pendapatan"
                     />
@@ -463,7 +471,7 @@
                       type="text"
                       class="form-control"
                       placeholder="Pendapatan Lain"
-                      value="{{ daWa.pendapatan_lain }}"
+                      value="{{ daWa.pendapatan_lain | currency: 'Rp':'symbol':'3.0' }}"
                       id="pendapatan_lain"
                       name="pendapatan_lain"
                     />
@@ -477,7 +485,7 @@
                       type="text"
                       class="form-control"
                       placeholder="Tunjangan"
-                      value="{{ daWa.tunjangan }}"
+                      value="{{ daWa.tunjangan | currency: 'Rp':'symbol':'3.0' }}"
                       id="tunjangan"
                       name="tunjangan"
                       onchange="dagu()"
@@ -492,7 +500,7 @@
                       type="text"
                       class="form-control"
                       placeholder="Total Pendapatan"
-                      value="{{ daWa.total_pendapatan }}"
+                      value="{{ daWa.total_pendapatan | currency: 'Rp':'symbol':'3.0' }}"
                       id="total_pendapatan"
                       name="total_pendapatan"
                       readonly

@@ -16,7 +16,7 @@
           type="text"
           class="form-control"
           placeholder="app_no_de"
-          value="{{ daWa.app_no_de }}"
+          value="{{ daWa1.app_no_de }}"
           readonly
         />
       </div>
@@ -435,7 +435,7 @@
       <label class="col-sm-4 col-form-label">Skala Perorangan</label>
       <div class="col-sm-8">
         <select class="form-control" id="skala_perusahaan" name="skala_perusahaan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
-          <option value="">{{ daWa.skala_perusahaan }}</option>
+          <option value="{{ daWa.skala_perusahaan }}">{{ daWa.skala_perusahaan }}</option>
           <option *ngFor="let skalaprusahaan of skalaprusahaan" value="{{ skalaprusahaan.deskripsi }}">
             {{ skalaprusahaan.deskripsi }}
           </option>
@@ -537,7 +537,7 @@
       <div class="form-group col-sm-8">
         <select
           class="form-control"
-          id="tipe_pekerjaan_pasanga"
+          id="tipe_pekerjaan_pasangan"
           name="tipe_pekerjaan_pasangan"
           [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
         >
@@ -596,6 +596,7 @@
           onkeypress="return onlyNumberKey(event)"
           class="form-control"
           placeholder="Tahun"
+          value="{{ daWa.lama_bekerja_tahun_pasangan }}"
           id="lama_bekerja_tahun_pasangan"
           name="lama_bekerja_tahun_pasangan"
           maxlength="2"
@@ -821,7 +822,10 @@
       <div class="col-md-8">
         <div class="form-group">
           <!-- <input type="checkbox" name="cek" id="cek" checked>  -->
-          <p id="denganini">{{ contohtex }}</p>
+          <p id="denganini">
+            <input type="checkbox" (click)="onclikwawancara($event)" />
+            {{ contohtex }}
+          </p>
         </div>
       </div>
     </div>
@@ -855,6 +859,15 @@
             name="no_wawancara"
             readonly
             value="{{ daWa.no_wawancara }}"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            id="no_wawancara1"
+            name="no_wawancara1"
+            value="{{ daWa.no_wawancara }}"
+            readonly
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           />
         </div>

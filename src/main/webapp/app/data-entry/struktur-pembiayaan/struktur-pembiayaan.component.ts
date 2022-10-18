@@ -480,7 +480,7 @@ export class StrukturPembiayaanComponent implements OnInit {
             //           this.contohdata = bawaan.result.app_no_de;
             this.databawaan = bawaan.result.app_no_de;
             // alert('MASUKAJAHSUSAH');
-            this.router.navigate(['/data-entry/data-entry/emergency-contact'], {
+            this.router.navigate(['/data-entry/emergency-contact'], {
               queryParams: {
                 app_no_de: this.app_no_de,
                 curef: this.curef,
