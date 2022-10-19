@@ -55,7 +55,7 @@
                   </div>
                 </div>
                 <div [ngSwitch]="tampungantipeagunan">
-                  <div *ngSwitchCase="'Kendaraan'">
+                  <div *ngif="'Kendaraan'">
                     <!--awal hidden kendaraan colom 1 NO 2-->
                     <div id="hidden_kendaraanCol1" class="hidden_kendaraanCol1">
                       <div class="form-group row">
@@ -69,6 +69,9 @@
                               [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
                             >
                               <option value="{{ daWa.tipe_kendaraan }}">{{ daWa.tipe_kendaraan }}</option>
+                              <option *ngFor="let getlistkendaraan of getlistkendaraan" value="{{ getlistkendaraan.deskripsi }}">
+                                {{ getlistkendaraan.deskripsi }}
+                              </option>
                             </select>
                           </div>
                         </div>
@@ -235,6 +238,18 @@
                       >
                         selanjutnya
                       </button>
+                      <button
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        type="button"
+                        class="btn btn-dark"
+                        id="simpan4"
+                        name="simpan5"
+                        value="simpan5"
+                        style="float: right"
+                        (click)="updatecollateralnih()"
+                      >
+                        Simpan Data1
+                      </button>
                     </div>
                     <!--akhir hide show colom kendaraan NO2 -->
 
@@ -331,7 +346,7 @@
                                       (click)="radiobbuttonorang()"
                                       type="radio"
                                       value="orang"
-                                      [checked]="daWa.status_developer == 'perorangan'"
+                                      [checked]="daWa.status_developer == 'perseorangan'"
                                       name="statusBarusecond"
                                       id="iperorangan"
                                     />Perorangan
@@ -360,7 +375,7 @@
                                       type="radio"
                                       value="orang"
                                       name="statusBarusecond"
-                                      [checked]="daWa.status_developer == 'perorangan'"
+                                      [checked]="daWa.status_developer == 'perseorangan'"
                                       id="iperorangan"
                                     />Perorangan
                                   </label>
@@ -473,6 +488,9 @@
                               [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
                             >
                               <option value="{{ daWa.hubungan_pemegang_hak }}">{{ daWa.hubungan_pemegang_hak }}</option>
+                              <option *ngFor="let listhubunganagunan of listhubunganagunan" value="{{ listhubunganagunan.deskripsi }}">
+                                {{ listhubunganagunan.deskripsi }}
+                              </option>
                             </select>
                           </div>
                         </div>
@@ -714,8 +732,8 @@
                             onkeypress="return onlyNumberKey(event)"
                             class="form-control"
                             placeholder=""
-                            name="no_contact_person"
-                            id="no_contact_person"
+                            name="no_handphone_cp"
+                            id="no_handphone_cp"
                             value="{{ daWa.no_handphone_cp }}"
                           />
                         </div>
@@ -744,8 +762,8 @@
                             [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
                             class="form-control"
                             type="date"
-                            name="tanggal_lahir"
-                            id="tanggal_lahir"
+                            name="tanggal_terbit"
+                            id="tanggal_terbit"
                             value="{{ daWa.tanggal_terbit }}"
                             onchange="tanggalTerbitDay()"
                           />
@@ -863,6 +881,7 @@
                                       (click)="radiobbuttonorang()"
                                       type="radio"
                                       value="orang"
+                                      [checked]="daWa.status_developer == 'perseorangan'"
                                       name="statusBarusecond"
                                       id="iperorangan"
                                     />Perorangan
@@ -891,6 +910,7 @@
                                       (click)="radiobbuttonorang()"
                                       type="radio"
                                       value="orang"
+                                      [checked]="daWa.status_developer == 'perseorangan'"
                                       name="statusBarusecond"
                                       id="iperorangan"
                                     />Perorangan
@@ -971,6 +991,7 @@
                                 value="1"
                                 id="status_jaminan_sebelumnyaia"
                                 name="status_jaminan_sebelumnyaia"
+                                [checked]="daWa.status_jaminan_sebelumnya == 'ia'"
                                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
                               />Ya</label
                             >
@@ -979,6 +1000,7 @@
                                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
                                 type="radio"
                                 value="tidak"
+                                [checked]="daWa.status_jaminan_sebelumnya == 'tidak'"
                                 id="status_jaminan_sebelumnyatidak"
                                 name="status_jaminan_sebelumnyatidak"
                               />Tidak</label
@@ -1004,6 +1026,9 @@
                               [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
                             >
                               <option value="{{ daWa.hubungan_pemegang_hak }}">{{ daWa.hubungan_pemegang_hak }}</option>
+                              <option *ngFor="let listhubunganagunan of listhubunganagunan" value="{{ listhubunganagunan.deskripsi }}">
+                                {{ listhubunganagunan.deskripsi }}
+                              </option>
                             </select>
                           </div>
                         </div>
@@ -1148,22 +1173,7 @@
                     <H1>untuk pilihan ini tidak tersedia</H1>
                   </div>
                   <div *ngSwitchDefault>
-                    <h4>bila data kurang silahkan memilih tipeagunan yg baru</h4>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          <select
-                            class="form-control"
-                            name="jenis_objek"
-                            id="jenis_objek"
-                            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                          >
-                            <option selected value="{{ daWa.jenis_objek_deskripsi }}">{{ daWa.jenis_objek_deskripsi }}</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
+                    <h4>bila data kurang silahkan memilih tipeagunan sesuai nama yg tertera</h4>
                   </div>
                 </div>
                 <div [ngSwitch]="tampungantipeagunan">

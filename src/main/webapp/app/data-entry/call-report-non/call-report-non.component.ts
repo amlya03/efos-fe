@@ -24,6 +24,17 @@ export class CallReportNonComponent implements OnInit {
   nowawancara: any;
   contohtex: any;
   untukSessionRole: any;
+  skalaprusahaan: any;
+  checkboxCeksiu: any;
+  checkboxCeksiup: any;
+  checkboxCeknib: any;
+  checkboxCekskdu: any;
+  checkboxCekskdp: any;
+  checkboxCekaktapendirian: any;
+  tempunganCek: Array<number> = [];
+  checkboxCek: any;
+  textwawancara: any;
+  untukSessionfullname: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,19 +54,23 @@ export class CallReportNonComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getCallReportByDe?sd=');
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
-  protected apgetnowawancara = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/get_call_report_seq');
+  protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected apgetnowawancara = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/get_call_report_seq');
+  protected apiskalaperusahaan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_skala_perusahaan'
+  );
 
   ngOnInit(): void {
     this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionfullname = this.localStorageService.retrieve('sessionFullName');
     this.load();
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   load() {
-    $('#denganini').val(
-      'JALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALAN'
-    );
+    // $('#denganini').val(
+    //   'JALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALAN'
+    // );
     this.contohtex =
       'Dengan ini saya menyatakan hasil wawancara yang diisi oleh saya "+Aoname+" dan pemberi Informasi yang disebut nasabah adalah benar adanya "+ userName';
     this.getdataentry().subscribe({
@@ -66,6 +81,26 @@ export class CallReportNonComponent implements OnInit {
           this.daWa = 0;
         } else {
           this.daWa = res.body?.result;
+          this.checkboxCek = this.daWa.legalitas_usaha.split(', ');
+
+          alert(this.checkboxCek);
+          for (let i = 0; i < this.checkboxCek.length; i++) {
+            // alert(this.checkboxCek[i] == "Sertifikat")
+            if (this.checkboxCek[i] == 'SIU') {
+              this.checkboxCeksiu = 'SIU';
+              alert(this.checkboxCeksiu);
+            } else if (this.checkboxCek[i] == 'SIUP') {
+              this.checkboxCeksiup = 'SIUP';
+            } else if (this.checkboxCek[i] == 'NIB') {
+              this.checkboxCeknib = 'NIB';
+            } else if (this.checkboxCek[i] == 'SKDU') {
+              this.checkboxCekskdu = 'SKDU';
+            } else if (this.checkboxCek[i] == 'SKDP') {
+              this.checkboxCekskdp = 'SKDP';
+            } else if (this.checkboxCek[i] == 'Akta Pendirian') {
+              this.checkboxCekaktapendirian = 'Akta Pendirian';
+            }
+          }
         }
       },
     });
@@ -74,8 +109,23 @@ export class CallReportNonComponent implements OnInit {
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('untukatas', res);
         this.daWa1 = res.body?.result;
+
+        this.textwawancara =
+          'Dengan ini saya menyatakan hasil wawancara yang diisi oleh saya ' +
+          this.untukSessionfullname +
+          ' dan pemberi Informasi yang disebut nasabah adalah benar adanya ' +
+          this.daWa1.nama;
       },
     });
+
+    this.getskalaprusahaan().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        // console.log(res.body?.result);
+        console.warn('skalaperusaahaan', res.body?.result);
+        this.skalaprusahaan = res.body?.result;
+      },
+    });
+    // alert(this.checkboxCek);
 
     if (this.daWa == null) {
       this.getnomorwawancara().subscribe({
@@ -99,6 +149,11 @@ export class CallReportNonComponent implements OnInit {
     });
   }
 
+  getskalaprusahaan(req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    return this.http.get<ApiResponse>(this.apiskalaperusahaan, { params: options, observe: 'response' });
+  }
+
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
@@ -115,7 +170,32 @@ export class CallReportNonComponent implements OnInit {
     return this.http.get<ApiResponse>(this.apgetnowawancara, { params: options, observe: 'response' });
   }
 
-  simpancallreport() { // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
+  onCheckCek(e: any) {
+    this.checkboxCeksiu = '';
+    this.checkboxCeksiup = '';
+    this.checkboxCeknib = '';
+    this.checkboxCekskdu = '';
+    this.checkboxCekskdp = '';
+    this.checkboxCekaktapendirian = '';
+    if (e.target.checked) {
+      // cek.push(new FormControl(e.target.value));
+      this.tempunganCek.push(e.target.value);
+      // alert(this.tempunganCek)
+    }
+  }
+  onclikwawancara(e: any) {
+    if (e.target.checked) {
+      $('#buttonsimpan').removeAttr('hidden');
+    } else {
+      $('#buttonsimpan').attr('hidden', 'hidden');
+    }
+
+    // $('#uang_muka').removeAttr('hidden');
+  }
+
+  simpancallreport() {
+    // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
+
     const tipe_nasabah = document.getElementById('tipe_nasabah') as HTMLInputElement | any;
     const alamat_ktp = document.getElementById('alamat_ktp') as HTMLInputElement | any;
     const tanggal_lahir = document.getElementById('tanggal_lahir') as HTMLInputElement | any;
@@ -164,7 +244,8 @@ export class CallReportNonComponent implements OnInit {
     const no_wawancara = document.getElementById('no_wawancara') as HTMLInputElement | any;
     const catatan_status_agunan = document.getElementById('catatan_status_agunan') as HTMLInputElement | any;
     // const angsuran = document.getElementById('angsuran') as HTMLInputElement | any;
-
+    // let cekKe = this.tempunganCek.join(', ');
+    let legalitas = this.tempunganCek.join(', ');
     alert('ini create');
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
@@ -211,7 +292,7 @@ export class CallReportNonComponent implements OnInit {
         // lama_bekerja_tahun: "string",
         lama_bekerja_tahun_pasangan: lama_bekerja_tahun_pasangan.value,
         lama_usaha: lama_usaha.value,
-        // legalitas_usaha: "string",
+        legalitas_usaha: legalitas,
         nama_ao: 'string',
         nama_perusahaan: nama_badan_usaha.value,
         nama_perusahaan_pasangan: nama_perusahaan_pasangan.value,

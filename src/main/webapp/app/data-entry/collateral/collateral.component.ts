@@ -47,6 +47,8 @@ export class CollateralComponent implements OnInit {
   kirimandatadevloper: any;
   untukSessionRole: any;
   getjenisobjek: any;
+  getlistkendaraan: any;
+  listhubunganagunan: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -73,8 +75,15 @@ export class CollateralComponent implements OnInit {
   protected apistatussertifikat = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.110:8805/api/v1/efos-ref/list_status_sertifikat'
   );
+  protected apigethubunganagunan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_hubungan_agunan'
+  );
+
   protected apigetjenispekeraan = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.110:8805/api/v1/efos-ref/list_jenis_objek_agunan'
+  );
+  protected apigetlistkendraan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_tipe_kendaraan'
   );
 
   protected apigetlistagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_developer');
@@ -117,6 +126,14 @@ export class CollateralComponent implements OnInit {
       },
     });
 
+    this.gethubunganagunan().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('hubunganagunana', res);
+        this.listhubunganagunan = res.body?.result;
+        this.tampungantipeagunan = 0;
+      },
+    });
+
     this.getlistagunan().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('listagunan', res);
@@ -130,6 +147,14 @@ export class CollateralComponent implements OnInit {
         // console.log(res.body?.result);
         console.warn('jenisobjek', res.body?.result);
         this.getjenisobjek = res.body?.result;
+      },
+    });
+
+    this.getlistkendaraanload().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        // console.log(res.body?.result);
+        console.warn('kendaraan', res.body?.result);
+        this.getlistkendaraan = res.body?.result;
       },
     });
   }
@@ -305,6 +330,12 @@ export class CollateralComponent implements OnInit {
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return this.http.get<ApiResponse>(this.apistatussertifikat, { params: options, observe: 'response' });
   }
+
+  gethubunganagunan(req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    return this.http.get<ApiResponse>(this.apigethubunganagunan, { params: options, observe: 'response' });
+  }
+
   getlistagunan(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
@@ -313,16 +344,12 @@ export class CollateralComponent implements OnInit {
 
   getjenisobject(req1?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req1);
-
-    // if (katagori_pekerjaan == 'Non Fix Income') {
-    //   var idkatagoripekerjaan = '2';
-    // }
-    // {
-    //   var idkatagoripekerjaan = '1';
-    // }
-
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return this.http.get<ApiResponse>(this.apigetjenispekeraan, { params: options, observe: 'response' });
+  }
+
+  getlistkendaraanload(req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    return this.http.get<ApiResponse>(this.apigetlistkendraan, { params: options, observe: 'response' });
   }
 
   changefom() {
@@ -371,7 +398,7 @@ export class CollateralComponent implements OnInit {
     this.router.navigate(['/data-entry/editcollateral'], {
       queryParams: {
         app_no_de: this.app_no_de,
-        datakirimiancure: this.curef,
+        curef: this.curef,
         // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
         datakirimanidcollateral: idcollateral,
       },

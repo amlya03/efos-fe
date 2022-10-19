@@ -109,7 +109,19 @@ export class JobInfoComponent implements OnInit {
   load() {
     // ambil semua data DE
     this.getFetchSemuaData().subscribe(data => {
+      console.warn('contohdata', data.result);
       this.dataEntry = data.result;
+
+      this.nampungdatakatagoripekerjaan = this.dataEntry.kategori_pekerjaan;
+
+      this.getjenispekerjaan(this.nampungdatakatagoripekerjaan).subscribe({
+        next: (res: EntityArrayResponseDaWa1) => {
+          // console.log(res.body?.result);
+          console.warn('jenispekerjaan', res.body?.result);
+          this.getjenispekerjaandariapi = res.body?.result;
+        },
+      });
+
       // alert('DE '+ this.dataEntry?.status_perkawinan)
     });
 
@@ -118,7 +130,7 @@ export class JobInfoComponent implements OnInit {
     this.getstatuspernikahan();
     // alert(this.curef);
     // alert(this.statusPerkawinan);
-    // this.nampungdatakatagoripekerjaan = this.curefakategoripekerjaan;
+    //
     // alert(this.nampungdatakatagoripekerjaan);
 
     this.getdataentry().subscribe({
@@ -127,33 +139,31 @@ export class JobInfoComponent implements OnInit {
       },
     });
 
-    this.sebelum(this.tampunganid).subscribe({
+    this.sebelum().subscribe({
       next: (res: EntityArrayResponseDaWa1) => {
         // console.log(res.body?.result);
         console.warn('sebelum', res.body?.result);
-        this.nampungsebelum = res.body?.result;
-        this.tampunganid = this.nampungsebelum[0];
+        console.warn('tampunganid', this.tampunganid);
 
-        if (this.tampunganid.kategori_pekerjaan_sebelum == 'Non Fix Income') {
-          this.tampungantipepekerjaan = 'Non Fix Income';
-        } else if (this.tampunganid.kategori_pekerjaan_sebelum == 'Fix Income') {
-          this.tampungantipepekerjaan = 'Fix Income';
+        if (res.body?.result == null) {
+          this.tampunganid = this.nampungsebelum[0];
         } else {
-          this.tampungantipepekerjaan = 'tolong pilih kategori pekerjaan yang benar';
+          this.nampungsebelum = res.body?.result;
+          this.tampunganid = this.nampungsebelum[0];
+
+          // if (this.tampunganid.kategori_pekerjaan_sebelum == 'Non Fix Income') {
+          //   this.tampungantipepekerjaan = 'Non Fix Income';
+          // } else if (this.tampunganid.kategori_pekerjaan_sebelum == 'Fix Income') {
+          //   this.tampungantipepekerjaan = 'Fix Income';
+          // } else {
+          //   this.tampungantipepekerjaan = 'tolong pilih kategori pekerjaan yang benar';
+          // }
+          // this.tampunganjobsebelumtipepekerjaan = this.nampungsebelum[0];
+          // alert('ini masih hard code');
+          console.warn('SEBELUMNYA', this.tampunganid);
+
+          // this.onResponseSuccess(res);
         }
-        // this.tampunganjobsebelumtipepekerjaan = this.nampungsebelum[0];
-        // alert('ini masih hard code');
-        console.warn('SEBELUMNYA', this.tampunganid);
-
-        // this.onResponseSuccess(res);
-      },
-    });
-
-    this.getjenispekerjaan(this.nampungdatakatagoripekerjaan).subscribe({
-      next: (res: EntityArrayResponseDaWa1) => {
-        // console.log(res.body?.result);
-        console.warn('jenispekerjaan', res.body?.result);
-        this.getjenispekerjaandariapi = res.body?.result;
       },
     });
 
@@ -402,19 +412,20 @@ export class JobInfoComponent implements OnInit {
 
     this.getjenispekerjaansebelum(provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kota', res);
+        console.warn('kota', res.body?.result);
 
         this.daWakotasebelum = res.body?.result;
 
-        if (pemisahnya == 1 || pemisahnya == 'Fix Income') {
-          this.tampungantipeagunan = '1';
-        } else if (pemisahnya == 2 || pemisahnya == 'Non Fix Income') {
-          this.tampungantipeagunan = '2';
-        } else if (pemisahnya == 2 || pemisahnya == 'Lain-lainnya') {
-          this.tampungantipeagunan = '3';
-        } else {
-          this.tampungantipeagunan = '4';
-        }
+        alert(this.daWakotasebelum);
+        // if (pemisahnya == 1 || pemisahnya == 'Fix Income') {
+        //   this.tampungantipeagunan = '1';
+        // } else if (pemisahnya == 2 || pemisahnya == 'Non Fix Income') {
+        //   this.tampungantipeagunan = '2';
+        // } else if (pemisahnya == 2 || pemisahnya == 'Lain-lainnya') {
+        //   this.tampungantipeagunan = '3';
+        // } else {
+        //   this.tampungantipeagunan = '4';
+        // }
         // alert(this.postId);
         // this.onResponseSuccess(res);
       },

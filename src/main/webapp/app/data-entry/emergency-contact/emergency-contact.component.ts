@@ -337,18 +337,6 @@ export class EmergencyContactComponent implements OnInit {
                 queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.curef },
               });
             }
-
-            //           this.contohdata = bawaan.result.app_no_de;
-            // this.databawaan = bawaan.result.app_no_de;
-            // alert('MASUKAJAHSUSAH');
-            // this.router.navigate(['/data-entry/data-entry/emergency-contact'], {
-            //   queryParams: {
-            //     // datakiriman: contohtampungancuref,
-            //     // statusPerkawinan: contohtampungstatuskawain,
-            //     // app_no_de: contohtampunganappde,
-            //     // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
-            //   },
-            // });
           },
         });
     } else {
@@ -392,18 +380,6 @@ export class EmergencyContactComponent implements OnInit {
                 queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.curef },
               });
             }
-
-            //           this.contohdata = bawaan.result.app_no_de;
-            // this.databawaan = bawaan.result.app_no_de;
-            // // alert('MASUKAJAHSUSAH');
-            // this.router.navigate(['/data-entry/emergency-contact'], {
-            //   queryParams: {
-            //     // datakiriman: contohtampungancuref,
-            //     // statusPerkawinan: contohtampungstatuskawain,
-            //     // app_no_de: contohtampunganappde,
-            //     // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
-            //   },
-            // });
           },
         });
     }

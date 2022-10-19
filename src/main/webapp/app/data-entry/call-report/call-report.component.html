@@ -184,6 +184,8 @@
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
           >
             <option value="{{ daWa.status_kawin }}">{{ daWa.status_kawin }}</option>
+            <option value="Lajang">Lajang</option>
+            <option value="Menikah">Menikah</option>
           </select>
         </div>
       </div>
@@ -434,6 +436,9 @@
       <div class="col-sm-8">
         <select class="form-control" id="skala_perusahaan" name="skala_perusahaan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
           <option value="">{{ daWa.skala_perusahaan }}</option>
+          <option *ngFor="let skalaprusahaan of skalaprusahaan" value="{{ skalaprusahaan.deskripsi }}">
+            {{ skalaprusahaan.deskripsi }}
+          </option>
         </select>
       </div>
     </div>

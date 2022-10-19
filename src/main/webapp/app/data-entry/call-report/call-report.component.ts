@@ -24,6 +24,7 @@ export class CallReportComponent implements OnInit {
   untukSessionUserName: any;
   untukSessionFullName: any;
   untukSessionKodeCabang: any;
+  skalaprusahaan: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,7 +48,10 @@ export class CallReportComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getCallReportByDe?sd=');
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected apiskalaperusahaan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_skala_perusahaan'
+  );
 
   ngOnInit(): void {
     this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
@@ -55,9 +59,9 @@ export class CallReportComponent implements OnInit {
   }
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   load() {
-    $('#denganini').val(
-      'JALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALAN'
-    );
+    // $('#denganini').val(
+    //   'JALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALAN'
+    // );
 
     this.contohtex =
       'Dengan ini saya menyatakan hasil wawancara yang diisi oleh saya "+Aoname+" dan pemberi Informasi yang disebut nasabah adalah benar adanya "+ userName';
@@ -85,6 +89,14 @@ export class CallReportComponent implements OnInit {
         this.daWa1 = res.body?.result;
       },
     });
+
+    this.getskalaprusahaan().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        // console.log(res.body?.result);
+        console.warn('skalaperusaahaan', res.body?.result);
+        this.skalaprusahaan = res.body?.result;
+      },
+    });
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -94,6 +106,11 @@ export class CallReportComponent implements OnInit {
     this.router.navigate(['/data-entry/memo'], {
       queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
     });
+  }
+
+  getskalaprusahaan(req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    return this.http.get<ApiResponse>(this.apiskalaperusahaan, { params: options, observe: 'response' });
   }
 
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
@@ -107,7 +124,8 @@ export class CallReportComponent implements OnInit {
     return this.http.get<ApiResponse>(this.resourceUrl1 + this.app_no_de, { params: options, observe: 'response' });
   }
 
-  simpancallreport() { // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
+  simpancallreport() {
+    // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
     const tipe_nasabah = document.getElementById('tipe_nasabah') as HTMLInputElement | any;
     const alamat_ktp = document.getElementById('alamat_ktp') as HTMLInputElement | any;
     const tanggal_lahir = document.getElementById('tanggal_lahir') as HTMLInputElement | any;
