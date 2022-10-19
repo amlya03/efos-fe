@@ -87,6 +87,7 @@ export class StukturPembiayaanComponent implements OnInit {
         // console.log(this.Skema)
       }
     });
+
     this.dataEntryService.getfetchlistagunan(this.curef).subscribe(data => {
       // if(data.code === 200) {
       this.listagunan = data.result;
