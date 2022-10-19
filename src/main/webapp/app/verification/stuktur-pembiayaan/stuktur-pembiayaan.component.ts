@@ -66,16 +66,15 @@ export class StukturPembiayaanComponent implements OnInit {
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
       // alert(this.dataEntry.kode_fasilitas);
-      this.loadSkema(this.dataEntry.produk);
+      setTimeout(() => {
+        this.loadSkema(this.dataEntry.produk);
+      }, 300);
     });
-    // setTimeout(() => {
-    //   window.location.reload();
-    // }, 300);
   }
 
   loadSkema(produknya:any){
     // Ref Skema
-    // alert('skema '+ produknya)
+    alert('skema '+ produknya)
     this.verifikasiServices.getSkema(produknya).subscribe(data =>{
       if(data.code === 200){
         this.Skema = data.result;
@@ -121,8 +120,9 @@ export class StukturPembiayaanComponent implements OnInit {
     })
     .subscribe({
       next: (data) => {
-        this.nilaiPembiayaan = data.result;
+        this.nilaiPembiayaan = data.result.nilai_pembiayaan;
         console.log(data.result)
+        alert(this.nilaiPembiayaan)
         }
     });
   }
