@@ -18,6 +18,7 @@ import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model
 import { refAnalisaCalonNasabah } from './refAnalisaCalonNasabah.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { LocalStorageService } from 'ngx-webstorage';
+// import { openStdin } from 'process';
 
 @Component({
   selector: 'jhi-data-calon-nasabah',
@@ -59,6 +60,11 @@ export class DataCalonNasabahComponent implements OnInit {
   curef: any;
   // Role
   untukSessionRole: any;
+  listaksesrumah: any;
+  listagunan: any;
+  listfasilitaslistrik: any;
+  listkondisilingkungan: any;
+  listlokasirumah: any;
 
   constructor(
     protected dataCalonNasabah: ServiceVerificationService,
@@ -382,6 +388,38 @@ export class DataCalonNasabahComponent implements OnInit {
       // if(data.code === 200) {
       this.dataEntry = data.result;
       // console.log(this.dataEntry);
+      // console.log("ini data de "+this.fetchAllDe);
+      // }
+    });
+
+    this.dataEntryService.getFetchListAksesRumah().subscribe(data => {
+      // if(data.code === 200) {
+      this.listaksesrumah = data.result;
+      console.log('ctas', this.listaksesrumah);
+      // console.log("ini data de "+this.fetchAllDe);
+      // }
+    });
+
+    this.dataEntryService.getFetchListFasilitasListrik().subscribe(data => {
+      // if(data.code === 200) {
+      this.listfasilitaslistrik = data.result;
+      console.log('listrik', this.listfasilitaslistrik);
+      // console.log("ini data de "+this.fetchAllDe);
+      // }
+    });
+
+    this.dataEntryService.getFetchListKondisiLingkungan().subscribe(data => {
+      // if(data.code === 200) {
+      this.listkondisilingkungan = data.result;
+      //  console.log('lin',this.listkondisilingkungan);
+      // console.log("ini data de "+this.fetchAllDe);
+      // }
+    });
+
+    this.dataEntryService.getFetchListLokasiRumah().subscribe(data => {
+      // if(data.code === 200) {
+      this.listlokasirumah = data.result;
+      //  console.log('lin',this.listkondisilingkungan);
       // console.log("ini data de "+this.fetchAllDe);
       // }
     });

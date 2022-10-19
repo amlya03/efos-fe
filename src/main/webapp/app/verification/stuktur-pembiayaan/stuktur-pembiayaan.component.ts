@@ -1,11 +1,18 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { colateralmodel } from './collateral-model';
+import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { getJob } from 'app/data-entry/services/config/getJob.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { createRequestOption } from 'app/core/request/request-util';
+
+export type EntityResponseDaWa = HttpResponse<colateralmodel>;
+export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 
 @Component({
   selector: 'jhi-stuktur-pembiayaan',
@@ -20,6 +27,7 @@ export class StukturPembiayaanComponent implements OnInit {
   strukturForm!: FormGroup;
   submitted = false;
   curef: any;
+  listagunan: any;
 
   constructor(
     public router: Router,
@@ -36,9 +44,11 @@ export class StukturPembiayaanComponent implements OnInit {
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getCollateralByCuref?sc=');
 
   ngOnInit(): void {
     this.load();
+
     this.strukturForm = this.formBuilder.group({
       id: '',
       app_no_ide: '',
@@ -120,6 +130,7 @@ export class StukturPembiayaanComponent implements OnInit {
       jangka_waktu: '',
       nilai_pembiayaan: '',
       kode_fasilitas_name: '',
+      table: '',
 
       // Job
       total_pendapatan: '',
@@ -224,12 +235,30 @@ export class StukturPembiayaanComponent implements OnInit {
         jangka_waktu: this.dataEntry.jangka_waktu,
         nilai_pembiayaan: this.dataEntry.nilai_pembiayaan,
         kode_fasilitas_name: this.dataEntry.kode_fasilitas_name,
+        table: this.listagunan,
 
         // Job
         total_pendapatan: this.fetchJob[0].total_pendapatan,
       };
       this.strukturForm.setValue(retriveStruktur);
     });
+    this.dataEntryService.getfetchlistagunan(this.curef).subscribe(data => {
+      // if(data.code === 200) {
+      this.listagunan = data.result;
+      console.log('agunanagunan', this.listagunan);
+      // console.log("ini data de "+this.fetchAllDe);
+      // }
+    });
+
+    // this.getlistagunan().subscribe({
+    //   next: (res: EntityArrayResponseDaWa) => {
+
+    //     console.warn('pasangan', res);
+
+    //     this.listagunan = res.body?.result;
+    //     // this.onResponseSuccess(res);
+    //   },
+    // });
   }
   onSubmit(): void {
     this.submitted = true;
@@ -239,5 +268,26 @@ export class StukturPembiayaanComponent implements OnInit {
   viewStruktur(): void {
     // alert(getAppNoDe);
     this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+  }
+
+  gotoeditcollateral(idcollateral: any) {
+    // this.onResponseSuccess(res);
+    // alert('ke editcollateral ');
+    // alert(this.datakirimanakategoripekerjaan);
+    console.warn('INI ADA GK SIH', this.curef, this.app_no_de);
+    this.router.navigate(['/data-entry/editcollateral'], {
+      queryParams: {
+        app_no_de: this.app_no_de,
+        curef: this.curef,
+        // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+        datakirimanidcollateral: idcollateral,
+      },
+    });
+  }
+
+  getlistagunan(req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+    return this.http.get<ApiResponse>(this.resourceUrl + this.curef, { params: options, observe: 'response' });
   }
 }

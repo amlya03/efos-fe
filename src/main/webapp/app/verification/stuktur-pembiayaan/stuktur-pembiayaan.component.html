@@ -9,7 +9,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Pemohon</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nama" name="nama" formControlName="nama"/>
+          <input type="text" readonly class="form-control" id="nama" name="nama" formControlName="nama" />
         </div>
       </div>
       <br />
@@ -74,7 +74,14 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nilai_pembiayaan" name="nilai_pembiayaan" formControlName="nilai_pembiayaan" />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="nilai_pembiayaan"
+            name="nilai_pembiayaan"
+            formControlName="nilai_pembiayaan"
+          />
         </div>
       </div>
       <br />
@@ -88,7 +95,14 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Total Pendapatan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="total_pendapatan" name="total_pendapatan" formControlName="total_pendapatan" />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="total_pendapatan"
+            name="total_pendapatan"
+            formControlName="total_pendapatan"
+          />
         </div>
       </div>
     </div>
@@ -103,21 +117,42 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Total Pendapatan Pemohon</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="total_pendapatan_pemohon" name="total_pendapatan_pemohon" formControlName="total_pendapatan" />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="total_pendapatan_pemohon"
+            name="total_pendapatan_pemohon"
+            formControlName="total_pendapatan"
+          />
         </div>
       </div>
       <p></p>
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Total Pendapatan Pasangan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="total_pendapatan_pasangan" name="total_pendapatan_pasangan" formControlName="" />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="total_pendapatan_pasangan"
+            name="total_pendapatan_pasangan"
+            formControlName=""
+          />
         </div>
       </div>
       <p></p>
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Total Pendapatan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="analisa_total_pendapatan" name="analisa_total_pendapatan" formControlName="" />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="analisa_total_pendapatan"
+            name="analisa_total_pendapatan"
+            formControlName=""
+          />
         </div>
       </div>
       <p></p>
@@ -197,7 +232,14 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="analisa_nilai_pembiayaan" name="analisa_nilai_pembiayaan" formControlName="" />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="analisa_nilai_pembiayaan"
+            name="analisa_nilai_pembiayaan"
+            formControlName=""
+          />
         </div>
       </div>
       <br />
@@ -364,6 +406,20 @@
           <fa-icon icon="pencil-square"></fa-icon>
         </td>
       </tr>
+
+      <tr formControlName="table" *ngFor="let listagunan of listagunan; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ listagunan.tipe_agunan }}</td>
+        <td style="text-align: center" scope="col">{{ listagunan.tanggal_terbit }}</td>
+        <td style="text-align: center" scope="col">{{ listagunan.tipe_agunan }}</td>
+        <td style="text-align: center" scope="col">{{ listagunan.harga_objek }}</td>
+        <td style="text-align: center">
+          <button type="button" (click)="gotoeditcollateral(listagunan.id_collateral_detail)" class="btn btn-outline-info">
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline">Detail</span>
+          </button>
+        </td>
+      </tr>
     </tbody>
   </table>
   <p></p>
@@ -406,7 +462,14 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Down Payment</label>
         <div class="col">
-          <input type="text" readonly class="form-control" id="rekomendasi_down_payment" name="rekomendasi_down_payment" formControlName="" />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="rekomendasi_down_payment"
+            name="rekomendasi_down_payment"
+            formControlName=""
+          />
         </div>
         <div class="col">
           <label>35 %</label>
