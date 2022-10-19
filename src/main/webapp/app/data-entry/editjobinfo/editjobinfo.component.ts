@@ -103,7 +103,7 @@ export class EditjobinfoComponent implements OnInit {
           },
         });
 
-        alert(this.databawakategori);
+        // alert(this.databawakategori);
       },
     });
 
@@ -183,9 +183,9 @@ export class EditjobinfoComponent implements OnInit {
     const options = createRequestOption(req1);
     const katagori_pekerjaansebelum = document.getElementById('kategori_pekerjaan') as HTMLInputElement | any;
     // var katagori_pekerjaansebelumvalue = katagori_pekerjaansebelum.split('|');
-    alert('asdwaAAA' + contoh);
-    alert('contohonoh' + this.databawakategori);
-    alert('inivalue' + katagori_pekerjaansebelum.value);
+    // alert('asdwaAAA' + contoh);
+    // alert('contohonoh' + this.databawakategori);
+    // alert('inivalue' + katagori_pekerjaansebelum.value);
     if (contoh == 'Fix Income') {
       var kiriman = 1;
     } else if (contoh == 'Non Fix Income') {
@@ -257,10 +257,10 @@ export class EditjobinfoComponent implements OnInit {
 
     this.daWakodepos = datakodepos[0];
 
-    alert(this.daWakodepos);
+    // alert(this.daWakodepos);
     // kode_post.innerHTML=this.daWakodepos ;
     kode_post.value = this.daWakodepos;
-    alert('kodepos' + kode_post);
+    // alert('kodepos' + kode_post);
     // document.getElementById('kode_pos').value=this.daWakodepos;
     // alert(this.daWakodepos);
     // this.onResponseSuccess(res);
@@ -329,8 +329,8 @@ export class EditjobinfoComponent implements OnInit {
     const tipe_perusahaan = document.getElementById('tipe_perusahaan') as HTMLInputElement | any;
     const tipe_kepegawaian = document.getElementById('tipe_kepegawaian') as HTMLInputElement | any;
 
-    alert(pendapatan.value);
-    alert(tunjangan.value);
+    // alert(pendapatan.value);
+    // alert(tunjangan.value);
 
     const kirimanpyroljob = (<HTMLInputElement>document.getElementById('payroll')).checked;
     const kirimanpyroljob1 = (<HTMLInputElement>document.getElementById('payroll1')).checked;
@@ -342,8 +342,10 @@ export class EditjobinfoComponent implements OnInit {
 
     if (kategori_pekerjaan.value == 'Fix Income') {
       var kirimanjumlahkaryawan = jumlah_karyawan.value;
-    } else {
+    } else if (kategori_pekerjaan.value == 'Non Fix Income') {
       var kirimanjumlahkaryawan = jumlah_karyawan2.value;
+    } else {
+      var kirimanjumlahkaryawan = null;
     }
 
     if (kirimanpyroljob == true) {
@@ -377,6 +379,12 @@ export class EditjobinfoComponent implements OnInit {
     } else {
       var kirimankelurahan = kelurahan.value;
     }
+    var potonganjenisbidang = jenis_bidang.value.split('|');
+    if (jenis_bidang.value.indexOf('|') !== -1) {
+      var jenisbidangkirim = potonganjenisbidang[1];
+    } else {
+      var jenisbidangkirim = jenis_bidang.value;
+    }
 
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
@@ -394,7 +402,7 @@ export class EditjobinfoComponent implements OnInit {
         curef: this.curef,
         id: this.datakirimanid,
         jabatan: posisi.value,
-        jenis_bidang: jenis_bidang.value,
+        jenis_bidang: jenisbidangkirim,
         jenis_pekerjaan: jenis_pekerjaan.value,
         jumlah_karyawan: kirimanjumlahkaryawan,
         kabkota: kirimankabkota,

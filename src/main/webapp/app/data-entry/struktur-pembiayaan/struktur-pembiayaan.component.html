@@ -143,8 +143,9 @@
           >
             <!-- 19-08-20 -->
             <option selected value="{{ daWa.kode_fasilitas }}">{{ daWa.tujuan_pembiayaan }}</option>
-            <option selected value="123">123</option>
-            <option selected value="123">321</option>
+            <option *ngFor="let tujuanpembiayaan of tujuanpembiayaan" value="{{ tujuanpembiayaan.deskripsi }}">
+              {{ tujuanpembiayaan.deskripsi }}
+            </option>
           </select>
         </div>
       </div>

@@ -242,17 +242,17 @@ export class ServiceVerificationService {
   // ////////////////////// Ref Status Rumah \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// Ref SKema \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getSkema(produk:any): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.refSkema+produk);
+  getSkema(produk: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refSkema + produk);
   }
   // ////////////////////// Ref SKema \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// Ref Tenor \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getTenorFix(skema:any): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.refTenorFix+skema);
+  getTenorFix(skema: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refTenorFix + skema);
   }
-  getTenorNon(skema:any): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.refTenorNon+skema);
+  getTenorNon(skema: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refTenorNon + skema);
   }
   // ////////////////////// Ref Tenor \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   // ///////////////////// REF ////////////////////////////////////////////////

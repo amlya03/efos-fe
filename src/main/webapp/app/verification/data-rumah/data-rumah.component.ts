@@ -266,18 +266,34 @@ export class DataRumahComponent implements OnInit {
       Number(this.analisaKeuanganForm.get('pendapatan_profesional')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value);
     const total_kewa = Number(this.slikTotal.total_angsuran_nasabah) + Number(this.slikTotal.total_angsuran_pasangan);
-    const total_gaji = Number(this.analisaKeuanganForm.get('gaji_kotor')?.value) + Number(this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value);
-    const total_kewaLain = Number(this.analisaKeuanganForm.get('kewajiban_lainnya')?.value) + Number(this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value);
-    const pend_kantorLain = Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value) + Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value);
-    const pend_usahaTot = Number(this.analisaKeuanganForm.get('pendapatan_usaha')?.value) + Number(this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value);
-    const tunjangan_Tot = Number(this.analisaKeuanganForm.get('tunjangan')?.value) + Number(this.analisaKeuanganForm.get('tunjangan_pasangan')?.value);
-    const pend_kotor = (Number(this.analisaKeuanganForm.get('gaji_kotor')?.value) + Number(this.analisaKeuanganForm.get('tunjangan')?.value)) + Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value);
-    const pend_kotor_pas = (Number(this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value) + Number(this.analisaKeuanganForm.get('tunjangan_pasangan')?.value)) + Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value);
+    const total_gaji =
+      Number(this.analisaKeuanganForm.get('gaji_kotor')?.value) + Number(this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value);
+    const total_kewaLain =
+      Number(this.analisaKeuanganForm.get('kewajiban_lainnya')?.value) +
+      Number(this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value);
+    const pend_kantorLain =
+      Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value);
+    const pend_usahaTot =
+      Number(this.analisaKeuanganForm.get('pendapatan_usaha')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value);
+    const tunjangan_Tot =
+      Number(this.analisaKeuanganForm.get('tunjangan')?.value) + Number(this.analisaKeuanganForm.get('tunjangan_pasangan')?.value);
+    const pend_kotor =
+      Number(this.analisaKeuanganForm.get('gaji_kotor')?.value) +
+      Number(this.analisaKeuanganForm.get('tunjangan')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value);
+    const pend_kotor_pas =
+      Number(this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value) +
+      Number(this.analisaKeuanganForm.get('tunjangan_pasangan')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value);
     const pend_kotor_tot = pend_kotor + pend_kotor_pas;
     const pend_bersih_nas = pend_kotor - Number(this.analisaKeuanganForm.get('total_angsuran_kantor')?.value);
     const pend_bersih_pas = pend_kotor_pas - Number(this.analisaKeuanganForm.get('total_angsuran_kantor_pasangan')?.value);
     const pend_bersih = pend_bersih_nas + pend_bersih_pas;
-    const angsuranKewaTotal = Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value) + Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value)
+    const angsuranKewaTotal =
+      Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value) +
+      Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value);
 
     const totalPengKot =
       pend_bersih_nas +
@@ -290,8 +306,11 @@ export class DataRumahComponent implements OnInit {
       Number(this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value);
 
     const totalTotalPengKot = totalPengKot + totalPengKotPas;
-    const totalPengBersih = totalPengKot - (Number(this.slikTotal.total_angsuran_nasabah) - Number(this.analisaKeuanganForm.get('kewajiban_lainnya')?.value));
-    const totalPengBersihPas = totalPengKotPas - (Number(this.slikTotal.total_angsuran_pasangan) - Number(this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value));
+    const totalPengBersih =
+      totalPengKot - (Number(this.slikTotal.total_angsuran_nasabah) - Number(this.analisaKeuanganForm.get('kewajiban_lainnya')?.value));
+    const totalPengBersihPas =
+      totalPengKotPas -
+      (Number(this.slikTotal.total_angsuran_pasangan) - Number(this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value));
     const totalPengBersihTot = totalPengBersih + totalPengBersihPas;
 
     // POST

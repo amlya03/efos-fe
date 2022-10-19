@@ -8,5 +8,5 @@ export class refSkema {
   max_plafond?: Number;
   fasilitas?: String;
   dp_min?: Number;
-  max_tenor?: Number
+  max_tenor?: Number;
 }

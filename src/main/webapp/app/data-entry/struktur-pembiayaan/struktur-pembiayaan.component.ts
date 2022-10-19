@@ -33,6 +33,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   postId: any;
   errorMessage: any;
   untukSessionRole: any;
+  tujuanpembiayaan: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,6 +61,10 @@ export class StrukturPembiayaanComponent implements OnInit {
     });
   }
   protected getekodefasilitas = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_fasilitas');
+  protected apigettujuanpembiayaan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_tujuan_pembiayaan'
+  );
+
   protected getkodeprogramstruktur = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.110:8805/api/v1/efos-de/list_program?sp='
   );
@@ -102,10 +107,23 @@ export class StrukturPembiayaanComponent implements OnInit {
         this.Kodefasilitas = res.body?.result;
       },
     });
+
+    this.gettujuanpembiayaan().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        // console.log(res.body?.result);
+        console.warn('kodefasilitas', res.body?.result);
+        this.tujuanpembiayaan = res.body?.result;
+      },
+    });
   }
   getkodefasilitas(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     return this.http.get<ApiResponse>(this.getekodefasilitas, { params: options, observe: 'response' });
+  }
+
+  gettujuanpembiayaan(req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    return this.http.get<ApiResponse>(this.apigettujuanpembiayaan, { params: options, observe: 'response' });
   }
 
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {

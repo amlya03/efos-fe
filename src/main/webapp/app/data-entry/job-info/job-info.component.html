@@ -570,7 +570,7 @@
         <!-- <td style="text-align: center;" scope="col">{{ daWa.id }}</td> -->
         <td style="text-align: center" scope="col">{{ daWa.nama_perusahaan }}</td>
         <td style="text-align: center" scope="col">{{ daWa.kategori_pekerjaan }}</td>
-        <td style="text-align: center" scope="col">{{ daWa.posisi_sebelum }}</td>
+        <td style="text-align: center" scope="col">{{ daWa.posisi }}</td>
         <td style="text-align: center" scope="col">{{ daWa.curef }}</td>
         <td style="text-align: center" scope="col">{{ daWa.id }}</td>
         <!-- (change)="getProoduct(daWa.isSelected, daWa.app_no_de)" -->
@@ -884,38 +884,45 @@
         <div class="col">Bulan</div>
       </div>
       <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
-        <div class="col-sm-8">
-          <input
-            type="tel"
-            onkeypress="return onlyNumberKey(event)"
-            maxlength="13"
-            class="form-control"
-            placeholder="Jumlah Karyawan"
-            id="jumlah_karyawan_sebelum"
-            name="jumlah_karyawan_sebelum"
-            formControlName="jumlah_karyawan_sebelum"
-          />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
-        <div class="col-sm-8">
-          <div class="form-group">
-            <select class="form-control" id="jumlah_karyawan_sebelumnya" name="jumlah_karyawan_sebelumnya">
-              <option
-                *ngFor="let getjumlahkaryawansebelumdariapi of getjumlahkaryawansebelumdariapi"
-                value="{{ getjumlahkaryawansebelumdariapi.deskripsi }}"
-              >
-                {{ getjumlahkaryawansebelumdariapi.deskripsi }}
-              </option>
-            </select>
+      <div [ngSwitch]="nampungdatakatagoripekerjaan">
+        <div *ngSwitchCase="'Fix Income'">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
+            <div class="col-sm-8">
+              <input
+                type="tel"
+                onkeypress="return onlyNumberKey(event)"
+                maxlength="13"
+                class="form-control"
+                placeholder="Jumlah Karyawan"
+                id="jumlah_karyawan_sebelum"
+                name="jumlah_karyawan_sebelum"
+                formControlName="jumlah_karyawan_sebelum"
+              />
+            </div>
           </div>
+          <br />
+        </div>
+        <div *ngSwitchCase="'Non Fix Income'">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <select class="form-control" id="jumlah_karyawan_sebelumnya" name="jumlah_karyawan_sebelumnya">
+                  <option
+                    *ngFor="let getjumlahkaryawansebelumdariapi of getjumlahkaryawansebelumdariapi"
+                    value="{{ getjumlahkaryawansebelumdariapi.deskripsi }}"
+                  >
+                    {{ getjumlahkaryawansebelumdariapi.deskripsi }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br />
         </div>
       </div>
-      <br />
+
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tipe Perusahaan</label>
         <div class="col-sm-8">

@@ -207,7 +207,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Skema</label>
         <div class="col-sm-8">
-          <select name="analisa_skema" id="analisa_skema" #analisa_skema class="form-control" (change)="tenorSkema(analisa_skema.value, this.dataEntry.kode_fasilitas_name)">
+          <select name="analisa_skema" id="analisa_skema" #analisa_skema class="form-control" (blur)="tenorSkema(analisa_skema.value, this.dataEntry.kode_fasilitas_name)">
             <option *ngFor="let Skema of Skema" value="{{Skema.skema}}|{{Skema.skema_master}}">{{Skema.skema_deskripsi}}</option>
           </select>
         </div>
@@ -216,7 +216,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tenor</label>
         <div class="col-sm-8">
-          <select name="analisa_tenor" id="analisa_tenor" class="form-control">
+          <select name="analisa_tenor" id="analisa_tenor" #analisa_skema class="form-control">
             <option *ngFor="let tenor of tenor" value="{{tenor.tn_code}}">{{tenor.tn_code}} Bulan</option>
           </select>
         </div>
@@ -225,21 +225,21 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Harga Permintaan</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" #harga_permintaan1 (blur)="hitungAngsuran(analisa_skema.value,harga_permintaan1.value,analisa_down_payment1.value)"/>
+          <input type="text" class="form-control" id="harga_permintaan" name="harga_permintaan" #harga_permintaan1 (change)="hitungAngsuran(analisa_skema.value,harga_permintaan1.value,analisa_down_payment1.value)"/>
         </div>
       </div>
       <br/>
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
         <div class="col-sm-8">
-          <!-- <input type="text" class="form-control" id="analisa_nilai_pembiayaan" name="analisa_nilai_pembiayaan" value="{{this.nilaiPembiayaan.nilai_pembiayaan}}"/> -->
+          <input type="text" class="form-control" id="analisa_nilai_pembiayaan" name="analisa_nilai_pembiayaan" value="{{this.nilaiPembiayaan.nilai_pembiayaan}}"/>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Down Payment</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="analisa_down_payment" name="analisa_down_payment" #analisa_down_payment1 (blur)="hitungAngsuran(analisa_skema.value,harga_permintaan1.value,analisa_down_payment1.value)"/>
+          <input type="text" class="form-control" id="analisa_down_payment" name="analisa_down_payment" #analisa_down_payment1 (change)="hitungAngsuran(analisa_skema.value,harga_permintaan1.value,analisa_down_payment1.value)"/>
           <label>Min 20%</label>
         </div>
       </div>

@@ -164,17 +164,10 @@ export class JobInfoComponent implements OnInit {
           this.getjenispekerjaandariapi = res.body?.result;
         },
       });
-
-      // alert('DE '+ this.dataEntry?.status_perkawinan)
     });
 
-    alert(this.app_no_de);
     this.gettokendukcapil();
     this.getstatuspernikahan();
-    // alert(this.curef);
-    // alert(this.statusPerkawinan);
-    //
-    // alert(this.nampungdatakatagoripekerjaan);
 
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
@@ -203,7 +196,6 @@ export class JobInfoComponent implements OnInit {
         //   //   this.tampungantipepekerjaan = 'tolong pilih kategori pekerjaan yang benar';
         //   // }
         //   // this.tampunganjobsebelumtipepekerjaan = this.nampungsebelum[0];
-        //   // alert('ini masih hard code');
         //   console.warn('SEBELUMNYA', this.tampunganid);
 
         //   // this.onResponseSuccess(res);
@@ -235,7 +227,8 @@ export class JobInfoComponent implements OnInit {
           tipe_perusahaan_sebelum: this.tampunganid.tipe_perusahaan_sebelum,
           tipe_kepegawaian_sebelum: this.tampunganid.tipe_kepegawaian_sebelum,
         };
-        alert(this.tampunganid.alamat_pekerjaan_sebelum);
+        alert(this.tampunganid.provinsi_sebelum);
+
         this.datajobsebelum.setValue(retrivejobsebelum);
         this.dataretriveprovinsisebelum = this.tampunganid.provinsi_sebelum;
         this.dataretrivekabkotasebelum = this.tampunganid.kabkota_sebelum;
@@ -293,7 +286,7 @@ export class JobInfoComponent implements OnInit {
         console.warn('jabatansebelum', res);
 
         this.getjabatansebelum = res.body?.result;
-        // alert(this.postId);
+
         // this.onResponseSuccess(res);
       },
     });
@@ -307,7 +300,6 @@ export class JobInfoComponent implements OnInit {
         console.warn('sebelum', res.body?.result);
         this.nampungsebelum = res.body?.result;
 
-        // alert('ini masih hard code');
         console.warn('SEBELUMNYA', this.nampungsebelum);
 
         // this.onResponseSuccess(res);
@@ -372,14 +364,14 @@ export class JobInfoComponent implements OnInit {
   jenisbidangselect() {
     const id_sektor = document.getElementById('jenis_bidang_perusahaan') as HTMLInputElement | any;
     const idsektorpotongan = id_sektor.value.split('|');
-    // alert(this.postId);
+
     // console.log('kode' + selectedStatus);
     this.getsektorekonomi(idsektorpotongan[0]).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kota', res);
 
         this.getdatasektorekonomi = res.body?.result;
-        // alert(this.postId);
+
         // this.onResponseSuccess(res);
       },
     });
@@ -388,14 +380,14 @@ export class JobInfoComponent implements OnInit {
   jenisbidangsebelumselect() {
     const id_sektor = document.getElementById('jenis_bidang_sebelum') as HTMLInputElement | any;
     const idsektorpotongan = id_sektor.value.split('|');
-    // alert(this.postId);
+
     // console.log('kode' + selectedStatus);
     this.getsektorekonomi(idsektorpotongan[0]).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kota', res);
 
         this.getdatasektorekonomi = res.body?.result;
-        // alert(this.postId);
+
         // this.onResponseSuccess(res);
       },
     });
@@ -413,8 +405,6 @@ export class JobInfoComponent implements OnInit {
       params: options,
       observe: 'response',
     });
-    // alert('CONTOHkota');
-    // alert(kodepotongan[0]);
   }
 
   getjumlahkaryawan(req1?: any): Observable<EntityArrayResponseDaWa1> {
@@ -462,7 +452,7 @@ export class JobInfoComponent implements OnInit {
           //     this.daWa = res.body?.result;
           //     // this.onResponseSuccess(res);
           //     console.warn('loadingNIH',this.postId );
-          //     alert(this.postId)
+
           //   },
           // });
         },
@@ -475,7 +465,6 @@ export class JobInfoComponent implements OnInit {
         // console.log(res.body?.result);
         console.warn('cekstatuspernikahan', res.body?.result);
         this.keteranganstatusnikah = res.body?.result.status_perkawinan;
-        alert(this.keteranganstatusnikah);
       },
     });
   }
@@ -490,7 +479,7 @@ export class JobInfoComponent implements OnInit {
       var pemisahnya = provinsi_cabang.value;
     }
 
-    // alert(this.postId);
+    this.nampungdatakatagoripekerjaan = pemisahnya;
 
     this.getjenispekerjaansebelum(provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
@@ -498,7 +487,6 @@ export class JobInfoComponent implements OnInit {
 
         this.daWakotasebelum = res.body?.result;
 
-        alert(this.daWakotasebelum);
         // if (pemisahnya == 1 || pemisahnya == 'Fix Income') {
         //   this.tampungantipeagunan = '1';
         // } else if (pemisahnya == 2 || pemisahnya == 'Non Fix Income') {
@@ -508,7 +496,7 @@ export class JobInfoComponent implements OnInit {
         // } else {
         //   this.tampungantipeagunan = '4';
         // }
-        // alert(this.postId);
+
         // this.onResponseSuccess(res);
       },
     });
@@ -517,28 +505,25 @@ export class JobInfoComponent implements OnInit {
   onChange() {
     const provinsi_cabang = document.getElementById('provinsi_cabang_perusahaan') as HTMLInputElement | any;
 
-    // alert(this.postId);
-
     this.datEntryService.getkabkota(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kota', res);
 
         this.daWakota = res.body?.result;
-        // alert(this.postId);
+
         // this.onResponseSuccess(res);
       },
     });
   }
 
   onChangekota() {
-    // alert(this.postId);
     const provinsi_cabang = document.getElementById('kabkota_cabang_perusahaan') as HTMLInputElement | any;
     this.datEntryService.getkecamatan(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kecamata', res);
 
         this.kecamatan = res.body?.result;
-        // alert(this.postId);
+
         // this.onResponseSuccess(res);
       },
     });
@@ -546,15 +531,13 @@ export class JobInfoComponent implements OnInit {
   }
 
   onChangekecamatan() {
-    // alert(this.postId);
-
     const provinsi_cabang = document.getElementById('kecamatan_perusahaan') as HTMLInputElement | any;
     this.datEntryService.getkelurahan(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kelurahan', res);
 
         this.kelurahan = res.body?.result;
-        // alert(this.postId);
+
         // this.onResponseSuccess(res);
       },
     });
@@ -562,7 +545,6 @@ export class JobInfoComponent implements OnInit {
   }
 
   onChangekelurahan() {
-    // alert(this.postId);
     alert('ganti');
     const provinsi_cabang = document.getElementById('kelurahan') as HTMLInputElement | any;
     var kode_post = document.getElementById('kode_pos') as HTMLInputElement | any;
@@ -570,40 +552,36 @@ export class JobInfoComponent implements OnInit {
 
     this.daWakodepos = datakodepos[0];
 
-    alert(this.daWakodepos);
     // kode_post.innerHTML=this.daWakodepos ;
     kode_post.value = this.daWakodepos;
-    alert('kodepos' + kode_post);
+
     // document.getElementById('kode_pos').value=this.daWakodepos;
-    // alert(this.daWakodepos);
+
     // this.onResponseSuccess(res);
   }
 
   onChangeD() {
     const provinsi_cabang = document.getElementById('provinsi_sebelum') as HTMLInputElement | any;
 
-    // alert(this.postId);
-
     this.datEntryService.getkabkota(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kota', res);
 
         this.daWakotaD = res.body?.result;
-        // alert(this.postId);
+
         // this.onResponseSuccess(res);
       },
     });
   }
 
   onChangekotaD() {
-    // alert(this.postId);
     const provinsi_cabang = document.getElementById('kabkota_sebelum') as HTMLInputElement | any;
     this.datEntryService.getkecamatan(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kecamata', res);
 
         this.kecamatanD = res.body?.result;
-        // alert(this.postId);
+
         // this.onResponseSuccess(res);
       },
     });
@@ -611,15 +589,13 @@ export class JobInfoComponent implements OnInit {
   }
 
   onChangekecamatanD() {
-    // alert(this.postId);
-
     const provinsi_cabang = document.getElementById('kecamatan_sebelum') as HTMLInputElement | any;
     this.datEntryService.getkelurahan(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kelurahan', res);
 
         this.kelurahanD = res.body?.result;
-        // alert(this.postId);
+
         // this.onResponseSuccess(res);
       },
     });
@@ -627,20 +603,17 @@ export class JobInfoComponent implements OnInit {
   }
 
   onChangekelurahanD() {
-    // alert(this.postId);
-    // alert('ganti');
     const provinsi_cabang = document.getElementById('kelurahan_sebelum') as HTMLInputElement | any;
     var kode_post = document.getElementById('kode_pos_sebelum') as HTMLInputElement | any;
     const datakodepos = provinsi_cabang.value.split('|');
 
     this.daWakodeposD = datakodepos[0];
 
-    // alert(this.daWakodepos);
     // kode_post.innerHTML=this.daWakodepos ;
     kode_post.value = this.daWakodeposD;
-    // alert('kodepos' + kode_post);
+
     // document.getElementById('kode_pos').value=this.daWakodepos;
-    // alert(this.daWakodepos);
+
     // this.onResponseSuccess(res);
   }
 
@@ -656,11 +629,9 @@ export class JobInfoComponent implements OnInit {
           app_no_de: this.app_no_de,
         },
       });
-      // alert(' ini NIKAH');
+
       console.warn(this.curef);
     } else {
-      // alert('ini jomblo');
-      // alert(contohtampungancuref);
       this.router.navigate(['/data-entry/collateral'], {
         queryParams: {
           queryParams: {
@@ -739,6 +710,13 @@ export class JobInfoComponent implements OnInit {
       var kirimankelurahan = potongankelurahan[1];
     } else {
       var kirimankelurahan = kelurahan_sebelum.value;
+    }
+
+    var potongankategori = kelurahan_sebelum.value.split('|');
+    if (kelurahan_sebelum.value.indexOf('|') !== -1) {
+      var kirimankategori = potongankategori[1];
+    } else {
+      var kirimankategori = kelurahan_sebelum.value;
     }
 
     // if (jenis_bidang_sebelum.value.indexOf('|') !== -1) {

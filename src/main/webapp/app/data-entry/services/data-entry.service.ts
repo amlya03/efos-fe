@@ -62,6 +62,34 @@ export class DataEntryService {
   protected fetchMemo = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getMemoByDe?sd=');
   // ///////////////////////////// Get MEMO \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // ///////////////////////////// Get api list_akses_rumah \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchlistaksesrumah = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_akses_rumah');
+  // ///////////////////////////// Get api list_akses_rumah \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ///////////////////////////// Get api list_fasilitas_listrik \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchlistfasilitaslistrik = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_fasilitas_listrik'
+  );
+  // ///////////////////////////// Get api list_fasilitas_listrik \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ///////////////////////////// Get api list_kondisi_lingkungan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchlistkondisilingkungan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_kondisi_lingkungan'
+  );
+  // ///////////////////////////// Get api list_kondisi_lingkungan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ///////////////////////////// Get ai list_lokasi_rumah \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchlistlokasirumah = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_lokasi_rumah'
+  );
+  // ///////////////////////////// Get api list_lokasi_rumah \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ///////////////////////////// Get ai listagunan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchgetlistaguunan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-de/getCollateralByCuref?sc='
+  );
+  // ///////////////////////////// Get api listagunan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
     this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
@@ -107,6 +135,36 @@ export class DataEntryService {
     return this.http.get<ApiResponse>(this.fetchMemo + app_no_de);
   }
   // /////////////////////////// MEMO ////////////////////////////////////////////
+
+  // /////////////////////////// list_akses_rumah ////////////////////////////////////////////
+  getFetchListAksesRumah(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchlistaksesrumah);
+  }
+  // /////////////////////////// list_akses_rumah ////////////////////////////////////////////
+
+  // /////////////////////////// list_fasilitas_listrik ////////////////////////////////////////////
+  getFetchListFasilitasListrik(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchlistfasilitaslistrik);
+  }
+  // /////////////////////////// list_fasilitas_listrik ////////////////////////////////////////////
+
+  // /////////////////////////// list_kondisi_lingkungan ////////////////////////////////////////////
+  getFetchListKondisiLingkungan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchlistkondisilingkungan);
+  }
+  // /////////////////////////// list_kondisi_lingkungan ////////////////////////////////////////////
+
+  // /////////////////////////// list_lokasi_rumah ////////////////////////////////////////////
+  getFetchListLokasiRumah(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchlistlokasirumah);
+  }
+  // /////////////////////////// list_lokasi_rumah ////////////////////////////////////////////
+
+  // /////////////////////////// listagunan ////////////////////////////////////////////
+  getfetchlistagunan(curef: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchgetlistaguunan + curef);
+  }
+  // /////////////////////////// listagunan ////////////////////////////////////////////
 
   getprovinsi(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);

@@ -1,9 +1,12 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { colateralmodel } from './collateral-model';
+import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { getJob } from 'app/data-entry/services/config/getJob.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { ServiceVerificationService } from '../service/service-verification.service';
@@ -22,6 +25,7 @@ export class StukturPembiayaanComponent implements OnInit {
   analisaPembiayaan: analisaPembiayaanModel = new analisaPembiayaanModel();
   fetchJob: getJob = new getJob();
   curef: any;
+  listagunan: any;
   nilaiPembiayaan: any;
 
   // Ref Skema
@@ -36,7 +40,7 @@ export class StukturPembiayaanComponent implements OnInit {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     protected dataEntryService: DataEntryService,
-    protected verifikasiServices : ServiceVerificationService
+    protected verifikasiServices: ServiceVerificationService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -45,6 +49,7 @@ export class StukturPembiayaanComponent implements OnInit {
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getCollateralByCuref?sc=');
 
   ngOnInit(): void {
     this.load();
@@ -54,8 +59,8 @@ export class StukturPembiayaanComponent implements OnInit {
     // Analisa Pembiayaan
     this.verifikasiServices.fetchAnalisaPembiayaan(this.app_no_de).subscribe(analisa => {
       this.analisaPembiayaan = analisa.result;
-      console.log('testt '+ analisa)
-    })
+      console.log('testt ' + analisa);
+    });
 
     // ambil semua data Job by Curef
     this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(Job => {
@@ -72,7 +77,7 @@ export class StukturPembiayaanComponent implements OnInit {
     });
   }
 
-  loadSkema(produknya:any){
+  loadSkema(produknya: any) {
     // Ref Skema
     alert('skema '+ produknya)
     this.verifikasiServices.getSkema(produknya).subscribe(data =>{
@@ -81,27 +86,44 @@ export class StukturPembiayaanComponent implements OnInit {
         // console.log(this.Skema)
       }
     });
+
+    this.dataEntryService.getfetchlistagunan(this.curef).subscribe(data => {
+      // if(data.code === 200) {
+      this.listagunan = data.result;
+      console.log('agunanagunan', this.listagunan);
+      // console.log("ini data de "+this.fetchAllDe);
+      // }
+    });
+
+    // this.getlistagunan().subscribe({
+    //   next: (res: EntityArrayResponseDaWa) => {
+
+    //     console.warn('pasangan', res);
+
+    //     this.listagunan = res.body?.result;
+    //     // this.onResponseSuccess(res);
+    //   },
+    // });
   }
 
-  tenorSkema(skemaName:any, skemaMaster:any){
+  tenorSkema(skemaName: any, skemaMaster: any) {
     // alert(skemaName +' '+ skemaMaster)
     const skemaidName = skemaName.split('|');
-    if(skemaMaster == 'PTA'){
-      this.verifikasiServices.getTenorFix(skemaidName[0]).subscribe(fix =>{
+    if (skemaMaster == 'PTA') {
+      this.verifikasiServices.getTenorFix(skemaidName[0]).subscribe(fix => {
         this.tenor = fix.result;
-        console.log('Fix ' + this.tenor)
-      })
-    }
-    else{
-      this.verifikasiServices.getTenorNon(skemaidName[0]).subscribe(Non =>{
+        console.log('Fix ' + this.tenor);
+      });
+    } else {
+      this.verifikasiServices.getTenorNon(skemaidName[0]).subscribe(Non => {
         this.tenor = Non.result;
-        console.log('Non ' + this.tenor)
-      })
+        console.log('Non ' + this.tenor);
+      });
     }
   }
 
   // Hitung Angsuran
-  hitungAngsuran(skema_id:any, harga:any, dp:any){
+  hitungAngsuran(skema_id: any, harga: any, dp: any) {
     const skemaidName = skema_id.split('|');
     // alert(skemaidName[1]+' '+harga+' '+ dp)
 
@@ -127,9 +149,7 @@ export class StukturPembiayaanComponent implements OnInit {
     });
   }
 
-  // pindah
-  viewStruktur(): void {
-    // alert(getAppNoDe);
-    this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+  viewStruktur() {
+    alert('tolong hapus aku');
   }
 }
