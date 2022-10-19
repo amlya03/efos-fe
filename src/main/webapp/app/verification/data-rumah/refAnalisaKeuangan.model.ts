@@ -1,5 +1,8 @@
 export class refAnalisaKeuangan {
   id?: number;
+  angsuran_kewajiban_kantor?: Number;
+  angsuran_kewajiban_kantor_pasangan?: Number;
+  total_angsuran_kewajiban_kantor?: Number;
   app_no_de?: number;
   nama_perusahaan?: string;
   alamat_perusahaan?: string;
@@ -19,8 +22,8 @@ export class refAnalisaKeuangan {
   pendapatan_usaha?: number;
   pendapatan_profesional?: number;
   total_penghasilan_kotor?: number;
-  kewajiban_bank?: string;
-  kewajiban_lainnya?: string;
+  kewajiban_bank?: number;
+  kewajiban_lainnya?: number;
   total_penghasilan_bersih?: number;
   gaji_kotor_pasangan?: number;
   tunjangan_pasangan?: number;
@@ -32,7 +35,7 @@ export class refAnalisaKeuangan {
   pendapatan_profesional_pasangan?: number;
   total_penghasilan_kotor_pasangan?: number;
   kewajiban_bank_pasangan?: string;
-  kewajiban_lainnya_pasangan?: string;
+  kewajiban_lainnya_pasangan?: number;
   total_penghasilan_bersih_pasangan?: number;
   gaji_kotor_total?: number;
   tunjangan_total?: number;

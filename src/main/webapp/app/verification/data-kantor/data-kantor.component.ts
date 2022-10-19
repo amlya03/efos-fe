@@ -156,7 +156,7 @@ export class DataKantorComponent implements OnInit {
       return;
     } else if (this.dataKantor == null) {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_kantor', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_kantor', {
           id: 0,
           app_no_de: this.app_no_de,
           aspek_syariah: this.dataKantorForm.get('aspek_syariah')?.value,
@@ -219,7 +219,7 @@ export class DataKantorComponent implements OnInit {
       this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     } else
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_data_kantor', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_data_kantor', {
           id: 0,
           app_no_de: this.app_no_de,
           aspek_syariah: this.dataKantorForm.get('aspek_syariah')?.value,
@@ -302,31 +302,24 @@ export class DataKantorComponent implements OnInit {
     this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(job => {
       this.dataJob = job.result[0];
       // alert("data JOb "+this.dataJob.tipe_kepegawaian)
-      if(this.dataJob.tipe_pekerjaan == 1){
-        this.tipe_pekerjaanGet = 'Pegawai Negeri Sipil'
+      if (this.dataJob.tipe_pekerjaan == 1) {
+        this.tipe_pekerjaanGet = 'Pegawai Negeri Sipil';
+      } else if (this.dataJob.tipe_pekerjaan == 2) {
+        this.tipe_pekerjaanGet = 'Pegawai Swasta';
+      } else if (this.dataJob.tipe_pekerjaan == 3) {
+        this.tipe_pekerjaanGet = 'Wiraswasta';
+      } else if (this.dataJob.tipe_pekerjaan == 4) {
+        this.tipe_pekerjaanGet = 'Profesional';
+      } else if (this.dataJob.tipe_pekerjaan == 5) {
+        this.tipe_pekerjaanGet = 'Pensiunan';
+      } else if (this.dataJob.tipe_pekerjaan == 6) {
+        this.tipe_pekerjaanGet = 'Tidak Bekerja';
+      } else if (this.dataJob.tipe_pekerjaan == 7) {
+        this.tipe_pekerjaanGet = 'TNI / Polri';
+      } else if (this.dataJob.tipe_pekerjaan == 8) {
+        this.tipe_pekerjaanGet = 'BUMN / BUMD';
       }
-      else if(this.dataJob.tipe_pekerjaan == 2){
-        this.tipe_pekerjaanGet = 'Pegawai Swasta'
-      }
-      else if(this.dataJob.tipe_pekerjaan == 3){
-        this.tipe_pekerjaanGet = 'Wiraswasta'
-      }
-      else if(this.dataJob.tipe_pekerjaan == 4){
-        this.tipe_pekerjaanGet = 'Profesional'
-      }
-      else if(this.dataJob.tipe_pekerjaan == 5){
-        this.tipe_pekerjaanGet = 'Pensiunan'
-      }
-      else if(this.dataJob.tipe_pekerjaan == 6){
-        this.tipe_pekerjaanGet = 'Tidak Bekerja'
-      }
-      else if(this.dataJob.tipe_pekerjaan == 7){
-        this.tipe_pekerjaanGet = 'TNI / Polri'
-      }
-      else if(this.dataJob.tipe_pekerjaan == 8){
-        this.tipe_pekerjaanGet = 'BUMN / BUMD'
-      }
-    })
+    });
 
     // ambil data Kantor
     this.dataKantor.fetchDataKantor(this.app_no_de).subscribe(data => {
@@ -543,7 +536,7 @@ export class DataKantorComponent implements OnInit {
   //   const poyonganGrupSektor = bidang.split('|');
   //   // alert(poyonganGrupSektor[0])
   //   return this.http
-  //     .get<ApiResponse>('http://10.20.34.178:8805/api/v1/efos-ide/list_sektor_ekonomi?se=' + poyonganGrupSektor[0])
+  //     .get<ApiResponse>('http://10.20.34.110:8805/api/v1/efos-ide/list_sektor_ekonomi?se=' + poyonganGrupSektor[0])
   //     .subscribe(data => {
   //       // console.log('Sektor Ekonomi', data.result);
   //       if (data.code === 200) {

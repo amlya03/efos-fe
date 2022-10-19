@@ -1,17 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { getJob } from 'app/data-entry/services/config/getJob.model';
+import { getJobPasangan } from 'app/data-entry/services/config/getJobPasangan.model';
 import { viewJobModel } from 'app/data-entry/services/config/viewJobModel.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { resultSlikTotal } from 'app/initial-data-entry/services/config/resultSlikTotal.model';
 import { slik } from 'app/initial-data-entry/services/config/slik.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { LocalStorageService } from 'ngx-webstorage';
-import { Subject } from 'rxjs';
+import { interval, Subject } from 'rxjs';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { refAnalisaKeuangan } from './refAnalisaKeuangan.model';
 
@@ -30,15 +32,28 @@ export class DataRumahComponent implements OnInit {
   dataJob: getJob = new getJob();
   getViewJob: viewJobModel = new viewJobModel();
   listSlik?: slik[];
+  slikTotal: resultSlikTotal = new resultSlikTotal();
   listLajangSlik: Array<slik> = new Array<slik>();
   listMenikahSlik: Array<slik> = new Array<slik>();
+  jobPasangan: getJobPasangan = new getJobPasangan();
+  struktur: any;
   // Role
   untukSessionRole: any;
+  untukSessionUsername: any;
+  // Total Plafound
+  plafond: any;
+  totalPlafonSlik: any;
+  // Total Outstanding
+  outstanding: any;
+  totalOutstandingSlik: any;
+
+  formatter: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
+  sumOfNumber: any;
 
   constructor(
     protected dataRumah: ServiceVerificationService,
@@ -61,6 +76,7 @@ export class DataRumahComponent implements OnInit {
 
   ngOnInit(): void {
     this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionUsername = this.localStorageService.retrieve('sessionUserName');
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -68,14 +84,24 @@ export class DataRumahComponent implements OnInit {
       responsive: true,
     };
     this.load();
+
+    this.formatter = new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    });
+
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.analisaKeuanganForm = this.formBuilder.group({
-      nama_pemohon: ['', Validators.required],
-      jabatan_dihubungi: ['', Validators.required],
-      tanggal_permintaan: ['', Validators.required],
-      tanggal_pemeriksa: ['', Validators.required],
-      nama_pemeriksa: ['', Validators.required],
+      nama_dihubungi: '',
+      nama_pemeriksa: '',
+      jabatan_dihubungi: '',
+      tanggal_permintaan: '',
+      tanggal_pemeriksa: '',
+
+      // COba: [this.formatter.format('')],
+      // Data Keuangan Nasabah \\
       gaji_kotor: '',
+      gaji_kotor_pasangan: '',
       tunjangan: '',
       pendapatan_kantor_lainnya: '',
       pendapatan_kotor: '',
@@ -84,10 +110,9 @@ export class DataRumahComponent implements OnInit {
       pendapatan_usaha: '',
       pendapatan_profesional: '',
       total_penghasilan_kotor: '',
-      kewajiban_bank: '',
+      // kewajiban_bank: '',
       kewajiban_lainnya: '',
       total_penghasilan_bersih: '',
-      gaji_kotor_pasangan: '',
       tunjangan_pasangan: '',
       pendapatan_kantor_lainnya_pasangan: '',
       pendapatan_kotor_pasangan: '',
@@ -96,7 +121,7 @@ export class DataRumahComponent implements OnInit {
       pendapatan_usaha_pasangan: '',
       pendapatan_profesional_pasangan: '',
       total_penghasilan_kotor_pasangan: '',
-      kewajiban_bank_pasangan: '',
+      // kewajiban_bank_pasangan: '',
       kewajiban_lainnya_pasangan: '',
       total_penghasilan_bersih_pasangan: '',
       gaji_kotor_total: '',
@@ -105,12 +130,16 @@ export class DataRumahComponent implements OnInit {
       pendapatan_kotor_total: '',
       total_angsuran_kantor_akumulasi: '',
       pendapatan_bersih_total: '',
-      pendapatan_usaha_total: '',
+      pendapatan_usaha_total: this.sumOfNumber,
       pendapatan_profesional_total: '',
       total_penghasilan_kotor_akumulasi: '',
       kewajiban_bank_total: '',
       kewajiban_lainnya_total: '',
       total_penghasilan_bersih_akumulasi: '',
+      // tambahan
+      // angsuran_kewajiban_kantor: '',
+      // angsuran_kewajiban_kantor_pasangan: '',
+      // total_angsuran_kewajiban_kantor: '',
     });
   }
 
@@ -118,22 +147,34 @@ export class DataRumahComponent implements OnInit {
     // get Semua DE
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
-      // console.log(this.dataEntry);
       // alert(this.dataEntry.joint_income)
     });
 
     // get Semua JOB
     this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(job => {
       this.dataJob = job.result[0];
-    })
+      // alert(this.dataJob.total_pendapatan)
+    });
 
+    // get Semua JOB Pasangan
+    this.dataEntryService.getSemuaDataJobPasangan(this.curef).subscribe(jobPasangan => {
+      this.jobPasangan = jobPasangan.result;
+      // console.log(this.jobPasangan)
+    });
 
     // ambil semua data Slik
-    this.dataRumah.fetchSlik('app_20221006_644').subscribe(data => {
+    this.dataRumah.fetchSlik('app_20221017_667').subscribe(data => {
       // if (data.code === 200) {
       // console.log(data)
-      this.listSlik = data.result;
-      // console.log(this.listSlik)
+      this.slikTotal = data.result;
+      this.listSlik = data.result.dataSlikResult;
+      // console.log(this.slikTotal.total_angsuran_pasangan)
+      // this.struktur = ('Rp 10000').toLocaleString();
+      this.struktur = 'Rp 10000'.replace('Rp', '');
+      let cekkk = 'Rp 10,000'.replace(/\,/g, '');
+      let cuukkk = cekkk.replace('Rp ', '');
+      // alert(this.struktur)
+      // alert(cuukkk)
 
       this.listSlik?.forEach(element => {
         if (element.response_description == 'get SLIK Result Success') {
@@ -144,21 +185,29 @@ export class DataRumahComponent implements OnInit {
           }
         }
       });
-      this.dtTrigger.next(data.result);
+      this.dtTrigger.next(data.result.dataSlikResult);
+      let plafonNasabah = Number(this.slikTotal.total_plafon_nasabah);
+      let plafonPasangan = Number(this.slikTotal.total_plafon_pasangan);
+      let outstandingNasabah = Number(this.slikTotal.total_outstanding_nasabah);
+      let outstandingPasangan = Number(this.slikTotal.total_outstanding_pasangan);
+      this.totalPlafonSlik = plafonNasabah + plafonPasangan;
+      this.totalOutstandingSlik = outstandingNasabah + outstandingPasangan;
+      // alert(this.totalPlafonSlik)
     });
 
     // ambil semua data Analisa
     this.dataRumah.fetchAnalisaKeuangan(this.app_no_de).subscribe(data => {
       this.analisaKeuanganMap = data.result;
       // }
+      // alert(this.analisaKeuanganMap.jabatan_dihubungi)
       let retriveAnalisaKeuangan = {
         // id: 1,
-        app_no_de: this.app_no_de,
+        // app_no_de: this.app_no_de,
         nama_dihubungi: this.analisaKeuanganMap.nama_dihubungi,
+        nama_pemeriksa: this.analisaKeuanganMap.nama_pemeriksa,
         jabatan_dihubungi: this.analisaKeuanganMap.jabatan_dihubungi,
         tanggal_permintaan: this.analisaKeuanganMap.tanggal_permintaan,
         tanggal_pemeriksa: this.analisaKeuanganMap.tanggal_pemeriksa,
-        nama_pemeriksa: this.analisaKeuanganMap.nama_pemeriksa,
         gaji_kotor: this.analisaKeuanganMap.gaji_kotor,
         tunjangan: this.analisaKeuanganMap.tunjangan,
         pendapatan_kantor_lainnya: this.analisaKeuanganMap.pendapatan_kantor_lainnya,
@@ -168,7 +217,7 @@ export class DataRumahComponent implements OnInit {
         pendapatan_usaha: this.analisaKeuanganMap.pendapatan_usaha,
         pendapatan_profesional: this.analisaKeuanganMap.pendapatan_profesional,
         total_penghasilan_kotor: this.analisaKeuanganMap.total_penghasilan_kotor,
-        kewajiban_bank: this.analisaKeuanganMap.kewajiban_bank,
+        // kewajiban_bank: this.slikTotal.total_angsuran_nasabah,
         kewajiban_lainnya: this.analisaKeuanganMap.kewajiban_lainnya,
         total_penghasilan_bersih: this.analisaKeuanganMap.total_penghasilan_bersih,
         gaji_kotor_pasangan: this.analisaKeuanganMap.gaji_kotor_pasangan,
@@ -180,7 +229,7 @@ export class DataRumahComponent implements OnInit {
         pendapatan_usaha_pasangan: this.analisaKeuanganMap.pendapatan_usaha_pasangan,
         pendapatan_profesional_pasangan: this.analisaKeuanganMap.pendapatan_profesional_pasangan,
         total_penghasilan_kotor_pasangan: this.analisaKeuanganMap.total_penghasilan_kotor_pasangan,
-        kewajiban_bank_pasangan: this.analisaKeuanganMap.kewajiban_bank_pasangan,
+        // kewajiban_bank_pasangan: this.slikTotal.total_angsuran_pasangan,
         kewajiban_lainnya_pasangan: this.analisaKeuanganMap.kewajiban_lainnya_pasangan,
         total_penghasilan_bersih_pasangan: this.analisaKeuanganMap.total_penghasilan_bersih_pasangan,
         gaji_kotor_total: this.analisaKeuanganMap.gaji_kotor_total,
@@ -192,9 +241,14 @@ export class DataRumahComponent implements OnInit {
         pendapatan_usaha_total: this.analisaKeuanganMap.pendapatan_usaha_total,
         pendapatan_profesional_total: this.analisaKeuanganMap.pendapatan_profesional_total,
         total_penghasilan_kotor_akumulasi: this.analisaKeuanganMap.total_penghasilan_kotor_akumulasi,
-        kewajiban_bank_total: this.analisaKeuanganMap.kewajiban_bank_total,
+        kewajiban_bank_total: '',
         kewajiban_lainnya_total: this.analisaKeuanganMap.kewajiban_lainnya_total,
         total_penghasilan_bersih_akumulasi: this.analisaKeuanganMap.total_penghasilan_bersih_akumulasi,
+        //Tambahajn
+        // angsuran_kewajiban_kantor: this.analisaKeuanganMap.angsuran_kewajiban_kantor,
+        // angsuran_kewajiban_kantor_pasangan: this.analisaKeuanganMap.angsuran_kewajiban_kantor_pasangan,
+        // total_angsuran_kewajiban_kantor: this.analisaKeuanganMap.total_angsuran_kewajiban_kantor,
+
         // created_date: "2022-09-29T10:59:20.895+00:00",
         // created_by: "",
         // updated_date: 'null',
@@ -202,64 +256,85 @@ export class DataRumahComponent implements OnInit {
       };
       this.analisaKeuanganForm.setValue(retriveAnalisaKeuangan);
     });
-
-    // this.dataRumah.getDaWuS().subscribe(data => {
-    //   console.warn(data);
-    //   if (data.code === 200) {
-    //     this.dataRumahModel = data.result;
-    //   }
-    // });
-    // ref Hubungan Emergency
-    // this.dataRumah.getHubunganEmergency().subscribe(data => {
-    //   // console.warn('ref', data);
-    //   if (data.code === 200) {
-    //     this.refHubunganEmergency = data.result;
-    //   }
-    // });
-    // get semua de
   }
 
   onSubmit(): void {
+    this.formatMoney('Rp 100,000.00');
+    const total_pro =
+      Number(this.analisaKeuanganForm.get('pendapatan_profesional')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value);
+    const total_kewa = Number(this.slikTotal.total_angsuran_nasabah) + Number(this.slikTotal.total_angsuran_pasangan);
+    const total_gaji =
+      Number(this.analisaKeuanganForm.get('gaji_kotor')?.value) + Number(this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value);
+    const total_kewaLain =
+      Number(this.analisaKeuanganForm.get('kewajiban_lainnya')?.value) +
+      Number(this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value);
+    const pend_bersih =
+      Number(this.analisaKeuanganForm.get('pendapatan_bersih')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_bersih_pasangan')?.value);
+    const pend_kantorLain =
+      Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value);
+    const pend_kotTot =
+      Number(this.analisaKeuanganForm.get('pendapatan_kotor')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_kotor_pasangan')?.value);
+    const pend_usahaTot =
+      Number(this.analisaKeuanganForm.get('pendapatan_usaha')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value);
+    const tunjangan_Tot =
+      Number(this.analisaKeuanganForm.get('tunjangan')?.value) + Number(this.analisaKeuanganForm.get('tunjangan_pasangan')?.value);
+    const totalPengKot =
+      Number(this.analisaKeuanganForm.get('pendapatan_bersih')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_usaha')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_profesional')?.value);
+
+    const totalPengKotPas =
+      Number(this.analisaKeuanganForm.get('pendapatan_bersih_pasangan')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value);
+
+    const totalTotalPengKot = totalPengKot + totalPengKotPas;
+    // POST
     this.submitted = true;
     if (this.analisaKeuanganForm.invalid) {
       return;
     } else if (this.analisaKeuanganMap == null) {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_keuangan', {
-          nama_pemohon: this.analisaKeuanganForm.get('nama_pemohon')?.value,
-          alamat_perusahaan: this.analisaKeuanganForm.get('alamat_perusahaan')?.value,
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_keuangan', {
+          nama_pemohon: this.dataEntry.nama,
+          alamat_perusahaan: this.dataJob.alamat_perusahaan,
+          nama_perusahaan: this.dataJob.nama_perusahaan,
           app_no_de: this.app_no_de,
-          created_by: '',
+          no_telepon_perusahaan: this.dataJob.no_telepon,
+          created_by: this.untukSessionUsername,
           created_date: '',
+          nama_dihubungi: this.analisaKeuanganForm.get('nama_dihubungi')?.value,
+          jabatan_dihubungi: this.analisaKeuanganForm.get('jabatan_dihubungi')?.value,
           gaji_kotor: this.analisaKeuanganForm.get('gaji_kotor')?.value,
           gaji_kotor_pasangan: this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value,
-          gaji_kotor_total: this.analisaKeuanganForm.get('gaji_kotor_total')?.value,
-          jabatan_dihubungi: this.analisaKeuanganForm.get('jabatan_dihubungi')?.value,
-          kewajiban_bank: this.analisaKeuanganForm.get('kewajiban_bank')?.value,
-          kewajiban_bank_pasangan: this.analisaKeuanganForm.get('kewajiban_bank_pasangan')?.value,
-          kewajiban_bank_total: this.analisaKeuanganForm.get('kewajiban_bank_total')?.value,
+          gaji_kotor_total: total_gaji,
+          kewajiban_bank: this.slikTotal.total_angsuran_nasabah,
+          kewajiban_bank_pasangan: this.slikTotal.total_angsuran_pasangan,
+          kewajiban_bank_total: total_kewa,
           kewajiban_lainnya: this.analisaKeuanganForm.get('kewajiban_lainnya')?.value,
-          kewajiban_lainnya_pasangan: this.analisaKeuanganForm.get('ewajiban_lainnya_pasangan')?.value,
-          kewajiban_lainnya_total: this.analisaKeuanganForm.get('kewajiban_lainnya_total')?.value,
-          nama_dihubungi: this.analisaKeuanganForm.get('nama_dihubungi')?.value,
+          kewajiban_lainnya_pasangan: this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value,
+          kewajiban_lainnya_total: total_kewaLain,
           nama_pemeriksa: this.analisaKeuanganForm.get('nama_pemeriksa')?.value,
-          nama_perusahaan: this.dataJob.nama_perusahaan,
-          no_telepon_perusahaan: this.dataJob.no_telepon,
           pendapatan_bersih: this.analisaKeuanganForm.get('pendapatan_bersih')?.value,
           pendapatan_bersih_pasangan: this.analisaKeuanganForm.get('pendapatan_bersih_pasangan')?.value,
-          pendapatan_bersih_total: this.analisaKeuanganForm.get('pendapatan_bersih_total')?.value,
+          pendapatan_bersih_total: pend_bersih,
           pendapatan_kantor_lainnya: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value,
           pendapatan_kantor_lainnya_pasangan: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value,
-          pendapatan_kantor_lainnya_total: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_total')?.value,
+          pendapatan_kantor_lainnya_total: pend_kantorLain,
           pendapatan_kotor: this.analisaKeuanganForm.get('pendapatan_kotor')?.value,
           pendapatan_kotor_pasangan: this.analisaKeuanganForm.get('pendapatan_kotor_pasangan')?.value,
-          pendapatan_kotor_total: this.analisaKeuanganForm.get('pendapatan_kotor_total')?.value,
+          pendapatan_kotor_total: pend_kotTot,
           pendapatan_profesional: this.analisaKeuanganForm.get('pendapatan_profesional')?.value,
           pendapatan_profesional_pasangan: this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value,
-          pendapatan_profesional_total: this.analisaKeuanganForm.get('pendapatan_profesional_total')?.value,
+          pendapatan_profesional_total: total_pro,
           pendapatan_usaha: this.analisaKeuanganForm.get('pendapatan_usaha')?.value,
           pendapatan_usaha_pasangan: this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value,
-          pendapatan_usaha_total: this.analisaKeuanganForm.get('pendapatan_usaha_total')?.value,
+          pendapatan_usaha_total: pend_usahaTot,
           tanggal_pemeriksa: this.analisaKeuanganForm.get('tanggal_pemeriksa')?.value,
           tanggal_permintaan: this.analisaKeuanganForm.get('tanggal_permintaan')?.value,
           total_angsuran_kantor: this.analisaKeuanganForm.get('total_angsuran_kantor')?.value,
@@ -268,52 +343,63 @@ export class DataRumahComponent implements OnInit {
           total_penghasilan_bersih: this.analisaKeuanganForm.get('total_penghasilan_bersih')?.value,
           total_penghasilan_bersih_akumulasi: this.analisaKeuanganForm.get('total_penghasilan_bersih_akumulasi')?.value,
           total_penghasilan_bersih_pasangan: this.analisaKeuanganForm.get('total_penghasilan_bersih_pasangan')?.value,
-          total_penghasilan_kotor: this.analisaKeuanganForm.get('total_penghasilan_kotor')?.value,
-          total_penghasilan_kotor_akumulasi: this.analisaKeuanganForm.get('total_penghasilan_kotor_akumulasi')?.value,
-          total_penghasilan_kotor_pasangan: this.analisaKeuanganForm.get('total_penghasilan_kotor_pasangan')?.value,
+          total_penghasilan_kotor: totalPengKot,
+          total_penghasilan_kotor_akumulasi: totalTotalPengKot,
+          total_penghasilan_kotor_pasangan: totalPengKotPas,
           tunjangan: this.analisaKeuanganForm.get('tunjangan')?.value,
           tunjangan_pasangan: this.analisaKeuanganForm.get('tunjangan_pasangan')?.value,
-          tunjangan_total: this.analisaKeuanganForm.get('tunjangan_total')?.value,
+          tunjangan_total: tunjangan_Tot,
+
+          // tambahan Total
+          angsuran_kewajiban_kantor: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value,
+          angsuran_kewajiban_kantor_pasangan: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value,
+          total_angsuran_kewajiban_kantor: this.analisaKeuanganForm.get('total_angsuran_kewajiban_kantor')?.value,
+          outstanding_nasabah: this.slikTotal.total_outstanding_nasabah,
+          outstanding_pasangan: this.slikTotal.total_outstanding_pasangan,
+          total_outstanding: this.totalOutstandingSlik,
+          plafon_nasabah: this.slikTotal.total_plafon_nasabah,
+          plafon_pasangan: this.slikTotal.total_plafon_pasangan,
+          total_plafon: this.totalPlafonSlik,
         })
         .subscribe({});
       this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     } else
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_keuangan', {
-          nama_pemohon: this.analisaKeuanganForm.get('nama_pemohon')?.value,
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_keuangan', {
+          nama_pemohon: this.dataEntry.nama,
           alamat_perusahaan: this.dataJob.alamat_perusahaan,
+          nama_perusahaan: this.dataJob.nama_perusahaan,
           app_no_de: this.app_no_de,
-          created_by: '',
+          no_telepon_perusahaan: this.dataJob.no_telepon,
+          created_by: this.untukSessionUsername,
           created_date: '',
+          nama_dihubungi: this.analisaKeuanganForm.get('nama_dihubungi')?.value,
+          jabatan_dihubungi: this.analisaKeuanganForm.get('jabatan_dihubungi')?.value,
           gaji_kotor: this.analisaKeuanganForm.get('gaji_kotor')?.value,
           gaji_kotor_pasangan: this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value,
-          gaji_kotor_total: this.analisaKeuanganForm.get('gaji_kotor_total')?.value,
-          jabatan_dihubungi: this.analisaKeuanganForm.get('jabatan_dihubungi')?.value,
-          kewajiban_bank: this.analisaKeuanganForm.get('kewajiban_bank')?.value,
-          kewajiban_bank_pasangan: this.analisaKeuanganForm.get('kewajiban_bank_pasangan')?.value,
-          kewajiban_bank_total: this.analisaKeuanganForm.get('kewajiban_bank_total')?.value,
+          gaji_kotor_total: total_gaji,
+          kewajiban_bank: this.slikTotal.total_angsuran_nasabah,
+          kewajiban_bank_pasangan: this.slikTotal.total_angsuran_pasangan,
+          kewajiban_bank_total: total_kewa,
           kewajiban_lainnya: this.analisaKeuanganForm.get('kewajiban_lainnya')?.value,
-          kewajiban_lainnya_pasangan: this.analisaKeuanganForm.get('ewajiban_lainnya_pasangan')?.value,
-          kewajiban_lainnya_total: this.analisaKeuanganForm.get('kewajiban_lainnya_total')?.value,
-          nama_dihubungi: this.analisaKeuanganForm.get('nama_dihubungi')?.value,
+          kewajiban_lainnya_pasangan: this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value,
+          kewajiban_lainnya_total: total_kewaLain,
           nama_pemeriksa: this.analisaKeuanganForm.get('nama_pemeriksa')?.value,
-          nama_perusahaan: this.dataJob.nama_perusahaan,
-          no_telepon_perusahaan: this.dataJob.no_telepon,
           pendapatan_bersih: this.analisaKeuanganForm.get('pendapatan_bersih')?.value,
           pendapatan_bersih_pasangan: this.analisaKeuanganForm.get('pendapatan_bersih_pasangan')?.value,
-          pendapatan_bersih_total: this.analisaKeuanganForm.get('pendapatan_bersih_total')?.value,
+          pendapatan_bersih_total: pend_bersih,
           pendapatan_kantor_lainnya: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value,
           pendapatan_kantor_lainnya_pasangan: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value,
-          pendapatan_kantor_lainnya_total: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_total')?.value,
+          pendapatan_kantor_lainnya_total: pend_kantorLain,
           pendapatan_kotor: this.analisaKeuanganForm.get('pendapatan_kotor')?.value,
           pendapatan_kotor_pasangan: this.analisaKeuanganForm.get('pendapatan_kotor_pasangan')?.value,
-          pendapatan_kotor_total: this.analisaKeuanganForm.get('pendapatan_kotor_total')?.value,
+          pendapatan_kotor_total: pend_kotTot,
           pendapatan_profesional: this.analisaKeuanganForm.get('pendapatan_profesional')?.value,
           pendapatan_profesional_pasangan: this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value,
-          pendapatan_profesional_total: this.analisaKeuanganForm.get('pendapatan_profesional_total')?.value,
+          pendapatan_profesional_total: total_pro,
           pendapatan_usaha: this.analisaKeuanganForm.get('pendapatan_usaha')?.value,
           pendapatan_usaha_pasangan: this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value,
-          pendapatan_usaha_total: this.analisaKeuanganForm.get('pendapatan_usaha_total')?.value,
+          pendapatan_usaha_total: pend_usahaTot,
           tanggal_pemeriksa: this.analisaKeuanganForm.get('tanggal_pemeriksa')?.value,
           tanggal_permintaan: this.analisaKeuanganForm.get('tanggal_permintaan')?.value,
           total_angsuran_kantor: this.analisaKeuanganForm.get('total_angsuran_kantor')?.value,
@@ -322,12 +408,23 @@ export class DataRumahComponent implements OnInit {
           total_penghasilan_bersih: this.analisaKeuanganForm.get('total_penghasilan_bersih')?.value,
           total_penghasilan_bersih_akumulasi: this.analisaKeuanganForm.get('total_penghasilan_bersih_akumulasi')?.value,
           total_penghasilan_bersih_pasangan: this.analisaKeuanganForm.get('total_penghasilan_bersih_pasangan')?.value,
-          total_penghasilan_kotor: this.analisaKeuanganForm.get('total_penghasilan_kotor')?.value,
-          total_penghasilan_kotor_akumulasi: this.analisaKeuanganForm.get('total_penghasilan_kotor_akumulasi')?.value,
-          total_penghasilan_kotor_pasangan: this.analisaKeuanganForm.get('total_penghasilan_kotor_pasangan')?.value,
+          total_penghasilan_kotor: totalPengKot,
+          total_penghasilan_kotor_akumulasi: totalTotalPengKot,
+          total_penghasilan_kotor_pasangan: totalPengKotPas,
           tunjangan: this.analisaKeuanganForm.get('tunjangan')?.value,
           tunjangan_pasangan: this.analisaKeuanganForm.get('tunjangan_pasangan')?.value,
-          tunjangan_total: this.analisaKeuanganForm.get('tunjangan_total')?.value,
+          tunjangan_total: tunjangan_Tot,
+
+          // tambahan Total
+          angsuran_kewajiban_kantor: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value,
+          angsuran_kewajiban_kantor_pasangan: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value,
+          total_angsuran_kewajiban_kantor: this.analisaKeuanganForm.get('total_angsuran_kewajiban_kantor')?.value,
+          outstanding_nasabah: this.slikTotal.total_outstanding_nasabah,
+          outstanding_pasangan: this.slikTotal.total_outstanding_pasangan,
+          total_outstanding: this.totalOutstandingSlik,
+          plafon_nasabah: this.slikTotal.total_plafon_nasabah,
+          plafon_pasangan: this.slikTotal.total_plafon_pasangan,
+          total_plafon: this.totalPlafonSlik,
         })
         .subscribe({});
     this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
@@ -345,10 +442,15 @@ export class DataRumahComponent implements OnInit {
   // Only Numbers
   keyPressNumbers(event?: any): void {
     const charCode = event.which ? event.which : event.keyCode;
+    // charCode.toLocaleString('id-ID',{style: 'currency', currency:'IDR'})
     // Only Numbers 0-9
     if (charCode < 48 || charCode > 57) {
       event.preventDefault();
       return;
     }
+  }
+  formatMoney(value?: any) {
+    const jdkfj = value.replace(/\,/g, '').replace('Rp ', '');
+    alert(jdkfj);
   }
 }

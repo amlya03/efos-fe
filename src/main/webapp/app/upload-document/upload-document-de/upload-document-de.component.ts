@@ -123,7 +123,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   // Delete
   deleteDataUpload(doc: any, id: any, id_upload: any, nama: any) {
     this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/deleteDocUpload', {
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/deleteDocUpload', {
         created_date: '',
         doc_description: doc,
         id: id,

@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { Subject } from 'rxjs';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { daOp } from './daOp.model';
@@ -21,6 +23,8 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
   valueCariButton = '';
   kategori_pekerjaan = '';
   kirimDe: Array<number> = [];
+  dataEntry?: fetchAllDe = new fetchAllDe();
+  curef: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -31,7 +35,8 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
     protected daOpService: ServiceVerificationService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected dataEntryService: DataEntryService
   ) {}
 
   ngOnInit(): void {
@@ -64,5 +69,14 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
   }
   clearInput(): void {
     $('#dataTables-example').DataTable().columns().search('').draw();
+  }
+
+  // ReadOnly
+  readOnlyButton(app_no_de: any) {
+    this.dataEntryService.getFetchSemuaDataDE(app_no_de).subscribe(data => {
+      this.dataEntry = data.result;
+      this.curef = this.dataEntry?.curef;
+      this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: app_no_de, curef: this.curef } });
+    });
   }
 }

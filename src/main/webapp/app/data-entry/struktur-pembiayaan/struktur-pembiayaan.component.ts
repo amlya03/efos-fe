@@ -59,19 +59,19 @@ export class StrukturPembiayaanComponent implements OnInit {
       this.curef = params['curef'];
     });
   }
-  protected getekodefasilitas = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_fasilitas');
+  protected getekodefasilitas = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_fasilitas');
   protected getkodeprogramstruktur = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-de/list_program?sp='
+    'http://10.20.34.110:8805/api/v1/efos-de/list_program?sp='
   );
-  protected getkodeproduknya = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_produk?sp=');
-  protected getskema = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_skema?ss=');
-  protected getfix = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_tenor_fix?ss=');
-  protected getstepup = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_tenor_stepup?ss=');
+  protected getkodeproduknya = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_produk?sp=');
+  protected getskema = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_skema?ss=');
+  protected getfix = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_tenor_fix?ss=');
+  protected getstepup = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_tenor_stepup?ss=');
   protected getmarginstepup = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-de/list_margin_stepup?ss='
+    'http://10.20.34.110:8805/api/v1/efos-de/list_margin_stepup?ss='
   );
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getStrukturBiayaByDe?');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getStrukturBiayaByDe?');
 
   ngOnInit(): void {
     this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
@@ -323,7 +323,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
     this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/hitung_angsuran', {
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/hitung_angsuran', {
         // headers: headers,
 
         app_no_de: this.app_no_de,
@@ -445,7 +445,7 @@ export class StrukturPembiayaanComponent implements OnInit {
       const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_struktur_pembiayaan', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_struktur_pembiayaan', {
           // headers: headers,
           angsuran: angsurankiriman.value,
           app_no_de: this.app_no_de,
@@ -493,7 +493,7 @@ export class StrukturPembiayaanComponent implements OnInit {
       const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_struktur_pembiayaan', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_struktur_pembiayaan', {
           // headers: headers,
           angsuran: angsurankiriman.value,
           app_no_de: this.app_no_de,

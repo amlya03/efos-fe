@@ -70,10 +70,10 @@ export class CollateralComponent implements OnInit {
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getCollateralByCuref?sc=');
-  protected apigettipeagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/list_tipe_agunan');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getCollateralByCuref?sc=');
+  protected apigettipeagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_tipe_agunan');
   protected apistatussertifikat = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-ref/list_status_sertifikat'
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_status_sertifikat'
   );
   protected apigethubunganagunan = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.178:8805/api/v1/efos-ref/list_hubungan_agunan'
@@ -86,7 +86,7 @@ export class CollateralComponent implements OnInit {
     'http://10.20.34.178:8805/api/v1/efos-ref/list_tipe_kendaraan'
   );
 
-  protected apigetlistagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_developer');
+  protected apigetlistagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_developer');
 
   ngOnInit(): void {
     this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
