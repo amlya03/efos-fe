@@ -22,7 +22,7 @@ export class PekerjaanPasanganComponent implements OnInit {
   curef: any;
   statusPerkawinan: any;
   daWa: any;
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getJobPasanganByCuref?sc=');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobPasanganByCuref?sc=');
   kirimansiup: any;
   jenispekerjaan: any;
   getjabatan: any;
@@ -50,12 +50,12 @@ export class PekerjaanPasanganComponent implements OnInit {
       this.statusPerkawinan = params.statusPerkawinan;
     });
   }
-  protected apilistjenisbidang = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/list_jenis_bidang');
+  protected apilistjenisbidang = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/list_jenis_bidang');
 
   protected apigetjenispekeraan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-ref/list_tipe_pekerjaan?sc='
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_pekerjaan?sc='
   );
-  protected apilistjabatan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_jabatan');
+  protected apilistjabatan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_jabatan');
 
   ngOnInit(): void {
     this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
@@ -203,7 +203,7 @@ export class PekerjaanPasanganComponent implements OnInit {
   getsektorekonomi(idsktor: any, req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
 
-    return this.http.get<ApiResponse>('http://10.20.34.178:8805/api/v1/efos-ide/list_sektor_ekonomi?se=' + idsktor, {
+    return this.http.get<ApiResponse>('http://10.20.34.110:8805/api/v1/efos-ide/list_sektor_ekonomi?se=' + idsktor, {
       params: options,
       observe: 'response',
     });
@@ -391,7 +391,7 @@ export class PekerjaanPasanganComponent implements OnInit {
     alert(contohtampungancuref);
 
     this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_job_info_pasangan', {
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_job_info_pasangan', {
         // headers: headers,
 
         curef: this.curef,

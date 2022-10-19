@@ -52,7 +52,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
   // }
 
   load(): void {
-    this.DaftarAplikasiVerifServices.getDaWuS().subscribe(data => {
+    this.DaftarAplikasiVerifServices.getDaOp().subscribe(data => {
       console.warn(data);
       if (data.code === 200) {
         this.daftarAplikasiVerif = data.result;

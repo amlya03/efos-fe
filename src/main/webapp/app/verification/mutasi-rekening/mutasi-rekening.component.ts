@@ -176,7 +176,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     // alert(this.lihatTableMutasi)
     if (this.tambahTableMutasi == '') {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_verif_mutasi', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_verif_mutasi', {
           id: this.idTableMutasi,
           app_no_de: this.app_no_de,
           bulan: bulan,
@@ -198,7 +198,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     } else {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_verif_mutasi', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_verif_mutasi', {
           id: this.idTableMutasi,
           app_no_de: this.app_no_de,
           bulan: bulan,

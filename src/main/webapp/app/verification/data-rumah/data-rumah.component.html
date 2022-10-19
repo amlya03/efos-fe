@@ -69,90 +69,70 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama yang Dihubungi</label>
         <div class="col-sm-8">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             type="text"
             class="form-control"
             id="nama_yang_dihubungi"
             name="nama_yang_dihubungi"
             placeholder=""
             formControlName="nama_dihubungi"
-            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.nama_dihubungi.errors }"
           />
-          <div *ngIf="submitted && analisaKeuanganForm.controls.nama_dihubungi.errors" class="text-danger">
-            <div *ngIf="submitted && analisaKeuanganForm.controls.nama_dihubungi.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jabatan yang Dihubungi</label>
         <div class="col-sm-8">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             type="text"
             class="form-control"
             id="jabatan_yang_dihubungi"
             name="jabatan_yang_dihubungi"
             placeholder=""
             formControlName="jabatan_dihubungi"
-            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.jabatan_dihubungi.errors }"
           />
-          <div *ngIf="submitted && analisaKeuanganForm.controls.jabatan_dihubungi.errors" class="text-danger">
-            <div *ngIf="submitted && analisaKeuanganForm.controls.jabatan_dihubungi.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tanggal Permintaan</label>
         <div class="col-sm-8">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             type="date"
             class="form-control"
             id="tanggal_permintaan"
             name="tanggal_permintaan"
             placeholder=""
             formControlName="tanggal_permintaan"
-            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.tanggal_permintaan.errors }"
           />
-          <div *ngIf="submitted && analisaKeuanganForm.controls.tanggal_permintaan.errors" class="text-danger">
-            <div *ngIf="submitted && analisaKeuanganForm.controls.tanggal_permintaan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tanggal Pemeriksa</label>
         <div class="col-sm-8">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             type="date"
             class="form-control"
             id="tanggal_pemeriksa"
             name="tanggal_pemeriksa"
             placeholder=""
             formControlName="tanggal_pemeriksa"
-            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.tanggal_pemeriksa.errors }"
           />
-          <div *ngIf="submitted && analisaKeuanganForm.controls.tanggal_pemeriksa.errors" class="text-danger">
-            <div *ngIf="submitted && analisaKeuanganForm.controls.tanggal_pemeriksa.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Pemeriksa</label>
         <div class="col-sm-8">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             type="text"
             class="form-control"
             id="nama_pemeriksa"
             name="nama_pemeriksa"
             placeholder=""
             formControlName="nama_pemeriksa"
-            [ngClass]="{ 'is-invalid': submitted && analisaKeuanganForm.controls.nama_pemeriksa.errors }"
           />
-          <div *ngIf="submitted && analisaKeuanganForm.controls.nama_pemeriksa.errors" class="text-danger">
-            <div *ngIf="submitted && analisaKeuanganForm.controls.nama_pemeriksa.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
     </div>
@@ -162,7 +142,7 @@
     <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pemohon)</h3>
   </div>
   <p></p>
-  <table class="table table-striped table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+  <table id="dataTables-slik" class="table table-striped table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
     <thead>
       <tr class="table-dark">
         <th scope="col" style="text-align: center;">#</th>
@@ -170,8 +150,10 @@
         <th scope="col" style="text-align: center;">Nama Bank</th>
         <th scope="col" style="text-align: center;">Jenis Fasilitas</th>
         <th scope="col" style="text-align: center;">Kolektibilitas</th>
+        <th scope="col" style="text-align: center;">Keterangan</th>
         <th scope="col" style="text-align: center;">Outstanding</th>
         <th scope="col" style="text-align: center;">Plafond</th>
+        <th scope="col" style="text-align: center;">Angsuran</th>
         <th scope="col" style="text-align: center;">Tanggal Mulai</th>
         <th scope="col" style="text-align: center;">Tanggal Berakhir</th>
         <th scope="col" style="text-align: center;">Status</th>
@@ -184,14 +166,32 @@
         <td style="text-align: center">{{listLajangSlik.ljk_ket}}</td>
         <td style="text-align: center">{{listLajangSlik.jenis_kredit_pembiayaan_ket}}</td>
         <td style="text-align: center">{{listLajangSlik.kualitas_ket}}</td>
-        <td style="text-align: center">{{listLajangSlik.suku_bunga_imbalan}}</td>
-        <td style="text-align: center">{{listLajangSlik.suku_bunga_imbalan}}</td>
+        <td style="text-align: center">{{listLajangSlik.jenis_penggunaan_ket}}</td>
+        <td style="text-align: center">{{listLajangSlik.baki_debet}}</td>
+        <td style="text-align: center">{{listLajangSlik.plafon}}</td>
+        <td style="text-align: center">{{listLajangSlik.angsuran}}</td>
         <td style="text-align: center">{{listLajangSlik.tanggal_mulai}}</td>
         <td style="text-align: center">{{listLajangSlik.tanggal_jatuh_tempo}}</td>
         <td style="text-align: center">{{listLajangSlik.kondisi_ket}}</td>
       </tr>
     </tbody>
+    <tfoot>
+        <tr>
+            <th style="text-align: center;" colspan="6">Total</th>
+            <th style="text-align: center;">{{this.slikTotal.total_outstanding_nasabah}}</th>
+            <th style="text-align: center;">{{this.slikTotal.total_plafon_nasabah}}</th>
+            <th style="text-align: center;">{{this.slikTotal.total_angsuran_nasabah}}</th>
+        </tr>
+    </tfoot>
   </table>
+  <div class="row form-material">
+    <div class="col">
+      <!-- {{this.plafond}} -->
+    </div>
+    <div class="col">
+      <!-- {{this.outstanding}} -->
+    </div>
+  </div>
   <p></p>
   <button class="btn btn-info" type="button" (click)="printLajang(listLajangSlik[0].id_number)">Lihat Slik</button>
   <p></p>
@@ -207,8 +207,10 @@
         <th scope="col" style="text-align: center;">Nama Bank</th>
         <th scope="col" style="text-align: center;">Jenis Fasilitas</th>
         <th scope="col" style="text-align: center;">Kolektibilitas</th>
+        <th scope="col" style="text-align: center;">Keterangan</th>
         <th scope="col" style="text-align: center;">Outstanding</th>
         <th scope="col" style="text-align: center;">Plafond</th>
+        <th scope="col" style="text-align: center;">Angsuran</th>
         <th scope="col" style="text-align: center;">Tanggal Mulai</th>
         <th scope="col" style="text-align: center;">Tanggal Berakhir</th>
         <th scope="col" style="text-align: center;">Status</th>
@@ -221,13 +223,23 @@
         <td style="text-align: center">{{listMenikahSlik.ljk_ket}}</td>
         <td style="text-align: center">{{listMenikahSlik.jenis_kredit_pembiayaan_ket}}</td>
         <td style="text-align: center">{{listMenikahSlik.kualitas_ket}}</td>
-        <td style="text-align: center">{{listMenikahSlik.suku_bunga_imbalan}}</td>
-        <td style="text-align: center">{{listMenikahSlik.suku_bunga_imbalan}}</td>
+        <td style="text-align: center">{{listMenikahSlik.jenis_penggunaan_ket}}</td>
+        <td style="text-align: center">{{listMenikahSlik.baki_debet}}</td>
+        <td style="text-align: center">{{listMenikahSlik.plafon}}</td>
+        <td style="text-align: center">{{listMenikahSlik.angsuran}}</td>
         <td style="text-align: center">{{listMenikahSlik.tanggal_mulai}}</td>
         <td style="text-align: center">{{listMenikahSlik.tanggal_jatuh_tempo}}</td>
         <td style="text-align: center">{{listMenikahSlik.kondisi_ket}}</td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+          <th style="text-align: center;" colspan="6">Total</th>
+          <th style="text-align: center;">{{this.slikTotal.total_outstanding_pasangan}}</th>
+          <th style="text-align: center;">{{this.slikTotal.total_plafon_pasangan}}</th>
+          <th style="text-align: center;">{{this.slikTotal.total_angsuran_pasangan}}</th>
+      </tr>
+    </tfoot>
   </table>
   <p></p>
   <button class="btn btn-info" type="button" (click)="printMenikah(listMenikahSlik[0].id_number)">Lihat Slik</button>
@@ -236,11 +248,11 @@
     <h3 style="color: #fff; text-align: center">Data Keuangan Nasabah</h3>
   </div>
   <p></p>
-  <div class="row">
-    <div class="col" style="text-align: center"><input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="checkbox" [checked]="this.dataEntry.joint_income == 1"/> Joint Income</div>
+  <div class="row form-material">
+    <div class="col" style="text-align: center"><input type="checkbox" [checked]="this.dataEntry.joint_income == 1"/> Joint Income</div>
   </div>
   <p></p>
-  <div id="fixIncome">
+  <div [hidden]="this.dataEntry.kategori_pekerjaan == 'Non Fix Income'"> <!--  *ngIf="this.dataEntry.kategori_pekerjaan == 'Fix Income'" -->
     <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
       <h3 style="color: #fff; text-align: center">Fix Income</h3>
     </div>
@@ -256,13 +268,14 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Gaji Kotor</label>
           <div class="col-sm-7">
-            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            <input
               formControlName="gaji_kotor"
               type="text"
               class="form-control"
               id="gaji_kotor_pemohon"
               name="gaji_kotor_pemohon"
-              placeholder=""
+              (keypress)="keyPressNumbers($event)"
+              #gaji_kotor1
             />
           </div>
         </div>
@@ -270,26 +283,29 @@
       <br />
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             formControlName="gaji_kotor_pasangan"
             type="text"
             class="form-control"
             id="gaji_kotor_pasangan"
             name="gaji_kotor_pasangan"
-            placeholder=""
+            (keypress)="keyPressNumbers($event)"
+            #gaji_kotor_pasangan1
           />
         </div>
       </div>
       <br />
       <div class="col">
         <div class="form-group row">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             formControlName="gaji_kotor_total"
             type="text"
             class="form-control"
             id="gaji_kotor_total"
             name="gaji_kotor_total"
-            placeholder=""
+            (keypress)="keyPressNumbers($event)"
+            readonly
+            value="{{(+gaji_kotor1.value)+(+gaji_kotor_pasangan1.value)| currency:'Rp '}}"
           />
         </div>
       </div>
@@ -300,38 +316,88 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Tunjangan</label>
           <div class="col-sm-7">
-            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            <input
               formControlName="tunjangan"
               type="text"
               class="form-control"
               id="tunjangan_pemohon"
               name="tunjangan_pemohon"
-              placeholder=""
+              (keypress)="keyPressNumbers($event)"
+              #tunjangan1
             />
           </div>
         </div>
       </div>
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             formControlName="tunjangan_pasangan"
             type="text"
             class="form-control"
             id="tunjangan_pasangan"
             name="tunjangan_pasangan"
-            placeholder=""
+            (keypress)="keyPressNumbers($event)"
+            #tunjangan_pasangan1
           />
         </div>
       </div>
       <div class="col">
         <div class="form-group row">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             formControlName="tunjangan_total"
             type="text"
             class="form-control"
             id="tunjangan_total"
             name="tunjangan_total"
-            placeholder=""
+            readonly
+            (keypress)="keyPressNumbers($event)"
+            value="{{(+tunjangan1.value)+(+tunjangan_pasangan1.value)| currency:'Rp '}}"
+          />
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label">Pendapatan Kantor Lainnya</label>
+          <div class="col-sm-7">
+            <input
+              formControlName="pendapatan_kantor_lainnya"
+              type="text"
+              class="form-control"
+              id="pendapatan_kantor_lainnya"
+              name="pendapatan_kantor_lainnya"
+              (keypress)="keyPressNumbers($event)"
+              #pendapatan_kantor_lainnya1
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col" [hidden]="this.dataEntry.joint_income == 0">
+        <div class="form-group row">
+          <input
+            formControlName="pendapatan_kantor_lainnya_pasangan"
+            type="text"
+            class="form-control"
+            id="pendapatan_kantor_lainnya_pasangan"
+            name="pendapatan_kantor_lainnya_pasangan"
+            (keypress)="keyPressNumbers($event)"
+            #pendapatan_kantor_lainnya_pasangan1
+          />
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <input
+            formControlName="pendapatan_kantor_lainnya_total"
+            type="text"
+            class="form-control"
+            id="pendapatan_kantor_lainnya_total"
+            name="pendapatan_kantor_lainnya_total"
+            (keypress)="keyPressNumbers($event)"
+            readonly
+            value="{{(+pendapatan_kantor_lainnya1.value)+(+pendapatan_kantor_lainnya_pasangan1.value)| currency:'Rp '}}"
           />
         </div>
       </div>
@@ -342,38 +408,138 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Pendapatan Kotor</label>
           <div class="col-sm-7">
-            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            <input
               formControlName="pendapatan_kotor"
               type="text"
               class="form-control"
               id="pendapatan_kotor_pemohon"
               name="pendapatan_kotor_pemohon"
-              placeholder=""
+              (keypress)="keyPressNumbers($event)"
+              #pendapatan_kotor1
+              value="{{(+gaji_kotor1.value)+(+tunjangan1.value)+(+pendapatan_kantor_lainnya1.value)}}"
             />
           </div>
         </div>
       </div>
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             formControlName="pendapatan_kotor_pasangan"
             type="text"
             class="form-control"
             id="pendapatan_kotor_pasangan"
             name="pendapatan_kotor_pasangan"
-            placeholder=""
+            (keypress)="keyPressNumbers($event)"
+            #pendapatan_kotor_pasangan1
+            value="{{(+gaji_kotor_pasangan1.value)+(+tunjangan_pasangan1.value)+(+pendapatan_kantor_lainnya_pasangan1.value)}}"
           />
         </div>
       </div>
       <div class="col">
         <div class="form-group row">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             formControlName="pendapatan_kotor_total"
             type="text"
             class="form-control"
             id="pendapatan_kotor_total"
             name="pendapatan_kotor_total"
-            placeholder=""
+            readonly
+            (keypress)="keyPressNumbers($event)"
+            value="{{(+pendapatan_kotor1.value)+(+pendapatan_kotor_pasangan1.value)| currency:'Rp '}}"
+          />
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label">Total Angsuran Kewajiban Kantor</label>
+          <div class="col-sm-7">
+            <input
+              type="text"
+              class="form-control"
+              id="total_angsuran_kewajiban_kantor"
+              (keypress)="keyPressNumbers($event)"
+              formControlName="angsuran_kewajiban_kantor"
+              #angsuran_kewajiban_kantor1
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col" [hidden]="this.dataEntry.joint_income == 0">
+        <div class="form-group row">
+          <input
+            type="text"
+            class="form-control"
+            id="total_angsuran_kewajiban_kantor_pasangan"
+            (keypress)="keyPressNumbers($event)"
+            formControlName="angsuran_kewajiban_kantor_pasangan"
+            #angsuran_kewajiban_kantor_pasangan1
+          />
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <input
+            type="text"
+            class="form-control"
+            id="total_angsuran_kewajiban_kantor_total"
+            (keypress)="keyPressNumbers($event)"
+            formControlName="total_angsuran_kewajiban_kantor"
+            value="{{(+angsuran_kewajiban_kantor1.value)+(+angsuran_kewajiban_kantor_pasangan1.value)| currency:'Rp '}}"
+            readonly
+          />
+        </div>
+      </div>
+    </div>
+    <br/>
+    <p></p>
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label">Pendapatan Bersih</label>
+          <div class="col-sm-7">
+            <input
+              formControlName="pendapatan_bersih"
+              type="text"
+              class="form-control"
+              id="pendapatan_bersih"
+              name="pendapatan_bersih"
+              (keypress)="keyPressNumbers($event)"
+              #pendapatan_bersih1
+              value="{{(+pendapatan_kotor1.value)-(+angsuran_kewajiban_kantor1.value)}}"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col" [hidden]="this.dataEntry.joint_income == 0">
+        <div class="form-group row">
+          <input
+            formControlName="pendapatan_bersih_pasangan"
+            type="text"
+            class="form-control"
+            id="pendapatan_bersih_pasangan"
+            name="pendapatan_bersih_pasangan"
+            (keypress)="keyPressNumbers($event)"
+            #pendapatan_bersih_pasangan1
+            value="{{(+pendapatan_kotor_pasangan1.value)-(+angsuran_kewajiban_kantor_pasangan1.value)}}"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <input
+            formControlName="pendapatan_bersih_total"
+            type="text"
+            class="form-control"
+            id="pendapatan_bersih_total"
+            name="pendapatan_bersih_total"
+            (keypress)="keyPressNumbers($event)"
+            value="{{(+pendapatan_bersih1.value)+(+pendapatan_bersih_pasangan1.value)| currency:'Rp '}}"
+            readonly
           />
         </div>
       </div>
@@ -382,7 +548,7 @@
     <br />
   </div>
   <p></p>
-  <div id="nonFixIncome">
+  <div [hidden]="this.dataEntry.kategori_pekerjaan == 'Fix Income'"> <!-- *ngIf="this.dataEntry.kategori_pekerjaan == 'Non Fix Income'" -->
     <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
       <h3 style="color: #fff; text-align: center">Non Fix Income</h3>
     </div>
@@ -397,38 +563,41 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Pendapatan Usaha</label>
           <div class="col-sm-7">
-            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            <input
               formControlName="pendapatan_usaha"
               type="text"
               class="form-control"
-              id="pendapatan_usaha_pemohon"
-              name="pendapatan_usaha_pemohon"
-              placeholder=""
+              id="pendapatan_usaha"
+              name="pendapatan_usaha"
+              (keypress)="keyPressNumbers($event)"
+              #pendapatan_usaha1
             />
           </div>
         </div>
       </div>
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             formControlName="pendapatan_usaha_pasangan"
             type="text"
             class="form-control"
             id="pendapatan_usaha_pasangan"
             name="pendapatan_usaha_pasangan"
-            placeholder=""
+            (keypress)="keyPressNumbers($event)"
+            #pendapatan_usaha_pasangan1
           />
         </div>
       </div>
       <div class="col">
         <div class="form-group row">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             formControlName="pendapatan_usaha_total"
             type="text"
             class="form-control"
             id="pendapatan_usaha_total"
             name="pendapatan_usaha_total"
-            placeholder=""
+            readonly
+            value="{{(+pendapatan_usaha1.value)+(+pendapatan_usaha_pasangan1.value)| currency:'Rp '}}"
           />
         </div>
       </div>
@@ -439,39 +608,47 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Pendapatan Profesional</label>
           <div class="col-sm-7">
-            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            <input
               type="text"
               class="form-control"
-              id="pendapatan_profesional_pemohon"
-              name="pendapatan_profesional_pemohon"
+              id="pendapatan_profesional"
+              name="pendapatan_profesional"
+              (keypress)="keyPressNumbers($event)"
               formControlName="pendapatan_profesional"
+              #pendapatan_profesional1
             />
           </div>
         </div>
       </div>
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             type="text"
             class="form-control"
             id="pendapatan_profesional_pasangan"
             name="pendapatan_profesional_pasangan"
+            (keypress)="keyPressNumbers($event)"
             formControlName="pendapatan_profesional_pasangan"
+            #pendapatan_profesional_pasangan1
           />
         </div>
       </div>
       <div class="col">
         <div class="form-group row">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             type="text"
             class="form-control"
             id="pendapatan_profesional_total"
             name="pendapatan_profesional_total"
+            (keypress)="keyPressNumbers($event)"
             formControlName="pendapatan_profesional_total"
+            readonly
+            value="{{(+pendapatan_profesional1.value) + (+pendapatan_profesional_pasangan1.value)| currency:'Rp '}}"
           />
         </div>
       </div>
     </div>
+  </div>
     <p></p>
     <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
       <h3 style="color: #fff; text-align: center">Total Penghasilan Kotor</h3>
@@ -482,13 +659,16 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label" style="color: #fff">TPK</label>
           <div class="col">
-            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            <input
               type="text"
               readonly
               class="form-control"
-              id="total_penghasilan_kotor_pemohon"
-              name="total_penghasilan_kotor_pemohon"
+              id="total_penghasilan_kotor"
+              name="total_penghasilan_kotor"
+              (keypress)="keyPressNumbers($event)"
               formControlName="total_penghasilan_kotor"
+              #total_penghasilan_kotor1
+              value="{{(+pendapatan_usaha1.value)+(+pendapatan_profesional1.value)+(+pendapatan_bersih1.value)}}"
             />
           </div>
         </div>
@@ -496,26 +676,31 @@
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <div class="col">
-            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            <input
               type="text"
               readonly
               class="form-control"
               id="total_penghasilan_kotor_pasangan"
               name="total_penghasilan_kotor_pasangan"
+              (keypress)="keyPressNumbers($event)"
               formControlName="total_penghasilan_kotor_pasangan"
+              #total_penghasilan_kotor_pasangan1
+              value="{{(+pendapatan_usaha_pasangan1.value)+(+pendapatan_profesional_pasangan1.value)+(+pendapatan_bersih_pasangan1.value)}}"
             />
           </div>
         </div>
       </div>
       <div class="col">
         <div class="form-group row">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             type="text"
             readonly
             class="form-control"
-            id="total_penghasilan_kotor_pasangan"
-            name="total_penghasilan_kotor_pasangan"
-            formControlName=""
+            id="total_penghasilan_kotor_akumulasi"
+            name="total_penghasilan_kotor_akumulasi"
+            (keypress)="keyPressNumbers($event)"
+            formControlName="total_penghasilan_kotor_akumulasi"
+            value="{{(+total_penghasilan_kotor1.value)+(+total_penghasilan_kotor_pasangan1.value)| currency:'Rp '}}"
           />
         </div>
       </div>
@@ -530,14 +715,15 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label" style="color: #fff">KB</label>
           <div class="col-sm-7">
-            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-              formControlName="kewajiban_bank"
+            <input
               type="text"
               readonly
               class="form-control"
-              id="kewajiban_bank_pemohon"
-              name="kewajiban_bank_pemohon"
-              placeholder=""
+              id="kewajiban_bank"
+              name="kewajiban_bank"
+              (keypress)="keyPressNumbers($event)"
+              #kewajiban_bank1
+              value="{{this.slikTotal.total_angsuran_nasabah}}"
             />
           </div>
         </div>
@@ -545,29 +731,31 @@
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <div class="col">
-            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-              formControlName="kewajiban_bank_pasangan"
+            <input
               type="text"
               readonly
               class="form-control"
               id="kewajiban_bank_pasangan"
               name="kewajiban_bank_pasangan"
-              placeholder=""
+              (keypress)="keyPressNumbers($event)"
+              #kewajiban_bank_pasangan1
+              value="{{this.slikTotal.total_angsuran_pasangan}}"
             />
           </div>
         </div>
       </div>
       <div class="col">
         <div class="form-group row">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             formControlName="kewajiban_bank_total"
             type="text"
             readonly
             class="form-control"
             id="kewajiban_bank_total"
             name="kewajiban_bank_total"
-            placeholder=""
-          />
+            (keypress)="keyPressNumbers($event)"
+            value="{{(+kewajiban_bank1.value)+(+kewajiban_bank_pasangan1.value) | currency:'Rp ':'2'}}"
+          /><!---| currency:'Rp ':'2'-->
         </div>
       </div>
     </div>
@@ -581,13 +769,14 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label" style="color: #fff">KL</label>
           <div class="col-sm-7">
-            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-              formControlName=""
+            <input
+              formControlName="kewajiban_lainnya"
               type="text"
               class="form-control"
-              id="kewajiban_lainnya_pemohon"
-              name="kewajiban_lainnya_pemohon"
-              placeholder="kewajiban_lainnya_total"
+              id="kewajiban_lainnya"
+              name="kewajiban_lainnya"
+              (keypress)="keyPressNumbers($event)"
+              #kewajiban_lainnya1
             />
           </div>
         </div>
@@ -595,27 +784,29 @@
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <div class="col">
-            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            <input
               formControlName="kewajiban_lainnya_pasangan"
               type="text"
               class="form-control"
               id="kewajiban_lainnya_pasangan"
               name="kewajiban_lainnya_pasangan"
-              placeholder=""
+              (keypress)="keyPressNumbers($event)"
+              #kewajiban_lainnya_pasangan1
             />
           </div>
         </div>
       </div>
       <div class="col">
         <div class="form-group row">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-            formControlName=""
+          <input
+            formControlName="kewajiban_lainnya_total"
             type="text"
             readonly
             class="form-control"
             id="kewajiban_lainnya_total"
             name="kewajiban_lainnya_total"
-            placeholder=""
+            (keypress)="keyPressNumbers($event)"
+            value="{{(+kewajiban_lainnya1.value)+(+kewajiban_lainnya_pasangan1.value)| currency:'Rp '}}"
           />
         </div>
       </div>
@@ -630,13 +821,16 @@
         <div class="form-group row">
           <label class="col-sm-5 col-form-label" style="color: #fff">TPB</label>
           <div class="col-sm-7">
-            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            <input
               type="text"
               readonly
               class="form-control"
-              id="total_penghasilan_bersih_pemohon"
-              name="total_penghasilan_bersih_pemohon"
-              formControlName=""
+              id="total_penghasilan_bersih"
+              name="total_penghasilan_bersih"
+              formControlName="total_penghasilan_bersih"
+              (keypress)="keyPressNumbers($event)"
+              #total_penghasilan_bersih1
+              value="{{(+total_penghasilan_kotor1.value)-((+kewajiban_bank1.value)+(+kewajiban_lainnya1.value))}}"
             />
           </div>
         </div>
@@ -644,31 +838,35 @@
       <div class="col" [hidden]="this.dataEntry.joint_income == 0">
         <div class="form-group row">
           <div class="col">
-            <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            <input
               type="text"
               readonly
               class="form-control"
               id="total_penghasilan_bersih_pasangan"
               name="total_penghasilan_bersih_pasangan"
-              formControlName=""
+              formControlName="total_penghasilan_bersih_pasangan"
+              (keypress)="keyPressNumbers($event)"
+              #total_penghasilan_bersih_pasangan1
+              value="{{(+total_penghasilan_kotor_pasangan1.value)-((+kewajiban_bank_pasangan1.value)+(+kewajiban_lainnya_pasangan1.value))}}"
             />
           </div>
         </div>
       </div>
       <div class="col">
         <div class="form-group row">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          <input
             type="text"
             readonly
             class="form-control"
-            id="total_penghasilan_bersih_total"
-            name="total_penghasilan_bersih_total"
+            id="total_penghasilan_bersih_akumulasi"
+            name="total_penghasilan_bersih_akumulasi"
             formControlName="total_penghasilan_bersih_akumulasi"
+            (keypress)="keyPressNumbers($event)"
+            value="{{(+total_penghasilan_bersih1.value)+(+total_penghasilan_bersih_pasangan1.value)| currency:'Rp '}}"
           />
         </div>
       </div>
     </div>
-  </div>
   <p></p>
   <p></p>
   <div class="row">

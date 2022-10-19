@@ -35,16 +35,24 @@ export class DataEntryService {
   }
 
   // ///////////////////////////// Data Entry \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  protected fetchSemuaDataDE = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected fetchSemuaDataDE = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
   // ///////////////////////////// Data Entry \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ///////////////////////////// Struktur Pembiayaan Data entry \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchSemuaStrukturDE = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getStrukturBiayaByDe?sc=');
+  // ///////////////////////////// Struktur Pembiayaan Data entry \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ///////////////////////////// Get Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected fetchSemuaJob = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobByCurefDe?sj=');
   // ///////////////////////////// Get Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ///////////////////////////// Get View Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  protected getViewJob = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getVJobByCuref?sj=');
+  protected getViewJob = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getVJobByCuref?sj=');
   // ///////////////////////////// Get ViewJob \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // //////////////////////////////////////////////////// Get Job Pasangan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected getJobPasangan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobPasanganByCuref?sc=')
+  // //////////////////////////////////////////////////// Get Job Pasangan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ///////////////////////////// Get MEMO \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected fetchMemo = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getMemoByDe?sd=');
@@ -66,11 +74,24 @@ export class DataEntryService {
   }
   // /////////////////////////// Ref Semua Data DE ////////////////////////////////////////////
 
+  // /////////////////////////// Ref Semua Struktur Pembiayaan Data DE ////////////////////////////////////////////
+  getFetchStrukturDE(app_no_de: any, curef: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchSemuaDataDE + curef +'&sd='+app_no_de);
+  }
+  // /////////////////////////// Ref Semua Struktur Pembiayaan Data DE ////////////////////////////////////////////
+
   // /////////////////////////// Ref Semua Data Job ////////////////////////////////////////////
   getFetchSemuaDataJob(curef: any): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.fetchSemuaJob + curef);
   }
   // /////////////////////////// Ref Semua Data Job ////////////////////////////////////////////
+
+  // /////////////////////////// Ref Semua Data Job Pasangan ////////////////////////////////////////////
+  getSemuaDataJobPasangan(curef: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getJobPasangan + curef);
+  }
+  // /////////////////////////// Ref Semua Data Job Pasangan ////////////////////////////////////////////
+
 
   // /////////////////////////// Ref View Job ////////////////////////////////////////////
   getGetViewDataJob(curef: any): Observable<ApiResponse> {

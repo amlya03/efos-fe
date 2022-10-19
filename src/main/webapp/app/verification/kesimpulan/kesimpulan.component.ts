@@ -88,7 +88,7 @@ export class KesimpulanComponent implements OnInit {
     }
     // else
     //   this.http
-    //     .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_keuangan', {
+    //     .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_keuangan', {
 
     //     })
     //     .subscribe({});

@@ -70,7 +70,7 @@
         <td style="text-align: center">{{ daOp.analis_verifikasi }}</td>
         <td style="text-align: center">{{ daOp.sla }} Hari</td>
         <td style="text-align: center">
-          <button type="button" class="btn btn-outline-secondary"><fa-icon icon="ellipsis"></fa-icon><br />Detail</button>
+          <a (click)="readOnlyButton(daOp.app_no_de)"><fa-icon icon="ellipsis"></fa-icon><br />Detail</a>
         </td>
       </tr>
     </tbody>

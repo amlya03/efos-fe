@@ -28,6 +28,7 @@ export class slik{
   kualitas?: number;
   kualitas_ket?: string;
   kode_valuta?: string;
+  angsuran?: Number;
   created_date?: string;
   created_by?: string;
 }

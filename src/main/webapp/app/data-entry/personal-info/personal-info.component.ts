@@ -23,7 +23,7 @@ export class PersonalInfoComponent implements OnInit {
   tampungandataygdibawa: any;
   app_no_de: any;
   daWa: any;
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
   hasildhn: any;
   personal_info_value: any;
   // protected getprovinsi = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/wilayahSvc/getProvinsi/');
@@ -309,7 +309,7 @@ export class PersonalInfoComponent implements OnInit {
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
     this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_customer', {
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_customer', {
         // headers: headers,
 
         nama: nama.value,
