@@ -70,6 +70,12 @@ export class ServiceVerificationService {
   );
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // ////////////////////// Analaisa Pembiayaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected allAnalisaPembiayaan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaPembiayaan?sd='
+  );
+  // ////////////////////// Analaisa Pembiayaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // ////////////////////// REFF \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   // ////////////////////// Ref Hubungan Angunan /////////////////////////////
   protected refHubunganAgunan = this.applicationConfigService.getEndpointFor(
@@ -102,6 +108,16 @@ export class ServiceVerificationService {
   // ////////////////////// Ref Status Rumah  /////////////////////////////
   protected refStatusRumah = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_status_rumah');
   // ////////////////////// Ref Status Rumah /////////////////////////////
+
+  // ////////////////////// Ref Skema  /////////////////////////////
+  protected refSkema = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_skema?ss=');
+  // ////////////////////// Ref Skema /////////////////////////////
+
+  // ////////////////////// Ref Tenor  /////////////////////////////
+  protected refTenorFix = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_tenor_fix?ss=');
+  protected refTenorNon = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_tenor_stepup?ss=');
+  // ////////////////////// Ref Tenor /////////////////////////////
+
   // ////////////////////// REFF \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
@@ -182,6 +198,12 @@ export class ServiceVerificationService {
   }
   // ////////////////////// get Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // ////////////////////// get Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  fetchAnalisaPembiayaan(app_no_de: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.allAnalisaPembiayaan + app_no_de);
+  }
+  // ////////////////////// get Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // ///////////////////// REF ////////////////////////////////////////////////
   // ////////////////////// Ref Hubungan Agunan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   getHubunganAgunan(): Observable<ApiResponse> {
@@ -218,5 +240,20 @@ export class ServiceVerificationService {
     return this.http.get<ApiResponse>(this.refStatusRumah);
   }
   // ////////////////////// Ref Status Rumah \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////// Ref SKema \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getSkema(produk: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refSkema + produk);
+  }
+  // ////////////////////// Ref SKema \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////// Ref Tenor \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getTenorFix(skema: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refTenorFix + skema);
+  }
+  getTenorNon(skema: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refTenorNon + skema);
+  }
+  // ////////////////////// Ref Tenor \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   // ///////////////////// REF ////////////////////////////////////////////////
 }

@@ -136,10 +136,11 @@ export class DataRumahComponent implements OnInit {
       kewajiban_bank_total: '',
       kewajiban_lainnya_total: '',
       total_penghasilan_bersih_akumulasi: '',
+
       // tambahan
-      // angsuran_kewajiban_kantor: '',
-      // angsuran_kewajiban_kantor_pasangan: '',
-      // total_angsuran_kewajiban_kantor: '',
+      angsuran_kewajiban_kantor: '',
+      angsuran_kewajiban_kantor_pasangan: '',
+      total_angsuran_kewajiban_kantor: '',
     });
   }
 
@@ -244,10 +245,11 @@ export class DataRumahComponent implements OnInit {
         kewajiban_bank_total: '',
         kewajiban_lainnya_total: this.analisaKeuanganMap.kewajiban_lainnya_total,
         total_penghasilan_bersih_akumulasi: this.analisaKeuanganMap.total_penghasilan_bersih_akumulasi,
+
         //Tambahajn
-        // angsuran_kewajiban_kantor: this.analisaKeuanganMap.angsuran_kewajiban_kantor,
-        // angsuran_kewajiban_kantor_pasangan: this.analisaKeuanganMap.angsuran_kewajiban_kantor_pasangan,
-        // total_angsuran_kewajiban_kantor: this.analisaKeuanganMap.total_angsuran_kewajiban_kantor,
+        angsuran_kewajiban_kantor: this.analisaKeuanganMap.angsuran_kewajiban_kantor,
+        angsuran_kewajiban_kantor_pasangan: this.analisaKeuanganMap.angsuran_kewajiban_kantor_pasangan,
+        total_angsuran_kewajiban_kantor: this.analisaKeuanganMap.total_angsuran_kewajiban_kantor,
 
         // created_date: "2022-09-29T10:59:20.895+00:00",
         // created_by: "",
@@ -269,31 +271,48 @@ export class DataRumahComponent implements OnInit {
     const total_kewaLain =
       Number(this.analisaKeuanganForm.get('kewajiban_lainnya')?.value) +
       Number(this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value);
-    const pend_bersih =
-      Number(this.analisaKeuanganForm.get('pendapatan_bersih')?.value) +
-      Number(this.analisaKeuanganForm.get('pendapatan_bersih_pasangan')?.value);
     const pend_kantorLain =
       Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value);
-    const pend_kotTot =
-      Number(this.analisaKeuanganForm.get('pendapatan_kotor')?.value) +
-      Number(this.analisaKeuanganForm.get('pendapatan_kotor_pasangan')?.value);
     const pend_usahaTot =
       Number(this.analisaKeuanganForm.get('pendapatan_usaha')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value);
     const tunjangan_Tot =
       Number(this.analisaKeuanganForm.get('tunjangan')?.value) + Number(this.analisaKeuanganForm.get('tunjangan_pasangan')?.value);
+    const pend_kotor =
+      Number(this.analisaKeuanganForm.get('gaji_kotor')?.value) +
+      Number(this.analisaKeuanganForm.get('tunjangan')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value);
+    const pend_kotor_pas =
+      Number(this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value) +
+      Number(this.analisaKeuanganForm.get('tunjangan_pasangan')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value);
+    const pend_kotor_tot = pend_kotor + pend_kotor_pas;
+    const pend_bersih_nas = pend_kotor - Number(this.analisaKeuanganForm.get('total_angsuran_kantor')?.value);
+    const pend_bersih_pas = pend_kotor_pas - Number(this.analisaKeuanganForm.get('total_angsuran_kantor_pasangan')?.value);
+    const pend_bersih = pend_bersih_nas + pend_bersih_pas;
+    const angsuranKewaTotal =
+      Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value) +
+      Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value);
+
     const totalPengKot =
-      Number(this.analisaKeuanganForm.get('pendapatan_bersih')?.value) +
+      pend_bersih_nas +
       Number(this.analisaKeuanganForm.get('pendapatan_usaha')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_profesional')?.value);
 
     const totalPengKotPas =
-      Number(this.analisaKeuanganForm.get('pendapatan_bersih_pasangan')?.value) +
+      pend_bersih_pas +
       Number(this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value);
 
     const totalTotalPengKot = totalPengKot + totalPengKotPas;
+    const totalPengBersih =
+      totalPengKot - (Number(this.slikTotal.total_angsuran_nasabah) - Number(this.analisaKeuanganForm.get('kewajiban_lainnya')?.value));
+    const totalPengBersihPas =
+      totalPengKotPas -
+      (Number(this.slikTotal.total_angsuran_pasangan) - Number(this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value));
+    const totalPengBersihTot = totalPengBersih + totalPengBersihPas;
+
     // POST
     this.submitted = true;
     if (this.analisaKeuanganForm.invalid) {
@@ -320,15 +339,15 @@ export class DataRumahComponent implements OnInit {
           kewajiban_lainnya_pasangan: this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value,
           kewajiban_lainnya_total: total_kewaLain,
           nama_pemeriksa: this.analisaKeuanganForm.get('nama_pemeriksa')?.value,
-          pendapatan_bersih: this.analisaKeuanganForm.get('pendapatan_bersih')?.value,
-          pendapatan_bersih_pasangan: this.analisaKeuanganForm.get('pendapatan_bersih_pasangan')?.value,
+          pendapatan_bersih: pend_bersih_nas,
+          pendapatan_bersih_pasangan: pend_bersih_pas,
           pendapatan_bersih_total: pend_bersih,
           pendapatan_kantor_lainnya: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value,
           pendapatan_kantor_lainnya_pasangan: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value,
           pendapatan_kantor_lainnya_total: pend_kantorLain,
-          pendapatan_kotor: this.analisaKeuanganForm.get('pendapatan_kotor')?.value,
-          pendapatan_kotor_pasangan: this.analisaKeuanganForm.get('pendapatan_kotor_pasangan')?.value,
-          pendapatan_kotor_total: pend_kotTot,
+          pendapatan_kotor: pend_kotor,
+          pendapatan_kotor_pasangan: pend_kotor_pas,
+          pendapatan_kotor_total: pend_kotor_tot,
           pendapatan_profesional: this.analisaKeuanganForm.get('pendapatan_profesional')?.value,
           pendapatan_profesional_pasangan: this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value,
           pendapatan_profesional_total: total_pro,
@@ -340,9 +359,9 @@ export class DataRumahComponent implements OnInit {
           total_angsuran_kantor: this.analisaKeuanganForm.get('total_angsuran_kantor')?.value,
           total_angsuran_kantor_akumulasi: this.analisaKeuanganForm.get('total_angsuran_kantor_akumulasi')?.value,
           total_angsuran_kantor_pasangan: this.analisaKeuanganForm.get('total_angsuran_kantor_pasangan')?.value,
-          total_penghasilan_bersih: this.analisaKeuanganForm.get('total_penghasilan_bersih')?.value,
-          total_penghasilan_bersih_akumulasi: this.analisaKeuanganForm.get('total_penghasilan_bersih_akumulasi')?.value,
-          total_penghasilan_bersih_pasangan: this.analisaKeuanganForm.get('total_penghasilan_bersih_pasangan')?.value,
+          total_penghasilan_bersih: totalPengBersih,
+          total_penghasilan_bersih_akumulasi: totalPengBersihTot,
+          total_penghasilan_bersih_pasangan: totalPengBersihPas,
           total_penghasilan_kotor: totalPengKot,
           total_penghasilan_kotor_akumulasi: totalTotalPengKot,
           total_penghasilan_kotor_pasangan: totalPengKotPas,
@@ -353,7 +372,7 @@ export class DataRumahComponent implements OnInit {
           // tambahan Total
           angsuran_kewajiban_kantor: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value,
           angsuran_kewajiban_kantor_pasangan: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value,
-          total_angsuran_kewajiban_kantor: this.analisaKeuanganForm.get('total_angsuran_kewajiban_kantor')?.value,
+          total_angsuran_kewajiban_kantor: angsuranKewaTotal,
           outstanding_nasabah: this.slikTotal.total_outstanding_nasabah,
           outstanding_pasangan: this.slikTotal.total_outstanding_pasangan,
           total_outstanding: this.totalOutstandingSlik,
@@ -385,15 +404,15 @@ export class DataRumahComponent implements OnInit {
           kewajiban_lainnya_pasangan: this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value,
           kewajiban_lainnya_total: total_kewaLain,
           nama_pemeriksa: this.analisaKeuanganForm.get('nama_pemeriksa')?.value,
-          pendapatan_bersih: this.analisaKeuanganForm.get('pendapatan_bersih')?.value,
-          pendapatan_bersih_pasangan: this.analisaKeuanganForm.get('pendapatan_bersih_pasangan')?.value,
+          pendapatan_bersih: pend_bersih_nas,
+          pendapatan_bersih_pasangan: pend_bersih_pas,
           pendapatan_bersih_total: pend_bersih,
           pendapatan_kantor_lainnya: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value,
           pendapatan_kantor_lainnya_pasangan: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value,
           pendapatan_kantor_lainnya_total: pend_kantorLain,
-          pendapatan_kotor: this.analisaKeuanganForm.get('pendapatan_kotor')?.value,
-          pendapatan_kotor_pasangan: this.analisaKeuanganForm.get('pendapatan_kotor_pasangan')?.value,
-          pendapatan_kotor_total: pend_kotTot,
+          pendapatan_kotor: pend_kotor,
+          pendapatan_kotor_pasangan: pend_kotor_pas,
+          pendapatan_kotor_total: pend_kotor_tot,
           pendapatan_profesional: this.analisaKeuanganForm.get('pendapatan_profesional')?.value,
           pendapatan_profesional_pasangan: this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value,
           pendapatan_profesional_total: total_pro,
@@ -405,9 +424,9 @@ export class DataRumahComponent implements OnInit {
           total_angsuran_kantor: this.analisaKeuanganForm.get('total_angsuran_kantor')?.value,
           total_angsuran_kantor_akumulasi: this.analisaKeuanganForm.get('total_angsuran_kantor_akumulasi')?.value,
           total_angsuran_kantor_pasangan: this.analisaKeuanganForm.get('total_angsuran_kantor_pasangan')?.value,
-          total_penghasilan_bersih: this.analisaKeuanganForm.get('total_penghasilan_bersih')?.value,
-          total_penghasilan_bersih_akumulasi: this.analisaKeuanganForm.get('total_penghasilan_bersih_akumulasi')?.value,
-          total_penghasilan_bersih_pasangan: this.analisaKeuanganForm.get('total_penghasilan_bersih_pasangan')?.value,
+          total_penghasilan_bersih: totalPengBersih,
+          total_penghasilan_bersih_akumulasi: totalPengBersihTot,
+          total_penghasilan_bersih_pasangan: totalPengBersihPas,
           total_penghasilan_kotor: totalPengKot,
           total_penghasilan_kotor_akumulasi: totalTotalPengKot,
           total_penghasilan_kotor_pasangan: totalPengKotPas,
@@ -418,7 +437,7 @@ export class DataRumahComponent implements OnInit {
           // tambahan Total
           angsuran_kewajiban_kantor: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value,
           angsuran_kewajiban_kantor_pasangan: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value,
-          total_angsuran_kewajiban_kantor: this.analisaKeuanganForm.get('total_angsuran_kewajiban_kantor')?.value,
+          total_angsuran_kewajiban_kantor: angsuranKewaTotal,
           outstanding_nasabah: this.slikTotal.total_outstanding_nasabah,
           outstanding_pasangan: this.slikTotal.total_outstanding_pasangan,
           total_outstanding: this.totalOutstandingSlik,
