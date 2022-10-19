@@ -1,4 +1,4 @@
-export class resultSlikTotal{
+export class resultSlikTotal {
   total_plafon_nasabah?: Number;
   total_plafon_pasangan?: Number;
   total_outstanding_nasabah?: Number;

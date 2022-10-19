@@ -48,6 +48,10 @@ export class EditjobinfoComponent implements OnInit {
   getjenisbidangdariapi: any;
   gettipeperusahaandariapi: any;
   untukSessionRole: any;
+  nampungdatakatagoripekerjaan: any;
+  kirimanjumlahkaryawan: any;
+  pendapatan!: number;
+  curef: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -72,6 +76,9 @@ export class EditjobinfoComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.statusPerkawinan = params['statusPerkawinan'];
     });
+    this.route.queryParams.subscribe(params => {
+      this.curef = params['curef'];
+    });
   }
 
   ngOnInit(): void {
@@ -88,7 +95,7 @@ export class EditjobinfoComponent implements OnInit {
         console.warn('asdasda', res.body?.result);
         this.daWa = res.body?.result;
         this.databawakategori = res.body?.result.kategori_pekerjaan;
-
+        this.nampungdatakatagoripekerjaan = this.daWa.kategori_pekerjaan;
         this.getjenispekerjaan(this.databawakategori).subscribe({
           next: (res: EntityArrayResponseDaWa) => {
             console.warn('kota', res);
@@ -322,11 +329,22 @@ export class EditjobinfoComponent implements OnInit {
     const tipe_perusahaan = document.getElementById('tipe_perusahaan') as HTMLInputElement | any;
     const tipe_kepegawaian = document.getElementById('tipe_kepegawaian') as HTMLInputElement | any;
 
-    alert(kategori_pekerjaan.value);
+    alert(pendapatan.value);
     alert(tunjangan.value);
 
     const kirimanpyroljob = (<HTMLInputElement>document.getElementById('payroll')).checked;
     const kirimanpyroljob1 = (<HTMLInputElement>document.getElementById('payroll1')).checked;
+
+    var kirimanpendapatan = Number(pendapatan.value.replace(/[^0-9\.-]+/g, ''));
+    var kirimanpendapatanlain = Number(pendapatan_lain.value.replace(/[^0-9\.-]+/g, ''));
+    var kirimantunjangan = Number(tunjangan.value.replace(/[^0-9\.-]+/g, ''));
+    var kirimantotalpendapatan = Number(total_pendapatan.value.replace(/[^0-9\.-]+/g, ''));
+
+    if (kategori_pekerjaan.value == 'Fix Income') {
+      var kirimanjumlahkaryawan = jumlah_karyawan.value;
+    } else {
+      var kirimanjumlahkaryawan = jumlah_karyawan2.value;
+    }
 
     if (kirimanpyroljob == true) {
       this.contohkirimpyrol = 1;
@@ -373,12 +391,12 @@ export class EditjobinfoComponent implements OnInit {
         // bulan_berdiri_sebelum: usia.value,
         // created_by: app_no_ide.value,
         // created_date: contohtampunganappde,
-        curef: this.datakiriman,
+        curef: this.curef,
         id: this.datakirimanid,
-        // jabatan: posisi.value,
+        jabatan: posisi.value,
         jenis_bidang: jenis_bidang.value,
         jenis_pekerjaan: jenis_pekerjaan.value,
-        jumlah_karyawan: jumlah_karyawan.value,
+        jumlah_karyawan: kirimanjumlahkaryawan,
         kabkota: kirimankabkota,
         kategori_pekerjaan: kategori_pekerjaan.value,
         kecamatan: kirimankecamatan,
@@ -394,8 +412,8 @@ export class EditjobinfoComponent implements OnInit {
         // npwp: kabkota_domisili.value,
         payroll: this.contohkirimpyrol,
         // pemilik_usaha: kecamatan_domisili.value,
-        pendapatan: pendapatan.value,
-        pendapatan_lain: pendapatan_lain.value,
+        pendapatan: kirimanpendapatan,
+        pendapatan_lain: kirimanpendapatanlain,
         // posisi: posisi.value,
         provinsi: kirimanprovinsi,
         rt: rt.value,
@@ -406,8 +424,8 @@ export class EditjobinfoComponent implements OnInit {
         tipe_kepegawaian: tipe_kepegawaian.value,
         tipe_pekerjaan: tipe_pekerjaan.value,
         tipe_perusahaan: tipe_perusahaan.value,
-        total_pendapatan: total_pendapatan.value,
-        tunjangan: tunjangan.value,
+        total_pendapatan: kirimantotalpendapatan,
+        tunjangan: kirimantunjangan,
         umur_pensiun: umur_pensiun.value,
       })
 
@@ -417,12 +435,12 @@ export class EditjobinfoComponent implements OnInit {
           // this.databawaan = bawaan.result.app_no_de;
           // alert('MASUKAJAHSUSAH');
           this.router.navigate(['/data-entry/job-info'], {
-            // queryParams: {
-            //   datakiriman: contohtampungancuref,
-            //   datakirimanstatus: contohtampungstatuskawain,
-            //   datakirimanappde: contohtampunganappde,
-            //   datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
-            // },
+            queryParams: {
+              curef: this.curef,
+              datakirimanstatus: this.statusPerkawinan,
+              app_no_de: this.app_no_de,
+              //   datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
+            },
           });
         },
       });
@@ -436,13 +454,13 @@ export class EditjobinfoComponent implements OnInit {
     //     datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
     //   },
     // });
-    this.router.navigate(['/data-entry/job-info'], {
-      queryParams: {
-        datakiriman: this.datakiriman,
-        statusPerkawinan: this.statusPerkawinan,
-        app_no_de: this.app_no_de,
-        // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
-      },
-    });
+    // this.router.navigate(['/data-entry/job-info'], {
+    //   queryParams: {
+    //     datakiriman: this.datakiriman,
+    //     statusPerkawinan: this.statusPerkawinan,
+    //     app_no_de: this.app_no_de,
+    //     // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+    //   },
+    // });
   }
 }

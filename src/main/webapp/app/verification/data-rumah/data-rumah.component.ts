@@ -32,22 +32,22 @@ export class DataRumahComponent implements OnInit {
   dataJob: getJob = new getJob();
   getViewJob: viewJobModel = new viewJobModel();
   listSlik?: slik[];
-  slikTotal: resultSlikTotal = new resultSlikTotal();;
+  slikTotal: resultSlikTotal = new resultSlikTotal();
   listLajangSlik: Array<slik> = new Array<slik>();
   listMenikahSlik: Array<slik> = new Array<slik>();
   jobPasangan: getJobPasangan = new getJobPasangan();
   struktur: any;
   // Role
   untukSessionRole: any;
-  untukSessionUsername: any
+  untukSessionUsername: any;
   // Total Plafound
-  plafond:any;
-  totalPlafonSlik:any;
+  plafond: any;
+  totalPlafonSlik: any;
   // Total Outstanding
-  outstanding:any;
-  totalOutstandingSlik:any;
+  outstanding: any;
+  totalOutstandingSlik: any;
 
-  formatter:any;
+  formatter: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -155,27 +155,25 @@ export class DataRumahComponent implements OnInit {
     this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(job => {
       this.dataJob = job.result[0];
       // alert(this.dataJob.total_pendapatan)
-    })
+    });
 
     // get Semua JOB Pasangan
     this.dataEntryService.getSemuaDataJobPasangan(this.curef).subscribe(jobPasangan => {
       this.jobPasangan = jobPasangan.result;
       // console.log(this.jobPasangan)
-    })
-
-
+    });
 
     // ambil semua data Slik
     this.dataRumah.fetchSlik('app_20221017_667').subscribe(data => {
       // if (data.code === 200) {
       // console.log(data)
-      this.slikTotal = data.result
+      this.slikTotal = data.result;
       this.listSlik = data.result.dataSlikResult;
       // console.log(this.slikTotal.total_angsuran_pasangan)
       // this.struktur = ('Rp 10000').toLocaleString();
-      this.struktur = ('Rp 10000').replace('Rp','')
-      let cekkk = ('Rp 10,000').replace(/\,/g, '');
-      let cuukkk = cekkk.replace('Rp ', '')
+      this.struktur = 'Rp 10000'.replace('Rp', '');
+      let cekkk = 'Rp 10,000'.replace(/\,/g, '');
+      let cuukkk = cekkk.replace('Rp ', '');
       // alert(this.struktur)
       // alert(cuukkk)
 
@@ -193,8 +191,8 @@ export class DataRumahComponent implements OnInit {
       let plafonPasangan = Number(this.slikTotal.total_plafon_pasangan);
       let outstandingNasabah = Number(this.slikTotal.total_outstanding_nasabah);
       let outstandingPasangan = Number(this.slikTotal.total_outstanding_pasangan);
-      this.totalPlafonSlik = plafonNasabah+plafonPasangan;
-      this.totalOutstandingSlik = outstandingNasabah+outstandingPasangan;
+      this.totalPlafonSlik = plafonNasabah + plafonPasangan;
+      this.totalOutstandingSlik = outstandingNasabah + outstandingPasangan;
       // alert(this.totalPlafonSlik)
     });
 
@@ -253,7 +251,6 @@ export class DataRumahComponent implements OnInit {
         angsuran_kewajiban_kantor_pasangan: this.analisaKeuanganMap.angsuran_kewajiban_kantor_pasangan,
         total_angsuran_kewajiban_kantor: this.analisaKeuanganMap.total_angsuran_kewajiban_kantor,
 
-
         // created_date: "2022-09-29T10:59:20.895+00:00",
         // created_by: "",
         // updated_date: 'null',
@@ -264,8 +261,10 @@ export class DataRumahComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.formatMoney('Rp 100,000.00')
-    const total_pro = Number(this.analisaKeuanganForm.get('pendapatan_profesional')?.value) + Number(this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value);
+    this.formatMoney('Rp 100,000.00');
+    const total_pro =
+      Number(this.analisaKeuanganForm.get('pendapatan_profesional')?.value) +
+      Number(this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value);
     const total_kewa = Number(this.slikTotal.total_angsuran_nasabah) + Number(this.slikTotal.total_angsuran_pasangan);
     const total_gaji = Number(this.analisaKeuanganForm.get('gaji_kotor')?.value) + Number(this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value);
     const total_kewaLain = Number(this.analisaKeuanganForm.get('kewajiban_lainnya')?.value) + Number(this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value);
@@ -450,8 +449,8 @@ export class DataRumahComponent implements OnInit {
       return;
     }
   }
-  formatMoney(value?:any) {
-    const jdkfj = value.replace(/\,/g, '').replace('Rp ','')
-    alert(jdkfj)
+  formatMoney(value?: any) {
+    const jdkfj = value.replace(/\,/g, '').replace('Rp ', '');
+    alert(jdkfj);
   }
 }

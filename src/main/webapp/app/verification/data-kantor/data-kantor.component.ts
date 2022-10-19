@@ -302,31 +302,24 @@ export class DataKantorComponent implements OnInit {
     this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(job => {
       this.dataJob = job.result[0];
       // alert("data JOb "+this.dataJob.tipe_kepegawaian)
-      if(this.dataJob.tipe_pekerjaan == 1){
-        this.tipe_pekerjaanGet = 'Pegawai Negeri Sipil'
+      if (this.dataJob.tipe_pekerjaan == 1) {
+        this.tipe_pekerjaanGet = 'Pegawai Negeri Sipil';
+      } else if (this.dataJob.tipe_pekerjaan == 2) {
+        this.tipe_pekerjaanGet = 'Pegawai Swasta';
+      } else if (this.dataJob.tipe_pekerjaan == 3) {
+        this.tipe_pekerjaanGet = 'Wiraswasta';
+      } else if (this.dataJob.tipe_pekerjaan == 4) {
+        this.tipe_pekerjaanGet = 'Profesional';
+      } else if (this.dataJob.tipe_pekerjaan == 5) {
+        this.tipe_pekerjaanGet = 'Pensiunan';
+      } else if (this.dataJob.tipe_pekerjaan == 6) {
+        this.tipe_pekerjaanGet = 'Tidak Bekerja';
+      } else if (this.dataJob.tipe_pekerjaan == 7) {
+        this.tipe_pekerjaanGet = 'TNI / Polri';
+      } else if (this.dataJob.tipe_pekerjaan == 8) {
+        this.tipe_pekerjaanGet = 'BUMN / BUMD';
       }
-      else if(this.dataJob.tipe_pekerjaan == 2){
-        this.tipe_pekerjaanGet = 'Pegawai Swasta'
-      }
-      else if(this.dataJob.tipe_pekerjaan == 3){
-        this.tipe_pekerjaanGet = 'Wiraswasta'
-      }
-      else if(this.dataJob.tipe_pekerjaan == 4){
-        this.tipe_pekerjaanGet = 'Profesional'
-      }
-      else if(this.dataJob.tipe_pekerjaan == 5){
-        this.tipe_pekerjaanGet = 'Pensiunan'
-      }
-      else if(this.dataJob.tipe_pekerjaan == 6){
-        this.tipe_pekerjaanGet = 'Tidak Bekerja'
-      }
-      else if(this.dataJob.tipe_pekerjaan == 7){
-        this.tipe_pekerjaanGet = 'TNI / Polri'
-      }
-      else if(this.dataJob.tipe_pekerjaan == 8){
-        this.tipe_pekerjaanGet = 'BUMN / BUMD'
-      }
-    })
+    });
 
     // ambil data Kantor
     this.dataKantor.fetchDataKantor(this.app_no_de).subscribe(data => {

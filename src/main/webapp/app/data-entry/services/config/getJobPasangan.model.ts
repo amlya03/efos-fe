@@ -1,4 +1,4 @@
-export class getJobPasangan{
+export class getJobPasangan {
   id?: Number;
   curef?: String;
   nama_perusahaan?: String;

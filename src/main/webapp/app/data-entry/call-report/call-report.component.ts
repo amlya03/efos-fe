@@ -25,6 +25,7 @@ export class CallReportComponent implements OnInit {
   untukSessionFullName: any;
   untukSessionKodeCabang: any;
   skalaprusahaan: any;
+  nowawancara: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,6 +53,7 @@ export class CallReportComponent implements OnInit {
   protected apiskalaperusahaan = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.178:8805/api/v1/efos-ref/list_skala_perusahaan'
   );
+  protected apgetnowawancara = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/get_call_report_seq');
 
   ngOnInit(): void {
     this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
@@ -63,8 +65,6 @@ export class CallReportComponent implements OnInit {
     //   'JALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALAN'
     // );
 
-    this.contohtex =
-      'Dengan ini saya menyatakan hasil wawancara yang diisi oleh saya "+Aoname+" dan pemberi Informasi yang disebut nasabah adalah benar adanya "+ userName';
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('callreportnon', res);
@@ -79,14 +79,31 @@ export class CallReportComponent implements OnInit {
           this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
         }
 
+        if (this.daWa == null) {
+          this.getnomorwawancara().subscribe({
+            next: (res: EntityArrayResponseDaWa) => {
+              console.warn('contohwawancarano', res);
+              this.nowawancara = res.body?.result;
+              $('#no_wawancara').val('CR' + '_' + this.app_no_de + '_' + this.nowawancara);
+              $('#no_wawancara1').val(this.nowawancara);
+            },
+          });
+        } else {
+        }
         // this.daWa = res.body?.result;
       },
     });
 
     this.getdataentrynama().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('callreportnon', res);
+        console.warn('namaatas', res);
         this.daWa1 = res.body?.result;
+
+        this.contohtex =
+          'Dengan ini saya menyatakan hasil wawancara yang diisi oleh saya ' +
+          this.untukSessionFullName +
+          ' dan pemberi Informasi yang disebut nasabah adalah benar adanya ' +
+          this.daWa1.nama;
       },
     });
 
@@ -123,6 +140,21 @@ export class CallReportComponent implements OnInit {
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return this.http.get<ApiResponse>(this.resourceUrl1 + this.app_no_de, { params: options, observe: 'response' });
   }
+  getnomorwawancara(req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+    return this.http.get<ApiResponse>(this.apgetnowawancara, { params: options, observe: 'response' });
+  }
+
+  onclikwawancara(e: any) {
+    if (e.target.checked) {
+      $('#buttonsimpan').removeAttr('hidden');
+    } else {
+      $('#buttonsimpan').attr('hidden', 'hidden');
+    }
+
+    // $('#uang_muka').removeAttr('hidden');
+  }
 
   simpancallreport() {
     // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
@@ -141,6 +173,7 @@ export class CallReportComponent implements OnInit {
     const lama_usaha = document.getElementById('lama_usaha') as HTMLInputElement | any;
     const bidang_usaha = document.getElementById('bidang_usaha') as HTMLInputElement | any;
     const nama_badan_usaha = document.getElementById('nama_badan_usaha') as HTMLInputElement | any;
+    const nama_perusahaan = document.getElementById('nama_perusahan') as HTMLInputElement | any;
     const skala_perusahaan = document.getElementById('skala_perusahaan') as HTMLInputElement | any;
     const jenis_produk = document.getElementById('jenis_produk') as HTMLInputElement | any;
     const tahun_berdiri_perusahaan = document.getElementById('tahun_berdiri_perusahaan') as HTMLInputElement | any;
@@ -160,18 +193,22 @@ export class CallReportComponent implements OnInit {
     const tahun_berdiri_perusahaan_pasangan = document.getElementById('tahun_berdiri_perusahaan_pasangan') as HTMLInputElement | any;
     const alamat_perusahaan_pasangan = document.getElementById('alamat_perusahaan_pasangan') as HTMLInputElement | any;
     const jumlah_karyawan_perusahaan_pasangan = document.getElementById('jumlah_karyawan_perusahaan_pasangan') as HTMLInputElement | any;
-    const kondisi_pandemi_pasangan = document.getElementById('kondisi_pandemi_pasangan') as HTMLInputElement | any;
+    const kondisi_pandemi_pasangan = document.getElementById('kondisi_pandemi_perusahaan_pasangan') as HTMLInputElement | any;
     // const email = document.getElementById('email') as HTMLInputElement | any;
     const no_kontak_hr_pasangan = document.getElementById('no_kontak_hr_pasangan') as HTMLInputElement | any;
-    const laba_periode_1 = document.getElementById('laba_periode_1') as HTMLInputElement | any;
-    const laba_periode_2 = document.getElementById('laba_periode_2') as HTMLInputElement | any;
-    const laba_periode_3 = document.getElementById('laba_periode_3') as HTMLInputElement | any;
-    const laba_periode_4 = document.getElementById('laba_periode_4') as HTMLInputElement | any;
-    const rata_rata_laba = document.getElementById('rata_rata_laba') as HTMLInputElement | any;
+    const status_pekerjaan = document.getElementById('status_pekerjaan') as HTMLInputElement | any;
+    const no_kontak_hr = document.getElementById('no_kontak_hr') as HTMLInputElement | any;
+    const catatan_status_agunan = document.getElementById('catatan_status_agunan') as HTMLInputElement | any;
+    const jabatan_terakhir = document.getElementById('jabatan_terakhir') as HTMLInputElement | any;
+    const keterangan = document.getElementById('keterangan') as HTMLInputElement | any;
     const estimasi_angsuran = document.getElementById('estimasi_angsuran') as HTMLInputElement | any;
     const tercermin_rekening = document.getElementById('tercermin_rekening') as HTMLInputElement | any;
     const tanggal_wawancara = document.getElementById('tanggal_wawancara') as HTMLInputElement | any;
     const no_wawancara = document.getElementById('no_wawancara') as HTMLInputElement | any;
+    const takeHomepay = document.getElementById('takeHomepay') as HTMLInputElement | any;
+    const tipe_pekerjaan = document.getElementById('tipe_pekerjaan') as HTMLInputElement | any;
+    const lama_bekerja = document.getElementById('lama_bekerja') as HTMLInputElement | any;
+    const lama_bekerja_bulan = document.getElementById('lama_bekerja_bulan') as HTMLInputElement | any;
     // const angsuran = document.getElementById('angsuran') as HTMLInputElement | any;
     // const angsuran = document.getElementById('angsuran') as HTMLInputElement | any;
 
@@ -185,7 +222,7 @@ export class CallReportComponent implements OnInit {
         alamat_perusahaan: alamat_perusahaan.value,
         alamat_perusahaan_pasangan: alamat_perusahaan_pasangan.value,
         alamat_tinggal: alamat_ktp.value,
-        app_no_de: 'string',
+        app_no_de: this.app_no_de,
         bidang_usaha: bidang_usaha.value,
         bidang_usaha_pasangan: bidang_usaha_pasangan.value,
         // bulan_berdiri_perusahaan: "string",
@@ -193,14 +230,14 @@ export class CallReportComponent implements OnInit {
         cabang: 'string',
         catatan_dokumen_agunan: catatan_dokumen_agunan.value,
         catatan_posisi_dokumen: catatan_posisi_dokumen.value,
-        catatan_status_agunan: 'string',
+        catatan_status_agunan: catatan_status_agunan.value,
         created_by: 'string',
         // created_date: "2022-10-06T07:02:19.704Z",
-        curef: 'string',
-        dokumen_agunan: 'string',
+        curef: this.datakirimiancure,
+        dokumen_agunan: dokumen_kepemilikan.value,
         estimasi_angsuran: estimasi_angsuran.value,
         id: 0,
-        jabatan_terakhir: 'string',
+        jabatan_terakhir: jabatan_terakhir.value,
         jabatan_terakhir_pasangan: jabatan_terakhir_pasangan.value,
         // jenis_produk: jenis_produk.value,
         // jenis_usaha: jenis_usaha_call.value,
@@ -209,23 +246,20 @@ export class CallReportComponent implements OnInit {
         kategori_pekerjaan: '',
         kendaraan: tipe_kendaraan1.value,
         // kepemilikan_usaha: kepemilikan_usaha.value,
-        keterangan: 'string',
+        keterangan: keterangan.value,
         kondisi_pandemi: kondisi_pandemik.value,
         kondisi_pandemi_perusahaan_pasangan: kondisi_pandemi_pasangan.value,
-        // laba_periode_1: laba_periode_1.value,
-        // laba_periode_2: laba_periode_2.value,
-        // laba_periode_3:laba_periode_3.value,
-        // laba_periode_4: laba_periode_4.value,
-        // lama_bekerja_bulan: "string",
+
+        lama_bekerja_bulan: lama_bekerja_bulan.value,
         lama_bekerja_bulan_pasangan: lama_bekerja_bulan_pasangan.value,
-        // lama_bekerja_tahun: "string",
+        lama_bekerja_tahun: lama_bekerja.value,
         lama_bekerja_tahun_pasangan: lama_bekerja_tahun_pasangan.value,
-        lama_usaha: lama_usaha.value,
+        // lama_usaha: lama_usaha.value,
         // legalitas_usaha: "string",
         nama_ao: 'string',
-        nama_perusahaan: nama_badan_usaha.value,
+        nama_perusahaan: nama_perusahaan.value,
         nama_perusahaan_pasangan: nama_perusahaan_pasangan.value,
-        no_kontak_hr: 'string',
+        no_kontak_hr: no_kontak_hr.value,
         no_kontak_hr_pasangan: no_kontak_hr_pasangan.value,
         no_wawancara: no_wawancara.value,
         pendidikan: pendidikan.value,
@@ -235,14 +269,14 @@ export class CallReportComponent implements OnInit {
         skala_perusahaan_pasangan: skala_perusahaan_pasangan.value,
         status_agunan: status_agunan.value,
         status_kawin: status_perkawinan.value,
-        status_pekerjaan: 'string',
+        status_pekerjaan: status_pekerjaan.value,
         status_pekerjaan_pasangan: status_pekerjaan_pasangan.value,
         tahun_berdiri_perusahaan: tahun_berdiri_perusahaan.value,
         tahun_berdiri_perusahaan_pasangan: tahun_berdiri_perusahaan_pasangan.value,
-        take_home_pay: 'string',
+        take_home_pay: takeHomepay.value,
         tanggal_lahir: tanggal_lahir.value,
         tanggal_wawancara: tanggal_wawancara.value,
-        tipe_pekerjaan: 'string',
+        tipe_pekerjaan: tipe_pekerjaan.value,
         tipe_pekerjaan_pasangan: tipe_pekerjaan_pasangan.value,
         validasi_rekening: tercermin_rekening.value,
       })
@@ -254,9 +288,9 @@ export class CallReportComponent implements OnInit {
           // alert('MASUKAJAHSUSAH');
           this.router.navigate(['data-entry/memo'], {
             queryParams: {
-              // datakiriman: contohtampungancuref,
+              datakiriman: this.datakirimiancure,
               // statusPerkawinan: contohtampungstatuskawain,
-              // app_no_de: contohtampunganappde,
+              app_no_de: this.app_no_de,
               // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
             },
           });

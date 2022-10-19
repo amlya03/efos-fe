@@ -1,4 +1,4 @@
-export class slik{
+export class slik {
   id?: number;
   ref_number?: number;
   response_description?: string;

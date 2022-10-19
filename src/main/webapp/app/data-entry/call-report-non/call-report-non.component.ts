@@ -79,6 +79,7 @@ export class CallReportNonComponent implements OnInit {
 
         if (res.body?.result == null) {
           this.daWa = 0;
+          // this.daWade = 0;
         } else {
           this.daWa = res.body?.result;
           this.checkboxCek = this.daWa.legalitas_usaha.split(', ');

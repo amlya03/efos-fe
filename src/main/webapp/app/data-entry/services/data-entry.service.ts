@@ -39,7 +39,9 @@ export class DataEntryService {
   // ///////////////////////////// Data Entry \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ///////////////////////////// Struktur Pembiayaan Data entry \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  protected fetchSemuaStrukturDE = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getStrukturBiayaByDe?sc=');
+  protected fetchSemuaStrukturDE = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-de/getStrukturBiayaByDe?sc='
+  );
   // ///////////////////////////// Struktur Pembiayaan Data entry \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ///////////////////////////// Get Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -51,7 +53,9 @@ export class DataEntryService {
   // ///////////////////////////// Get ViewJob \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // //////////////////////////////////////////////////// Get Job Pasangan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  protected getJobPasangan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobPasanganByCuref?sc=')
+  protected getJobPasangan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-de/getJobPasanganByCuref?sc='
+  );
   // //////////////////////////////////////////////////// Get Job Pasangan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ///////////////////////////// Get MEMO \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -76,7 +80,7 @@ export class DataEntryService {
 
   // /////////////////////////// Ref Semua Struktur Pembiayaan Data DE ////////////////////////////////////////////
   getFetchStrukturDE(app_no_de: any, curef: any): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.fetchSemuaDataDE + curef +'&sd='+app_no_de);
+    return this.http.get<ApiResponse>(this.fetchSemuaDataDE + curef + '&sd=' + app_no_de);
   }
   // /////////////////////////// Ref Semua Struktur Pembiayaan Data DE ////////////////////////////////////////////
 
@@ -91,7 +95,6 @@ export class DataEntryService {
     return this.http.get<ApiResponse>(this.getJobPasangan + curef);
   }
   // /////////////////////////// Ref Semua Data Job Pasangan ////////////////////////////////////////////
-
 
   // /////////////////////////// Ref View Job ////////////////////////////////////////////
   getGetViewDataJob(curef: any): Observable<ApiResponse> {
