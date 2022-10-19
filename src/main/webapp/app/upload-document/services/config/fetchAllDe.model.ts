@@ -79,5 +79,10 @@ export class fetchAllDe {
   jangka_waktu?: number;
   nilai_pembiayaan?: number;
   kode_fasilitas_name?: string | null;
+  angsuran?: number;
+  produk?: string | null;
+  uang_muka?: number;
+  skema_name?: string | null;
+  fasilitas_ke?: Number;
   joint_income?: number;
 }
