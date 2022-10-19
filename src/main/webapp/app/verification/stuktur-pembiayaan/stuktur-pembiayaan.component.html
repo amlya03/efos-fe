@@ -159,6 +159,7 @@
             id="total_kewajiban_bank_pemohon"
             name="total_kewajiban_bank_pemohon"
             value="{{this.analisaPembiayaan.kewajiban_bank_total}}"
+            #total_kewajiban_bank_pemohon1
           />
         </div>
       </div>
@@ -232,7 +233,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="analisa_nilai_pembiayaan" name="analisa_nilai_pembiayaan"/>
+          <input type="text" class="form-control" id="analisa_nilai_pembiayaan" name="analisa_nilai_pembiayaan" [value]="this.nilaiPembiayaan"/>
         </div>
       </div>
       <br />
@@ -247,39 +248,40 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Angsuran</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="analisa_angsuran" name="analisa_angsuran"  />
+          <input type="text" readonly class="form-control" id="analisa_angsuran" name="analisa_angsuran" #analisa_angsuran1 [value]="this.angsuranPalingTinggi"/>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Total Angsuran</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="total_angsuran" name="total_angsuran"  />
+          <input type="text" readonly class="form-control" id="total_angsuran" name="total_angsuran" value="{{(+total_kewajiban_bank_pemohon1.value) + (+analisa_angsuran1.value)}}"/>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Maximal DSR</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="maximal_dsr" name="maximal_dsr"  />
+          <input type="text" readonly class="form-control" id="maximal_dsr" name="maximal_dsr" value="{{this.analisaPembiayaan.dsr}} %"/>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Maximal Angsuran</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="maximal_angsuran" name="maximal_angsuran"  />
+          <input type="text" readonly class="form-control" id="maximal_angsuran" name="maximal_angsuran" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">DSR</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="dsr" name="dsr"  />
+          <input type="text" readonly class="form-control" id="dsr" name="dsr" [value]="this.analisaDsr"/>
         </div>
       </div>
     </div>
   </div>
+  <br/>
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
     <h3 style="color: #fff; text-align: center">Analisa Agunan</h3>
   </div>
@@ -357,11 +359,11 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col"></th>
-        <th scope="col">Tipe Angunan</th>
-        <th scope="col">Objek</th>
-        <th scope="col">Nilai yang dijaminkan</th>
-        <th scope="col">Nilai Market</th>
+        <th style="text-align: center" scope="col">#</th>
+        <th style="text-align: center" scope="col">Tipe Angunan</th>
+        <th style="text-align: center" scope="col">Objek</th>
+        <th style="text-align: center" scope="col">Nilai yang dijaminkan</th>
+        <th style="text-align: center" scope="col">Nilai Market</th>
         <th>Fungsi</th>
       </tr>
     </thead>
@@ -369,7 +371,7 @@
       <tr *ngFor="let listagunan of listagunan; index as i">
         <td style="text-align: center" scope="col">{{ i + 1 }}</td>
         <td style="text-align: center" scope="col">{{ listagunan.tipe_agunan }}</td>
-        <td style="text-align: center" scope="col">{{ listagunan.tanggal_terbit }}</td>
+        <td style="text-align: center" scope="col">{{ listagunan.jenis_objek_deskripsi }}</td>
         <td style="text-align: center" scope="col">{{ listagunan.tipe_agunan }}</td>
         <td style="text-align: center" scope="col">{{ listagunan.jenis_objek_deskripsi }}</td>
         <td style="text-align: center" scope="col"></td>

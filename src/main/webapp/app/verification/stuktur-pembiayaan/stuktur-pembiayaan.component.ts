@@ -2,17 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { colateralmodel } from './collateral-model';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
+import { HttpClient } from '@angular/common/http';
 import { getJob } from 'app/data-entry/services/config/getJob.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { analisaPembiayaanModel } from '../service/config/analisaPembiayaanModel.model';
 import { refSkema } from '../service/config/refSkema.model';
 import { refTenorFix } from '../service/config/refTenorFix.model';
+import { listAgunan } from 'app/data-entry/services/config/listAgunan.model';
 
 @Component({
   selector: 'jhi-stuktur-pembiayaan',
@@ -25,8 +22,12 @@ export class StukturPembiayaanComponent implements OnInit {
   analisaPembiayaan: analisaPembiayaanModel = new analisaPembiayaanModel();
   fetchJob: getJob = new getJob();
   curef: any;
-  listagunan: any;
+  listagunan: listAgunan[] = []
+
+  //nested
   nilaiPembiayaan: any;
+  angsuranPalingTinggi: any;
+  analisaDsr: any;
 
   // Ref Skema
   Skema: refSkema[] = [];
@@ -79,7 +80,7 @@ export class StukturPembiayaanComponent implements OnInit {
 
   loadSkema(produknya: any) {
     // Ref Skema
-    alert('skema '+ produknya)
+    // alert('skema '+ produknya)
     this.verifikasiServices.getSkema(produknya).subscribe(data =>{
       if(data.code === 200){
         this.Skema = data.result;
@@ -144,12 +145,28 @@ export class StukturPembiayaanComponent implements OnInit {
       next: (data) => {
         this.nilaiPembiayaan = data.result.nilai_pembiayaan;
         console.log(data.result)
-        alert(this.nilaiPembiayaan)
+        this.angsuranPalingTinggi = data.result.angsuran[data.result.angsuran.length - 1]
+        console.log(this.angsuranPalingTinggi)
+        // alert(this.nilaiPembiayaan)
         }
     });
+
+    setTimeout(() => {
+      this.http
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/getHitungAnalisaPembiayaan', {
+        angsuran: this.angsuranPalingTinggi,
+        app_no_de: this.dataEntry.app_no_de
+      })
+      .subscribe({
+        next: (data) => {
+          this.analisaDsr = data.result.dsr
+          console.log('analisa '+ data.result.dsr)
+        }
+      });
+    }, 300);
   }
 
   viewStruktur() {
-    alert('tolong hapus aku');
+    this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }
