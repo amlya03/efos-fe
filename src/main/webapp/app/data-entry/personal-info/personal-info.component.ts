@@ -83,6 +83,8 @@ export class PersonalInfoComponent implements OnInit {
   kirimanstatusktp: any;
   statusPerkawinan: any;
   untukSessionRole: any;
+  daWabawacuref: any;
+  daWabawastatusperkawinan: any;
   /////
 
   constructor(
@@ -119,6 +121,8 @@ export class PersonalInfoComponent implements OnInit {
         // console.warn('@@@@@@@@@@@@@', this.datakiriman);
         // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
         this.daWa = res.body?.result;
+        this.daWabawacuref = res.body?.result.curef;
+        this.daWabawastatusperkawinan = res.body?.result.status_perkawinan;
         // this.onResponseSuccess(res);
       },
     });
@@ -142,9 +146,9 @@ export class PersonalInfoComponent implements OnInit {
     // alert(contohtampungancuref);
     this.router.navigate(['/data-entry/job-info'], {
       queryParams: {
-        curef: contohtampungancuref,
-        statusPerkawinan: contohtampungstatuskawain,
-        app_no_de: contohtampunganappde,
+        curef: this.daWabawacuref,
+        statusPerkawinan: this.daWabawastatusperkawinan,
+        app_no_de: this.app_no_de,
       },
     });
   }
@@ -348,9 +352,9 @@ export class PersonalInfoComponent implements OnInit {
           // alert('MASUKAJAHSUSAH');
           this.router.navigate(['/data-entry/job-info'], {
             queryParams: {
-              curef: contohtampungancuref,
-              statusPerkawinan: contohtampungstatuskawain,
-              app_no_de: contohtampunganappde,
+              curef: this.daWabawacuref,
+              statusPerkawinan: this.daWabawastatusperkawinan,
+              app_no_de: this.app_no_de,
               // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
             },
           });

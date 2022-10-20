@@ -129,6 +129,11 @@ export class DataKantorComponent implements OnInit {
     });
 
     this.load();
+    if (this.untukSessionRole == 'VER_PRESCR') {
+      this.dataKantorForm.disable();
+    } else {
+      this.dataKantorForm.enable();
+    }
   }
 
   onSubmit(): void {
@@ -324,52 +329,110 @@ export class DataKantorComponent implements OnInit {
     // ambil data Kantor
     this.dataKantor.fetchDataKantor(this.app_no_de).subscribe(data => {
       this.dataKantorMap = data.result;
-      // alert(this.dataKantorMap.note_verif_alamat_perusahaan)
-      let retriveDataKantor = {
-        tanggal_verifikasi: this.dataKantorMap.tanggal_verifikasi,
-        pemberi_keterangan: this.dataKantorMap.pemberi_keterangan,
-        hubungan_pemberi_keterangan: this.dataKantorMap.hubungan_pemberi_keterangan,
-        verif_fax: this.dataKantorMap.verif_fax,
-        note_verif_fax: this.dataKantorMap.note_verif_fax,
-        verif_no_telepon: this.dataKantorMap.verif_no_telepon,
-        note_verif_no_telepon: this.dataKantorMap.note_verif_no_telepon,
-        verif_alamat_perusahaan: this.dataKantorMap.verif_alamat_perusahaan,
-        note_verif_alamat_perusahaan: this.dataKantorMap.note_verif_alamat_perusahaan,
-        verif_nama_perusahaan: this.dataKantorMap.verif_nama_perusahaan,
-        note_verif_nama_perusahaan: this.dataKantorMap.note_verif_nama_perusahaan,
-        verif_provinsi: this.dataKantorMap.verif_provinsi,
-        note_verif_provinsi: this.dataKantorMap.note_verif_provinsi,
-        verif_kabkota: this.dataKantorMap.verif_kabkota,
-        note_verif_kabkota: this.dataKantorMap.note_verif_kabkota,
-        verif_kecamatan: this.dataKantorMap.verif_kecamatan,
-        note_verif_kecamatan: this.dataKantorMap.note_verif_kecamatan,
-        verif_kelurahan: this.dataKantorMap.verif_kelurahan,
-        note_verif_kelurahan: this.dataKantorMap.note_verif_kelurahan,
-        verif_kode_pos: this.dataKantorMap.verif_kode_pos,
-        note_verif_kode_pos: this.dataKantorMap.note_verif_kode_pos,
-        verif_lama_bekerja: this.dataKantorMap.verif_lama_bekerja,
-        note_verif_lama_bekerja: this.dataKantorMap.note_verif_lama_bekerja,
-        verif_bidang_usaha: this.dataKantorMap.verif_bidang_usaha,
-        note_verif_bidang_usaha: this.dataKantorMap.note_verif_bidang_usaha,
-        verif_sektor_ekonomi: this.dataKantorMap.verif_sektor_ekonomi,
-        note_verif_sektor_ekonomi: this.dataKantorMap.note_verif_sektor_ekonomi,
-        verif_tipe_pekerjaan: this.dataKantorMap.verif_tipe_pekerjaan,
-        note_verif_tipe_pekerjaan: this.dataKantorMap.note_verif_tipe_pekerjaan,
-        verif_status_kepegawaian: this.dataKantorMap.verif_status_kepegawaian,
-        note_verif_status_kepegawaian: this.dataKantorMap.note_verif_status_kepegawaian,
-        verif_jabatan: this.dataKantorMap.verif_jabatan,
-        note_verif_jabatan: this.dataKantorMap.note_verif_jabatan,
-        verif_usia_pensiun: this.dataKantorMap.verif_usia_pensiun,
-        note_verif_usia_pensiun: this.dataKantorMap.note_verif_usia_pensiun,
-        divisi: this.dataKantorMap.divisi,
-        aspek_syariah: this.dataKantorMap.aspek_syariah,
+      console.warn('isidatanya', this.dataKantorMap);
 
-        // created_date: this.dataKantorMap.created_date,
-        // updated_date: this.dataKantorMap.updated_date,
-        // created_by: this.dataKantorMap.created_by,
-        // updated_by: this.dataKantorMap.updated_by,
-      };
-      this.dataKantorForm.setValue(retriveDataKantor);
+      if (this.dataKantorMap == null) {
+        // alert(this.dataKantorMap.note_verif_alamat_perusahaan)
+        let retriveDataKantor = {
+          tanggal_verifikasi: '',
+          pemberi_keterangan: '',
+          hubungan_pemberi_keterangan: '',
+          verif_fax: '',
+          note_verif_fax: '',
+          verif_no_telepon: '',
+          note_verif_no_telepon: '',
+          verif_alamat_perusahaan: '',
+          note_verif_alamat_perusahaan: '',
+          verif_nama_perusahaan: '',
+          note_verif_nama_perusahaan: '',
+          verif_provinsi: '',
+          note_verif_provinsi: '',
+          verif_kabkota: '',
+          note_verif_kabkota: '',
+          verif_kecamatan: '',
+          note_verif_kecamatan: '',
+          verif_kelurahan: '',
+          note_verif_kelurahan: '',
+          verif_kode_pos: '',
+          note_verif_kode_pos: '',
+          verif_lama_bekerja: '',
+          note_verif_lama_bekerja: '',
+          verif_bidang_usaha: '',
+          note_verif_bidang_usaha: '',
+          verif_sektor_ekonomi: '',
+          note_verif_sektor_ekonomi: '',
+          verif_tipe_pekerjaan: '',
+          note_verif_tipe_pekerjaan: '',
+          verif_status_kepegawaian: '',
+          note_verif_status_kepegawaian: '',
+          verif_jabatan: '',
+          note_verif_jabatan: '',
+          verif_usia_pensiun: '',
+          note_verif_usia_pensiun: '',
+          divisi: '',
+          aspek_syariah: '',
+        };
+        this.dataKantorForm.setValue(retriveDataKantor);
+        if (this.untukSessionRole == 'VER_PRESCR') {
+          this.dataKantorForm.disable();
+          // this.dataKantorForm.disable()
+        } else {
+          this.dataKantorForm.enable();
+        }
+      } else {
+        // alert(this.dataKantorMap.note_verif_alamat_perusahaan)
+        let retriveDataKantor = {
+          tanggal_verifikasi: this.dataKantorMap.tanggal_verifikasi,
+          pemberi_keterangan: this.dataKantorMap.pemberi_keterangan,
+          hubungan_pemberi_keterangan: this.dataKantorMap.hubungan_pemberi_keterangan,
+          verif_fax: this.dataKantorMap.verif_fax,
+          note_verif_fax: this.dataKantorMap.note_verif_fax,
+          verif_no_telepon: this.dataKantorMap.verif_no_telepon,
+          note_verif_no_telepon: this.dataKantorMap.note_verif_no_telepon,
+          verif_alamat_perusahaan: this.dataKantorMap.verif_alamat_perusahaan,
+          note_verif_alamat_perusahaan: this.dataKantorMap.note_verif_alamat_perusahaan,
+          verif_nama_perusahaan: this.dataKantorMap.verif_nama_perusahaan,
+          note_verif_nama_perusahaan: this.dataKantorMap.note_verif_nama_perusahaan,
+          verif_provinsi: this.dataKantorMap.verif_provinsi,
+          note_verif_provinsi: this.dataKantorMap.note_verif_provinsi,
+          verif_kabkota: this.dataKantorMap.verif_kabkota,
+          note_verif_kabkota: this.dataKantorMap.note_verif_kabkota,
+          verif_kecamatan: this.dataKantorMap.verif_kecamatan,
+          note_verif_kecamatan: this.dataKantorMap.note_verif_kecamatan,
+          verif_kelurahan: this.dataKantorMap.verif_kelurahan,
+          note_verif_kelurahan: this.dataKantorMap.note_verif_kelurahan,
+          verif_kode_pos: this.dataKantorMap.verif_kode_pos,
+          note_verif_kode_pos: this.dataKantorMap.note_verif_kode_pos,
+          verif_lama_bekerja: this.dataKantorMap.verif_lama_bekerja,
+          note_verif_lama_bekerja: this.dataKantorMap.note_verif_lama_bekerja,
+          verif_bidang_usaha: this.dataKantorMap.verif_bidang_usaha,
+          note_verif_bidang_usaha: this.dataKantorMap.note_verif_bidang_usaha,
+          verif_sektor_ekonomi: this.dataKantorMap.verif_sektor_ekonomi,
+          note_verif_sektor_ekonomi: this.dataKantorMap.note_verif_sektor_ekonomi,
+          verif_tipe_pekerjaan: this.dataKantorMap.verif_tipe_pekerjaan,
+          note_verif_tipe_pekerjaan: this.dataKantorMap.note_verif_tipe_pekerjaan,
+          verif_status_kepegawaian: this.dataKantorMap.verif_status_kepegawaian,
+          note_verif_status_kepegawaian: this.dataKantorMap.note_verif_status_kepegawaian,
+          verif_jabatan: this.dataKantorMap.verif_jabatan,
+          note_verif_jabatan: this.dataKantorMap.note_verif_jabatan,
+          verif_usia_pensiun: this.dataKantorMap.verif_usia_pensiun,
+          note_verif_usia_pensiun: this.dataKantorMap.note_verif_usia_pensiun,
+          divisi: this.dataKantorMap.divisi,
+          aspek_syariah: this.dataKantorMap.aspek_syariah,
+
+          // created_date: this.dataKantorMap.created_date,
+          // updated_date: this.dataKantorMap.updated_date,
+          // created_by: this.dataKantorMap.created_by,
+          // updated_by: this.dataKantorMap.updated_by,
+        };
+        this.dataKantorForm.setValue(retriveDataKantor);
+        if (this.untukSessionRole == 'VER_PRESCR') {
+          this.dataKantorForm.disable();
+          // this.dataKantorForm.disable()
+        } else {
+          this.dataKantorForm.enable();
+        }
+      }
     });
 
     // ref hubungan agunan
@@ -544,4 +607,7 @@ export class DataKantorComponent implements OnInit {
   //       }
   //     });
   // }
+  goto() {
+    this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+  }
 }

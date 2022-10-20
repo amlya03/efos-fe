@@ -472,4 +472,8 @@ export class DataRumahComponent implements OnInit {
     const jdkfj = value.replace(/\,/g, '').replace('Rp ', '');
     // alert(jdkfj);
   }
+
+  gotocalonnasabah() {
+    this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+  }
 }

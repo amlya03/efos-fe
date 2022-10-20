@@ -87,7 +87,7 @@ export class JobInfoComponent implements OnInit {
     private currencyPipe: CurrencyPipe
   ) {
     this.route.queryParams.subscribe(params => {
-      this.curef = params.curef;
+      this.curef = params['curef'];
       this.statusPerkawinan = params['statusPerkawinan'];
       this.app_no_de = params['app_no_de'];
     });
@@ -630,7 +630,7 @@ export class JobInfoComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto() {
     // this.onResponseSuccess(res);
-
+    alert(this.statusPerkawinan);
     if (this.statusPerkawinan === 'Menikah') {
       this.router.navigate(['/data-entry/data-pasangan'], {
         queryParams: {
@@ -644,11 +644,9 @@ export class JobInfoComponent implements OnInit {
     } else {
       this.router.navigate(['/data-entry/collateral'], {
         queryParams: {
-          queryParams: {
-            curef: this.curef,
-            statusPerkawinan: this.statusPerkawinan,
-            app_no_de: this.app_no_de,
-          },
+          curef: this.curef,
+          statusPerkawinan: this.statusPerkawinan,
+          app_no_de: this.app_no_de,
         },
       });
     }

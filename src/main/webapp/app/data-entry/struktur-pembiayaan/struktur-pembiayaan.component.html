@@ -9,7 +9,12 @@
       <label class="col-sm-4 col-form-label">Joint Income<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" name="joint_income" id="joint_income" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            name="joint_income"
+            id="joint_income"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+          >
             <option value="{{ daWa.joint_income }}">{{ daWa.joint_income }}</option>
           </select>
         </div>
@@ -25,7 +30,7 @@
             (change)="onchangefasilitas(Kodefasilitas.fasilitas)"
             name="kode_fasilitas"
             id="kode_fasilitas"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
             <option value="{{ daWa.kode_fasilitas_name }}">{{ daWa.kode_fasilitas_name }}</option>
             <option *ngFor="let Kodefasilitas of Kodefasilitas" value="{{ Kodefasilitas.kode_fasilitas }}|{{ Kodefasilitas.fasilitas }}">
@@ -45,7 +50,7 @@
             (change)="onchangeprogram(0)"
             name="program"
             id="program"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
             <option value="{{ daWa.program_name }}" selected>{{ daWa.program_name }}</option>
             <option *ngFor="let kodeprogram of kodeprogram" value="{{ kodeprogram.kode_program }}|{{ kodeprogram.program }}">
@@ -65,7 +70,7 @@
             (change)="onchangeproduk(0)"
             name="produk"
             id="produk"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
             <option value="{{ daWa.produk_name }}" selected>{{ daWa.produk_name }}</option>
 
@@ -86,7 +91,7 @@
             (change)="onchangeskema(0)"
             name="skema"
             id="skema"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
             <option value="{{ daWa.skema_name }}" selected>{{ daWa.skema_name }}</option>
             <option
@@ -109,7 +114,7 @@
             (change)="onchangejangkawaktu(0)"
             name="jangka_waktu"
             id="jangka_waktu"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
             <option selected value="{{ daWa.jangka_waktu }}">{{ daWa.jangka_waktu }}</option>
             <option *ngFor="let kodetenor of kodetenor" value="{{ kodetenor.tn_code }}|{{ kodetenor.margin }}">
@@ -124,7 +129,12 @@
       <label class="col-sm-4 col-form-label">Tipe Margin<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" name="tipe_margin" id="tipe_margin" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            name="tipe_margin"
+            id="tipe_margin"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+          >
             <option selected value="{{ daWa.tipe_margin }}">{{ daWa.tipe_margin }}</option>
           </select>
         </div>
@@ -139,7 +149,7 @@
             class="form-control"
             name="tujuan_pembiayaan"
             id="tujuan_pembiayaan"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
             <!-- 19-08-20 -->
             <option selected value="{{ daWa.kode_fasilitas }}">{{ daWa.tujuan_pembiayaan }}</option>
@@ -155,7 +165,12 @@
       <label class="col-sm-4 col-form-label">Fasilitas Ke<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" name="fasilitas_ke" id="fasilitas_ke" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            name="fasilitas_ke"
+            id="fasilitas_ke"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+          >
             <option value="{{ daWa.fasilitas_ke }}" selected>{{ daWa.fasilitas_ke }}</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -171,7 +186,7 @@
       <label class="col-sm-4 col-form-label">Margin<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           type="text"
           class="form-control"
           value="{{ daWa.margin }}"
@@ -184,7 +199,7 @@
         />
 
         <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           type="hidden"
           class="form-control"
           value="{{ daWa.margin }}"
@@ -202,7 +217,7 @@
       <label class="col-sm-4 col-form-label">Harga Objek Pembiayaan<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           type="text"
           class="form-control"
           placeholder="Hrga Objek Pembiayaan"
@@ -223,7 +238,7 @@
           name="fee_based"
           id="fee_based"
           value="{{ daWa.fee_based }}"
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
         />
         <input
           type="hidden"
@@ -232,7 +247,7 @@
           name="codekodefasilitas"
           id="codekodefasilitas"
           value="{{ daWa.kode_fasilitas }}"
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
         />
         <input
           type="hidden"
@@ -241,7 +256,7 @@
           name="codeprogram"
           id="codeprogram"
           value="{{ daWa.program }}"
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
         />
         <input
           type="hidden"
@@ -250,7 +265,7 @@
           name="codeproduk"
           id="codeproduk"
           value="{{ daWa.produk }}"
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
         />
         <input
           type="hidden"
@@ -259,7 +274,7 @@
           name="codeskemamaster"
           id="codeskemamaster"
           value="{{ daWa.skema_master }}"
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
         />
         <input
           type="hidden"
@@ -268,7 +283,7 @@
           name="codeskemaid"
           id="codeskemaid"
           value="{{ daWa.skema }}"
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
         />
       </div>
     </div>
@@ -283,7 +298,7 @@
             name="uang_muka"
             id="uang_muka"
             value="{{ daWa.uang_muka }}"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           />
           <div class="input-group-append">
             <button
@@ -292,7 +307,7 @@
               id="rincihan"
               style="float: right"
               (click)="itungrincihan()"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
               Rincian Pembayaran
             </button>
@@ -305,7 +320,7 @@
       <label class="col-sm-4 col-form-label">Angsuran<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           type="text"
           class="form-control"
           readonly
@@ -316,7 +331,7 @@
           data-placement="bottom"
         />
         <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           type="text"
           class="form-control"
           readonly
@@ -333,7 +348,7 @@
       <label class="col-sm-4 col-form-label">Nilai Pembiayaan<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           type="text"
           class="form-control"
           value="{{ daWa.nilai_pembiayaan }}"
@@ -343,7 +358,7 @@
         />
 
         <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           type="hidden"
           class="form-control"
           value="{{ daWa.id }}"
@@ -362,7 +377,7 @@
           rows="6"
           name="detail_objek_pembiayaan"
           id="detail_objek_pembiayaan"
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >{{ daWa.detail_objek_pembiayaan }}</textarea
         >
       </div>
@@ -372,7 +387,7 @@
 <div class="row">
   <div class="col" style="text-align: center">
     <button
-      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
       type="submit"
       (click)="simpanstruktur()"
       id="btn"

@@ -231,4 +231,8 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
         this.getTableMutasi = data.result;
       });
   }
+
+  goto() {
+    this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+  }
 }

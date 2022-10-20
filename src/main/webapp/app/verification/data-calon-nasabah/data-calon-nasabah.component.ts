@@ -88,6 +88,7 @@ export class DataCalonNasabahComponent implements OnInit {
 
   ngOnInit(): void {
     this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    alert(this.untukSessionRole);
     this.editor = new Editor();
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.dataCalonNasabahForm = this.formBuilder.group({
@@ -202,6 +203,7 @@ export class DataCalonNasabahComponent implements OnInit {
       // created_by: "",
       // updated_by: ""
     });
+
     this.load();
   }
 
@@ -385,6 +387,15 @@ export class DataCalonNasabahComponent implements OnInit {
 
   load(): void {
     // ambil semua data
+
+    if (this.untukSessionRole == 'VER_PRESCR') {
+      alert('ini jalan terusif');
+      this.dataCalonNasabahForm.disable();
+    } else {
+      alert('ini jalan terus');
+      this.dataCalonNasabahForm.disable();
+    }
+
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       // if(data.code === 200) {
       this.dataEntry = data.result;
@@ -417,10 +428,10 @@ export class DataCalonNasabahComponent implements OnInit {
       // }
     });
 
-    this.dataEntryService.getfetchlistagunan(this.curef).subscribe(agunan =>{
-      this.listagunan = agunan.result[0]
+    this.dataEntryService.getfetchlistagunan(this.curef).subscribe(agunan => {
+      this.listagunan = agunan.result[0];
       // console.log('aguhnan '+ this.listagunan)
-    })
+    });
 
     this.dataEntryService.getFetchListLokasiRumah().subscribe(data => {
       // if(data.code === 200) {
@@ -432,85 +443,157 @@ export class DataCalonNasabahComponent implements OnInit {
 
     this.dataCalonNasabah.fetchDataNasabah(this.app_no_de).subscribe(data => {
       this.dataCalonNasabahMap = data.result;
-      let retriveCalonNasabah = {
-        /// tambahan dari de
-        // nama: this.dataEntry?.nama,
-        // curef: this.dataEntry?.curef,
-        // no_handphone: this.dataEntry?.no_handphone,
-        // jenis_kelamin: this.dataEntry?.jenis_kelamin,
-        // alamat_ktp: this.dataEntry?.alamat_ktp,
-        // rt: this.dataEntry?.rt,
-        // rw: this.dataEntry?.rw,
-        // provinsi: this.dataEntry?.provinsi,
-        // kabkota: this.dataEntry?.kabkota,
-        // kecamatan: this.dataEntry?.kecamatan,
-        // kelurahan: this.dataEntry?.kelurahan,
-        // kode_pos: this.dataEntry?.kode_pos,
-        // status_perkawinan: this.dataEntry?.status_perkawinan,
-        // tanggal_lahir: this.dataEntry?.tanggal_lahir,
-        // pendidikan: this.dataEntry?.pendidikan,
-        // nama_ibu_kandung: this.dataEntry?.nama_ibu_kandung,
-        // kode_fasilitas: this.dataEntry?.kode_fasilitas,
-        // nama_pasangan: this.dataEntry?.nama_pasangan,
-        // pekerjaan_pasangan: this.dataEntry?.nama_ibu_kandung_pasangan,
 
-        // id: this.dataCalonNasabahMap ,
-        // app_no_de: this.dataCalonNasabahMap.app_no_de,
-        tanggal_verifikasi: this.dataCalonNasabahMap.tanggal_verifikasi,
-        pemberi_keterangan: this.dataCalonNasabahMap.pemberi_keterangan,
-        hubungan_pemberi_keterangan: this.dataCalonNasabahMap.hubungan_pemberi_keterangan,
-        verif_alamat: this.dataCalonNasabahMap.verif_alamat,
-        note_verif_alamat: this.dataCalonNasabahMap.note_verif_alamat,
-        verif_rt_rw: this.dataCalonNasabahMap.verif_rt_rw,
-        note_verif_rt_rw: this.dataCalonNasabahMap.note_verif_rt_rw,
-        verif_provinsi: this.dataCalonNasabahMap.verif_provinsi,
-        note_verif_provinsi: this.dataCalonNasabahMap.note_verif_provinsi,
-        verif_kabkota: this.dataCalonNasabahMap.verif_kabkota,
-        note_verif_kabkota: this.dataCalonNasabahMap.note_verif_kabkota,
-        verif_kecamatan: this.dataCalonNasabahMap.verif_kecamatan,
-        note_verif_kecamatan: this.dataCalonNasabahMap.note_verif_kecamatan,
-        verif_kelurahan: this.dataCalonNasabahMap.verif_kelurahan,
-        note_verif_kelurahan: this.dataCalonNasabahMap.note_verif_kelurahan,
-        verif_kode_pos: this.dataCalonNasabahMap.verif_kode_pos,
-        note_verif_kode_pos: this.dataCalonNasabahMap.note_verif_kode_pos,
-        verif_tanggal_lahir: this.dataCalonNasabahMap.verif_tanggal_lahir,
-        note_verif_tanggal_lahir: this.dataCalonNasabahMap.note_verif_tanggal_lahir,
-        verif_pendidikan: this.dataCalonNasabahMap.verif_pendidikan,
-        note_verif_pendidikan: this.dataCalonNasabahMap.note_verif_pendidikan,
-        verif_status_menikah: this.dataCalonNasabahMap.verif_status_menikah,
-        note_verif_status_menikah: this.dataCalonNasabahMap.note_verif_status_menikah,
-        verif_ibu_kandung: this.dataCalonNasabahMap.verif_ibu_kandung,
-        note_verif_ibu_kandung: this.dataCalonNasabahMap.note_verif_ibu_kandung,
-        verif_jumlah_tanggungan: this.dataCalonNasabahMap.verif_jumlah_tanggungan,
-        note_verif_jumlah_tanggungan: this.dataCalonNasabahMap.note_verif_jumlah_tanggungan,
-        verif_nama_pasangan: this.dataCalonNasabahMap.verif_nama_pasangan,
-        note_verif_nama_pasangan: this.dataCalonNasabahMap.note_verif_nama_pasangan,
-        verif_pekerjaan_pasangan: this.dataCalonNasabahMap.verif_pekerjaan_pasangan,
-        note_verif_pekerjaan_pasangan: this.dataCalonNasabahMap.note_verif_pekerjaan_pasangan,
-        fasilitas_pembiayaan: this.dataCalonNasabahMap.fasilitas_pembiayaan,
-        karakter_calon_nasabah: this.dataCalonNasabahMap.karakter_calon_nasabah,
-        status_rumah: this.dataCalonNasabahMap.status_rumah,
-        // cek: this.dataCalonNasabahMap.cek,
-        rumah_dihuni: this.dataCalonNasabahMap.rumah_dihuni,
-        lama_menetap_bulan: this.dataCalonNasabahMap.lama_menetap_bulan,
-        lama_menetap_tahun: this.dataCalonNasabahMap.lama_menetap_tahun,
-        jenis_bangunan: this.dataCalonNasabahMap.jenis_bangunan,
-        lokasi_perumahan: this.dataCalonNasabahMap.lokasi_perumahan,
-        fasilitas_listrik: this.dataCalonNasabahMap.fasilitas_listrik,
-        // isi_rumah: this.dataCalonNasabahMap.isi_rumah,
-        kondisi_lingkungan: this.dataCalonNasabahMap.kondisi_lingkungan,
-        akses_jalan: this.dataCalonNasabahMap.akses_jalan,
-        garasi: this.dataCalonNasabahMap.garasi,
-        carport: this.dataCalonNasabahMap.carport,
-        kendaraan: this.dataCalonNasabahMap.kendaraan,
-        jumlah_kendaraan: this.dataCalonNasabahMap.jumlah_kendaraan,
-        kondisi_kendaraan: this.dataCalonNasabahMap.kondisi_kendaraan,
-        // created_date: this.dataCalonNasabahMap ,
-        // updated_date: this.dataCalonNasabahMap ,
-        // created_by: this.dataCalonNasabahMap ,
-        // updated_by: this.dataCalonNasabahMap
-      };
-      this.dataCalonNasabahForm.setValue(retriveCalonNasabah);
+      if (this.dataCalonNasabahMap == null) {
+        let retriveCalonNasabah = {
+          tanggal_verifikasi: '',
+          pemberi_keterangan: '',
+          hubungan_pemberi_keterangan: '',
+          verif_alamat: '',
+          note_verif_alamat: '',
+          verif_rt_rw: '',
+          note_verif_rt_rw: '',
+          verif_provinsi: '',
+          note_verif_provinsi: '',
+          verif_kabkota: '',
+          note_verif_kabkota: '',
+          verif_kecamatan: '',
+          note_verif_kecamatan: '',
+          verif_kelurahan: '',
+          note_verif_kelurahan: '',
+          verif_kode_pos: '',
+          note_verif_kode_pos: '',
+          verif_tanggal_lahir: '',
+          note_verif_tanggal_lahir: '',
+          verif_pendidikan: '',
+          note_verif_pendidikan: '',
+          verif_status_menikah: '',
+          note_verif_status_menikah: '',
+          verif_ibu_kandung: '',
+          note_verif_ibu_kandung: '',
+          verif_jumlah_tanggungan: '',
+          note_verif_jumlah_tanggungan: '',
+          verif_nama_pasangan: '',
+          note_verif_nama_pasangan: '',
+          verif_pekerjaan_pasangan: '',
+          note_verif_pekerjaan_pasangan: '',
+          fasilitas_pembiayaan: '',
+          karakter_calon_nasabah: '',
+          status_rumah: '',
+          // cek: this.dataCalonNasabahMap.cek,
+          rumah_dihuni: '',
+          lama_menetap_bulan: '',
+          lama_menetap_tahun: '',
+          jenis_bangunan: '',
+          lokasi_perumahan: '',
+          fasilitas_listrik: '',
+
+          kondisi_lingkungan: '',
+          akses_jalan: '',
+          garasi: '',
+          carport: '',
+          kendaraan: '',
+          jumlah_kendaraan: '',
+          kondisi_kendaraan: '',
+        };
+        this.dataCalonNasabahForm.setValue(retriveCalonNasabah);
+
+        if (this.untukSessionRole == 'VER_PRESCR') {
+          alert('ini if');
+          this.dataCalonNasabahForm.disable();
+        } else {
+          alert('ini else');
+          this.dataCalonNasabahForm.enable();
+        }
+      } else {
+        let retriveCalonNasabah = {
+          /// tambahan dari de
+          // nama: this.dataEntry?.nama,
+          // curef: this.dataEntry?.curef,
+          // no_handphone: this.dataEntry?.no_handphone,
+          // jenis_kelamin: this.dataEntry?.jenis_kelamin,
+          // alamat_ktp: this.dataEntry?.alamat_ktp,
+          // rt: this.dataEntry?.rt,
+          // rw: this.dataEntry?.rw,
+          // provinsi: this.dataEntry?.provinsi,
+          // kabkota: this.dataEntry?.kabkota,
+          // kecamatan: this.dataEntry?.kecamatan,
+          // kelurahan: this.dataEntry?.kelurahan,
+          // kode_pos: this.dataEntry?.kode_pos,
+          // status_perkawinan: this.dataEntry?.status_perkawinan,
+          // tanggal_lahir: this.dataEntry?.tanggal_lahir,
+          // pendidikan: this.dataEntry?.pendidikan,
+          // nama_ibu_kandung: this.dataEntry?.nama_ibu_kandung,
+          // kode_fasilitas: this.dataEntry?.kode_fasilitas,
+          // nama_pasangan: this.dataEntry?.nama_pasangan,
+          // pekerjaan_pasangan: this.dataEntry?.nama_ibu_kandung_pasangan,
+
+          // id: this.dataCalonNasabahMap ,
+          // app_no_de: this.dataCalonNasabahMap.app_no_de,
+          tanggal_verifikasi: this.dataCalonNasabahMap.tanggal_verifikasi,
+          pemberi_keterangan: this.dataCalonNasabahMap.pemberi_keterangan,
+          hubungan_pemberi_keterangan: this.dataCalonNasabahMap.hubungan_pemberi_keterangan,
+          verif_alamat: this.dataCalonNasabahMap.verif_alamat,
+          note_verif_alamat: this.dataCalonNasabahMap.note_verif_alamat,
+          verif_rt_rw: this.dataCalonNasabahMap.verif_rt_rw,
+          note_verif_rt_rw: this.dataCalonNasabahMap.note_verif_rt_rw,
+          verif_provinsi: this.dataCalonNasabahMap.verif_provinsi,
+          note_verif_provinsi: this.dataCalonNasabahMap.note_verif_provinsi,
+          verif_kabkota: this.dataCalonNasabahMap.verif_kabkota,
+          note_verif_kabkota: this.dataCalonNasabahMap.note_verif_kabkota,
+          verif_kecamatan: this.dataCalonNasabahMap.verif_kecamatan,
+          note_verif_kecamatan: this.dataCalonNasabahMap.note_verif_kecamatan,
+          verif_kelurahan: this.dataCalonNasabahMap.verif_kelurahan,
+          note_verif_kelurahan: this.dataCalonNasabahMap.note_verif_kelurahan,
+          verif_kode_pos: this.dataCalonNasabahMap.verif_kode_pos,
+          note_verif_kode_pos: this.dataCalonNasabahMap.note_verif_kode_pos,
+          verif_tanggal_lahir: this.dataCalonNasabahMap.verif_tanggal_lahir,
+          note_verif_tanggal_lahir: this.dataCalonNasabahMap.note_verif_tanggal_lahir,
+          verif_pendidikan: this.dataCalonNasabahMap.verif_pendidikan,
+          note_verif_pendidikan: this.dataCalonNasabahMap.note_verif_pendidikan,
+          verif_status_menikah: this.dataCalonNasabahMap.verif_status_menikah,
+          note_verif_status_menikah: this.dataCalonNasabahMap.note_verif_status_menikah,
+          verif_ibu_kandung: this.dataCalonNasabahMap.verif_ibu_kandung,
+          note_verif_ibu_kandung: this.dataCalonNasabahMap.note_verif_ibu_kandung,
+          verif_jumlah_tanggungan: this.dataCalonNasabahMap.verif_jumlah_tanggungan,
+          note_verif_jumlah_tanggungan: this.dataCalonNasabahMap.note_verif_jumlah_tanggungan,
+          verif_nama_pasangan: this.dataCalonNasabahMap.verif_nama_pasangan,
+          note_verif_nama_pasangan: this.dataCalonNasabahMap.note_verif_nama_pasangan,
+          verif_pekerjaan_pasangan: this.dataCalonNasabahMap.verif_pekerjaan_pasangan,
+          note_verif_pekerjaan_pasangan: this.dataCalonNasabahMap.note_verif_pekerjaan_pasangan,
+          fasilitas_pembiayaan: this.dataCalonNasabahMap.fasilitas_pembiayaan,
+          karakter_calon_nasabah: this.dataCalonNasabahMap.karakter_calon_nasabah,
+          status_rumah: this.dataCalonNasabahMap.status_rumah,
+          // cek: this.dataCalonNasabahMap.cek,
+          rumah_dihuni: this.dataCalonNasabahMap.rumah_dihuni,
+          lama_menetap_bulan: this.dataCalonNasabahMap.lama_menetap_bulan,
+          lama_menetap_tahun: this.dataCalonNasabahMap.lama_menetap_tahun,
+          jenis_bangunan: this.dataCalonNasabahMap.jenis_bangunan,
+          lokasi_perumahan: this.dataCalonNasabahMap.lokasi_perumahan,
+          fasilitas_listrik: this.dataCalonNasabahMap.fasilitas_listrik,
+          // isi_rumah: this.dataCalonNasabahMap.isi_rumah,
+          kondisi_lingkungan: this.dataCalonNasabahMap.kondisi_lingkungan,
+          akses_jalan: this.dataCalonNasabahMap.akses_jalan,
+          garasi: this.dataCalonNasabahMap.garasi,
+          carport: this.dataCalonNasabahMap.carport,
+          kendaraan: this.dataCalonNasabahMap.kendaraan,
+          jumlah_kendaraan: this.dataCalonNasabahMap.jumlah_kendaraan,
+          kondisi_kendaraan: this.dataCalonNasabahMap.kondisi_kendaraan,
+          // created_date: this.dataCalonNasabahMap ,
+          // updated_date: this.dataCalonNasabahMap ,
+          // created_by: this.dataCalonNasabahMap ,
+          // updated_by: this.dataCalonNasabahMap
+        };
+        this.dataCalonNasabahForm.setValue(retriveCalonNasabah);
+
+        if (this.untukSessionRole == 'VER_PRESCR') {
+          alert('ini if');
+          this.dataCalonNasabahForm.disable();
+        } else {
+          alert('ini else');
+          this.dataCalonNasabahForm.enable();
+        }
+      }
 
       // Checkbox Cek Ke
       this.checkboxCek = this.dataCalonNasabahMap.cek?.split(', ');
@@ -550,6 +633,12 @@ export class DataCalonNasabahComponent implements OnInit {
         }
       }
     });
+
+    // if( this.untukSessionRole=='VER_PRESCR'){
+    //   this.dataCalonNasabahForm.enable()
+    // }else{
+    //   this.dataCalonNasabahForm.disable()
+    // }
 
     // ref Hubungan Emergency
     this.dataCalonNasabah.getHubunganEmergency().subscribe(data => {
@@ -591,5 +680,9 @@ export class DataCalonNasabahComponent implements OnInit {
       event.preventDefault();
       return;
     }
+  }
+
+  goto() {
+    this.router.navigate(['/data-kantor'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

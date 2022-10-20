@@ -1,7 +1,10 @@
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Daftar Calon Nasabah</h3>
 </div>
-<form [formGroup]="mutasiForm" (ngSubmit)="submitForm(nama_bank.value, no_rekening.value, tahun.value, bulan.value, debet.value, kredit.value, saldo.value)">
+<form
+  [formGroup]="mutasiForm"
+  (ngSubmit)="submitForm(nama_bank.value, no_rekening.value, tahun.value, bulan.value, debet.value, kredit.value, saldo.value)"
+>
   <div class="row form-material">
     <!-- ////Colom ke 1\\\\\ -->
     <div class="col">
@@ -70,7 +73,26 @@
   </div>
   <p></p>
   <p></p>
-  <button type="button" (click)="this.tambahTableMutasi = ''; this.lihatTableMutasi = ''; nama_bank.value = ''; no_rekening.value = ''; tahun.value = ''; bulan.value = ''; debet.value = ''; kredit.value = ''; saldo.value = ''; hubunganDenganBank.style.display = 'block'" class="btn btn-info" style="float: right">Tambah Data</button>
+  <button
+    [hidden]="this.untukSessionRole == 'VER_PRESCR'"
+    type="button"
+    (click)="
+      this.tambahTableMutasi = '';
+      this.lihatTableMutasi = '';
+      nama_bank.value = '';
+      no_rekening.value = '';
+      tahun.value = '';
+      bulan.value = '';
+      debet.value = '';
+      kredit.value = '';
+      saldo.value = '';
+      hubunganDenganBank.style.display = 'block'
+    "
+    class="btn btn-info"
+    style="float: right"
+  >
+    Tambah Data
+  </button>
   <p></p>
   <table class="table table-striped">
     <thead>
@@ -97,17 +119,35 @@
         <td style="text-align: center">{{ mutasiRekening.kredit }}</td>
         <td style="text-align: center">{{ mutasiRekening.saldo }}</td>
         <td style="text-align: center">
-          <a type="button" (click)="editMutasi(mutasiRekening.id); this.lihatTableMutasi = 1; this.tambahTableMutasi = 1; hubunganDenganBank.style.display = 'block'"><fa-icon icon="ellipsis"></fa-icon><br/>View</a>
+          <a
+            type="button"
+            (click)="
+              editMutasi(mutasiRekening.id);
+              this.lihatTableMutasi = 1;
+              this.tambahTableMutasi = 1;
+              hubunganDenganBank.style.display = 'block'
+            "
+            ><fa-icon icon="ellipsis"></fa-icon><br />View</a
+          >
           &nbsp;&nbsp;&nbsp;
-          <a type="button"><fa-icon icon="trash"></fa-icon><br/>Hapus</a>
+          <a type="button"><fa-icon icon="trash"></fa-icon><br />Hapus</a>
           &nbsp;&nbsp;&nbsp;
-          <a type="button" (click)="editMutasi(mutasiRekening.id); this.lihatTableMutasi = ''; this.tambahTableMutasi = 1; hubunganDenganBank.style.display = 'block'"><fa-icon icon="pencil-square"></fa-icon><br/>Edit</a>
+          <a
+            type="button"
+            (click)="
+              editMutasi(mutasiRekening.id);
+              this.lihatTableMutasi = '';
+              this.tambahTableMutasi = 1;
+              hubunganDenganBank.style.display = 'block'
+            "
+            ><fa-icon icon="pencil-square"></fa-icon><br />Edit</a
+          >
         </td>
       </tr>
     </tbody>
   </table>
   <p></p>
-  <div #hubunganDenganBank style="display: none;">
+  <div #hubunganDenganBank style="display: none">
     <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
       <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pasangan)</h3>
     </div>
@@ -119,14 +159,26 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Nama Bank</label>
           <div class="col-sm-8">
-            <input #nama_bank type="text" value="{{this.getTableMutasi.nama_bank}}" [disabled]="this.lihatTableMutasi == 1" class="form-control"/>
+            <input
+              #nama_bank
+              type="text"
+              value="{{ this.getTableMutasi.nama_bank }}"
+              [disabled]="this.lihatTableMutasi == 1"
+              class="form-control"
+            />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">No Rekening</label>
           <div class="col-sm-8">
-            <input #no_rekening type="text" value="{{this.getTableMutasi.no_rekening}}" [disabled]="this.lihatTableMutasi == 1" class="form-control"/>
+            <input
+              #no_rekening
+              type="text"
+              value="{{ this.getTableMutasi.no_rekening }}"
+              [disabled]="this.lihatTableMutasi == 1"
+              class="form-control"
+            />
           </div>
         </div>
         <br />
@@ -134,7 +186,7 @@
           <label class="col-sm-4 col-form-label">Tahun</label>
           <div class="col-sm-8">
             <select #tahun name="view_data_tahun" id="view_data_tahun" class="form-control" [disabled]="this.lihatTableMutasi == 1">
-              <option value="{{this.getTableMutasi.tahun}}">{{this.getTableMutasi.tahun}}</option>
+              <option value="{{ this.getTableMutasi.tahun }}">{{ this.getTableMutasi.tahun }}</option>
               <option value="2022">2022</option>
               <option value="2023">2023</option>
             </select>
@@ -147,7 +199,7 @@
           <label class="col-sm-4 col-form-label">Bulan</label>
           <div class="col-sm-8">
             <select #bulan name="view_data_bulan" id="view_data_bulan" class="form-control" [disabled]="this.lihatTableMutasi == 1">
-              <option value="{{this.getTableMutasi.bulan}}">{{this.getTableMutasi.bulan}}</option>
+              <option value="{{ this.getTableMutasi.bulan }}">{{ this.getTableMutasi.bulan }}</option>
               <option value="Januari">Januari</option>
               <option value="Febuari">Febuari</option>
               <option value="Maret">Maret</option>
@@ -167,21 +219,45 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Debet</label>
           <div class="col-sm-8">
-            <input #debet value="{{this.getTableMutasi.debet}}" type="text" class="form-control" id="debet" name="debet" [disabled]="this.lihatTableMutasi == 1"/>
+            <input
+              #debet
+              value="{{ this.getTableMutasi.debet }}"
+              type="text"
+              class="form-control"
+              id="debet"
+              name="debet"
+              [disabled]="this.lihatTableMutasi == 1"
+            />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Kredit</label>
           <div class="col-sm-8">
-            <input #kredit value="{{this.getTableMutasi.kredit}}" type="text" class="form-control" id="kredit" name="kredit" [disabled]="this.lihatTableMutasi == 1"/>
+            <input
+              #kredit
+              value="{{ this.getTableMutasi.kredit }}"
+              type="text"
+              class="form-control"
+              id="kredit"
+              name="kredit"
+              [disabled]="this.lihatTableMutasi == 1"
+            />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Saldo</label>
           <div class="col-sm-8">
-            <input #saldo value="{{this.getTableMutasi.saldo}}" type="text" class="form-control" id="saldo" name="saldo" [disabled]="this.lihatTableMutasi == 1"/>
+            <input
+              #saldo
+              value="{{ this.getTableMutasi.saldo }}"
+              type="text"
+              class="form-control"
+              id="saldo"
+              name="saldo"
+              [disabled]="this.lihatTableMutasi == 1"
+            />
           </div>
         </div>
       </div>
@@ -190,7 +266,8 @@
   <p></p>
   <div class="row">
     <div class="col" style="text-align: center">
-      <button type="submit" class="btn btn-info">Simpan Data</button>
+      <button [hidden]="this.untukSessionRole == 'VER_PRESCR'" type="submit" class="btn btn-info">Simpan Data</button>
+      <button (click)="goto()" type="button" class="btn btn-info">selanjutnya</button>
     </div>
   </div>
 </form>

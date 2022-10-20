@@ -163,7 +163,8 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
 
   viewdataentry(getAppNoDe: any): void {
     alert(getAppNoDe);
-    this.router.navigate(['/data-entry'], { queryParams: { datakiriman: getAppNoDe } });
+    // this.router.navigate(['/data-entry/personalinfo'], { queryParams: { curef: getCuref, statusPerkawinan: getStatus, app_no_de: getAppNoDe} });
+    this.router.navigate(['/data-entry/personalinfo'], { queryParams: { app_no_de: getAppNoDe } });
   }
   // /////////////////////////Untuk Alert/////////////////////////////////////
 

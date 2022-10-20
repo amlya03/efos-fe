@@ -91,16 +91,24 @@
 <br />
 <div class="text-center">
   <!-- <button type="submit" class="fa fa-floppy-o btn btn-secondary">Simpan Memo</button> -->
-  <button (click)="simpanmemo()" type="submit" id="update_memo" name="update_memo" value="update_memo" class="btn mb-1 btn-dark">
+  <button
+    [hidden]="this.untukSessionRole == 'VER_PRESCR'"
+    (click)="simpanmemo()"
+    type="submit"
+    id="update_memo"
+    name="update_memo"
+    value="update_memo"
+    class="btn mb-1 btn-dark"
+  >
     Simpan Memo<span class="btn-icon-right"><i class="fa fa-floppy-o"></i></span>
   </button>
-  <button type="button" (click)="cetakmemo()" id="cetakYuk" class="btn mb-1 btn-secondary">
+  <button [hidden]="this.untukSessionRole == 'VER_PRESCR'" type="button" (click)="cetakmemo()" id="cetakYuk" class="btn mb-1 btn-secondary">
     Cetak Memo<span class="btn-icon-right"><i class="fa fa-print"></i></span>
   </button>
 
   <button
     type="button"
-    [hidden]="this.untukSessionRole == 'BRANCHMANAGER'"
+    [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
     (click)="updatestatus()"
     id="simpan_memo"
     name="simpan_memo"
@@ -113,7 +121,7 @@
   <!--  and  $this->session->userdata('cekstrukturpembayaran')=='1'){?> -->
   <button
     (click)="kembalikede()"
-    [hidden]="this.untukSessionRole == 'AO'"
+    [hidden]="this.untukSessionRole == 'AO' || this.untukSessionRole == 'VER_PRESCR'"
     type="button"
     id="kembalide"
     name="kembalide"
@@ -129,9 +137,21 @@
     name="selanjutnyauntukbm"
     value="selanjutnyauntukbm"
     class="btn mb-1 btn-warning"
-    [hidden]="this.untukSessionRole == 'AO'"
+    [hidden]="this.untukSessionRole == 'AO' || this.untukSessionRole == 'VER_PRESCR'"
   >
     Update Status untuk bm <span class="btn-icon-right"><i class="fa fa-check"></i></span>
+  </button>
+
+  <button
+    type="button"
+    [hidden]="this.untukSessionRole == 'BRANCHMANAGER'"
+    (click)="updatestatus()"
+    id="simpan_memo"
+    name="simpan_memo"
+    value="simpan_memo"
+    class="btn mb-1 btn-warning"
+  >
+    selanjutnya<span class="btn-icon-right"><i class="fa fa-check"></i></span>
   </button>
 
   <!-- <button class="btn mb-1 btn-warning" id="btn_bm_selesai" name="btn_bm_selesai" value="btn_bm_selesai">Update Status<span>&nbsp;<i class="fa fa-check"></i></span></button>  -->
