@@ -52,6 +52,12 @@ export class ServiceVerificationService {
   );
   // ////////////////////// Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // ////////////////////// Get Struktur Pembiayaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected getStrukturPembiayaan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaStrukturPembiayaan?sd='
+  );
+  // ////////////////////// Get Struktur Pembiayaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // //////////////////////////////////// URL List Syarat Persetujuan ///////////////////////////////////////////////////////////
   protected fetchSyaratPersetujuan = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.110:8805/api/v1/efos-verif/getSyaratPersetujuan?sd='
@@ -185,6 +191,12 @@ export class ServiceVerificationService {
     return this.http.get<ApiResponse>(this.getMutasi + id);
   }
   // //////////////////////get mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ///////////////////// Get Struktur Pembiayaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getFetchStrukturPembiayaan(app_no_de: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getStrukturPembiayaan + app_no_de);
+  }
+  // ////////////////////// Get Struktur Pembiayaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// Syarat Persetujuan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   getfetchSyaratPersetujuan(app_no_de: any): Observable<ApiResponse> {

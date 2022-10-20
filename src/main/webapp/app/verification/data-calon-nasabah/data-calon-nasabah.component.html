@@ -47,18 +47,14 @@
         <label class="col-sm-4 col-form-label">Tanggal Verification</label>
         <div class="col-sm-8">
           <input
-            readonly
             class="form-control"
             type="date"
-            formControlName="tanggal_verification"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.tanggal_verification.errors }"
+            formControlName="tanggal_verifikasi"
             id="tanggal_verification"
             name="tanggal_verification"
             onchange="submitBday()"
+            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.tanggal_verification.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.tanggal_verification.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
@@ -66,19 +62,15 @@
         <label class="col-sm-4 col-form-label">Pemberi Keterangan</label>
         <div class="col-sm-8">
           <input
-            readonly
             class="form-control"
             type="text"
             formControlName="pemberi_keterangan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.pemberi_keterangan.errors }"
             id="pemberi_keterangan"
             name="pemberi_keterangan"
             onchange="submitBday()"
             maxlength="200"
+            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.pemberi_keterangan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.pemberi_keterangan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
@@ -86,23 +78,17 @@
         <label class="col-sm-4 col-form-label">Hubungan dengan pemberi Keterangan</label>
         <div class="col-sm-8">
           <select
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             name="hubungan_dengen_pemberi_keterangan"
             id="hubungan_dengen_pemberi_keterangan"
             class="form-control"
-            formControlName="hubungan_dengen_pemberi_keterangan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.hubungan_dengen_pemberi_keterangan.errors }"
+            formControlName="hubungan_pemberi_keterangan"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
           >
             <option value="">Pilih Data</option>
-            <option *ngFor="let refHubunganEmergency of refHubunganEmergency" value="{{ refHubunganEmergency.deskripsi }}">
+            <option *ngFor="let refHubunganEmergency of refHubunganEmergency" value="{{refHubunganEmergency.deskripsi}}">
               {{ refHubunganEmergency.deskripsi }}
             </option>
           </select>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.hubungan_dengen_pemberi_keterangan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.hubungan_dengen_pemberi_keterangan.errors.required">
-              Harap Pilih Data
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -137,26 +123,26 @@
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <input
-        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_alamat_rumah_ya"
         formControlName="verif_alamat"
         value="1"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
       />
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
-        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_alamat_rumah_tidak"
         formControlName="verif_alamat"
         value="0"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
       />
       <!--formControlName="verif_alamat" -->
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <textarea class="form-control" name="note_alamat_rumah" id="note_alamat_rumah" formControlName="note_verif_alamat"></textarea>
+        <textarea class="form-control" [readonly]="this.untukSessionRole == 'VER_PRESCR'" name="note_alamat_rumah" id="note_alamat_rumah" formControlName="note_verif_alamat"></textarea>
       </div>
     </div>
   </div>
@@ -216,7 +202,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           name="note_rt_rw"
           id="note_rt_rw"
           class="form-control"
@@ -267,11 +253,11 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
           name="note_provinsi"
           id="note_provinsi"
           class="form-control"
           formControlName="note_verif_provinsi"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
         />
       </div>
     </div>
@@ -320,7 +306,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           name="note_kota"
           id="note_kota"
           class="form-control"
@@ -373,7 +359,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           name="kelurahan"
           id="kelurahan"
           class="form-control"
@@ -423,7 +409,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           id="note_kelurahan"
           name="note_kelurahan"
           type="text"
@@ -480,7 +466,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           class="form-control"
           type="text"
           id="note_kodepos"
@@ -497,7 +483,7 @@
         <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
         <div class="col-sm-8">
           <input
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            readonly
             class="form-control"
             type="date"
             id="tanggal_lahir"
@@ -531,7 +517,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           name="note_verif_tanggal_lahir"
           id="note_verif_tanggal_lahir"
           class="form-control"
@@ -585,7 +571,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           name="note_pendidikan"
           id="note_pendidikan"
           class="form-control"
@@ -639,7 +625,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           type="text"
           class="form-control"
           id="note_status_menikah"
@@ -663,11 +649,7 @@
             name="nama_ibu_kandung"
             placeholder=""
             value="{{this.dataEntry.nama_ibu_kandung}}"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.nama_ibu_kandung.errors }"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_ibu_kandung.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_ibu_kandung.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
     </div>
@@ -694,7 +676,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           type="text"
           class="form-control"
           id="note_verif_ibu_kandung"
@@ -704,7 +686,7 @@
       </div>
     </div>
   </div>
-  <br />
+  <!-- <br />
   <div class="row form-material">
     <div class="col">
       <div class="form-group row">
@@ -732,7 +714,6 @@
         formControlName="verif_jumlah_tanggungan"
         value="1"
       />
-      <!--verif_jumlah_tanggungan-->
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
         [disabled]="this.untukSessionRole == 'VER_PRESCR'"
@@ -755,7 +736,7 @@
         />
       </div>
     </div>
-  </div>
+  </div> -->
   <br />
   <div [ngSwitch]="status_perkawinan.value">
     <div *ngSwitchCase="'Menikah'">
@@ -765,18 +746,14 @@
             <label class="col-sm-4 col-form-label">Nama Pasangan</label>
             <div class="col-sm-8">
               <input
-                [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+                readonly
                 type="text"
                 class="form-control"
                 id="nama_pasangan"
                 name="nama_pasangan"
                 placeholder=""
                 value="{{this.dataEntry.nama_pasangan}}"
-                [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.nama_pasangan.errors }"
               />
-              <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_pasangan.errors" class="text-danger">
-                <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_pasangan.errors.required">Tidak Boleh Kosong</div>
-              </div>
             </div>
           </div>
         </div>
@@ -803,7 +780,7 @@
         <div class="col">
           <div class="form-group row">
             <input
-              [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+              [readonly]="this.untukSessionRole == 'VER_PRESCR'"
               type="text"
               class="form-control"
               id="note_nama_pasangan"
@@ -820,12 +797,11 @@
             <label class="col-sm-4 col-form-label">Pekerjaan Pasangan</label>
             <div class="col-sm-8">
               <input
-                [disabled]="this.untukSessionRole == 'VER_PRESCR'"
                 type="text"
                 class="form-control"
                 id="pekerjaan_pasangan"
                 name="pekerjaan_pasangan"
-                formControlName="pekerjaan_pasangan"
+                value="{{this.dataEntry.jenis_pekerjaan_pasangan_desc}}"
                 readonly
               />
             </div>
@@ -854,7 +830,7 @@
         <div class="col">
           <div class="form-group row">
             <input
-              [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+              [readonly]="this.untukSessionRole == 'VER_PRESCR'"
               type="text"
               class="form-control"
               id="note_pekerjaan_pasangan"
@@ -896,15 +872,11 @@
           id="karakter_calon_nasabah "
           class="form-control"
           formControlName="karakter_calon_nasabah"
-          [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.karakter_calon_nasabah.errors }"
         >
           <option value="">Pilih Data</option>
           <option value="Baik">Baik</option>
           <option value="Tidak Baik">Tidak Baik</option>
         </select>
-        <div *ngIf="submitted && dataCalonNasabahForm.controls.karakter_calon_nasabah.errors" class="text-danger">
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.karakter_calon_nasabah.errors.required">Tidak Boleh Kosong</div>
-        </div>
         <!-- </div> -->
       </div>
     </div>
@@ -926,16 +898,12 @@
             id="status_rumah"
             class="form-control"
             formControlName="status_rumah"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.status_rumah.errors }"
           >
             <option value="">Pilih Data</option>
             <option [ngValue]="refStatusRumah.description" *ngFor="let refStatusRumah of refStatusRumah">
               {{ refStatusRumah.description }}
             </option>
           </select>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.status_rumah.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.status_rumah.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
@@ -1006,33 +974,25 @@
         <label class="col-sm-4 col-form-label">Lama Menetap</label>
         <div class="col">
           <input
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             type="text"
             class="form-control"
             id="lama_menetap_tahun"
             name="lama_menetap_tahun"
             formControlName="lama_menetap_tahun"
             maxlength="2"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.lama_menetap_tahun.errors }"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.lama_menetap_tahun.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.lama_menetap_tahun.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
         <div class="col">Tahun</div>
         <div class="col">
           <input
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             type="text"
             class="form-control"
             id="lama_menetap_bulan"
             name="lama_menetap_bulan"
             formControlName="lama_menetap_bulan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.lama_menetap_bulan.errors }"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.lama_menetap_bulan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.lama_menetap_bulan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
         <div class="col">Bulan</div>
       </div>
@@ -1040,9 +1000,9 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jenis Bangunan</label>
         <div class="col-sm-8">
-          <select [disabled]="this.untukSessionRole == 'VER_PRESCR'" name="jenis_bangunan" id="jenis_bangunan" class="form-control">
+          <select [disabled]="this.untukSessionRole == 'VER_PRESCR'" name="jenis_bangunan" id="jenis_bangunan" class="form-control" formControlName="jenis_bangunan">
             <option value="">Pilih Data</option>
-            <option [ngValue]="refListTipeProperti.properti_deskripsi" *ngFor="let refListTipeProperti of refListTipeProperti">
+            <option *ngFor="let refListTipeProperti of refListTipeProperti" value="{{refListTipeProperti.properti_deskripsi}}">
               {{ refListTipeProperti.properti_deskripsi }}
             </option>
           </select>
@@ -1140,7 +1100,6 @@
             id="kondisi_lingkungan"
             class="form-control"
             formControlName="kondisi_lingkungan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.kondisi_lingkungan.errors }"
           >
             <option value="">Pilih Data</option>
             <option *ngFor="let listkondisilingkungan of listkondisilingkungan" value="{{ listkondisilingkungan.kondisi_lingkungan }}">
@@ -1150,9 +1109,6 @@
             <option value="Sedang">Sedang</option>
             <option value="Kurang Baik">Kurang Baik</option> -->
           </select>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.kondisi_lingkungan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.kondisi_lingkungan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
@@ -1165,50 +1121,12 @@
             id="akses_jalan_ke_rumah_tinggal"
             class="form-control"
             formControlName="akses_jalan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.akses_jalan.errors }"
           >
             <option value="">Pilih Data</option>
             <option *ngFor="let listaksesrumah of listaksesrumah" value="{{ listaksesrumah.akses_rumah }}">
               {{ listaksesrumah.akses_rumah }}
             </option>
           </select>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.akses_jalan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.akses_jalan.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Luas Tanah</label>
-        <div class="col-sm-8">
-          <input
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-            (keypress)="keyPressNumbers($event)"
-            type="text"
-            class="form-control"
-            id="luas_tanah"
-            name="luas_tanah"
-            [value]="this.listagunan.luas_tanah"
-            placeholder=""
-          />
-          <label>m2</label>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Luas Bangunan</label>
-        <div class="col-sm-8">
-          <input
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-            (keypress)="keyPressNumbers($event)"
-            type="text"
-            class="form-control"
-            id="luas_bangunan"
-            name="luas_bangunan"
-            [value]="this.listagunan.luas_bangunan"
-            placeholder=""
-          />
-          <label>m2</label>
         </div>
       </div>
       <br />
@@ -1291,7 +1209,7 @@
         <label class="col-sm-4 col-form-label">Jumlah Kendaraan</label>
         <div class="col-sm-8">
           <input
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             type="text"
             (keypress)="keyPressNumbers($event)"
             class="form-control"
@@ -1299,11 +1217,7 @@
             name="jumlah_kendaraan"
             placeholder=""
             formControlName="jumlah_kendaraan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.jumlah_kendaraan.errors }"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.jumlah_kendaraan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.jumlah_kendaraan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
@@ -1335,7 +1249,7 @@
     </div>
   </div>
   <p></p>
-  <div class="row form-material">
+  <!-- <div class="row form-material">
     <label class="col-sm-3 col-form-label">Kesimpulan Hasil Investigasi</label>
     <div class="col-sm-9">
       <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
@@ -1346,14 +1260,10 @@
         [disabled]="false"
         [placeholder]="'Tulis Disini. . .'"
         formControlName="kesimpulan_hasil_investigasi"
-        [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.kesimpulan_hasil_investigasi.errors }"
       >
       </ngx-editor>
-      <div *ngIf="submitted && dataCalonNasabahForm.controls.kesimpulan_hasil_investigasi.errors" class="text-danger">
-        <div *ngIf="submitted && dataCalonNasabahForm.controls.kesimpulan_hasil_investigasi.errors.required">Tidak Boleh Kosong</div>
-      </div>
     </div>
-  </div>
+  </div> -->
   <p></p>
   <div class="row">
     <div class="col" style="text-align: center">

@@ -8,28 +8,28 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Nasabah</label>
         <div class="col-sm-8">
-          <input readonly type="text" class="form-control" formControlName="nama" />
+          <input readonly type="text" class="form-control" value="{{this.dataEntry.nama}}"/>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">No Aplikasi</label>
         <div class="col-sm-8">
-          <input readonly type="text" formControlName="app_no_de" class="form-control" id="no_aplikasi" name="no_aplikasi" />
+          <input readonly type="text" formControlName="app_no_de" class="form-control" id="no_aplikasi" value="{{this.dataEntry.app_no_de}}"/>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Fasilitas</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" formControlName="kode_fasilitas" />
+          <input type="text" readonly class="form-control" value="{{this.dataEntry.kode_fasilitas_name}}"/>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Program</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" formControlName="program_pembiayaan" />
+          <input type="text" readonly class="form-control" value="{{this.dataEntry.program_pembiayaan}}"/>
         </div>
       </div>
     </div>
@@ -38,28 +38,28 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Product</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" formControlName="produk_pembiayaan" />
+          <input type="text" readonly class="form-control" value="{{this.dataEntry.produk_pembiayaan}}"/>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Skema</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" formControlName="kode_fasilitas" />
+          <input type="text" readonly class="form-control" value="{{this.dataEntry.skema_name}}"/>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tenor</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" formControlName="jangka_waktu" />
+          <input type="text" readonly class="form-control" value="{{this.dataEntry.jangka_waktu}} Bulan"/>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" formControlName="nilai_pembiayaan" />
+          <input type="text" readonly class="form-control" value="{{this.dataEntry.nilai_pembiayaan | currency:'Rp '}}"/>
         </div>
       </div>
     </div>

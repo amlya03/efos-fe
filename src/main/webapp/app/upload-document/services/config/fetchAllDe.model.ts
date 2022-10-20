@@ -85,4 +85,5 @@ export class fetchAllDe {
   skema_name?: string | null;
   fasilitas_ke?: Number;
   joint_income?: number;
+  jenis_pekerjaan_pasangan_desc?: String;
 }

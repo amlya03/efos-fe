@@ -11,13 +11,9 @@
             class="form-control"
             type="date"
             formControlName="tanggal_verifikasi"
-            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.tanggal_verification.errors }"
             id="tanggal_verification"
             name="tanggal_verification"
           />
-          <div *ngIf="submitted && dataKantorForm.controls.tanggal_verification.errors" class="text-danger">
-            <div *ngIf="submitted && dataKantorForm.controls.tanggal_verification.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
@@ -41,12 +37,8 @@
             type="time"
             id="waktu_verification"
             name="waktu_verification"
-            formControlName="waktu_verification"
-            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.waktu_verification.errors }"
+            formControlName="waktu_verifikasi"
           />
-          <div *ngIf="submitted && dataKantorForm.controls.waktu_verification.errors" class="text-danger">
-            <div *ngIf="submitted && dataKantorForm.controls.waktu_verification.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
@@ -56,16 +48,12 @@
           <select [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             class="form-control"
             formControlName="hubungan_pemberi_keterangan"
-            [ngClass]="{ 'is-invalid': submitted && dataKantorForm.controls.hubungan_pemberi_keterangan.errors }"
           >
-            <!-- <option value="">Pilih Data</option> -->
+            <option value="">Pilih Data</option>
             <option value="Penjual (Developer dan Pembeli)">
               Penjual (Developer dan Pembeli)
             </option>
           </select>
-          <div *ngIf="submitted && dataKantorForm.controls.hubungan_pemberi_keterangan.errors" class="text-danger">
-            <div *ngIf="submitted && dataKantorForm.controls.hubungan_pemberi_keterangan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
     </div>

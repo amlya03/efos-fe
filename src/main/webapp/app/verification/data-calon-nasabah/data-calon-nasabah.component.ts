@@ -42,7 +42,6 @@ export class DataCalonNasabahComponent implements OnInit {
   dataEntry: fetchAllDe = new fetchAllDe();
   tempunganCek: Array<number> = [];
   tampunganIsiRum: Array<number> = [];
-  listagunan: listAgunan = new listAgunan();
 
   // checkbox cek ke
   checkboxCek: any;
@@ -60,6 +59,7 @@ export class DataCalonNasabahComponent implements OnInit {
   isiRumahSofa: any;
   isiRumahPerabot: any;
   curef: any;
+
   // Role
   untukSessionRole: any;
   listaksesrumah: any;
@@ -168,8 +168,8 @@ export class DataCalonNasabahComponent implements OnInit {
       note_verif_status_menikah: '',
       verif_ibu_kandung: '',
       note_verif_ibu_kandung: '',
-      verif_jumlah_tanggungan: '',
-      note_verif_jumlah_tanggungan: '',
+      // verif_jumlah_tanggungan: '',
+      // note_verif_jumlah_tanggungan: '',
       verif_nama_pasangan: '',
       note_verif_nama_pasangan: '',
       verif_pekerjaan_pasangan: '',
@@ -267,7 +267,7 @@ export class DataCalonNasabahComponent implements OnInit {
           lokasi_perumahan: this.dataCalonNasabahForm.get('lokasi_perumahan')?.value,
           note_verif_alamat: this.dataCalonNasabahForm.get('note_verif_alamat')?.value,
           note_verif_ibu_kandung: this.dataCalonNasabahForm.get('note_verif_ibu_kandung')?.value,
-          note_verif_jumlah_tanggungan: this.dataCalonNasabahForm.get('note_verif_jumlah_tanggungan')?.value,
+          // note_verif_jumlah_tanggungan: this.dataCalonNasabahForm.get('note_verif_jumlah_tanggungan')?.value,
           note_verif_kabkota: this.dataCalonNasabahForm.get('note_verif_kabkota')?.value,
           note_verif_kecamatan: this.dataCalonNasabahForm.get('note_verif_kecamatan')?.value,
           note_verif_kelurahan: this.dataCalonNasabahForm.get('note_verif_kelurahan')?.value,
@@ -287,7 +287,7 @@ export class DataCalonNasabahComponent implements OnInit {
           // updated_date: this.dataCalonNasabahForm.get('updated_date')?.value,
           verif_alamat: this.dataCalonNasabahForm.get('verif_alamat')?.value,
           verif_ibu_kandung: this.dataCalonNasabahForm.get('verif_ibu_kandung')?.value,
-          verif_jumlah_tanggungan: this.dataCalonNasabahForm.get('verif_jumlah_tanggungan')?.value,
+          // verif_jumlah_tanggungan: this.dataCalonNasabahForm.get('verif_jumlah_tanggungan')?.value,
           verif_kabkota: this.dataCalonNasabahForm.get('verif_kabkota')?.value,
           verif_kecamatan: this.dataCalonNasabahForm.get('verif_kecamatan')?.value,
           verif_kelurahan: this.dataCalonNasabahForm.get('verif_kelurahan')?.value,
@@ -346,7 +346,7 @@ export class DataCalonNasabahComponent implements OnInit {
         lokasi_perumahan: this.dataCalonNasabahForm.get('lokasi_perumahan')?.value,
         note_verif_alamat: this.dataCalonNasabahForm.get('note_verif_alamat')?.value,
         note_verif_ibu_kandung: this.dataCalonNasabahForm.get('note_verif_ibu_kandung')?.value,
-        note_verif_jumlah_tanggungan: this.dataCalonNasabahForm.get('note_verif_jumlah_tanggungan')?.value,
+        // note_verif_jumlah_tanggungan: this.dataCalonNasabahForm.get('note_verif_jumlah_tanggungan')?.value,
         note_verif_kabkota: this.dataCalonNasabahForm.get('note_verif_kabkota')?.value,
         note_verif_kecamatan: this.dataCalonNasabahForm.get('note_verif_kecamatan')?.value,
         note_verif_kelurahan: this.dataCalonNasabahForm.get('note_verif_kelurahan')?.value,
@@ -366,7 +366,7 @@ export class DataCalonNasabahComponent implements OnInit {
         // updated_date: this.dataCalonNasabahForm.get('updated_date')?.value,
         verif_alamat: this.dataCalonNasabahForm.get('verif_alamat')?.value,
         verif_ibu_kandung: this.dataCalonNasabahForm.get('verif_ibu_kandung')?.value,
-        verif_jumlah_tanggungan: this.dataCalonNasabahForm.get('verif_jumlah_tanggungan')?.value,
+        // verif_jumlah_tanggungan: this.dataCalonNasabahForm.get('verif_jumlah_tanggungan')?.value,
         verif_kabkota: this.dataCalonNasabahForm.get('verif_kabkota')?.value,
         verif_kecamatan: this.dataCalonNasabahForm.get('verif_kecamatan')?.value,
         verif_kelurahan: this.dataCalonNasabahForm.get('verif_kelurahan')?.value,
@@ -416,11 +416,6 @@ export class DataCalonNasabahComponent implements OnInit {
       // console.log("ini data de "+this.fetchAllDe);
       // }
     });
-
-    this.dataEntryService.getfetchlistagunan(this.curef).subscribe(agunan =>{
-      this.listagunan = agunan.result[0]
-      // console.log('aguhnan '+ this.listagunan)
-    })
 
     this.dataEntryService.getFetchListLokasiRumah().subscribe(data => {
       // if(data.code === 200) {
@@ -481,8 +476,8 @@ export class DataCalonNasabahComponent implements OnInit {
         note_verif_status_menikah: this.dataCalonNasabahMap.note_verif_status_menikah,
         verif_ibu_kandung: this.dataCalonNasabahMap.verif_ibu_kandung,
         note_verif_ibu_kandung: this.dataCalonNasabahMap.note_verif_ibu_kandung,
-        verif_jumlah_tanggungan: this.dataCalonNasabahMap.verif_jumlah_tanggungan,
-        note_verif_jumlah_tanggungan: this.dataCalonNasabahMap.note_verif_jumlah_tanggungan,
+        // verif_jumlah_tanggungan: this.dataCalonNasabahMap.verif_jumlah_tanggungan,
+        // note_verif_jumlah_tanggungan: this.dataCalonNasabahMap.note_verif_jumlah_tanggungan,
         verif_nama_pasangan: this.dataCalonNasabahMap.verif_nama_pasangan,
         note_verif_nama_pasangan: this.dataCalonNasabahMap.note_verif_nama_pasangan,
         verif_pekerjaan_pasangan: this.dataCalonNasabahMap.verif_pekerjaan_pasangan,

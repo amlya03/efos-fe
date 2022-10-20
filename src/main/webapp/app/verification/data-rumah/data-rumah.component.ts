@@ -84,7 +84,7 @@ export class DataRumahComponent implements OnInit {
       responsive: true,
     };
     this.load();
-    alert(this.untukSessionRole);
+    // alert(this.untukSessionRole);
     this.formatter = new Intl.NumberFormat('id-ID', {
       style: 'currency',
       currency: 'IDR',
@@ -133,7 +133,7 @@ export class DataRumahComponent implements OnInit {
       pendapatan_usaha_total: this.sumOfNumber,
       pendapatan_profesional_total: '',
       total_penghasilan_kotor_akumulasi: '',
-      kewajiban_bank_total: '',
+      // kewajiban_bank_total: '',
       kewajiban_lainnya_total: '',
       total_penghasilan_bersih_akumulasi: '',
 
@@ -242,7 +242,7 @@ export class DataRumahComponent implements OnInit {
         pendapatan_usaha_total: this.analisaKeuanganMap.pendapatan_usaha_total,
         pendapatan_profesional_total: this.analisaKeuanganMap.pendapatan_profesional_total,
         total_penghasilan_kotor_akumulasi: this.analisaKeuanganMap.total_penghasilan_kotor_akumulasi,
-        kewajiban_bank_total: '',
+        // kewajiban_bank_total: '',
         kewajiban_lainnya_total: this.analisaKeuanganMap.kewajiban_lainnya_total,
         total_penghasilan_bersih_akumulasi: this.analisaKeuanganMap.total_penghasilan_bersih_akumulasi,
 
@@ -471,5 +471,10 @@ export class DataRumahComponent implements OnInit {
   formatMoney(value?: any) {
     const jdkfj = value.replace(/\,/g, '').replace('Rp ', '');
     // alert(jdkfj);
+  }
+
+  // Selanjutnya
+  Next(){
+    this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

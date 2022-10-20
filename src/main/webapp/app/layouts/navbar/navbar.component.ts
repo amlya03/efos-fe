@@ -10,10 +10,8 @@ import { LoginService } from 'app/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { EntityArrayResponseDaWa, PersonalInfoComponent } from 'app/data-entry/personal-info/personal-info.component';
-import { createRequestOption } from 'app/core/request/request-util';
-import { Observable } from 'rxjs';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
+import { EntityArrayResponseDaWa } from 'app/data-entry/personal-info/personal-info.component';
+import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -22,7 +20,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  // private loggedIn = new BehaviorSubject<boolean>(false); // {1}
   inProduction?: boolean;
   isNavbarCollapsed = true;
   languages = LANGUAGES;
@@ -46,6 +44,10 @@ export class NavbarComponent implements OnInit {
   datakirimantgllahir: any;
   datakirimanappide: any;
   datakirimanidcustomer: any;
+
+  // get isLoggedIn() {
+  //   return this.loggedIn.asObservable(); // {2}
+  // }
 
   constructor(
     protected http: HttpClient,
@@ -108,12 +110,6 @@ export class NavbarComponent implements OnInit {
     this.untukSessionFullName = this.localStorageService.retrieve('sessionFullName');
     this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
 
-    // ref personal info
-    this.getdataentry().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        this.daWa = res.body?.result;
-      },
-    });
   }
 
   changeLanguage(languageKey: string): void {
@@ -126,22 +122,19 @@ export class NavbarComponent implements OnInit {
   }
 
   login(): void {
-    this.router.navigate(['/login']);
+    // this.router.navigate(['/login']);
+      // this.loggedIn.next(true);
+      this.router.navigate(['/login']);
   }
 
   logout(): void {
     this.collapseNavbar();
     this.loginService.logout();
     this.router.navigate(['']);
+    // this.router.navigate(['/login']);
   }
 
   toggleNavbar(): void {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
-  }
-
-  // ref personal
-  getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.resourceUrl + this.app_no_de, { params: options, observe: 'response' });
   }
 }

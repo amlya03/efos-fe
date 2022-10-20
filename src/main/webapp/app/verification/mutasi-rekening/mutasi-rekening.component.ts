@@ -66,31 +66,6 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       processing: true,
       responsive: true,
     };
-
-    this.mutasiForm = this.formBuilder.group({
-      app_no_de: '',
-      // DE
-      nama: '',
-      program_pembiayaan: '',
-      produk_pembiayaan: '',
-      jangka_waktu: '',
-      nilai_pembiayaan: '',
-      kode_fasilitas: '',
-
-      // Mutasi
-      // id: '',
-      // bulan: '',
-      // created_by: '',
-      // created_date: '',
-      // debet: '',
-      // kredit: '',
-      // nama_bank: '',
-      // no_rekening: '',
-      // saldo: '',
-      // tahun: '',
-      // updated_by: '',
-      // updated_date: '',
-    });
     this.load();
   }
 
@@ -98,32 +73,6 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     // ambil semua data
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
-
-      let retriveMutasi = {
-        app_no_de: this.app_no_de,
-        //DE
-        nama: this.dataEntry.nama,
-        program_pembiayaan: this.dataEntry.program_pembiayaan,
-        produk_pembiayaan: this.dataEntry.produk_pembiayaan,
-        jangka_waktu: this.dataEntry.jangka_waktu,
-        nilai_pembiayaan: this.dataEntry.nilai_pembiayaan,
-        kode_fasilitas: this.dataEntry.kode_fasilitas,
-
-        // // mutasi
-        // id: this.getTableMutasi.id,
-        // nama_bank: this.getTableMutasi.nama_bank,
-        // no_rekening: this.getTableMutasi.nama_bank,
-        // tahun: this.getTableMutasi.tahun,
-        // bulan: this.getTableMutasi.bulan,
-        // debet: this.getTableMutasi.debet,
-        // kredit: this.getTableMutasi.kredit,
-        // saldo: this.getTableMutasi.saldo,
-        // created_date: this.getTableMutasi.created_date,
-        // created_by: this.getTableMutasi.created_by,
-        // updated_date: this.getTableMutasi.updated_date,
-        // updated_by: this.getTableMutasi.updated_by,
-      };
-      this.mutasiForm.setValue(retriveMutasi);
     });
 
     // list Table
@@ -134,39 +83,6 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
         this.dtTrigger.next(data.result);
       }
     });
-
-    // data
-    // this.fetchMutasi().subscribe(data => {
-    //   this.getAllMutasi = data.result;
-    //   console.log(data)
-    //   console.log('mutasi ', this.getAllMutasi)
-
-    //   let retriveMutasi = {
-    //     //DE
-    //     nama: this.dataEntry.nama,
-    //     program_pembiayaan: this.dataEntry.program_pembiayaan,
-    //     produk_pembiayaan: this.dataEntry.produk_pembiayaan,
-    //     jangka_waktu: this.dataEntry.jangka_waktu,
-    //     nilai_pembiayaan: this.dataEntry.nilai_pembiayaan,
-    //     kode_fasilitas: this.dataEntry.kode_fasilitas,
-
-    //     // // mutasi
-    //     // id: this.getAllMutasi.id,
-    //     // app_no_de: this.getAllMutasi.app_no_de,
-    //     // nama_bank: this.getAllMutasi.nama_bank,
-    //     // no_rekening: this.getAllMutasi.no_rekening,
-    //     // tahun: this.getAllMutasi.tahun,
-    //     // bulan: this.getAllMutasi.bulan,
-    //     // debet: this.getAllMutasi.debet,
-    //     // kredit: this.getAllMutasi.kredit,
-    //     // saldo: this.getAllMutasi.saldo,
-    //     // created_date: this.getAllMutasi.created_date,
-    //     // created_by: this.getAllMutasi.created_by,
-    //     // updated_date: this.getAllMutasi.updated_date,
-    //     // updated_by: this.getAllMutasi.updated_by,
-    //   };
-    //   this.mutasiForm.setValue(retriveMutasi);
-    // });
   }
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();

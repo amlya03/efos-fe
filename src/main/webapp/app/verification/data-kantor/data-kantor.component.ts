@@ -54,6 +54,7 @@ export class DataKantorComponent implements OnInit {
 
   // Role
   untukSessionRole: any;
+  untukSessionUserName: any;
 
   // logic get Number
   tipe_pekerjaanGet: any;
@@ -79,6 +80,8 @@ export class DataKantorComponent implements OnInit {
 
   ngOnInit(): void {
     this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
+    // alert(this.untukSessionUserName)
     // this.postGetTokenDuckapil();
     // this.editor = new Editor();
 
@@ -121,6 +124,7 @@ export class DataKantorComponent implements OnInit {
       note_verif_usia_pensiun: '',
       divisi: '',
       aspek_syariah: '',
+      waktu_verifikasi: '',
 
       // created_date: '',
       // updated_date: '',
@@ -132,6 +136,7 @@ export class DataKantorComponent implements OnInit {
   }
 
   onSubmit(): void {
+    // alert(this.dataKantorMap !=null)
     // // const getSekarang = new Date();
     // const getValueTanggal = +new Date(this.dataKantorForm.value.waktu_verification);
     // // alert(getValueTanggal.getTime());
@@ -154,13 +159,13 @@ export class DataKantorComponent implements OnInit {
     this.submitted = true;
     if (this.dataKantorForm.invalid) {
       return;
-    } else if (this.dataKantor == null) {
+    } else if (this.dataKantorMap == null) {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_kantor', {
-          id: 0,
+          // id: 0,
           app_no_de: this.app_no_de,
           aspek_syariah: this.dataKantorForm.get('aspek_syariah')?.value,
-          // created_by: this.dataKantorForm.get('created_by')?.value,
+          created_by: this.untukSessionUserName,
           // created_date: this.dataKantorForm.get('created_date')?.value,
           divisi: this.dataKantorForm.get('divisi')?.value,
           hubungan_pemberi_keterangan: this.dataKantorForm.get('hubungan_pemberi_keterangan')?.value,
@@ -187,7 +192,7 @@ export class DataKantorComponent implements OnInit {
           note_verif_usia_pensiun: this.dataKantorForm.get('note_verif_usia_pensiun')?.value,
           pemberi_keterangan: this.dataKantorForm.get('pemberi_keterangan')?.value,
           tanggal_verifikasi: this.dataKantorForm.get('tanggal_verifikasi')?.value,
-          // updated_by: this.dataKantorForm.get('updated_by')?.value,
+          updated_by: this.untukSessionUserName,
           // updated_date: this.dataKantorForm.get('updated_date')?.value,
           verif_alamat_perusahan: this.dataKantorForm.get('verif_alamat_perusahan')?.value,
           verif_bidang_usaha: this.dataKantorForm.get('verif_bidang_usaha')?.value,
@@ -214,13 +219,22 @@ export class DataKantorComponent implements OnInit {
           note_verif_nama_perusahaan: this.dataKantorForm.get('note_verif_nama_perusahaan')?.value,
           verif_alamat_perusahaan: this.dataKantorForm.get('verif_alamat_perusahaan')?.value,
           note_verif_alamat_perusahaan: this.dataKantorForm.get('note_verif_alamat_perusahaan')?.value,
+          waktu_verifikasi: this.dataKantorForm.get('note_verif_alamat_perusahaan')?.value,
+
+  // "created_date": "2022-10-20T02:38:50.939Z",
+  // "note_verif_jenis_pekerjaan": "string",
+  // "note_verif_jumlah_karyawan": "string",
+  // "note_verif_tipe_perusahaan": "string",
+  // "updated_date": "2022-10-20T02:38:50.939Z",
+  // "verif_jenis_pekerjaan": "string",
+  // "verif_jumlah_karyawan": "string",
         })
         .subscribe({});
       this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     } else
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_data_kantor', {
-          id: 0,
+          // id: 0,
           app_no_de: this.app_no_de,
           aspek_syariah: this.dataKantorForm.get('aspek_syariah')?.value,
           // created_by: this.dataKantorForm.get('created_by')?.value,
@@ -277,6 +291,7 @@ export class DataKantorComponent implements OnInit {
           note_verif_nama_perusahaan: this.dataKantorForm.get('note_verif_nama_perusahaan')?.value,
           verif_alamat_perusahaan: this.dataKantorForm.get('verif_alamat_perusahaan')?.value,
           note_verif_alamat_perusahaan: this.dataKantorForm.get('note_verif_alamat_perusahaan')?.value,
+          waktu_verifikasi: this.dataKantorForm.get('waktu_verifikasi')?.value,
         })
         .subscribe({});
     this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
@@ -363,6 +378,7 @@ export class DataKantorComponent implements OnInit {
         note_verif_usia_pensiun: this.dataKantorMap.note_verif_usia_pensiun,
         divisi: this.dataKantorMap.divisi,
         aspek_syariah: this.dataKantorMap.aspek_syariah,
+        waktu_verifikasi: this.dataKantorMap.waktu_verifikasi,
 
         // created_date: this.dataKantorMap.created_date,
         // updated_date: this.dataKantorMap.updated_date,
