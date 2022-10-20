@@ -261,7 +261,7 @@ export class DataRumahComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.formatMoney('Rp 100,000.00');
+    // this.formatMoney('Rp 100,000.00');
     const total_pro =
       Number(this.analisaKeuanganForm.get('pendapatan_profesional')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value);
@@ -288,13 +288,13 @@ export class DataRumahComponent implements OnInit {
       Number(this.analisaKeuanganForm.get('tunjangan_pasangan')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value);
     const pend_kotor_tot = pend_kotor + pend_kotor_pas;
-    const pend_bersih_nas = pend_kotor - Number(this.analisaKeuanganForm.get('total_angsuran_kantor')?.value);
-    const pend_bersih_pas = pend_kotor_pas - Number(this.analisaKeuanganForm.get('total_angsuran_kantor_pasangan')?.value);
+    const pend_bersih_nas = pend_kotor - Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value);
+    const pend_bersih_pas = pend_kotor_pas - Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value);
     const pend_bersih = pend_bersih_nas + pend_bersih_pas;
     const angsuranKewaTotal =
       Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value) +
       Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value);
-
+    // alert(pend_bersih_nas)
     const totalPengKot =
       pend_bersih_nas +
       Number(this.analisaKeuanganForm.get('pendapatan_usaha')?.value) +
@@ -470,6 +470,6 @@ export class DataRumahComponent implements OnInit {
   }
   formatMoney(value?: any) {
     const jdkfj = value.replace(/\,/g, '').replace('Rp ', '');
-    alert(jdkfj);
+    // alert(jdkfj);
   }
 }

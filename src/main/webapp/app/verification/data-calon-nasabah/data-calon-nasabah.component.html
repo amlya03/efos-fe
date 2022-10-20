@@ -9,35 +9,35 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nomor Customer</label>
         <div class="col-sm-8">
-          <input formControlName="curef" class="form-control" type="text" id="no_customer" name="no_customer" readonly />
+          <input value="{{this.dataEntry.curef}}" class="form-control" type="text" id="no_customer" name="no_customer" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nomor Aplikasi</label>
         <div class="col-sm-8">
-          <input formControlName="app_no_de" class="form-control" type="text" id="nomor_aplikasi" name="nomor_aplikasi" readonly />
+          <input value="{{this.dataEntry.app_no_de}}" class="form-control" type="text" id="nomor_aplikasi" name="nomor_aplikasi" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama</label>
         <div class="col-sm-8">
-          <input formControlName="nama" class="form-control" type="text" id="nama" name="nama" readonly />
+          <input value="{{this.dataEntry.nama}}" class="form-control" type="text" id="nama" name="nama" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nomor HP</label>
         <div class="col-sm-8">
-          <input formControlName="no_handphone" class="form-control" type="text" id="nomor_hp" name="nomor_hp" readonly />
+          <input value="{{this.dataEntry.no_handphone}}" class="form-control" type="text" id="nomor_hp" name="nomor_hp" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
         <div class="col-sm-8">
-          <input formControlName="jenis_kelamin" name="jenis_kelamin" id="jenis_kelamin" class="form-control" readonly />
+          <input value="{{this.dataEntry.jenis_kelamin}}" name="jenis_kelamin" id="jenis_kelamin" class="form-control" readonly />
         </div>
       </div>
     </div>
@@ -128,7 +128,7 @@
             id="alamat_rumah"
             cols="49"
             rows="2"
-            formControlName="alamat_ktp"
+            value="{{this.dataEntry.alamat_ktp}}"
             readonly
           ></textarea>
         </div>
@@ -173,7 +173,7 @@
             id="rt"
             name="rt"
             maxlength="3"
-            formControlName="rt"
+            value="{{this.dataEntry.rt}}"
             readonly
           />
         </div>
@@ -186,7 +186,7 @@
             id="rw"
             name="rw"
             maxlength="3"
-            formControlName="rw"
+            value="{{this.dataEntry.rw}}"
             maxlength="3"
             readonly
           />
@@ -231,7 +231,12 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Provinsi</label>
         <div class="col-sm-8">
-          <input name="provinsi" id="provinsi" class="form-control" formControlName="provinsi" readonly />
+          <input
+            name="provinsi"
+            id="provinsi"
+            class="form-control"
+            value="{{this.dataEntry.provinsi}}"
+            readonly />
           <!-- <option *ngFor="let getProvinsi of getProvinsi" [ngValue]="getProvinsi.kdWilayah">
               {{ getProvinsi.namaWilayah }}
             </option> -->
@@ -277,7 +282,12 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kota</label>
         <div class="col-sm-8">
-          <input name="kota" id="kota" class="form-control" formControlName="kabkota" readonly />
+          <input
+            name="kota"
+            id="kota"
+            class="form-control"
+            value="{{this.dataEntry.kabkota}}"
+            readonly />
           <!-- <option *ngFor="let getKota of getKota" value="{{ getKota.kdWilayah }}">
               {{ getKota.namaWilayah }}
             </option>
@@ -325,7 +335,12 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kecamatan</label>
         <div class="col-sm-8">
-          <input name="kecamatan" id="kecamatan" class="form-control" formControlName="kecamatan" readonly />
+          <input
+            name="kecamatan"
+            id="kecamatan"
+            class="form-control"
+            value="{{this.dataEntry.kecamatan}}"
+            readonly />
           <!-- <option *ngFor="let getKecamatan of getKecamatan" value="{{ getKecamatan.kdWilayah }}">
               {{ getKecamatan.namaWilayah }}
             </option>
@@ -373,7 +388,12 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kelurahan</label>
         <div class="col-sm-8">
-          <input name="kelurahan" id="kelurahan" class="form-control" formControlName="kelurahan" readonly />
+          <input
+            name="kelurahan"
+            id="kelurahan"
+            class="form-control"
+            value="{{this.dataEntry.kelurahan}}"
+            readonly />
           <!-- <option *ngFor="let getKelurahan of getKelurahan" value="{{ getKelurahan.kdPos }}">
               {{ getKelurahan.namaWilayah }}
             </option>
@@ -425,7 +445,7 @@
               class="form-control"
               id="kode_pos"
               name="kode_pos"
-              formControlName="kode_pos"
+              value="{{this.dataEntry.kode_pos}}"
               (keypress)="keyPressNumbers($event)"
               maxlength="8"
               readonly
@@ -483,7 +503,7 @@
             id="tanggal_lahir"
             name="tanggal_lahir"
             onchange="submitBday()"
-            formControlName="tanggal_lahir"
+            value="{{this.dataEntry.tanggal_lahir}}"
           />
         </div>
       </div>
@@ -526,7 +546,12 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Pendidikan</label>
         <div class="col-sm-8">
-          <input name="pedidikan" id="pedidikan" class="form-control" formControlName="pendidikan" readonly />
+          <input
+            name="pedidikan"
+            id="pedidikan"
+            class="form-control"
+            value="{{this.dataEntry.pendidikan}}"
+            readonly />
           <!-- <option value="">Pilih Data</option>
             <option value="SMA">SMA</option>
             <option value="D3">D3</option>
@@ -580,7 +605,7 @@
             id="status_perkawinan"
             #status_perkawinan
             class="form-control"
-            formControlName="status_perkawinan"
+            value="{{this.dataEntry.status_perkawinan}}"
             readonly
           />
           <!-- <option value="">Pilih Data</option>
@@ -637,7 +662,7 @@
             id="nama_ibu_kandung"
             name="nama_ibu_kandung"
             placeholder=""
-            formControlName="nama_ibu_kandung"
+            value="{{this.dataEntry.nama_ibu_kandung}}"
             [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.nama_ibu_kandung.errors }"
           />
           <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_ibu_kandung.errors" class="text-danger">
@@ -746,7 +771,7 @@
                 id="nama_pasangan"
                 name="nama_pasangan"
                 placeholder=""
-                formControlName="nama_pasangan"
+                value="{{this.dataEntry.nama_pasangan}}"
                 [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.nama_pasangan.errors }"
               />
               <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_pasangan.errors" class="text-danger">
@@ -853,7 +878,7 @@
             id="fasilitas_pembiayaan_ke"
             name="fasilitas_pembiayaan_ke"
             placeholder=""
-            formControlName="kode_fasilitas"
+            value="{{this.dataEntry.fasilitas_ke}}"
             readonly
           />
         </div>
@@ -1163,6 +1188,7 @@
             class="form-control"
             id="luas_tanah"
             name="luas_tanah"
+            [value]="this.listagunan.luas_tanah"
             placeholder=""
           />
           <label>m2</label>
@@ -1179,6 +1205,7 @@
             class="form-control"
             id="luas_bangunan"
             name="luas_bangunan"
+            [value]="this.listagunan.luas_bangunan"
             placeholder=""
           />
           <label>m2</label>

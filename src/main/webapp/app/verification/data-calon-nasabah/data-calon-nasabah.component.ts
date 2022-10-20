@@ -18,6 +18,7 @@ import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model
 import { refAnalisaCalonNasabah } from './refAnalisaCalonNasabah.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { LocalStorageService } from 'ngx-webstorage';
+import { listAgunan } from 'app/data-entry/services/config/listAgunan.model';
 // import { openStdin } from 'process';
 
 @Component({
@@ -38,9 +39,10 @@ export class DataCalonNasabahComponent implements OnInit {
   refListTipeProperti?: refListTipeProperti[];
   app_no_de: any;
   dataCalonNasabahMap: refAnalisaCalonNasabah = new refAnalisaCalonNasabah();
-  dataEntry?: fetchAllDe = new fetchAllDe();
+  dataEntry: fetchAllDe = new fetchAllDe();
   tempunganCek: Array<number> = [];
   tampunganIsiRum: Array<number> = [];
+  listagunan: listAgunan = new listAgunan();
 
   // checkbox cek ke
   checkboxCek: any;
@@ -61,7 +63,6 @@ export class DataCalonNasabahComponent implements OnInit {
   // Role
   untukSessionRole: any;
   listaksesrumah: any;
-  listagunan: any;
   listfasilitaslistrik: any;
   listkondisilingkungan: any;
   listlokasirumah: any;
@@ -120,28 +121,28 @@ export class DataCalonNasabahComponent implements OnInit {
       // lama_menetap_tahun: ['', Validators.required],
 
       // ini tambahan
-      nama: '',
-      curef: '',
-      no_handphone: '',
-      jenis_kelamin: '',
-      alamat_ktp: '',
-      rt: '',
-      rw: '',
-      provinsi: '',
-      kabkota: '',
-      kecamatan: '',
-      kelurahan: '',
-      kode_pos: '',
-      status_perkawinan: '',
-      tanggal_lahir: '',
-      pendidikan: '',
-      nama_ibu_kandung: '',
-      kode_fasilitas: '',
-      nama_pasangan: '',
-      pekerjaan_pasangan: '',
+      // nama: '',
+      // curef: '',
+      // no_handphone: '',
+      // jenis_kelamin: '',
+      // alamat_ktp: '',
+      // rt: '',
+      // rw: '',
+      // provinsi: '',
+      // kabkota: '',
+      // kecamatan: '',
+      // kelurahan: '',
+      // kode_pos: '',
+      // status_perkawinan: '',
+      // tanggal_lahir: '',
+      // pendidikan: '',
+      // nama_ibu_kandung: '',
+      // kode_fasilitas: '',
+      // nama_pasangan: '',
+      // pekerjaan_pasangan: '',
 
       // id: "",
-      app_no_de: '',
+      // app_no_de: '',
       tanggal_verifikasi: '',
       pemberi_keterangan: '',
       hubungan_pemberi_keterangan: '',
@@ -244,7 +245,7 @@ export class DataCalonNasabahComponent implements OnInit {
           no_handphone: this.dataCalonNasabahForm.get('no_handphone')?.value,
           jenis_kelamin: this.dataCalonNasabahForm.get('jenis_kelamin')?.value,
           akses_jalan: this.dataCalonNasabahForm.get('akses_jalan')?.value,
-          app_no_de: this.dataCalonNasabahForm.get('app_no_de')?.value,
+          app_no_de: this.app_no_de,
           carport: this.dataCalonNasabahForm.get('carport')?.value,
           cek: cekKe,
           // created_by: this.dataCalonNasabahForm.get('created_by')?.value,
@@ -323,7 +324,7 @@ export class DataCalonNasabahComponent implements OnInit {
         no_handphone: this.dataCalonNasabahForm.get('no_handphone')?.value,
         jenis_kelamin: this.dataCalonNasabahForm.get('jenis_kelamin')?.value,
         akses_jalan: this.dataCalonNasabahForm.get('akses_jalan')?.value,
-        app_no_de: this.dataCalonNasabahForm.get('app_no_de')?.value,
+        app_no_de: this.app_no_de,
         carport: this.dataCalonNasabahForm.get('carport')?.value,
         cek: this.dataCalonNasabahMap.cek,
         // created_by: this.dataCalonNasabahForm.get('created_by')?.value,
@@ -416,6 +417,11 @@ export class DataCalonNasabahComponent implements OnInit {
       // }
     });
 
+    this.dataEntryService.getfetchlistagunan(this.curef).subscribe(agunan =>{
+      this.listagunan = agunan.result[0]
+      // console.log('aguhnan '+ this.listagunan)
+    })
+
     this.dataEntryService.getFetchListLokasiRumah().subscribe(data => {
       // if(data.code === 200) {
       this.listlokasirumah = data.result;
@@ -428,28 +434,28 @@ export class DataCalonNasabahComponent implements OnInit {
       this.dataCalonNasabahMap = data.result;
       let retriveCalonNasabah = {
         /// tambahan dari de
-        nama: this.dataEntry?.nama,
-        curef: this.dataEntry?.curef,
-        no_handphone: this.dataEntry?.no_handphone,
-        jenis_kelamin: this.dataEntry?.jenis_kelamin,
-        alamat_ktp: this.dataEntry?.alamat_ktp,
-        rt: this.dataEntry?.rt,
-        rw: this.dataEntry?.rw,
-        provinsi: this.dataEntry?.provinsi,
-        kabkota: this.dataEntry?.kabkota,
-        kecamatan: this.dataEntry?.kecamatan,
-        kelurahan: this.dataEntry?.kelurahan,
-        kode_pos: this.dataEntry?.kode_pos,
-        status_perkawinan: this.dataEntry?.status_perkawinan,
-        tanggal_lahir: this.dataEntry?.tanggal_lahir,
-        pendidikan: this.dataEntry?.pendidikan,
-        nama_ibu_kandung: this.dataEntry?.nama_ibu_kandung,
-        kode_fasilitas: this.dataEntry?.kode_fasilitas,
-        nama_pasangan: this.dataEntry?.nama_pasangan,
-        pekerjaan_pasangan: this.dataEntry?.nama_ibu_kandung_pasangan,
+        // nama: this.dataEntry?.nama,
+        // curef: this.dataEntry?.curef,
+        // no_handphone: this.dataEntry?.no_handphone,
+        // jenis_kelamin: this.dataEntry?.jenis_kelamin,
+        // alamat_ktp: this.dataEntry?.alamat_ktp,
+        // rt: this.dataEntry?.rt,
+        // rw: this.dataEntry?.rw,
+        // provinsi: this.dataEntry?.provinsi,
+        // kabkota: this.dataEntry?.kabkota,
+        // kecamatan: this.dataEntry?.kecamatan,
+        // kelurahan: this.dataEntry?.kelurahan,
+        // kode_pos: this.dataEntry?.kode_pos,
+        // status_perkawinan: this.dataEntry?.status_perkawinan,
+        // tanggal_lahir: this.dataEntry?.tanggal_lahir,
+        // pendidikan: this.dataEntry?.pendidikan,
+        // nama_ibu_kandung: this.dataEntry?.nama_ibu_kandung,
+        // kode_fasilitas: this.dataEntry?.kode_fasilitas,
+        // nama_pasangan: this.dataEntry?.nama_pasangan,
+        // pekerjaan_pasangan: this.dataEntry?.nama_ibu_kandung_pasangan,
 
         // id: this.dataCalonNasabahMap ,
-        app_no_de: this.dataCalonNasabahMap.app_no_de,
+        // app_no_de: this.dataCalonNasabahMap.app_no_de,
         tanggal_verifikasi: this.dataCalonNasabahMap.tanggal_verifikasi,
         pemberi_keterangan: this.dataCalonNasabahMap.pemberi_keterangan,
         hubungan_pemberi_keterangan: this.dataCalonNasabahMap.hubungan_pemberi_keterangan,
