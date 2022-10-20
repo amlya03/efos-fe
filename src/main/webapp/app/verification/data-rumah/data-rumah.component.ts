@@ -84,7 +84,7 @@ export class DataRumahComponent implements OnInit {
       responsive: true,
     };
     this.load();
-
+    alert(this.untukSessionRole);
     this.formatter = new Intl.NumberFormat('id-ID', {
       style: 'currency',
       currency: 'IDR',

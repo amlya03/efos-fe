@@ -11,6 +11,7 @@ import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model
 import { LocalStorageService } from 'ngx-webstorage';
 import { FormBuilder, FormGroup } from '@angular/forms';
 // import { CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 
 export type EntityResponseDaWa = HttpResponse<jobinfolist>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -72,6 +73,8 @@ export class JobInfoComponent implements OnInit {
   pendapatan!: number;
   pendapatanlain!: number;
   tunjangan!: number;
+  formattedAmount: any;
+  amount: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -80,7 +83,8 @@ export class JobInfoComponent implements OnInit {
     protected http: HttpClient,
     private formBuilder: FormBuilder,
     protected applicationConfigService: ApplicationConfigService,
-    private localStorageService: LocalStorageService // private currencyPipe: CurrencyPipe
+    private localStorageService: LocalStorageService, // private currencyPipe: CurrencyPipe
+    private currencyPipe: CurrencyPipe
   ) {
     this.route.queryParams.subscribe(params => {
       this.curef = params.curef;
@@ -405,6 +409,12 @@ export class JobInfoComponent implements OnInit {
       params: options,
       observe: 'response',
     });
+  }
+
+  transformAmount(element: any) {
+    this.formattedAmount = this.currencyPipe.transform(this.formattedAmount, 'Rp');
+
+    element.target.value = this.formattedAmount;
   }
 
   getjumlahkaryawan(req1?: any): Observable<EntityArrayResponseDaWa1> {

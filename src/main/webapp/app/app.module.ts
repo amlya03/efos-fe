@@ -68,6 +68,7 @@ import { CollateralEditComponent } from './data-entry/collateral-edit/collateral
 import { SyaratPersetujuanComponent } from './verification/syarat-persetujuan/syarat-persetujuan.component';
 import { KesimpulanComponent } from './verification/kesimpulan/kesimpulan.component';
 import { MemoVerificationComponent } from './verification/memo-verification/memo-verification.component';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 
 @NgModule({
   imports: [
@@ -96,6 +97,7 @@ import { MemoVerificationComponent } from './verification/memo-verification/memo
     { provide: LOCALE_ID, useValue: 'en' },
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
+    CurrencyPipe,
   ],
   declarations: [
     MainComponent,
