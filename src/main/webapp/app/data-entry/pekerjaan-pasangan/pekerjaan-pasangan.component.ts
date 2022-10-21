@@ -108,71 +108,110 @@ export class PekerjaanPasanganComponent implements OnInit {
   load(): void {
     this.gettokendukcapil();
     // alert(this.curef);
+    // alert('tidak jalan ');
 
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         // console.log(res.body?.result);
         console.warn('strukturdata', res);
-
+        // alert('tidak jalan dalam fungi ');
         // console.warn('!!!!!!!!!!!!!!!!!!!', this.datakiriman);
         // console.warn('@@@@@@@@@@@@@', this.datakiriman);
         // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
         this.daWa = res.body?.result;
-
+        // alert(this.daWa);
         // console.warn('buatpemisah', res);
         // console.warn('buatoemisah', res.body);
         // /////////////////////// Untuk COnvert hasil yang angka ///////////////////////////////////
-        if (this.daWa.kategori_pekerjaan == 1) {
-          this.daWa.kategori_pekerjaan = 'Fix Income';
-        }
-        if (this.daWa.kategori_pekerjaan == 2) {
-          this.daWa.kategori_pekerjaan = 'Non Fix Income';
-        }
-        if (this.daWa.kategori_pekerjaan == 3) {
-          this.daWa.kategori_pekerjaan = 'Lainnya';
-        }
-        if (this.daWa.tipe_pekerjaan == 1) {
-          this.daWa.tipe_pekerjaan = 'Pegawai Negeri Sipil';
-        }
-        if (this.daWa.tipe_pekerjaan == 2) {
-          this.daWa.tipe_pekerjaan = 'Pegawai Swasta';
-        }
-        if (this.daWa.tipe_pekerjaan == 3) {
-          this.daWa.tipe_pekerjaan = 'Wiraswasta';
-        }
-        if (this.daWa.tipe_pekerjaan == 4) {
-          this.daWa.tipe_pekerjaan = 'Profesional';
-        }
-        if (this.daWa.tipe_pekerjaan == 5) {
-          this.daWa.tipe_pekerjaan = 'Pensiunan';
-        }
-        if (this.daWa.tipe_pekerjaan == 6) {
-          this.daWa.tipe_pekerjaan = 'Tidak Bekerja';
-        }
-        if (this.daWa.tipe_pekerjaan == 7) {
-          this.daWa.tipe_pekerjaan = 'TNI / POLRI';
-        }
-        if (this.daWa.tipe_pekerjaan == 8) {
-          this.daWa.tipe_pekerjaan = 'Pegawai BUMN';
-        }
-        if (this.daWa.tipe_perusahaan == 1) {
-          this.daWa.tipe_perusahaan = 'Perseorangan';
-        }
-        if (this.daWa.tipe_perusahaan == 2) {
-          this.daWa.tipe_perusahaan = 'PT Terbuka (Perseroan Terbatas TBK)';
-        }
-        if (this.daWa.tipe_perusahaan == 3) {
-          this.daWa.tipe_perusahaan = 'PT (Perseroan Terbatas)';
-        }
-        if (this.daWa.tipe_perusahaan == 5) {
-          this.daWa.tipe_perusahaan = 'CV';
-        }
-        if (this.daWa.tipe_perusahaan == 6) {
-          this.daWa.tipe_perusahaan = 'Tidak Bekerja';
-        }
 
         if (this.daWa == null) {
+          // alert('tidak jalan ');
+
+          let retrivejobpasangan = {
+            kate_peker: '',
+            tipe_pekerjaan: '',
+            posisi1: '',
+            nama_perusahaan: '',
+            id: '',
+            alamat_perusahaan1: '',
+            provinsi1: '',
+            kabkota1: '',
+            kecamatan1: '',
+            kelurahan1: '',
+            kode_pos1: '',
+            siup2: '',
+            jenis_bidang: '',
+            sektor_ekonomi: '',
+            jumlah_karyawan: '',
+            tipe_perusahaan: '',
+            lama_bekerja_bulan1: '',
+            lama_bekerja_tahun1: '',
+            status_kepegawaian: '',
+            pendapatan: '',
+            tunjangan: '',
+            pendapatan_lain: '',
+            total_pendapatan: '',
+            usia: '',
+          };
+          this.formpekerjaanpasangan.setValue(retrivejobpasangan);
+          if (this.untukSessionRole == 'VER_PRESCR') {
+            // alert('ini if');
+            this.formpekerjaanpasangan.disable();
+          } else {
+            // alert('ini else');
+            this.formpekerjaanpasangan.enable();
+          }
         } else {
+          if (this.daWa.kategori_pekerjaan == 1) {
+            this.daWa.kategori_pekerjaan = 'Fix Income';
+          }
+          if (this.daWa.kategori_pekerjaan == 2) {
+            this.daWa.kategori_pekerjaan = 'Non Fix Income';
+          }
+          if (this.daWa.kategori_pekerjaan == 3) {
+            this.daWa.kategori_pekerjaan = 'Lainnya';
+          }
+          if (this.daWa.tipe_pekerjaan == 1) {
+            this.daWa.tipe_pekerjaan = 'Pegawai Negeri Sipil';
+          }
+          if (this.daWa.tipe_pekerjaan == 2) {
+            this.daWa.tipe_pekerjaan = 'Pegawai Swasta';
+          }
+          if (this.daWa.tipe_pekerjaan == 3) {
+            this.daWa.tipe_pekerjaan = 'Wiraswasta';
+          }
+          if (this.daWa.tipe_pekerjaan == 4) {
+            this.daWa.tipe_pekerjaan = 'Profesional';
+          }
+          if (this.daWa.tipe_pekerjaan == 5) {
+            this.daWa.tipe_pekerjaan = 'Pensiunan';
+          }
+          if (this.daWa.tipe_pekerjaan == 6) {
+            this.daWa.tipe_pekerjaan = 'Tidak Bekerja';
+          }
+          if (this.daWa.tipe_pekerjaan == 7) {
+            this.daWa.tipe_pekerjaan = 'TNI / POLRI';
+          }
+          if (this.daWa.tipe_pekerjaan == 8) {
+            this.daWa.tipe_pekerjaan = 'Pegawai BUMN';
+          }
+          if (this.daWa.tipe_perusahaan == 1) {
+            this.daWa.tipe_perusahaan = 'Perseorangan';
+          }
+          if (this.daWa.tipe_perusahaan == 2) {
+            this.daWa.tipe_perusahaan = 'PT Terbuka (Perseroan Terbatas TBK)';
+          }
+          if (this.daWa.tipe_perusahaan == 3) {
+            this.daWa.tipe_perusahaan = 'PT (Perseroan Terbatas)';
+          }
+          if (this.daWa.tipe_perusahaan == 5) {
+            this.daWa.tipe_perusahaan = 'CV';
+          }
+          if (this.daWa.tipe_perusahaan == 6) {
+            this.daWa.tipe_perusahaan = 'Tidak Bekerja';
+          }
+
+          // alert('tidak jalan else');
           let retrivejobpasangan = {
             kate_peker: this.daWa.kategori_pekerjaan,
             tipe_pekerjaan: this.daWa.tipe_pekerjaan,
@@ -211,10 +250,19 @@ export class PekerjaanPasanganComponent implements OnInit {
           this.untukjenisbidang = this.daWa.jenis_bidang;
           this.unutkjenissektor = this.daWa.sektor_ekonomi;
           this.untuktipepekerjaan = this.daWa.tipe_pekerjaan;
+
+          if (this.untukSessionRole == 'VER_PRESCR') {
+            // alert('ini if');
+            this.formpekerjaanpasangan.disable();
+          } else {
+            // alert('ini else');
+            this.formpekerjaanpasangan.enable();
+          }
         }
 
         // /////////////////////// Untuk COnvert hasil yang angka ///////////////////////////////////
         // alert(this.daWa.tipe_perusahaan)
+        // alert('tidak jalan ');
       },
     });
 
@@ -360,17 +408,17 @@ export class PekerjaanPasanganComponent implements OnInit {
   }
   onChangekelurahan(selectedStatus: any) {
     // alert(this.postId);
-    alert('ganti');
+    // alert('ganti');
     const provinsi_cabang = document.getElementById('kelurahan_swasta') as HTMLInputElement | any;
     var kode_post = document.getElementById('kode_pos_swasta') as HTMLInputElement | any;
     const datakodepos = provinsi_cabang.value.split('|');
 
     this.daWakodepos = datakodepos[0];
 
-    alert(this.daWakodepos);
+    // alert(this.daWakodepos);
     // kode_post.innerHTML=this.daWakodepos ;
     kode_post.value = this.daWakodepos;
-    alert('kodepos' + kode_post);
+    // alert('kodepos' + kode_post);
     // document.getElementById('kode_pos').value=this.daWakodepos;
     // alert(this.daWakodepos);
     // this.onResponseSuccess(res);
@@ -410,7 +458,7 @@ export class PekerjaanPasanganComponent implements OnInit {
 
   goto(): void {
     // this.onResponseSuccess(res);
-    alert('otw collateral1 ');
+    // alert('otw collateral1 ');
     // console.warn('colalteral', this.app_no_de, this.curef, this.datakirimanakategoripekerjaan);
     this.router.navigate(['/data-entry/collateral'], {
       queryParams: {
@@ -502,11 +550,11 @@ export class PekerjaanPasanganComponent implements OnInit {
     } else {
       this.kirimansiup = siup2.value;
     }
-    alert(id.value);
-    alert(contohtampungancuref);
+    // alert(id.value);
+    // alert(contohtampungancuref);
 
     if (this.daWa == null) {
-      alert('kosong');
+      // alert('kosong');
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_job_info_pasangan', {
           // headers: headers,

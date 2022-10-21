@@ -165,17 +165,17 @@ export class DataPasanganComponent implements OnInit {
 
   onChangekelurahan(selectedStatus: any) {
     // alert(this.postId);
-    alert('ganti');
+    // alert('ganti');
     const provinsi_cabang = document.getElementById('kelurahan_pasangan') as HTMLInputElement | any;
     var kode_post = document.getElementById('kode_pos_pasangan') as HTMLInputElement | any;
     const datakodepos = provinsi_cabang.value.split('|');
 
     this.daWakodepos = datakodepos[0];
 
-    alert(this.daWakodepos);
+    // alert(this.daWakodepos);
     // kode_post.innerHTML=this.daWakodepos ;
     kode_post.value = this.daWakodepos;
-    alert('kodepos' + kode_post);
+    // alert('kodepos' + kode_post);
     // document.getElementById('kode_pos').value=this.daWakodepos;
     // alert(this.daWakodepos);
     // this.onResponseSuccess(res);
@@ -190,9 +190,9 @@ export class DataPasanganComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto(contohtampungancuref: any) {
     // this.onResponseSuccess(res);
-    alert(contohtampungancuref);
-    alert(this.app_no_de);
-    alert(this.curef);
+    // alert(contohtampungancuref);
+    // alert(this.app_no_de);
+    // alert(this.curef);
     this.router.navigate(['/data-entry/pekerjaan-pasangan'], {
       queryParams: {
         curef: this.curef,
@@ -279,12 +279,12 @@ export class DataPasanganComponent implements OnInit {
     if (this.kirimanstatusktp == 1) {
       var kirimantanggalex = null;
     } else {
-      alert(this.kirimanstatusktp);
+      // alert(this.kirimanstatusktp);
       var kirimantanggalex = tanggal_exp_ktp_pasangan.value;
     }
 
-    alert(id.value);
-    alert(contohtampungancuref);
+    // alert(id.value);
+    // alert(contohtampungancuref);
 
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_pasangan', {

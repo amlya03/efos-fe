@@ -473,6 +473,7 @@
             placeholder="Pendapatan Lain"
             id="pendapatan_lain"
             name="pendapatan_lain"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             value="0"
           />
         </div>
@@ -815,7 +816,15 @@
               formControlName="kode_pos_sebelum"
             />
             <div class="input-group-append">
-              <button onclick="buatisisebelum()" class="btn btn-outline-dark" id="kode_pos_sebelumhilang" type="button">Cari Data</button>
+              <button
+                onclick="buatisisebelum()"
+                class="btn btn-outline-dark"
+                id="kode_pos_sebelumhilang"
+                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+                type="button"
+              >
+                Cari Data
+              </button>
             </div>
           </div>
         </div>

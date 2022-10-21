@@ -930,7 +930,11 @@
       <div class="col-md-8">
         <div class="form-group">
           <p id="denganini">
-            <input type="checkbox" (click)="onclikwawancara($event)" />
+            <input
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              type="checkbox"
+              (click)="onclikwawancara($event)"
+            />
             {{ textwawancara }}
           </p>
         </div>

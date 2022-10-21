@@ -205,44 +205,91 @@ export class JobInfoComponent implements OnInit {
         //   // this.onResponseSuccess(res);
         // }
 
-        this.dataretrivejobsebelumMap = res.body?.result;
-        let retrivejobsebelum = {
-          kategori_pekerjaan_sebelum: this.tampunganid.kategori_pekerjaan_sebelum,
-          tipe_pekerjaan_sebelum: this.tampunganid.tipe_pekerjaan_sebelum,
-          // pay_roll: '',
-          posisi_sebelum: this.tampunganid.posisi_sebelum,
-          nama_perusahaan_sebelum: this.tampunganid.nama_perusahaan_sebelum,
-          id: this.tampunganid.id,
-          curef: this.tampunganid.curef,
-          alamat_pekerjaan_sebelum: this.tampunganid.alamat_pekerjaan_sebelum,
-          provinsi_sebelum: this.tampunganid.provinsi_sebelum,
-          kabkota_sebelum: this.tampunganid.kabkota_sebelum,
-          kecamatan_sebelum: this.tampunganid.kecamatan_sebelum,
-          kelurahan_sebelum: this.tampunganid.kelurahan_sebelum,
-          kode_pos_sebelum: this.tampunganid.kode_pos_sebelum,
-          rt_sebelum: this.tampunganid.rt_sebelum,
-          rw_sebelum: this.tampunganid.rw_sebelum,
-          jenis_bidang_sebelum: this.tampunganid.jenis_bidang_sebelum,
-          sektor_ekonomi_sebelum: this.tampunganid.sektor_ekonomi_sebelum,
-          lama_bekerja_tahun_sebelum: this.tampunganid.lama_bekerja_tahun_sebelum,
-          lama_bekerja_bulan_sebelum: this.tampunganid.lama_bekerja_bulan_sebelum,
-          jumlah_karyawan_sebelum: this.tampunganid.jumlah_karyawan_sebelum,
-          // jumlah_karyawan_sebelumnya: this.tampunganid.jumlah_karyawan_sebelumnya,
-          tipe_perusahaan_sebelum: this.tampunganid.tipe_perusahaan_sebelum,
-          tipe_kepegawaian_sebelum: this.tampunganid.tipe_kepegawaian_sebelum,
-        };
-        alert(this.tampunganid.provinsi_sebelum);
+        if (this.tampunganid == null) {
+          this.dataretrivejobsebelumMap = res.body?.result;
+          let retrivejobsebelum = {
+            kategori_pekerjaan_sebelum: '',
+            tipe_pekerjaan_sebelum: '',
+            // pay_roll: '',
+            posisi_sebelum: '',
+            nama_perusahaan_sebelum: '',
+            id: '',
+            curef: '',
+            alamat_pekerjaan_sebelum: '',
+            provinsi_sebelum: '',
+            kabkota_sebelum: '',
+            kecamatan_sebelum: '',
+            kelurahan_sebelum: '',
+            kode_pos_sebelum: '',
+            rt_sebelum: '',
+            rw_sebelum: '',
+            jenis_bidang_sebelum: '',
+            sektor_ekonomi_sebelum: '',
+            lama_bekerja_tahun_sebelum: '',
+            lama_bekerja_bulan_sebelum: '',
+            jumlah_karyawan_sebelum: '',
+            // jumlah_karyawan_sebelumnya: this.tampunganid.jumlah_karyawan_sebelumnya,
+            tipe_perusahaan_sebelum: '',
+            tipe_kepegawaian_sebelum: '',
+          };
+          this.datajobsebelum.setValue(retrivejobsebelum);
+          this.dataretriveprovinsisebelum = this.tampunganid.provinsi_sebelum;
+          this.dataretrivekabkotasebelum = this.tampunganid.kabkota_sebelum;
+          this.dataretrivekecamatansebelum = this.tampunganid.kecamatan_sebelum;
+          this.dataretrivekelurahansebelum = this.tampunganid.kelurahan_sebelum;
+          this.dataretrivetipepegawaiansebelum = this.tampunganid.tipe_kepegawaian_sebelum;
+          this.dataretrivetikategoripekerjaansebelum = this.tampunganid.kategori_pekerjaan_sebelum;
+          this.dataretrivetipepekerjaansebelum = this.tampunganid.tipe_pekerjaan_sebelum;
+          this.dataretrivejenisbidangsebelum = this.tampunganid.jenis_bidang_sebelum;
+          this.dataretrivesektorekosebelum = this.tampunganid.sektor_ekonomi_sebelum;
+        } else {
+          this.dataretrivejobsebelumMap = res.body?.result;
+          let retrivejobsebelum = {
+            kategori_pekerjaan_sebelum: this.tampunganid.kategori_pekerjaan_sebelum,
+            tipe_pekerjaan_sebelum: this.tampunganid.tipe_pekerjaan_sebelum,
+            // pay_roll: '',
+            posisi_sebelum: this.tampunganid.posisi_sebelum,
+            nama_perusahaan_sebelum: this.tampunganid.nama_perusahaan_sebelum,
+            id: this.tampunganid.id,
+            curef: this.tampunganid.curef,
+            alamat_pekerjaan_sebelum: this.tampunganid.alamat_pekerjaan_sebelum,
+            provinsi_sebelum: this.tampunganid.provinsi_sebelum,
+            kabkota_sebelum: this.tampunganid.kabkota_sebelum,
+            kecamatan_sebelum: this.tampunganid.kecamatan_sebelum,
+            kelurahan_sebelum: this.tampunganid.kelurahan_sebelum,
+            kode_pos_sebelum: this.tampunganid.kode_pos_sebelum,
+            rt_sebelum: this.tampunganid.rt_sebelum,
+            rw_sebelum: this.tampunganid.rw_sebelum,
+            jenis_bidang_sebelum: this.tampunganid.jenis_bidang_sebelum,
+            sektor_ekonomi_sebelum: this.tampunganid.sektor_ekonomi_sebelum,
+            lama_bekerja_tahun_sebelum: this.tampunganid.lama_bekerja_tahun_sebelum,
+            lama_bekerja_bulan_sebelum: this.tampunganid.lama_bekerja_bulan_sebelum,
+            jumlah_karyawan_sebelum: this.tampunganid.jumlah_karyawan_sebelum,
+            // jumlah_karyawan_sebelumnya: this.tampunganid.jumlah_karyawan_sebelumnya,
+            tipe_perusahaan_sebelum: this.tampunganid.tipe_perusahaan_sebelum,
+            tipe_kepegawaian_sebelum: this.tampunganid.tipe_kepegawaian_sebelum,
+          };
+          // alert(this.tampunganid.provinsi_sebelum);
 
-        this.datajobsebelum.setValue(retrivejobsebelum);
-        this.dataretriveprovinsisebelum = this.tampunganid.provinsi_sebelum;
-        this.dataretrivekabkotasebelum = this.tampunganid.kabkota_sebelum;
-        this.dataretrivekecamatansebelum = this.tampunganid.kecamatan_sebelum;
-        this.dataretrivekelurahansebelum = this.tampunganid.kelurahan_sebelum;
-        this.dataretrivetipepegawaiansebelum = this.tampunganid.tipe_kepegawaian_sebelum;
-        this.dataretrivetikategoripekerjaansebelum = this.tampunganid.kategori_pekerjaan_sebelum;
-        this.dataretrivetipepekerjaansebelum = this.tampunganid.tipe_pekerjaan_sebelum;
-        this.dataretrivejenisbidangsebelum = this.tampunganid.jenis_bidang_sebelum;
-        this.dataretrivesektorekosebelum = this.tampunganid.sektor_ekonomi_sebelum;
+          this.datajobsebelum.setValue(retrivejobsebelum);
+          this.dataretriveprovinsisebelum = this.tampunganid.provinsi_sebelum;
+          this.dataretrivekabkotasebelum = this.tampunganid.kabkota_sebelum;
+          this.dataretrivekecamatansebelum = this.tampunganid.kecamatan_sebelum;
+          this.dataretrivekelurahansebelum = this.tampunganid.kelurahan_sebelum;
+          this.dataretrivetipepegawaiansebelum = this.tampunganid.tipe_kepegawaian_sebelum;
+          this.dataretrivetikategoripekerjaansebelum = this.tampunganid.kategori_pekerjaan_sebelum;
+          this.dataretrivetipepekerjaansebelum = this.tampunganid.tipe_pekerjaan_sebelum;
+          this.dataretrivejenisbidangsebelum = this.tampunganid.jenis_bidang_sebelum;
+          this.dataretrivesektorekosebelum = this.tampunganid.sektor_ekonomi_sebelum;
+        }
+
+        if (this.untukSessionRole == 'VER_PRESCR') {
+          // alert('ini if');
+          this.datajobsebelum.disable();
+        } else {
+          // alert('ini else');
+          this.datajobsebelum.enable();
+        }
       },
     });
 
@@ -555,7 +602,7 @@ export class JobInfoComponent implements OnInit {
   }
 
   onChangekelurahan() {
-    alert('ganti');
+    // alert('ganti');
     const provinsi_cabang = document.getElementById('kelurahan') as HTMLInputElement | any;
     var kode_post = document.getElementById('kode_pos') as HTMLInputElement | any;
     const datakodepos = provinsi_cabang.value.split('|');
@@ -630,7 +677,7 @@ export class JobInfoComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto() {
     // this.onResponseSuccess(res);
-    alert(this.statusPerkawinan);
+    // alert(this.statusPerkawinan);
     if (this.statusPerkawinan === 'Menikah') {
       this.router.navigate(['/data-entry/data-pasangan'], {
         queryParams: {
@@ -915,7 +962,7 @@ export class JobInfoComponent implements OnInit {
     }
 
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
-    alert('CREATE NIH');
+    // alert('CREATE NIH');
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_job_info', {
         // headers: headers,

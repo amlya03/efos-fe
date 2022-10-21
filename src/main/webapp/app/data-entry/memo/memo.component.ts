@@ -71,7 +71,7 @@ export class MemoComponent implements OnInit {
 
         this.tampilanfixornon = res.body?.result.kategori_pekerjaan;
 
-        alert(this.tampilanfixornon);
+        // alert(this.tampilanfixornon);
       },
     });
   }
@@ -125,7 +125,7 @@ export class MemoComponent implements OnInit {
   }
 
   kembalikede(): void {
-    alert('BackStatustoDe');
+    // alert('BackStatustoDe');
 
     const keterangan = document.getElementById('keterangan') as HTMLInputElement | any;
     const status_aplikasi_desc = document.getElementById('status_aplikasi_desc') as HTMLInputElement | any;
@@ -158,14 +158,12 @@ export class MemoComponent implements OnInit {
   }
 
   cetakmemo(): void {
-    alert('cetak');
-
+    // alert('cetak');
     //  var divToPrint=document.getElementById("example");
     //         newWin= window.open("");
     //         newWin.document.write(divToPrint.outerHTML);
     //         newWin.print();
     //         newWin.close();
-
     // let printContents, popupWin;
     // printContents = document.getElementById('#example').innerHTML;
     // popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
@@ -184,7 +182,7 @@ export class MemoComponent implements OnInit {
   }
 
   updatekeupload(): void {
-    alert('cetak');
+    // alert('cetak');
     const status_aplikasi_desc = document.getElementById('status_aplikasi_desc') as HTMLInputElement | any;
 
     this.http
@@ -226,7 +224,7 @@ export class MemoComponent implements OnInit {
   }
 
   updatestatus(): void {
-    alert('cetak');
+    // alert('cetak');
     const status_aplikasi_desc = document.getElementById('status_aplikasi_desc') as HTMLInputElement | any;
 
     this.http
@@ -247,5 +245,14 @@ export class MemoComponent implements OnInit {
           });
         },
       });
+  }
+  backtoverifikatro(): void {
+    this.router.navigate(['/daftar-aplikasi-waiting-assigment'], {
+      // queryParams: {
+      //   // datakirimanappde: this.datakirimande,
+      //   // datakirimiancure: this.datakirimancuref,
+      //   // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+      // },
+    });
   }
 }

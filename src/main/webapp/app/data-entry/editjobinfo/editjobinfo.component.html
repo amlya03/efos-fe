@@ -18,7 +18,7 @@
                   <div class="col-sm-9">
                     <div class="form-group">
                       <input
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                         type="text"
                         id="kategori_pekerjaan"
                         name="kategori_pekerjaan"
@@ -47,7 +47,7 @@
                         class="form-control"
                         id="tipe_pekerjaan"
                         name="tipe_pekerjaan"
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       >
                         <option value="{{ daWa.tipe_pekerjaan }}">{{ daWa.tipe_pekerjaan }}</option>
                         <option *ngFor="let edittipepekerjaan of edittipepekerjaan" value="{{ edittipepekerjaan.job_desc }}">
@@ -69,7 +69,7 @@
                           id="payroll"
                           value="1"
                           [checked]="daWa.payroll == 1"
-                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                         />Payroll</label
                       >
                       <label class="radio-inline mr-3">
@@ -79,7 +79,7 @@
                           id="payroll1"
                           value="0"
                           [checked]="daWa.payroll == 0"
-                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                         />Non Payroll</label
                       >
                     </div>
@@ -89,7 +89,12 @@
                   <label class="col-sm-3 col-form-label">Posisi</label>
                   <div class="col-sm-9">
                     <div class="form-group">
-                      <select class="form-control" id="posisi" name="posisi" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+                      <select
+                        class="form-control"
+                        id="posisi"
+                        name="posisi"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+                      >
                         <option value="{{ daWa.jabatan }}">{{ daWa.jabatan }}</option>
                         <option *ngFor="let getjabatandariapi of getjabatandariapi" value="{{ getjabatandariapi.jabatan_deskripsi }}">
                           {{ getjabatandariapi.jabatan_deskripsi }}
@@ -107,7 +112,7 @@
                         class="form-control"
                         id="jenis_pekerjaan"
                         name="jenis_pekerjaan"
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       >
                         <option value="{{ daWa.jenis_pekerjaan }}">{{ daWa.jenis_pekerjaan }}</option>
                       </select>
@@ -119,6 +124,7 @@
                   <div class="col-sm-9">
                     <input
                       type="text"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       class="form-control"
                       id="nama_perusahaan"
                       name="nama_perusahaan"
@@ -136,7 +142,7 @@
                       id="comment"
                       id="alamat_perusahaan"
                       name="alamat_perusahaan"
-                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       >{{ daWa.alamat_perusahaan }}</textarea
                     >
                   </div>
@@ -150,7 +156,7 @@
                         (change)="onChange()"
                         id="provinsi_cabang"
                         name="provinsi"
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       >
                         <option value="{{ daWa.provinsi }}">{{ daWa.provinsi }}</option>
                         <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
@@ -169,7 +175,7 @@
                         (change)="onChangekota()"
                         id="kabkota_cabang"
                         name="kabkota"
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       >
                         <option value="{{ daWa.kabkota }}">{{ daWa.kabkota }}</option>
                         <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
@@ -188,7 +194,7 @@
                         (change)="onChangekecamatan()"
                         id="kecamatan"
                         name="kecamatan"
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       >
                         <option value="{{ daWa.kecamatan }}">{{ daWa.kecamatan }}</option>
                         <option
@@ -210,7 +216,7 @@
                         (change)="onChangekelurahan()"
                         id="kelurahan"
                         name="kelurahan"
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       >
                         <option value="{{ daWa.kelurahan }}">{{ daWa.kelurahan }}</option>
                         <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
@@ -225,7 +231,7 @@
                   <div class="col-sm-9">
                     <div class="input-group mb-3">
                       <input
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                         type="tel"
                         onkeypress="return onlyNumberKey(event)"
                         maxlength="8"
@@ -240,7 +246,7 @@
                           class="btn btn-outline-dark"
                           id="kode_poshilang"
                           type="button"
-                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                         >
                           Cari Data
                         </button>
@@ -254,7 +260,7 @@
                     <div class="form-row">
                       <div class="form-group col-md-5">
                         <input
-                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                           type="tel"
                           onkeypress="return onlyNumberKey(event)"
                           maxlength="3"
@@ -268,7 +274,7 @@
                       <h2>/</h2>
                       <div class="form-group col-md-5">
                         <input
-                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                           type="tel"
                           onkeypress="return onlyNumberKey(event)"
                           class="form-control"
@@ -287,7 +293,7 @@
                     <label id="changeLabelSiup" class="col-sm-3 col-form-label">Nomor SIUP<span class="text-danger">*</span></label>
                     <div class="col-sm-9">
                       <input
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                         type="tel"
                         onkeypress="return onlyNumberKey(event)"
                         maxlength="16"
@@ -310,7 +316,7 @@
                         class="form-control"
                         id="jenis_bidang"
                         name="jenis_bidang"
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       >
                         <option value="{{ daWa.jenis_bidang }}">{{ daWa.jenis_bidang }}</option>
                         <option
@@ -331,7 +337,7 @@
                         class="form-control"
                         id="jenis_sektor"
                         name="sektor_ekonomi"
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       >
                         <option value="{{ daWa.sektor_ekonomi }}">{{ daWa.sektor_ekonomi }}</option>
                         <option
@@ -348,7 +354,7 @@
                   <label class="col-sm-3 col-form-label">Umur</label>
                   <div class="col-sm-9">
                     <input
-                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       type="tel"
                       class="form-control"
                       placeholder="Umur"
@@ -363,7 +369,7 @@
                   <label class="col-sm-3 col-form-label">Umur Pensiun</label>
                   <div class="col-sm-9">
                     <input
-                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       type="tel"
                       onkeypress="return onlyNumberKey(event)"
                       maxlength="2"
@@ -381,7 +387,7 @@
                     <div class="form-row">
                       <div class="col">
                         <input
-                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                           type="tel"
                           onkeypress="return onlyNumberKey(event)"
                           maxlength="2"
@@ -395,7 +401,7 @@
                       <span>Tahun</span><span class="text-danger">*</span>
                       <div class="col">
                         <input
-                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                           type="tel"
                           onkeypress="return onlyNumberKey(event)"
                           maxlength="2"
@@ -417,7 +423,7 @@
                       <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
                       <div class="col-sm-9">
                         <input
-                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                           type="tel"
                           onkeypress="return onlyNumberKey(event)"
                           maxlength="13"
@@ -439,7 +445,7 @@
                             class="form-control"
                             id="jumlah_karyawan2"
                             name="jumlah_karyawan2"
-                            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                           >
                             <option value="{{ daWa.kabkota }}">{{ daWa.jumlah_karyawan }}</option>
                           </select>
@@ -453,7 +459,7 @@
                   <label class="col-sm-3 col-form-label">Pendapatan</label>
                   <div class="col-sm-9">
                     <input
-                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       type="text"
                       class="form-control"
                       placeholder="Pendapatan"
@@ -467,7 +473,7 @@
                   <label class="col-sm-3 col-form-label">Pendapatan Lain</label>
                   <div class="col-sm-9">
                     <input
-                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       type="text"
                       class="form-control"
                       placeholder="Pendapatan Lain"
@@ -481,7 +487,7 @@
                   <label class="col-sm-3 col-form-label">Tunjangan</label>
                   <div class="col-sm-9">
                     <input
-                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       type="text"
                       class="form-control"
                       placeholder="Tunjangan"
@@ -496,7 +502,7 @@
                   <label class="col-sm-3 col-form-label">Total Pendapatan</label>
                   <div class="col-sm-9">
                     <input
-                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       type="text"
                       class="form-control"
                       placeholder="Total Pendapatan"
@@ -515,7 +521,7 @@
                         class="form-control"
                         id="tipe_perusahaan"
                         name="tipe_perusahaan"
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       >
                         <option value="{{ daWa.tipe_perusahaan }}">{{ daWa.tipe_perusahaan }}</option>
                         <option
@@ -536,7 +542,7 @@
                         class="form-control"
                         id="tipe_kepegawaian"
                         name="tipe_kepegawaian"
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                       >
                         <option value="{{ daWa.tipe_kepegawaian }}">
                           {{ daWa.tipe_kepegawaian }}
@@ -548,7 +554,7 @@
                   </div>
                 </div>
                 <button
-                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                   type="submit"
                   id="btn"
                   (click)="updatejobinfo()"
@@ -559,7 +565,16 @@
                 >
                   Update Data
                 </button>
-                <button type="submit" id="selanjutnya" name="selanjutnya" value="selanjutnya" class="btn btn-warning" style="float: right">
+                <button
+                  [disabled]="this.untukSessionRole == 'AO'"
+                  (click)="gotojobinfo()"
+                  type="button"
+                  id="selanjutnya"
+                  name="selanjutnya"
+                  value="selanjutnya"
+                  class="btn btn-warning"
+                  style="float: right"
+                >
                   Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
                 </button>
 

@@ -873,7 +873,11 @@
         <div class="form-group">
           <!-- <input type="checkbox" name="cek" id="cek" checked>  -->
           <p id="denganini">
-            <input type="checkbox" (click)="onclikwawancara($event)" />
+            <input
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              type="checkbox"
+              (click)="onclikwawancara($event)"
+            />
             {{ contohtex }}
           </p>
         </div>

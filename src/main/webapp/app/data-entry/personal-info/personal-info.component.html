@@ -332,7 +332,13 @@
       <label class="col-sm-3 col-form-label">Status Rumah</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" value="" id="status_rumah" name="status_rumah" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            value=""
+            id="status_rumah"
+            name="status_rumah"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+          >
             <option value="{{ daWa.status_rumah }}">{{ daWa.status_rumah }}</option>
           </select>
         </div>
@@ -360,7 +366,12 @@
       <label class="col-sm-3 col-form-label">Punya Kendaraan</label>
       <div class="col-sm-9">
         <div class="form-group">
-          <select class="form-control" id="status_kendaraan" name="status_kendaraan" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+          <select
+            class="form-control"
+            id="status_kendaraan"
+            name="status_kendaraan"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+          >
             <option value="{{ daWa.status_kendaraan }}">{{ daWa.status_kendaraan }}</option>
             <option value="1">Ya</option>
             <option value="2">Tidak</option>
@@ -504,7 +515,12 @@
             value="{{ daWa.kode_pos }}"
           />
           <div class="input-group-append">
-            <button onclick="buatisi()" class="btn btn-outline-dark" type="button" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+            <button
+              onclick="buatisi()"
+              class="btn btn-outline-dark"
+              type="button"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+            >
               Cari Data
             </button>
           </div>
