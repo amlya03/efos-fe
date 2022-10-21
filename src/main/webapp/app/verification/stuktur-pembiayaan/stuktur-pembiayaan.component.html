@@ -37,7 +37,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Down Payment</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="down_payment" name="down_payment" value="{{this.dataEntry.uang_muka}}"/>
+          <input type="text" readonly class="form-control" id="down_payment" name="down_payment" value="{{this.dataEntry.uang_muka | currency:'Rp '}}"/>
         </div>
       </div>
       <br />
@@ -74,21 +74,21 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nilai_pembiayaan" name="nilai_pembiayaan" value="{{this.dataEntry.nilai_pembiayaan}}"/>
+          <input type="text" readonly class="form-control" id="nilai_pembiayaan" name="nilai_pembiayaan" value="{{this.dataEntry.nilai_pembiayaan | currency:'Rp '}}"/>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Angsuran</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="angsuran" name="angsuran" value="{{this.dataEntry.angsuran}}"/>
+          <input type="text" readonly class="form-control" id="angsuran" name="angsuran" value="{{this.dataEntry.angsuran | currency:'Rp '}}"/>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Total Pendapatan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="total_pendapatan" name="total_pendapatan" value="{{this.fetchJob.total_pendapatan}}"/>
+          <input type="text" readonly class="form-control" id="total_pendapatan" name="total_pendapatan" value="{{this.fetchJob.total_pendapatan | currency:'Rp '}}"/>
         </div>
       </div>
     </div>
@@ -272,14 +272,14 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Maximal Angsuran</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="maximal_angsuran" name="maximal_angsuran" #maximal_angsuran1/>
+          <input type="text" readonly class="form-control" id="maximal_angsuran" name="maximal_angsuran" #maximal_angsuran1 [value]="this.analisaMaxAngsuran  | currency:'Rp '"/>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">DSR</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" #analisaDsr1 id="dsr" name="dsr" [value]="this.analisaDsr+' %'"/>
+          <input type="text" readonly class="form-control" #analisaDsr1 id="dsr" name="dsr" [value]="this.analisaDsr + ' %'"/>
         </div>
       </div>
     </div>

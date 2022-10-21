@@ -33,6 +33,7 @@ export class StukturPembiayaanComponent implements OnInit {
   nilaiPembiayaan: any;
   angsuranPalingTinggi: any;
   analisaDsr: any;
+  analisaMaxAngsuran: any;
 
   // Ref Skema
   Skema: refSkema[] = [];
@@ -177,8 +178,9 @@ export class StukturPembiayaanComponent implements OnInit {
       })
       .subscribe({
         next: (data) => {
-          this.analisaDsr = data.result.dsr
-          console.log('analisa '+ data.result.dsr)
+          this.analisaDsr = data.result.dsr;
+          this.analisaMaxAngsuran = data.result.max_angsuran;
+          console.log('analisa '+ data.result.max_angsuran)
         }
       });
     }, 300);

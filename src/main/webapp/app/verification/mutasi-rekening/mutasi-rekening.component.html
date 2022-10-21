@@ -1,7 +1,7 @@
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Daftar Calon Nasabah</h3>
 </div>
-<form [formGroup]="mutasiForm" (ngSubmit)="submitForm(nama_bank.value, no_rekening.value, tahun.value, bulan.value, debet.value, kredit.value, saldo.value)">
+<form [formGroup]="mutasiForm">
   <div class="row form-material">
     <!-- ////Colom ke 1\\\\\ -->
     <div class="col">
@@ -190,7 +190,7 @@
   <p></p>
   <div class="row">
     <div class="col" style="text-align: center">
-      <button type="submit" class="btn btn-info">Simpan Data</button>
+      <button type="submit" class="btn btn-info" (click)="submitForm(nama_bank.value, no_rekening.value, tahun.value, bulan.value, debet.value, kredit.value, saldo.value)">Simpan Data</button>
     </div>
   </div>
 </form>

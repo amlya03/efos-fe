@@ -47,7 +47,15 @@ export class DataRumahComponent implements OnInit {
   outstanding: any;
   totalOutstandingSlik: any;
 
-  formatter: any;
+  // Table Slik
+  totalOutNas:any;
+  totalPlaNas:any;
+  totalAngNas:any;
+  totalPasOut:any;
+  totalPasPla:any;
+  totalPasAng:any;
+
+  formatIdr: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -84,11 +92,9 @@ export class DataRumahComponent implements OnInit {
       responsive: true,
     };
     this.load();
+    this.formatMoney();
     // alert(this.untukSessionRole);
-    this.formatter = new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-    });
+    this.formatIdr = new Intl.NumberFormat('id-ID', {style: 'currency',currency: 'IDR',});
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.analisaKeuanganForm = this.formBuilder.group({
@@ -98,7 +104,7 @@ export class DataRumahComponent implements OnInit {
       tanggal_permintaan: '',
       tanggal_pemeriksa: '',
 
-      // COba: [this.formatter.format('')],
+      // COba: [this.formatIdr.format('')],
       // Data Keuangan Nasabah \\
       gaji_kotor: '',
       gaji_kotor_pasangan: '',
@@ -165,9 +171,17 @@ export class DataRumahComponent implements OnInit {
 
     // ambil semua data Slik
     this.dataRumah.fetchSlik('app_20221017_667').subscribe(data => {
-      // if (data.code === 200) {
-      // console.log(data)
       this.slikTotal = data.result;
+      // alert(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_angsuran_pasangan)))
+      this.totalOutNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_outstanding_nasabah));
+      this.totalPlaNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_plafon_nasabah));
+      this.totalAngNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_angsuran_nasabah));
+      this.totalPasOut = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_outstanding_pasangan));
+      this.totalPasPla = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_plafon_pasangan));
+      this.totalPasAng = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_angsuran_pasangan));
+
+
+      // List Slik
       this.listSlik = data.result.dataSlikResult;
       // console.log(this.slikTotal.total_angsuran_pasangan)
       // this.struktur = ('Rp 10000').toLocaleString();
@@ -469,8 +483,8 @@ export class DataRumahComponent implements OnInit {
     }
   }
   formatMoney(value?: any) {
-    const jdkfj = value.replace(/\,/g, '').replace('Rp ', '');
-    // alert(jdkfj);
+    // value?.replace(/\,/g, '').replace('Rp ', '');
+    new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(value));
   }
 
   // Selanjutnya
