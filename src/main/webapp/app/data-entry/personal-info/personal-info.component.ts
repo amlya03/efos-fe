@@ -83,6 +83,8 @@ export class PersonalInfoComponent implements OnInit {
   kirimanstatusktp: any;
   statusPerkawinan: any;
   untukSessionRole: any;
+  daWabawacuref: any;
+  daWabawastatusperkawinan: any;
   /////
 
   constructor(
@@ -119,6 +121,8 @@ export class PersonalInfoComponent implements OnInit {
         // console.warn('@@@@@@@@@@@@@', this.datakiriman);
         // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
         this.daWa = res.body?.result;
+        this.daWabawacuref = res.body?.result.curef;
+        this.daWabawastatusperkawinan = res.body?.result.status_perkawinan;
         // this.onResponseSuccess(res);
       },
     });
@@ -142,9 +146,9 @@ export class PersonalInfoComponent implements OnInit {
     // alert(contohtampungancuref);
     this.router.navigate(['/data-entry/job-info'], {
       queryParams: {
-        curef: contohtampungancuref,
-        statusPerkawinan: contohtampungstatuskawain,
-        app_no_de: contohtampunganappde,
+        curef: this.daWabawacuref,
+        statusPerkawinan: this.daWabawastatusperkawinan,
+        app_no_de: this.app_no_de,
       },
     });
   }
@@ -202,8 +206,8 @@ export class PersonalInfoComponent implements OnInit {
     const radiobuttontidak = (<HTMLInputElement>document.getElementById('alamat_sama_ktp_tidak')).checked;
     // const radiobuttonia=document.getElementById('alamat_sama_ktp_sama') as HTMLInputElement | any;
     // const radiobuttontidak=document.getElementById('alamat_sama_ktp_tidak') as HTMLInputElement | any;
-    alert(id.value);
-    alert(contohtampungancuref);
+    // alert(id.value);
+    // alert(contohtampungancuref);
 
     if (radiobuttonia == true) {
       this.contohcontoh = 1;
@@ -235,11 +239,11 @@ export class PersonalInfoComponent implements OnInit {
     if (cekdatapipe !== -1) {
       var kirimanprovinsi = kirimanpotonganprovinsi[1];
 
-      alert('update provinsi bawa value pipe |' + kirimanprovinsi);
+      // alert('update provinsi bawa value pipe |' + kirimanprovinsi);
     } else {
       //  var kirimanprovinsi =kirimanpotonganprovinsi[1];
       var kirimanprovinsi = provinsi_cabang.value;
-      alert('update provinsi bawa value' + kirimanprovinsi);
+      // alert('update provinsi bawa value' + kirimanprovinsi);
     }
     var potongankabkota = kabkota_cabang.value.split('|');
     if (kabkota_cabang.value.indexOf('|') !== -1) {
@@ -348,9 +352,9 @@ export class PersonalInfoComponent implements OnInit {
           // alert('MASUKAJAHSUSAH');
           this.router.navigate(['/data-entry/job-info'], {
             queryParams: {
-              curef: contohtampungancuref,
-              statusPerkawinan: contohtampungstatuskawain,
-              app_no_de: contohtampunganappde,
+              curef: this.daWabawacuref,
+              statusPerkawinan: this.daWabawastatusperkawinan,
+              app_no_de: this.app_no_de,
               // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
             },
           });
@@ -467,17 +471,17 @@ export class PersonalInfoComponent implements OnInit {
 
   onChangekelurahan(selectedStatus: any) {
     // alert(this.postId);
-    alert('ganti');
+    // alert('ganti');
     const provinsi_cabang = document.getElementById('kelurahan') as HTMLInputElement | any;
     var kode_post = document.getElementById('kode_pos') as HTMLInputElement | any;
     const datakodepos = provinsi_cabang.value.split('|');
 
     this.daWakodepos = datakodepos[0];
 
-    alert(this.daWakodepos);
+    // alert(this.daWakodepos);
     // kode_post.innerHTML=this.daWakodepos ;
     kode_post.value = this.daWakodepos;
-    alert('kodepos' + kode_post);
+    // alert('kodepos' + kode_post);
     // document.getElementById('kode_pos').value=this.daWakodepos;
     // alert(this.daWakodepos);
     // this.onResponseSuccess(res);
@@ -532,17 +536,17 @@ export class PersonalInfoComponent implements OnInit {
 
   onChangekelurahanD(selectedStatus: any) {
     // alert(this.postId);
-    alert('ganti');
+    // alert('ganti');
     const provinsi_cabang = document.getElementById('kelurahan_domisili') as HTMLInputElement | any;
     var kode_post = document.getElementById('kode_pos_domisili') as HTMLInputElement | any;
     const datakodepos = provinsi_cabang.value.split('|');
 
     this.daWakodeposD = datakodepos[0];
 
-    alert(this.daWakodepos);
+    // alert(this.daWakodepos);
     // kode_post.innerHTML=this.daWakodepos ;
     kode_post.value = this.daWakodeposD;
-    alert('kodepos' + kode_post);
+    // alert('kodepos' + kode_post);
     // document.getElementById('kode_pos').value=this.daWakodepos;
     // alert(this.daWakodepos);
     // this.onResponseSuccess(res);

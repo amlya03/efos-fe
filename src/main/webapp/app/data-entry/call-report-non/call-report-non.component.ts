@@ -84,12 +84,12 @@ export class CallReportNonComponent implements OnInit {
           this.daWa = res.body?.result;
           this.checkboxCek = this.daWa.legalitas_usaha.split(', ');
 
-          alert(this.checkboxCek);
+          // alert(this.checkboxCek);
           for (let i = 0; i < this.checkboxCek.length; i++) {
             // alert(this.checkboxCek[i] == "Sertifikat")
             if (this.checkboxCek[i] == 'SIU') {
               this.checkboxCeksiu = 'SIU';
-              alert(this.checkboxCeksiu);
+              // alert(this.checkboxCeksiu);
             } else if (this.checkboxCek[i] == 'SIUP') {
               this.checkboxCeksiup = 'SIUP';
             } else if (this.checkboxCek[i] == 'NIB') {
@@ -143,7 +143,7 @@ export class CallReportNonComponent implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto() {
-    alert(this.app_no_de);
+    // alert(this.app_no_de);
     // this.router.navigate(['/memo'], { queryParams: {  } });
     this.router.navigate(['/data-entry/memo'], {
       queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
@@ -247,7 +247,7 @@ export class CallReportNonComponent implements OnInit {
     // const angsuran = document.getElementById('angsuran') as HTMLInputElement | any;
     // let cekKe = this.tempunganCek.join(', ');
     let legalitas = this.tempunganCek.join(', ');
-    alert('ini create');
+    // alert('ini create');
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
     this.http
@@ -323,7 +323,7 @@ export class CallReportNonComponent implements OnInit {
         next: bawaan => {
           //           this.contohdata = bawaan.result.app_no_de;
           // this.databawaan = bawaan.result.app_no_de;
-          alert('MASUKAJAHSUSAH');
+          // alert('MASUKAJAHSUSAH');
           this.router.navigate(['/data-entry/memo'], {
             queryParams: {
               // datakiriman: contohtampungancuref,

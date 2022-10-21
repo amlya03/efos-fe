@@ -101,7 +101,7 @@ export class EmergencyContactComponent implements OnInit {
         // console.log(res.body?.result);
         console.warn('cekstatuspernikahan', res.body?.result);
         this.keteranganstatusnikah = res.body?.result.kategori_pekerjaan;
-        alert(this.keteranganstatusnikah);
+        // alert(this.keteranganstatusnikah);
       },
     });
   }
@@ -193,17 +193,17 @@ export class EmergencyContactComponent implements OnInit {
 
   onChangekelurahan(selectedStatus: any) {
     // alert(this.postId);
-    alert('ganti');
+    // alert('ganti');
     const provinsi_cabang = document.getElementById('kelurahan') as HTMLInputElement | any;
     var kode_post = document.getElementById('kode_pos') as HTMLInputElement | any;
     const datakodepos = provinsi_cabang.value.split('|');
 
     this.daWakodepos = datakodepos[0];
 
-    alert(this.daWakodepos);
+    // alert(this.daWakodepos);
     // kode_post.innerHTML=this.daWakodepos ;
     kode_post.value = this.daWakodepos;
-    alert('kodepos' + kode_post);
+    // alert('kodepos' + kode_post);
     // document.getElementById('kode_pos').value=this.daWakodepos;
     // alert(this.daWakodepos);
     // this.onResponseSuccess(res);
@@ -223,13 +223,13 @@ export class EmergencyContactComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto(appde: any) {
     if (this.keteranganstatusnikah === 'Fix Income') {
-      alert('ini fix');
+      // alert('ini fix');
       // alert(this.app_no_de);
       this.router.navigate(['/data-entry/call-report'], {
         queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.curef },
       });
     } else {
-      alert('ini non fix');
+      // alert('ini non fix');
       // alert(this.app_no_de);
       // alert(this.datakirimanakategoripekerjaan);
       this.router.navigate(['/data-entry/call-report-non'], {
@@ -287,7 +287,7 @@ export class EmergencyContactComponent implements OnInit {
     }
 
     if (this.daWa == 0) {
-      alert('ini create');
+      // alert('ini create');
       const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
       this.http
@@ -324,15 +324,15 @@ export class EmergencyContactComponent implements OnInit {
         .subscribe({
           next: bawaan => {
             if (this.datakirimanakategoripekerjaan === 'Fix Income') {
-              alert('ini fix');
-              alert(this.app_no_de);
+              // alert('ini fix');
+              // alert(this.app_no_de);
               this.router.navigate(['/data-entry/call-report'], {
                 queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.curef },
               });
             } else {
-              alert('ini non fix');
-              alert(this.app_no_de);
-              alert(this.datakirimanakategoripekerjaan);
+              // alert('ini non fix');
+              // alert(this.app_no_de);
+              // alert(this.datakirimanakategoripekerjaan);
               this.router.navigate(['/data-entry/call-report-non'], {
                 queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.curef },
               });
@@ -340,7 +340,7 @@ export class EmergencyContactComponent implements OnInit {
           },
         });
     } else {
-      alert('ini update');
+      // alert('ini update');
       const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
       this.http
@@ -367,15 +367,15 @@ export class EmergencyContactComponent implements OnInit {
         .subscribe({
           next: bawaan => {
             if (this.datakirimanakategoripekerjaan === 'Fix Income') {
-              alert('ini fix');
-              alert(this.app_no_de);
+              // alert('ini fix');
+              // alert(this.app_no_de);
               this.router.navigate(['/data-entry/call-report'], {
                 queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.curef },
               });
             } else {
-              alert('ini non fix');
-              alert(this.app_no_de);
-              alert(this.datakirimanakategoripekerjaan);
+              // alert('ini non fix');
+              // alert(this.app_no_de);
+              // alert(this.datakirimanakategoripekerjaan);
               this.router.navigate(['/data-entry/call-report-non'], {
                 queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.curef },
               });

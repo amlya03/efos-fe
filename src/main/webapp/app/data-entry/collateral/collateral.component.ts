@@ -96,8 +96,8 @@ export class CollateralComponent implements OnInit {
   load() {
     this.gettokendukcapil();
 
-    alert('colalteral' + this.app_no_de);
-    alert(this.curef);
+    // alert('colalteral' + this.app_no_de);
+    // alert(this.curef);
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         // console.log(res.body?.result);
@@ -280,34 +280,34 @@ export class CollateralComponent implements OnInit {
   }
   onChangekelurahan(selectedStatus: any) {
     // alert(this.postId);
-    alert('ganti');
+    // alert('ganti');
     const provinsi_cabang = document.getElementById('kelurahan_agunan') as HTMLInputElement | any;
     var kode_post = document.getElementById('kode_pos_agunan') as HTMLInputElement | any;
     const datakodepos = provinsi_cabang.value.split('|');
 
     this.daWakodepos = datakodepos[0];
 
-    alert(this.daWakodepos);
+    // alert(this.daWakodepos);
     // kode_post.innerHTML=this.daWakodepos ;
     kode_post.value = this.daWakodepos;
-    alert('kodepos' + kode_post);
+    // alert('kodepos' + kode_post);
     // document.getElementById('kode_pos').value=this.daWakodepos;
     // alert(this.daWakodepos);
     // this.onResponseSuccess(res);
   }
   onChangekelurahans(selectedStatus: any) {
     // alert(this.postId);
-    alert('ganti');
+    // alert('ganti');
     const provinsi_cabang = document.getElementById('kelurahan_sesuai_sertifikat') as HTMLInputElement | any;
     var kode_post = document.getElementById('kode_pos_sesuai_sertifikat') as HTMLInputElement | any;
     const datakodepos = provinsi_cabang.value.split('|');
 
     this.daWakodepos = datakodepos[0];
 
-    alert(this.daWakodepos);
+    // alert(this.daWakodepos);
     // kode_post.innerHTML=this.daWakodepos ;
     kode_post.value = this.daWakodepos;
-    alert('kodepos' + kode_post);
+    // alert('kodepos' + kode_post);
     // document.getElementById('kode_pos').value=this.daWakodepos;
     // alert(this.daWakodepos);
     // this.onResponseSuccess(res);
@@ -360,7 +360,7 @@ export class CollateralComponent implements OnInit {
 
   tambahcollateral() {
     // const pilihantipeagunan = document.getElementById('tipe_anggunan') as HTMLInputElement | any;
-    alert('tambah');
+    // alert('tambah');
     this.tambahatautidak = 'benar';
     $('#tambahdata').attr('hidden', 'hidden');
   }
@@ -368,8 +368,8 @@ export class CollateralComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto() {
     // this.onResponseSuccess(res);
-    alert('ke struktur ');
-    alert(this.datakirimanakategoripekerjaan);
+    // alert('ke struktur ');
+    // alert(this.datakirimanakategoripekerjaan);
     console.warn('INI ADA GK SIH', this.curef, this.app_no_de);
     this.router.navigate(['/data-entry/struktur-pembiayaan'], {
       queryParams: {
@@ -392,8 +392,8 @@ export class CollateralComponent implements OnInit {
 
   gotoeditcollateral(idcollateral: any) {
     // this.onResponseSuccess(res);
-    alert('ke editcollateral ');
-    alert(this.datakirimanakategoripekerjaan);
+    // alert('ke editcollateral ');
+    // alert(this.datakirimanakategoripekerjaan);
     console.warn('INI ADA GK SIH', this.curef, this.app_no_de);
     this.router.navigate(['/data-entry/editcollateral'], {
       queryParams: {

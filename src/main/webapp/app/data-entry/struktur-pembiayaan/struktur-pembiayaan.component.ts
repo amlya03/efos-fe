@@ -138,9 +138,9 @@ export class StrukturPembiayaanComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto() {
     // this.onResponseSuccess(res);
-    alert('ke emergency');
-    alert(this.datakirimanakategoripekerjaan);
-    alert(this.app_no_de);
+    // alert('ke emergency');
+    // alert(this.datakirimanakategoripekerjaan);
+    // alert(this.app_no_de);
     this.router.navigate(['/data-entry/emergency-contact'], {
       queryParams: {
         app_no_de: this.app_no_de,
@@ -155,7 +155,7 @@ export class StrukturPembiayaanComponent implements OnInit {
 
     var potongankodefasilitas = provinsi_cabang.value.split('|');
 
-    alert(potongankodefasilitas[0]);
+    // alert(potongankodefasilitas[0]);
     // alert(this.postId);
     // console.log('kode' + selectedStatus);
     console.log('kode' + provinsi_cabang.value);
@@ -216,7 +216,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   onchangeskema(selectedStatus: any) {
     const provinsi_cabang = document.getElementById('skema') as HTMLInputElement | any;
     const pemisahskemamaster = provinsi_cabang.value.split('|');
-    alert(pemisahskemamaster[1]);
+    // alert(pemisahskemamaster[1]);
     if (pemisahskemamaster[1] == 1) {
       let tipePro = '<option selected value="fix">FIX</option>';
       tipePro = tipePro + '';
@@ -374,15 +374,15 @@ export class StrukturPembiayaanComponent implements OnInit {
 
           $('#hasil_pembiayaan').val(nilai);
 
-          alert(this.postId);
-          alert(anguran2);
+          // alert(this.postId);
+          // alert(anguran2);
           console.warn('There was an error!', data);
         },
         error: error => {
           this.errorMessage = error.error.message;
           console.error('There was an error!', error);
 
-          alert(this.errorMessage);
+          // alert(this.errorMessage);
         },
       });
   }
@@ -459,7 +459,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     }
 
     if (this.daWa == 0) {
-      alert('ini create');
+      // alert('ini create');
       const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
       this.http
@@ -507,7 +507,7 @@ export class StrukturPembiayaanComponent implements OnInit {
           },
         });
     } else {
-      alert('ini update');
+      // alert('ini update');
       const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
       this.http

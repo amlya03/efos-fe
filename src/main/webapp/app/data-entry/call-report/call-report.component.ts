@@ -119,7 +119,7 @@ export class CallReportComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto() {
     // this.router.navigate(['/memo'], { queryParams: {  } });
-    alert(this.app_no_de);
+    // alert(this.app_no_dea);
     this.router.navigate(['/data-entry/memo'], {
       queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
     });
@@ -212,7 +212,7 @@ export class CallReportComponent implements OnInit {
     // const angsuran = document.getElementById('angsuran') as HTMLInputElement | any;
     // const angsuran = document.getElementById('angsuran') as HTMLInputElement | any;
 
-    alert('ini create');
+    // alert('ini create');
     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
     this.http

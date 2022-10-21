@@ -92,6 +92,7 @@ export class SyaratPersetujuanComponent implements OnInit {
     // ambil semua data Syarat Persetujuan
     this.serviceVerificationService.getfetchSyaratPersetujuan(this.app_no_de).subscribe(data => {
       // Syarat Persetujuan
+      console.warn('contohcontoh', data.result);
       this.syaratPersetujuan = data.result.syarat;
       this.syaratPersetujuan?.forEach(element => {
         if (element.kode_syarat == 1) {
@@ -267,6 +268,9 @@ export class SyaratPersetujuanComponent implements OnInit {
           .subscribe({});
       }
     }
+    this.router.navigate(['/kesimpulan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+  }
+  goto() {
     this.router.navigate(['/kesimpulan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

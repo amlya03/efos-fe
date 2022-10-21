@@ -250,7 +250,7 @@ export class EditjobinfoComponent implements OnInit {
 
   onChangekelurahan() {
     // alert(this.postId);
-    alert('ganti');
+    // alert('ganti');
     const provinsi_cabang = document.getElementById('kelurahan') as HTMLInputElement | any;
     var kode_post = document.getElementById('kode_pos') as HTMLInputElement | any;
     const datakodepos = provinsi_cabang.value.split('|');
@@ -470,5 +470,16 @@ export class EditjobinfoComponent implements OnInit {
     //     // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
     //   },
     // });
+  }
+
+  gotojobinfo() {
+    this.router.navigate(['/data-entry/job-info'], {
+      queryParams: {
+        curef: this.curef,
+        datakirimanstatus: this.statusPerkawinan,
+        app_no_de: this.app_no_de,
+        //   datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
+      },
+    });
   }
 }
