@@ -609,7 +609,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'APPRAISAL'"
+      *ngIf="untukSessionRole == 'APPRAISAL'|| untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Analisa Keuangan</h6>
     </a>
@@ -619,7 +619,7 @@
       [routerLinkActive]="'active'"
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'APPRAISAL'"
+      *ngIf="untukSessionRole == 'APPRAISAL'|| untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Detail Analisa</h6>
     </a>
@@ -629,7 +629,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'APPRAISAL'"
+      *ngIf="untukSessionRole == 'APPRAISAL'|| untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Data Kantor</h6>
     </a>
@@ -639,7 +639,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'APPRAISAL'"
+      *ngIf="untukSessionRole == 'APPRAISAL'|| untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Mutasi Rekening</h6>
     </a>
@@ -649,7 +649,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'APPRAISAL'"
+      *ngIf="untukSessionRole == 'APPRAISAL'|| untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Struktur Pembiayaan</h6>
     </a>
@@ -659,7 +659,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'APPRAISAL'"
+      *ngIf="untukSessionRole == 'APPRAISAL'|| untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Checklist Document</h6>
     </a>
@@ -669,7 +669,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'APPRAISAL'"
+      *ngIf="untukSessionRole == 'APPRAISAL'|| untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Syarat Persetujuan</h6>
     </a>
@@ -679,7 +679,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'APPRAISAL'"
+      *ngIf="untukSessionRole == 'APPRAISAL'|| untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Kesimpulan</h6>
     </a>
@@ -689,7 +689,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'APPRAISAL'"
+      *ngIf="untukSessionRole == 'APPRAISAL'|| untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Memo</h6>
     </a>

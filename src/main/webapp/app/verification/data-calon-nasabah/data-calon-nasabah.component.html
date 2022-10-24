@@ -127,7 +127,7 @@
         id="verifikasi_alamat_rumah_ya"
         formControlName="verif_alamat"
         value="1"
-        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.verifikatorMelihat"
       />
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
@@ -135,9 +135,8 @@
         id="verifikasi_alamat_rumah_tidak"
         formControlName="verif_alamat"
         value="0"
-        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.verifikatorMelihat"
       />
-      <!--formControlName="verif_alamat" -->
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">

@@ -67,6 +67,9 @@ export class DataCalonNasabahComponent implements OnInit {
   listkondisilingkungan: any;
   listlokasirumah: any;
 
+  // disable
+  verifikatorMelihat: any;
+
   constructor(
     protected dataCalonNasabah: ServiceVerificationService,
     protected activatedRoute: ActivatedRoute,
@@ -88,6 +91,7 @@ export class DataCalonNasabahComponent implements OnInit {
 
   ngOnInit(): void {
     this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.verifikatorMelihat = this.untukSessionRole == 'VER_PRESCR'
     this.editor = new Editor();
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.dataCalonNasabahForm = this.formBuilder.group({
@@ -146,33 +150,33 @@ export class DataCalonNasabahComponent implements OnInit {
       tanggal_verifikasi: '',
       pemberi_keterangan: '',
       hubungan_pemberi_keterangan: '',
-      verif_alamat: '',
+      verif_alamat: [{ value: !null || null, disabled: this.verifikatorMelihat }],
       note_verif_alamat: '',
-      verif_rt_rw: '',
+      verif_rt_rw: [{ value: !null || null, disabled: this.verifikatorMelihat }],
       note_verif_rt_rw: '',
-      verif_provinsi: '',
+      verif_provinsi: [{ value: !null || null, disabled: this.verifikatorMelihat }],
       note_verif_provinsi: '',
-      verif_kabkota: '',
+      verif_kabkota: [{ value: !null || null, disabled: this.verifikatorMelihat }],
       note_verif_kabkota: '',
-      verif_kecamatan: '',
+      verif_kecamatan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
       note_verif_kecamatan: '',
-      verif_kelurahan: '',
+      verif_kelurahan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
       note_verif_kelurahan: '',
-      verif_kode_pos: '',
+      verif_kode_pos: [{ value: !null || null, disabled: this.verifikatorMelihat }],
       note_verif_kode_pos: '',
-      verif_tanggal_lahir: '',
+      verif_tanggal_lahir: [{ value: !null || null, disabled: this.verifikatorMelihat }],
       note_verif_tanggal_lahir: '',
-      verif_pendidikan: '',
+      verif_pendidikan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
       note_verif_pendidikan: '',
-      verif_status_menikah: '',
+      verif_status_menikah: [{ value: !null || null, disabled: this.verifikatorMelihat }],
       note_verif_status_menikah: '',
-      verif_ibu_kandung: '',
+      verif_ibu_kandung: [{ value: !null || null, disabled: this.verifikatorMelihat }],
       note_verif_ibu_kandung: '',
       // verif_jumlah_tanggungan: '',
       // note_verif_jumlah_tanggungan: '',
-      verif_nama_pasangan: '',
+      verif_nama_pasangan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
       note_verif_nama_pasangan: '',
-      verif_pekerjaan_pasangan: '',
+      verif_pekerjaan_pasangan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
       note_verif_pekerjaan_pasangan: '',
       fasilitas_pembiayaan: '',
       karakter_calon_nasabah: '',

@@ -68,7 +68,8 @@ import { CollateralEditComponent } from './data-entry/collateral-edit/collateral
 import { SyaratPersetujuanComponent } from './verification/syarat-persetujuan/syarat-persetujuan.component';
 import { KesimpulanComponent } from './verification/kesimpulan/kesimpulan.component';
 import { MemoVerificationComponent } from './verification/memo-verification/memo-verification.component';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 @NgModule({
   imports: [
@@ -91,6 +92,7 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
     NgxEditorModule,
     ReactiveFormsModule,
     ReactiveFormsModule,
+    NgxCurrencyModule
   ],
   providers: [
     Title,
