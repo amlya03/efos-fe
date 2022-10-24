@@ -13,9 +13,10 @@ import { resultSlikTotal } from 'app/initial-data-entry/services/config/resultSl
 import { slik } from 'app/initial-data-entry/services/config/slik.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { LocalStorageService } from 'ngx-webstorage';
-import { interval, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { refAnalisaKeuangan } from './refAnalisaKeuangan.model';
+import { CurrencyMaskInputMode } from 'ngx-currency'
 
 @Component({
   selector: 'jhi-data-rumah',
@@ -56,6 +57,10 @@ export class DataRumahComponent implements OnInit {
   totalPasAng:any;
 
   formatIdr: any;
+  valueNgx = null;
+
+  options = { prefix: '', thousands: ',', decimal: '.', inputMode: CurrencyMaskInputMode.NATURAL }
+
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;

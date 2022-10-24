@@ -92,7 +92,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
     NgxEditorModule,
     ReactiveFormsModule,
     ReactiveFormsModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
   ],
   providers: [
     Title,

@@ -3,6 +3,10 @@
 </div>
 <br />
 <form [formGroup]="analisaKeuanganForm" (ngSubmit)="onSubmit()">
+  Value:
+{{valueNgx}}
+
+<input currencyMask [(ngModel)]="valueNgx" [options]="options"/>
   <div class="row form-material">
     <!-- ////Colom ke 1\\\\\ -->
     <div class="col-md-6">
