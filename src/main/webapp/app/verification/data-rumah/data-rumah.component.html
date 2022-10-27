@@ -3,10 +3,6 @@
 </div>
 <br />
 <form [formGroup]="analisaKeuanganForm" (ngSubmit)="onSubmit()">
-  Value:
-{{valueNgx}}
-
-<input currencyMask [(ngModel)]="valueNgx" [options]="options"/>
   <div class="row form-material">
     <!-- ////Colom ke 1\\\\\ -->
     <div class="col-md-6">
@@ -61,10 +57,11 @@
             class="form-control"
             id="no_telepon_perusahaan"
             name="no_telepon_perusahaan"
-            placeholder=""
-            [value]="this.dataJob.no_telepon"
             readonly
           />
+          <!--
+            placeholder=""
+            [value]="this.dataJob.no_telepon" -->
         </div>
       </div>
     </div>

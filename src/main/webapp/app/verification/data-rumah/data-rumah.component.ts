@@ -57,9 +57,8 @@ export class DataRumahComponent implements OnInit {
   totalPasAng:any;
 
   formatIdr: any;
-  valueNgx = null;
 
-  options = { prefix: '', thousands: ',', decimal: '.', inputMode: CurrencyMaskInputMode.NATURAL }
+  optionsMoney = { prefix: 'Rp ', thousands: ',', decimal: '.', inputMode: CurrencyMaskInputMode.NATURAL }
 
 
   @ViewChild(DataTableDirective, { static: false })
@@ -494,6 +493,8 @@ export class DataRumahComponent implements OnInit {
 
   // Selanjutnya
   Next(){
+    this.onSubmit();
+    // alert(coba)
     this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

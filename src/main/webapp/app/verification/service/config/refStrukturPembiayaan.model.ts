@@ -2,6 +2,8 @@ export class refStrukturPembiayaan{
   id?: Number;
   app_no_de?: String;
   skema?: String;
+  skema_code?: String;
+  skema_master?: Number;
   tenor?: Number;
   harga_permintaan?: Number;
   nilai_pembiayaan?: Number;

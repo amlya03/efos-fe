@@ -13,6 +13,7 @@ import { listAgunan } from 'app/data-entry/services/config/listAgunan.model';
 import { LocalStorageService } from 'ngx-webstorage';
 import { refStrukturPembiayaan } from '../service/config/refStrukturPembiayaan.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CurrencyMaskInputMode } from 'ngx-currency'
 
 @Component({
   selector: 'jhi-stuktur-pembiayaan',
@@ -44,6 +45,15 @@ export class StukturPembiayaanComponent implements OnInit {
   // session username
   sessionUsername: any;
 
+  // Satuin Skema
+  comboSkema: any;
+  dpKurang = 0;
+
+  // Nyoba ngitung FTV
+  betaFTV: any;
+
+  optionsMoney = { prefix: 'Rp ', thousands: ',', decimal: '.', inputMode: CurrencyMaskInputMode.NATURAL }
+
   constructor(
     public router: Router,
     protected activatedRoute: ActivatedRoute,
@@ -68,12 +78,15 @@ export class StukturPembiayaanComponent implements OnInit {
     this.load();
 
     this.strukturForm = this.formBuilder.group({
+      harga_permintaan: '',
+      down_payment: '',
+      skema: '',
+      tenor: '',
+      nilai_pembiayaan: '',
       angsuran: '',
       total_angsuran: '',
-      max_dsr: '',
       max_angsuran: '',
-      dsr: '',
-      persentase_pembiayaan_existing: '',
+      dsr: ''
     });
   }
 
@@ -94,6 +107,7 @@ export class StukturPembiayaanComponent implements OnInit {
       this.dataEntry = data.result;
       setTimeout(() => {
         this.loadSkema(this.dataEntry.produk);
+        // alert(this.dataEntry.produk)
       }, 300);
     });
 
@@ -101,15 +115,32 @@ export class StukturPembiayaanComponent implements OnInit {
     this.verifikasiServices.getFetchStrukturPembiayaan(this.app_no_de).subscribe(struktur => {
       this.strukturPembiayaan = struktur.result;
       // console.log(this.strukturPembiayaan)
+      this.comboSkema = this.strukturPembiayaan.skema_code+'|'+this.strukturPembiayaan.skema_master+'|'+this.strukturPembiayaan.skema
+      // retrive Tenor
+      if (this.dataEntry.kode_fasilitas_name == 'PTA') {
+        this.verifikasiServices.getTenorFix(this.strukturPembiayaan.skema_code).subscribe(fix => {
+          this.tenor = fix.result;
+        });
+      } else {
+        this.verifikasiServices.getTenorNon(this.strukturPembiayaan.skema_code).subscribe(Non => {
+          this.tenor = Non.result;
+        });
+      }
+
+      // alert(this.comboSkema)
       let retrivestrukturForm = {
-        angsuran: '',
-        total_angsuran: '',
-        max_dsr: '',
-        max_angsuran: '',
-        dsr: '',
-        persentase_pembiayaan_existing: ''
+        harga_permintaan: this.strukturPembiayaan.harga_permintaan,
+        down_payment: this.strukturPembiayaan.down_payment,
+        skema: this.comboSkema,
+        tenor: this.strukturPembiayaan.tenor,
+        nilai_pembiayaan: this.strukturPembiayaan.nilai_pembiayaan,
+        angsuran: this.strukturPembiayaan.angsuran,
+        total_angsuran: this.strukturPembiayaan.total_angsuran,
+        max_angsuran: this.strukturPembiayaan.max_angsuran,
+        dsr: this.strukturPembiayaan.dsr
       }
       this.strukturForm.setValue(retrivestrukturForm);
+
     })
   }
 
@@ -125,6 +156,8 @@ export class StukturPembiayaanComponent implements OnInit {
 
     this.dataEntryService.getfetchlistagunan(this.curef).subscribe(data => {
       this.listagunan = data.result;
+      // console.log(this.listagunan)
+      this.betaFTV = Number(this.listagunan[0].harga_objek) / Number(this.dataEntry.uang_muka)
     });
   }
 
@@ -134,12 +167,12 @@ export class StukturPembiayaanComponent implements OnInit {
     if (skemaMaster == 'PTA') {
       this.verifikasiServices.getTenorFix(skemaidName[0]).subscribe(fix => {
         this.tenor = fix.result;
-        console.log('Fix ' + this.tenor);
+        // console.log('Fix ' + this.tenor);
       });
     } else {
       this.verifikasiServices.getTenorNon(skemaidName[0]).subscribe(Non => {
         this.tenor = Non.result;
-        console.log('Non ' + this.tenor);
+        // console.log('Non ' + this.tenor);
       });
     }
   }
@@ -147,6 +180,10 @@ export class StukturPembiayaanComponent implements OnInit {
   // Hitung Angsuran
   hitungAngsuran(skema_id: any, harga: any, dp: any) {
     const skemaidName = skema_id.split('|');
+    // const hargaPermintaan = harga.replace(/\,/g, '').replace('Rp ', '');
+    // const dpnya = dp.replace(/\,/g, '').replace('Rp ', '');
+    // alert(dpnya)
+    // alert(hargaPermintaan)
 
     this.http
     .post<any>('http://10.20.34.110:8805/api/v1/efos-de/hitung_angsuran', {
@@ -167,6 +204,13 @@ export class StukturPembiayaanComponent implements OnInit {
         console.log(data.result)
         this.angsuranPalingTinggi = data.result.angsuran[data.result.angsuran.length - 1]
         console.log(this.angsuranPalingTinggi)
+        this.dpKurang = 0
+        },
+        error: (err) => {
+          if(err.error.code == 400){
+            alert(err.error.message)
+            this.dpKurang = 1
+          }
         }
     });
 
@@ -203,10 +247,11 @@ export class StukturPembiayaanComponent implements OnInit {
     const analisaDsr = dsr.replace(' %', '');
     const maxDsr = max_dsr.replace(' %', '');
     const persentace = persentase_pembiayaan_existing.replace('%', '');
-    // alert(Skemanya[2])
+    const valueMax_angsuran = max_angsuran.replace(/\,/g, '').replace('Rp ', '');
+    // alert(valueMax_angsuran)
     if(this.strukturPembiayaan == null){
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_struktur_pembiayaan', {
+        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_struktur_pembiayaan', {
           angsuran: angsuran,
           app_no_de: this.dataEntry.app_no_de,
           created_by: this.sessionUsername,
@@ -215,13 +260,15 @@ export class StukturPembiayaanComponent implements OnInit {
           dsr: analisaDsr,
           harga_permintaan: harga_permintaan,
           id: '',
-          max_angsuran: max_angsuran,
+          max_angsuran: valueMax_angsuran,
           max_dsr: maxDsr,
           nilai_pembiayaan: nilai_pembiayaan,
           persentase_pembiayaan_existing: persentace,
           skema: Skemanya[2],
           tenor: tenor,
-          total_angsuran: total_angsuran
+          total_angsuran: total_angsuran,
+          skema_code: Skemanya[0],
+          skema_master: Skemanya[1],
         })
         .subscribe({
           next: response => console.warn(response),
@@ -230,7 +277,7 @@ export class StukturPembiayaanComponent implements OnInit {
     }
      else {
       this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_struktur_pembiayaan', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_struktur_pembiayaan', {
         angsuran: angsuran,
         app_no_de: this.dataEntry.app_no_de,
         updated_by: this.sessionUsername,
@@ -239,13 +286,15 @@ export class StukturPembiayaanComponent implements OnInit {
         dsr: analisaDsr,
         harga_permintaan: harga_permintaan,
         id: '',
-        max_angsuran: max_angsuran,
+        max_angsuran: valueMax_angsuran,
         max_dsr: maxDsr,
         nilai_pembiayaan: nilai_pembiayaan,
         persentase_pembiayaan_existing: persentace,
         skema: Skemanya[2],
         tenor: tenor,
-        total_angsuran: total_angsuran
+        total_angsuran: total_angsuran,
+        skema_code: Skemanya[0],
+        skema_master: Skemanya[1],
       })
       .subscribe({
         next: response => console.warn(response),
