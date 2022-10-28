@@ -387,7 +387,7 @@
 <div class="row">
   <div class="col" style="text-align: center">
     <button
-      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+      [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
       type="submit"
       (click)="simpanstruktur()"
       id="btn"

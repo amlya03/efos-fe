@@ -9,42 +9,56 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Pemohon</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nama" name="nama" value="{{this.dataEntry.nama}}"/>
+          <input type="text" readonly class="form-control" id="nama" name="nama" value="{{ this.dataEntry.nama }}" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">No Aplikasi</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="no_aplikasi" name="no_aplikasi" value="{{this.dataEntry.app_no_de}}"/>
+          <input type="text" readonly class="form-control" id="no_aplikasi" name="no_aplikasi" value="{{ this.dataEntry.app_no_de }}" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Fasilitas</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="fasilitas" name="fasilitas" value="{{this.dataEntry.kode_fasilitas_name}}"/>
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="fasilitas"
+            name="fasilitas"
+            value="{{ this.dataEntry.kode_fasilitas_name }}"
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Program</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="program" name="program" value="{{this.dataEntry.program_pembiayaan}}"/>
+          <input type="text" readonly class="form-control" id="program" name="program" value="{{ this.dataEntry.program_pembiayaan }}" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Down Payment</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="down_payment" name="down_payment" value="{{this.dataEntry.uang_muka | currency:'Rp '}}"/>
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="down_payment"
+            name="down_payment"
+            value="{{ this.dataEntry.uang_muka | currency: 'Rp ' }}"
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Joint Income</label>
         <div class="col-sm-8">
-          <input disabled type="checkbox" id="joint_income" name="joint_income" [checked]="this.dataEntry.joint_income == 1"/>
+          <input disabled type="checkbox" id="joint_income" name="joint_income" [checked]="this.dataEntry.joint_income == 1" />
         </div>
       </div>
     </div>
@@ -53,42 +67,63 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Product</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="product" name="product" value="{{this.dataEntry.produk_pembiayaan}}"/>
+          <input type="text" readonly class="form-control" id="product" name="product" value="{{ this.dataEntry.produk_pembiayaan }}" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Skema</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="skema" name="skema" value="{{this.dataEntry.skema_name}}"/>
+          <input type="text" readonly class="form-control" id="skema" name="skema" value="{{ this.dataEntry.skema_name }}" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tenor</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="tenor" name="tenor" value="{{this.dataEntry.jangka_waktu}} Bulan"/>
+          <input type="text" readonly class="form-control" id="tenor" name="tenor" value="{{ this.dataEntry.jangka_waktu }} Bulan" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nilai_pembiayaan" name="nilai_pembiayaan" value="{{this.dataEntry.nilai_pembiayaan | currency:'Rp '}}"/>
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="nilai_pembiayaan"
+            name="nilai_pembiayaan"
+            value="{{ this.dataEntry.nilai_pembiayaan | currency: 'Rp ' }}"
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Angsuran</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="angsuran" name="angsuran" value="{{this.dataEntry.angsuran | currency:'Rp '}}"/>
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="angsuran"
+            name="angsuran"
+            value="{{ this.dataEntry.angsuran | currency: 'Rp ' }}"
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Total Pendapatan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="total_pendapatan" name="total_pendapatan" value="{{this.fetchJob.total_pendapatan | currency:'Rp '}}"/>
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="total_pendapatan"
+            name="total_pendapatan"
+            value="{{ this.fetchJob.total_pendapatan | currency: 'Rp ' }}"
+          />
         </div>
       </div>
     </div>
@@ -103,21 +138,42 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Total Pendapatan Pemohon</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="total_pendapatan_pemohon" name="total_pendapatan_pemohon" value="{{this.analisaPembiayaan.total_penghasilan_bersih}}"/>
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="total_pendapatan_pemohon"
+            name="total_pendapatan_pemohon"
+            value="{{ this.analisaPembiayaan.total_penghasilan_bersih }}"
+          />
         </div>
       </div>
       <p></p>
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Total Pendapatan Pasangan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="total_pendapatan_pasangan" name="total_pendapatan_pasangan" value="{{this.analisaPembiayaan.total_penghasilan_bersih_pasangan}}"/>
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="total_pendapatan_pasangan"
+            name="total_pendapatan_pasangan"
+            value="{{ this.analisaPembiayaan.total_penghasilan_bersih_pasangan }}"
+          />
         </div>
       </div>
       <p></p>
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Total Pendapatan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="analisa_total_pendapatan" name="analisa_total_pendapatan" value="{{this.analisaPembiayaan.total_penghasilan_bersih_akumulasi}}"/>
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="analisa_total_pendapatan"
+            name="analisa_total_pendapatan"
+            value="{{ this.analisaPembiayaan.total_penghasilan_bersih_akumulasi }}"
+          />
         </div>
       </div>
       <p></p>
@@ -130,7 +186,7 @@
             class="form-control"
             id="analisa_kewajiban_bank_pemohon"
             name="analisa_kewajiban_bank_pemohon"
-            value="{{this.analisaPembiayaan.kewajiban_bank}}"
+            value="{{ this.analisaPembiayaan.kewajiban_bank }}"
           />
         </div>
       </div>
@@ -144,7 +200,7 @@
             class="form-control"
             id="total_kewajiban_bank_pemohon"
             name="total_kewajiban_bank_pemohon"
-            value="{{this.analisaPembiayaan.kewajiban_bank_pasangan}}"
+            value="{{ this.analisaPembiayaan.kewajiban_bank_pasangan }}"
           />
         </div>
       </div>
@@ -158,7 +214,7 @@
             class="form-control"
             id="total_kewajiban_bank_pemohon"
             name="total_kewajiban_bank_pemohon"
-            value="{{this.analisaPembiayaan.kewajiban_bank_total}}"
+            value="{{ this.analisaPembiayaan.kewajiban_bank_total }}"
             #total_kewajiban_bank_pemohon1
           />
         </div>
@@ -167,26 +223,14 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Total Outstanding</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            value="{{this.analisaPembiayaan.total_outstanding}}"
-            #total_outstanding1
-          />
+          <input type="text" readonly class="form-control" value="{{ this.analisaPembiayaan.total_outstanding }}" #total_outstanding1 />
         </div>
       </div>
       <p></p>
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Total Plafound</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            value="{{this.analisaPembiayaan.total_plafon}}"
-            #total_plafon1
-          />
+          <input type="text" readonly class="form-control" value="{{ this.analisaPembiayaan.total_plafon }}" #total_plafon1 />
         </div>
       </div>
       <p></p>
@@ -200,7 +244,7 @@
             id="persentase_penggunaan_fasilitas"
             name="persentase_penggunaan_fasilitas"
             #persentase_penggunaan_fasilitas1
-            value="{{((+total_outstanding1.value)/(+total_plafon1.value)) * 100 | currency:' '}}%"
+            value="{{ (+total_outstanding1.value / +total_plafon1.value) * 100 | currency: ' ' }}%"
           />
         </div>
       </div>
@@ -209,9 +253,17 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Skema</label>
         <div class="col-sm-8">
-          <select name="analisa_skema" id="analisa_skema" #analisa_skema class="form-control" (blur)="tenorSkema(analisa_skema.value, this.dataEntry.kode_fasilitas_name)">
-            <option value="{{this.strukturPembiayaan.skema}}">{{this.strukturPembiayaan.skema}}</option>
-            <option *ngFor="let Skema of Skema" value="{{Skema.skema}}|{{Skema.skema_master}}|{{Skema.skema_deskripsi}}">{{Skema.skema_deskripsi}}</option>
+          <select
+            name="analisa_skema"
+            id="analisa_skema"
+            #analisa_skema
+            class="form-control"
+            (blur)="tenorSkema(analisa_skema.value, this.dataEntry.kode_fasilitas_name)"
+          >
+            <option value="{{ this.strukturPembiayaan.skema }}">{{ this.strukturPembiayaan.skema }}</option>
+            <option *ngFor="let Skema of Skema" value="{{ Skema.skema }}|{{ Skema.skema_master }}|{{ Skema.skema_deskripsi }}">
+              {{ Skema.skema_deskripsi }}
+            </option>
           </select>
         </div>
       </div>
@@ -220,8 +272,8 @@
         <label class="col-sm-4 col-form-label">Tenor</label>
         <div class="col-sm-8">
           <select name="analisa_tenor" id="analisa_tenor" #analisa_tenor class="form-control">
-            <option value="{{this.strukturPembiayaan.tenor}}">{{this.strukturPembiayaan.tenor}} Bulan</option>
-            <option *ngFor="let tenor of tenor" value="{{tenor.tn_code}}">{{tenor.tn_code}} Bulan</option>
+            <option value="{{ this.strukturPembiayaan.tenor }}">{{ this.strukturPembiayaan.tenor }} Bulan</option>
+            <option *ngFor="let tenor of tenor" value="{{ tenor.tn_code }}">{{ tenor.tn_code }} Bulan</option>
           </select>
         </div>
       </div>
@@ -229,21 +281,41 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Harga Permintaan</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" [value]="this.strukturPembiayaan.harga_permintaan" #harga_permintaan1 (change)="hitungAngsuran(analisa_skema.value,harga_permintaan1.value,analisa_down_payment1.value)"/>
+          <input
+            type="text"
+            class="form-control"
+            [value]="this.strukturPembiayaan.harga_permintaan"
+            #harga_permintaan1
+            (change)="hitungAngsuran(analisa_skema.value, harga_permintaan1.value, analisa_down_payment1.value)"
+          />
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
         <div class="col-sm-8">
-          <input readonly type="text" class="form-control" id="analisa_nilai_pembiayaan" name="analisa_nilai_pembiayaan" #analisa_nilai_pembiayaan1 [value]="this.nilaiPembiayaan"/>
+          <input
+            readonly
+            type="text"
+            class="form-control"
+            id="analisa_nilai_pembiayaan"
+            name="analisa_nilai_pembiayaan"
+            #analisa_nilai_pembiayaan1
+            [value]="this.nilaiPembiayaan"
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Down Payment</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" [value]="this.strukturPembiayaan.down_payment" #analisa_down_payment1 (change)="hitungAngsuran(analisa_skema.value,harga_permintaan1.value,analisa_down_payment1.value)"/>
+          <input
+            type="text"
+            class="form-control"
+            [value]="this.strukturPembiayaan.down_payment"
+            #analisa_down_payment1
+            (change)="hitungAngsuran(analisa_skema.value, harga_permintaan1.value, analisa_down_payment1.value)"
+          />
           <label>Min 20%</label>
         </div>
       </div>
@@ -251,40 +323,72 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Angsuran</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="analisa_angsuran" name="analisa_angsuran" #analisa_angsuran1 [value]="this.angsuranPalingTinggi"/>
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="analisa_angsuran"
+            name="analisa_angsuran"
+            #analisa_angsuran1
+            [value]="this.angsuranPalingTinggi"
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Total Angsuran</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="total_angsuran" name="total_angsuran" #total_angsuran1 value="{{(+total_kewajiban_bank_pemohon1.value) + (+analisa_angsuran1.value)}}"/>
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="total_angsuran"
+            name="total_angsuran"
+            #total_angsuran1
+            value="{{ +total_kewajiban_bank_pemohon1.value + +analisa_angsuran1.value }}"
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Maximal DSR</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="maximal_dsr" name="maximal_dsr" #maximal_dsr1 value="{{this.analisaPembiayaan.dsr}} %"/>
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="maximal_dsr"
+            name="maximal_dsr"
+            #maximal_dsr1
+            value="{{ this.analisaPembiayaan.dsr }} %"
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Maximal Angsuran</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="maximal_angsuran" name="maximal_angsuran" #maximal_angsuran1 [value]="this.analisaMaxAngsuran  | currency:'Rp '"/>
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="maximal_angsuran"
+            name="maximal_angsuran"
+            #maximal_angsuran1
+            [value]="this.analisaMaxAngsuran | currency: 'Rp '"
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">DSR</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" #analisaDsr1 id="dsr" name="dsr" [value]="this.analisaDsr + ' %'"/>
+          <input type="text" readonly class="form-control" #analisaDsr1 id="dsr" name="dsr" [value]="this.analisaDsr + ' %'" />
         </div>
       </div>
     </div>
   </div>
-  <br/>
+  <br />
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
     <h3 style="color: #fff; text-align: center">Analisa Agunan</h3>
   </div>
@@ -295,28 +399,28 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Market</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nilai_market" name="nilai_market"  />
+          <input type="text" readonly class="form-control" id="nilai_market" name="nilai_market" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai IMB</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nilai_imb" name="nilai_imb"  />
+          <input type="text" readonly class="form-control" id="nilai_imb" name="nilai_imb" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Luas Tanah</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="luas_tanah" name="luas_tanah"  />
+          <input type="text" readonly class="form-control" id="luas_tanah" name="luas_tanah" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Luas Bangunan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="luas_bangunan" name="luas_bangunan"  />
+          <input type="text" readonly class="form-control" id="luas_bangunan" name="luas_bangunan" />
         </div>
       </div>
     </div>
@@ -325,28 +429,28 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Objek Pembiayaan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="objek_pembiayaan" name="objek_pembiayaan"  />
+          <input type="text" readonly class="form-control" id="objek_pembiayaan" name="objek_pembiayaan" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tipe Angunan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="tipe_agunan" name="tipe_agunan"  />
+          <input type="text" readonly class="form-control" id="tipe_agunan" name="tipe_agunan" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jenis Objek</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="jenis_objek" name="jenis_objek"  />
+          <input type="text" readonly class="form-control" id="jenis_objek" name="jenis_objek" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">FTV</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="ftv" name="ftv"  />
+          <input type="text" readonly class="form-control" id="ftv" name="ftv" />
           <label>70 %</label>
         </div>
       </div>
@@ -393,35 +497,28 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tenor</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="rekomendasi_tenor" name="rekomendasi_tenor"  />
+          <input type="text" readonly class="form-control" id="rekomendasi_tenor" name="rekomendasi_tenor" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Harga Perolehan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="harga_perolehan" name="harga_perolehan"  />
+          <input type="text" readonly class="form-control" id="harga_perolehan" name="harga_perolehan" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="rekomendasi_nilai_pembiayaan"
-            name="rekomendasi_nilai_pembiayaan"
-
-          />
+          <input type="text" readonly class="form-control" id="rekomendasi_nilai_pembiayaan" name="rekomendasi_nilai_pembiayaan" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Down Payment</label>
         <div class="col">
-          <input type="text" readonly class="form-control" id="rekomendasi_down_payment" name="rekomendasi_down_payment"  />
+          <input type="text" readonly class="form-control" id="rekomendasi_down_payment" name="rekomendasi_down_payment" />
         </div>
         <div class="col">
           <label>35 %</label>
@@ -431,9 +528,9 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Angsuran</label>
         <div class="col">
-          <input type="text" readonly class="form-control" id="angsuran_tahun_ke_1_2" name="angsuran_tahun_ke_1_2"  />
+          <input type="text" readonly class="form-control" id="angsuran_tahun_ke_1_2" name="angsuran_tahun_ke_1_2" />
           <p></p>
-          <input type="text" readonly class="form-control" id="angsuran_tahun_ke_3_5" name="angsuran_tahun_ke_3_5"  />
+          <input type="text" readonly class="form-control" id="angsuran_tahun_ke_3_5" name="angsuran_tahun_ke_3_5" />
         </div>
         <div class="col">
           <label>Tahun Ke 1 - 2</label>
@@ -446,9 +543,9 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Rate Margin</label>
         <div class="col">
-          <input type="text" readonly class="form-control" id="rate_margin_ke_1_2" name="rate_margin_ke_1_2"  />
+          <input type="text" readonly class="form-control" id="rate_margin_ke_1_2" name="rate_margin_ke_1_2" />
           <p></p>
-          <input type="text" readonly class="form-control" id="rate_margin_ke_3_5" name="rate_margin_ke_3_5"  />
+          <input type="text" readonly class="form-control" id="rate_margin_ke_3_5" name="rate_margin_ke_3_5" />
         </div>
         <div class="col">
           <label>Tahun Ke 1 - 2</label>
@@ -464,28 +561,28 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Harga Jual</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="harga_jual" name="harga_jual"  />
+          <input type="text" readonly class="form-control" id="harga_jual" name="harga_jual" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Margin</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="margin" name="margin"  />
+          <input type="text" readonly class="form-control" id="margin" name="margin" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Akad</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="akad" name="akad"  />
+          <input type="text" readonly class="form-control" id="akad" name="akad" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Hasil Scoring</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="hasil_scoring" name="hasil_scoring"  />
+          <input type="text" readonly class="form-control" id="hasil_scoring" name="hasil_scoring" />
         </div>
       </div>
     </div>
@@ -494,20 +591,29 @@
     <button
       type="submit"
       class="btn btn-info"
-      (click)="onSubmit(
-        analisa_angsuran1.value,
-        analisa_down_payment1.value,
-        analisaDsr1.value,
-        harga_permintaan1.value,
-        maximal_angsuran1.value,
-        maximal_dsr1.value,
-        analisa_nilai_pembiayaan1.value,
-        persentase_penggunaan_fasilitas1.value,
-        analisa_skema.value,
-        analisa_tenor.value,
-        total_angsuran1.value
-      )"
-    >Simpan Data</button>
-    <button type="submit" class="btn btn-primary" (click)="viewStruktur()">Proses Data</button>
+      [hidden]="this.untukSessionRole == 'VER_PRESCR'"
+      (click)="
+        onSubmit(
+          analisa_angsuran1.value,
+          analisa_down_payment1.value,
+          analisaDsr1.value,
+          harga_permintaan1.value,
+          maximal_angsuran1.value,
+          maximal_dsr1.value,
+          analisa_nilai_pembiayaan1.value,
+          persentase_penggunaan_fasilitas1.value,
+          analisa_skema.value,
+          analisa_tenor.value,
+
+          total_angsuran1.value
+        )
+      "
+    >
+      Simpan Data
+    </button>
+    <button type="submit" [hidden]="this.untukSessionRole == 'VER_PRESCR'" class="btn btn-primary" (click)="viewStruktur()">
+      Proses Data
+    </button>
+    <button type="submit" class="btn btn-primary" (click)="goto()">Selanjutnya</button>
   </div>
 </form>

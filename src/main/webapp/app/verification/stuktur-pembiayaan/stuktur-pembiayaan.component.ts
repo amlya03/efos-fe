@@ -27,7 +27,7 @@ export class StukturPembiayaanComponent implements OnInit {
   fetchJob: getJob = new getJob();
   strukturPembiayaan: refStrukturPembiayaan = new refStrukturPembiayaan();
   curef: any;
-  listagunan: listAgunan[] = []
+  listagunan: listAgunan[] = [];
 
   //nested
   nilaiPembiayaan: any;
@@ -43,6 +43,7 @@ export class StukturPembiayaanComponent implements OnInit {
 
   // session username
   sessionUsername: any;
+  untukSessionRole: any;
 
   constructor(
     public router: Router,
@@ -52,7 +53,7 @@ export class StukturPembiayaanComponent implements OnInit {
     protected dataEntryService: DataEntryService,
     protected verifikasiServices: ServiceVerificationService,
     private localStorageService: LocalStorageService,
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -65,6 +66,7 @@ export class StukturPembiayaanComponent implements OnInit {
 
   ngOnInit(): void {
     this.sessionUsername = this.localStorageService.retrieve('sessionUserName');
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     this.load();
 
     this.strukturForm = this.formBuilder.group({
@@ -107,17 +109,17 @@ export class StukturPembiayaanComponent implements OnInit {
         max_dsr: '',
         max_angsuran: '',
         dsr: '',
-        persentase_pembiayaan_existing: ''
-      }
+        persentase_pembiayaan_existing: '',
+      };
       this.strukturForm.setValue(retrivestrukturForm);
-    })
+    });
   }
 
   loadSkema(produknya: any) {
     // Ref Skema
     // alert('skema '+ produknya)
-    this.verifikasiServices.getSkema(produknya).subscribe(data =>{
-      if(data.code === 200){
+    this.verifikasiServices.getSkema(produknya).subscribe(data => {
+      if (data.code === 200) {
         this.Skema = data.result;
         // console.log(this.Skema)
       }
@@ -149,62 +151,62 @@ export class StukturPembiayaanComponent implements OnInit {
     const skemaidName = skema_id.split('|');
 
     this.http
-    .post<any>('http://10.20.34.110:8805/api/v1/efos-de/hitung_angsuran', {
-      app_no_de: this.dataEntry.app_no_de,
-      curef: this.dataEntry.curef,
-      dp: dp,
-      fasilitas: this.dataEntry.fasilitas_ke,
-      harga_objek: harga,
-      kode_fasilitas: this.dataEntry.kode_fasilitas,
-      kode_produk: this.dataEntry.produk,
-      skema_id: skemaidName[0],
-      skema_master: skemaidName[1],
-      tenor: this.dataEntry.jangka_waktu
-    })
-    .subscribe({
-      next: (data) => {
-        this.nilaiPembiayaan = data.result.nilai_pembiayaan;
-        console.log(data.result)
-        this.angsuranPalingTinggi = data.result.angsuran[data.result.angsuran.length - 1]
-        console.log(this.angsuranPalingTinggi)
-        }
-    });
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/hitung_angsuran', {
+        app_no_de: this.dataEntry.app_no_de,
+        curef: this.dataEntry.curef,
+        dp: dp,
+        fasilitas: this.dataEntry.fasilitas_ke,
+        harga_objek: harga,
+        kode_fasilitas: this.dataEntry.kode_fasilitas,
+        kode_produk: this.dataEntry.produk,
+        skema_id: skemaidName[0],
+        skema_master: skemaidName[1],
+        tenor: this.dataEntry.jangka_waktu,
+      })
+      .subscribe({
+        next: data => {
+          this.nilaiPembiayaan = data.result.nilai_pembiayaan;
+          console.log(data.result);
+          this.angsuranPalingTinggi = data.result.angsuran[data.result.angsuran.length - 1];
+          console.log(this.angsuranPalingTinggi);
+        },
+      });
 
     setTimeout(() => {
       this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/getHitungAnalisaPembiayaan', {
-        angsuran: this.angsuranPalingTinggi,
-        app_no_de: this.dataEntry.app_no_de
-      })
-      .subscribe({
-        next: (data) => {
-          this.analisaDsr = data.result.dsr;
-          this.analisaMaxAngsuran = data.result.max_angsuran;
-          console.log('analisa '+ data.result.max_angsuran)
-        }
-      });
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/getHitungAnalisaPembiayaan', {
+          angsuran: this.angsuranPalingTinggi,
+          app_no_de: this.dataEntry.app_no_de,
+        })
+        .subscribe({
+          next: data => {
+            this.analisaDsr = data.result.dsr;
+            this.analisaMaxAngsuran = data.result.max_angsuran;
+            console.log('analisa ' + data.result.max_angsuran);
+          },
+        });
     }, 300);
   }
 
   onSubmit(
     angsuran: any,
-    down_payment:any,
-    dsr:any,
-    harga_permintaan:any,
-    max_angsuran:any,
-    max_dsr:any,
-    nilai_pembiayaan:any,
-    persentase_pembiayaan_existing:any,
-    skema:any,
-    tenor:any,
-    total_angsuran:any
-  ){
+    down_payment: any,
+    dsr: any,
+    harga_permintaan: any,
+    max_angsuran: any,
+    max_dsr: any,
+    nilai_pembiayaan: any,
+    persentase_pembiayaan_existing: any,
+    skema: any,
+    tenor: any,
+    total_angsuran: any
+  ) {
     const Skemanya = skema.split('|');
     const analisaDsr = dsr.replace(' %', '');
     const maxDsr = max_dsr.replace(' %', '');
     const persentace = persentase_pembiayaan_existing.replace('%', '');
     // alert(Skemanya[2])
-    if(this.strukturPembiayaan == null){
+    if (this.strukturPembiayaan == null) {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_struktur_pembiayaan', {
           angsuran: angsuran,
@@ -221,40 +223,42 @@ export class StukturPembiayaanComponent implements OnInit {
           persentase_pembiayaan_existing: persentace,
           skema: Skemanya[2],
           tenor: tenor,
-          total_angsuran: total_angsuran
+          total_angsuran: total_angsuran,
+        })
+        .subscribe({
+          next: response => console.warn(response),
+          error: error => console.warn(error),
+        });
+    } else {
+      this.http
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_struktur_pembiayaan', {
+          angsuran: angsuran,
+          app_no_de: this.dataEntry.app_no_de,
+          updated_by: this.sessionUsername,
+          updated_date: '',
+          down_payment: down_payment,
+          dsr: analisaDsr,
+          harga_permintaan: harga_permintaan,
+          id: '',
+          max_angsuran: max_angsuran,
+          max_dsr: maxDsr,
+          nilai_pembiayaan: nilai_pembiayaan,
+          persentase_pembiayaan_existing: persentace,
+          skema: Skemanya[2],
+          tenor: tenor,
+          total_angsuran: total_angsuran,
         })
         .subscribe({
           next: response => console.warn(response),
           error: error => console.warn(error),
         });
     }
-     else {
-      this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_struktur_pembiayaan', {
-        angsuran: angsuran,
-        app_no_de: this.dataEntry.app_no_de,
-        updated_by: this.sessionUsername,
-        updated_date: '',
-        down_payment: down_payment,
-        dsr: analisaDsr,
-        harga_permintaan: harga_permintaan,
-        id: '',
-        max_angsuran: max_angsuran,
-        max_dsr: maxDsr,
-        nilai_pembiayaan: nilai_pembiayaan,
-        persentase_pembiayaan_existing: persentace,
-        skema: Skemanya[2],
-        tenor: tenor,
-        total_angsuran: total_angsuran
-      })
-      .subscribe({
-        next: response => console.warn(response),
-        error: error => console.warn(error),
-      });
-     }
   }
 
   viewStruktur() {
+    this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+  }
+  goto() {
     this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

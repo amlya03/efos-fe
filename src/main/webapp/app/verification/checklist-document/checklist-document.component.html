@@ -30,9 +30,9 @@
     </div>
   </div>
 </div>
-<br/>
-<br/>
-<br/>
+<br />
+<br />
+<br />
 <div class="row form-material">
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
     <h3 style="color: #fff; text-align: center">Checklist Document Data Entry</h3>
@@ -58,22 +58,32 @@
         <td style="text-align: center">
           <div class="row">
             <div class="col">
-              <input type="radio" name="validasiDE{{ i + 1 }}" id="validasiDE{{ i + 1 }}" value="1">
-              <br/><label>Sesuai</label>
+              <input
+                [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+                type="radio"
+                name="validasiDE{{ i + 1 }}"
+                id="validasiDE{{ i + 1 }}"
+                value="1"
+              />
+              <br /><label>Sesuai</label>
             </div>
             <div class="col">
-              <input type="radio" name="validasiDE{{ i + 1 }}" id="validasiDE{{ i + 1 }}" value="0">
-              <br/><label>Tidak Sesuai</label>
+              <input
+                [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+                type="radio"
+                name="validasiDE{{ i + 1 }}"
+                id="validasiDE{{ i + 1 }}"
+                value="0"
+              />
+              <br /><label>Tidak Sesuai</label>
             </div>
           </div>
         </td>
         <td style="text-align: center">
-          <input type="text" class="form-control" id="keteranganDE{{ i + 1 }}">
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="text" class="form-control" id="keteranganDE{{ i + 1 }}" />
         </td>
         <td style="text-align: center">
-          <a (click)="detailDataEntry(uploadDocument.nama_dokumen)">
-            <fa-icon icon="ellipsis"></fa-icon><br/>View Document
-          </a>
+          <a (click)="detailDataEntry(uploadDocument.nama_dokumen)"> <fa-icon icon="ellipsis"></fa-icon><br />View Document </a>
         </td>
       </tr>
     </tbody>
@@ -104,22 +114,32 @@
         <td style="text-align: center">
           <div class="row">
             <div class="col">
-              <input type="radio" name="validasiAgunan{{ i + 1 }}" id="validasiAgunan{{ i + 1 }}" value="1">
-              <br/><label>Sesuai</label>
+              <input
+                [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+                type="radio"
+                name="validasiAgunan{{ i + 1 }}"
+                id="validasiAgunan{{ i + 1 }}"
+                value="1"
+              />
+              <br /><label>Sesuai</label>
             </div>
             <div class="col">
-              <input type="radio" name="validasiAgunan{{ i + 1 }}" id="validasiAgunan{{ i + 1 }}" value="0">
-              <br/><label>Tidak Sesuai</label>
+              <input
+                [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+                type="radio"
+                name="validasiAgunan{{ i + 1 }}"
+                id="validasiAgunan{{ i + 1 }}"
+                value="0"
+              />
+              <br /><label>Tidak Sesuai</label>
             </div>
           </div>
         </td>
         <td style="text-align: center">
-          <input type="text" class="form-control" id="keteranganAgunan{{ i + 1 }}">
+          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="text" class="form-control" id="keteranganAgunan{{ i + 1 }}" />
         </td>
         <td style="text-align: center">
-          <a (click)="detailAgunan(uploadAgunan.nama_dokumen)">
-            <fa-icon icon="ellipsis"></fa-icon><br/>View Document
-          </a>
+          <a (click)="detailAgunan(uploadAgunan.nama_dokumen)"> <fa-icon icon="ellipsis"></fa-icon><br />View Document </a>
         </td>
       </tr>
     </tbody>
@@ -129,6 +149,7 @@
 <div class="row">
   <div class="col" style="text-align: center">
     <button [disabled]="this.untukSessionRole == 'VER_PRESCR'" (click)="postCeklis()" class="btn btn-info">Simpan Data</button>
-    <button class="btn btn-info" (click)="updateStatus()">Update Status</button>
+    <button class="btn btn-info" (click)="updateStatus()">Update Status</button>\
+    <button class="btn btn-info" (click)="goto()">selanjutnya</button>
   </div>
 </div>
