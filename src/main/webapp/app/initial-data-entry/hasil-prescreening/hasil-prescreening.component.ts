@@ -27,6 +27,8 @@ export class HasilPrescreeningComponent implements OnInit {
   contohdata: any;
   potongankakotanih: any;
   statusnikah: any;
+  datadukcapilusername: any;
+  datadukcapilpasangan: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -63,12 +65,12 @@ export class HasilPrescreeningComponent implements OnInit {
         // this.onResponseSuccess(res);
 
         const tglLahir = this.daWa.tanggal_lahir;
-
-        this.cekdukcapil(tglLahir);
+        const tglLahirpasangan = this.daWa.tanggal_lahir_pasangan;
+        this.cekdukcapil(tglLahir, tglLahirpasangan);
       },
     });
   }
-  cekdukcapil(tglLahir: any) {
+  cekdukcapil(tglLahir: any, tglLahirpasangan: any) {
     // let dateTime = new Date()
     let dateTime = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
     var str1 = new Date();
@@ -86,10 +88,12 @@ export class HasilPrescreeningComponent implements OnInit {
     var Datenih = new Date();
     var pipe = new DatePipe('en-US');
     var datee = tglLahir;
+    var dateepasangan = tglLahirpasangan;
 
     const str4 = new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta' });
     var timestamp = pipe.transform(Date.now(), 'yyyy-mm-dd HH:mm:ss');
     var tgllahirkirim = pipe.transform(datee, 'dd-MM-yyyy');
+    var tgllahirkirimpasangan = pipe.transform(dateepasangan, 'dd-MM-yyyy');
     var hasilmiripdongbanyak = pipe.transform(datee, 'yyyy:MM:dd ');
     var hasilmiripdong = pipe.transform(Date.now(), 'yyyy:mm:ddHH:mm:ss');
     //  var hasilmiripdong1 = hasilmiripdong?.replace(/|/g,'');
@@ -130,59 +134,181 @@ export class HasilPrescreeningComponent implements OnInit {
       this.statusnikah = 'BELUM KAWIN';
     }
 
-    this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify', {
-        no_id: this.datakirimanappide,
-        tanggal_lahir: this.datakirimanappide,
+    if (this.daWa.status_perkawinan === 'Menikah') {
+      this.http
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify', {
+          no_id: this.datakirimanappide,
+          tanggal_lahir: this.datakirimanappide,
 
-        reffNumber: hasilmiripdongfinal,
-        timestamp: timestamp,
-        channelID: 'EFOS',
-        NIK: this.daWa.no_ktp,
-        noKK: '',
-        namaLengkap: this.daWa.nama,
-        jenisKelamin: this.daWa.jenis_kelamin,
-        tempatLahir: '',
-        tglLahir: tgllahirkirim,
-        createdBy: '',
-        appNoIde: this.daWa.app_no_ide,
-        pendidikan: '',
-        pekerjaan: '',
-        statusPerkawinan: this.statusnikah,
-        namaIbuKandung: '',
-        statusHubKeluarga: '',
-        alamat: this.daWa.alamat_ktp,
-        kodePropinsi: '',
-        kodeKabupaten: '',
-        kodeKecamatan: '',
-        kodeKelurahan: '',
-        namaPropinsi: this.daWa.provinsi,
-        namaKabupaten: this.potongankakotanih,
-        namaKecamatan: this.daWa.kecamatan,
-        namaKelurahan: this.daWa.kelurahan,
-        noRW: this.daWa.rw,
-        noRT: this.daWa.rt,
-        // password_dukcapil: '3foWeb@pp',
-      })
-      .subscribe({
-        next: data => {
-          const codeverifducapilapi = data.code;
-          console.warn(codeverifducapilapi);
+          reffNumber: hasilmiripdongfinal,
+          timestamp: timestamp,
+          channelID: 'EFOS',
+          NIK: this.daWa.no_ktp,
+          noKK: '',
+          namaLengkap: this.daWa.nama,
+          jenisKelamin: this.daWa.jenis_kelamin,
+          tempatLahir: '',
+          tglLahir: tgllahirkirim,
+          createdBy: '',
+          appNoIde: this.daWa.app_no_ide,
+          pendidikan: '',
+          pekerjaan: '',
+          statusPerkawinan: this.statusnikah,
+          namaIbuKandung: '',
+          statusHubKeluarga: '',
+          alamat: this.daWa.alamat_ktp,
+          kodePropinsi: '',
+          kodeKabupaten: '',
+          kodeKecamatan: '',
+          kodeKelurahan: '',
+          namaPropinsi: this.daWa.provinsi,
+          namaKabupaten: this.potongankakotanih,
+          namaKecamatan: this.daWa.kecamatan,
+          namaKelurahan: this.daWa.kelurahan,
+          noRW: this.daWa.rw,
+          noRT: this.daWa.rt,
+          // password_dukcapil: '3foWeb@pp',
+        })
+        .subscribe({
+          next: data => {
+            const codeverifducapilapi = data.code;
+            console.warn(codeverifducapilapi);
 
-          if (codeverifducapilapi != 200) {
-            alert('gagal !200');
-          } else {
-            if (data.result.responseCode != '00') {
-              alert('ini gagal');
-              alert(data.result.responseDesc);
+            if (codeverifducapilapi != 200) {
+              alert('gagal !200');
             } else {
-              this.datadukcapil = data.result;
-              this.dataif = data.result.responseCode;
-              alert('berhasil ');
+              if (data.result.responseCode != '00') {
+                alert('ini gagal');
+                alert(data.result.responseDesc);
+                this.datadukcapil = null;
+                console.warn('dukcapil' + this.datadukcapil);
+                this.datadukcapilusername = null;
+              } else {
+                this.datadukcapil = data.result;
+                console.warn('dukcapil' + this.datadukcapil);
+                this.dataif = data.result.responseCode;
+                alert('berhasil ');
+              }
             }
-          }
-        },
-      });
+          },
+        });
+
+      this.http
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify', {
+          no_id: this.datakirimanappide,
+          tanggal_lahir: this.datakirimanappide,
+
+          reffNumber: hasilmiripdongfinal,
+          timestamp: timestamp,
+          channelID: 'EFOS',
+          NIK: this.daWa.no_ktp_pasangan,
+          noKK: '',
+          namaLengkap: this.daWa.nama_pasangan,
+          jenisKelamin: this.daWa.jenis_kelamin_pasangan,
+          tempatLahir: '',
+          tglLahir: tgllahirkirimpasangan,
+          createdBy: '',
+          appNoIde: this.daWa.app_no_ide,
+          pendidikan: '',
+          pekerjaan: '',
+          statusPerkawinan: this.statusnikah,
+          namaIbuKandung: '',
+          statusHubKeluarga: '',
+          alamat: this.daWa.alamat_ktp_pasangan,
+          kodePropinsi: '',
+          kodeKabupaten: '',
+          kodeKecamatan: '',
+          kodeKelurahan: '',
+          namaPropinsi: this.daWa.provinsi_pasangan,
+          namaKabupaten: this.daWa.kabkota_pasangan,
+          namaKecamatan: this.daWa.kecamatan_pasangan,
+          namaKelurahan: this.daWa.kelurahan_pasangan,
+          noRW: this.daWa.rw_pasangan,
+          noRT: this.daWa.rt_pasangan,
+          // password_dukcapil: '3foWeb@pp',
+        })
+        .subscribe({
+          next: data => {
+            const codeverifducapilapi = data.code;
+            console.warn(codeverifducapilapi);
+
+            if (codeverifducapilapi != 200) {
+              alert('gagal !200');
+            } else {
+              if (data.result.responseCode != '00') {
+                alert('ini gagal');
+                alert(data.result.responseDesc);
+                this.datadukcapilpasangan = null;
+                console.warn('dukcapil' + this.datadukcapilpasangan);
+                this.datadukcapilusername = null;
+              } else {
+                this.datadukcapilpasangan = data.result;
+                console.warn('dukcapil' + this.datadukcapilpasangan);
+                this.dataif = data.result.responseCode;
+                alert('berhasil ');
+              }
+            }
+          },
+        });
+    } else {
+      this.http
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify', {
+          no_id: this.datakirimanappide,
+          tanggal_lahir: this.datakirimanappide,
+
+          reffNumber: hasilmiripdongfinal,
+          timestamp: timestamp,
+          channelID: 'EFOS',
+          NIK: this.daWa.no_ktp,
+          noKK: '',
+          namaLengkap: this.daWa.nama,
+          jenisKelamin: this.daWa.jenis_kelamin,
+          tempatLahir: '',
+          tglLahir: tgllahirkirim,
+          createdBy: '',
+          appNoIde: this.daWa.app_no_ide,
+          pendidikan: '',
+          pekerjaan: '',
+          statusPerkawinan: this.statusnikah,
+          namaIbuKandung: '',
+          statusHubKeluarga: '',
+          alamat: this.daWa.alamat_ktp,
+          kodePropinsi: '',
+          kodeKabupaten: '',
+          kodeKecamatan: '',
+          kodeKelurahan: '',
+          namaPropinsi: this.daWa.provinsi,
+          namaKabupaten: this.potongankakotanih,
+          namaKecamatan: this.daWa.kecamatan,
+          namaKelurahan: this.daWa.kelurahan,
+          noRW: this.daWa.rw,
+          noRT: this.daWa.rt,
+          // password_dukcapil: '3foWeb@pp',
+        })
+        .subscribe({
+          next: data => {
+            const codeverifducapilapi = data.code;
+            console.warn(codeverifducapilapi);
+
+            if (codeverifducapilapi != 200) {
+              alert('gagal !200');
+            } else {
+              if (data.result.responseCode != '00') {
+                alert('ini gagal');
+                alert(data.result.responseDesc);
+                this.datadukcapil = null;
+                console.warn('dukcapil' + this.datadukcapil);
+                this.datadukcapilusername = null;
+              } else {
+                this.datadukcapil = data.result;
+                console.warn('dukcapil' + this.datadukcapil);
+                this.dataif = data.result.responseCode;
+                alert('berhasil ');
+              }
+            }
+          },
+        });
+    }
   }
 
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {

@@ -45,10 +45,15 @@ export class InitialDataEntryFixComponent implements OnInit {
   npwp: string | undefined;
   alamat_ktp: string | undefined;
   provinsi_cabang: any;
+  provinsi_cabang_pasangan: any;
   kabkota_cabang: any;
+  kabkota_cabang_pasangan: any;
   kecamatan: any;
+  kecamatan_pasangan: any;
   kelurahan: any;
+  kelurahan_pasangan: any;
   kode_pos: string | undefined;
+  kode_pos_pasangan: any;
   rt: string | undefined;
   rw: string | undefined;
   no_ktp: string | undefined;
@@ -56,6 +61,11 @@ export class InitialDataEntryFixComponent implements OnInit {
   tanggal_exp_ktp: string | undefined;
   no_handphone: string | undefined;
   contohdata: any;
+  daWakotap: any;
+  daWakecamatanp: any;
+  daWakelurahanp: any;
+  daWakodeposp: any;
+  daWaprofp: any;
 
   // ///////////////////////////////////////////
   constructor(
@@ -121,7 +131,21 @@ export class InitialDataEntryFixComponent implements OnInit {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     };
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvinsi/', {
+      headers: httpOptions,
+      params: options,
+      observe: 'response',
+    });
+    // alert('CONTOH' + token);
+  }
 
+  getdataentry1p(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    const httpOptions = {
+      // 'Authorization': token,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
     return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvinsi/', {
       headers: httpOptions,
       params: options,
@@ -131,6 +155,24 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   getkabkota(token: any, kodekota: any, req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    const httpOptions = {
+      // 'Authorization': token,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+    const kodepotongan = kodekota.split('|');
+
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKota/' + kodepotongan[0], {
+      headers: httpOptions,
+      params: options,
+      observe: 'response',
+    });
+    // alert('CONTOHkota');
+    // alert(kodepotongan[0]);
+  }
+
+  getkabkotap(token: any, kodekota: any, req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     const httpOptions = {
       // 'Authorization': token,
@@ -164,6 +206,22 @@ export class InitialDataEntryFixComponent implements OnInit {
     // alert('CONTOHkecamatan');
   }
 
+  getkecamatanp(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    const httpOptions = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+
+    const kodepotongan = kodekecamatan.split('|');
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKec/' + kodepotongan[0], {
+      headers: httpOptions,
+      params: options,
+      observe: 'response',
+    });
+    // alert('CONTOHkecamatan');
+  }
+
   getkodepos(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     const httpOptions = {
@@ -179,7 +237,37 @@ export class InitialDataEntryFixComponent implements OnInit {
     // alert('CONTOHkecamatan');
   }
 
+  getkodeposp(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    const httpOptions = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+    const kodepotongan = kodekecamatan.split('|');
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKdPos/' + kodepotongan[0], {
+      headers: httpOptions,
+      params: options,
+      observe: 'response',
+    });
+    // alert('CONTOHkecamatan');
+  }
+
   getkelurahan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    const httpOptions = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+    const kodepotongan = kodekecamatan.split('|');
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKel/' + kodepotongan[0], {
+      headers: httpOptions,
+      params: options,
+      observe: 'response',
+    });
+    // alert('CONTOHkecamatan');
+  }
+
+  getkelurahanp(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     const httpOptions = {
       'Content-Type': 'application/json',
@@ -409,6 +497,18 @@ export class InitialDataEntryFixComponent implements OnInit {
               console.warn('PROVINSI', res);
 
               this.daWaprof = res.body?.result;
+
+              // alert(this.postId);
+              // this.onResponseSuccess(res);
+            },
+          });
+
+          this.getdataentry1p(this.postId).subscribe({
+            next: (res: EntityArrayResponseDaWa) => {
+              console.warn('PROVINSI', res);
+
+              this.daWaprofp = res.body?.result;
+
               // alert(this.postId);
               // this.onResponseSuccess(res);
             },
@@ -547,6 +647,62 @@ export class InitialDataEntryFixComponent implements OnInit {
 
   onSubmit(event: any) {
     return event.target.nama.value;
+  }
+
+  onChangep(selectedStatus: any) {
+    // alert(this.postId);
+
+    this.getkabkotap(this.postId, selectedStatus).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kota', res);
+
+        this.daWakotap = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+
+    console.log(selectedStatus);
+  }
+
+  onChangekotap(selectedStatus: any) {
+    // alert(this.postId);
+    this.getkecamatanp(this.postId, selectedStatus).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kecamata', res);
+
+        this.daWakecamatanp = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+    console.log(selectedStatus);
+  }
+
+  onChangekecamatanp(selectedStatus: any) {
+    // alert(this.postId);
+    this.getkelurahanp(this.postId, selectedStatus).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kelurahan', res);
+
+        this.daWakelurahanp = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+    console.log(selectedStatus);
+  }
+
+  onChangekelurahanp(selectedStatus: any) {
+    // alert(this.postId);
+    const datakodepos = selectedStatus.split('|');
+
+    this.daWakodeposp = datakodepos[0];
+
+    // alert(this.daWakodepos);
+    // this.onResponseSuccess(res);
+
+    console.log(selectedStatus);
   }
 
   onChange(selectedStatus: any) {
