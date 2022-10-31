@@ -217,7 +217,9 @@ import { MemoVerificationComponent } from './verification/memo-verification/memo
         },
         {
           path: '',
-          loadChildren: () => import(`./entities/entity-routing.module`).then(m => m.EntityRoutingModule),
+          // loadChildren: () => import(`./entities/entity-routing.module`).then(m => m.EntityRoutingModule),
+          redirectTo: 'login',
+          pathMatch: 'full',
         },
         navbarRoute,
         ...errorRoute,

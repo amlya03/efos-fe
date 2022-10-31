@@ -59,6 +59,10 @@ export class AuthServerProvider {
       // /////kodebarang//////////
       this.localStorageService.clear('sessionKdCabang');
       this.sessionStorageService.clear('sessionKdCabang');
+      // //////Sudah Logout////////
+      this.localStorageService.clear('SudahLogin');
+      this.sessionStorageService.clear('SudahLogin');
+
       observer.complete();
     });
   }
@@ -82,10 +86,13 @@ export class AuthServerProvider {
     this.localStorageService.store('sessionFullName', sessionFullName);
     this.localStorageService.store('sessionKdCabang', sessionKdCabang);
     this.localStorageService.store('authenticationToken', jwt);
+    // Store Login
+    this.localStorageService.store('SudahLogin', 1);
     this.sessionStorageService.clear('sessionRole');
     this.sessionStorageService.clear('sessionUserName');
     this.sessionStorageService.clear('sessionFullName');
     this.sessionStorageService.clear('sessionKdCabang');
+    this.sessionStorageService.clear('SudahLogin');
     // } else {
     //   this.sessionStorageService.store('authenticationToken', jwt);
     //   this.localStorageService.clear('authenticationToken');

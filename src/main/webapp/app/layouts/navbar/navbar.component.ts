@@ -13,6 +13,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { EntityArrayResponseDaWa } from 'app/data-entry/personal-info/personal-info.component';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'jhi-navbar',
@@ -21,6 +22,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class NavbarComponent implements OnInit {
   // private loggedIn = new BehaviorSubject<boolean>(false); // {1}
+  sudahLogin = true;
   inProduction?: boolean;
   isNavbarCollapsed = true;
   languages = LANGUAGES;
@@ -109,7 +111,11 @@ export class NavbarComponent implements OnInit {
     this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
     this.untukSessionFullName = this.localStorageService.retrieve('sessionFullName');
     this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
-
+    this.sudahLogin = this.localStorageService.retrieve('SudahLogin');
+    // alert(this.sudahLogin)
+    if (this.sudahLogin == null) {
+      this.router.navigate(['/login']);
+    }
   }
 
   changeLanguage(languageKey: string): void {
@@ -123,15 +129,50 @@ export class NavbarComponent implements OnInit {
 
   login(): void {
     // this.router.navigate(['/login']);
-      // this.loggedIn.next(true);
-      this.router.navigate(['/login']);
+    // this.loggedIn.next(true);
+    this.router.navigate(['/login']);
   }
 
   logout(): void {
-    this.collapseNavbar();
-    this.loginService.logout();
-    this.router.navigate(['']);
+    // this.collapseNavbar();
+    // this.loginService.logout();
+    // // this.router.navigate(['']);
     // this.router.navigate(['/login']);
+    // window.location.reload()
+    // // this.router.navigate(['/login']);
+
+    Swal.fire({
+      title: 'Informasi Akun',
+      // text: " - lkdzflkxcbxbxcvbcvbcvsd",
+      // html: 'User Id : '+this.untukSessionUserName+' <p>test</p>',
+      html:
+        'User Id : ' +
+        this.untukSessionUserName +
+        ' <p>Nama : ' +
+        this.untukSessionFullName +
+        '</p><p>Saya adalah ' +
+        this.untukSessionRole +
+        '</p>',
+      imageUrl: '../../../content/images/bank-mega-syariah.png',
+      imageWidth: 100,
+      imageHeight: 70,
+      imageAlt: 'Eagle Image',
+      showCancelButton: true,
+      confirmButtonText: 'Logout',
+      cancelButtonText: 'Tidak',
+      confirmButtonColor: '#8567d3',
+      cancelButtonColor: '#999999',
+      reverseButtons: true,
+    }).then(result => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('Berhasil Logout!', '', 'warning').then((message: any) => {
+          this.loginService.logout();
+          this.router.navigate(['/login']);
+          window.location.reload();
+        });
+      }
+    });
   }
 
   toggleNavbar(): void {
