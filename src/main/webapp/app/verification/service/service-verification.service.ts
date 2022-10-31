@@ -54,7 +54,7 @@ export class ServiceVerificationService {
 
   // ////////////////////// Get Struktur Pembiayaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected getStrukturPembiayaan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaStrukturPembiayaan?sd='
+    'http://10.20.34.178:8805/api/v1/efos-verif/getAnalisaStrukturPembiayaan?sd='
   );
   // ////////////////////// Get Struktur Pembiayaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 

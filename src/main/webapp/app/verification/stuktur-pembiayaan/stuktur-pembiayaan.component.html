@@ -254,13 +254,11 @@
         <label class="col-sm-4 col-form-label">Skema</label>
         <div class="col-sm-8">
           <select
-            name="analisa_skema"
-            id="analisa_skema"
+            formControlName="skema"
             #analisa_skema
             class="form-control"
-            (blur)="tenorSkema(analisa_skema.value, this.dataEntry.kode_fasilitas_name)"
+            (change)="tenorSkema(analisa_skema.value, this.dataEntry.kode_fasilitas_name)"
           >
-            <option value="{{ this.strukturPembiayaan.skema }}">{{ this.strukturPembiayaan.skema }}</option>
             <option *ngFor="let Skema of Skema" value="{{ Skema.skema }}|{{ Skema.skema_master }}|{{ Skema.skema_deskripsi }}">
               {{ Skema.skema_deskripsi }}
             </option>
@@ -271,8 +269,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tenor</label>
         <div class="col-sm-8">
-          <select name="analisa_tenor" id="analisa_tenor" #analisa_tenor class="form-control">
-            <option value="{{ this.strukturPembiayaan.tenor }}">{{ this.strukturPembiayaan.tenor }} Bulan</option>
+          <select formControlName="tenor" id="analisa_tenor" #analisa_tenor class="form-control">
             <option *ngFor="let tenor of tenor" value="{{ tenor.tn_code }}">{{ tenor.tn_code }} Bulan</option>
           </select>
         </div>
@@ -284,7 +281,7 @@
           <input
             type="text"
             class="form-control"
-            [value]="this.strukturPembiayaan.harga_permintaan"
+            formControlName="harga_permintaan"
             #harga_permintaan1
             (change)="hitungAngsuran(analisa_skema.value, harga_permintaan1.value, analisa_down_payment1.value)"
           />
@@ -299,7 +296,7 @@
             type="text"
             class="form-control"
             id="analisa_nilai_pembiayaan"
-            name="analisa_nilai_pembiayaan"
+            formControlName="nilai_pembiayaan"
             #analisa_nilai_pembiayaan1
             [value]="this.nilaiPembiayaan"
           />
@@ -312,7 +309,7 @@
           <input
             type="text"
             class="form-control"
-            [value]="this.strukturPembiayaan.down_payment"
+            formControlName="down_payment"
             #analisa_down_payment1
             (change)="hitungAngsuran(analisa_skema.value, harga_permintaan1.value, analisa_down_payment1.value)"
           />
@@ -328,7 +325,7 @@
             readonly
             class="form-control"
             id="analisa_angsuran"
-            name="analisa_angsuran"
+            formControlName="angsuran"
             #analisa_angsuran1
             [value]="this.angsuranPalingTinggi"
           />
@@ -343,9 +340,9 @@
             readonly
             class="form-control"
             id="total_angsuran"
-            name="total_angsuran"
+            formControlName="total_angsuran"
             #total_angsuran1
-            value="{{ +total_kewajiban_bank_pemohon1.value + +analisa_angsuran1.value }}"
+            value="{{ +total_kewajiban_bank_pemohon1.value + +analisa_angsuran1.value | currency: 'Rp ' }}"
           />
         </div>
       </div>
@@ -373,7 +370,7 @@
             readonly
             class="form-control"
             id="maximal_angsuran"
-            name="maximal_angsuran"
+            formControlName="max_angsuran"
             #maximal_angsuran1
             [value]="this.analisaMaxAngsuran | currency: 'Rp '"
           />
@@ -383,7 +380,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">DSR</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" #analisaDsr1 id="dsr" name="dsr" [value]="this.analisaDsr + ' %'" />
+          <input type="text" readonly class="form-control" #analisaDsr1 id="dsr" formControlName="dsr" [value]="this.analisaDsr + ' %'" />
         </div>
       </div>
     </div>
@@ -429,30 +426,51 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Objek Pembiayaan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="objek_pembiayaan" name="objek_pembiayaan" />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="objek_pembiayaan"
+            name="objek_pembiayaan"
+            value="{{ this.listagunan[0].tipe_properti }}"
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tipe Angunan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="tipe_agunan" name="tipe_agunan" />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="tipe_agunan"
+            name="tipe_agunan"
+            value="{{ this.listagunan[0].tipe_agunan }}"
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jenis Objek</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="jenis_objek" name="jenis_objek" />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="jenis_objek"
+            name="jenis_objek"
+            value="{{ listagunan[0].jenis_objek_deskripsi }}"
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">FTV</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="ftv" name="ftv" />
-          <label>70 %</label>
+        <div class="col-sm-6">
+          <input type="text" readonly class="form-control" id="ftv" name="ftv" value="{{ this.dataEntry.uang_muka | currency: 'Rp ' }}" />
         </div>
+        <div class="col-sm-1">{{ this.betaFTV }} %</div>
       </div>
     </div>
   </div>
@@ -589,9 +607,9 @@
   </div>
   <div class="col" style="text-align: center">
     <button
+      [disabled]="this.dpKurang == 1"
       type="submit"
       class="btn btn-info"
-      [hidden]="this.untukSessionRole == 'VER_PRESCR'"
       (click)="
         onSubmit(
           analisa_angsuran1.value,
@@ -604,16 +622,12 @@
           persentase_penggunaan_fasilitas1.value,
           analisa_skema.value,
           analisa_tenor.value,
-
           total_angsuran1.value
         )
       "
     >
       Simpan Data
     </button>
-    <button type="submit" [hidden]="this.untukSessionRole == 'VER_PRESCR'" class="btn btn-primary" (click)="viewStruktur()">
-      Proses Data
-    </button>
-    <button type="submit" class="btn btn-primary" (click)="goto()">Selanjutnya</button>
+    <button [disabled]="this.dpKurang == 1" type="submit" class="btn btn-primary" (click)="viewStruktur()">Proses Data</button>
   </div>
 </form>
