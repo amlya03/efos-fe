@@ -30,6 +30,9 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   hapusUpload: any;
   popup: any;
 
+  // Progress bar
+  proggresBar: any;
+
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
@@ -92,9 +95,8 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     this.buttonUpload = (<HTMLInputElement>document.getElementById('uploadData' + id)).value;
     this.inputUpload = <HTMLInputElement>document.getElementById('inputDocument' + id);
     this.hapusUpload = (<HTMLInputElement>document.getElementById('hapusData' + id)).value;
-    // alert(this.buttonUpload == id)
-    // for (let i = 0; i < this.uploadDocument.length; i++) {}
-    // alert(this.inputUpload.name);
+
+    (<HTMLInputElement>document.getElementById('uploadData' + id)).style.display = 'block';
   }
 
   // Upload
@@ -106,7 +108,11 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
       //   this.loading = false; // Flag variable
       // }
     });
-    window.location.reload();
+    (<HTMLInputElement>document.getElementById('uploadData' + doc_type)).style.display = 'none';
+    (<HTMLInputElement>document.getElementById('proggresBar' + doc_type)).style.display = 'block';
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
 
     // this.loading = !this.loading;
     // alert(this.idUpload);
