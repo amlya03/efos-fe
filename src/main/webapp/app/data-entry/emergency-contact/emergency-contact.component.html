@@ -251,7 +251,7 @@
       name="simpandata"
       value="simpandata"
       class="btn btn-dark"
-      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+      [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
     >
       Simpan Data
     </button>

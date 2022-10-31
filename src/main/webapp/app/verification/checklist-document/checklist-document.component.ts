@@ -168,5 +168,8 @@ export class ChecklistDocumentComponent implements OnInit {
   updateStatus() {
     this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
+  goto() {
+    this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+  }
 }
 // update Status

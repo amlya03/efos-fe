@@ -16,7 +16,7 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { Subject } from 'rxjs';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { refAnalisaKeuangan } from './refAnalisaKeuangan.model';
-import { CurrencyMaskInputMode } from 'ngx-currency'
+import { CurrencyMaskInputMode } from 'ngx-currency';
 
 @Component({
   selector: 'jhi-data-rumah',
@@ -49,17 +49,16 @@ export class DataRumahComponent implements OnInit {
   totalOutstandingSlik: any;
 
   // Table Slik
-  totalOutNas:any;
-  totalPlaNas:any;
-  totalAngNas:any;
-  totalPasOut:any;
-  totalPasPla:any;
-  totalPasAng:any;
+  totalOutNas: any;
+  totalPlaNas: any;
+  totalAngNas: any;
+  totalPasOut: any;
+  totalPasPla: any;
+  totalPasAng: any;
 
   formatIdr: any;
 
-  optionsMoney = { prefix: 'Rp ', thousands: ',', decimal: '.', inputMode: CurrencyMaskInputMode.NATURAL }
-
+  optionsMoney = { prefix: 'Rp ', thousands: ',', decimal: '.', inputMode: CurrencyMaskInputMode.NATURAL };
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -98,7 +97,7 @@ export class DataRumahComponent implements OnInit {
     this.load();
     this.formatMoney();
     // alert(this.untukSessionRole);
-    this.formatIdr = new Intl.NumberFormat('id-ID', {style: 'currency',currency: 'IDR',});
+    this.formatIdr = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' });
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.analisaKeuanganForm = this.formBuilder.group({
@@ -177,13 +176,24 @@ export class DataRumahComponent implements OnInit {
     this.dataRumah.fetchSlik('app_20221017_667').subscribe(data => {
       this.slikTotal = data.result;
       // alert(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_angsuran_pasangan)))
-      this.totalOutNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_outstanding_nasabah));
-      this.totalPlaNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_plafon_nasabah));
-      this.totalAngNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_angsuran_nasabah));
-      this.totalPasOut = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_outstanding_pasangan));
-      this.totalPasPla = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_plafon_pasangan));
-      this.totalPasAng = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_angsuran_pasangan));
-
+      this.totalOutNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
+        Number(this.slikTotal.total_outstanding_nasabah)
+      );
+      this.totalPlaNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
+        Number(this.slikTotal.total_plafon_nasabah)
+      );
+      this.totalAngNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
+        Number(this.slikTotal.total_angsuran_nasabah)
+      );
+      this.totalPasOut = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
+        Number(this.slikTotal.total_outstanding_pasangan)
+      );
+      this.totalPasPla = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
+        Number(this.slikTotal.total_plafon_pasangan)
+      );
+      this.totalPasAng = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
+        Number(this.slikTotal.total_angsuran_pasangan)
+      );
 
       // List Slik
       this.listSlik = data.result.dataSlikResult;
@@ -492,7 +502,7 @@ export class DataRumahComponent implements OnInit {
   }
 
   // Selanjutnya
-  Next(){
+  Next() {
     this.onSubmit();
     // alert(coba)
     this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });

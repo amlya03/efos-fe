@@ -58,6 +58,7 @@ export class DataKantorComponent implements OnInit {
 
   // logic get Number
   tipe_pekerjaanGet: any;
+  verifikatorMelihat: any;
 
   constructor(
     protected dataKantor: ServiceVerificationService,
@@ -80,6 +81,7 @@ export class DataKantorComponent implements OnInit {
 
   ngOnInit(): void {
     this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.verifikatorMelihat = this.untukSessionRole == 'VER_PRESCR';
     this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
     // alert(this.untukSessionUserName)
     // this.postGetTokenDuckapil();
@@ -87,44 +89,44 @@ export class DataKantorComponent implements OnInit {
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.dataKantorForm = this.formBuilder.group({
-      tanggal_verifikasi: '', //['', Validators.required],
-      pemberi_keterangan: '', //['', Validators.required],
-      hubungan_pemberi_keterangan: '', //['', Validators.required],
-      verif_fax: '',
-      note_verif_fax: '',
-      verif_no_telepon: '',
-      note_verif_no_telepon: '',
-      verif_alamat_perusahaan: '',
-      note_verif_alamat_perusahaan: '',
-      verif_nama_perusahaan: '',
-      note_verif_nama_perusahaan: '',
-      verif_provinsi: '',
-      note_verif_provinsi: '',
-      verif_kabkota: '',
-      note_verif_kabkota: '',
-      verif_kecamatan: '',
-      note_verif_kecamatan: '',
-      verif_kelurahan: '',
-      note_verif_kelurahan: '',
-      verif_kode_pos: '',
-      note_verif_kode_pos: '',
-      verif_lama_bekerja: '',
-      note_verif_lama_bekerja: '',
-      verif_bidang_usaha: '',
-      note_verif_bidang_usaha: '',
-      verif_sektor_ekonomi: '',
-      note_verif_sektor_ekonomi: '',
-      verif_tipe_pekerjaan: '',
-      note_verif_tipe_pekerjaan: '',
-      verif_status_kepegawaian: '',
-      note_verif_status_kepegawaian: '',
-      verif_jabatan: '',
-      note_verif_jabatan: '',
-      verif_usia_pensiun: '',
-      note_verif_usia_pensiun: '',
-      divisi: '',
-      aspek_syariah: '',
-      waktu_verifikasi: '',
+      tanggal_verifikasi: [{ value: !null || null, disabled: this.verifikatorMelihat }], //['', Validators.required],
+      pemberi_keterangan: [{ value: !null || null, disabled: this.verifikatorMelihat }], //['', Validators.required],
+      hubungan_pemberi_keterangan: [{ value: !null || null, disabled: this.verifikatorMelihat }], //['', Validators.required],
+      verif_fax: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_fax: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      verif_no_telepon: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_no_telepon: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      verif_alamat_perusahaan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_alamat_perusahaan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      verif_nama_perusahaan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_nama_perusahaan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      verif_provinsi: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_provinsi: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      verif_kabkota: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_kabkota: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      verif_kecamatan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_kecamatan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      verif_kelurahan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_kelurahan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      verif_kode_pos: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_kode_pos: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      verif_lama_bekerja: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_lama_bekerja: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      verif_bidang_usaha: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_bidang_usaha: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      verif_sektor_ekonomi: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_sektor_ekonomi: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      verif_tipe_pekerjaan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_tipe_pekerjaan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      verif_status_kepegawaian: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_status_kepegawaian: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      verif_jabatan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_jabatan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      verif_usia_pensiun: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      note_verif_usia_pensiun: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      divisi: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      aspek_syariah: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      waktu_verifikasi: [{ value: !null || null, disabled: this.verifikatorMelihat }],
 
       // created_date: '',
       // updated_date: '',
@@ -221,13 +223,13 @@ export class DataKantorComponent implements OnInit {
           note_verif_alamat_perusahaan: this.dataKantorForm.get('note_verif_alamat_perusahaan')?.value,
           waktu_verifikasi: this.dataKantorForm.get('note_verif_alamat_perusahaan')?.value,
 
-  // "created_date": "2022-10-20T02:38:50.939Z",
-  // "note_verif_jenis_pekerjaan": "string",
-  // "note_verif_jumlah_karyawan": "string",
-  // "note_verif_tipe_perusahaan": "string",
-  // "updated_date": "2022-10-20T02:38:50.939Z",
-  // "verif_jenis_pekerjaan": "string",
-  // "verif_jumlah_karyawan": "string",
+          // "created_date": "2022-10-20T02:38:50.939Z",
+          // "note_verif_jenis_pekerjaan": "string",
+          // "note_verif_jumlah_karyawan": "string",
+          // "note_verif_tipe_perusahaan": "string",
+          // "updated_date": "2022-10-20T02:38:50.939Z",
+          // "verif_jenis_pekerjaan": "string",
+          // "verif_jumlah_karyawan": "string",
         })
         .subscribe({});
       this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });

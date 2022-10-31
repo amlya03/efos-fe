@@ -9,27 +9,14 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Nasabah</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            class="form-control"
-            id="nama"
-            name="nama"
-            readonly
-            [value]="this.dataEntry.nama"
-          />
+          <input type="text" class="form-control" id="nama" name="nama" readonly [value]="this.dataEntry.nama" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Perusahaan</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            class="form-control"
-            id="nama_perusahaan"
-            [value]="this.dataJob.nama_perusahaan"
-            readonly
-          />
+          <input type="text" class="form-control" id="nama_perusahaan" [value]="this.dataJob.nama_perusahaan" readonly />
         </div>
       </div>
       <br />
@@ -52,13 +39,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">No Telepon Perusahaan</label>
         <div class="col-sm-8">
-          <input
-            type="number"
-            class="form-control"
-            id="no_telepon_perusahaan"
-            name="no_telepon_perusahaan"
-            readonly
-          />
+          <input type="number" class="form-control" id="no_telepon_perusahaan" name="no_telepon_perusahaan" readonly />
           <!--
             placeholder=""
             [value]="this.dataJob.no_telepon" -->
@@ -173,9 +154,9 @@
         <td style="text-align: center">{{ listLajangSlik.jenis_kredit_pembiayaan_ket }}</td>
         <td style="text-align: center">{{ listLajangSlik.kualitas_ket }}</td>
         <td style="text-align: center">{{ listLajangSlik.jenis_penggunaan_ket }}</td>
-        <td style="text-align: center">{{ listLajangSlik.baki_debet?.toLocaleString("id-ID", {style:"currency", currency:"IDR"}) }}</td>
-        <td style="text-align: center">{{ listLajangSlik.plafon?.toLocaleString("id-ID", {style:"currency", currency:"IDR"}) }}</td>
-        <td style="text-align: center">{{ listLajangSlik.angsuran?.toLocaleString("id-ID", {style:"currency", currency:"IDR"}) }}</td>
+        <td style="text-align: center">{{ listLajangSlik.baki_debet?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
+        <td style="text-align: center">{{ listLajangSlik.plafon?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
+        <td style="text-align: center">{{ listLajangSlik.angsuran?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
         <td style="text-align: center">{{ listLajangSlik.tanggal_mulai }}</td>
         <td style="text-align: center">{{ listLajangSlik.tanggal_jatuh_tempo }}</td>
         <td style="text-align: center">{{ listLajangSlik.kondisi_ket }}</td>
@@ -184,7 +165,7 @@
     <tfoot>
       <tr>
         <th style="text-align: center" colspan="6">Total</th>
-        <th style="text-align: center">{{ (this.totalOutNas) }}</th>
+        <th style="text-align: center">{{ this.totalOutNas }}</th>
         <th style="text-align: center">{{ this.totalPlaNas }}</th>
         <th style="text-align: center">{{ this.totalAngNas }}</th>
       </tr>
@@ -231,9 +212,13 @@
           <td style="text-align: center">{{ listMenikahSlik.jenis_kredit_pembiayaan_ket }}</td>
           <td style="text-align: center">{{ listMenikahSlik.kualitas_ket }}</td>
           <td style="text-align: center">{{ listMenikahSlik.jenis_penggunaan_ket }}</td>
-          <td style="text-align: center">{{ listMenikahSlik.baki_debet?.toLocaleString("id-ID", {style:"currency", currency:"IDR"}) }}</td>
-          <td style="text-align: center">{{ listMenikahSlik.plafon?.toLocaleString("id-ID", {style:"currency", currency:"IDR"}) }}</td>
-          <td style="text-align: center">{{ listMenikahSlik.angsuran?.toLocaleString("id-ID", {style:"currency", currency:"IDR"}) }}</td>
+          <td style="text-align: center">
+            {{ listMenikahSlik.baki_debet?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}
+          </td>
+          <td style="text-align: center">{{ listMenikahSlik.plafon?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
+          <td style="text-align: center">
+            {{ listMenikahSlik.angsuran?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}
+          </td>
           <td style="text-align: center">{{ listMenikahSlik.tanggal_mulai }}</td>
           <td style="text-align: center">{{ listMenikahSlik.tanggal_jatuh_tempo }}</td>
           <td style="text-align: center">{{ listMenikahSlik.kondisi_ket }}</td>
@@ -257,7 +242,9 @@
   </div>
   <p></p>
   <div class="row form-material">
-    <div class="col" style="text-align: center"><input type="checkbox" disabled [checked]="this.dataEntry.joint_income == 1" /> Joint Income</div>
+    <div class="col" style="text-align: center">
+      <input type="checkbox" disabled [checked]="this.dataEntry.joint_income == 1" /> Joint Income
+    </div>
   </div>
   <p></p>
   <div [hidden]="this.dataEntry.kategori_pekerjaan == 'Non Fix Income'">
@@ -777,7 +764,7 @@
           id="kewajiban_bank_total"
           name="kewajiban_bank_total"
           (keypress)="keyPressNumbers($event)"
-          value="{{ this.formatIdr.format((+kewajiban_bank1.value) + (+kewajiban_bank_pasangan1.value))}}"
+          value="{{ this.formatIdr.format(+kewajiban_bank1.value + +kewajiban_bank_pasangan1.value) }}"
         /><!---| currency:'Rp ':'2'-->
       </div>
     </div>
@@ -855,7 +842,7 @@
             formControlName="total_penghasilan_bersih"
             (keypress)="keyPressNumbers($event)"
             #total_penghasilan_bersih1
-            value="{{ +total_penghasilan_kotor1.value - (+kewajiban_bank1.value - (+kewajiban_lainnya1.value)) }}"
+            value="{{ +total_penghasilan_kotor1.value - (+kewajiban_bank1.value - +kewajiban_lainnya1.value) }}"
           />
         </div>
       </div>
@@ -872,7 +859,7 @@
             formControlName="total_penghasilan_bersih_pasangan"
             (keypress)="keyPressNumbers($event)"
             #total_penghasilan_bersih_pasangan1
-            value="{{ (+total_penghasilan_kotor_pasangan1.value )- (+kewajiban_bank_pasangan1.value) - (+kewajiban_lainnya_pasangan1.value) }}"
+            value="{{ +total_penghasilan_kotor_pasangan1.value - +kewajiban_bank_pasangan1.value - +kewajiban_lainnya_pasangan1.value }}"
           />
         </div>
       </div>

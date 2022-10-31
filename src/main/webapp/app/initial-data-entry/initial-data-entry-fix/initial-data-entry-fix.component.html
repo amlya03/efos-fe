@@ -475,8 +475,17 @@
             <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
             <div class="col-sm-8">
               <div class="form-group">
-                <select class="form-control" id="provinsi_pasangan" name="provinsi_pasangan">
-                  <option value="">Pilih Provinsi</option>
+                <select
+                  (change)="onChangep(provinsi_cabang_pasangan)"
+                  class="form-control"
+                  [(ngModel)]="provinsi_cabang_pasangan"
+                  id="provinsi_pasangan"
+                  name="provinsi_pasangan"
+                >
+                  <option>Pilih Provinsi</option>
+                  <option *ngFor="let daWaprof of daWaprofp" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+                    {{ daWaprof.namaWilayah }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -486,8 +495,17 @@
             <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
             <div class="col-sm-8">
               <div class="form-group">
-                <select class="form-control" id="kabkota_pasangan" name="kabkota_pasangan">
+                <select
+                  (change)="onChangekotap(kabkota_cabang_pasangan)"
+                  class="form-control"
+                  [(ngModel)]="kabkota_cabang_pasangan"
+                  id="kabkota_pasangan"
+                  name="kabkota_pasangan"
+                >
                   <option value="">Pilih Kota</option>
+                  <option *ngFor="let daWakota of daWakotap" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
+                    {{ daWakota.namaWilayah }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -497,8 +515,20 @@
             <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
             <div class="col-sm-8">
               <div class="form-group">
-                <select class="form-control" id="kecamatan_pasangan" name="kecamatan_pasangan">
+                <select
+                  (change)="onChangekecamatanp(kecamatan_pasangan)"
+                  class="form-control"
+                  id="kecamatan_pasangan"
+                  [(ngModel)]="kecamatan_pasangan"
+                  name="kecamatan_pasangan"
+                >
                   <option value="">Pilih Kecamatan</option>
+                  <option
+                    *ngFor="let daWakecamatan of daWakecamatanp"
+                    value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}"
+                  >
+                    {{ daWakecamatan.namaWilayah }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -508,8 +538,17 @@
             <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
             <div class="col-sm-8">
               <div class="form-group">
-                <select class="form-control" id="kelurahan_pasangan" name="kelurahan_pasangan">
+                <select
+                  (change)="onChangekelurahanp(kelurahan_pasangan)"
+                  class="form-control"
+                  id="kelurahan_pasangan"
+                  [(ngModel)]="kelurahan_pasangan"
+                  name="kelurahan_pasangan"
+                >
                   <option value="">Pilih Kelurahan</option>
+                  <option *ngFor="let daWakelurahan of daWakelurahanp" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
+                    {{ daWakelurahan.namaWilayah }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -526,6 +565,8 @@
                   class="form-control"
                   id="kode_pos_pasangan"
                   name="kode_pos_pasangan"
+                  value="{{ daWakodeposp }}"
+                  [(ngModel)]="kode_pos_pasangan"
                 />
                 <div class="input-group-append">
                   <button class="btn btn-outline-dark" onclick="buatisipasangan()" type="button">Cari Data</button>

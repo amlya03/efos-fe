@@ -1,4 +1,4 @@
-export class refStrukturPembiayaan{
+export class refStrukturPembiayaan {
   id?: Number;
   app_no_de?: String;
   skema?: String;
@@ -17,5 +17,5 @@ export class refStrukturPembiayaan{
   created_date?: String;
   created_by?: String;
   updated_date?: String;
-  updated_by?: String
+  updated_by?: String;
 }

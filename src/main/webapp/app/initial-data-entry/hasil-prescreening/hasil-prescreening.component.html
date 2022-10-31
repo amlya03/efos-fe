@@ -21,32 +21,37 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil.namaLengkap.substring(0, 1) === 'T'; else untuknama">
+    <div *ngIf="datadukcapil === null || datadukcapil.namaLengkap.substring(0, 1) === 'T'; else untuknama">
       <i class="fa fa-window-close fa-lg" style="color: red"></i>
+      <div *ngIf="datadukcapil === null; else untuknamatidakktp">
+        <p>
+          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
+        </p>
+      </div>
+    </div>
+
+    <ng-template #untuknamatidakktp>
       <p>
         <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaLengkap }} </label>
       </p>
-    </div>
+    </ng-template>
 
     <ng-template #untuknama>
+      <!-- <div *ngIf="datadukcapilusername === ''; else untuknamatolak"> -->
       <i class="fa fa-window-close fa-lg" style="color: rgb(0, 204, 0)"></i>
       <p>
         <label for="check3" style="font-size: 100%; color: rgb(0, 255, 0)">{{ datadukcapil.namaLengkap }} </label>
       </p>
+      <!-- </div> -->
       <!-- <input type="checkbox" id="check3" checked="checked" disabled/><p><label for="check3" style="font-size:100%">{{ datadukcapil.namaLengkap }} </label></p> -->
     </ng-template>
 
-    <!-- <div *ngIf=" datadukcapil.nama.substring(0,1)=== 'T'; else loggedOut">
-      <i class="fa fa-window-close fa-lg" style="color: red;"></i><p><label for="check3" style="font-size:100%; color: red;">GAGAL</label></p>
-   </div>
-
-   <ng-template #loggedOut>
-    <i class="fa fa-window-close fa-lg" style="color: red;"></i><p><label for="check3" style="font-size:100%; color: red;">GAGAL</label></p>
-
-   </ng-template> -->
-
-    <!-- <h2>contoh</h2> -->
-    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
+    <ng-template #untuknamatolak>
+      <i class="fa fa-window-close fa-lg" style="color: red"></i>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaLengkap }} </label>
+      </p>
+    </ng-template>
   </div>
 </div>
 <br />
@@ -62,17 +67,25 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil.tglLahir.substring(0, 1) === 'T'; else untuknama">
+    <div *ngIf="datadukcapil === null || datadukcapil.tglLahir.substring(0, 1) === 'T'; else untuktglLahir">
       <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.tglLahir }} </label>
-      </p>
+      <div *ngIf="datadukcapil === null; else untuktglLahirtidakktp">
+        <p>
+          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+        </p>
+      </div>
     </div>
 
-    <ng-template #untuknama>
+    <ng-template #untuktglLahir>
       <input type="checkbox" id="check3" checked="checked" disabled />
       <p>
         <label for="check3" style="font-size: 100%">{{ datadukcapil.tglLahir }} </label>
+      </p>
+    </ng-template>
+
+    <ng-template #untuktglLahirtidakktp>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.tglLahir }} </label>
       </p>
     </ng-template>
 
@@ -92,17 +105,25 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil.statusPerkawinan.substring(0, 1) === 'T'; else untukstatuskawin">
+    <div *ngIf="datadukcapil === null || datadukcapil.statusPerkawinan.substring(0, 1) === 'T'; else untukstatuskawin">
       <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.statusPerkawinan }} </label>
-      </p>
+      <div *ngIf="datadukcapil === null; else untukstatuskawintidakktp">
+        <p>
+          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+        </p>
+      </div>
     </div>
 
     <ng-template #untukstatuskawin>
       <input type="checkbox" id="check3" checked="checked" disabled />
       <p>
         <label for="check3" style="font-size: 100%">{{ datadukcapil.statusPerkawinan }} </label>
+      </p>
+    </ng-template>
+
+    <ng-template #untukstatuskawintidakktp>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.statusPerkawinan }} </label>
       </p>
     </ng-template>
 
@@ -127,17 +148,25 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil.alamat.substring(0, 1) === 'T'; else untukalamat">
+    <div *ngIf="datadukcapil === null || datadukcapil.alamat.substring(0, 1) === 'T'; else untukalamat">
       <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.alamat }} </label>
-      </p>
+      <div *ngIf="datadukcapil === null; else untukalamattidakktp">
+        <p>
+          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
+        </p>
+      </div>
     </div>
 
     <ng-template #untukalamat>
       <input type="checkbox" id="check3" checked="checked" disabled />
       <p>
         <label for="check3" style="font-size: 100%">{{ datadukcapil.alamat }} </label>
+      </p>
+    </ng-template>
+
+    <ng-template #untukalamattidakktp>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.alamat }} </label>
       </p>
     </ng-template>
 
@@ -157,17 +186,26 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil.namaPropinsi.substring(0, 1) === 'T'; else untukprovinsi">
+    <div *ngIf="datadukcapil === null || datadukcapil.namaPropinsi.substring(0, 1) === 'T'; else untukprovinsi">
       <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaPropinsi }}</label>
-      </p>
+
+      <div *ngIf="datadukcapil === null; else untukprovinsitidakktp">
+        <p>
+          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+        </p>
+      </div>
     </div>
 
     <ng-template #untukprovinsi>
       <input type="checkbox" id="check3" checked="checked" disabled />
       <p>
         <label for="check3" style="font-size: 100%">{{ datadukcapil.namaPropinsi }} </label>
+      </p>
+    </ng-template>
+
+    <ng-template #untukprovinsitidakktp>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaPropinsi }}</label>
       </p>
     </ng-template>
     <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
@@ -186,17 +224,25 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil.namaKabupaten.substring(0, 1) === 'T'; else untukkota">
+    <div *ngIf="datadukcapil === null || datadukcapil.namaKabupaten.substring(0, 1) === 'T'; else untukkota">
       <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaKabupaten }} </label>
-      </p>
+      <div *ngIf="datadukcapil === null; else untukkotatidakktp">
+        <p>
+          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+        </p>
+      </div>
     </div>
 
     <ng-template #untukkota>
       <input type="checkbox" id="check3" checked="checked" disabled />
       <p>
         <label for="check3" style="font-size: 100%">{{ datadukcapil.namaKabupaten }} </label>
+      </p>
+    </ng-template>
+
+    <ng-template #untukkotatidakktp>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaKabupaten }} </label>
       </p>
     </ng-template>
 
@@ -216,17 +262,25 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil.namaKecamatan.substring(0, 1) === 'T'; else untukkecamatan">
+    <div *ngIf="datadukcapil === null || datadukcapil.namaKecamatan.substring(0, 1) === 'T'; else untukkecamatan">
       <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaKecamatan }} </label>
-      </p>
+      <div *ngIf="datadukcapil === null; else untukkecamatantidakktp">
+        <p>
+          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
+        </p>
+      </div>
     </div>
 
     <ng-template #untukkecamatan>
       <input type="checkbox" id="check3" checked="checked" disabled />
       <p>
         <label for="check3" style="font-size: 100%">{{ datadukcapil.namaKecamatan }} </label>
+      </p>
+    </ng-template>
+
+    <ng-template #untukkecamatantidakktp>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaKecamatan }} </label>
       </p>
     </ng-template>
 
@@ -246,17 +300,25 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil.namaKelurahan.substring(0, 1) === 'T'; else untukkelurahan">
+    <div *ngIf="datadukcapil === null || datadukcapil.namaKelurahan.substring(0, 1) === 'T'; else untukkelurahan">
       <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaKelurahan }}</label>
-      </p>
+      <div *ngIf="datadukcapil === null; else untukkelurahantidakktp">
+        <p>
+          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+        </p>
+      </div>
     </div>
 
     <ng-template #untukkelurahan>
       <input type="checkbox" id="check3" checked="checked" disabled />
       <p>
         <label for="check3" style="font-size: 100%">{{ datadukcapil.namaKelurahan }} </label>
+      </p>
+    </ng-template>
+
+    <ng-template #untukkelurahantidakktp>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaKelurahan }}</label>
       </p>
     </ng-template>
 
@@ -281,11 +343,14 @@
   <div class="col" style="text-align: center">
     <div class="row">
       <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapil.noRT.substring(0, 1) === 'T'; else untukrt">
+        <div *ngIf="datadukcapil === null || datadukcapil.noRT.substring(0, 1) === 'T'; else untukrt">
           <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.noRT }}</label>
-          </p>
+
+          <div *ngIf="datadukcapil === null; else untukrttidakktp">
+            <p>
+              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+            </p>
+          </div>
         </div>
 
         <ng-template #untukrt>
@@ -295,20 +360,34 @@
           </p>
         </ng-template>
 
+        <ng-template #untukrttidakktp>
+          <p>
+            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.noRT }}</label>
+          </p>
+        </ng-template>
+
         <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
       </div>
       <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapil.noRW.substring(0, 1) === 'T'; else untukrw">
+        <div *ngIf="datadukcapil === null || datadukcapil.noRW.substring(0, 1) === 'T'; else untukrw">
           <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.noRW }}</label>
-          </p>
+          <div *ngIf="datadukcapil === null; else untukrwtidakktp">
+            <p>
+              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+            </p>
+          </div>
         </div>
 
         <ng-template #untukrw>
           <input type="checkbox" id="check3" checked="checked" disabled />
           <p>
             <label for="check3" style="font-size: 100%">{{ datadukcapil.noRW }} </label>
+          </p>
+        </ng-template>
+
+        <ng-template #untukrwtidakktp>
+          <p>
+            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.noRW }}</label>
           </p>
         </ng-template>
 
@@ -330,11 +409,13 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil.jenisKelamin.substring(0, 1) === 'T'; else jenisKelamin">
+    <div *ngIf="datadukcapil === null || datadukcapil.jenisKelamin.substring(0, 1) === 'T'; else jenisKelamin">
       <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.jenisKelamin }}</label>
-      </p>
+      <div *ngIf="datadukcapil === null; else jenisKelamintidakktp">
+        <p>
+          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+        </p>
+      </div>
     </div>
 
     <ng-template #jenisKelamin>
@@ -344,12 +425,18 @@
       </p>
     </ng-template>
 
+    <ng-template #jenisKelamintidakktp>
+      <p>
+        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.jenisKelamin }}</label>
+      </p>
+    </ng-template>
+
     <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
 
 <div [ngSwitch]="'{{ daWa.status_perkawinan }}'">
-  <div *ngSwitchCase="'Kawin'">
+  <div *ngSwitchCase="'Menikah'">
     <br />
     <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
       <h3 style="color: #fff; text-align: center">Hasil Pengecekan E-KTP Pasangan</h3>
@@ -374,7 +461,30 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.namaLengkap.substring(0, 1) === 'T'; else untuknama">
+          <i class="fa fa-window-close fa-lg" style="color: red"></i>
+          <div *ngIf="datadukcapilpasangan === null; else untuknamatidakktp">
+            <p>
+              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
+            </p>
+          </div>
+        </div>
+
+        <ng-template #untuknamatidakktp>
+          <p>
+            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.namaLengkap }} </label>
+          </p>
+        </ng-template>
+
+        <ng-template #untuknama>
+          <!-- <div *ngIf="datadukcapilusername === ''; else untuknamatolak"> -->
+          <i class="fa fa-window-close fa-lg" style="color: rgb(0, 204, 0)"></i>
+          <p>
+            <label for="check3" style="font-size: 100%; color: rgb(0, 255, 0)">{{ datadukcapil.namaLengkap }} </label>
+          </p>
+          <!-- </div> -->
+          <!-- <input type="checkbox" id="check3" checked="checked" disabled/><p><label for="check3" style="font-size:100%">{{ datadukcapil.namaLengkap }} </label></p> -->
+        </ng-template>
       </div>
     </div>
     <br />
@@ -388,7 +498,27 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.tglLahir.substring(0, 1) === 'T'; else untuktglLahir">
+          <i class="fa fa-window-close fa-lg" style="color: red"></i>
+          <div *ngIf="datadukcapilpasangan === null; else untuktglLahirtidakktp">
+            <p>
+              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+            </p>
+          </div>
+        </div>
+
+        <ng-template #untuktglLahir>
+          <input type="checkbox" id="check3" checked="checked" disabled />
+          <p>
+            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.tglLahir }} </label>
+          </p>
+        </ng-template>
+
+        <ng-template #untuktglLahirtidakktp>
+          <p>
+            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.tglLahir }} </label>
+          </p>
+        </ng-template>
       </div>
     </div>
     <br />
@@ -404,7 +534,27 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.statusPerkawinan.substring(0, 1) === 'T'; else untukstatuskawin">
+          <i class="fa fa-window-close fa-lg" style="color: red"></i>
+          <div *ngIf="datadukcapilpasangan === null; else untukstatuskawintidakktp">
+            <p>
+              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+            </p>
+          </div>
+        </div>
+
+        <ng-template #untukstatuskawin>
+          <input type="checkbox" id="check3" checked="checked" disabled />
+          <p>
+            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.statusPerkawinan }} </label>
+          </p>
+        </ng-template>
+
+        <ng-template #untukstatuskawintidakktp>
+          <p>
+            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.statusPerkawinan }} </label>
+          </p>
+        </ng-template>
       </div>
     </div>
     <br />
@@ -418,7 +568,27 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.alamat.substring(0, 1) === 'T'; else untukalamat">
+          <i class="fa fa-window-close fa-lg" style="color: red"></i>
+          <div *ngIf="datadukcapilpasangan === null; else untukalamattidakktp">
+            <p>
+              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
+            </p>
+          </div>
+        </div>
+
+        <ng-template #untukalamat>
+          <input type="checkbox" id="check3" checked="checked" disabled />
+          <p>
+            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.alamat }} </label>
+          </p>
+        </ng-template>
+
+        <ng-template #untukalamattidakktp>
+          <p>
+            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.alamat }} </label>
+          </p>
+        </ng-template>
       </div>
     </div>
     <br />
@@ -434,7 +604,28 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.namaPropinsi.substring(0, 1) === 'T'; else untukprovinsi">
+          <i class="fa fa-window-close fa-lg" style="color: red"></i>
+
+          <div *ngIf="datadukcapilpasangan === null; else untukprovinsitidakktp">
+            <p>
+              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+            </p>
+          </div>
+        </div>
+
+        <ng-template #untukprovinsi>
+          <input type="checkbox" id="check3" checked="checked" disabled />
+          <p>
+            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.namaPropinsi }} </label>
+          </p>
+        </ng-template>
+
+        <ng-template #untukprovinsitidakktp>
+          <p>
+            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.namaPropinsi }}</label>
+          </p>
+        </ng-template>
       </div>
     </div>
     <br />
@@ -450,7 +641,27 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.namaKabupaten.substring(0, 1) === 'T'; else untukkota">
+          <i class="fa fa-window-close fa-lg" style="color: red"></i>
+          <div *ngIf="datadukcapilpasangan === null; else untukkotatidakktp">
+            <p>
+              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+            </p>
+          </div>
+        </div>
+
+        <ng-template #untukkota>
+          <input type="checkbox" id="check3" checked="checked" disabled />
+          <p>
+            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.namaKabupaten }} </label>
+          </p>
+        </ng-template>
+
+        <ng-template #untukkotatidakktp>
+          <p>
+            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.namaKabupaten }} </label>
+          </p>
+        </ng-template>
       </div>
     </div>
     <br />
@@ -466,7 +677,27 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.namaKecamatan.substring(0, 1) === 'T'; else untukkecamatan">
+          <i class="fa fa-window-close fa-lg" style="color: red"></i>
+          <div *ngIf="datadukcapilpasangan === null; else untukkecamatantidakktp">
+            <p>
+              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
+            </p>
+          </div>
+        </div>
+
+        <ng-template #untukkecamatan>
+          <input type="checkbox" id="check3" checked="checked" disabled />
+          <p>
+            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.namaKecamatan }} </label>
+          </p>
+        </ng-template>
+
+        <ng-template #untukkecamatantidakktp>
+          <p>
+            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.namaKecamatan }} </label>
+          </p>
+        </ng-template>
       </div>
     </div>
     <br />
@@ -482,7 +713,27 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.namaKelurahan.substring(0, 1) === 'T'; else untukkelurahan">
+          <i class="fa fa-window-close fa-lg" style="color: red"></i>
+          <div *ngIf="datadukcapilpasangan === null; else untukkelurahantidakktp">
+            <p>
+              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+            </p>
+          </div>
+        </div>
+
+        <ng-template #untukkelurahan>
+          <input type="checkbox" id="check3" checked="checked" disabled />
+          <p>
+            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.namaKelurahan }} </label>
+          </p>
+        </ng-template>
+
+        <ng-template #untukkelurahantidakktp>
+          <p>
+            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.namaKelurahan }}</label>
+          </p>
+        </ng-template>
       </div>
     </div>
     <br />
@@ -503,10 +754,51 @@
       <div class="col">
         <div class="row">
           <div class="col" style="text-align: center">
-            <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+            <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.noRT.substring(0, 1) === 'T'; else untukrt">
+              <i class="fa fa-window-close fa-lg" style="color: red"></i>
+
+              <div *ngIf="datadukcapilpasangan === null; else untukrttidakktp">
+                <p>
+                  <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+                </p>
+              </div>
+            </div>
+
+            <ng-template #untukrt>
+              <input type="checkbox" id="check3" checked="checked" disabled />
+              <p>
+                <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.noRT }} </label>
+              </p>
+            </ng-template>
+
+            <ng-template #untukrttidakktp>
+              <p>
+                <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.noRT }}</label>
+              </p>
+            </ng-template>
           </div>
           <div class="col" style="text-align: center">
-            <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+            <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.noRW.substring(0, 1) === 'T'; else untukrw">
+              <i class="fa fa-window-close fa-lg" style="color: red"></i>
+              <div *ngIf="datadukcapilpasangan === null; else untukrwtidakktp">
+                <p>
+                  <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+                </p>
+              </div>
+            </div>
+
+            <ng-template #untukrw>
+              <input type="checkbox" id="check3" checked="checked" disabled />
+              <p>
+                <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.noRW }} </label>
+              </p>
+            </ng-template>
+
+            <ng-template #untukrwtidakktp>
+              <p>
+                <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.noRW }}</label>
+              </p>
+            </ng-template>
           </div>
         </div>
       </div>
@@ -524,7 +816,27 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label>
+        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.jenisKelamin.substring(0, 1) === 'T'; else jenisKelamin">
+          <i class="fa fa-window-close fa-lg" style="color: red"></i>
+          <div *ngIf="datadukcapilpasangan === null; else jenisKelamintidakktp">
+            <p>
+              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
+            </p>
+          </div>
+        </div>
+
+        <ng-template #jenisKelamin>
+          <input type="checkbox" id="check3" checked="checked" disabled />
+          <p>
+            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.jenisKelamin }} </label>
+          </p>
+        </ng-template>
+
+        <ng-template #jenisKelamintidakktp>
+          <p>
+            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.jenisKelamin }}</label>
+          </p>
+        </ng-template>
       </div>
     </div>
   </div>
