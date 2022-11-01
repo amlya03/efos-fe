@@ -29,6 +29,9 @@ export class HasilPrescreeningComponent implements OnInit {
   statusnikah: any;
   datadukcapilusername: any;
   datadukcapilpasangan: any;
+  dawastatuspernikaham: any;
+  dataslik: any;
+  dataslikp: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -49,6 +52,7 @@ export class HasilPrescreeningComponent implements OnInit {
 
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getCustomerByAppId?sc=');
   protected getdhn = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/cekDhn');
+  protected apigetslit = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/fetchDataSlik?sd=');
 
   ngOnInit(): void {
     this.load();
@@ -61,7 +65,9 @@ export class HasilPrescreeningComponent implements OnInit {
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('tabel', res);
         this.daWa = res.body?.result.customer;
+        this.dawastatuspernikaham=res.body?.result.customer.status_perkawinan;
         console.warn('customer', res.body?.result.customer);
+        alert( this.dawastatuspernikaham);
         // this.onResponseSuccess(res);
 
         const tglLahir = this.daWa.tanggal_lahir;
@@ -69,7 +75,37 @@ export class HasilPrescreeningComponent implements OnInit {
         this.cekdukcapil(tglLahir, tglLahirpasangan);
       },
     });
+
+    this.getdataslik().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+ this.dataslik = res.body?.result.dataSlikResult;
+        console.warn('sliknih', this.dataslik);
+        console.warn('sliknih',res);
+      },
+    });
+
+    this.getdataslikp().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+ this.dataslikp = res.body?.result.dataSlikResult;
+        console.warn('sliknih', this.dataslik);
+        console.warn('sliknih',res);
+      },
+    });
+
+
   }
+
+  getdataslik(req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    return this.http.get<ApiResponse>(this.apigetslit + 'app_20221017_667', { params: options, observe: 'response' });
+  }
+
+  getdataslikp(req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    return this.http.get<ApiResponse>(this.apigetslit + 'app_20221017_667', { params: options, observe: 'response' });
+  }
+
+
   cekdukcapil(tglLahir: any, tglLahirpasangan: any) {
     // let dateTime = new Date()
     let dateTime = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
@@ -202,7 +238,7 @@ export class HasilPrescreeningComponent implements OnInit {
           timestamp: timestamp,
           channelID: 'EFOS',
           NIK: this.daWa.no_ktp_pasangan,
-          noKK: '',
+          noKK: 'pasangapunya',
           namaLengkap: this.daWa.nama_pasangan,
           jenisKelamin: this.daWa.jenis_kelamin_pasangan,
           tempatLahir: '',
