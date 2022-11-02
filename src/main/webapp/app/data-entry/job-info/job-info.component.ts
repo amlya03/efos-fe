@@ -75,6 +75,14 @@ export class JobInfoComponent implements OnInit {
   tunjangan!: number;
   formattedAmount: any;
   amount: any;
+  retriveprovinsi: any;
+  retrivekabkota: any;
+  retrivekecamatan: any;
+  retrivekelurahan: any;
+  retriveprovinsisebelum: any;
+  retrivekabkotasebelum: any;
+  retrivekecamatansebelum: any;
+  retrivekelurahansebelum: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -183,11 +191,12 @@ export class JobInfoComponent implements OnInit {
       next: (res: EntityArrayResponseDaWa1) => {
         // console.log(res.body?.result);
         console.warn('sebelum', res.body?.result);
-        console.warn('tampunganid', this.tampunganid);
+
 
         // if (res.body?.result == null) {
         this.nampungsebelum = res.body?.result;
         this.tampunganid = this.nampungsebelum[0];
+        console.warn('tampunganid', this.tampunganid);
         // } else {
 
         //   this.tampunganid = this.nampungsebelum[0];
@@ -205,8 +214,9 @@ export class JobInfoComponent implements OnInit {
         //   // this.onResponseSuccess(res);
         // }
 
-        if (this.tampunganid == null) {
+        if (this.tampunganid == null || this.tampunganid == undefined) {
           this.dataretrivejobsebelumMap = res.body?.result;
+          alert('inijalan');
           let retrivejobsebelum = {
             kategori_pekerjaan_sebelum: '',
             tipe_pekerjaan_sebelum: '',
@@ -233,20 +243,20 @@ export class JobInfoComponent implements OnInit {
             tipe_kepegawaian_sebelum: '',
           };
           this.datajobsebelum.setValue(retrivejobsebelum);
-          this.dataretriveprovinsisebelum = this.tampunganid.provinsi_sebelum;
-          this.dataretrivekabkotasebelum = this.tampunganid.kabkota_sebelum;
-          this.dataretrivekecamatansebelum = this.tampunganid.kecamatan_sebelum;
-          this.dataretrivekelurahansebelum = this.tampunganid.kelurahan_sebelum;
-          this.dataretrivetipepegawaiansebelum = this.tampunganid.tipe_kepegawaian_sebelum;
-          this.dataretrivetikategoripekerjaansebelum = this.tampunganid.kategori_pekerjaan_sebelum;
-          this.dataretrivetipepekerjaansebelum = this.tampunganid.tipe_pekerjaan_sebelum;
-          this.dataretrivejenisbidangsebelum = this.tampunganid.jenis_bidang_sebelum;
-          this.dataretrivesektorekosebelum = this.tampunganid.sektor_ekonomi_sebelum;
+          this.dataretriveprovinsisebelum ='pilih provinsi';
+          this.dataretrivekabkotasebelum = 'pilih kota';
+          this.dataretrivekecamatansebelum ='pilih kecamatan';
+          this.dataretrivekelurahansebelum = 'pilih kelurahan';
+          this.dataretrivetipepegawaiansebelum = 'pilih tipe kepegawaian';
+          this.dataretrivetikategoripekerjaansebelum = 'pilih kategori pekerjaan';
+          this.dataretrivetipepekerjaansebelum = 'pilih tipe pekerjaan';
+          this.dataretrivejenisbidangsebelum = 'pilih jenis bidang ';
+          this.dataretrivesektorekosebelum ='pilih jenis sektor';
         } else {
           this.dataretrivejobsebelumMap = res.body?.result;
           let retrivejobsebelum = {
             kategori_pekerjaan_sebelum: this.tampunganid.kategori_pekerjaan_sebelum,
-            tipe_pekerjaan_sebelum: this.tampunganid.tipe_pekerjaan_sebelum,
+            tipe_pekerjaan_sebelum: '',
             // pay_roll: '',
             posisi_sebelum: this.tampunganid.posisi_sebelum,
             nama_perusahaan_sebelum: this.tampunganid.nama_perusahaan_sebelum,
@@ -254,14 +264,14 @@ export class JobInfoComponent implements OnInit {
             curef: this.tampunganid.curef,
             alamat_pekerjaan_sebelum: this.tampunganid.alamat_pekerjaan_sebelum,
             provinsi_sebelum: this.tampunganid.provinsi_sebelum,
-            kabkota_sebelum: this.tampunganid.kabkota_sebelum,
-            kecamatan_sebelum: this.tampunganid.kecamatan_sebelum,
-            kelurahan_sebelum: this.tampunganid.kelurahan_sebelum,
+            kabkota_sebelum: '',
+            kecamatan_sebelum: '',
+            kelurahan_sebelum: '',
             kode_pos_sebelum: this.tampunganid.kode_pos_sebelum,
             rt_sebelum: this.tampunganid.rt_sebelum,
             rw_sebelum: this.tampunganid.rw_sebelum,
             jenis_bidang_sebelum: this.tampunganid.jenis_bidang_sebelum,
-            sektor_ekonomi_sebelum: this.tampunganid.sektor_ekonomi_sebelum,
+            sektor_ekonomi_sebelum: '',
             lama_bekerja_tahun_sebelum: this.tampunganid.lama_bekerja_tahun_sebelum,
             lama_bekerja_bulan_sebelum: this.tampunganid.lama_bekerja_bulan_sebelum,
             jumlah_karyawan_sebelum: this.tampunganid.jumlah_karyawan_sebelum,
@@ -1022,4 +1032,120 @@ export class JobInfoComponent implements OnInit {
         },
       });
   }
+
+  carimenggunakankodepost(kodepost:any,req:any){
+
+    this.getkodepostnya(kodepost, req).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kodepost', res);
+
+        // this.dawakodepost = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+
+        this.retriveprovinsi=res.body?.result.provKec.nm_prov;
+
+
+        this.retrivekabkota=res.body?.result.provKec.nm_kota;
+
+
+        this.retrivekecamatan=res.body?.result.provKec.nm_kec;
+
+
+        this.retrivekelurahan=res.body?.result.provKec.nm_kel;
+
+
+
+        // $('#provinsi_cabang').attr('selected', 'selected').val(this.provinsi_cabangkode + '|' +    this.provinsi_cabang);
+        $('#provinsi_cabang_perusahaan option:first').text(this.retriveprovinsi);
+
+        // $('#kabkota').append(this.kabkota_cabang);
+
+        $('#kabkota_cabang_perusahaan option:first').text(this.retrivekabkota);
+        // $('#kabkota_cabang').attr('selected', 'selected').val(this.kabkota_cabangkode + '|' +    this.kabkota_cabang);
+
+        // $('#kecamatan').attr('selected', 'selected').val(this.kecamatankode + '|' +    this.kecamatan);
+        $('#kecamatan_perusahaan option:first').text(this.retrivekecamatan);
+
+        // $('#kelurahan').attr('selected', 'selected').val(this.kelurahankode + '|' +    this.kelurahan);
+        $('#kelurahan option:first').text(this.retrivekelurahan);
+        // alert(this.provinsi_cabang)
+      },
+    });
+
+    console.log(req);
+
+
+  }
+
+  ////sebelum
+
+  carimenggunakankodepostsebelum(kodepost:any,req:any){
+
+    this.getkodepostnya(kodepost, req).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kodepost', res);
+
+        // this.dawakodepost = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+
+        this.dataretriveprovinsisebelum=res.body?.result.provKec.nm_prov;
+
+
+        this.dataretrivekabkotasebelum=res.body?.result.provKec.nm_kota;
+
+
+        this.dataretrivekecamatansebelum=res.body?.result.provKec.nm_kec;
+
+
+        this.dataretrivekelurahansebelum=res.body?.result.provKec.nm_kel;
+
+
+
+        // $('#provinsi_cabang').attr('selected', 'selected').val(this.dataretriveprovinsisebelum + '|' +    this.dataretriveprovinsisebelum);
+        $('#provinsi_sebelum option:first').text(this.dataretriveprovinsisebelum);
+        // $('#provinsi_cabang_perusahaan option:first').text(this.dataretriveprovinsisebelum);
+
+        // $('#kabkota').append(this.kabkota_cabang);
+
+        $('#kabkota_sebelum option:first').text(this.dataretrivekabkotasebelum);
+        // $('#kabkota_cabang').attr('selected', 'selected').val(this.kabkota_cabangkode + '|' +    this.kabkota_cabang);
+
+        // $('#kecamatan').attr('selected', 'selected').val(this.kecamatankode + '|' +    this.kecamatan);
+        $('#kecamatan_sebelum option:first').text(this.dataretrivekecamatansebelum);
+
+        // $('#kelurahan').attr('selected', 'selected').val(this.kelurahankode + '|' +    this.kelurahan);
+        $('#kelurahan_sebelum option:first').text(this.dataretrivekelurahansebelum);
+        // alert(this.provinsi_cabang)
+      },
+    });
+
+    console.log(req);
+
+
+  }
+
+
+  ////sebelum
+
+  getkodepostnya(kodepst:any,req:any){
+
+    const options = createRequestOption(req);
+    const httpOptions = {
+      // 'Authorization': token,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.postId}`,
+    };
+    // const kodepotongan = kodekota.split('|');
+
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvKecByKdPos/' + kodepst, {
+      headers: httpOptions,
+      params: options,
+      observe: 'response',
+    });
+
+  }
+
+
 }

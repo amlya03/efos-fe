@@ -85,6 +85,14 @@ export class PersonalInfoComponent implements OnInit {
   untukSessionRole: any;
   daWabawacuref: any;
   daWabawastatusperkawinan: any;
+  retriveprovinsi: any;
+  retrivekabkota: any;
+  retrivekecamatan: any;
+  retrivekelurahan: any;
+  retrivekecamatandomisili: any;
+  retriveprovinsidomisili: any;
+  retrivekabkotadomisili: any;
+  retrivekelurahandomisili: any;
   /////
 
   constructor(
@@ -121,6 +129,18 @@ export class PersonalInfoComponent implements OnInit {
         // console.warn('@@@@@@@@@@@@@', this.datakiriman);
         // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
         this.daWa = res.body?.result;
+        this.retriveprovinsi=res.body?.result.provinsi;
+        this.retrivekabkota=res.body?.result.kabkota;
+        this.retrivekecamatan=res.body?.result.kecamatan;
+        this.retrivekelurahan=res.body?.result.kelurahan;
+
+        this.retriveprovinsidomisili=res.body?.result.provinsi_domisili;
+        this.retrivekabkotadomisili=res.body?.result.kabkota_domisili;
+        this.retrivekecamatandomisili=res.body?.result.kecamatan_domisili;
+        this.retrivekelurahandomisili=res.body?.result.kelurahan_domisili;
+
+
+
         this.daWabawacuref = res.body?.result.curef;
         this.daWabawastatusperkawinan = res.body?.result.status_perkawinan;
         // this.onResponseSuccess(res);
@@ -129,6 +149,119 @@ export class PersonalInfoComponent implements OnInit {
 
     // $('#nama').attr('readonly', 'readonly');
   }
+
+  carimenggunakankodepost(kodepost:any,req:any){
+
+    this.getkodepostnya(kodepost, req).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kodepost', res);
+
+        // this.dawakodepost = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+
+        this.retriveprovinsi=res.body?.result.provKec.nm_prov;
+
+
+        this.retrivekabkota=res.body?.result.provKec.nm_kota;
+
+
+        this.retrivekecamatan=res.body?.result.provKec.nm_kec;
+
+
+        this.retrivekelurahan=res.body?.result.provKec.nm_kel;
+
+
+
+        // $('#provinsi_cabang').attr('selected', 'selected').val(this.provinsi_cabangkode + '|' +    this.provinsi_cabang);
+        $('#provinsi_cabang option:first').text(this.retriveprovinsi);
+
+        // $('#kabkota').append(this.kabkota_cabang);
+
+        $('#kabkota_cabang option:first').text(this.retrivekabkota);
+        // $('#kabkota_cabang').attr('selected', 'selected').val(this.kabkota_cabangkode + '|' +    this.kabkota_cabang);
+
+        // $('#kecamatan').attr('selected', 'selected').val(this.kecamatankode + '|' +    this.kecamatan);
+        $('#kecamatan option:first').text(this.retrivekecamatan);
+
+        // $('#kelurahan').attr('selected', 'selected').val(this.kelurahankode + '|' +    this.kelurahan);
+        $('#kelurahan option:first').text(this.retrivekelurahan);
+        // alert(this.provinsi_cabang)
+      },
+    });
+
+    console.log(req);
+
+
+  }
+
+  getkodepostnya(kodepst:any,req:any){
+
+    const options = createRequestOption(req);
+    const httpOptions = {
+      // 'Authorization': token,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.postId}`,
+    };
+    // const kodepotongan = kodekota.split('|');
+
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvKecByKdPos/' + kodepst, {
+      headers: httpOptions,
+      params: options,
+      observe: 'response',
+    });
+
+  }
+
+  ////// domisili
+
+  carimenggunakankodepostdomisili(kodepost:any,req:any){
+
+    this.getkodepostnya(kodepost, req).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kodepost', res);
+
+        // this.dawakodepost = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+
+        this.retriveprovinsidomisili=res.body?.result.provKec.nm_prov;
+
+
+        this.retrivekabkotadomisili=res.body?.result.provKec.nm_kota;
+
+
+        this.retrivekecamatandomisili=res.body?.result.provKec.nm_kec;
+
+
+        this.retrivekelurahandomisili=res.body?.result.provKec.nm_kel;
+
+
+
+        // $('#provinsi_cabang').attr('selected', 'selected').val(this.provinsi_cabangkode + '|' +    this.provinsi_cabang);
+        $('#provinsi_domisili option:first').text(this.retriveprovinsidomisili);
+
+        // $('#kabkota').append(this.kabkota_cabang);
+
+        $('#kabkota_domisili option:first').text(this.retrivekabkotadomisili);
+        // $('#kabkota_cabang').attr('selected', 'selected').val(this.kabkota_cabangkode + '|' +    this.kabkota_cabang);
+
+        // $('#kecamatan').attr('selected', 'selected').val(this.kecamatankode + '|' +    this.kecamatan);
+        $('#kecamatan_domisili option:first').text(this.retrivekecamatandomisili);
+
+        // $('#kelurahan').attr('selected', 'selected').val(this.kelurahankode + '|' +    this.kelurahan);
+        $('#kelurahan_domisili option:first').text(this.retrivekelurahandomisili);
+        // alert(this.provinsi_cabang)
+      },
+    });
+
+    console.log(req);
+
+
+  }
+
+  ///domisili
+
 
   // readonly(): void {
   //   document.getElementById('#nama').readOnly = true;

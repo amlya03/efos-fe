@@ -146,7 +146,7 @@
               name="provinsi"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
-              <option value="">Pilih Provinsi</option>
+              <option >Pilih Provinsi</option>
               <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                 {{ daWaprof.namaWilayah }}
               </option>
@@ -166,7 +166,7 @@
               name="kabkota"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
-              <option value="">Pilih Kota</option>
+              <option >Pilih Kota</option>
               <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
                 {{ daWakota.namaWilayah }}
               </option>
@@ -186,7 +186,7 @@
               name="kecamatan"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
-              <option value="">Pilih Kecamatan</option>
+              <option >Pilih Kecamatan</option>
               <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
                 {{ daWakecamatan.namaWilayah }}
               </option>
@@ -206,7 +206,7 @@
               name="kelurahan"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
-              <option value="">Pilih Kelurahan</option>
+              <option >Pilih Kelurahan</option>
               <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
                 {{ daWakelurahan.namaWilayah }}
               </option>
@@ -227,10 +227,11 @@
               class="form-control"
               id="kode_pos"
               name="kode_pos"
+              #kodepos
             />
             <div class="input-group-append">
               <button
-                onclick="buatisi()"
+              (click)="carimenggunakankodepost(kodepos.value,0)"
                 class="btn btn-outline-dark"
                 id="kode_poshilang"
                 type="button"
@@ -634,7 +635,7 @@
               id="kategori_pekerjaan_sebelum"
               formControlName="kategori_pekerjaan_sebelum"
             >
-              <option value="{{ dataretrivetikategoripekerjaansebelum }}">{{ dataretrivetikategoripekerjaansebelum }}</option>
+              <option >{{ dataretrivetikategoripekerjaansebelum }}</option>
               <option value="1|Fix Income">Fix Income</option>
               <option value="2|Non Fix Income">Non Fix Income</option>
               <option value="3|Lain-lainnya">Lain-lainnyatest</option>
@@ -648,7 +649,7 @@
         <div class="col-sm-9">
           <div class="form-group">
             <select class="form-control" name="tipe_pekerjaan_sebelum" id="tipe_pekerjaan_sebelum" formControlName="tipe_pekerjaan_sebelum">
-              <option value="{{ dataretrivetipepekerjaansebelum }}">{{ dataretrivetipepekerjaansebelum }}</option>
+              <option >{{ dataretrivetipepekerjaansebelum }}</option>
 
               <option *ngFor="let daWakotasebelum of daWakotasebelum" value="{{ daWakotasebelum.job_desc }}">
                 {{ daWakotasebelum.job_desc }}
@@ -733,7 +734,7 @@
               name="provinsi_sebelum"
               formControlName="provinsi_sebelum"
             >
-              <option value="{{ dataretriveprovinsisebelum }}">{{ dataretriveprovinsisebelum }}</option>
+              <option  >{{ dataretriveprovinsisebelum }}</option>
               <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                 {{ daWaprof.namaWilayah }}
               </option>
@@ -753,7 +754,7 @@
               (change)="onChangekotaD()"
               name="kabkota_sebelum"
             >
-              <option value="{{ dataretrivekabkotasebelum }}">{{ dataretrivekabkotasebelum }}</option>
+            <option >{{ dataretrivekabkotasebelum }}</option>
               <option *ngFor="let daWakotaD of daWakotaD" value="{{ daWakotaD.kdWilayah }}|{{ daWakotaD.namaWilayah }}">
                 {{ daWakotaD.namaWilayah }}
               </option>
@@ -773,7 +774,7 @@
               name="kecamatan_sebelum"
               formControlName="kecamatan_sebelum"
             >
-              <option value="{{ dataretrivekecamatansebelum }}">{{ dataretrivekecamatansebelum }}</option>
+              <option >{{ dataretrivekecamatansebelum }}</option>
               <option *ngFor="let daWakecamatanD of kecamatanD" value="{{ daWakecamatanD.kdWilayah }}|{{ daWakecamatanD.namaWilayah }}">
                 {{ daWakecamatanD.namaWilayah }}
               </option>
@@ -793,7 +794,7 @@
               name="kelurahan_sebelum"
               formControlName="kelurahan_sebelum"
             >
-              <option value="{{ dataretrivekelurahansebelum }}">{{ dataretrivekelurahansebelum }}</option>
+              <option >{{ dataretrivekelurahansebelum }}</option>
               <option *ngFor="let daWakelurahanD of kelurahanD" value="{{ daWakelurahanD.kdPos }}|{{ daWakelurahanD.namaWilayah }}">
                 {{ daWakelurahanD.namaWilayah }}
               </option>
@@ -814,10 +815,11 @@
               id="kode_pos_sebelum"
               name="kode_pos_sebelum"
               formControlName="kode_pos_sebelum"
+              #kodepossebelum
             />
             <div class="input-group-append">
               <button
-                onclick="buatisisebelum()"
+              (click)="carimenggunakankodepostsebelum(kodepossebelum.value,0)"
                 class="btn btn-outline-dark"
                 id="kode_pos_sebelumhilang"
                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
@@ -873,7 +875,8 @@
               formControlName="jenis_bidang_sebelum"
               name="jenis_bidang_sebelum"
             >
-              <option value="{{ dataretrivejenisbidangsebelum }}">{{ dataretrivejenisbidangsebelum }}</option>
+
+              <option>{{ dataretrivejenisbidangsebelum }}</option>
               <option
                 *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
                 value="{{ getjenisbidangdariapi.group_sektor }}|{{ getjenisbidangdariapi.nama_group_sektor }}"
@@ -890,7 +893,7 @@
         <div class="col-sm-8">
           <div class="form-group">
             <select class="form-control" id="sektor_ekonomi_sebelum" formControlName="sektor_ekonomi_sebelum" name="sektor_ekonomi_sebelum">
-              <option value="{{ dataretrivesektorekosebelum }}">{{ dataretrivesektorekosebelum }}</option>
+              <option >{{ dataretrivesektorekosebelum }}</option>
               <option *ngFor="let getdatasektorekonomi of getdatasektorekonomi" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
                 {{ getdatasektorekonomi.nama_sub_sektor }}
               </option>

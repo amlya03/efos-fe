@@ -432,7 +432,7 @@
             name="provinsi"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option value="{{ daWa.provinsi }}">{{ daWa.provinsi }}</option>
+            <option value="{{ retriveprovinsi}}">{{ retriveprovinsi }}</option>
             <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
               {{ daWaprof.namaWilayah }}
             </option>
@@ -452,7 +452,7 @@
             name="kabkota"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option value="{{ daWa.kabkota }}">{{ daWa.kabkota }}</option>
+            <option value="{{retrivekabkota }}">{{ retrivekabkota }}</option>
             <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
               {{ daWakota.namaWilayah }}
             </option>
@@ -472,7 +472,7 @@
             name="kecamatan"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option>{{ daWa.kecamatan }}</option>
+            <option value="{{retrivekecamatan }}">{{ retrivekecamatan}}</option>
             <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
               {{ daWakecamatan.namaWilayah }}
             </option>
@@ -492,7 +492,7 @@
             name="kelurahan"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option>{{ daWa.kelurahan }}</option>
+            <option value="{{retrivekelurahan }}">{{ retrivekelurahan }}</option>
             <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
               {{ daWakelurahan.namaWilayah }}
             </option>
@@ -513,10 +513,11 @@
             id="kode_pos"
             name="kode_pos"
             value="{{ daWa.kode_pos }}"
+            #kodepos
           />
           <div class="input-group-append">
             <button
-              onclick="buatisi()"
+            (click)="carimenggunakankodepost(kodepos.value,0)"
               class="btn btn-outline-dark"
               type="button"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
@@ -609,7 +610,7 @@
             name="provinsi_domisili"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option>{{ daWa.provinsi_domisili }}</option>
+            <option>{{ retriveprovinsidomisili }}</option>
             <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
               {{ daWaprof.namaWilayah }}
             </option>
@@ -629,7 +630,7 @@
             name="kabkota_domisili"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option value="{{ daWa.kabkota_domisili }}">{{ daWa.kabkota_domisili }}</option>
+            <option value="{{ retrivekabkotadomisili }}">{{ retrivekabkotadomisili }}</option>
             <option *ngFor="let daWakotaD of daWakotaD" value="{{ daWakotaD.kdWilayah }}|{{ daWakotaD.namaWilayah }}">
               {{ daWakotaD.namaWilayah }}
             </option>
@@ -649,7 +650,7 @@
             name="kecamatan_domisili"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option>{{ daWa.kecamatan_domisili }}</option>
+            <option>{{ retrivekecamatandomisili}}</option>
             <option *ngFor="let daWakecamatanD of kecamatanD" value="{{ daWakecamatanD.kdWilayah }}|{{ daWakecamatanD.namaWilayah }}">
               {{ daWakecamatanD.namaWilayah }}
             </option>
@@ -669,7 +670,7 @@
             name="kelurahan_domisili"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option>{{ daWa.kelurahan_domisili }}</option>
+            <option>{{ retrivekelurahandomisili }}</option>
             <option *ngFor="let daWakelurahanD of kelurahanD" value="{{ daWakelurahanD.kdPos }}|{{ daWakelurahanD.namaWilayah }}">
               {{ daWakelurahanD.namaWilayah }}
             </option>
@@ -691,10 +692,11 @@
             id="kode_pos_domisili"
             name="kode_pos_domisili"
             value="{{ daWa.kode_pos_domisili }}"
+            #kodeposdomisili
           />
           <div class="input-group-append">
             <button
-              onclick="buatisidomisili()"
+            (click)="carimenggunakankodepostdomisili(kodeposdomisili.value,0)"
               class="btn btn-outline-dark"
               id="kode_pos_domisilihilang"
               type="button"

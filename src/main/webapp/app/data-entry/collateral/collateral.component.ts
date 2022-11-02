@@ -49,6 +49,10 @@ export class CollateralComponent implements OnInit {
   getjenisobjek: any;
   getlistkendaraan: any;
   listhubunganagunan: any;
+  untukprovinsiagunan: any;
+  untukkobkotaagunan: any;
+  untukkecamatanagunan: any;
+  untukkelurahanagunan: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -76,14 +80,14 @@ export class CollateralComponent implements OnInit {
     'http://10.20.34.110:8805/api/v1/efos-ref/list_status_sertifikat'
   );
   protected apigethubunganagunan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-ref/list_hubungan_agunan'
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_hubungan_agunan'
   );
 
   protected apigetjenispekeraan = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.110:8805/api/v1/efos-ref/list_jenis_objek_agunan'
   );
   protected apigetlistkendraan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-ref/list_tipe_kendaraan'
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_kendaraan'
   );
 
   protected apigetlistagunan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_developer');
@@ -106,6 +110,14 @@ export class CollateralComponent implements OnInit {
         // console.warn('@@@@@@@@@@@@@', this.datakiriman);
         // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
         this.daWa = res.body?.result;
+
+        this.untukprovinsiagunan=res.body?.result.provinsi;
+        this.untukkobkotaagunan=res.body?.result.kabkota;
+        this.untukkecamatanagunan=res.body?.result.kecamatan;
+        this.untukkelurahanagunan=res.body?.result.kelurahan;
+
+
+
         // this.onResponseSuccess(res);
       },
     });
@@ -896,4 +908,106 @@ export class CollateralComponent implements OnInit {
   radiobbuttonorang() {
     this.pemisahuntukdevloper = 'perorang';
   }
+
+  carimenggunakankodeposagunan(kodepost:any,req:any){
+
+    this.getkodepostnya(kodepost, req).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kodepost', res);
+
+        // this.dawakodepost = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+
+        this.untukprovinsiagunan=res.body?.result.provKec.nm_prov;
+        this.untukkobkotaagunan=res.body?.result.provKec.nm_kota;
+        this.untukkecamatanagunan=res.body?.result.provKec.nm_kec;
+        this.untukkelurahanagunan=res.body?.result.provKec.nm_kel;
+
+
+
+        // $('#provinsi_cabang').attr('selected', 'selected').val(this.provinsi_cabangkode + '|' +    this.provinsi_cabang);
+        $('#provinsi_agunan option:first').text(this.untukprovinsiagunan);
+
+        // $('#kabkota').append(this.kabkota_cabang);
+
+        $('#kabkota_agunan option:first').text(this.untukkobkotaagunan);
+        // $('#kabkota_cabang').attr('selected', 'selected').val(this.kabkota_cabangkode + '|' +    this.kabkota_cabang);
+
+        // $('#kecamatan').attr('selected', 'selected').val(this.kecamatankode + '|' +    this.kecamatan);
+        $('#kecamatan_agunan option:first').text(this.untukkecamatanagunan);
+
+        // $('#kelurahan').attr('selected', 'selected').val(this.kelurahankode + '|' +    this.kelurahan);
+        $('#kelurahan_agunan option:first').text(this.untukkelurahanagunan);
+        // alert(this.provinsi_cabang)
+      },
+    });
+
+    console.log(req);
+
+
+  }
+
+  ///sertifikat
+
+  carimenggunakankodepossertifikat(kodepost:any,req:any){
+
+    this.getkodepostnya(kodepost, req).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kodepost', res);
+
+        // this.dawakodepost = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+
+        this.untukprovinsiagunan=res.body?.result.provKec.nm_prov;
+        this.untukkobkotaagunan=res.body?.result.provKec.nm_kota;
+        this.untukkecamatanagunan=res.body?.result.provKec.nm_kec;
+        this.untukkelurahanagunan=res.body?.result.provKec.nm_kel;
+
+
+
+        // $('#provinsi_cabang').attr('selected', 'selected').val(this.provinsi_cabangkode + '|' +    this.provinsi_cabang);
+        $('#provinsi_sesuai_sertifikat option:first').text(this.untukprovinsiagunan);
+
+        // $('#kabkota').append(this.kabkota_cabang);
+
+        $('#kabkota_sesuai_sertifikat option:first').text(this.untukkobkotaagunan);
+        // $('#kabkota_cabang').attr('selected', 'selected').val(this.kabkota_cabangkode + '|' +    this.kabkota_cabang);
+
+        // $('#kecamatan').attr('selected', 'selected').val(this.kecamatankode + '|' +    this.kecamatan);
+        $('#kecamatan_sesuai_sertifikat option:first').text(this.untukkecamatanagunan);
+
+        // $('#kelurahan').attr('selected', 'selected').val(this.kelurahankode + '|' +    this.kelurahan);
+        $('#kelurahan_sesuai_sertifikat option:first').text(this.untukkelurahanagunan);
+        // alert(this.provinsi_cabang)
+      },
+    });
+
+    console.log(req);
+
+
+  }
+
+
+  ///serifikat
+
+  getkodepostnya(kodepst:any,req:any){
+
+    const options = createRequestOption(req);
+    const httpOptions = {
+      // 'Authorization': token,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.postId}`,
+    };
+    // const kodepotongan = kodekota.split('|');
+
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvKecByKdPos/' + kodepst, {
+      headers: httpOptions,
+      params: options,
+      observe: 'response',
+    });
+
+  }
+
 }

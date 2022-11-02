@@ -253,7 +253,7 @@ export class StukturPembiayaanComponent implements OnInit {
     // alert(valueMax_angsuran)
     if (this.strukturPembiayaan == null) {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_analisa_struktur_pembiayaan', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_struktur_pembiayaan', {
           angsuran: angsuran,
           app_no_de: this.dataEntry.app_no_de,
           created_by: this.sessionUsername,
@@ -278,7 +278,7 @@ export class StukturPembiayaanComponent implements OnInit {
         });
     } else {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_analisa_struktur_pembiayaan', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_struktur_pembiayaan', {
           angsuran: angsuran,
           app_no_de: this.dataEntry.app_no_de,
           updated_by: this.sessionUsername,
