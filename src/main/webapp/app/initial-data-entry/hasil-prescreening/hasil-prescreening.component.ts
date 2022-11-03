@@ -32,6 +32,10 @@ export class HasilPrescreeningComponent implements OnInit {
   dawastatuspernikaham: any;
   dataslik: any;
   dataslikp: any;
+  nama: any;
+  ktp: any;
+  duplikate: any;
+  potongankakotanihpasangan: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -53,6 +57,8 @@ export class HasilPrescreeningComponent implements OnInit {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getCustomerByAppId?sc=');
   protected getdhn = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/cekDhn');
   protected apigetslit = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/fetchDataSlik?sd=');
+  protected apigetduplikat = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getDuplicateCheck?sk=');
+
 
   ngOnInit(): void {
     this.load();
@@ -65,14 +71,25 @@ export class HasilPrescreeningComponent implements OnInit {
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('tabel', res);
         this.daWa = res.body?.result.customer;
+        this.nama = res.body?.result.customer.nama;
+        this.ktp = res.body?.result.customer.no_ktp;
         this.dawastatuspernikaham=res.body?.result.customer.status_perkawinan;
         console.warn('customer', res.body?.result.customer);
         alert( this.dawastatuspernikaham);
         // this.onResponseSuccess(res);
-
+      ;
         const tglLahir = this.daWa.tanggal_lahir;
         const tglLahirpasangan = this.daWa.tanggal_lahir_pasangan;
         this.cekdukcapil(tglLahir, tglLahirpasangan);
+
+        this.getduplikatc( this.ktp, this.nama).subscribe({
+          next: (res: EntityArrayResponseDaWa) => {
+           this.duplikate = res.body?.result;
+            console.warn('duplikat', this.dataslik);
+            console.warn('duplikat',res);
+          },
+        });
+
       },
     });
 
@@ -93,6 +110,7 @@ export class HasilPrescreeningComponent implements OnInit {
     });
 
 
+
   }
 
   getdataslik(req?: any): Observable<EntityArrayResponseDaWa> {
@@ -103,6 +121,12 @@ export class HasilPrescreeningComponent implements OnInit {
   getdataslikp(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     return this.http.get<ApiResponse>(this.apigetslit + 'app_20221017_667', { params: options, observe: 'response' });
+  }
+
+
+  getduplikatc(noktp:any,nama:any,req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    return this.http.get<ApiResponse>(this.apigetduplikat + noktp +'&sn='+nama, { params: options, observe: 'response' });
   }
 
 
@@ -163,6 +187,10 @@ export class HasilPrescreeningComponent implements OnInit {
 
     if (this.daWa.kabkota.indexOf(' ')) {
       this.potongankakotanih = this.daWa.kabkota.replace('Kota ', '');
+    }
+
+    if (this.daWa.kabkota_pasangan.indexOf(' ')) {
+      this.potongankakotanihpasangan = this.daWa.kabkota.replace('Kota ', '');
     }
     if (this.daWa.status_perkawinan === 'Menikah') {
       this.statusnikah = 'KAWIN';
@@ -238,7 +266,7 @@ export class HasilPrescreeningComponent implements OnInit {
           timestamp: timestamp,
           channelID: 'EFOS',
           NIK: this.daWa.no_ktp_pasangan,
-          noKK: 'pasangapunya',
+          noKK: '',
           namaLengkap: this.daWa.nama_pasangan,
           jenisKelamin: this.daWa.jenis_kelamin_pasangan,
           tempatLahir: '',
@@ -256,7 +284,7 @@ export class HasilPrescreeningComponent implements OnInit {
           kodeKecamatan: '',
           kodeKelurahan: '',
           namaPropinsi: this.daWa.provinsi_pasangan,
-          namaKabupaten: this.daWa.kabkota_pasangan,
+          namaKabupaten:  this.potongankakotanihpasangan,
           namaKecamatan: this.daWa.kecamatan_pasangan,
           namaKelurahan: this.daWa.kelurahan_pasangan,
           noRW: this.daWa.rw_pasangan,
@@ -401,4 +429,10 @@ export class HasilPrescreeningComponent implements OnInit {
         },
       });
   }
+  backtoide(): void {
+    this.router.navigate(['/daftaraplikasiide'], {
+      queryParams: {},
+    });
+  }
+
 }
