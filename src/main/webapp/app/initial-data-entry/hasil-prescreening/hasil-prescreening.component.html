@@ -141,7 +141,7 @@
           rows="6"
           id="alamat_ktp"
           name="alamat_ktp"
-          value="{{ daWa.status_perkawinan }}"
+          value="{{ daWa.alamat_ktp }}"
           readonly
         ></textarea>
       </div>
@@ -856,13 +856,21 @@
       <table id="example" class="table table-striped table-bordered zero-configuration">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Cabang</th>
+            <th>Nama</th>
+            <th>Nomor aplikasi</th>
 
-            <th></th>
           </tr>
         </thead>
-        <tbody id="duplicatecheking"></tbody>
+        <tbody id="pengecekan_ideb">
+          <tr *ngFor="let duplikate of duplikate">
+            <td style="text-align: center" scope="col">{{ duplikate.nama }}</td>
+            <td style="text-align: center" scope="col">{{ duplikate.no_aplikasi }}</td>
+            <td class="text-end">
+
+            </td>
+          </tr>
+
+        </tbody>
         <tfoot></tfoot>
       </table>
     </div>
@@ -981,6 +989,8 @@
       >
         prosesssss
       </button>
+
+      <button name="submit_button"   (click)="backtoide()" class="fa fa-file-archive-o btn btn-dark">Tolak</button>
 
       <!-- <input type="checkbox" id="check3" checked="checked" disabled/><p><label for="check3" style="font-size:100%">{{ datadukcapil.namaLengkap }} </label></p> -->
     </ng-template>

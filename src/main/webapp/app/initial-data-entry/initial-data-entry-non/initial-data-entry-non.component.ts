@@ -481,19 +481,79 @@ if(this.status_perkawinan =='Menikah'){
 
 
   const kirimanprovinsi = this.provinsi_cabang.split('|');
+  if (this.provinsi_cabang.indexOf('|') !== -1) {
+    var kirimanprovinsid = kirimanprovinsi[1];
+  } else {
+    var kirimanprovinsid = this.provinsi_cabang;
+  }
   const kirimankabkota = this.kabkota_cabang.split('|');
+  if (this.kabkota_cabang.indexOf('|') !== -1) {
+    var kirimankabkotaid = kirimankabkota[1];
+  } else {
+    var kirimankabkotaid = this.kabkota_cabang;
+  }
   const kirimankecamatan = this.kecamatan.split('|');
+  if (this.kecamatan.indexOf('|') !== -1) {
+    var kirimankecamatanid = kirimankecamatan[1];
+  } else {
+    var kirimankecamatanid = this.kecamatan;
+  }
   const kirimankelurahan = this.kelurahan.split('|');
+  if (this.kelurahan.indexOf('|') !== -1) {
+    var kirimankelurahanid = kirimankelurahan[1];
+  } else {
+    var kirimankelurahanid = this.kelurahan;
+  }
 
   const kirimanprovinsipsng = this.provinsi_cabang_pasangan.split('|');
+  if (this.provinsi_cabang_pasangan.indexOf('|') !== -1) {
+    var kirimanprovpsg = kirimanprovinsipsng[1];
+  } else {
+    var kirimanprovpsg = this.provinsi_cabang_pasangan;
+  }
   const kirimankabkotapsng = this.kabkota_cabang_pasangan.split('|');
+  if (this.kabkota_cabang_pasangan.indexOf('|') !== -1) {
+    var kirimankotapsg= kirimankabkotapsng[1];
+  } else {
+    var kirimankotapsg = this.kabkota_cabang_pasangan;
+  }
   const kirimankecamatanpsng = this.kecamatan_pasangan.split('|');
+  if (this.kecamatan_pasangan.indexOf('|') !== -1) {
+    var kirimankecamatanpsg = kirimankecamatanpsng[1];
+  } else {
+    var kirimankecamatanpsg = this.kecamatan_pasangan;
+  }
   const kirimankelurahanpsng = this.kelurahan_pasangan.split('|');
+  if (this.kelurahan_pasangan.indexOf('|') !== -1) {
+    var kirimankelurahanpsg = kirimankelurahanpsng[1];
+  } else {
+    var kirimankelurahanpsg = this.kelurahan_pasangan;
+  }
 
   const kirimanprovinsijob = this.provinsi_perusahaan.split('|');
+  if (this.provinsi_perusahaan.indexOf('|') !== -1) {
+    var kirimanprovjob = kirimanprovinsijob[1];
+  } else {
+    var kirimanprovjob = this.provinsi_perusahaan;
+  }
   const kirimankabkotajob = this.kabkota_perusahaan.split('|');
+  if (this.kabkota_perusahaan.indexOf('|') !== -1) {
+    var kirimankabkotajobn = kirimankabkotajob[1];
+  } else {
+    var kirimankabkotajobn = this.kabkota_perusahaan;
+  }
   const kirimankecamatanjob = this.kecamatan_perusahaan.split('|');
+  if (this.kecamatan_perusahaan.indexOf('|') !== -1) {
+    var kirimankecamatanjobn= kirimankecamatanjob[1];
+  } else {
+    var kirimankecamatanjobn = this.kecamatan_perusahaan;
+  }
   const kirimankelurahanjob = this.kelurahan_perusahaan.split('|');
+  if (this.kelurahan_perusahaan.indexOf('|') !== -1) {
+    var kirimankelurahanjobn= kirimankelurahanjob[1];
+  } else {
+    var kirimankelurahanjobn = this.kelurahan_perusahaan;
+  }
 
   const httpOptions = {
     'Content-Type': 'text/plain',
@@ -505,17 +565,17 @@ if(this.status_perkawinan =='Menikah'){
     .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
       headers: headers,
     nama: this.nama,
-    nama_pasangan: '',
-    kategori_pekerjaan: 'Fixincome',
+    nama_pasangan: this.nama_pasangan,
+    kategori_pekerjaan: 'Non Fix Income',
     curef: curef,
     jenis_kelamin: this.jenis_kelamin,
-    jenis_kelamin_pasangan: '',
+    jenis_kelamin_pasangan:  this.jenis_kelamin_pasangan,
     usia: '0',
     app_no_ide: app_no_ide,
     tanggal_lahir: this.tanggal_lahir,
-    tanggal_lahir_pasangan: '',
+    tanggal_lahir_pasangan: this.tanggal_lahir_pasangan,
     tempat_lahir: this.tempat_lahir,
-    tempat_lahir_pasangan: '',
+    tempat_lahir_pasangan:  this.tempat_lahir_pasangan,
     status_perkawinan: this.status_perkawinan,
     status_alamat: '',
     status_kendaraan: '',
@@ -523,30 +583,30 @@ if(this.status_perkawinan =='Menikah'){
     status_ktp_pasangan: '',
     status_rumah: '',
     agama: this.agama,
-    agama_pasangan: '',
+    agama_pasangan:  this.agama_pasangan,
     pendidikan: this.pendidikan,
-    pendidikan_pasangan: '',
+    pendidikan_pasangan: this.pendidikan_pasangan,
     kewarganegaraan: this.kewarganegaraan,
-    kewarganegaraan_pasangan: '',
+    kewarganegaraan_pasangan: this.kewarganegaraan_pasangan,
     nama_ibu_kandung: this.nama_ibu_kandung,
-    nama_ibu_kandung_pasangan: '',
+    nama_ibu_kandung_pasangan: this.nama_ibu_kandung_pasangan,
     npwp: this.npwp,
-    npwp_pasangan: '',
+    npwp_pasangan:  this.npwp_pasangan,
     alamat_ktp: this.alamat_ktp,
-    alamat_ktp_pasangan: '',
+    alamat_ktp_pasangan: this.alamat_ktp_pasangan,
     alamat_domisili: '',
     provinsi: kirimanprovinsid,
     provinsi_domisili: '',
-    provinsi_pasangan:'' ,
+    provinsi_pasangan:kirimanprovpsg ,
     kabkota: kirimankabkotaid,
     kabkota_domisili: '',
-    kabkota_pasangan:'',
+    kabkota_pasangan:kirimankotapsg,
     kecamatan: kirimankecamatanid,
     kecamatan_domisili: '',
-    kecamatan_pasangan:'' ,
+    kecamatan_pasangan:kirimankecamatanpsg ,
     kelurahan: kirimankelurahanid,
     kelurahan_domisili: '',
-    kelurahan_pasangan: '',
+    kelurahan_pasangan: kirimankelurahanpsg,
     kode_pos: '',
     kode_pos_domisili: '',
     kode_pos_pasangan: '',
@@ -560,102 +620,111 @@ if(this.status_perkawinan =='Menikah'){
     jumlah_anak: '',
     rt: this.rt,
     rt_domisili: '',
-    rt_pasangan: '',
+    rt_pasangan: this.rt_pasangan,
     rw: this.rw,
     rw_domisili: '',
-    rw_pasangan: '',
+    rw_pasangan:this.rw_pasangan,
     no_ktp: this.no_ktp,
-    no_ktp_pasangan: '',
+    no_ktp_pasangan: this.no_ktp_pasangan,
     tanggal_terbit_ktp: this.tanggal_terbit_ktp,
-    tanggal_terbit_ktp_pasangan: '',
+    tanggal_terbit_ktp_pasangan: this.tanggal_terbit_ktp_pasangan,
     tanggal_exp_ktp: this.tanggal_exp_ktp,
-    tanggal_exp_ktp_pasangan: '',
+    tanggal_exp_ktp_pasangan:  this.tanggal_exp_ktp_pasangan,
     tipe_kendaraan: '',
     no_handphone: this.no_handphone,
-    no_handphone_pasangan: '',
+    no_handphone_pasangan:  this.no_handphone_pasangan,
     no_telepon: '',
     updated_by: '',
     updated_date: '',
     usia_pasangan: '',
     })
     .subscribe(resposne => {
-      console.log(resposne);
-    });
 
-  this.http
-    .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_job_info', {
-      headers: headers,
-      alamat_perusahaan: this.alamat_perusahaan,
-      barang_jasa: this.barang_jasa,
-      bulan_berdiri: this.bulan_berdiri_perusahaan,
-      bulan_berdiri_sebelum: this.bulan_berdiri_perusahaan_sebelum,
-      created_by: '',
-      created_date: '',
-      curef: curef,
-      id: '',
-      jabatan: '',
-      jabatan_sebelum: '',
-      jenis_bidang: this.jenis_bidang,
-      jenis_bidang_sebelum: this.jenis_bidang_sebelum,
-      jenis_pekerjaan: this.status_perkawinan,
-      jenis_pekerjaan_sebelum: this.nama,
-      jumlah_karyawan: this.jumlah_karyawan,
-      jumlah_karyawan_sebelum: this.nama,
-      kabkota_sebelum: '',
-      kabkota: this.kabkota_perusahaan,
-      kategori_pekerjaan: this.agama,
-      kategori_pekerjaan_sebelum: this.nama,
-      kecamatan: this.kecamatan_perusahaan,
-      kecamatan_sebelum: '',
-      kelurahan: this.kelurahan_perusahaan,
-      kelurahan_sebelum: '',
-      kepemilikan_perusahaan: this.kepemilikan_perusahaan,
-      kode_pos: '',
-      kode_pos_sebelum: '',
-      lama_bekerja_tahun: this.nama,
-      lama_bekerja_bulan_sebelum: this.alamat_ktp,
-      lama_bekerja_tahun_sebelum: this.nama,
-      nama_perusahaan: this.nama,
-      nama_perusahaan_sebelum: kirimanprovinsi[1],
-      no_siup: this.no_siup,
-      no_telepon: this.no_telepon,
-      npwp: kirimankabkota[1],
-      payroll: '',
-      payroll_sebelum: '',
-      pemilik_usaha: this.pemilik_usaha,
-      pendapatan: '',
-      pendapatan_lain: '',
-      posisi: '',
-      posisi_sebelum: '',
-      provinsi: this.provinsi_perusahaan,
-      provinsi_sebelum: '',
-      rt: this.rt_perusahaan,
-      rt_sebelum: '',
-      rw: this.rw_perusahaan,
-      rw_sebelum: '',
-      sektor_ekonomi: this.jenis_sektor,
-      sektor_ekonomi_sebelum: this.jenis_sektor_sebelum,
-      status_active: '',
-      tahun_berdiri: this.tahun_berdiri_perusahaan,
-      tahun_berdiri_sebelum: this.tahun_berdiri_perusahaan_sebelum,
-      tipe_kepegawaian: '',
-      tipe_kepegawaian_sebelum: '',
-      tipe_pekerjaan: this.tipe_pekerjaan,
-      tipe_pekerjaan_sebelum: this.tipe_pekerjaan_sebelum,
-      tipe_perusahaan: this.tipe_perusahaan,
-      tipe_perusahaan_sebelum: this.tipe_perusahaan_sebelum,
-      total_pendapatan: '',
-      tunjangan: '',
-      umur_pensiun: '',
-      umur_pensiun_sebelum: '',
-    })
-    .subscribe(resposne => {
-      console.log(resposne);
-    });
+      this.contohdata = resposne.result.id;
 
-  this.router.navigate(['/hasilprescreening'], {
-    queryParams: {},
-  });
+      console.log(resposne);
+      this.http
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_job_info', {
+        headers: headers,
+        alamat_perusahaan: this.alamat_perusahaan,
+        barang_jasa: this.barang_jasa,
+        bulan_berdiri: this.bulan_berdiri_perusahaan,
+        bulan_berdiri_sebelum: this.bulan_berdiri_perusahaan_sebelum,
+        created_by: '',
+        created_date: '',
+        curef: curef,
+        id: '',
+        jabatan: '',
+        jabatan_sebelum: '',
+        jenis_bidang: this.jenis_bidang,
+        jenis_bidang_sebelum: this.jenis_bidang_sebelum,
+        jenis_pekerjaan: this.status_perkawinan,
+        jenis_pekerjaan_sebelum: this.nama,
+        jumlah_karyawan: this.jumlah_karyawan,
+        jumlah_karyawan_sebelum: this.nama,
+        kabkota_sebelum: '',
+        kabkota: kirimankabkotajobn,
+        kategori_pekerjaan: this.agama,
+        kategori_pekerjaan_sebelum: this.nama,
+        kecamatan: kirimankecamatanjobn,
+        kecamatan_sebelum: '',
+        kelurahan: kirimankelurahanjobn,
+        kelurahan_sebelum: '',
+        kepemilikan_perusahaan: this.kepemilikan_perusahaan,
+        kode_pos: '',
+        kode_pos_sebelum: '',
+        lama_bekerja_tahun: this.nama,
+        lama_bekerja_bulan_sebelum: this.alamat_ktp,
+        lama_bekerja_tahun_sebelum: this.nama,
+        nama_perusahaan: this.nama,
+        nama_perusahaan_sebelum: '',
+        no_siup: this.no_siup,
+        no_telepon: this.no_telepon,
+        npwp: '',
+        payroll: '',
+        payroll_sebelum: '',
+        pemilik_usaha: this.pemilik_usaha,
+        pendapatan: '',
+        pendapatan_lain: '',
+        posisi: '',
+        posisi_sebelum: '',
+        provinsi: kirimanprovjob,
+        provinsi_sebelum: '',
+        rt: this.rt_perusahaan,
+        rt_sebelum: '',
+        rw: this.rw_perusahaan,
+        rw_sebelum: '',
+        sektor_ekonomi: this.jenis_sektor,
+        sektor_ekonomi_sebelum: this.jenis_sektor_sebelum,
+        status_active: '',
+        tahun_berdiri: this.tahun_berdiri_perusahaan,
+        tahun_berdiri_sebelum: this.tahun_berdiri_perusahaan_sebelum,
+        tipe_kepegawaian: '',
+        tipe_kepegawaian_sebelum: '',
+        tipe_pekerjaan: this.tipe_pekerjaan,
+        tipe_pekerjaan_sebelum: this.tipe_pekerjaan_sebelum,
+        tipe_perusahaan: this.tipe_perusahaan,
+        tipe_perusahaan_sebelum: this.tipe_perusahaan_sebelum,
+        total_pendapatan: '',
+        tunjangan: '',
+        umur_pensiun: '',
+        umur_pensiun_sebelum: '',
+      })
+      .subscribe({
+        next: data => {
+          // this.contohdata = data.result.id;
+          this.app_no_ide = data.result.app_no_ide;
+          this.tanggal_lahir = data.result.tanggal_lahir;
+
+          this.router.navigate(['/hasilprescreening'], {
+            queryParams: { datakirimanid: this.contohdata, datakirimantgllahir: this.tanggal_lahir, datakirimanappide: this.app_no_ide },
+          });
+
+          alert(this.contohdata);
+        },
+      });
+
+    });
 
 }else{
 
@@ -711,12 +780,8 @@ if(this.status_perkawinan =='Menikah'){
     var kirimankelurahanjobn = this.kelurahan_perusahaan;
   }
 
-  // const httpOptions = {
-  //   'Content-Type': 'text/plain',
-  // };
-
   const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
-
+  const umur = document.getElementById('umur') as HTMLInputElement | any;
 
 
   this.http
@@ -725,11 +790,11 @@ if(this.status_perkawinan =='Menikah'){
     headers: headers,
     nama: this.nama,
     nama_pasangan: '',
-    kategori_pekerjaan: 'Fixincome',
+    kategori_pekerjaan: 'Non Fix Income',
     curef: curef,
     jenis_kelamin: this.jenis_kelamin,
     jenis_kelamin_pasangan: '',
-    usia: '0',
+    usia: umur.value,
     app_no_ide: app_no_ide,
     tanggal_lahir: this.tanggal_lahir,
     tanggal_lahir_pasangan: '',
@@ -799,20 +864,6 @@ if(this.status_perkawinan =='Menikah'){
 
 
   })
-  // .subscribe({
-  //   next: data => {
-  //     this.contohdata = data.result.id;
-  //     this.app_no_ide = data.result.app_no_ide;
-  //     this.tanggal_lahir = data.result.tanggal_lahir;
-
-  //     this.router.navigate(['/hasilprescreening'], {
-  //       queryParams: { datakirimanid: this.contohdata, datakirimantgllahir: this.tanggal_lahir, datakirimanappide: this.app_no_ide },
-  //     });
-
-  //     alert(this.contohdata);
-  //   },
-  // });
-
   .subscribe(resposne => {
     console.log(resposne);
     this.contohdata = resposne.result.id;
@@ -901,212 +952,180 @@ if(this.status_perkawinan =='Menikah'){
 
   });
 
-
-
-
-
-
-
-
-
-
-
-//     .subscribe(resposne => {
-//       // console.log("contohrespionnya"+resposne);
-//       this.http
-//       .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_job_info', {
-//         headers: headers,
-//         alamat_perusahaan: this.alamat_perusahaan,
-//         barang_jasa: this.barang_jasa,
-//         bulan_berdiri: this.bulan_berdiri_perusahaan,
-//         bulan_berdiri_sebelum: this.bulan_berdiri_perusahaan_sebelum,
-//         created_by: '',
-//         created_date: '',
-//         curef: curef,
-//         id: '',
-//         jabatan: '',
-//         jabatan_sebelum: '',
-//         jenis_bidang: this.jenis_bidang,
-//         jenis_bidang_sebelum: this.jenis_bidang_sebelum,
-//         jenis_pekerjaan: this.status_perkawinan,
-//         jenis_pekerjaan_sebelum: this.nama,
-//         jumlah_karyawan: this.jumlah_karyawan,
-//         jumlah_karyawan_sebelum: this.nama,
-//         kabkota_sebelum: '',
-//         kabkota: kirimankabkotajobn,
-//         kategori_pekerjaan: this.agama,
-//         kategori_pekerjaan_sebelum: this.nama,
-//         kecamatan: kirimankecamatanjobn,
-//         kecamatan_sebelum: '',
-//         kelurahan: kirimankelurahanjobn,
-//         kelurahan_sebelum: '',
-//         kepemilikan_perusahaan: this.kepemilikan_perusahaan,
-//         kode_pos: '',
-//         kode_pos_sebelum: '',
-//         lama_bekerja_tahun: this.nama,
-//         lama_bekerja_bulan_sebelum: this.alamat_ktp,
-//         lama_bekerja_tahun_sebelum: this.nama,
-//         nama_perusahaan: this.nama,
-//         nama_perusahaan_sebelum: '',
-//         no_siup: this.no_siup,
-//         no_telepon: this.no_telepon,
-//         npwp: '',
-//         payroll: '',
-//         payroll_sebelum: '',
-//         pemilik_usaha: this.pemilik_usaha,
-//         pendapatan: '',
-//         pendapatan_lain: '',
-//         posisi: '',
-//         posisi_sebelum: '',
-//         provinsi: kirimanprovjob,
-//         provinsi_sebelum: '',
-//         rt: this.rt_perusahaan,
-//         rt_sebelum: '',
-//         rw: this.rw_perusahaan,
-//         rw_sebelum: '',
-//         sektor_ekonomi: this.jenis_sektor,
-//         sektor_ekonomi_sebelum: this.jenis_sektor_sebelum,
-//         status_active: '',
-//         tahun_berdiri: this.tahun_berdiri_perusahaan,
-//         tahun_berdiri_sebelum: this.tahun_berdiri_perusahaan_sebelum,
-//         tipe_kepegawaian: '',
-//         tipe_kepegawaian_sebelum: '',
-//         tipe_pekerjaan: this.tipe_pekerjaan,
-//         tipe_pekerjaan_sebelum: this.tipe_pekerjaan_sebelum,
-//         tipe_perusahaan: this.tipe_perusahaan,
-//         tipe_perusahaan_sebelum: this.tipe_perusahaan_sebelum,
-//         total_pendapatan: '',
-//         tunjangan: '',
-//         umur_pensiun: '',
-//         umur_pensiun_sebelum: '',
-//       })
-//     .subscribe({
-//   next: data => {
-//     this.contohdata = data.result.id;
-//     this.app_no_ide = data.result.app_no_ide;
-//     this.tanggal_lahir = data.result.tanggal_lahir;
-
-//     this.router.navigate(['/hasilprescreening'], {
-//       queryParams: { datakirimanid: this.contohdata, datakirimantgllahir: this.tanggal_lahir, datakirimanappide: this.app_no_ide },
-//     });
-
-//     alert(this.contohdata);
-//   },
-// });
-
-//     });
-
-
-
-// this.router.navigate(['/hasilprescreening'], {
-//         queryParams: { datakirimanid: this.contohdata, datakirimantgllahir: this.tanggal_lahir, datakirimanappide: this.app_no_ide },
-//       });
-
-
-
-
 }
 
   }
 
   gotodaftaraplikasiide(app_no_ide: any, curef: any) {
-    const kirimanprovinsi = this.provinsi_cabang.split('|');
-    const kirimankabkota = this.kabkota_cabang.split('|');
-    const kirimankecamatan = this.kecamatan.split('|');
-    const kirimankelurahan = this.kelurahan.split('|');
-    const kirimanprovinsipsng = this.provinsi_cabang.split('|');
-    const kirimankabkotapsng = this.kabkota_cabang.split('|');
-    const kirimankecamatanpsng = this.kecamatan.split('|');
-    const kirimankelurahanpsng = this.kelurahan.split('|');
-    const httpOptions = {
-      'Content-Type': 'text/plain',
-    };
 
-    const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
+    alert('cekcuref'+curef)
+if(this.status_perkawinan =='Menikah'){
 
-    this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
-        headers: headers,
-        nama: this.nama,
-        nama_pasangan: this.nama_pasangan,
-        kategori_pekerjaan: 'Fixincome',
-        curef: curef,
-        jenis_kelamin: this.jenis_kelamin,
-        jenis_kelamin_pasangan: this.jenis_kelamin_pasangan,
-        usia: '0',
-        app_no_ide: app_no_ide,
-        tanggal_lahir: this.tanggal_lahir,
-        tanggal_lahir_pasangan: this.tanggal_lahir_pasangan,
-        tempat_lahir: this.tempat_lahir,
-        tempat_lahir_pasangan: this.tempat_lahir_pasangan,
-        status_perkawinan: this.status_perkawinan,
-        status_alamat: '',
-        status_kendaraan: '',
-        status_ktp: '',
-        status_ktp_pasangan: '',
-        status_rumah: '',
-        agama: this.agama,
-        agama_pasangan: this.agama_pasangan,
-        pendidikan: this.pendidikan,
-        pendidikan_pasangan: this.pendidikan_pasangan,
-        kewarganegaraan: this.kewarganegaraan,
-        kewarganegaraan_pasangan: this.kewarganegaraan_pasangan,
-        nama_ibu_kandung: this.nama_ibu_kandung,
-        nama_ibu_kandung_pasangan: this.nama_ibu_kandung_pasangan,
-        npwp: this.npwp,
-        npwp_pasangan: this.npwp_pasangan,
-        alamat_ktp: this.alamat_ktp,
-        alamat_ktp_pasangan: this.alamat_ktp_pasangan,
-        alamat_domisili: '',
-        provinsi: kirimanprovinsi[1],
-        provinsi_domisili: 'this.nama_pasangan',
-        provinsi_pasangan: kirimanprovinsipsng[1],
-        kabkota: kirimankabkota[1],
-        kabkota_domisili: '',
-        kabkota_pasangan: kirimankabkotapsng[1],
-        kecamatan: kirimankecamatan[1],
-        kecamatan_domisili: '',
-        kecamatan_pasangan: kirimankecamatanpsng[1],
-        kelurahan: kirimankelurahan[1],
-        kelurahan_domisili: '',
-        kelurahan_pasangan: kirimankelurahanpsng[1],
-        kode_pos: this.kode_pos,
-        kode_pos_domisili: '',
-        kode_pos_pasangan: this.kode_pos_pasangan,
-        lama_menetap: '',
-        cabang: '',
-        created_by: '',
-        created_date: '',
-        email: '',
-        email_pasangan: '',
-        id: 0,
-        jumlah_anak: '',
-        rt: this.rt,
-        rt_domisili: '',
-        rt_pasangan: this.rt_pasangan,
-        rw: this.rw,
-        rw_domisili: '',
-        rw_pasangan: this.rw_pasangan,
-        no_ktp: this.no_ktp,
-        no_ktp_pasangan: this.no_ktp_pasangan,
-        tanggal_terbit_ktp: this.tanggal_terbit_ktp,
-        tanggal_terbit_ktp_pasangan: this.tanggal_terbit_ktp_pasangan,
-        tanggal_exp_ktp: this.tanggal_exp_ktp,
-        tipe_kendaraan: '',
-        no_handphone: this.no_handphone,
-        no_handphone_pasangan: this.no_handphone_pasangan,
-        no_telepon: '',
-        updated_by: '',
-        updated_date: '',
-        usia_pasangan: '',
-        alamat_pekerjaan: this.alamat_perusahaan,
-        alamat_pekerjaan_sebelum: this.alamat_pekerjaan_sebelum,
-      })
-      .subscribe(resposne => {
-        console.log(resposne);
-      });
 
-    this.http
+  const kirimanprovinsi = this.provinsi_cabang.split('|');
+  if (this.provinsi_cabang.indexOf('|') !== -1) {
+    var kirimanprovinsid = kirimanprovinsi[1];
+  } else {
+    var kirimanprovinsid = this.provinsi_cabang;
+  }
+  const kirimankabkota = this.kabkota_cabang.split('|');
+  if (this.kabkota_cabang.indexOf('|') !== -1) {
+    var kirimankabkotaid = kirimankabkota[1];
+  } else {
+    var kirimankabkotaid = this.kabkota_cabang;
+  }
+  const kirimankecamatan = this.kecamatan.split('|');
+  if (this.kecamatan.indexOf('|') !== -1) {
+    var kirimankecamatanid = kirimankecamatan[1];
+  } else {
+    var kirimankecamatanid = this.kecamatan;
+  }
+  const kirimankelurahan = this.kelurahan.split('|');
+  if (this.kelurahan.indexOf('|') !== -1) {
+    var kirimankelurahanid = kirimankelurahan[1];
+  } else {
+    var kirimankelurahanid = this.kelurahan;
+  }
+
+  const kirimanprovinsipsng = this.provinsi_cabang_pasangan.split('|');
+  if (this.provinsi_cabang_pasangan.indexOf('|') !== -1) {
+    var kirimanprovpsg = kirimanprovinsipsng[1];
+  } else {
+    var kirimanprovpsg = this.provinsi_cabang_pasangan;
+  }
+  const kirimankabkotapsng = this.kabkota_cabang_pasangan.split('|');
+  if (this.kabkota_cabang_pasangan.indexOf('|') !== -1) {
+    var kirimankotapsg= kirimankabkotapsng[1];
+  } else {
+    var kirimankotapsg = this.kabkota_cabang_pasangan;
+  }
+  const kirimankecamatanpsng = this.kecamatan_pasangan.split('|');
+  if (this.kecamatan_pasangan.indexOf('|') !== -1) {
+    var kirimankecamatanpsg = kirimankecamatanpsng[1];
+  } else {
+    var kirimankecamatanpsg = this.kecamatan_pasangan;
+  }
+  const kirimankelurahanpsng = this.kelurahan_pasangan.split('|');
+  if (this.kelurahan_pasangan.indexOf('|') !== -1) {
+    var kirimankelurahanpsg = kirimankelurahanpsng[1];
+  } else {
+    var kirimankelurahanpsg = this.kelurahan_pasangan;
+  }
+
+  const kirimanprovinsijob = this.provinsi_perusahaan.split('|');
+  if (this.provinsi_perusahaan.indexOf('|') !== -1) {
+    var kirimanprovjob = kirimanprovinsijob[1];
+  } else {
+    var kirimanprovjob = this.provinsi_perusahaan;
+  }
+  const kirimankabkotajob = this.kabkota_perusahaan.split('|');
+  if (this.kabkota_perusahaan.indexOf('|') !== -1) {
+    var kirimankabkotajobn = kirimankabkotajob[1];
+  } else {
+    var kirimankabkotajobn = this.kabkota_perusahaan;
+  }
+  const kirimankecamatanjob = this.kecamatan_perusahaan.split('|');
+  if (this.kecamatan_perusahaan.indexOf('|') !== -1) {
+    var kirimankecamatanjobn= kirimankecamatanjob[1];
+  } else {
+    var kirimankecamatanjobn = this.kecamatan_perusahaan;
+  }
+  const kirimankelurahanjob = this.kelurahan_perusahaan.split('|');
+  if (this.kelurahan_perusahaan.indexOf('|') !== -1) {
+    var kirimankelurahanjobn= kirimankelurahanjob[1];
+  } else {
+    var kirimankelurahanjobn = this.kelurahan_perusahaan;
+  }
+
+  const httpOptions = {
+    'Content-Type': 'text/plain',
+  };
+
+  const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
+
+  this.http
+    .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
+      headers: headers,
+    nama: this.nama,
+    nama_pasangan: this.nama_pasangan,
+    kategori_pekerjaan: 'Non Fix Income',
+    curef: curef,
+    jenis_kelamin: this.jenis_kelamin,
+    jenis_kelamin_pasangan:  this.jenis_kelamin_pasangan,
+    usia: '0',
+    app_no_ide: app_no_ide,
+    tanggal_lahir: this.tanggal_lahir,
+    tanggal_lahir_pasangan: this.tanggal_lahir_pasangan,
+    tempat_lahir: this.tempat_lahir,
+    tempat_lahir_pasangan:  this.tempat_lahir_pasangan,
+    status_perkawinan: this.status_perkawinan,
+    status_alamat: '',
+    status_kendaraan: '',
+    status_ktp: '',
+    status_ktp_pasangan: '',
+    status_rumah: '',
+    agama: this.agama,
+    agama_pasangan:  this.agama_pasangan,
+    pendidikan: this.pendidikan,
+    pendidikan_pasangan: this.pendidikan_pasangan,
+    kewarganegaraan: this.kewarganegaraan,
+    kewarganegaraan_pasangan: this.kewarganegaraan_pasangan,
+    nama_ibu_kandung: this.nama_ibu_kandung,
+    nama_ibu_kandung_pasangan: this.nama_ibu_kandung_pasangan,
+    npwp: this.npwp,
+    npwp_pasangan:  this.npwp_pasangan,
+    alamat_ktp: this.alamat_ktp,
+    alamat_ktp_pasangan: this.alamat_ktp_pasangan,
+    alamat_domisili: '',
+    provinsi: kirimanprovinsid,
+    provinsi_domisili: '',
+    provinsi_pasangan:kirimanprovpsg ,
+    kabkota: kirimankabkotaid,
+    kabkota_domisili: '',
+    kabkota_pasangan:kirimankotapsg,
+    kecamatan: kirimankecamatanid,
+    kecamatan_domisili: '',
+    kecamatan_pasangan:kirimankecamatanpsg ,
+    kelurahan: kirimankelurahanid,
+    kelurahan_domisili: '',
+    kelurahan_pasangan: kirimankelurahanpsg,
+    kode_pos: '',
+    kode_pos_domisili: '',
+    kode_pos_pasangan: '',
+    lama_menetap: '',
+    cabang: '',
+    created_by: '',
+    created_date: '',
+    email: '',
+    email_pasangan: '',
+    id: 0,
+    jumlah_anak: '',
+    rt: this.rt,
+    rt_domisili: '',
+    rt_pasangan: this.rt_pasangan,
+    rw: this.rw,
+    rw_domisili: '',
+    rw_pasangan:this.rw_pasangan,
+    no_ktp: this.no_ktp,
+    no_ktp_pasangan: this.no_ktp_pasangan,
+    tanggal_terbit_ktp: this.tanggal_terbit_ktp,
+    tanggal_terbit_ktp_pasangan: this.tanggal_terbit_ktp_pasangan,
+    tanggal_exp_ktp: this.tanggal_exp_ktp,
+    tanggal_exp_ktp_pasangan:  this.tanggal_exp_ktp_pasangan,
+    tipe_kendaraan: '',
+    no_handphone: this.no_handphone,
+    no_handphone_pasangan:  this.no_handphone_pasangan,
+    no_telepon: '',
+    updated_by: '',
+    updated_date: '',
+    usia_pasangan: '',
+    })
+    .subscribe(resposne => {
+
+      this.contohdata = resposne.result.id;
+
+      console.log(resposne);
+      this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_job_info', {
         headers: headers,
         alamat_perusahaan: this.alamat_perusahaan,
@@ -1126,12 +1145,12 @@ if(this.status_perkawinan =='Menikah'){
         jumlah_karyawan: this.jumlah_karyawan,
         jumlah_karyawan_sebelum: this.nama,
         kabkota_sebelum: '',
-        kabkota: this.kabkota_perusahaan,
+        kabkota: kirimankabkotajobn,
         kategori_pekerjaan: this.agama,
         kategori_pekerjaan_sebelum: this.nama,
-        kecamatan: this.kecamatan_perusahaan,
+        kecamatan: kirimankecamatanjobn,
         kecamatan_sebelum: '',
-        kelurahan: this.kelurahan_perusahaan,
+        kelurahan: kirimankelurahanjobn,
         kelurahan_sebelum: '',
         kepemilikan_perusahaan: this.kepemilikan_perusahaan,
         kode_pos: '',
@@ -1140,10 +1159,10 @@ if(this.status_perkawinan =='Menikah'){
         lama_bekerja_bulan_sebelum: this.alamat_ktp,
         lama_bekerja_tahun_sebelum: this.nama,
         nama_perusahaan: this.nama,
-        nama_perusahaan_sebelum: kirimanprovinsi[1],
+        nama_perusahaan_sebelum: '',
         no_siup: this.no_siup,
         no_telepon: this.no_telepon,
-        npwp: kirimankabkota[1],
+        npwp: '',
         payroll: '',
         payroll_sebelum: '',
         pemilik_usaha: this.pemilik_usaha,
@@ -1151,7 +1170,7 @@ if(this.status_perkawinan =='Menikah'){
         pendapatan_lain: '',
         posisi: '',
         posisi_sebelum: '',
-        provinsi: this.provinsi_perusahaan,
+        provinsi: kirimanprovjob,
         provinsi_sebelum: '',
         rt: this.rt_perusahaan,
         rt_sebelum: '',
@@ -1173,14 +1192,254 @@ if(this.status_perkawinan =='Menikah'){
         umur_pensiun: '',
         umur_pensiun_sebelum: '',
       })
-      .subscribe(resposne => {
-        console.log(resposne);
+      .subscribe({
+        next: data => {
+          // this.contohdata = data.result.id;
+          this.app_no_ide = data.result.app_no_ide;
+          this.tanggal_lahir = data.result.tanggal_lahir;
+
+          this.router.navigate(['/daftaraplikasiide'], {
+            queryParams: {},
+          });
+
+          alert(this.contohdata);
+        },
       });
 
-    this.router.navigate(['/daftaraplikasiide'], {
-      queryParams: {},
     });
+
+}else{
+
+
+  const kirimanprovinsi = this.provinsi_cabang.split('|');
+  if (this.provinsi_cabang.indexOf('|') !== -1) {
+    var kirimanprovinsid = kirimanprovinsi[1];
+  } else {
+    var kirimanprovinsid = this.provinsi_cabang;
   }
+  const kirimankabkota = this.kabkota_cabang.split('|');
+  if (this.kabkota_cabang.indexOf('|') !== -1) {
+    var kirimankabkotaid = kirimankabkota[1];
+  } else {
+    var kirimankabkotaid = this.kabkota_cabang;
+  }
+  const kirimankecamatan = this.kecamatan.split('|');
+  if (this.kecamatan.indexOf('|') !== -1) {
+    var kirimankecamatanid = kirimankecamatan[1];
+  } else {
+    var kirimankecamatanid = this.kecamatan;
+  }
+  const kirimankelurahan = this.kelurahan.split('|');
+  if (this.kelurahan.indexOf('|') !== -1) {
+    var kirimankelurahanid = kirimankelurahan[1];
+  } else {
+    var kirimankelurahanid = this.kelurahan;
+  }
+
+  const kirimanprovinsijob = this.provinsi_perusahaan.split('|');
+  if (this.provinsi_perusahaan.indexOf('|') !== -1) {
+    var kirimanprovjob = kirimanprovinsijob[1];
+  } else {
+    var kirimanprovjob = this.provinsi_perusahaan;
+  }
+  const kirimankabkotajob = this.kabkota_perusahaan.split('|');
+  if (this.kabkota_perusahaan.indexOf('|') !== -1) {
+    var kirimankabkotajobn = kirimankabkotajob[1];
+  } else {
+    var kirimankabkotajobn = this.kabkota_perusahaan;
+  }
+
+  const kirimankecamatanjob = this.kecamatan_perusahaan.split('|');
+  if (this.kecamatan_perusahaan.indexOf('|') !== -1) {
+    var kirimankecamatanjobn= kirimankecamatanjob[1];
+  } else {
+    var kirimankecamatanjobn = this.kecamatan_perusahaan;
+  }
+  const kirimankelurahanjob = this.kelurahan_perusahaan.split('|');
+  if (this.kelurahan_perusahaan.indexOf('|') !== -1) {
+    var kirimankelurahanjobn= kirimankelurahanjob[1];
+  } else {
+    var kirimankelurahanjobn = this.kelurahan_perusahaan;
+  }
+
+  const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
+  const umur = document.getElementById('umur') as HTMLInputElement | any;
+
+
+  this.http
+  .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
+
+    headers: headers,
+    nama: this.nama,
+    nama_pasangan: '',
+    kategori_pekerjaan: 'Non Fix Income',
+    curef: curef,
+    jenis_kelamin: this.jenis_kelamin,
+    jenis_kelamin_pasangan: '',
+    usia: umur.value,
+    app_no_ide: app_no_ide,
+    tanggal_lahir: this.tanggal_lahir,
+    tanggal_lahir_pasangan: '',
+    tempat_lahir: this.tempat_lahir,
+    tempat_lahir_pasangan: '',
+    status_perkawinan: this.status_perkawinan,
+    status_alamat: '',
+    status_kendaraan: '',
+    status_ktp: '',
+    status_ktp_pasangan: '',
+    status_rumah: '',
+    agama: this.agama,
+    agama_pasangan: '',
+    pendidikan: this.pendidikan,
+    pendidikan_pasangan: '',
+    kewarganegaraan: this.kewarganegaraan,
+    kewarganegaraan_pasangan: '',
+    nama_ibu_kandung: this.nama_ibu_kandung,
+    nama_ibu_kandung_pasangan: '',
+    npwp: this.npwp,
+    npwp_pasangan: '',
+    alamat_ktp: this.alamat_ktp,
+    alamat_ktp_pasangan: '',
+    alamat_domisili: '',
+    provinsi: kirimanprovinsid,
+    provinsi_domisili: '',
+    provinsi_pasangan:'' ,
+    kabkota: kirimankabkotaid,
+    kabkota_domisili: '',
+    kabkota_pasangan:'',
+    kecamatan: kirimankecamatanid,
+    kecamatan_domisili: '',
+    kecamatan_pasangan:'' ,
+    kelurahan: kirimankelurahanid,
+    kelurahan_domisili: '',
+    kelurahan_pasangan: '',
+    kode_pos: '',
+    kode_pos_domisili: '',
+    kode_pos_pasangan: '',
+    lama_menetap: '',
+    cabang: '',
+    created_by: '',
+    created_date: '',
+    email: '',
+    email_pasangan: '',
+    id: 0,
+    jumlah_anak: '',
+    rt: this.rt,
+    rt_domisili: '',
+    rt_pasangan: '',
+    rw: this.rw,
+    rw_domisili: '',
+    rw_pasangan: '',
+    no_ktp: this.no_ktp,
+    no_ktp_pasangan: '',
+    tanggal_terbit_ktp: this.tanggal_terbit_ktp,
+    tanggal_terbit_ktp_pasangan: '',
+    tanggal_exp_ktp: this.tanggal_exp_ktp,
+    tanggal_exp_ktp_pasangan: '',
+    tipe_kendaraan: '',
+    no_handphone: this.no_handphone,
+    no_handphone_pasangan: '',
+    no_telepon: '',
+    updated_by: '',
+    updated_date: '',
+    usia_pasangan: '',
+
+
+  })
+  .subscribe(resposne => {
+    console.log(resposne);
+    this.contohdata = resposne.result.id;
+
+    this.http
+    .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_job_info', {
+      headers: headers,
+      alamat_perusahaan: this.alamat_perusahaan,
+      barang_jasa: this.barang_jasa,
+      bulan_berdiri: this.bulan_berdiri_perusahaan,
+      bulan_berdiri_sebelum: this.bulan_berdiri_perusahaan_sebelum,
+      created_by: '',
+      created_date: '',
+      curef: curef,
+      id: '',
+      jabatan: '',
+      jabatan_sebelum: '',
+      jenis_bidang: this.jenis_bidang,
+      jenis_bidang_sebelum: this.jenis_bidang_sebelum,
+      jenis_pekerjaan: this.status_perkawinan,
+      jenis_pekerjaan_sebelum: this.nama,
+      jumlah_karyawan: this.jumlah_karyawan,
+      jumlah_karyawan_sebelum: this.nama,
+      kabkota_sebelum: '',
+      kabkota: kirimankabkotajobn,
+      kategori_pekerjaan: this.agama,
+      kategori_pekerjaan_sebelum: this.nama,
+      kecamatan: kirimankecamatanjobn,
+      kecamatan_sebelum: '',
+      kelurahan: kirimankelurahanjobn,
+      kelurahan_sebelum: '',
+      kepemilikan_perusahaan: this.kepemilikan_perusahaan,
+      kode_pos: '',
+      kode_pos_sebelum: '',
+      lama_bekerja_tahun: this.nama,
+      lama_bekerja_bulan_sebelum: this.alamat_ktp,
+      lama_bekerja_tahun_sebelum: this.nama,
+      nama_perusahaan: this.nama,
+      nama_perusahaan_sebelum: '',
+      no_siup: this.no_siup,
+      no_telepon: this.no_telepon,
+      npwp: '',
+      payroll: '',
+      payroll_sebelum: '',
+      pemilik_usaha: this.pemilik_usaha,
+      pendapatan: '',
+      pendapatan_lain: '',
+      posisi: '',
+      posisi_sebelum: '',
+      provinsi: kirimanprovjob,
+      provinsi_sebelum: '',
+      rt: this.rt_perusahaan,
+      rt_sebelum: '',
+      rw: this.rw_perusahaan,
+      rw_sebelum: '',
+      sektor_ekonomi: this.jenis_sektor,
+      sektor_ekonomi_sebelum: this.jenis_sektor_sebelum,
+      status_active: '',
+      tahun_berdiri: this.tahun_berdiri_perusahaan,
+      tahun_berdiri_sebelum: this.tahun_berdiri_perusahaan_sebelum,
+      tipe_kepegawaian: '',
+      tipe_kepegawaian_sebelum: '',
+      tipe_pekerjaan: this.tipe_pekerjaan,
+      tipe_pekerjaan_sebelum: this.tipe_pekerjaan_sebelum,
+      tipe_perusahaan: this.tipe_perusahaan,
+      tipe_perusahaan_sebelum: this.tipe_perusahaan_sebelum,
+      total_pendapatan: '',
+      tunjangan: '',
+      umur_pensiun: '',
+      umur_pensiun_sebelum: '',
+    })
+      .subscribe({
+        next: data => {
+          // this.contohdata = data.result.id;
+          this.app_no_ide = data.result.app_no_ide;
+          this.tanggal_lahir = data.result.tanggal_lahir;
+
+          this.router.navigate(['/daftaraplikasiide'], {
+            queryParams: {},
+          });
+
+          alert(this.contohdata);
+        },
+      });
+
+
+  });
+
+}
+
+  }
+
+
+
 
   onChange(selectedStatus: any) {
     alert(this.postId);
@@ -1430,5 +1689,31 @@ if(this.status_perkawinan =='Menikah'){
     });
 
   }
+
+
+  submitBday() {
+    const contoh = document.getElementById('tanggal_lahir') as HTMLInputElement | any;
+    const contoh2 = document.getElementById('status_perkawinan') as HTMLInputElement | any;
+    var Q4A = "";
+    var Bdate = contoh.value;
+    var Bday = +new Date(Bdate);
+    Q4A += +~~((Date.now() - Bday) / (31557600000));
+    var theBday = document.getElementById('umur');
+    $('#umur').val(Q4A);
+}
+
+submitBdayp() {
+  const contoh = document.getElementById('tanggal_lahir_pasangan') as HTMLInputElement | any;
+
+
+    var Q4A = "";
+    var Bdate = contoh.value;
+    var Bday = +new Date(Bdate);
+    Q4A += +~~((Date.now() - Bday) / (31557600000));
+    var theBday = document.getElementById('umur');
+    $('#umurpasangan').val(Q4A);
+
+}
+
 
 }

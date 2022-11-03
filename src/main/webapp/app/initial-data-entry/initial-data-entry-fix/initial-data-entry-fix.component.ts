@@ -91,6 +91,7 @@ export class InitialDataEntryFixComponent implements OnInit {
   kabkota_cabang_pasangankode: any;
   kecamatan_pasangankode: any;
   kelurahan_pasangankode: any;
+  umur:any;
 
 
 
@@ -372,19 +373,19 @@ if( this.status_perkawinan =='Menikah'){
   } else {
     var kirimankelurahanidpasangan = this.kelurahan_pasangan;
   }
-
-  alert(kirimanprovinsipasangan);
-  alert(kirimanprovinsipasangan.indexOf('|') !== -1);
+  const umur = document.getElementById('umur') as HTMLInputElement | any;
+  // alert(kirimanprovinsipasangan);
+  // alert(kirimanprovinsipasangan.indexOf('|') !== -1);
   this.http
   .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
     headers: headers,
     nama: this.nama,
     nama_pasangan: this.nama_pasangan,
-    kategori_pekerjaan: 'Fixincome',
+    kategori_pekerjaan: 'Fix Income',
     curef: getcuref,
     jenis_kelamin: this.jenis_kelamin,
     jenis_kelamin_pasangan: this.jenis_kelamin_pasangan,
-    usia: '0',
+    usia: umur.value,
     app_no_ide: getappide,
     tanggal_lahir: this.tanggal_lahir,
     tanggal_lahir_pasangan: this.tanggal_lahir_pasangan,
@@ -468,42 +469,42 @@ if( this.status_perkawinan =='Menikah'){
 
 }else{
   const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
-
+  const umur = document.getElementById('umur') as HTMLInputElement | any;
   const kirimanprovinsi = this.provinsi_cabang.split('|');
-  if (kirimanprovinsi.indexOf('|') !== -1) {
+  if (this.provinsi_cabang.indexOf('|') !== -1) {
     var kirimanprovinsid = kirimanprovinsi[1];
   } else {
     var kirimanprovinsid = this.provinsi_cabang;
   }
   const kirimankabkota = this.kabkota_cabang.split('|');
-  if (kirimankabkota.indexOf('|') !== -1) {
+  if (this.kabkota_cabang.indexOf('|') !== -1) {
     var kirimankabkotaid = kirimankabkota[1];
   } else {
     var kirimankabkotaid = this.kabkota_cabang;
   }
   const kirimankecamatan = this.kecamatan.split('|');
-  if (kirimankecamatan.indexOf('|') !== -1) {
+  if (this.kecamatan.indexOf('|') !== -1) {
     var kirimankecamatanid = kirimankecamatan[1];
   } else {
     var kirimankecamatanid = this.kecamatan;
   }
   const kirimankelurahan = this.kelurahan.split('|');
-  if (kirimankelurahan.indexOf('|') !== -1) {
+  if (this.kelurahan.indexOf('|') !== -1) {
     var kirimankelurahanid = kirimankelurahan[1];
   } else {
     var kirimankelurahanid = this.kelurahan;
   }
-
+alert(this.umur);
   this.http
   .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
     headers: headers,
     nama: this.nama,
     nama_pasangan: '',
-    kategori_pekerjaan: 'Fixincome',
+    kategori_pekerjaan: 'Fix Income',
     curef: getcuref,
     jenis_kelamin: this.jenis_kelamin,
     jenis_kelamin_pasangan: '',
-    usia: '0',
+    usia: umur.value,
     app_no_ide: getappide,
     tanggal_lahir: this.tanggal_lahir,
     tanggal_lahir_pasangan: '',
@@ -698,19 +699,20 @@ if( this.status_perkawinan =='Menikah'){
       } else {
         var kirimankelurahanidpasangan = this.kelurahan_pasangan;
       }
-
-      alert(kirimanprovinsipasangan);
-      alert(kirimanprovinsipasangan.indexOf('|') !== -1);
+      const umur = document.getElementById('umur') as HTMLInputElement | any;
+      const umurpasangan = document.getElementById('umurpasangan') as HTMLInputElement | any;
+      // alert(kirimanprovinsipasangan);
+      // alert(kirimanprovinsipasangan.indexOf('|') !== -1);
       this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
         headers: headers,
         nama: this.nama,
         nama_pasangan: this.nama_pasangan,
-        kategori_pekerjaan: 'Fixincome',
+        kategori_pekerjaan: 'Fix Income',
         curef: getcuref,
         jenis_kelamin: this.jenis_kelamin,
         jenis_kelamin_pasangan: this.jenis_kelamin_pasangan,
-        usia: '0',
+        usia: umur.value,
         app_no_ide: getappide,
         tanggal_lahir: this.tanggal_lahir,
         tanggal_lahir_pasangan: this.tanggal_lahir_pasangan,
@@ -776,7 +778,7 @@ if( this.status_perkawinan =='Menikah'){
         no_telepon: '',
         updated_by: '',
         updated_date: '',
-        usia_pasangan: '',
+        usia_pasangan: umurpasangan.value,
       })
       .subscribe({
         next: data => {
@@ -820,17 +822,17 @@ if( this.status_perkawinan =='Menikah'){
       } else {
         var kirimankelurahanid = this.kelurahan;
       }
-
+      const umur = document.getElementById('umur') as HTMLInputElement | any;
       this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
         headers: headers,
         nama: this.nama,
         nama_pasangan: '',
-        kategori_pekerjaan: 'Fixincome',
+        kategori_pekerjaan: 'Fix Income',
         curef: getcuref,
         jenis_kelamin: this.jenis_kelamin,
         jenis_kelamin_pasangan: '',
-        usia: '0',
+        usia:umur.value,
         app_no_ide: getappide,
         tanggal_lahir: this.tanggal_lahir,
         tanggal_lahir_pasangan: '',
@@ -1100,7 +1102,7 @@ if( this.status_perkawinan =='Menikah'){
   }
 
   onChange(selectedStatus: any) {
-    // alert(this.postId);
+     alert(selectedStatus);
 
     this.getkabkota(this.postId, selectedStatus).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
@@ -1286,6 +1288,33 @@ if( this.status_perkawinan =='Menikah'){
     // alert(kodepotongan[0]);
 
   }
+
+  submitBday() {
+    const contoh = document.getElementById('tanggal_lahir') as HTMLInputElement | any;
+    const contoh2 = document.getElementById('tanggal_lahir_pasangan') as HTMLInputElement | any;
+
+
+      var Q4A = "";
+      var Bdate = contoh.value;
+      var Bday = +new Date(Bdate);
+      Q4A += +~~((Date.now() - Bday) / (31557600000));
+      var theBday = document.getElementById('umur');
+      $('#umur').val(Q4A);
+}
+
+
+submitBdayp() {
+  const contoh = document.getElementById('tanggal_lahir_pasangan') as HTMLInputElement | any;
+
+
+    var Q4A = "";
+    var Bdate = contoh.value;
+    var Bday = +new Date(Bdate);
+    Q4A += +~~((Date.now() - Bday) / (31557600000));
+    var theBday = document.getElementById('umur');
+    $('#umurpasangan').val(Q4A);
+
+}
 
 
 }

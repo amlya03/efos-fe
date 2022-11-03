@@ -40,9 +40,9 @@
           [(ngModel)]="tanggal_lahir"
           id="tanggal_lahir"
           name="tanggal_lahir"
-          onchange="submitBday()"
+          (change)="submitBday()"
         />
-        <input class="form-control" type="text" id="umur" name="usia" />
+        <input class="form-control" type="text" id="umur" name="umur" />
       </div>
     </div>
     <br />
@@ -888,7 +888,9 @@
               [(ngModel)]="tanggal_lahir_pasangan"
               id="tanggal_lahir_pasangan"
               name="tanggal_lahir_pasangan"
+              (change)="submitBdayp()"
             />
+            <input class="form-control" type="text" id="umurpasangan" name="umurpasangan" />
           </div>
         </div>
         <br />
