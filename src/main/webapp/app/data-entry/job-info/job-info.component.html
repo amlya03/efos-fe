@@ -28,13 +28,14 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">T2ipe Pekerjaan<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Tipe Pekerjaan<span class="text-danger">*</span></label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
               class="form-control"
               id="tipe_pekerjaan"
               name="tipe_pekerjaan"
+              [(ngModel)]="tipePekerjaanValidasi"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
               <option value="">Pilih Tipe Pekerjaan</option>
@@ -43,6 +44,9 @@
               </option>
             </select>
           </div>
+          <span *ngIf="tipePekerjaanValidasi == '' || tipePekerjaanValidasi == null || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' && this.daWa == ''" class="text-danger">
+            Tipe Pekerjaan Harus Diisi
+          </span>
         </div>
       </div>
       <br />

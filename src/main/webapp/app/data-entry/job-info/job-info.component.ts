@@ -83,6 +83,13 @@ export class JobInfoComponent implements OnInit {
   retrivekabkotasebelum: any;
   retrivekecamatansebelum: any;
   retrivekelurahansebelum: any;
+  /// Validasi
+  tipePekerjaanValidasi: any;
+  payrollValidasi: any;
+  posisiValidasi: any;
+  jenisPekerjaanValidasi: any;
+  namaPerusahaanValidasi: any;
+  alamatValidasi: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -216,7 +223,7 @@ export class JobInfoComponent implements OnInit {
 
         if (this.tampunganid == null || this.tampunganid == undefined) {
           this.dataretrivejobsebelumMap = res.body?.result;
-          alert('inijalan');
+          // alert('inijalan');
           let retrivejobsebelum = {
             kategori_pekerjaan_sebelum: '',
             tipe_pekerjaan_sebelum: '',
@@ -710,172 +717,177 @@ export class JobInfoComponent implements OnInit {
   }
 
   updatejobsebelum() {
-    const kategori_pekerjaan_sebelum = document.getElementById('kategori_pekerjaan_sebelum') as HTMLInputElement | any;
-    const tipe_pekerjaan_sebelum = document.getElementById('tipe_pekerjaan_sebelum') as HTMLInputElement | any;
-    const posisi_sebelum = document.getElementById('posisi_sebelum') as HTMLInputElement | any;
-    const nama_perusahaan_sebelum = document.getElementById('nama_perusahaan_sebelum') as HTMLInputElement | any;
-    const alamat_pekerjaan_sebelum = document.getElementById('alamat_pekerjaan_sebelum') as HTMLInputElement | any;
-    const provinsi_sebelum = document.getElementById('provinsi_sebelum') as HTMLInputElement | any;
-    const kabkota_sebelum = document.getElementById('kabkota_sebelum') as HTMLInputElement | any;
-    const kecamatan_sebelum = document.getElementById('kecamatan_sebelum') as HTMLInputElement | any;
-    const kelurahan_sebelum = document.getElementById('kelurahan_sebelum') as HTMLInputElement | any;
-    const kode_pos_sebelum = document.getElementById('kode_pos_sebelum') as HTMLInputElement | any;
-    const rt_sebelum = document.getElementById('rt_sebelum') as HTMLInputElement | any;
-    const rw_sebelum = document.getElementById('rw_sebelum') as HTMLInputElement | any;
-    const jenis_bidang_sebelum = document.getElementById('jenis_bidang_sebelum') as HTMLInputElement | any;
-    const sektor_ekonomi_sebelum = document.getElementById('sektor_ekonomi_sebelum') as HTMLInputElement | any;
-    const lama_bekerja_tahun_sebelum = document.getElementById('lama_bekerja_tahun_sebelum') as HTMLInputElement | any;
-    const lama_bekerja_bulan_sebelum = document.getElementById('lama_bekerja_bulan_sebelum') as HTMLInputElement | any;
-    const jumlah_karyawan_sebelum = document.getElementById('jumlah_karyawan_sebelum') as HTMLInputElement | any;
-    const jumlah_karyawan_sebelumnya = document.getElementById('jumlah_karyawan_sebelumnya') as HTMLInputElement | any;
-    const tipe_perusahaan_sebelum = document.getElementById('tipe_perusahaan_sebelum') as HTMLInputElement | any;
-    const tipe_kepegawaian_sebelum = document.getElementById('tipe_kepegawaian_sebelum') as HTMLInputElement | any;
-    const id = document.getElementById('id') as HTMLInputElement | any;
-    const curef = document.getElementById('curef') as HTMLInputElement | any;
-
-    var kirimanpotonganprovinsi = provinsi_sebelum.value.split('|');
-    var cekdatapipe = provinsi_sebelum.value.indexOf('|');
-    var cekpipejenisbidang = jenis_bidang_sebelum.value.indexOf('|');
-    var kirimanjenisbidang1 = jenis_bidang_sebelum.value.split('|');
-
-    const kirimanpayrol = (<HTMLInputElement>document.getElementById('payrollid')).checked;
-    const kirimannonpayrol = (<HTMLInputElement>document.getElementById('nonpayrollid')).checked;
-
-    if (kirimanpayrol == true) {
-      this.contohkirimanpayrol = 1;
-    } else if (kirimannonpayrol == true) {
-      this.contohkirimanpayrol = 0;
+    if(this.daWa == ''){
+      alert('Perkerjaan Belum Ada')
+      return;
     } else {
-      this.contohkirimanpayrol = 9;
+      const kategori_pekerjaan_sebelum = document.getElementById('kategori_pekerjaan_sebelum') as HTMLInputElement | any;
+      const tipe_pekerjaan_sebelum = document.getElementById('tipe_pekerjaan_sebelum') as HTMLInputElement | any;
+      const posisi_sebelum = document.getElementById('posisi_sebelum') as HTMLInputElement | any;
+      const nama_perusahaan_sebelum = document.getElementById('nama_perusahaan_sebelum') as HTMLInputElement | any;
+      const alamat_pekerjaan_sebelum = document.getElementById('alamat_pekerjaan_sebelum') as HTMLInputElement | any;
+      const provinsi_sebelum = document.getElementById('provinsi_sebelum') as HTMLInputElement | any;
+      const kabkota_sebelum = document.getElementById('kabkota_sebelum') as HTMLInputElement | any;
+      const kecamatan_sebelum = document.getElementById('kecamatan_sebelum') as HTMLInputElement | any;
+      const kelurahan_sebelum = document.getElementById('kelurahan_sebelum') as HTMLInputElement | any;
+      const kode_pos_sebelum = document.getElementById('kode_pos_sebelum') as HTMLInputElement | any;
+      const rt_sebelum = document.getElementById('rt_sebelum') as HTMLInputElement | any;
+      const rw_sebelum = document.getElementById('rw_sebelum') as HTMLInputElement | any;
+      const jenis_bidang_sebelum = document.getElementById('jenis_bidang_sebelum') as HTMLInputElement | any;
+      const sektor_ekonomi_sebelum = document.getElementById('sektor_ekonomi_sebelum') as HTMLInputElement | any;
+      const lama_bekerja_tahun_sebelum = document.getElementById('lama_bekerja_tahun_sebelum') as HTMLInputElement | any;
+      const lama_bekerja_bulan_sebelum = document.getElementById('lama_bekerja_bulan_sebelum') as HTMLInputElement | any;
+      const jumlah_karyawan_sebelum = document.getElementById('jumlah_karyawan_sebelum') as HTMLInputElement | any;
+      const jumlah_karyawan_sebelumnya = document.getElementById('jumlah_karyawan_sebelumnya') as HTMLInputElement | any;
+      const tipe_perusahaan_sebelum = document.getElementById('tipe_perusahaan_sebelum') as HTMLInputElement | any;
+      const tipe_kepegawaian_sebelum = document.getElementById('tipe_kepegawaian_sebelum') as HTMLInputElement | any;
+      const id = document.getElementById('id') as HTMLInputElement | any;
+      const curef = document.getElementById('curef') as HTMLInputElement | any;
+
+      var kirimanpotonganprovinsi = provinsi_sebelum.value.split('|');
+      var cekdatapipe = provinsi_sebelum.value.indexOf('|');
+      var cekpipejenisbidang = jenis_bidang_sebelum.value.indexOf('|');
+      var kirimanjenisbidang1 = jenis_bidang_sebelum.value.split('|');
+
+      const kirimanpayrol = (<HTMLInputElement>document.getElementById('payrollid')).checked;
+      const kirimannonpayrol = (<HTMLInputElement>document.getElementById('nonpayrollid')).checked;
+
+      if (kirimanpayrol == true) {
+        this.contohkirimanpayrol = 1;
+      } else if (kirimannonpayrol == true) {
+        this.contohkirimanpayrol = 0;
+      } else {
+        this.contohkirimanpayrol = 9;
+      }
+
+      if (cekdatapipe !== -1) {
+        var kirimanprovinsi = kirimanpotonganprovinsi[1];
+
+        // alert("update provinsi bawa value pipe |"+kirimanprovinsi)
+      } else {
+        //  var kirimanprovinsi =kirimanpotonganprovinsi[1];
+        var kirimanprovinsi = provinsi_sebelum.value;
+        // alert("update provinsi bawa value"+kirimanprovinsi)
+      }
+      var potongankabkota = kabkota_sebelum.value.split('|');
+      if (kabkota_sebelum.value.indexOf('|') !== -1) {
+        var kirimankabkota = potongankabkota[1];
+      } else {
+        var kirimankabkota = kabkota_sebelum.value;
+      }
+      var potongankecamatan = kecamatan_sebelum.value.split('|');
+      if (kecamatan_sebelum.value.indexOf('|') !== -1) {
+        var kirimankecamatan = potongankecamatan[1];
+      } else {
+        var kirimankecamatan = kecamatan_sebelum.value;
+      }
+      var potongankelurahan = kelurahan_sebelum.value.split('|');
+      if (kelurahan_sebelum.value.indexOf('|') !== -1) {
+        var kirimankelurahan = potongankelurahan[1];
+      } else {
+        var kirimankelurahan = kelurahan_sebelum.value;
+      }
+
+      var potongankategori = kelurahan_sebelum.value.split('|');
+      if (kelurahan_sebelum.value.indexOf('|') !== -1) {
+        var kirimankategori = potongankategori[1];
+      } else {
+        var kirimankategori = kelurahan_sebelum.value;
+      }
+
+      // if (jenis_bidang_sebelum.value.indexOf('|') !== -1) {
+      //   var jneisbidangsebelumnya = jenis_bidang_sebelum.value.split('|');
+      //   var kirimanjenisbidang = jneisbidangsebelumnya[1];
+      //   alert('ada piope nya' + jenis_bidang_sebelum.values + jneisbidangsebelumnya[1]);
+      // } else {
+      //   alert('gkada');
+      //   var kirimanjenisbidang = jenis_bidang_sebelum.value;
+      // }
+      var potonganjenisbidang = jenis_bidang_sebelum.value.split('|');
+      if (jenis_bidang_sebelum.value.indexOf('|') !== -1) {
+        var kirimanjenisbidang = potonganjenisbidang[1];
+      } else {
+        var kirimanjenisbidang = jenis_bidang_sebelum.value;
+      }
+
+      var potongansektor = sektor_ekonomi_sebelum.value.split('|');
+      if (sektor_ekonomi_sebelum.value.indexOf('|') !== -1) {
+        var kirimansektor = potongansektor[1];
+      } else {
+        var kirimansektor = sektor_ekonomi_sebelum.value;
+      }
+
+      this.http
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_job_sebelum_de', {
+          // headers: headers,
+
+          alamat_pekerjaan_sebelum: alamat_pekerjaan_sebelum.value,
+          id: id.value,
+          // jabatan_sebelum: contohtampungancuref,
+          jenis_bidang_sebelum: kirimanjenisbidang,
+          // jenis_pekerjaan_sebelum: usia.value,
+          jumlah_karyawan_sebelum: jumlah_karyawan_sebelum.value,
+          kategori_pekerjaan_sebelum: kategori_pekerjaan_sebelum.value,
+          kabkota_sebelum: kirimankabkota,
+          kecamatan_sebelum: kirimankecamatan,
+          kelurahan_sebelum: kirimankelurahan,
+          kode_pos_sebelum: kode_pos_sebelum.value,
+          lama_bekerja_bulan_sebelum: lama_bekerja_bulan_sebelum.value,
+          lama_bekerja_tahun_sebelum: lama_bekerja_tahun_sebelum.value,
+          nama_perusahaan_sebelum: nama_perusahaan_sebelum.value,
+          payroll_sebelum: this.contohkirimanpayrol,
+          posisi_sebelum: posisi_sebelum.value,
+          provinsi_sebelum: kirimanprovinsi,
+          rt_sebelum: rt_sebelum.value,
+          // nama_ibu_kandung: ' 1',
+          rw_sebelum: rw_sebelum.value,
+          sektor_ekonomi_sebelum: kirimansektor,
+          // tahun_berdiri_sebelum: id.value,
+          tipe_kepegawaian_sebelum: tipe_kepegawaian_sebelum.value,
+          tipe_pekerjaan_sebelum: tipe_pekerjaan_sebelum.value,
+          tipe_perusahaan_sebelum: tipe_perusahaan_sebelum.value,
+          // umur_pensiun_sebelum: kirimankabkota,
+          curef: curef.value,
+        })
+
+        .subscribe({
+          next: bawaan => {
+            //           this.contohdata = bawaan.result.app_no_de;
+            // this.databawaan = bawaan.result.app_no_de;
+
+            // this.router.navigate(['/data-entry/job-info'], {
+            //   queryParams: {
+            //     datakiriman:  this.datakiriman,
+            //     datakirimanstatus: this.datakirimanstatus,
+            //     datakirimanappde: this.datakirimanappde,
+            //     datakirimanakategoripekerjaan:   this.datakirimanakategoripekerjaan,
+            //   },
+            // });
+
+            if (this.keteranganstatusnikah === 'Menikah') {
+              this.router.navigate(['/data-entry/data-pasangan'], {
+                queryParams: {
+                  app_no_de: this.app_no_de,
+                  // datakirimanakategoripekerjaan: this.curefakategoripekerjaan,
+                  curef: this.curef,
+                },
+              });
+              // alert(' ini NIKAH');
+              console.warn(this.curef);
+            } else {
+              // alert('ini jomblo');
+              // alert(contohtampungancuref);
+              this.router.navigate(['/data-entry/collateral'], {
+                queryParams: {
+                  app_no_de: this.app_no_de,
+                  // datakirimanakategoripekerjaan: this.curefakategoripekerjaan,
+                  curef: this.curef,
+                },
+              });
+            }
+          },
+        });
     }
-
-    if (cekdatapipe !== -1) {
-      var kirimanprovinsi = kirimanpotonganprovinsi[1];
-
-      // alert("update provinsi bawa value pipe |"+kirimanprovinsi)
-    } else {
-      //  var kirimanprovinsi =kirimanpotonganprovinsi[1];
-      var kirimanprovinsi = provinsi_sebelum.value;
-      // alert("update provinsi bawa value"+kirimanprovinsi)
-    }
-    var potongankabkota = kabkota_sebelum.value.split('|');
-    if (kabkota_sebelum.value.indexOf('|') !== -1) {
-      var kirimankabkota = potongankabkota[1];
-    } else {
-      var kirimankabkota = kabkota_sebelum.value;
-    }
-    var potongankecamatan = kecamatan_sebelum.value.split('|');
-    if (kecamatan_sebelum.value.indexOf('|') !== -1) {
-      var kirimankecamatan = potongankecamatan[1];
-    } else {
-      var kirimankecamatan = kecamatan_sebelum.value;
-    }
-    var potongankelurahan = kelurahan_sebelum.value.split('|');
-    if (kelurahan_sebelum.value.indexOf('|') !== -1) {
-      var kirimankelurahan = potongankelurahan[1];
-    } else {
-      var kirimankelurahan = kelurahan_sebelum.value;
-    }
-
-    var potongankategori = kelurahan_sebelum.value.split('|');
-    if (kelurahan_sebelum.value.indexOf('|') !== -1) {
-      var kirimankategori = potongankategori[1];
-    } else {
-      var kirimankategori = kelurahan_sebelum.value;
-    }
-
-    // if (jenis_bidang_sebelum.value.indexOf('|') !== -1) {
-    //   var jneisbidangsebelumnya = jenis_bidang_sebelum.value.split('|');
-    //   var kirimanjenisbidang = jneisbidangsebelumnya[1];
-    //   alert('ada piope nya' + jenis_bidang_sebelum.values + jneisbidangsebelumnya[1]);
-    // } else {
-    //   alert('gkada');
-    //   var kirimanjenisbidang = jenis_bidang_sebelum.value;
-    // }
-    var potonganjenisbidang = jenis_bidang_sebelum.value.split('|');
-    if (jenis_bidang_sebelum.value.indexOf('|') !== -1) {
-      var kirimanjenisbidang = potonganjenisbidang[1];
-    } else {
-      var kirimanjenisbidang = jenis_bidang_sebelum.value;
-    }
-
-    var potongansektor = sektor_ekonomi_sebelum.value.split('|');
-    if (sektor_ekonomi_sebelum.value.indexOf('|') !== -1) {
-      var kirimansektor = potongansektor[1];
-    } else {
-      var kirimansektor = sektor_ekonomi_sebelum.value;
-    }
-
-    this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_job_sebelum_de', {
-        // headers: headers,
-
-        alamat_pekerjaan_sebelum: alamat_pekerjaan_sebelum.value,
-        id: id.value,
-        // jabatan_sebelum: contohtampungancuref,
-        jenis_bidang_sebelum: kirimanjenisbidang,
-        // jenis_pekerjaan_sebelum: usia.value,
-        jumlah_karyawan_sebelum: jumlah_karyawan_sebelum.value,
-        kategori_pekerjaan_sebelum: kategori_pekerjaan_sebelum.value,
-        kabkota_sebelum: kirimankabkota,
-        kecamatan_sebelum: kirimankecamatan,
-        kelurahan_sebelum: kirimankelurahan,
-        kode_pos_sebelum: kode_pos_sebelum.value,
-        lama_bekerja_bulan_sebelum: lama_bekerja_bulan_sebelum.value,
-        lama_bekerja_tahun_sebelum: lama_bekerja_tahun_sebelum.value,
-        nama_perusahaan_sebelum: nama_perusahaan_sebelum.value,
-        payroll_sebelum: this.contohkirimanpayrol,
-        posisi_sebelum: posisi_sebelum.value,
-        provinsi_sebelum: kirimanprovinsi,
-        rt_sebelum: rt_sebelum.value,
-        // nama_ibu_kandung: ' 1',
-        rw_sebelum: rw_sebelum.value,
-        sektor_ekonomi_sebelum: kirimansektor,
-        // tahun_berdiri_sebelum: id.value,
-        tipe_kepegawaian_sebelum: tipe_kepegawaian_sebelum.value,
-        tipe_pekerjaan_sebelum: tipe_pekerjaan_sebelum.value,
-        tipe_perusahaan_sebelum: tipe_perusahaan_sebelum.value,
-        // umur_pensiun_sebelum: kirimankabkota,
-        curef: curef.value,
-      })
-
-      .subscribe({
-        next: bawaan => {
-          //           this.contohdata = bawaan.result.app_no_de;
-          // this.databawaan = bawaan.result.app_no_de;
-
-          // this.router.navigate(['/data-entry/job-info'], {
-          //   queryParams: {
-          //     datakiriman:  this.datakiriman,
-          //     datakirimanstatus: this.datakirimanstatus,
-          //     datakirimanappde: this.datakirimanappde,
-          //     datakirimanakategoripekerjaan:   this.datakirimanakategoripekerjaan,
-          //   },
-          // });
-
-          if (this.keteranganstatusnikah === 'Menikah') {
-            this.router.navigate(['/data-entry/data-pasangan'], {
-              queryParams: {
-                app_no_de: this.app_no_de,
-                // datakirimanakategoripekerjaan: this.curefakategoripekerjaan,
-                curef: this.curef,
-              },
-            });
-            // alert(' ini NIKAH');
-            console.warn(this.curef);
-          } else {
-            // alert('ini jomblo');
-            // alert(contohtampungancuref);
-            this.router.navigate(['/data-entry/collateral'], {
-              queryParams: {
-                app_no_de: this.app_no_de,
-                // datakirimanakategoripekerjaan: this.curefakategoripekerjaan,
-                curef: this.curef,
-              },
-            });
-          }
-        },
-      });
   }
 
   vieweditjobinfo(contohtampungancuref: any, id: any): void {
