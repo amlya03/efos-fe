@@ -91,7 +91,7 @@
             name="provinsi_pasangan"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option>{{ daWa.provinsi_pasangan }}</option>
+            <option>{{retriveprovinsi}}</option>
             <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
               {{ daWaprof.namaWilayah }}
             </option>
@@ -111,7 +111,7 @@
             name="kabkota_pasangan"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option>{{ daWa.kabkota_pasangan }}</option>
+            <option>{{ retrivekabkota}}</option>
             <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
               {{ daWakota.namaWilayah }}
             </option>
@@ -131,7 +131,7 @@
             name="kecamatan_pasangan"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option>{{ daWa.kecamatan_pasangan }}</option>
+            <option>{{ retrivekecamatan }}</option>
             <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
               {{ daWakecamatan.namaWilayah }}
             </option>
@@ -151,7 +151,7 @@
             name="kelurahan_pasangan"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option>{{ daWa.kelurahan_pasangan }}</option>
+            <option>{{ retrivekelurahan }}</option>
             <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
               {{ daWakelurahan.namaWilayah }}
             </option>
@@ -172,12 +172,13 @@
             class="form-control"
             id="kode_pos_pasangan"
             name="kode_pos_pasangan"
+            #kodepos
             value="{{ daWa.kode_pos_pasangan }}"
           />
           <div class="input-group-append">
             <button
               id="btnkdphilang"
-              onclick="buatisi()"
+              (click)="carimenggunakankodepos(kodepos.value,0)"
               class="btn btn-outline-dark"
               type="button"
               value="{{ daWa.kode_pos_pasangan }}"

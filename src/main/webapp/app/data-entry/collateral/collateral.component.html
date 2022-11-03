@@ -1342,10 +1342,11 @@
                                       class="form-control"
                                       id="kode_pos_agunan"
                                       name="kode_pos_agunan"
+                                      #kodeposagunan
                                     />
                                     <button
                                       class="btn btn-outline-dark"
-                                      onclick="buatisiagunan()"
+                                      (click)="carimenggunakankodeposagunan(kodeposagunan.value,0)"
                                       type="button"
                                       [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
                                     >
@@ -1561,8 +1562,9 @@
                                       class="form-control"
                                       id="kode_pos_sesuai_sertifikat"
                                       name="kode_pos_sesuai_sertifikat"
+                                      #kodepossertifikat
                                     />
-                                    <button class="btn btn-outline-dark" onclick="buatisisertifikat()" type="button">Cari Data</button>
+                                    <button class="btn btn-outline-dark"   (click)="carimenggunakankodepossertifikat(kodepossertifikat.value,0)" type="button">Cari Data</button>
                                   </div>
                                 </div>
                               </div>

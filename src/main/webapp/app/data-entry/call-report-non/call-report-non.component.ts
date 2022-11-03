@@ -54,10 +54,10 @@ export class CallReportNonComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getCallReportByDe?sd=');
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
-  protected apgetnowawancara = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/get_call_report_seq');
+  protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected apgetnowawancara = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/get_call_report_seq');
   protected apiskalaperusahaan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-ref/list_skala_perusahaan'
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_skala_perusahaan'
   );
 
   ngOnInit(): void {
@@ -68,6 +68,7 @@ export class CallReportNonComponent implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   load() {
+    alert( this.untukSessionRole)
     // $('#denganini').val(
     //   'JALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALAN'
     // );

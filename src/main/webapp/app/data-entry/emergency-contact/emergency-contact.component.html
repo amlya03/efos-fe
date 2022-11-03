@@ -54,7 +54,7 @@
             name="provinsi"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option>{{ daWa.provinsi }}</option>
+            <option>{{ untukprovinsi }}</option>
             <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
               {{ daWaprof.namaWilayah }}
             </option>
@@ -74,7 +74,7 @@
             name="kabkota"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option>{{ daWa.kabkota }}</option>
+            <option>{{ untukkobkota }}</option>
             <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
               {{ daWakota.namaWilayah }}
             </option>
@@ -94,7 +94,7 @@
             name="kecamatan"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option>{{ daWa.kecamatan }}</option>
+            <option>{{ untukkecamatan }}</option>
             <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
               {{ daWakecamatan.namaWilayah }}
             </option>
@@ -114,7 +114,7 @@
             name="kelurahan"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           >
-            <option>{{ daWa.kelurahan }}</option>
+            <option>{{ untukkelurahan}}</option>
             <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
               {{ daWakelurahan.namaWilayah }}
             </option>
@@ -136,12 +136,13 @@
             name="kode_pos"
             id="kode_pos"
             value="{{ daWa.kode_pos }}"
+            #kodepos
           />
           <div class="input-group-append">
             <button
               class="btn btn-outline-dark"
               id="kode_poshilang"
-              onclick="buatisi()"
+              (click)="carimenggunakankodepos(kodepos.value,0)"
               type="button"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >

@@ -48,6 +48,10 @@ export class PekerjaanPasanganComponent implements OnInit {
   unutkjenissektor: any;
   untuktipepekerjaan: any;
   gettipeperusahaandariapi: any;
+  retriveprovinsi: any;
+  retrivekabkota: any;
+  retrivekecamatan: any;
+  retrivekelurahan: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -119,6 +123,8 @@ export class PekerjaanPasanganComponent implements OnInit {
         // console.warn('@@@@@@@@@@@@@', this.datakiriman);
         // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
         this.daWa = res.body?.result;
+
+
         // alert(this.daWa);
         // console.warn('buatpemisah', res);
         // console.warn('buatoemisah', res.body);
@@ -220,9 +226,9 @@ export class PekerjaanPasanganComponent implements OnInit {
             id: this.daWa.id,
             alamat_perusahaan1: this.daWa.alamat_perusahaan,
             provinsi1: this.daWa.provinsi,
-            kabkota1: this.daWa.kabkota,
-            kecamatan1: this.daWa.kecamatan,
-            kelurahan1: this.daWa.kelurahan,
+            kabkota1: '',
+            kecamatan1: '',
+            kelurahan1: '',
             kode_pos1: this.daWa.kode_pos,
             siup2: this.daWa.no_siup,
             jenis_bidang: this.daWa.jenis_bidang,
@@ -557,8 +563,7 @@ export class PekerjaanPasanganComponent implements OnInit {
       // alert('kosong');
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_job_info_pasangan', {
-          // headers: headers,
-
+          //  headers: headers,
           curef: this.curef,
           alamat_perusahaan: alamat_perusahaan1.value,
           // created_by: app_no_ide.value,
@@ -611,9 +616,8 @@ export class PekerjaanPasanganComponent implements OnInit {
         });
     } else {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_job_info_pasangan', {
-          // headers: headers,
-
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_job_info_pasangan', {
+          //  headers: headers,
           curef: this.curef,
           alamat_perusahaan: alamat_perusahaan1.value,
           // created_by: app_no_ide.value,
@@ -674,4 +678,68 @@ export class PekerjaanPasanganComponent implements OnInit {
     //   },
     // });
   }
+
+  carimenggunakankodepos(kodepost:any,req:any){
+
+    this.getkodepostnya(kodepost, req).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kodepost', res);
+
+        // this.dawakodepost = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+
+        this.untukprovinsijobpasangan=res.body?.result.provKec.nm_prov;
+
+
+        this.untukkobkotajobpasangan=res.body?.result.provKec.nm_kota;
+
+
+        this.untukkecamatanjobpasangan=res.body?.result.provKec.nm_kec;
+
+
+        this.untukkelurahanjobpasangan=res.body?.result.provKec.nm_kel;
+
+
+
+        // $('#provinsi_cabang').attr('selected', 'selected').val(this.provinsi_cabangkode + '|' +    this.provinsi_cabang);
+        $('#provinsi_cabang_swasta option:first').text(this.untukprovinsijobpasangan);
+
+        // $('#kabkota').append(this.kabkota_cabang);
+
+        $('#kabkota_cabang_swasta option:first').text(this.untukkobkotajobpasangan);
+        // $('#kabkota_cabang').attr('selected', 'selected').val(this.kabkota_cabangkode + '|' +    this.kabkota_cabang);
+
+        // $('#kecamatan').attr('selected', 'selected').val(this.kecamatankode + '|' +    this.kecamatan);
+        $('#kecamatan_swasta option:first').text(this.untukkecamatanjobpasangan);
+
+        // $('#kelurahan').attr('selected', 'selected').val(this.kelurahankode + '|' +    this.kelurahan);
+        $('#kelurahan_swasta option:first').text(this.untukkelurahanjobpasangan);
+        // alert(this.provinsi_cabang)
+      },
+    });
+
+    console.log(req);
+
+
+  }
+
+  getkodepostnya(kodepst:any,req:any){
+
+    const options = createRequestOption(req);
+    const httpOptions = {
+      // 'Authorization': token,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.postId}`,
+    };
+    // const kodepotongan = kodekota.split('|');
+
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvKecByKdPos/' + kodepst, {
+      headers: httpOptions,
+      params: options,
+      observe: 'response',
+    });
+
+  }
+
 }

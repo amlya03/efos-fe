@@ -1296,7 +1296,7 @@
       function buatisi() {
         var x = kode_pos.value;
         $.ajax({
-          url: 'http://10.20.34.178:8087/efo/getWilByKdPos/' + x,
+          url: 'http://10.20.34.110:8087/efo/getWilByKdPos/' + x,
           dataType: 'json',
           type: 'GET',
           success: function (response) {
@@ -1344,8 +1344,8 @@
       function buatisi_pasangan() {
         var x = kode_pos_pasangan.value;
         $.ajax({
-          //'http://10.20.34.178:8087/efo/getWilByKdPos/'+x
-          url: 'http://10.20.34.178:8087/efo/getWilByKdPos/' + x,
+          //'http://10.20.34.110:8087/efo/getWilByKdPos/'+x
+          url: 'http://10.20.34.110:8087/efo/getWilByKdPos/' + x,
           dataType: 'json',
           type: 'GET',
           // data: {ket: 'provKec',provid: '0'},

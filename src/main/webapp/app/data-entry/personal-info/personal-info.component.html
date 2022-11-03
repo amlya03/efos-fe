@@ -15,8 +15,10 @@
             placeholder="Nama Lengkap"
             formControlName="nama"
             id="nama"
-
           />
+          <span [hidden]="(personalInfoForm.controls.nama.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+              Nama Harus Diisi
+          </span>
           <input type="hidden" class="form-control" placeholder="Nama Lengkap" formControlName="app_no_ide" id="app_no_ide" [value]="personalInfoModel.app_no_ide" />
         </div>
       </div>
@@ -29,12 +31,14 @@
               class="form-control"
               id="jenis_kelamin"
               formControlName="jenis_kelamin"
-
             >
               <option value="Laki-laki">Laki - laki</option>
               <option value="Perempuan">Perempuan</option>
             </select>
           </div>
+          <span [hidden]="(personalInfoForm.controls.jenis_kelamin.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+              Jenis Kelamin Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -46,22 +50,27 @@
             type="date"
             id="tanggal_lahir"
             formControlName="tanggal_lahir"
-
+            (change)="hitungUsia()"
           />
         </div>
+        <span [hidden]="(personalInfoForm.controls.tanggal_lahir.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            Tanggal Lahir Harus Diisi
+        </span>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Tempat Lahir</label>
         <div class="col-sm-9">
           <input
-
             type="text"
             class="form-control"
             placeholder="Tempat Lahir"
             id="tempat_lahir"
             formControlName="tempat_lahir"
           />
+          <span [hidden]="(personalInfoForm.controls.tempat_lahir.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+              Tempat Lahir Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -69,23 +78,24 @@
         <label class="col-sm-3 col-form-label">Usia</label>
         <div class="col-sm-9">
           <input
-
             type="tel"
             maxlength="2"
             class="form-control"
             placeholder="Usia"
             id="usia"
             formControlName="usia"
+            readonly
           />
-
           <input
             type="hidden"
             class="form-control"
             placeholder="Nama id"
             id="id"
             value="{{ personalInfoModel.id_customer }}"
-
           />
+          <span [hidden]="(personalInfoForm.controls.usia.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+              Usia Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -107,6 +117,9 @@
               <option>Kong Hu Chu</option>
             </select>
           </div>
+          <span [hidden]="(personalInfoForm.controls.agama.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+              Agama Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -127,6 +140,9 @@
               <option value="S3">S3</option>
             </select>
           </div>
+          <span [hidden]="(personalInfoForm.controls.pendidikan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+              Pendidikan Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -144,6 +160,9 @@
               <option>WNA</option>
             </select>
           </div>
+          <span [hidden]="(personalInfoForm.controls.kewarganegaraan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+              Kewarganegaraan Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -153,7 +172,6 @@
         <label class="col-sm-3 col-form-label">Nomor Telepon</label>
         <div class="col-sm-9">
           <input
-
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
@@ -162,6 +180,9 @@
             id="no_telepon"
             formControlName="no_telepon"
           />
+          <span [hidden]="(personalInfoForm.controls.no_telepon.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+              No Telepon Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -176,6 +197,9 @@
             formControlName="email"
 
           />
+          <span [hidden]="(personalInfoForm.controls.email.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+              Email Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -183,7 +207,6 @@
         <label class="col-sm-3 col-form-label">No Handphone</label>
         <div class="col-sm-9">
           <input
-
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
@@ -193,6 +216,9 @@
             formControlName="no_handphone"
             maxlength="13"
           />
+          <span [hidden]="(personalInfoForm.controls.no_handphone.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+              No Telepon Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -200,7 +226,6 @@
         <label class="col-sm-3 col-form-label">No KTP</label>
         <div class="col-sm-9">
           <input
-
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             minlength="16"
@@ -210,6 +235,9 @@
             id="no_ktp"
             formControlName="no_ktp"
           />
+          <span [hidden]="(personalInfoForm.controls.no_ktp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+              No Telepon Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -223,6 +251,9 @@
             formControlName="tanggal_terbit_ktp"
 
           />
+          <span [hidden]="(personalInfoForm.controls.tanggal_terbit_ktp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+              Tanggal Terbit KTP Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -246,6 +277,10 @@
 
           />
           Tidak
+
+          <span [hidden]="(personalInfoForm.controls.status_ktp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            KTP Seumur Hidup Harus Diisi
+          </span>
         </div>
       </div>
       <div class="form-group row" *ngIf="ktp_seumur_hidup == 0">
@@ -259,6 +294,9 @@
             formControlName="tanggal_exp_ktp"
 
           />
+          <span [hidden]="(personalInfoForm.controls.tanggal_exp_ktp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            Tanggal Exipred KTP Harus Diisi
+          </span>
         </div>
       </div>
       <br/>
@@ -275,6 +313,9 @@
             id="npwp"
             formControlName="npwp"
           />
+          <span [hidden]="(personalInfoForm.controls.npwp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            NPWP Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -293,6 +334,9 @@
             </option>
             </select>
           </div>
+          <span [hidden]="(personalInfoForm.controls.status_perkawinan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            Status Perkawinan Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -309,6 +353,9 @@
             id="jumlah_anak"
             formControlName="jumlah_anak"
           />
+          <span [hidden]="(personalInfoForm.controls.jumlah_anak.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            Jumlah Anak Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -328,6 +375,9 @@
             </option>
             </select>
           </div>
+          <span [hidden]="(personalInfoForm.controls.status_rumah.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            Status Rumah Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -335,7 +385,6 @@
         <label class="col-sm-3 col-form-label">Lama Menetap</label>
         <div class="col-sm-9">
           <input
-
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             maxlength="2"
@@ -344,6 +393,9 @@
             id="lama_menetap"
             formControlName="lama_menetap"
           />
+          <span [hidden]="(personalInfoForm.controls.lama_menetap.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            Lama Menetap Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -362,6 +414,9 @@
               <option value="0">Tidak</option>
             </select>
           </div>
+          <span [hidden]="(personalInfoForm.controls.status_kendaraan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            Kepemilikan Kendaraan Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -380,6 +435,9 @@
             </option>
             </select>
           </div>
+          <span [hidden]="(personalInfoForm.controls.tipe_kendaraan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            Tipe Kendaraan Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -402,6 +460,9 @@
             id="alamat_ktp"
             formControlName="alamat_ktp"
           ></textarea>
+          <span [hidden]="(personalInfoForm.controls.alamat_ktp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            Alamat KTP Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -411,6 +472,7 @@
           <div class="form-group">
             <select
               class="form-control"
+              #provinsi_saat
               id="provinsi_cabang"
               (change)="onChange(provinsi_cabang)"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
@@ -453,7 +515,7 @@
               id="kecamatan"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
-              <option>{{ personalInfoModel.kecamatan }}</option>
+              <option value="{{ personalInfoModel.kecamatan }}">{{ personalInfoModel.kecamatan }}</option>
               <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
                 {{ daWakecamatan.namaWilayah }}
               </option>
@@ -472,7 +534,7 @@
               id="kelurahan"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
-              <option>{{ personalInfoModel.kelurahan }}</option>
+              <option value="{{ personalInfoModel.kelurahan }}">{{ personalInfoModel.kelurahan }}</option>
               <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
                 {{ daWakelurahan.namaWilayah }}
               </option>
@@ -486,12 +548,14 @@
         <div class="col-sm-9">
           <div class="input-group mb-3">
             <input
+              #kodepos
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
               type="tel"
               onkeypress="return onlyNumberKey(event)"
               class="form-control"
               id="kode_pos"
               value="{{ personalInfoModel.kode_pos }}"
+              [(ngModel)]="validasiKodePos"
             />
             <div class="input-group-append">
               <button
@@ -499,6 +563,7 @@
                 class="btn btn-outline-dark"
                 type="button"
                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+                (click)="kodePosApi(kodepos.value,0)"
               >
                 Cari Data
               </button>
@@ -519,6 +584,9 @@
             id="rt"
             formControlName="rt"
           />
+          <span [hidden]="(personalInfoForm.controls.rt.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            RT Harus Diisi
+          </span>
         </div>
         <div class="col">RT</div>
         <div class="col">
@@ -532,6 +600,9 @@
             id="rw"
             formControlName="rw"
           />
+          <span [hidden]="(personalInfoForm.controls.rw.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            RW Harus Diisi
+          </span>
         </div>
         <div class="col">RW</div>
       </div>
@@ -543,6 +614,7 @@
             type="radio"
             name="testtt"
             value="0"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'"
             (change)="onItemChange($event.target)"
             [checked]="this.personalInfoForm.get('alamat_ktp')?.value != this.personalInfoForm.get('alamat_domisili')?.value"
           />Tidak Sama
@@ -550,6 +622,7 @@
             type="radio"
             name="testtt"
             value="1"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'"
             (change)="onItemChange($event.target)"
             [checked]="this.personalInfoForm.get('alamat_ktp')?.value == this.personalInfoForm.get('alamat_domisili')?.value"
           />Sama
@@ -567,6 +640,9 @@
             id="alamat_domisili"
             formControlName="alamat_domisili"
           ></textarea>
+          <span [hidden]="(personalInfoForm.controls.alamat_domisili.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            Alamat Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -651,6 +727,7 @@
         <div class="col-sm-9">
           <div class="input-group mb-3">
             <input
+              #kodeposdomisili
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
               type="tel"
               onkeypress="return onlyNumberKey(event)"
@@ -666,6 +743,7 @@
                 id="kode_pos_domisilihilang"
                 type="button"
                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+                (click)="kodePosApiDomisili(kodeposdomisili.value,0)"
               >
                 Cari Data
               </button>
@@ -687,6 +765,9 @@
             id="rt_domisili"
             formControlName="rt_domisili"
           />
+          <span [hidden]="(personalInfoForm.controls.rt_domisili.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            RT Harus Diisi
+          </span>
         </div>
         <div class="col">RT</div>
         <div class="col">
@@ -700,6 +781,9 @@
             id="rw_domisili"
             formControlName="rw_domisili"
           />
+          <span [hidden]="(personalInfoForm.controls.rw_domisili.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+            RW Harus Diisi
+          </span>
         </div>
         <div class="col">RW</div>
       </div>

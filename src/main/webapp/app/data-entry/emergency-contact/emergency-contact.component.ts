@@ -32,6 +32,10 @@ export class EmergencyContactComponent implements OnInit {
   gethubunganemergency1: any;
   keteranganstatusnikah: any;
   untukSessionRole: any;
+  untukprovinsi: any;
+  untukkobkota: any;
+  untukkecamatan: any;
+  untukkelurahan: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -82,6 +86,15 @@ export class EmergencyContactComponent implements OnInit {
           this.daWa = 0;
         } else {
           this.daWa = res.body?.result;
+
+
+
+        this.untukprovinsi=res.body?.result.provinsi;
+        this.untukkobkota=res.body?.result.kabkota;
+        this.untukkecamatan=res.body?.result.kecamatan;
+        this.untukkelurahan=res.body?.result.kelurahan;
+
+
         }
       },
     });
@@ -384,4 +397,64 @@ export class EmergencyContactComponent implements OnInit {
         });
     }
   }
+
+  carimenggunakankodepos(kodepost:any,req:any){
+
+    this.getkodepostnya(kodepost, req).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kodepost', res);
+
+        // this.dawakodepost = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+
+        this.untukprovinsi=res.body?.result.provKec.nm_prov;
+        this.untukkobkota=res.body?.result.provKec.nm_kota;
+        this.untukkecamatan=res.body?.result.provKec.nm_kec;
+        this.untukkelurahan=res.body?.result.provKec.nm_kel;
+
+
+
+        // $('#provinsi_cabang').attr('selected', 'selected').val(this.provinsi_cabangkode + '|' +    this.provinsi_cabang);
+        $('#provinsi_cabang option:first').text(this.untukprovinsi);
+
+        // $('#kabkota').append(this.kabkota_cabang);
+
+        $('#kabkota_cabang option:first').text(this.untukkobkota);
+        // $('#kabkota_cabang').attr('selected', 'selected').val(this.kabkota_cabangkode + '|' +    this.kabkota_cabang);
+
+        // $('#kecamatan').attr('selected', 'selected').val(this.kecamatankode + '|' +    this.kecamatan);
+        $('#kecamatan option:first').text(this.untukkecamatan);
+
+        // $('#kelurahan').attr('selected', 'selected').val(this.kelurahankode + '|' +    this.kelurahan);
+        $('#kelurahan option:first').text(this.untukkelurahan);
+        // alert(this.provinsi_cabang)
+      },
+    });
+
+    console.log(req);
+
+
+  }
+
+  getkodepostnya(kodepst:any,req:any){
+
+    const options = createRequestOption(req);
+    const httpOptions = {
+      // 'Authorization': token,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.postId}`,
+    };
+    // const kodepotongan = kodekota.split('|');
+
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvKecByKdPos/' + kodepst, {
+      headers: httpOptions,
+      params: options,
+      observe: 'response',
+    });
+
+  }
+
+
+
 }

@@ -995,8 +995,8 @@
 <br />
 <div class="row">
   <div class="col" style="text-align: center">
-    <button type="submit" (click)="goto()" id="selanjutnya" name="selanjutnya" value="selanjutnya" class="btn mb-1 btn-warning">
-      Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
+    <button type="submit"   [hidden]="this.untukSessionRole == 'AO' || this.untukSessionRole == 'VER_PRESCR'" (click)="goto()" id="selanjutnya" name="selanjutnya" value="selanjutnya" class="btn mb-1 btn-warning">
+      Selanjutnya1<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
     </button>
     <button
       type="submit"
@@ -1005,8 +1005,8 @@
       name="buttonsimpan"
       value="buttonsimpan"
       class="btn mb-1 btn-dark"
-      hidden
-      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+
+      [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
     >
       Simpan Data<span class="btn-icon-right"><i class="fa fa-floppy-o"></i></span>
     </button>

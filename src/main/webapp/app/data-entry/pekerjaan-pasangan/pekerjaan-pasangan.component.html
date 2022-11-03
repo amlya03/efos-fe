@@ -110,7 +110,7 @@
               name="provinsi1"
               formControlName="provinsi1"
             >
-              <option value="{{ untukprovinsijobpasangan }}">{{ untukprovinsijobpasangan }}</option>
+              <option >{{ untukprovinsijobpasangan }}</option>
               <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                 {{ daWaprof.namaWilayah }}
               </option>
@@ -131,7 +131,7 @@
               name="kabkota1"
               formControlName="kabkota1"
             >
-              <option value="{{ untukkobkotajobpasangan }}">{{ untukkobkotajobpasangan }}</option>
+              <option >{{ untukkobkotajobpasangan }}</option>
               <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
                 {{ daWakota.namaWilayah }}
               </option>
@@ -152,7 +152,7 @@
               name="kecamatan1"
               formControlName="kecamatan1"
             >
-              <option value="{{ untukkecamatanjobpasangan }}">{{ untukkecamatanjobpasangan }}</option>
+              <option >{{ untukkecamatanjobpasangan }}</option>
               <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
                 {{ daWakecamatan.namaWilayah }}
               </option>
@@ -173,7 +173,7 @@
               name="kelurahan1"
               formControlName="kelurahan1"
             >
-              <option value="{{ untukkelurahanjobpasangan }}">{{ untukkelurahanjobpasangan }}</option>
+              <option >{{ untukkelurahanjobpasangan }}</option>
               <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
                 {{ daWakelurahan.namaWilayah }}
               </option>
@@ -195,12 +195,13 @@
               id="kode_pos_swasta"
               formControlName="kode_pos1"
               name="kode_pos1"
+              #kodepos
             />
             <div class="input-group-append">
               <button
                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                 id="btnisi1"
-                onclick="buatisi1()"
+                (click)="carimenggunakankodepos(kodepos.value,0)"
                 class="btn btn-outline-dark"
                 type="button"
               >
