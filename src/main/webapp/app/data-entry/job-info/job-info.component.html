@@ -12,7 +12,7 @@
   <div class="row form-material">
     <div class="col">
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Kategori Pekerjaan<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Kategori Pekerjaan</label>
         <div class="col-sm-9">
           <div class="form-group">
             <input
@@ -28,7 +28,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Tipe Pekerjaan<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Tipe Pekerjaan</label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
@@ -44,14 +44,14 @@
               </option>
             </select>
           </div>
-          <span *ngIf="tipePekerjaanValidasi == '' || tipePekerjaanValidasi == null || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' && this.daWa == ''" class="text-danger">
+          <span *ngIf="tipePekerjaanValidasi == '' || tipePekerjaanValidasi == null && this.jobInfo[0] == null" class="text-danger">
             Tipe Pekerjaan Harus Diisi
           </span>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Payroll :<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Payroll :</label>
         <div class="col-sm-9">
           <div class="form-group">
             <label class="radio-inline mr-3">
@@ -60,6 +60,7 @@
                 name="optradio"
                 id="payroll"
                 value="1"
+                [(ngModel)]="payrollValidasi"
                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
               />Payroll</label
             >
@@ -69,51 +70,62 @@
                 name="optradio"
                 id="payroll1"
                 value="0"
+                [(ngModel)]="payrollValidasi"
                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
               />Non Payroll</label
             >
           </div>
+          <span *ngIf="payrollValidasi == '' || payrollValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            Payroll Harus Diisi
+          </span>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Posisi<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Posisi</label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
               class="form-control"
               id="jabatan"
               name="posisi"
+              [(ngModel)]="posisiValidasi"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
               <option selected value="">Pilih Posisi</option>
-
               <option *ngFor="let getjabatandariapi of getjabatandariapi" value="{{ getjabatandariapi.jabatan_deskripsi }}">
                 {{ getjabatandariapi.jabatan_deskripsi }}
               </option>
             </select>
           </div>
+          <span *ngIf="posisiValidasi == '' || posisiValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            Posisi Harus Diisi
+          </span>
         </div>
       </div>
       <br />
       <div class="form-group row" style="display: none">
-        <label class="col-sm-3 col-form-label">Jenis Pekerjaan<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Jenis Pekerjaan</label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
               class="form-control"
               id="jenis_pekerjaan"
               name="jenis_pekerjaan"
+              [(ngModel)]="jenisPekerjaanValidasi"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
               <option selected value="">Pilih Jenis Pekerjaan</option>
             </select>
           </div>
+          <span *ngIf="jenisPekerjaanValidasi == '' || jenisPekerjaanValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            Jenis Pekerjaan Harus Diisi
+          </span>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Nama Perusahaan<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Nama Perusahaan</label>
         <div class="col-sm-9">
           <input
             type="text"
@@ -121,26 +133,34 @@
             id="nama_perusahaan"
             name="nama_perusahaan"
             placeholder="Nama Perusahaan"
+            [(ngModel)]="namaPerusahaanValidasi"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           />
+          <span *ngIf="namaPerusahaanValidasi == '' || namaPerusahaanValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            Nama Perusahaan Harus Diisi
+          </span>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Alamat<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Alamat</label>
         <div class="col-sm-9">
           <textarea
             class="form-control h-150px"
             rows="6"
             id="alamat_perusahaan"
             name="alamat_perusahaan"
+            [(ngModel)]="alamatValidasi"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           ></textarea>
+          <span *ngIf="alamatValidasi == '' || alamatValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            Alamat Harus Diisi
+          </span>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Provinsi</label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
@@ -148,6 +168,7 @@
               (change)="onChange()"
               id="provinsi_cabang_perusahaan"
               name="provinsi"
+              [(ngModel)]="provinsiValidasi"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
               <option >Pilih Provinsi</option>
@@ -156,11 +177,14 @@
               </option>
             </select>
           </div>
+          <span *ngIf="provinsiValidasi == '' || provinsiValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            Provinsi Harus Diisi
+          </span>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Kota</label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
@@ -168,6 +192,7 @@
               (change)="onChangekota()"
               id="kabkota_cabang_perusahaan"
               name="kabkota"
+              [(ngModel)]="kotaValidasi"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
               <option >Pilih Kota</option>
@@ -176,11 +201,14 @@
               </option>
             </select>
           </div>
+          <span *ngIf="kotaValidasi == '' || kotaValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            Kota Harus Diisi
+          </span>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Kecamatan</label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
@@ -188,6 +216,7 @@
               (change)="onChangekecamatan()"
               id="kecamatan_perusahaan"
               name="kecamatan"
+              [(ngModel)]="kecamatanValidasi"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
               <option >Pilih Kecamatan</option>
@@ -196,11 +225,14 @@
               </option>
             </select>
           </div>
+          <span *ngIf="kecamatanValidasi == '' || kecamatanValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            Kecamatan Harus Diisi
+          </span>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Kelurahan</label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
@@ -208,6 +240,7 @@
               (change)="onChangekelurahan()"
               id="kelurahan"
               name="kelurahan"
+              [(ngModel)]="kelurahanValidasi"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
               <option >Pilih Kelurahan</option>
@@ -216,11 +249,14 @@
               </option>
             </select>
           </div>
+          <span *ngIf="kelurahanValidasi == '' || kelurahanValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            Kelurahan Harus Diisi
+          </span>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Kode Pos</label>
         <div class="col-sm-9">
           <div class="input-group mb-3">
             <input
@@ -261,7 +297,11 @@
             placeholder="RT"
             id="rt"
             name="rt"
+            [(ngModel)]="rtValidasi"
           />
+          <span *ngIf="rtValidasi == '' || rtValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            RT Harus Diisi
+          </span>
         </div>
         <div class="col">RT</div>
         <div class="col">
@@ -275,14 +315,18 @@
             id="rw"
             value=""
             name="rw"
+            [(ngModel)]="rwValidasi"
           />
+          <span *ngIf="rwValidasi == '' || rwValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            RW Harus Diisi
+          </span>
         </div>
         <div class="col">RW</div>
       </div>
       <br />
-      <div id="hidden_siup" style="display: none">
+      <div>
         <div class="form-group row">
-          <label id="changeLabelSiup" class="col-sm-3 col-form-label">Nomor SIUP<span class="text-danger">*</span></label>
+          <label id="changeLabelSiup" class="col-sm-3 col-form-label">Nomor SIUP</label>
           <div class="col-sm-9">
             <input
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
@@ -292,14 +336,18 @@
               name="no_siup"
               class="form-control"
               maxlength="16"
+              [(ngModel)]="noSiupValidasi"
             />
+            <span *ngIf="noSiupValidasi == '' || noSiupValidasi == null && this.jobInfo[0] == null" class="text-danger">
+              No SIUP Harus Diisi
+            </span>
           </div>
         </div>
       </div>
     </div>
     <div class="col">
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Jenis Bidang<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Jenis Bidang</label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
@@ -307,6 +355,7 @@
               (change)="jenisbidangselect()"
               id="jenis_bidang_perusahaan"
               name="jenis_bidang"
+              [(ngModel)]="jenisBidangValidasi"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
               <option value="">Pilih Jenis Bidang</option>
@@ -318,17 +367,21 @@
               </option>
             </select>
           </div>
+          <span *ngIf="jenisBidangValidasi == '' || jenisBidangValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            Jenis Bidang Harus Diisi
+          </span>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Sektor Ekonomi<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Sektor Ekonomi</label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
               class="form-control"
               id="jenis_sektor_perusahaan"
               name="sektor_ekonomi"
+              [(ngModel)]="sektorEkonomiValidasi"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
               <option value="">Pilih Sektor Ekonomi</option>
@@ -337,26 +390,14 @@
               </option>
             </select>
           </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row" hidden>
-        <label class="col-sm-3 col-form-label">Umur</label>
-        <div class="col-sm-9">
-          <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-            type="tel"
-            class="form-control"
-            placeholder="Umur"
-            maxlength="90"
-            id="umur1"
-            name="umur1"
-          />
+          <span *ngIf="sektorEkonomiValidasi == '' || sektorEkonomiValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            Sektor Ekonomi Harus Diisi
+          </span>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Umur Pensiun<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Umur Pensiun</label>
         <div class="col-sm-9">
           <input
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
@@ -368,7 +409,11 @@
             maxlength="2"
             id="umur_pensiun"
             name="umur_pensiun"
+            [(ngModel)]="umurPensiunValidasi"
           />
+          <span *ngIf="umurPensiunValidasi == '' || umurPensiunValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            Umur Pensiun Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -383,8 +428,11 @@
             id="lama_bekerja_tahun"
             name="lama_bekerja_tahun"
             maxlength="2"
-            value=""
+            [(ngModel)]="lamaBekerjaTahunValidasi"
           />
+          <span *ngIf="lamaBekerjaTahunValidasi == '' || lamaBekerjaTahunValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            Lama Bekerja Tahun Harus Diisi
+          </span>
         </div>
         <div class="col">Tahun</div>
         <div class="col">
@@ -396,8 +444,11 @@
             id="lama_bekerja_bulan"
             name="lama_bekerja_bulan"
             maxlength="2"
-            value=""
+            [(ngModel)]="lamaBekerjaBulanValidasi"
           />
+          <span *ngIf="lamaBekerjaBulanValidasi == '' || lamaBekerjaBulanValidasi == null && this.jobInfo[0] == null" class="text-danger">
+            Lama Bekerja Bulan Harus Diisi
+          </span>
         </div>
         <div class="col">Bulan</div>
       </div>
@@ -407,7 +458,7 @@
         <div *ngSwitchCase="'Fix Income'">
           <div id="jumlahKaryawanFix">
             <div class="form-group row">
-              <label class="col-sm-3 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
+              <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
               <div class="col-sm-9">
                 <input
                   [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
@@ -419,7 +470,11 @@
                   placeholder="Jumlah Karyawan"
                   id="jumlah_karyawan"
                   name="jumlah_karyawan"
+                  [(ngModel)]="jumlahKaryawanValidasi"
                 />
+                <span *ngIf="jumlahKaryawanValidasi == '' || jumlahKaryawanValidasi == null && this.jobInfo[0] == null" class="text-danger">
+                  Jumlah Karyawan Harus Diisi
+                </span>
               </div>
             </div>
           </div>
@@ -428,13 +483,14 @@
         <div *ngSwitchCase="'Non Fix Income'">
           <div id="jumlahKaryawanNon" class="hidden_jumlahKaryawanNon">
             <div class="form-group row">
-              <label class="col-sm-3 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
+              <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
               <div class="col-sm-9">
                 <div class="form-group">
                   <select
                     class="form-control"
                     id="jumlah_karyawan2"
                     name="jumlah_karyawan2"
+                    [(ngModel)]="jumlahKaryawanValidasi"
                     [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                   >
                     <option value="">Pilih Jumalah Karyawan</option>
@@ -446,6 +502,9 @@
                     </option>
                   </select>
                 </div>
+                <span *ngIf="jumlahKaryawanValidasi == '' || jumlahKaryawanValidasi == null && this.jobInfo[0] == null" class="text-danger">
+                  Jumlah Karyawan Harus Diisi
+                </span>
               </div>
             </div>
           </div>
@@ -454,7 +513,7 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Pendapatan<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Pendapatan</label>
         <div class="col-sm-9">
           <input
             type="number"
@@ -465,6 +524,9 @@
             [(ngModel)]="pendapatan"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           />
+          <span *ngIf="pendapatan == null && this.jobInfo[0] == null" class="text-danger">
+            Pendapatan Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -485,7 +547,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Tunjangan<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Tunjangan</label>
         <div class="col-sm-9">
           <input
             type="number"
@@ -496,11 +558,14 @@
             [(ngModel)]="tunjangan"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           />
+          <span *ngIf="tunjangan == null && this.jobInfo[0] == null" class="text-danger">
+            Pendapatan Harus Diisi
+          </span>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Total Pendapatan<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Total Pendapatan</label>
         <div class="col-sm-9">
           <input
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
@@ -516,13 +581,14 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Tipe Perusahaan<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Tipe Perusahaan</label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
               class="form-control"
               id="tipe_perusahaan"
               name="tipe_perusahaan"
+              [(ngModel)]="tipePerusahaanValidasi"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
               <option value="">Pilih Tipe Perusahaan</option>
@@ -534,17 +600,21 @@
               </option>
             </select>
           </div>
+          <span *ngIf="this.jobInfo[0] == null && tipePerusahaanValidasi == ''" class="text-danger">
+            Pendapatan Harus Diisi
+          </span>
         </div>
       </div>
       <br />
       <div id="hideJikaNFiTipeKepegawaian" class="form-group row">
-        <label class="col-sm-3 col-form-label">Tipe Kepegawaian<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-form-label">Tipe Kepegawaian</label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
               class="form-control"
               id="tipe_kepegawaian"
               name="tipe_kepegawaian"
+              [(ngModel)]="tipeKepegawaianValidasi"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
             >
               <option value="">Pilih Tipe Pekerjaan</option>
@@ -552,6 +622,9 @@
               <option value="Pegawai kontrak">Pegawai kontrak</option>
             </select>
           </div>
+          <span *ngIf="tipeKepegawaianValidasi == '' && this.jobInfo[0] == null" class="text-danger">
+            Pendapatan Harus Diisi
+          </span>
         </div>
       </div>
       <br />
