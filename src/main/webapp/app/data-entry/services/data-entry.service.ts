@@ -34,14 +34,6 @@ export class DataEntryService {
     this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
   }
 
-  // //////////////////////////// Ref Tipe Kendaraan //////////////////////////////////////////////////
-  protected ListTipeKendaraaan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_kendaraan');
-  // //////////////////////////// Ref Tipe Kendaraan //////////////////////////////////////////////////
-
-  // //////////////////////////// Ref Status Perkawinan //////////////////////////////////////////////////
-  protected refStatusPerkawinan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_status_perkawinan');
-  // //////////////////////////// Ref Status Perkawinan //////////////////////////////////////////////////
-
   // ///////////////////////////// Data Entry \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected fetchSemuaDataDE = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
   // ///////////////////////////// Data Entry \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -116,7 +108,7 @@ export class DataEntryService {
 
   // /////////////////////////// Ref Semua Struktur Pembiayaan Data DE ////////////////////////////////////////////
   getFetchStrukturDE(app_no_de: any, curef: any): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.fetchSemuaStrukturDE + curef + '&sd=' + app_no_de);
+    return this.http.get<ApiResponse>(this.fetchSemuaDataDE + curef + '&sd=' + app_no_de);
   }
   // /////////////////////////// Ref Semua Struktur Pembiayaan Data DE ////////////////////////////////////////////
 
@@ -238,18 +230,4 @@ export class DataEntryService {
     });
     // alert('CONTOHkecamatan');
   }
-
-
-  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
-  getFetchListTipeKendaraaan(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.ListTipeKendaraaan);
-  }
-  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
-
-
-  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
-  getFetchStatusPerkawinan(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.refStatusPerkawinan);
-  }
-  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
 }

@@ -53,9 +53,6 @@ export class StukturPembiayaanComponent implements OnInit {
   // Nyoba ngitung FTV
   betaFTV: any;
 
-  // Hasil Scoring
-  hasilScoring: any;
-
   optionsMoney = { prefix: 'Rp ', thousands: ',', decimal: '.', inputMode: CurrencyMaskInputMode.NATURAL };
 
   constructor(
@@ -230,20 +227,6 @@ export class StukturPembiayaanComponent implements OnInit {
             this.analisaDsr = data.result.dsr;
             this.analisaMaxAngsuran = data.result.max_angsuran;
             console.log('analisa ' + data.result.max_angsuran);
-
-            setTimeout(() => {
-              this.http
-                .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/getHitungScoring', {
-                  dsr: this.analisaDsr,
-                  app_no_de: this.dataEntry.app_no_de,
-                })
-                .subscribe({
-                  next: data => {
-                    this.hasilScoring = data.result.score_value;
-                    alert(this.hasilScoring)
-                  },
-                });
-            }, 300);
           },
         });
     }, 300);
