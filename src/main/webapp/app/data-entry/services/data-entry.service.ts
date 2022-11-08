@@ -34,6 +34,27 @@ export class DataEntryService {
     this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
   }
 
+  // //////////////////////////// Ref List Tipe Perusahaan //////////////////////////////////////////////////
+  protected refTipePerusahaan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_perusahaan');
+  // //////////////////////////// Ref List Tipe Perusahaan //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Jumlah Karyawan //////////////////////////////////////////////////
+  protected refListJumlahKaryawan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_jumlah_karyawan');
+  // //////////////////////////// Ref List Jumlah Karyawan //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Jabatan //////////////////////////////////////////////////
+  protected refListJabatan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_jabatan');
+  // //////////////////////////// Ref List Jabatan //////////////////////////////////////////////////
+
+
+  // //////////////////////////// Ref List Jabatan //////////////////////////////////////////////////
+  protected refJenisPekerjaan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_jenis_pekerjaan');
+  // //////////////////////////// Ref List Jabatan //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Tipe Pekerjaan //////////////////////////////////////////////////
+  protected refListTipePekerjaan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_pekerjaan?sc=');
+  // //////////////////////////// Ref List Tipe Pekerjaan //////////////////////////////////////////////////
+
   // //////////////////////////// Ref Tipe Kendaraan //////////////////////////////////////////////////
   protected ListTipeKendaraaan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_kendaraan');
   // //////////////////////////// Ref Tipe Kendaraan //////////////////////////////////////////////////
@@ -55,6 +76,11 @@ export class DataEntryService {
   // ///////////////////////////// Get Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected fetchSemuaJob = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobByCurefDe?sj=');
   // ///////////////////////////// Get Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ///////////////////////////// Get Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected getJobById = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobById?si=');
+  // ///////////////////////////// Get Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
 
   // ///////////////////////////// Get View Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected getViewJob = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getVJobByCuref?sj=');
@@ -126,6 +152,12 @@ export class DataEntryService {
   }
   // /////////////////////////// Ref Semua Data Job ////////////////////////////////////////////
 
+  // /////////////////////////// Get Job By id ////////////////////////////////////////////
+  getEditJobById(id: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getJobById + id);
+  }
+  // /////////////////////////// Get Job By id ////////////////////////////////////////////
+
   // /////////////////////////// Ref Semua Data Job Pasangan ////////////////////////////////////////////
   getSemuaDataJobPasangan(curef: any): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getJobPasangan + curef);
@@ -173,6 +205,55 @@ export class DataEntryService {
     return this.http.get<ApiResponse>(this.fetchgetlistaguunan + curef);
   }
   // /////////////////////////// listagunan ////////////////////////////////////////////
+
+
+  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
+  getFetchListTipeKendaraaan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.ListTipeKendaraaan);
+  }
+  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
+
+
+  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
+  getFetchStatusPerkawinan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refStatusPerkawinan);
+  }
+  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
+
+
+  ////////////////////////////////////// REF List Tipe Pekerjaan //////////////////////////////////////////////
+  getFetchListTipePekerjaan(id: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListTipePekerjaan + id);
+  }
+  ////////////////////////////////////// REF List Tipe Pekerjaan //////////////////////////////////////////////
+
+
+  ////////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
+  getFetchListJabatan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListJabatan);
+  }
+  ////////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
+
+
+  ////////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
+  getFetchListJenisPekerjaan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refJenisPekerjaan);
+  }
+  ////////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
+
+
+  ////////////////////////////////////// REF List Jumlah Karyawan //////////////////////////////////////////////
+  getFetchListJumlahKaryawan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListJumlahKaryawan);
+  }
+  ////////////////////////////////////// REF List Jumlah Karyawan //////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Tipe Perusahaan //////////////////////////////////////////////////
+  getFetchTipePerusahaan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refTipePerusahaan);
+  }
+  // //////////////////////////// Ref List Tipe Perusahaan //////////////////////////////////////////////////
+
 
   getprovinsi(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
@@ -239,17 +320,4 @@ export class DataEntryService {
     // alert('CONTOHkecamatan');
   }
 
-
-  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
-  getFetchListTipeKendaraaan(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.ListTipeKendaraaan);
-  }
-  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
-
-
-  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
-  getFetchStatusPerkawinan(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.refStatusPerkawinan);
-  }
-  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
 }

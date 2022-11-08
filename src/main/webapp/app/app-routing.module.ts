@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { errorRoute } from './layouts/error/error.route';
 import { navbarRoute } from './layouts/navbar/navbar.route';
 import { DEBUG_INFO_ENABLED } from 'app/app.constants';
 import { Authority } from 'app/config/authority.constants';
-
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
-
 import { DaftarAplikasiWaitingAssigmentComponent } from './verification/daftar-aplikasi-waiting-assigment/daftar-aplikasi-waiting-assigment.component';
 import { DaftarAplikasiOnProcessComponent } from './verification/daftar-aplikasi-on-process/daftar-aplikasi-on-process.component';
 import { DaftarAplikasiWaitingUpdateStatusComponent } from './verification/daftar-aplikasi-waiting-update-status/daftar-aplikasi-waiting-update-status.component';
@@ -45,6 +42,8 @@ import { CollateralEditComponent } from './data-entry/collateral-edit/collateral
 import { SyaratPersetujuanComponent } from './verification/syarat-persetujuan/syarat-persetujuan.component';
 import { KesimpulanComponent } from './verification/kesimpulan/kesimpulan.component';
 import { MemoVerificationComponent } from './verification/memo-verification/memo-verification.component';
+import { DaftarAplikasiIsiMapisComponent } from './verification/daftar-aplikasi-isi-mapis/daftar-aplikasi-isi-mapis.component';
+import { MapisComponent } from './verification/daftar-aplikasi-isi-mapis/mapis/mapis.component';
 
 @NgModule({
   imports: [
@@ -214,6 +213,14 @@ import { MemoVerificationComponent } from './verification/memo-verification/memo
         {
           path: 'ideCoba',
           component: InitialDataEntryComponent,
+        },
+        {
+          path: 'daftar_input_mapis',
+          component: DaftarAplikasiIsiMapisComponent,
+        },
+        {
+          path: 'mapis',
+          component: MapisComponent,
         },
         {
           path: '',

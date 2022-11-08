@@ -843,6 +843,7 @@
       <h6>Job Info</h6>
     </a>
     <a
+      [hidden]="this.statusPerkawinan == 'Lajang'"
       class="nav-item nav-link"
       [queryParams]="{
         curef: this.curef,
@@ -857,6 +858,7 @@
       <h6>Data Pasangan</h6>
     </a>
     <a
+      [hidden]="this.statusPerkawinan == 'Lajang'"
       class="nav-item nav-link"
       [queryParams]="{
         curef: this.curef,

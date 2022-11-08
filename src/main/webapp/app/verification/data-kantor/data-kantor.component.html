@@ -464,18 +464,14 @@
     </div>
   </div>
   <br />
-  <div class="row form-material">
+  <div class="row form-material" [formGroup]="formRetrive">
     <div class="col">
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tipe Pekerjaan</label>
         <div class="col-sm-8">
-          <input
-            class="form-control"
-            [value]="this.tipe_pekerjaanGet"
-            readonly
-          />
-            <!-- <option value="">Pilih Data</option>
-          </select> -->
+          <select formControlName="tipe_pekerjaan" class="form-control">
+            <option *ngFor="let listTipePekerjaan of listTipePekerjaan" value="{{ listTipePekerjaan.id }}">{{listTipePekerjaan.job_desc}}</option>
+          </select>
         </div>
       </div>
     </div>
@@ -493,16 +489,15 @@
     </div>
   </div>
   <br />
-  <div class="row form-material">
+  <div class="row form-material" [formGroup]="formRetrive">
     <div class="col">
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Status Kepegawaian</label>
         <div class="col-sm-8">
-          <input
-            class="form-control"
-            [value]="this.dataJob.tipe_kepegawaian"
-            readonly
-          />
+          <select formControlName="tipe_kepegawaian" class="form-control">
+            <option value="1">Pegawai Tetap</option>
+            <option value="2">Pegawai Kontrak</option>
+          </select>
         </div>
       </div>
     </div>

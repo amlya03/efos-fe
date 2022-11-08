@@ -232,10 +232,10 @@ export class PersonalInfoComponent implements OnInit {
   ) {
 
     if (this.personalInfoForm.invalid) {
-      // alert('gabisa')
+      alert("Gagal Menyimpan Data")
       return;
     } else {
-      this.submitted =false
+      this.submitted = true;
       const provinsi_domisili = document.getElementById('provinsi_domisili') as HTMLInputElement | any;
       const kabkota_domisili = document.getElementById('kabkota_domisili') as HTMLInputElement | any;
       const kecamatan_domisili = document.getElementById('kecamatan_domisili') as HTMLInputElement | any;
@@ -357,60 +357,34 @@ export class PersonalInfoComponent implements OnInit {
 
         .subscribe({
           next: bawaan => {
-            //           this.contohdata = bawaan.result.app_no_de;
-            this.databawaan = bawaan.result.app_no_de;
-            // alert('MASUKAJAHSUSAH');
-            this.router.navigate(['/data-entry/job-info'], {
-              queryParams: {
-                curef: this.curefGetDE,
-                statusPerkawinan: this.statusKawin,
-                app_no_de: this.app_no_de,
-                // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
-              },
-            });
+            alert("Berhasil Menyimpan Data")
+            // setTimeout(() => {
+              this.router.navigate(['/data-entry/job-info'], {
+                queryParams: {
+                  curef: this.curefGetDE,
+                  statusPerkawinan: this.statusKawin,
+                  app_no_de: this.app_no_de,
+                },
+              });
+            // }, 1000);
           },
         });
     }
   }
 
   gettokendukcapil(): void {
-    this.http
-      .post<any>('http://10.20.82.12:8083/token/generate-token', {
+    this.http.post<any>('http://10.20.82.12:8083/token/generate-token', {
         password: '3foWeb@pp',
         username: 'efo',
-        // password_dukcapil: '3foWeb@pp',
       })
       .subscribe({
         next: data => {
           this.postId = data.result.token;
-          // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
-          // return this.postId;
-
-          console.warn(data.result.token);
-          console.warn(this.postId);
-          // this.router.navigate(['/daftaraplikasiide'], {
-          //   queryParams: {},
-          // });
-          // alert('dapetnih');
-
           this.datEntryService.getprovinsi(this.postId).subscribe({
             next: (res: EntityArrayResponseDaWa) => {
-              console.warn('PROVINSI', res);
-
               this.daWaprof = res.body?.result;
-              // alert(this.postId);
-              // this.onResponseSuccess(res);
             },
           });
-
-          // this.getdataentry(this.postId).subscribe({
-          //   next: (res: EntityArrayResponseDaWa) => {
-          //     this.daWa = res.body?.result;
-          //     // this.onResponseSuccess(res);
-          //     console.warn('loadingNIH',this.postId );
-          //     alert(this.postId)
-          //   },
-          // });
         },
       });
   }

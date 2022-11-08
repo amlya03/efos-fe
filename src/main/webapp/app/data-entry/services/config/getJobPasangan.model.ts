@@ -4,7 +4,7 @@ export class getJobPasangan {
   nama_perusahaan?: String;
   tipe_perusahaan?: Number;
   tipe_pekerjaan?: Number;
-  kategori_pekerjaan?: Number;
+  kategori_pekerjaan?: String;
   jenis_bidang?: String;
   sektor_ekonomi?: String;
   alamat_perusahaan?: String;

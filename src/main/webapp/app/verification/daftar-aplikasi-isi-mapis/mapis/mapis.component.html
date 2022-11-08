@@ -1,0 +1,95 @@
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Input Data Form</h3>
+</div>
+<br />
+<form [formGroup]="mapisForm" (ngSubmit)="submitForm()">
+  <div class="row form-material">
+    <!-- ////Colom ke 1\\\\\ -->
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Nilai Market</label>
+        <div class="col-sm-8">
+          <input type="text"  class="form-control" id="nilai_market" formControlName="nilai_market" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Nilai IMB</label>
+        <div class="col-sm-8">
+          <input type="text"  class="form-control" id="nilai_imb" formControlName="nilai_imb" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Luas Tanah</label>
+        <div class="col-sm-8">
+          <input type="text"  class="form-control" id="luas_tanah" formControlName="luas_tanah" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Luas Bangunan</label>
+        <div class="col-sm-8">
+          <input type="text"  class="form-control" id="luas_bangunan" formControlName="luas_bangunan" />
+        </div>
+      </div>
+    </div>
+    <!-- ////Colom ke 2\\\\\ -->
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Objek Pembiayaan</label>
+        <div class="col-sm-8">
+          <input
+            type="text"
+
+            class="form-control"
+            id="objek_pembiayaan"
+            formControlName="objek_pembiayaan"
+          />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tipe Angunan</label>
+        <div class="col-sm-8">
+          <input
+            type="text"
+
+            class="form-control"
+            id="tipe_agunan"
+            formControlName="tipe_agunan"
+          />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Jenis Objek</label>
+        <div class="col-sm-8">
+          <input
+            type="text"
+
+            class="form-control"
+            id="jenis_objek"
+            formControlName="jenis_objek"
+          />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">FTV</label>
+        <div class="col-sm-6">
+          <input type="text"  class="form-control" id="ftv" formControlName="ftv"/>
+        </div>
+        <div class="col-sm-2">%</div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <div class="col" style="text-align: center">
+    <button
+      class="btn btn-info" >
+      Simpan Data
+    </button>
+  </div>
+</form>

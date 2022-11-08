@@ -16,6 +16,7 @@ import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { getJob } from 'app/data-entry/services/config/getJob.model';
 import { LocalStorageService } from 'ngx-webstorage';
+import { getListTipePekerjaan } from 'app/data-entry/services/config/getListTipePekerjaan.model';
 
 @Component({
   selector: 'jhi-data-kantor',
@@ -34,6 +35,7 @@ export class DataKantorComponent implements OnInit {
   editor!: Editor;
   html = '';
   dataKantorForm!: FormGroup;
+  formRetrive!: FormGroup;
   submitted = false;
   refHubunganAgunan?: refHubunganAgunan[];
   refJabatan?: refJabatan[];
@@ -51,13 +53,14 @@ export class DataKantorComponent implements OnInit {
   dataEntry: fetchAllDe = new fetchAllDe();
   dataJob: getJob = new getJob();
   curef: any;
+  changeUntukTipe: any;
+  listTipePekerjaan?: getListTipePekerjaan[];
 
   // Role
   untukSessionRole: any;
   untukSessionUserName: any;
 
   // logic get Number
-  tipe_pekerjaanGet: any;
   verifikatorMelihat: any;
 
   constructor(
@@ -88,45 +91,50 @@ export class DataKantorComponent implements OnInit {
     // this.editor = new Editor();
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
+    this.formRetrive = this.formBuilder.group({
+      tipe_kepegawaian: { value: '', disabled: true },
+      tipe_pekerjaan: { value: '', disabled: true }
+    });
+
     this.dataKantorForm = this.formBuilder.group({
-      tanggal_verifikasi: [{ value: !null || null, disabled: this.verifikatorMelihat }], //['', Validators.required],
-      pemberi_keterangan: [{ value: !null || null, disabled: this.verifikatorMelihat }], //['', Validators.required],
-      hubungan_pemberi_keterangan: [{ value: !null || null, disabled: this.verifikatorMelihat }], //['', Validators.required],
-      verif_fax: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_fax: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      verif_no_telepon: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_no_telepon: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      verif_alamat_perusahaan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_alamat_perusahaan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      verif_nama_perusahaan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_nama_perusahaan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      verif_provinsi: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_provinsi: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      verif_kabkota: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_kabkota: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      verif_kecamatan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_kecamatan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      verif_kelurahan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_kelurahan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      verif_kode_pos: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_kode_pos: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      verif_lama_bekerja: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_lama_bekerja: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      verif_bidang_usaha: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_bidang_usaha: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      verif_sektor_ekonomi: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_sektor_ekonomi: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      verif_tipe_pekerjaan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_tipe_pekerjaan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      verif_status_kepegawaian: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_status_kepegawaian: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      verif_jabatan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_jabatan: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      verif_usia_pensiun: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      note_verif_usia_pensiun: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      divisi: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      aspek_syariah: [{ value: !null || null, disabled: this.verifikatorMelihat }],
-      waktu_verifikasi: [{ value: !null || null, disabled: this.verifikatorMelihat }],
+      tanggal_verifikasi: [{ value: '', disabled: this.verifikatorMelihat }], //['', Validators.required],
+      pemberi_keterangan: [{ value: '', disabled: this.verifikatorMelihat }], //['', Validators.required],
+      hubungan_pemberi_keterangan: [{ value: '', disabled: this.verifikatorMelihat }], //['', Validators.required],
+      verif_fax: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_fax: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_no_telepon: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_no_telepon: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_alamat_perusahaan: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_alamat_perusahaan: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_nama_perusahaan: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_nama_perusahaan: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_provinsi: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_provinsi: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_kabkota: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_kabkota: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_kecamatan: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_kecamatan: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_kelurahan: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_kelurahan: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_kode_pos: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_kode_pos: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_lama_bekerja: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_lama_bekerja: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_bidang_usaha: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_bidang_usaha: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_sektor_ekonomi: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_sektor_ekonomi: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_tipe_pekerjaan: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_tipe_pekerjaan: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_status_kepegawaian: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_status_kepegawaian: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_jabatan: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_jabatan: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_usia_pensiun: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_usia_pensiun: [{ value: '', disabled: this.verifikatorMelihat }],
+      divisi: [{ value: '', disabled: this.verifikatorMelihat }],
+      aspek_syariah: [{ value: '', disabled: this.verifikatorMelihat }],
+      waktu_verifikasi: [{ value: '', disabled: this.verifikatorMelihat }],
 
       // created_date: '',
       // updated_date: '',
@@ -310,6 +318,8 @@ export class DataKantorComponent implements OnInit {
   }
 
   load(): void {
+    // ref status pekerjaan
+
     // ambil semua data DE
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
@@ -318,24 +328,22 @@ export class DataKantorComponent implements OnInit {
     // ambil Semua Data Job
     this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(job => {
       this.dataJob = job.result[0];
-      // alert("data JOb "+this.dataJob.tipe_kepegawaian)
-      if (this.dataJob.tipe_pekerjaan == 1) {
-        this.tipe_pekerjaanGet = 'Pegawai Negeri Sipil';
-      } else if (this.dataJob.tipe_pekerjaan == 2) {
-        this.tipe_pekerjaanGet = 'Pegawai Swasta';
-      } else if (this.dataJob.tipe_pekerjaan == 3) {
-        this.tipe_pekerjaanGet = 'Wiraswasta';
-      } else if (this.dataJob.tipe_pekerjaan == 4) {
-        this.tipe_pekerjaanGet = 'Profesional';
-      } else if (this.dataJob.tipe_pekerjaan == 5) {
-        this.tipe_pekerjaanGet = 'Pensiunan';
-      } else if (this.dataJob.tipe_pekerjaan == 6) {
-        this.tipe_pekerjaanGet = 'Tidak Bekerja';
-      } else if (this.dataJob.tipe_pekerjaan == 7) {
-        this.tipe_pekerjaanGet = 'TNI / Polri';
-      } else if (this.dataJob.tipe_pekerjaan == 8) {
-        this.tipe_pekerjaanGet = 'BUMN / BUMD';
+      if(this.dataJob.kategori_pekerjaan == 'Fix Income'){
+        this.changeUntukTipe = 1
+      } else if(this.dataJob.kategori_pekerjaan == 'Non Fix Income'){
+        this.changeUntukTipe = 2
+      } else {
+        this.changeUntukTipe = 3
       }
+      this.dataEntryService.getFetchListTipePekerjaan(this.changeUntukTipe).subscribe(data => {
+        this.listTipePekerjaan = data.result;
+      });
+      // alert(this.changeUntukTipe)
+      let retriveForm = {
+        tipe_kepegawaian: this.dataJob.tipe_kepegawaian,
+        tipe_pekerjaan: this.dataJob.tipe_pekerjaan
+      }
+      this.formRetrive.setValue(retriveForm);
     });
 
     // ambil data Kantor

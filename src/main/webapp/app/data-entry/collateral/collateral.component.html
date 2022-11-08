@@ -1,1687 +1,1704 @@
-<button id="tambahdata" (click)="tambahcollateral()" type="button">Tambahdata</button>
 
 <div [ngSwitch]="tambahatautidak">
   <div *ngSwitchCase="'benar'">
-    <div class="content-body">
-      <div class="container-fluid">
-        <div id="hidden_collateral" class="hidden_collateral">
-          <form id="data_entry_form" method="post" action="" required>
-            <div class="card">
-              <h4 class="card card-body gradient-9" style="text-align: center">Collateral</h4>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <div class="form-group row">
-                      <input
-                        type="hidden"
-                        id="WADUH"
-                        name="WADUH"
-                        value=""
-                        class="form-control"
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                      />
-                      <input
-                        id="app_no_de"
-                        name="app_no_de"
-                        type="hidden"
-                        class="form-control"
-                        placeholder="app_no_ide"
-                        value=""
-                        hidden
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                      />
-                      <input
-                        type="hidden"
-                        id="curef_id"
-                        name="curef_id"
-                        value=""
-                        class="form-control"
-                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                      />
+    <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+      <h3 style="color: #fff; text-align: center">Collateral</h3>
+    </div>
+    <br/>
+    <br/>
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Tipe Agunan<span class="text-danger">*</span></label>
+          <div class="col-sm-8">
+            <div class="form-group">
+              <select
+                class="form-control"
+                (change)="changefom()"
+                id="tipe_anggunan"
+                name="tipe_anggunan"
+                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+              >
+                <option selected value="">Pilih Tipe Agunan</option>
+                <option *ngFor="let datatipeagunan of datatipeagunan" value="{{ datatipeagunan.collateral_deskripsi }}">
+                  {{ datatipeagunan.collateral_deskripsi }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <br/>
+        <div [ngSwitch]="tampungantipeagunan">
+          <div *ngSwitchCase="'Kendaraan'">
+            <!--awal hidden kendaraan colom 1 NO 2-->
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
+              <div class="col-sm-8">
+                <div class="form-group">
+                  <select
+                    class="form-control"
+                    name="jenis_objek"
+                    id="jenis_objek"
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  >
+                    <option selected value="">Pilih Jenis Objek</option>
+                    <option *ngFor="let getjenisobjek of getjenisobjek" value="{{ getjenisobjek.jenis_objek_code }}">
+                      {{ getjenisobjek.jenis_objek_deskripsi }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <br/>
+            <div id="hidden_kendaraanCol1" class="hidden_kendaraanCol1">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tipe Kendaraan<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="tipe_kendaraan2"
+                      id="tipe_kendaraan2"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    >
+                      <option value="">Pilih Tipe Kendaraan</option>
+                      <option *ngFor="let getlistkendaraan of getlistkendaraan" value="{{ getlistkendaraan.deskripsi }}">
+                        {{ getlistkendaraan.deskripsi }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Merek<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Merek"
+                    name="merk2"
+                    id="merk2"
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Model<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Model"
+                    name="model2"
+                    id="model2"
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Seri<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Seri"
+                    name="seri2"
+                    id="seri2"
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">No BPKB<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    placeholder="No BPKB"
+                    name="nomor_bpkb2"
+                    id="nomor_bpkb2"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- batas hidden kendaraan colom 1 NO2 -->
+
+            <!-- pembatas colom 1 dan 2 -->
+
+            <!-- hide show colom kendaraan NO2 -->
+            <div class="col hidden_kendaraanCol2" id="hidden_kendaraanCol2">
+              <!-- hide_kendaraan -->
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">No Plat<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    placeholder="No Plat"
+                    name="no_plat"
+                    id="no_plat"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Warna<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Warna"
+                    name="warna"
+                    id="warna"
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">No Mesin<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    placeholder="No Mesin"
+                    name="no_mesin"
+                    id="no_mesin"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">No Rangka<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    placeholder="No Rangka"
+                    name="no_rangka"
+                    id="no_rangka"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nama BPKB<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nama BPKB"
+                    name="nama_bpkb"
+                    id="nama_bpkb"
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    class="form-control"
+                    type="date"
+                    id="tanggal_terbit"
+                    name="tanggal_terbit"
+                    value=""
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  />
+                </div>
+              </div>
+              <button
+                id="selanjutnyakendaraan"
+                name="selanjutnya"
+                value="selanjutnya"
+                type="submit"
+                class="btn btn-dark"
+                style="float: right"
+                (click)="createcollateral()"
+              >
+                selanjutnya
+              </button>
+            </div>
+            <!--akhir hide show colom kendaraan NO2 -->
+
+            <!-- <h1>LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL</h1> -->
+          </div>
+          <div *ngSwitchCase="'Tanah dan Bangunan'">
+            <!-- untuk tanah dan bangunan colom 1 NO1 -->
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
+              <div class="col-sm-8">
+                <div class="form-group">
+                  <select
+                    class="form-control"
+                    name="jenis_objek"
+                    id="jenis_objek"
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  >
+                    <option selected value="">Pilih Jenis Objek</option>
+                    <option *ngFor="let getjenisobjek of getjenisobjek" value="{{ getjenisobjek.jenis_objek_code }}">
+                      {{ getjenisobjek.jenis_objek_deskripsi }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <br/>
+            <div id="hidden_tnb" class="hidden_tnb">
+              <!--awal hidden tbn-->
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tipe Property<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="tipe_properti"
+                      id="tipe_properti"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    >
+                      <option value="">Pilih Tipe Properti</option>
+                      <option>Rumah</option>
+                      <option>Apartement</option>
+                      <option>Ruko / Rukan</option>
+                      <option>Kos</option>
+                      <option>Villa</option>
+                      <option>Tanah / Kavling</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Status<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <div class="lihat_baru" id="ihide_baru">
+                      <label class="radio-inline mr-3" for="ibaru">
+                        <input
+                          (click)="radiobbuttonbaru()"
+                          type="radio"
+                          value="baru"
+                          name="statusCollateral"
+                          id="ibaru"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        />Baru
+                      </label>
                     </div>
+                    <div class="lihat_second" id="ihide_second">
+                      <label class="radio-inline mr-3" for="isecond">
+                        <input
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          (click)="radiobbuttonsecon()"
+                          type="radio"
+                          value="second"
+                          name="statusCollateral"
+                          id="isecond"
+                        />Second
+                      </label>
+                    </div>
+
+                    <div [ngSwitch]="untukstatusdev">
+                      <div *ngSwitchCase="'baru'">
+                        <div class="hide_pks" id="ihide_pks">
+                          <label class="radio-inline mr-3" for="ipks">
+                            <input
+                              (click)="radiobbuttonpks()"
+                              type="radio"
+                              value="pks"
+                              name="statusBarusecond"
+                              id="ipks"
+                              [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                            />PKS
+                          </label>
+                        </div>
+                        <div class="hide_nonpks" id="ihide_nonpks">
+                          <label class="radio-inline mr-3" for="inonpks">
+                            <input
+                              [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                              (click)="radiobbuttonnonpks()"
+                              type="radio"
+                              value="non"
+                              name="statusBarusecond"
+                              id="inonpks"
+                            />NON-PKS
+                          </label>
+                        </div>
+                        <div class="hide_perorangan" id="ihide_perorangan">
+                          <label class="radio-inline mr-3" for="iperorangan">
+                            <input
+                              [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                              (click)="radiobbuttonorang()"
+                              type="radio"
+                              value="orang"
+                              name="statusBarusecond"
+                              id="iperorangan"
+                            />Perorangan
+                          </label>
+                        </div>
+                      </div>
+
+                      <div *ngSwitchCase="'secon'">
+                        <input
+                          (click)="radiobbuttonpks()"
+                          type="radio"
+                          value="pks"
+                          name="statusBarusecond"
+                          id="ipks"
+                          hidden
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        />
+                        <div class="hide_nonpks" id="ihide_nonpks">
+                          <label class="radio-inline mr-3" for="inonpks">
+                            <input
+                              type="radio"
+                              value="non"
+                              name="statusBarusecond"
+                              id="inonpks"
+                              [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                            />NON-PKS
+                          </label>
+                        </div>
+                        <div class="hide_perorangan" id="ihide_perorangan">
+                          <label class="radio-inline mr-3" for="iperorangan">
+                            <input
+                              type="radio"
+                              value="orang"
+                              name="statusBarusecond"
+                              id="iperorangan"
+                              [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                            />Perorangan
+                          </label>
+                        </div>
+                      </div>
+                      <div *ngSwitchDefault></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div [ngSwitch]="pemisahuntukdevloper">
+                <div *ngSwitchCase="'pks'">
+                  <div class="developer_pks">
                     <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Tipe Agunan<span class="text-danger">*</span></label>
+                      <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
                       <div class="col-sm-8">
                         <div class="form-group">
                           <select
                             class="form-control"
-                            (change)="changefom()"
-                            id="tipe_anggunan"
-                            name="tipe_anggunan"
+                            name="developer_pks"
+                            id="developer_pks"
                             [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
                           >
-                            <option selected value="">Pilih Tipe Agunan</option>
-                            <option *ngFor="let datatipeagunan of datatipeagunan" value="{{ datatipeagunan.collateral_deskripsi }}">
-                              {{ datatipeagunan.collateral_deskripsi }}
+                            <option value="">Pilih Nama Developer</option>
+                            <option *ngFor="let listagunan of listagunan" value="{{ listagunan.nama_developer }}">
+                              {{ listagunan.nama_developer }}
                             </option>
                           </select>
                         </div>
                       </div>
                     </div>
-                    <div [ngSwitch]="tampungantipeagunan">
-                      <div *ngSwitchCase="'Kendaraan'">
-                        <!--awal hidden kendaraan colom 1 NO 2-->
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
-                          <div class="col-sm-8">
-                            <div class="form-group">
-                              <select
-                                class="form-control"
-                                name="jenis_objek"
-                                id="jenis_objek"
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              >
-                                <option selected value="">Pilih Jenis Objek</option>
-                                <option *ngFor="let getjenisobjek of getjenisobjek" value="{{ getjenisobjek.jenis_objek_code }}">
-                                  {{ getjenisobjek.jenis_objek_deskripsi }}
-                                </option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div id="hidden_kendaraanCol1" class="hidden_kendaraanCol1">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Tipe Kendaraan<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <div class="form-group">
-                                <select
-                                  class="form-control"
-                                  name="tipe_kendaraan2"
-                                  id="tipe_kendaraan2"
-                                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                >
-                                  <option value="">Pilih Tipe Kendaraan</option>
-                                  <option *ngFor="let getlistkendaraan of getlistkendaraan" value="{{ getlistkendaraan.deskripsi }}">
-                                    {{ getlistkendaraan.deskripsi }}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Merek<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Merek"
-                                name="merk2"
-                                id="merk2"
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Model<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Model"
-                                name="model2"
-                                id="model2"
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Seri<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Seri"
-                                name="seri2"
-                                id="seri2"
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">No BPKB<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="tel"
-                                onkeypress="return onlyNumberKey(event)"
-                                class="form-control"
-                                placeholder="No BPKB"
-                                name="nomor_bpkb2"
-                                id="nomor_bpkb2"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <!-- batas hidden kendaraan colom 1 NO2 -->
-
-                        <!-- pembatas colom 1 dan 2 -->
-
-                        <!-- hide show colom kendaraan NO2 -->
-                        <div class="col hidden_kendaraanCol2" id="hidden_kendaraanCol2">
-                          <!-- hide_kendaraan -->
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">No Plat<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="tel"
-                                onkeypress="return onlyNumberKey(event)"
-                                class="form-control"
-                                placeholder="No Plat"
-                                name="no_plat"
-                                id="no_plat"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Warna<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Warna"
-                                name="warna"
-                                id="warna"
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">No Mesin<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="tel"
-                                onkeypress="return onlyNumberKey(event)"
-                                class="form-control"
-                                placeholder="No Mesin"
-                                name="no_mesin"
-                                id="no_mesin"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">No Rangka<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="tel"
-                                onkeypress="return onlyNumberKey(event)"
-                                class="form-control"
-                                placeholder="No Rangka"
-                                name="no_rangka"
-                                id="no_rangka"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Nama BPKB<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Nama BPKB"
-                                name="nama_bpkb"
-                                id="nama_bpkb"
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                class="form-control"
-                                type="date"
-                                id="tanggal_terbit"
-                                name="tanggal_terbit"
-                                value=""
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              />
-                            </div>
-                          </div>
-                          <button
-                            id="selanjutnyakendaraan"
-                            name="selanjutnya"
-                            value="selanjutnya"
-                            type="submit"
-                            class="btn btn-dark"
-                            style="float: right"
-                            (click)="createcollateral()"
-                          >
-                            selanjutnya
-                          </button>
-                        </div>
-                        <!--akhir hide show colom kendaraan NO2 -->
-
-                        <!-- <h1>LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL</h1> -->
+                  </div>
+                </div>
+                <div *ngSwitchCase="'non pks'">
+                  <div class="developer_nonpks">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <input
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          type="text"
+                          class="form-control"
+                          placeholder="Developer"
+                          name="developer_non_pks"
+                          id="developer_non_pks"
+                        />
                       </div>
-                      <div *ngSwitchCase="'Tanah dan Bangunan'">
-                        <!-- untuk tanah dan bangunan colom 1 NO1 -->
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
-                          <div class="col-sm-8">
-                            <div class="form-group">
-                              <select
-                                class="form-control"
-                                name="jenis_objek"
-                                id="jenis_objek"
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              >
-                                <option selected value="">Pilih Jenis Objek</option>
-                                <option *ngFor="let getjenisobjek of getjenisobjek" value="{{ getjenisobjek.jenis_objek_code }}">
-                                  {{ getjenisobjek.jenis_objek_deskripsi }}
-                                </option>
-                              </select>
-                            </div>
-                          </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngSwitchCase="'perorang'"></div>
+                <div *ngSwitchDefault></div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nama Perumahan</label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="text"
+                    class="form-control"
+                    placeholder="Nama Perumahan"
+                    name="nama_perumahan"
+                    id="nama_perumahan"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label"
+                  >Status Sama dengan Jaminan Sebelumnya<span class="text-danger">*</span></label
+                >
+                <div class="col-sm-8">
+                  <div class="form-group" id="radioButtonStatusJaminanSebelumTnb">
+                    <label class="radio-inline mr-3">
+                      <input
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        type="radio"
+                        value="ia"
+                        name="status_jaminan_sebelumnyaia"
+                        id="status_jaminan_sebelumnyaia"
+                      />Ya</label
+                    >
+                    <label class="radio-inline mr-3">
+                      <input
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        type="radio"
+                        value="tidak"
+                        name="status_jaminan_sebelumnyatidak"
+                        id="status_jaminan_sebelumnyatidak"
+                      />Tidak</label
+                    >
+                    <!-- <p> <button type="submit" class="col-sm-12 btn btn-dark"><i class="icon-magnifier menu-icon"></i>Lihat Jaminan Sebelumnya</button></p> -->
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label"
+                  >Hubungan antara Pemegang Hak dan calon Nasabah<span class="text-danger">*</span></label
+                >
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="hubungan_pemegang_hak"
+                      id="hubungan_pemegang_hak"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    >
+                      <option value="">Pilih Hubungan Pemegang Hak</option>
+                      <option *ngFor="let listhubunganagunan of listhubunganagunan" value="{{ listhubunganagunan.deskripsi }}">
+                        {{ listhubunganagunan.deskripsi }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- </div> batas hidden colom tnb  NO 1-->
+
+            <!-- hide show colom 2 buat tnb dan bangunan  -->
+            <div class="col hidden_tnbCol2" id="hidden_tnbCol2">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tahun Buat (YYYY)<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    placeholder=""
+                    name="tahun_buat"
+                    id="tahun_buat"
+                    minlength="4"
+                    maxlength="4"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="status_sertifikat"
+                      id="status_sertifikat"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    >
+                      <option selected value="">Pilih Status Sertifikat</option>
+                      <option
+                        *ngFor="let statussertifikat of statussertifikat"
+                        value="{{ statussertifikat.sertifikat_deskripsi }}"
+                      >
+                        {{ statussertifikat.sertifikat_deskripsi }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nomor Sertifikat<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    placeholder="Nomor Sertifikat"
+                    name="no_sertifikat"
+                    id="no_sertifikat"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    name="nama_pemegang_hak"
+                    id="nama_pemegang_hak"
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">No Contact Person<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    maxlength="12"
+                    class="form-control"
+                    placeholder=""
+                    name="no_handphone_cp"
+                    id="no_handphone_cp"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label"
+                  >Nomor Identitas Pemegang Hak Setifikat<span class="text-danger">*</span></label
+                >
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    placeholder=""
+                    name="no_id_pemegang_hak_sertifikat"
+                    id="no_id_pemegang_hak_sertifikat"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    class="form-control"
+                    type="date"
+                    id="tanggal_terbit"
+                    name="tanggal_terbit"
+                    onchange="tanggalTerbitDayTanahDanBangunan()"
+                  />
+                  <input class="form-control" id="hariTanggalnyaTerbitTanahDanBangunan" hidden />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tanggal Exipred<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    class="form-control"
+                    type="date"
+                    id="tanggal_expired"
+                    name="tanggal_expired"
+                    onchange="tanggalExpDayTanahDanBangunan()"
+                  />
+                  <input
+                    class="form-control"
+                    id="hariTanggalnyaExpTanahDanBagunan"
+                    hidden
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  />
+                </div>
+              </div>
+            </div>
+            <!--hide show colom biasa-->
+
+            <!-- batas colom 1 dan 2 -->
+          </div>
+          <div *ngSwitchCase="'Tanah'">
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
+              <div class="col-sm-8">
+                <div class="form-group">
+                  <select
+                    class="form-control"
+                    name="jenis_objek"
+                    id="jenis_objek"
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  >
+                    <option selected value="">Pilih Jenis Objek</option>
+                    <option *ngFor="let getjenisobjek of getjenisobjek" value="{{ getjenisobjek.jenis_objek_code }}">
+                      {{ getjenisobjek.jenis_objek_deskripsi }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <br/>
+            <!--awal hiden colom 1 tanah NO 4-->
+            <div id="hidden_tanahCol1" class="hidden_tanahCol1">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label"
+                  >Hubungan antar Pemegang Hak dan calon Nasabah<span class="text-danger">*</span></label
+                >
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="hubungan_pemegang_hak"
+                      id="hubungan_pemegang_hak"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    >
+                      <option selected value=""></option>
+                      <option *ngFor="let listhubunganagunan of listhubunganagunan" value="{{ listhubunganagunan.deskripsi }}">
+                        {{ listhubunganagunan.deskripsi }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- hide show colom 2 tanah NO 4--->
+            <div class="col hidden_tanahCol2" id="hidden_tanahCol2">
+              <!-- <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tahun Buat (YYYY)<span class="text-danger">*</span></label>
+                <div class="col-sm-8"> -->
+              <input
+                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                hidden
+                type="tel"
+                onkeypress="return onlyNumberKey(event)"
+                class="form-control"
+                placeholder=""
+                name="tahun_buat4"
+                id=""
+                minlength="4"
+                maxlength="4"
+              />
+              <!-- </div>
+            </div> -->
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="status_sertifikat"
+                      id="status_sertifikat"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    >
+                      <option selected value="">Pilih Status Sertifikat</option>
+                      <option
+                        *ngFor="let statussertifikat of statussertifikat"
+                        value="{{ statussertifikat.sertifikat_deskripsi }}"
+                      >
+                        {{ statussertifikat.sertifikat_deskripsi }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nomor Sertifikat<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    maxlength="20"
+                    class="form-control"
+                    placeholder="Nomor Sertifikat"
+                    name="nomor_sertifikat"
+                    id="nomor_sertifikat"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    name="nama_pemegang_hak"
+                    id="nama_pemegang_hak"
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">No Contact Person<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    placeholder=""
+                    name="no_contact_person"
+                    id="no_contact_person"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label"
+                  >Nomor Identitas Pemegang Hak Setifikat<span class="text-danger">*</span></label
+                >
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    placeholder=""
+                    name="nomor_identitas_pemegang_hak"
+                    id="nomor_identitas_pemegang_hak"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    class="form-control"
+                    type="date"
+                    name="tanggal_lahir"
+                    id="tanggal_lahir"
+                    onchange="tanggalTerbitDay()"
+                  />
+                  <input class="form-control" id="hariTanggalnyaTerbitTanah" hidden />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tanggal Exipred<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    class="form-control"
+                    type="date"
+                    id="tanggal_exipred"
+                    name="tanggal_exipred"
+                    onchange="tanggalExpDay()"
+                  />
+                  <input class="form-control" id="hariTanggalnyaExpTanah" hidden />
+                </div>
+              </div>
+            </div>
+            <!-- hide show colom 2 tanah  NO 4-->
+          </div>
+          <div *ngSwitchCase="'Bangunan'">
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
+              <div class="col-sm-8">
+                <div class="form-group">
+                  <select
+                    class="form-control"
+                    name="jenis_objek"
+                    id="jenis_objek"
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  >
+                    <option selected value="">Pilih Jenis Objek</option>
+                    <option *ngFor="let getjenisobjek of getjenisobjek" value="{{ getjenisobjek.jenis_objek_code }}">
+                      {{ getjenisobjek.jenis_objek_deskripsi }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <br/>
+            <div id="hidden_bangunan" class="hidden_bangunan">
+              <!--awal hidden bangunan colom 1 NO5-->
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tipe Property<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="tipe_properti"
+                      id="tipe_properti"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    >
+                      <option>Rumah</option>
+                      <option>Apartement</option>
+                      <option>Ruko / Rukan</option>
+                      <option>Kos</option>
+                      <option>Villa</option>
+                      <option>Tanah / Kavling</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Status<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <div class="form-group" id="statusRadioButton">
+                    <div class="lihat_baru2" id="ihide_baru2">
+                      <label class="radio-inline mr-3" for="ibaru2">
+                        <input
+                          (click)="radiobbuttonbaru()"
+                          type="radio"
+                          value="baru"
+                          name="statusCollateral"
+                          id="ibaru"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        />Baru
+                      </label>
+                    </div>
+                    <div class="lihat_second2" id="ihide_second2">
+                      <label class="radio-inline mr-3" for="isecond2">
+                        <input
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          (click)="radiobbuttonsecon()"
+                          type="radio"
+                          value="second"
+                          name="statusCollateral"
+                          id="isecond"
+                        />Second
+                      </label>
+                    </div>
+
+                    <div [ngSwitch]="untukstatusdev">
+                      <div *ngSwitchCase="'baru'">
+                        <div class="hide_pks" id="ihide_pks">
+                          <label class="radio-inline mr-3" for="ipks">
+                            <input
+                              (click)="radiobbuttonpks()"
+                              type="radio"
+                              value="pks"
+                              name="statusBarusecond"
+                              id="ipks"
+                              [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                            />PKS
+                          </label>
                         </div>
-
-                        <div id="hidden_tnb" class="hidden_tnb">
-                          <!--awal hidden tbn-->
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Tipe Property<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <div class="form-group">
-                                <select
-                                  class="form-control"
-                                  name="tipe_properti"
-                                  id="tipe_properti"
-                                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                >
-                                  <option value="">Pilih Tipe Properti</option>
-                                  <option>Rumah</option>
-                                  <option>Apartement</option>
-                                  <option>Ruko / Rukan</option>
-                                  <option>Kos</option>
-                                  <option>Villa</option>
-                                  <option>Tanah / Kavling</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Status<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <div class="form-group">
-                                <div class="lihat_baru" id="ihide_baru">
-                                  <label class="radio-inline mr-3" for="ibaru">
-                                    <input
-                                      (click)="radiobbuttonbaru()"
-                                      type="radio"
-                                      value="baru"
-                                      name="statusCollateral"
-                                      id="ibaru"
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    />Baru
-                                  </label>
-                                </div>
-                                <div class="lihat_second" id="ihide_second">
-                                  <label class="radio-inline mr-3" for="isecond">
-                                    <input
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                      (click)="radiobbuttonsecon()"
-                                      type="radio"
-                                      value="second"
-                                      name="statusCollateral"
-                                      id="isecond"
-                                    />Second
-                                  </label>
-                                </div>
-
-                                <div [ngSwitch]="untukstatusdev">
-                                  <div *ngSwitchCase="'baru'">
-                                    <div class="hide_pks" id="ihide_pks">
-                                      <label class="radio-inline mr-3" for="ipks">
-                                        <input
-                                          (click)="radiobbuttonpks()"
-                                          type="radio"
-                                          value="pks"
-                                          name="statusBarusecond"
-                                          id="ipks"
-                                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                        />PKS
-                                      </label>
-                                    </div>
-                                    <div class="hide_nonpks" id="ihide_nonpks">
-                                      <label class="radio-inline mr-3" for="inonpks">
-                                        <input
-                                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                          (click)="radiobbuttonnonpks()"
-                                          type="radio"
-                                          value="non"
-                                          name="statusBarusecond"
-                                          id="inonpks"
-                                        />NON-PKS
-                                      </label>
-                                    </div>
-                                    <div class="hide_perorangan" id="ihide_perorangan">
-                                      <label class="radio-inline mr-3" for="iperorangan">
-                                        <input
-                                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                          (click)="radiobbuttonorang()"
-                                          type="radio"
-                                          value="orang"
-                                          name="statusBarusecond"
-                                          id="iperorangan"
-                                        />Perorangan
-                                      </label>
-                                    </div>
-                                  </div>
-
-                                  <div *ngSwitchCase="'secon'">
-                                    <input
-                                      (click)="radiobbuttonpks()"
-                                      type="radio"
-                                      value="pks"
-                                      name="statusBarusecond"
-                                      id="ipks"
-                                      hidden
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    />
-                                    <div class="hide_nonpks" id="ihide_nonpks">
-                                      <label class="radio-inline mr-3" for="inonpks">
-                                        <input
-                                          type="radio"
-                                          value="non"
-                                          name="statusBarusecond"
-                                          id="inonpks"
-                                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                        />NON-PKS
-                                      </label>
-                                    </div>
-                                    <div class="hide_perorangan" id="ihide_perorangan">
-                                      <label class="radio-inline mr-3" for="iperorangan">
-                                        <input
-                                          type="radio"
-                                          value="orang"
-                                          name="statusBarusecond"
-                                          id="iperorangan"
-                                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                        />Perorangan
-                                      </label>
-                                    </div>
-                                  </div>
-                                  <div *ngSwitchDefault></div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div [ngSwitch]="pemisahuntukdevloper">
-                            <div *ngSwitchCase="'pks'">
-                              <div class="developer_pks">
-                                <div class="form-group row">
-                                  <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
-                                  <div class="col-sm-8">
-                                    <div class="form-group">
-                                      <select
-                                        class="form-control"
-                                        name="developer_pks"
-                                        id="developer_pks"
-                                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                      >
-                                        <option value="">Pilih Nama Developer</option>
-                                        <option *ngFor="let listagunan of listagunan" value="{{ listagunan.nama_developer }}">
-                                          {{ listagunan.nama_developer }}
-                                        </option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div *ngSwitchCase="'non pks'">
-                              <div class="developer_nonpks">
-                                <div class="form-group row">
-                                  <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
-                                  <div class="col-sm-8">
-                                    <input
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                      type="text"
-                                      class="form-control"
-                                      placeholder="Developer"
-                                      name="developer_non_pks"
-                                      id="developer_non_pks"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div *ngSwitchCase="'perorang'"></div>
-                            <div *ngSwitchDefault></div>
-                          </div>
-
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Nama Perumahan</label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="text"
-                                class="form-control"
-                                placeholder="Nama Perumahan"
-                                name="nama_perumahan"
-                                id="nama_perumahan"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label"
-                              >Status Sama dengan Jaminan Sebelumnya<span class="text-danger">*</span></label
-                            >
-                            <div class="col-sm-8">
-                              <div class="form-group" id="radioButtonStatusJaminanSebelumTnb">
-                                <label class="radio-inline mr-3">
-                                  <input
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    type="radio"
-                                    value="ia"
-                                    name="status_jaminan_sebelumnyaia"
-                                    id="status_jaminan_sebelumnyaia"
-                                  />Ya</label
-                                >
-                                <label class="radio-inline mr-3">
-                                  <input
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    type="radio"
-                                    value="tidak"
-                                    name="status_jaminan_sebelumnyatidak"
-                                    id="status_jaminan_sebelumnyatidak"
-                                  />Tidak</label
-                                >
-                                <!-- <p> <button type="submit" class="col-sm-12 btn btn-dark"><i class="icon-magnifier menu-icon"></i>Lihat Jaminan Sebelumnya</button></p> -->
-                              </div>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label"
-                              >Hubungan antara Pemegang Hak dan calon Nasabah<span class="text-danger">*</span></label
-                            >
-                            <div class="col-sm-8">
-                              <div class="form-group">
-                                <select
-                                  class="form-control"
-                                  name="hubungan_pemegang_hak"
-                                  id="hubungan_pemegang_hak"
-                                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                >
-                                  <option value="">Pilih Hubungan Pemegang Hak</option>
-                                  <option *ngFor="let listhubunganagunan of listhubunganagunan" value="{{ listhubunganagunan.deskripsi }}">
-                                    {{ listhubunganagunan.deskripsi }}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
+                        <div class="hide_nonpks" id="ihide_nonpks">
+                          <label class="radio-inline mr-3" for="inonpks">
+                            <input
+                              [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                              (click)="radiobbuttonnonpks()"
+                              type="radio"
+                              value="non"
+                              name="statusBarusecond"
+                              id="inonpks"
+                            />NON-PKS
+                          </label>
                         </div>
-                        <!-- </div> batas hidden colom tnb  NO 1-->
-
-                        <!-- hide show colom 2 buat tnb dan bangunan  -->
-                        <div class="col hidden_tnbCol2" id="hidden_tnbCol2">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Tahun Buat (YYYY)<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="tel"
-                                onkeypress="return onlyNumberKey(event)"
-                                class="form-control"
-                                placeholder=""
-                                name="tahun_buat"
-                                id="tahun_buat"
-                                minlength="4"
-                                maxlength="4"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <div class="form-group">
-                                <select
-                                  class="form-control"
-                                  name="status_sertifikat"
-                                  id="status_sertifikat"
-                                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                >
-                                  <option selected value="">Pilih Status Sertifikat</option>
-                                  <option
-                                    *ngFor="let statussertifikat of statussertifikat"
-                                    value="{{ statussertifikat.sertifikat_deskripsi }}"
-                                  >
-                                    {{ statussertifikat.sertifikat_deskripsi }}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Nomor Sertifikat<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="tel"
-                                onkeypress="return onlyNumberKey(event)"
-                                class="form-control"
-                                placeholder="Nomor Sertifikat"
-                                name="no_sertifikat"
-                                id="no_sertifikat"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                type="text"
-                                class="form-control"
-                                placeholder=""
-                                name="nama_pemegang_hak"
-                                id="nama_pemegang_hak"
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">No Contact Person<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="tel"
-                                onkeypress="return onlyNumberKey(event)"
-                                maxlength="12"
-                                class="form-control"
-                                placeholder=""
-                                name="no_handphone_cp"
-                                id="no_handphone_cp"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label"
-                              >Nomor Identitas Pemegang Hak Setifikat<span class="text-danger">*</span></label
-                            >
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="tel"
-                                onkeypress="return onlyNumberKey(event)"
-                                class="form-control"
-                                placeholder=""
-                                name="no_id_pemegang_hak_sertifikat"
-                                id="no_id_pemegang_hak_sertifikat"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                class="form-control"
-                                type="date"
-                                id="tanggal_terbit"
-                                name="tanggal_terbit"
-                                onchange="tanggalTerbitDayTanahDanBangunan()"
-                              />
-                              <input class="form-control" id="hariTanggalnyaTerbitTanahDanBangunan" hidden />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Tanggal Exipred<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                class="form-control"
-                                type="date"
-                                id="tanggal_expired"
-                                name="tanggal_expired"
-                                onchange="tanggalExpDayTanahDanBangunan()"
-                              />
-                              <input
-                                class="form-control"
-                                id="hariTanggalnyaExpTanahDanBagunan"
-                                hidden
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              />
-                            </div>
-                          </div>
+                        <div class="hide_perorangan" id="ihide_perorangan">
+                          <label class="radio-inline mr-3" for="iperorangan">
+                            <input
+                              [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                              (click)="radiobbuttonorang()"
+                              type="radio"
+                              value="orang"
+                              name="statusBarusecond"
+                              id="iperorangan"
+                            />Perorangan
+                          </label>
                         </div>
-                        <!--hide show colom biasa-->
-
-                        <!-- batas colom 1 dan 2 -->
                       </div>
-                      <div *ngSwitchCase="'Tanah'">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
-                          <div class="col-sm-8">
-                            <div class="form-group">
-                              <select
-                                class="form-control"
-                                name="jenis_objek"
-                                id="jenis_objek"
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              >
-                                <option selected value="">Pilih Jenis Objek</option>
-                                <option *ngFor="let getjenisobjek of getjenisobjek" value="{{ getjenisobjek.jenis_objek_code }}">
-                                  {{ getjenisobjek.jenis_objek_deskripsi }}
-                                </option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                        <!--awal hiden colom 1 tanah NO 4-->
-                        <div id="hidden_tanahCol1" class="hidden_tanahCol1">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label"
-                              >Hubungan antar Pemegang Hak dan calon Nasabah<span class="text-danger">*</span></label
-                            >
-                            <div class="col-sm-8">
-                              <div class="form-group">
-                                <select
-                                  class="form-control"
-                                  name="hubungan_pemegang_hak"
-                                  id="hubungan_pemegang_hak"
-                                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                >
-                                  <option selected value=""></option>
-                                  <option *ngFor="let listhubunganagunan of listhubunganagunan" value="{{ listhubunganagunan.deskripsi }}">
-                                    {{ listhubunganagunan.deskripsi }}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
 
-                        <!-- hide show colom 2 tanah NO 4--->
-                        <div class="col hidden_tanahCol2" id="hidden_tanahCol2">
-                          <!-- <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Tahun Buat (YYYY)<span class="text-danger">*</span></label>
-                            <div class="col-sm-8"> -->
-                          <input
-                            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                            hidden
-                            type="tel"
-                            onkeypress="return onlyNumberKey(event)"
-                            class="form-control"
-                            placeholder=""
-                            name="tahun_buat4"
-                            id=""
-                            minlength="4"
-                            maxlength="4"
-                          />
-                          <!-- </div>
-                        </div> -->
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <div class="form-group">
-                                <select
-                                  class="form-control"
-                                  name="status_sertifikat"
-                                  id="status_sertifikat"
-                                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                >
-                                  <option selected value="">Pilih Status Sertifikat</option>
-                                  <option
-                                    *ngFor="let statussertifikat of statussertifikat"
-                                    value="{{ statussertifikat.sertifikat_deskripsi }}"
-                                  >
-                                    {{ statussertifikat.sertifikat_deskripsi }}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Nomor Sertifikat<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="tel"
-                                onkeypress="return onlyNumberKey(event)"
-                                maxlength="20"
-                                class="form-control"
-                                placeholder="Nomor Sertifikat"
-                                name="nomor_sertifikat"
-                                id="nomor_sertifikat"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                type="text"
-                                class="form-control"
-                                placeholder=""
-                                name="nama_pemegang_hak"
-                                id="nama_pemegang_hak"
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">No Contact Person<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="tel"
-                                onkeypress="return onlyNumberKey(event)"
-                                class="form-control"
-                                placeholder=""
-                                name="no_contact_person"
-                                id="no_contact_person"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label"
-                              >Nomor Identitas Pemegang Hak Setifikat<span class="text-danger">*</span></label
-                            >
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="tel"
-                                onkeypress="return onlyNumberKey(event)"
-                                class="form-control"
-                                placeholder=""
-                                name="nomor_identitas_pemegang_hak"
-                                id="nomor_identitas_pemegang_hak"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                class="form-control"
-                                type="date"
-                                name="tanggal_lahir"
-                                id="tanggal_lahir"
-                                onchange="tanggalTerbitDay()"
-                              />
-                              <input class="form-control" id="hariTanggalnyaTerbitTanah" hidden />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Tanggal Exipred<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                class="form-control"
-                                type="date"
-                                id="tanggal_exipred"
-                                name="tanggal_exipred"
-                                onchange="tanggalExpDay()"
-                              />
-                              <input class="form-control" id="hariTanggalnyaExpTanah" hidden />
-                            </div>
-                          </div>
+                      <div *ngSwitchCase="'secon'">
+                        <input
+                          (click)="radiobbuttonpks()"
+                          type="radio"
+                          value="pks"
+                          name="statusBarusecond"
+                          id="ipks"
+                          hidden
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        />
+                        <div class="hide_nonpks" id="ihide_nonpks">
+                          <label class="radio-inline mr-3" for="inonpks">
+                            <input
+                              [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                              (click)="radiobbuttonnonpks()"
+                              type="radio"
+                              value="non"
+                              name="statusBarusecond"
+                              id="inonpks"
+                            />NON-PKS
+                          </label>
                         </div>
-                        <!-- hide show colom 2 tanah  NO 4-->
-                      </div>
-                      <div *ngSwitchCase="'Bangunan'">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Jenis Objek<span class="text-danger">*</span></label>
-                          <div class="col-sm-8">
-                            <div class="form-group">
-                              <select
-                                class="form-control"
-                                name="jenis_objek"
-                                id="jenis_objek"
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              >
-                                <option selected value="">Pilih Jenis Objek</option>
-                                <option *ngFor="let getjenisobjek of getjenisobjek" value="{{ getjenisobjek.jenis_objek_code }}">
-                                  {{ getjenisobjek.jenis_objek_deskripsi }}
-                                </option>
-                              </select>
-                            </div>
-                          </div>
+                        <div class="hide_perorangan" id="ihide_perorangan">
+                          <label class="radio-inline mr-3" for="iperorangan">
+                            <input
+                              [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                              (click)="radiobbuttonorang()"
+                              type="radio"
+                              value="orang"
+                              name="statusBarusecond"
+                              id="iperorangan"
+                            />Perorangan
+                          </label>
                         </div>
-
-                        <div id="hidden_bangunan" class="hidden_bangunan">
-                          <!--awal hidden bangunan colom 1 NO5-->
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Tipe Property<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <div class="form-group">
-                                <select
-                                  class="form-control"
-                                  name="tipe_properti"
-                                  id="tipe_properti"
-                                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                >
-                                  <option>Rumah</option>
-                                  <option>Apartement</option>
-                                  <option>Ruko / Rukan</option>
-                                  <option>Kos</option>
-                                  <option>Villa</option>
-                                  <option>Tanah / Kavling</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Status<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <div class="form-group" id="statusRadioButton">
-                                <div class="lihat_baru2" id="ihide_baru2">
-                                  <label class="radio-inline mr-3" for="ibaru2">
-                                    <input
-                                      (click)="radiobbuttonbaru()"
-                                      type="radio"
-                                      value="baru"
-                                      name="statusCollateral"
-                                      id="ibaru"
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    />Baru
-                                  </label>
-                                </div>
-                                <div class="lihat_second2" id="ihide_second2">
-                                  <label class="radio-inline mr-3" for="isecond2">
-                                    <input
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                      (click)="radiobbuttonsecon()"
-                                      type="radio"
-                                      value="second"
-                                      name="statusCollateral"
-                                      id="isecond"
-                                    />Second
-                                  </label>
-                                </div>
-
-                                <div [ngSwitch]="untukstatusdev">
-                                  <div *ngSwitchCase="'baru'">
-                                    <div class="hide_pks" id="ihide_pks">
-                                      <label class="radio-inline mr-3" for="ipks">
-                                        <input
-                                          (click)="radiobbuttonpks()"
-                                          type="radio"
-                                          value="pks"
-                                          name="statusBarusecond"
-                                          id="ipks"
-                                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                        />PKS
-                                      </label>
-                                    </div>
-                                    <div class="hide_nonpks" id="ihide_nonpks">
-                                      <label class="radio-inline mr-3" for="inonpks">
-                                        <input
-                                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                          (click)="radiobbuttonnonpks()"
-                                          type="radio"
-                                          value="non"
-                                          name="statusBarusecond"
-                                          id="inonpks"
-                                        />NON-PKS
-                                      </label>
-                                    </div>
-                                    <div class="hide_perorangan" id="ihide_perorangan">
-                                      <label class="radio-inline mr-3" for="iperorangan">
-                                        <input
-                                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                          (click)="radiobbuttonorang()"
-                                          type="radio"
-                                          value="orang"
-                                          name="statusBarusecond"
-                                          id="iperorangan"
-                                        />Perorangan
-                                      </label>
-                                    </div>
-                                  </div>
-
-                                  <div *ngSwitchCase="'secon'">
-                                    <input
-                                      (click)="radiobbuttonpks()"
-                                      type="radio"
-                                      value="pks"
-                                      name="statusBarusecond"
-                                      id="ipks"
-                                      hidden
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    />
-                                    <div class="hide_nonpks" id="ihide_nonpks">
-                                      <label class="radio-inline mr-3" for="inonpks">
-                                        <input
-                                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                          (click)="radiobbuttonnonpks()"
-                                          type="radio"
-                                          value="non"
-                                          name="statusBarusecond"
-                                          id="inonpks"
-                                        />NON-PKS
-                                      </label>
-                                    </div>
-                                    <div class="hide_perorangan" id="ihide_perorangan">
-                                      <label class="radio-inline mr-3" for="iperorangan">
-                                        <input
-                                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                          (click)="radiobbuttonorang()"
-                                          type="radio"
-                                          value="orang"
-                                          name="statusBarusecond"
-                                          id="iperorangan"
-                                        />Perorangan
-                                      </label>
-                                    </div>
-                                  </div>
-                                  <div *ngSwitchDefault></div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div [ngSwitch]="pemisahuntukdevloper">
-                            <div *ngSwitchCase="'pks'">
-                              <div class="developer_pks">
-                                <div class="form-group row">
-                                  <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
-                                  <div class="col-sm-8">
-                                    <div class="form-group">
-                                      <select
-                                        class="form-control"
-                                        name="developer_pks"
-                                        id="developer_pks"
-                                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                      >
-                                        <option value="">Pilih Nama Developer</option>
-                                        <option *ngFor="let listagunan of listagunan" value="{{ listagunan.nama_developer }}">
-                                          {{ listagunan.nama_developer }}
-                                        </option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div *ngSwitchCase="'non pks'">
-                              <div class="developer_nonpks">
-                                <div class="form-group row">
-                                  <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
-                                  <div class="col-sm-8">
-                                    <input
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                      type="text"
-                                      class="form-control"
-                                      placeholder="Developer"
-                                      name="developer_non_pks"
-                                      id="developer_non_pks"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div *ngSwitchCase="'perorang'"></div>
-                            <div *ngSwitchDefault></div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Nama Perumahan</label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="text"
-                                class="form-control"
-                                placeholder="Nama Perumahan"
-                                name="nama_perumahan"
-                                id="nama_perumahan"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Sama dengan Jaminan Sebelumnya<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <div class="form-group" id="radioButtonStatusJaminanSebelum">
-                                <label class="radio-inline mr-3">
-                                  <input
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    type="radio"
-                                    value="1"
-                                    id="status_jaminan_sebelumnyaia"
-                                    name="status_jaminan_sebelumnyaia"
-                                  />Ya</label
-                                >
-                                <label class="radio-inline mr-3">
-                                  <input
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    type="radio"
-                                    value="tidak"
-                                    id="status_jaminan_sebelumnyatidak"
-                                    name="status_jaminan_sebelumnyatidak"
-                                  />Tidak</label
-                                >
-                                <p>
-                                  <button
-                                    type="submit"
-                                    class="col-sm-12 btn btn-dark"
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                  >
-                                    <i class="icon-magnifier menu-icon"></i>Lihat Jaminan Sebelumnya
-                                  </button>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label"
-                              >Hubungan antara Pemegang Hak dan calon Nasabah<span class="text-danger">*</span></label
-                            >
-                            <div class="col-sm-8">
-                              <div class="form-group">
-                                <select
-                                  class="form-control"
-                                  name="hubungan_pemegang_hak"
-                                  id="hubungan_pemegang_hak"
-                                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                >
-                                  <option value="">Pilih Hubungan Pemegang Hak</option>
-                                  <option *ngFor="let listhubunganagunan of listhubunganagunan" value="{{ listhubunganagunan.deskripsi }}">
-                                    {{ listhubunganagunan.deskripsi }}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- batas hidden bangunan NO5 -->
-                        <!--batas colom 1 bangunan-->
-
-                        <!-- hide show colom 2 buat tnb dan bangunan  -->
-                        <div class="col hidden_bangunanCol2" id="hidden_bangunanCol2">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Tahun Buat (YYYY)<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="tel"
-                                onkeypress="return onlyNumberKey(event)"
-                                class="form-control"
-                                placeholder=""
-                                name="tahun_buat"
-                                id="tahun_buat"
-                                minlength="4"
-                                maxlength="4"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <div class="form-group">
-                                <select
-                                  class="form-control"
-                                  name="status_sertifikat"
-                                  id="status_sertifikat"
-                                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                >
-                                  <option selected value="">Pilih Status Sertifikat</option>
-                                  <option
-                                    *ngFor="let statussertifikat of statussertifikat"
-                                    value="{{ statussertifikat.sertifikat_deskripsi }}"
-                                  >
-                                    {{ statussertifikat.sertifikat_deskripsi }}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Nomor Sertifikat<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="tel"
-                                onkeypress="return onlyNumberKey(event)"
-                                class="form-control"
-                                placeholder="Nomor Sertifikat"
-                                name="no_sertifikat"
-                                id="no_sertifikat"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                type="text"
-                                class="form-control"
-                                placeholder=""
-                                name="nama_pemegang_hak"
-                                id="nama_pemegang_hak"
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">No Contact Person<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="tel"
-                                onkeypress="return onlyNumberKey(event)"
-                                maxlength="12"
-                                class="form-control"
-                                placeholder=""
-                                name="no_handphone_cp"
-                                id="no_handphone_cp"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label"
-                              >Nomor Identitas Pemegang Hak Setifikat<span class="text-danger">*</span></label
-                            >
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                type="tel"
-                                onkeypress="return onlyNumberKey(event)"
-                                class="form-control"
-                                placeholder=""
-                                name="no_id_pemegang_hak_sertifikat"
-                                id="no_id_pemegang_hak_sertifikat"
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                class="form-control"
-                                type="date"
-                                id="tanggal_terbit"
-                                name="tanggal_terbit"
-                                onchange="tanggalTerbitDayBangunan()"
-                              />
-                              <input class="form-control" id="hariTanggalnyaTerbitBangunan" hidden />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Tanggal Exipred<span class="text-danger">*</span></label>
-                            <div class="col-sm-8">
-                              <input
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                class="form-control"
-                                type="date"
-                                id="tanggal_expired"
-                                name="tanggal_expired"
-                                onchange="tanggalExpDayBangunan()"
-                              />
-                              <input
-                                class="form-control"
-                                id="hariTanggalnyaExpBagunan"
-                                hidden
-                                [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <!--hide show colom biasa-->
-                      </div>
-                      <div *ngSwitchCase="'Emas'">
-                        <H1>untuk pilihan ini tidak tersedia</H1>
                       </div>
                       <div *ngSwitchDefault></div>
                     </div>
-                    <div [ngSwitch]="tampungantipeagunan">
-                      <div *ngSwitchCase="'Kendaraan'"></div>
-                      <div *ngSwitchCase="'Emas'"></div>
-                      <div *ngSwitchDefault>
-                        <!-- pembatas row ke 2 dan 3 -->
-                        <div class="card-body" id="hide_row" class="hide_row">
-                          <h4 class="card-body gradient-9" style="text-align: center">Alamat Agunan</h4>
-                          <div class="row">
-                            <div class="col">
-                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Alamat<span class="text-danger">*</span></label>
-                                <div class="col-sm-9">
-                                  <textarea
-                                    class="form-control h-150px"
-                                    rows="6"
-                                    id="alamat_agunan"
-                                    name="alamat_agunan"
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                  ></textarea>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
-                                <div class="col-sm-9">
-                                  <div class="form-group">
-                                    <select
-                                      class="form-control"
-                                      (change)="onChange(0)"
-                                      id="provinsi_agunan"
-                                      name="provinsi_agunan"
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    >
-                                      <option value="">Pilih Provinsi</option>
-                                      <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
-                                        {{ daWaprof.namaWilayah }}
-                                      </option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
-                                <div class="col-sm-9">
-                                  <div class="form-group">
-                                    <select
-                                      class="form-control"
-                                      (change)="onChangekota(0)"
-                                      id="kabkota_agunan"
-                                      name="kabkota_agunan"
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    >
-                                      <option value="">Pilih Kota</option>
-                                      <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
-                                        {{ daWakota.namaWilayah }}
-                                      </option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
-                                <div class="col-sm-9">
-                                  <div class="form-group">
-                                    <select
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                      class="form-control"
-                                      (change)="onChangekecamatan(0)"
-                                      id="kecamatan_agunan"
-                                      name="kecamatan_agunan"
-                                    >
-                                      <option value="">Pilih Kecamatan</option>
-                                      <option
-                                        *ngFor="let daWakecamatan of kecamatan"
-                                        value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}"
-                                      >
-                                        {{ daWakecamatan.namaWilayah }}
-                                      </option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
-                                <div class="col-sm-9">
-                                  <div class="form-group">
-                                    <select
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                      class="form-control"
-                                      (change)="onChangekelurahan(0)"
-                                      id="kelurahan_agunan"
-                                      name="kelurahan_agunan"
-                                    >
-                                      <option value="">Pilih Kelurahan</option>
-                                      <option
-                                        *ngFor="let daWakelurahan of kelurahan"
-                                        value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}"
-                                      >
-                                        {{ daWakelurahan.namaWilayah }}
-                                      </option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Kode Pos<span class="text-danger">*</span></label>
-                                <div class="col-sm-9">
-                                  <div class="input-group-append">
-                                    <input
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                      type="tel"
-                                      onkeypress="return onlyNumberKey(event)"
-                                      maxlength="8"
-                                      class="form-control"
-                                      id="kode_pos_agunan"
-                                      name="kode_pos_agunan"
-                                      #kodeposagunan
-                                    />
-                                    <button
-                                      class="btn btn-outline-dark"
-                                      (click)="carimenggunakankodeposagunan(kodeposagunan.value,0)"
-                                      type="button"
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    >
-                                      Cari Data
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">RT / RW<span class="text-danger">*</span></label>
-                                <div class="col">
-                                  <input
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    type="tel"
-                                    onkeypress="return onlyNumberKey(event)"
-                                    maxlength="3"
-                                    class="form-control"
-                                    placeholder="RT"
-                                    id="rt_agunan"
-                                    name="rt_agunan"
-                                  />
-                                </div>
-                                <h2>/</h2>
-                                <div class="col">
-                                  <input
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    type="tel"
-                                    onkeypress="return onlyNumberKey(event)"
-                                    class="form-control"
-                                    placeholder="RW"
-                                    maxlength="3"
-                                    id="rw_agunan"
-                                    name="rw_agunan"
-                                  />
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Alamat Agunan Sama Dengan Sertifikat?</label>
-                                <div class="col-sm-9">
-                                  <input
-                                    type="radio"
-                                    name="samaDomisili"
-                                    id="iyaSama"
-                                    value="1"
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                  />Sama
-                                  <input
-                                    type="radio"
-                                    name="samaDomisili"
-                                    id="takSama"
-                                    value="0"
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                  />Tidak Sama
-                                </div>
-                              </div>
-                              <div id="hiddenJikaTanah" class="form-group row">
-                                <label class="col-sm-3 col-form-label">Luas Bangunan<span class="text-danger">*</span></label>
-                                <div class="form-group col-md-8">
-                                  <input
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    type="tel"
-                                    oninput="this.value = this.value.replace(/^0/g, '');"
-                                    onkeypress="return onlyNumberKey(event)"
-                                    class="form-control"
-                                    placeholder=""
-                                    name="luas_bangunan_anggunan"
-                                    id="luas_bangunan_anggunan"
-                                  />
-                                </div>
-                                <span>M2</span>
-                              </div>
-                              <div id="hiddenJikaBangunan" class="form-group row">
-                                <label class="col-md-3 col-form-label">Luas Tanah<span class="text-danger">*</span></label>
-                                <div class="form-group col-md-8">
-                                  <input
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    type="tel"
-                                    oninput="this.value = this.value.replace(/^0/g, '');"
-                                    onkeypress="return onlyNumberKey(event)"
-                                    class="form-control"
-                                    placeholder=""
-                                    name="luas_tanah_anggunan"
-                                    id="luas_tanah_anggunan"
-                                  />
-                                </div>
-                                <span>M2</span>
-                              </div>
-                              <div id="hiddenJikaTanahHarga" class="form-group row">
-                                <label class="col-sm-3 col-form-label">Harga Objek<span class="text-danger">*</span></label>
-                                <div class="col-sm-9">
-                                  <input
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    type="tel"
-                                    oninput="this.value = this.value.replace(/^0/g, '');"
-                                    onkeypress="return onlyNumberKey(event)"
-                                    class="form-control"
-                                    placeholder=""
-                                    name="harga_objek"
-                                    id="harga_objek"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                            <!-- batas colom 1 dan 2 -->
+                  </div>
+                </div>
+              </div>
 
-                            <div class="col">
-                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Alamat Sesuai Sertifikat<span class="text-danger">*</span></label>
-                                <div class="col-sm-9">
-                                  <textarea
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    class="form-control h-150px"
-                                    rows="6"
-                                    id="alamat_sesuai_sertifikat"
-                                    name="alamat_sesuai_sertifikat"
-                                  ></textarea>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
-                                <div class="col-sm-9">
-                                  <div class="form-group">
-                                    <select
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                      class="form-control"
-                                      (change)="onChanges(0)"
-                                      id="provinsi_sesuai_sertifikat"
-                                      name="provinsi_sesuai_sertifikat"
-                                    >
-                                      <option value="">Pilih Provinsi</option>
-                                      <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
-                                        {{ daWaprof.namaWilayah }}
-                                      </option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
-                                <div class="col-sm-9">
-                                  <div class="form-group">
-                                    <select
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                      class="form-control"
-                                      (change)="onChangekotas(0)"
-                                      id="kabkota_sesuai_sertifikat"
-                                      name="kabkota_sesuai_sertifikat"
-                                    >
-                                      <option value="">Pilih Kota</option>
-                                      <option
-                                        *ngFor="let daWakotas of daWakotas"
-                                        value="{{ daWakotas.kdWilayah }}|{{ daWakotas.namaWilayah }}"
-                                      >
-                                        {{ daWakotas.namaWilayah }}
-                                      </option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
-                                <div class="col-sm-9">
-                                  <div class="form-group">
-                                    <select
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                      class="form-control"
-                                      (change)="onChangekecamatans(0)"
-                                      id="kecamatan_sesuai_sertifikat"
-                                      name="kecamatan_sesuai_sertifikat"
-                                    >
-                                      <option value="">Pilih Kecamatan</option>
-                                      <option
-                                        *ngFor="let kecamatans of kecamatans"
-                                        value="{{ kecamatans.kdWilayah }}|{{ kecamatans.namaWilayah }}"
-                                      >
-                                        {{ kecamatans.namaWilayah }}
-                                      </option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
-                                <div class="col-sm-9">
-                                  <div class="form-group">
-                                    <select
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                      (change)="onChangekelurahans(0)"
-                                      class="form-control"
-                                      id="kelurahan_sesuai_sertifikat"
-                                      name="kelurahan_sesuai_sertifikat"
-                                    >
-                                      <option value="">Pilih Kelurahan</option>
-                                      <option
-                                        *ngFor="let kelurahans of kelurahans"
-                                        value="{{ kelurahans.kdPos }}|{{ kelurahans.namaWilayah }}"
-                                      >
-                                        {{ kelurahans.namaWilayah }}
-                                      </option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Kode Pos<span class="text-danger">*</span></label>
-                                <div class="col-sm-9">
-                                  <div class="input-group-append">
-                                    <input
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                      type="tel"
-                                      onkeypress="return onlyNumberKey(event)"
-                                      maxlength="8"
-                                      class="form-control"
-                                      id="kode_pos_sesuai_sertifikat"
-                                      name="kode_pos_sesuai_sertifikat"
-                                      #kodepossertifikat
-                                    />
-                                    <button class="btn btn-outline-dark"   (click)="carimenggunakankodepossertifikat(kodepossertifikat.value,0)" type="button">Cari Data</button>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">RT / RW<span class="text-danger">*</span></label>
-                                <div class="col">
-                                  <input
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    type="tel"
-                                    onkeypress="return onlyNumberKey(event)"
-                                    class="form-control"
-                                    placeholder="RT"
-                                    id="rt_sertifikat"
-                                    name="rt_sertifikat"
-                                    maxlength="3"
-                                  />
-                                </div>
-                                <h2>/</h2>
-                                <div class="col">
-                                  <input
-                                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    type="tel"
-                                    onkeypress="return onlyNumberKey(event)"
-                                    class="form-control"
-                                    placeholder="RW"
-                                    maxlength="3"
-                                    id="rw_sertifikat"
-                                    name="rw_sertifikat"
-                                  />
-                                </div>
-                              </div>
-                              <div id="adaKaloTnb">
-                                <div class="form-group row">
-                                  <label class="col-sm-3 col-form-label">ID Rumah<span class="text-danger">*</span></label>
-                                  <div class="col-sm-9">
-                                    <input
-                                      type="text"
-                                      class="form-control"
-                                      placeholder=""
-                                      name="id_rumah"
-                                      id="id_rumah"
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    />
-                                  </div>
-                                </div>
-                                <div class="form-group row">
-                                  <label class="col-md-3 col-form-label">Blok Rumah<span class="text-danger">*</span></label>
-                                  <div class="col-sm-9">
-                                    <input
-                                      type="text"
-                                      class="form-control"
-                                      placeholder=""
-                                      name="blok_rumah"
-                                      id="blok_rumah"
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    />
-                                  </div>
-                                </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-3 col-form-label">No Rumah<span class="text-danger">*</span></label>
-                                  <div class="col-sm-9">
-                                    <input
-                                      type="text"
-                                      class="form-control"
-                                      placeholder=""
-                                      name="no_rumah"
-                                      id="no_rumah"
-                                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <button
-                            id="selanjutnyadata"
-                            name="selanjutnyadata"
-                            value="selanjutnyadata"
-                            type="button"
-                            class="btn btn-dark"
-                            style="float: right"
+              <div [ngSwitch]="pemisahuntukdevloper">
+                <div *ngSwitchCase="'pks'">
+                  <div class="developer_pks">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <div class="form-group">
+                          <select
+                            class="form-control"
+                            name="developer_pks"
+                            id="developer_pks"
+                            [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
                           >
-                            selanjutnya1
-                          </button>
+                            <option value="">Pilih Nama Developer</option>
+                            <option *ngFor="let listagunan of listagunan" value="{{ listagunan.nama_developer }}">
+                              {{ listagunan.nama_developer }}
+                            </option>
+                          </select>
                         </div>
-                        <button
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngSwitchCase="'non pks'">
+                  <div class="developer_nonpks">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Developer<span class="text-danger">*</span></label>
+                      <div class="col-sm-8">
+                        <input
                           [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
-                          type="button"
-                          class="btn btn-dark"
-                          id="simpan4"
-                          name="simpan5"
-                          value="simpan5"
-                          style="float: right"
-                          (click)="createcollateral()"
+                          type="text"
+                          class="form-control"
+                          placeholder="Developer"
+                          name="developer_non_pks"
+                          id="developer_non_pks"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngSwitchCase="'perorang'"></div>
+                <div *ngSwitchDefault></div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nama Perumahan</label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="text"
+                    class="form-control"
+                    placeholder="Nama Perumahan"
+                    name="nama_perumahan"
+                    id="nama_perumahan"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Sama dengan Jaminan Sebelumnya<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <div class="form-group" id="radioButtonStatusJaminanSebelum">
+                    <label class="radio-inline mr-3">
+                      <input
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        type="radio"
+                        value="1"
+                        id="status_jaminan_sebelumnyaia"
+                        name="status_jaminan_sebelumnyaia"
+                      />Ya</label
+                    >
+                    <label class="radio-inline mr-3">
+                      <input
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        type="radio"
+                        value="tidak"
+                        id="status_jaminan_sebelumnyatidak"
+                        name="status_jaminan_sebelumnyatidak"
+                      />Tidak</label
+                    >
+                    <p>
+                      <button
+                        type="submit"
+                        class="col-sm-12 btn btn-dark"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                      >
+                        <i class="icon-magnifier menu-icon"></i>Lihat Jaminan Sebelumnya
+                      </button>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label"
+                  >Hubungan antara Pemegang Hak dan calon Nasabah<span class="text-danger">*</span></label
+                >
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="hubungan_pemegang_hak"
+                      id="hubungan_pemegang_hak"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    >
+                      <option value="">Pilih Hubungan Pemegang Hak</option>
+                      <option *ngFor="let listhubunganagunan of listhubunganagunan" value="{{ listhubunganagunan.deskripsi }}">
+                        {{ listhubunganagunan.deskripsi }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- batas hidden bangunan NO5 -->
+            <!--batas colom 1 bangunan-->
+
+            <!-- hide show colom 2 buat tnb dan bangunan  -->
+            <div class="col hidden_bangunanCol2" id="hidden_bangunanCol2">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tahun Buat (YYYY)<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    placeholder=""
+                    name="tahun_buat"
+                    id="tahun_buat"
+                    minlength="4"
+                    maxlength="4"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Status Setifikat<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="status_sertifikat"
+                      id="status_sertifikat"
+                      [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    >
+                      <option selected value="">Pilih Status Sertifikat</option>
+                      <option
+                        *ngFor="let statussertifikat of statussertifikat"
+                        value="{{ statussertifikat.sertifikat_deskripsi }}"
+                      >
+                        {{ statussertifikat.sertifikat_deskripsi }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nomor Sertifikat<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    placeholder="Nomor Sertifikat"
+                    name="no_sertifikat"
+                    id="no_sertifikat"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nama Pemegang Hak<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    name="nama_pemegang_hak"
+                    id="nama_pemegang_hak"
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">No Contact Person<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    maxlength="12"
+                    class="form-control"
+                    placeholder=""
+                    name="no_handphone_cp"
+                    id="no_handphone_cp"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label"
+                  >Nomor Identitas Pemegang Hak Setifikat<span class="text-danger">*</span></label
+                >
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    type="tel"
+                    onkeypress="return onlyNumberKey(event)"
+                    class="form-control"
+                    placeholder=""
+                    name="no_id_pemegang_hak_sertifikat"
+                    id="no_id_pemegang_hak_sertifikat"
+                  />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tanggal Terbit<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    class="form-control"
+                    type="date"
+                    id="tanggal_terbit"
+                    name="tanggal_terbit"
+                    onchange="tanggalTerbitDayBangunan()"
+                  />
+                  <input class="form-control" id="hariTanggalnyaTerbitBangunan" hidden />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tanggal Exipred<span class="text-danger">*</span></label>
+                <div class="col-sm-8">
+                  <input
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                    class="form-control"
+                    type="date"
+                    id="tanggal_expired"
+                    name="tanggal_expired"
+                    onchange="tanggalExpDayBangunan()"
+                  />
+                  <input
+                    class="form-control"
+                    id="hariTanggalnyaExpBagunan"
+                    hidden
+                    [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                  />
+                </div>
+              </div>
+            </div>
+            <!--hide show colom biasa-->
+          </div>
+          <div *ngSwitchCase="'Emas'">
+            <H1>untuk pilihan ini tidak tersedia</H1>
+          </div>
+          <div *ngSwitchDefault></div>
+        </div>
+        <div [ngSwitch]="tampungantipeagunan">
+          <div *ngSwitchCase="'Kendaraan'"></div>
+          <div *ngSwitchCase="'Emas'"></div>
+          <div *ngSwitchDefault>
+            <!-- pembatas row ke 2 dan 3 -->
+            <div class="card-body" id="hide_row" class="hide_row">
+              <h4 class="card-body gradient-9" style="text-align: center">Alamat Agunan</h4>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Alamat<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <textarea
+                        class="form-control h-150px"
+                        rows="6"
+                        id="alamat_agunan"
+                        name="alamat_agunan"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select
+                          class="form-control"
+                          (change)="onChange(0)"
+                          id="provinsi_agunan"
+                          name="provinsi_agunan"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
                         >
-                          Simpan Data1
+                          <option value="">Pilih Provinsi</option>
+                          <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+                            {{ daWaprof.namaWilayah }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select
+                          class="form-control"
+                          (change)="onChangekota(0)"
+                          id="kabkota_agunan"
+                          name="kabkota_agunan"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        >
+                          <option value="">Pilih Kota</option>
+                          <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
+                            {{ daWakota.namaWilayah }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          class="form-control"
+                          (change)="onChangekecamatan(0)"
+                          id="kecamatan_agunan"
+                          name="kecamatan_agunan"
+                        >
+                          <option value="">Pilih Kecamatan</option>
+                          <option
+                            *ngFor="let daWakecamatan of kecamatan"
+                            value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}"
+                          >
+                            {{ daWakecamatan.namaWilayah }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          class="form-control"
+                          (change)="onChangekelurahan(0)"
+                          id="kelurahan_agunan"
+                          name="kelurahan_agunan"
+                        >
+                          <option value="">Pilih Kelurahan</option>
+                          <option
+                            *ngFor="let daWakelurahan of kelurahan"
+                            value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}"
+                          >
+                            {{ daWakelurahan.namaWilayah }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="input-group-append">
+                        <input
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          type="tel"
+                          onkeypress="return onlyNumberKey(event)"
+                          maxlength="8"
+                          class="form-control"
+                          id="kode_pos_agunan"
+                          name="kode_pos_agunan"
+                          #kodeposagunan
+                        />
+                        <button
+                          class="btn btn-outline-dark"
+                          (click)="carimenggunakankodeposagunan(kodeposagunan.value,0)"
+                          type="button"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        >
+                          Cari Data
                         </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">RT / RW<span class="text-danger">*</span></label>
+                    <div class="col">
+                      <input
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        maxlength="3"
+                        class="form-control"
+                        placeholder="RT"
+                        id="rt_agunan"
+                        name="rt_agunan"
+                      />
+                    </div>
+                    <h2>/</h2>
+                    <div class="col">
+                      <input
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder="RW"
+                        maxlength="3"
+                        id="rw_agunan"
+                        name="rw_agunan"
+                      />
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Alamat Agunan Sama Dengan Sertifikat?</label>
+                    <div class="col-sm-9">
+                      <input
+                        type="radio"
+                        name="samaDomisili"
+                        id="iyaSama"
+                        value="1"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                      />Sama
+                      <input
+                        type="radio"
+                        name="samaDomisili"
+                        id="takSama"
+                        value="0"
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                      />Tidak Sama
+                    </div>
+                  </div>
+                  <br/>
+                  <div id="hiddenJikaTanah" class="form-group row">
+                    <label class="col-sm-3 col-form-label">Luas Bangunan<span class="text-danger">*</span></label>
+                    <div class="form-group col-md-8">
+                      <input
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        type="tel"
+                        oninput="this.value = this.value.replace(/^0/g, '');"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder=""
+                        name="luas_bangunan_anggunan"
+                        id="luas_bangunan_anggunan"
+                      />
+                    </div>
+                    <span>M2</span>
+                  </div>
+                  <div id="hiddenJikaBangunan" class="form-group row">
+                    <label class="col-md-3 col-form-label">Luas Tanah<span class="text-danger">*</span></label>
+                    <div class="form-group col-md-8">
+                      <input
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        type="tel"
+                        oninput="this.value = this.value.replace(/^0/g, '');"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder=""
+                        name="luas_tanah_anggunan"
+                        id="luas_tanah_anggunan"
+                      />
+                    </div>
+                    <span>M2</span>
+                  </div>
+                  <br/>
+                  <div id="hiddenJikaTanahHarga" class="form-group row">
+                    <label class="col-sm-3 col-form-label">Harga Objek<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <input
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        type="tel"
+                        oninput="this.value = this.value.replace(/^0/g, '');"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder=""
+                        name="harga_objek"
+                        id="harga_objek"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- batas colom 1 dan 2 -->
+
+                <div class="col">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Alamat Sesuai Sertifikat<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <textarea
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        class="form-control h-150px"
+                        rows="6"
+                        id="alamat_sesuai_sertifikat"
+                        name="alamat_sesuai_sertifikat"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Provinsi<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          class="form-control"
+                          (change)="onChanges(0)"
+                          id="provinsi_sesuai_sertifikat"
+                          name="provinsi_sesuai_sertifikat"
+                        >
+                          <option value="">Pilih Provinsi</option>
+                          <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+                            {{ daWaprof.namaWilayah }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kota<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          class="form-control"
+                          (change)="onChangekotas(0)"
+                          id="kabkota_sesuai_sertifikat"
+                          name="kabkota_sesuai_sertifikat"
+                        >
+                          <option value="">Pilih Kota</option>
+                          <option
+                            *ngFor="let daWakotas of daWakotas"
+                            value="{{ daWakotas.kdWilayah }}|{{ daWakotas.namaWilayah }}"
+                          >
+                            {{ daWakotas.namaWilayah }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          class="form-control"
+                          (change)="onChangekecamatans(0)"
+                          id="kecamatan_sesuai_sertifikat"
+                          name="kecamatan_sesuai_sertifikat"
+                        >
+                          <option value="">Pilih Kecamatan</option>
+                          <option
+                            *ngFor="let kecamatans of kecamatans"
+                            value="{{ kecamatans.kdWilayah }}|{{ kecamatans.namaWilayah }}"
+                          >
+                            {{ kecamatans.namaWilayah }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <select
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          (change)="onChangekelurahans(0)"
+                          class="form-control"
+                          id="kelurahan_sesuai_sertifikat"
+                          name="kelurahan_sesuai_sertifikat"
+                        >
+                          <option value="">Pilih Kelurahan</option>
+                          <option
+                            *ngFor="let kelurahans of kelurahans"
+                            value="{{ kelurahans.kdPos }}|{{ kelurahans.namaWilayah }}"
+                          >
+                            {{ kelurahans.namaWilayah }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                      <div class="input-group-append">
+                        <input
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                          type="tel"
+                          onkeypress="return onlyNumberKey(event)"
+                          maxlength="8"
+                          class="form-control"
+                          id="kode_pos_sesuai_sertifikat"
+                          name="kode_pos_sesuai_sertifikat"
+                          #kodepossertifikat
+                        />
+                        <button class="btn btn-outline-dark"   (click)="carimenggunakankodepossertifikat(kodepossertifikat.value,0)" type="button">Cari Data</button>
+                      </div>
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">RT / RW<span class="text-danger">*</span></label>
+                    <div class="col">
+                      <input
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder="RT"
+                        id="rt_sertifikat"
+                        name="rt_sertifikat"
+                        maxlength="3"
+                      />
+                    </div>
+                    <h2>/</h2>
+                    <div class="col">
+                      <input
+                        [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        type="tel"
+                        onkeypress="return onlyNumberKey(event)"
+                        class="form-control"
+                        placeholder="RW"
+                        maxlength="3"
+                        id="rw_sertifikat"
+                        name="rw_sertifikat"
+                      />
+                    </div>
+                  </div>
+                  <br/>
+                  <div id="adaKaloTnb">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">ID Rumah<span class="text-danger">*</span></label>
+                      <div class="col-sm-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder=""
+                          name="id_rumah"
+                          id="id_rumah"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        />
+                      </div>
+                    </div>
+                    <br/>
+                    <div class="form-group row">
+                      <label class="col-md-3 col-form-label">Blok Rumah<span class="text-danger">*</span></label>
+                      <div class="col-sm-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder=""
+                          name="blok_rumah"
+                          id="blok_rumah"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        />
+                      </div>
+                    </div>
+                    <br/>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">No Rumah<span class="text-danger">*</span></label>
+                      <div class="col-sm-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder=""
+                          name="no_rumah"
+                          id="no_rumah"
+                          [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <button
+                id="selanjutnyadata"
+                name="selanjutnyadata"
+                value="selanjutnyadata"
+                type="button"
+                class="btn btn-dark"
+                style="float: right"
+              >
+                selanjutnya1
+              </button>
             </div>
-          </form>
+            <button
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER'"
+              type="button"
+              class="btn btn-dark"
+              id="simpan4"
+              name="simpan5"
+              value="simpan5"
+              style="float: right"
+              (click)="createcollateral()"
+            >
+              Simpan Data1
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div *ngSwitchDefault></div>
 </div>
 
-<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+<div [hidden]="tambahatautidak == 'benar'" style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Daftar Collateral</h3>
 </div>
-<p></p>
-<p></p>
-<div class="table-responsive">
+<br/>
+<br/>
+<button id="tambahdata" (click)="tambahcollateral()" type="button" class="btn btn-info">Tambahdata</button>
+<div class="table-responsive" [hidden]="tambahatautidak == 'benar'">
   <table class="table table-striped">
     <thead style="background-color: grey">
       <tr>

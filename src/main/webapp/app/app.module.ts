@@ -70,6 +70,8 @@ import { KesimpulanComponent } from './verification/kesimpulan/kesimpulan.compon
 import { MemoVerificationComponent } from './verification/memo-verification/memo-verification.component';
 import { CurrencyPipe } from '@angular/common';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { DaftarAplikasiIsiMapisComponent } from './verification/daftar-aplikasi-isi-mapis/daftar-aplikasi-isi-mapis.component';
+import { MapisComponent } from './verification/daftar-aplikasi-isi-mapis/mapis/mapis.component';
 
 @NgModule({
   imports: [
@@ -145,6 +147,8 @@ import { NgxCurrencyModule } from 'ngx-currency';
     SyaratPersetujuanComponent,
     KesimpulanComponent,
     MemoVerificationComponent,
+    DaftarAplikasiIsiMapisComponent,
+    MapisComponent,
   ],
   bootstrap: [
     MainComponent,
