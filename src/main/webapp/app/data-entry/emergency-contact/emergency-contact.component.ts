@@ -73,7 +73,7 @@ export class EmergencyContactComponent implements OnInit {
     this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
     this.load();
   }
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
   load() {
     this.getstatuspernikahan();
     this.gettokendukcapil();
@@ -87,14 +87,10 @@ export class EmergencyContactComponent implements OnInit {
         } else {
           this.daWa = res.body?.result;
 
-
-
-        this.untukprovinsi=res.body?.result.provinsi;
-        this.untukkobkota=res.body?.result.kabkota;
-        this.untukkecamatan=res.body?.result.kecamatan;
-        this.untukkelurahan=res.body?.result.kelurahan;
-
-
+          this.untukprovinsi = res.body?.result.provinsi;
+          this.untukkobkota = res.body?.result.kabkota;
+          this.untukkecamatan = res.body?.result.kecamatan;
+          this.untukkelurahan = res.body?.result.kelurahan;
         }
       },
     });
@@ -233,7 +229,6 @@ export class EmergencyContactComponent implements OnInit {
     return this.http.get<ApiResponse>(this.resourceUrl + this.curef, { params: options, observe: 'response' });
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto(appde: any) {
     if (this.keteranganstatusnikah === 'Fix Income') {
       // alert('ini fix');
@@ -398,8 +393,7 @@ export class EmergencyContactComponent implements OnInit {
     }
   }
 
-  carimenggunakankodepos(kodepost:any,req:any){
-
+  carimenggunakankodepos(kodepost: any, req: any) {
     this.getkodepostnya(kodepost, req).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kodepost', res);
@@ -408,12 +402,10 @@ export class EmergencyContactComponent implements OnInit {
         // alert(this.postId);
         // this.onResponseSuccess(res);
 
-        this.untukprovinsi=res.body?.result.provKec.nm_prov;
-        this.untukkobkota=res.body?.result.provKec.nm_kota;
-        this.untukkecamatan=res.body?.result.provKec.nm_kec;
-        this.untukkelurahan=res.body?.result.provKec.nm_kel;
-
-
+        this.untukprovinsi = res.body?.result.provKec.nm_prov;
+        this.untukkobkota = res.body?.result.provKec.nm_kota;
+        this.untukkecamatan = res.body?.result.provKec.nm_kec;
+        this.untukkelurahan = res.body?.result.provKec.nm_kel;
 
         // $('#provinsi_cabang').attr('selected', 'selected').val(this.provinsi_cabangkode + '|' +    this.provinsi_cabang);
         $('#provinsi_cabang option:first').text(this.untukprovinsi);
@@ -433,12 +425,9 @@ export class EmergencyContactComponent implements OnInit {
     });
 
     console.log(req);
-
-
   }
 
-  getkodepostnya(kodepst:any,req:any){
-
+  getkodepostnya(kodepst: any, req: any) {
     const options = createRequestOption(req);
     const httpOptions = {
       // 'Authorization': token,
@@ -452,9 +441,16 @@ export class EmergencyContactComponent implements OnInit {
       params: options,
       observe: 'response',
     });
-
   }
 
-
-
+  // Only Numbers
+  keyPressNumbers(event?: any): void {
+    const charCode = event.which ? event.which : event.keyCode;
+    // charCode.toLocaleString('id-ID',{style: 'currency', currency:'IDR'})
+    // Only Numbers 0-9
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+      return;
+    }
+  }
 }

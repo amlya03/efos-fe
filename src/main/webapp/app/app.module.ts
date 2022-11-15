@@ -72,6 +72,7 @@ import { CurrencyPipe } from '@angular/common';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { DaftarAplikasiIsiMapisComponent } from './verification/daftar-aplikasi-isi-mapis/daftar-aplikasi-isi-mapis.component';
 import { MapisComponent } from './verification/daftar-aplikasi-isi-mapis/mapis/mapis.component';
+import { InputScoringComponent } from './input-scoring/input-scoring.component';
 
 @NgModule({
   imports: [
@@ -149,6 +150,7 @@ import { MapisComponent } from './verification/daftar-aplikasi-isi-mapis/mapis/m
     MemoVerificationComponent,
     DaftarAplikasiIsiMapisComponent,
     MapisComponent,
+    InputScoringComponent,
   ],
   bootstrap: [
     MainComponent,

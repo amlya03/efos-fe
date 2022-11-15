@@ -3,23 +3,39 @@
 </div>
 <p></p>
 <p></p>
-<form [formGroup]="personalInfoForm" (ngSubmit)="gotojobandupdate(personalInfoModel.curef, personalInfoModel.status_perkawinan, personalInfoModel.app_no_de, personalInfoModel.kategori_pekerjaan)">
+<form
+  [formGroup]="personalInfoForm"
+  (ngSubmit)="
+    gotojobandupdate(
+      personalInfoModel.curef,
+      personalInfoModel.status_perkawinan,
+      personalInfoModel.app_no_de,
+      personalInfoModel.kategori_pekerjaan
+    )
+  "
+>
   <div class="row form-material">
     <div class="col">
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Nama Lengkap</label>
         <div class="col-sm-9">
+          <input type="text" class="form-control" placeholder="Nama Lengkap" formControlName="nama" id="nama" />
+          <span
+            [hidden]="
+              personalInfoForm.controls.nama.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            Nama Harus Diisi
+          </span>
           <input
-            type="text"
+            type="hidden"
             class="form-control"
             placeholder="Nama Lengkap"
-            formControlName="nama"
-            id="nama"
+            formControlName="app_no_ide"
+            id="app_no_ide"
+            [value]="personalInfoModel.app_no_ide"
           />
-          <span [hidden]="(personalInfoForm.controls.nama.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              Nama Harus Diisi
-          </span>
-          <input type="hidden" class="form-control" placeholder="Nama Lengkap" formControlName="app_no_ide" id="app_no_ide" [value]="personalInfoModel.app_no_ide" />
         </div>
       </div>
       <br />
@@ -27,17 +43,20 @@
         <label class="col-sm-3 col-form-label">Jenis Kelamin</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              class="form-control"
-              id="jenis_kelamin"
-              formControlName="jenis_kelamin"
-            >
+            <select class="form-control" id="jenis_kelamin" formControlName="jenis_kelamin">
               <option value="Laki-laki">Laki - laki</option>
               <option value="Perempuan">Perempuan</option>
             </select>
           </div>
-          <span [hidden]="(personalInfoForm.controls.jenis_kelamin.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              Jenis Kelamin Harus Diisi
+          <span
+            [hidden]="
+              personalInfoForm.controls.jenis_kelamin.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            Jenis Kelamin Harus Diisi
           </span>
         </div>
       </div>
@@ -45,31 +64,33 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
         <div class="col-sm-9">
-          <input
-            class="form-control"
-            type="date"
-            id="tanggal_lahir"
-            formControlName="tanggal_lahir"
-            (change)="hitungUsia()"
-          />
+          <input class="form-control" type="date" id="tanggal_lahir" formControlName="tanggal_lahir" (change)="hitungUsia()" />
         </div>
-        <span [hidden]="(personalInfoForm.controls.tanggal_lahir.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-            Tanggal Lahir Harus Diisi
+        <span
+          [hidden]="
+            personalInfoForm.controls.tanggal_lahir.valid ||
+            this.untukSessionRole == 'VER_PRESCR' ||
+            this.untukSessionRole == 'BRANCHMANAGER'
+          "
+          class="text-danger"
+        >
+          Tanggal Lahir Harus Diisi
         </span>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Tempat Lahir</label>
         <div class="col-sm-9">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Tempat Lahir"
-            id="tempat_lahir"
-            formControlName="tempat_lahir"
-          />
-          <span [hidden]="(personalInfoForm.controls.tempat_lahir.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              Tempat Lahir Harus Diisi
+          <input type="text" class="form-control" placeholder="Tempat Lahir" id="tempat_lahir" formControlName="tempat_lahir" />
+          <span
+            [hidden]="
+              personalInfoForm.controls.tempat_lahir.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            Tempat Lahir Harus Diisi
           </span>
         </div>
       </div>
@@ -77,24 +98,14 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Usia</label>
         <div class="col-sm-9">
-          <input
-            type="tel"
-            maxlength="2"
-            class="form-control"
-            placeholder="Usia"
-            id="usia"
-            formControlName="usia"
-            readonly
-          />
-          <input
-            type="hidden"
-            class="form-control"
-            placeholder="Nama id"
-            id="id"
-            value="{{ personalInfoModel.id_customer }}"
-          />
-          <span [hidden]="(personalInfoForm.controls.usia.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              Usia Harus Diisi
+          <input type="tel" maxlength="2" class="form-control" placeholder="Usia" id="usia" formControlName="usia" readonly />
+          <span
+            [hidden]="
+              personalInfoForm.controls.usia.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            Usia Harus Diisi
           </span>
         </div>
       </div>
@@ -103,12 +114,7 @@
         <label class="col-sm-3 col-form-label">Agama</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              class="form-control"
-              id="agama"
-              formControlName="agama"
-
-            >
+            <select class="form-control" id="agama" formControlName="agama">
               <option>Islam</option>
               <option>Kristen</option>
               <option>Khatolik</option>
@@ -117,8 +123,13 @@
               <option>Kong Hu Chu</option>
             </select>
           </div>
-          <span [hidden]="(personalInfoForm.controls.agama.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              Agama Harus Diisi
+          <span
+            [hidden]="
+              personalInfoForm.controls.agama.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            Agama Harus Diisi
           </span>
         </div>
       </div>
@@ -127,12 +138,7 @@
         <label class="col-sm-3 col-form-label">Pendidikan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              class="form-control"
-              id="pendidikan"
-              formControlName="pendidikan"
-
-            >
+            <select class="form-control" id="pendidikan" formControlName="pendidikan">
               <option value="SMA">SMA</option>
               <option value="D3">D3</option>
               <option value="S1">S1</option>
@@ -140,8 +146,15 @@
               <option value="S3">S3</option>
             </select>
           </div>
-          <span [hidden]="(personalInfoForm.controls.pendidikan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              Pendidikan Harus Diisi
+          <span
+            [hidden]="
+              personalInfoForm.controls.pendidikan.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            Pendidikan Harus Diisi
           </span>
         </div>
       </div>
@@ -150,18 +163,20 @@
         <label class="col-sm-3 col-form-label">Kewarganegaraan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              class="form-control"
-              id="kewarganegaraan"
-              formControlName="kewarganegaraan"
-
-            >
+            <select class="form-control" id="kewarganegaraan" formControlName="kewarganegaraan">
               <option>WNI</option>
               <option>WNA</option>
             </select>
           </div>
-          <span [hidden]="(personalInfoForm.controls.kewarganegaraan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              Kewarganegaraan Harus Diisi
+          <span
+            [hidden]="
+              personalInfoForm.controls.kewarganegaraan.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            Kewarganegaraan Harus Diisi
           </span>
         </div>
       </div>
@@ -174,13 +189,21 @@
           <input
             type="tel"
             pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
+            (keypress)="keyPressNumbers($event)"
             class="form-control"
             placeholder="no_telepon"
             id="no_telepon"
             formControlName="no_telepon"
           />
-          <span [hidden]="(personalInfoForm.controls.no_telepon.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              No Telepon Harus Diisi
+          <span
+            [hidden]="
+              personalInfoForm.controls.no_telepon.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            No Telepon Harus Diisi
           </span>
         </div>
       </div>
@@ -188,16 +211,14 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Email</label>
         <div class="col-sm-9">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Email"
-            id="email"
-            formControlName="email"
-
-          />
-          <span [hidden]="(personalInfoForm.controls.email.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              Email Harus Diisi
+          <input type="email" class="form-control" placeholder="Email" id="email" formControlName="email" />
+          <span
+            [hidden]="
+              personalInfoForm.controls.email.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            Email Harus Diisi
           </span>
         </div>
       </div>
@@ -208,14 +229,22 @@
           <input
             type="tel"
             pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
+            (keypress)="keyPressNumbers($event)"
             class="form-control"
             placeholder="No Handphone"
             id="no_handphone"
             formControlName="no_handphone"
             maxlength="13"
           />
-          <span [hidden]="(personalInfoForm.controls.no_handphone.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              No Telepon Harus Diisi
+          <span
+            [hidden]="
+              personalInfoForm.controls.no_handphone.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            No Handphone Harus Diisi
           </span>
         </div>
       </div>
@@ -231,9 +260,15 @@
             placeholder="No KTP"
             id="no_ktp"
             formControlName="no_ktp"
+            (keypress)="keyPressNumbers($event)"
           />
-          <span [hidden]="(personalInfoForm.controls.no_ktp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              No Telepon Harus Diisi
+          <span
+            [hidden]="
+              personalInfoForm.controls.no_ktp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            No KTP Harus Diisi
           </span>
         </div>
       </div>
@@ -241,15 +276,16 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Tanggal Terbit KTP</label>
         <div class="col-sm-9">
-          <input
-            class="form-control"
-            type="date"
-            id="tanggal_terbit_ktp"
-            formControlName="tanggal_terbit_ktp"
-
-          />
-          <span [hidden]="(personalInfoForm.controls.tanggal_terbit_ktp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              Tanggal Terbit KTP Harus Diisi
+          <input class="form-control" type="date" id="tanggal_terbit_ktp" formControlName="tanggal_terbit_ktp" />
+          <span
+            [hidden]="
+              personalInfoForm.controls.tanggal_terbit_ktp.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            Tanggal Terbit KTP Harus Diisi
           </span>
         </div>
       </div>
@@ -257,59 +293,59 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label"> KTP Seumur Hidup</label>
         <div class="col-sm-9">
-          <input
-            type="radio"
-            id="ktp_seumur_hidup_ya"
-            formControlName="status_ktp"
-            [(ngModel)]="ktp_seumur_hidup"
-            value="1"
-
-          />
+          <input type="radio" id="ktp_seumur_hidup_ya" formControlName="status_ktp" [(ngModel)]="ktp_seumur_hidup" value="1" />
           Ya
-          <input
-            type="radio"
-            formControlName="status_ktp"
-            value="0"
-            [(ngModel)]="ktp_seumur_hidup"
-
-          />
+          <input type="radio" formControlName="status_ktp" value="0" [(ngModel)]="ktp_seumur_hidup" />
           Tidak
 
-          <span [hidden]="(personalInfoForm.controls.status_ktp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              personalInfoForm.controls.status_ktp.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             KTP Seumur Hidup Harus Diisi
           </span>
         </div>
       </div>
       <div class="form-group row" *ngIf="ktp_seumur_hidup == 0">
-        <br/>
+        <br />
         <label class="col-sm-3 col-form-label">Tanggal Exipred KTP</label>
         <div class="col-sm-9">
-          <input
-            class="form-control"
-            type="date"
-            id="tanggal_exp_ktp"
-            formControlName="tanggal_exp_ktp"
-
-          />
-          <span [hidden]="(personalInfoForm.controls.tanggal_exp_ktp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <input class="form-control" type="date" id="tanggal_exp_ktp" formControlName="tanggal_exp_ktp" />
+          <span
+            [hidden]="
+              personalInfoForm.controls.tanggal_exp_ktp.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             Tanggal Exipred KTP Harus Diisi
           </span>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">NPWP</label>
         <div class="col-sm-9">
           <input
-
             type="tel"
             class="form-control"
             placeholder="NPWP"
             maxlength="16"
             id="npwp"
             formControlName="npwp"
+            (keypress)="keyPressNumbers($event)"
           />
-          <span [hidden]="(personalInfoForm.controls.npwp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              personalInfoForm.controls.npwp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             NPWP Harus Diisi
           </span>
         </div>
@@ -319,18 +355,20 @@
         <label class="col-sm-3 col-form-label">Status Perkawinan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              class="form-control"
-              id="status_perkawinan"
-              formControlName="status_perkawinan"
-
-            >
-            <option *ngFor="let ref_status_perkawinan of ref_status_perkawinan" value="{{ ref_status_perkawinan.deskripsi }}">
-              {{ ref_status_perkawinan.deskripsi }}
-            </option>
+            <select class="form-control" id="status_perkawinan" formControlName="status_perkawinan">
+              <option *ngFor="let ref_status_perkawinan of ref_status_perkawinan" value="{{ ref_status_perkawinan.deskripsi }}">
+                {{ ref_status_perkawinan.deskripsi }}
+              </option>
             </select>
           </div>
-          <span [hidden]="(personalInfoForm.controls.status_perkawinan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              personalInfoForm.controls.status_perkawinan.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             Status Perkawinan Harus Diisi
           </span>
         </div>
@@ -340,7 +378,7 @@
         <label class="col-sm-3 col-form-label">Jumlah Anak</label>
         <div class="col-sm-9">
           <input
-
+            (keypress)="keyPressNumbers($event)"
             type="tel"
             class="form-control"
             placeholder="Jumlah Anak"
@@ -348,7 +386,14 @@
             id="jumlah_anak"
             formControlName="jumlah_anak"
           />
-          <span [hidden]="(personalInfoForm.controls.jumlah_anak.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              personalInfoForm.controls.jumlah_anak.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             Jumlah Anak Harus Diisi
           </span>
         </div>
@@ -358,19 +403,20 @@
         <label class="col-sm-3 col-form-label">Status Rumah</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              class="form-control"
-              value=""
-              id="status_rumah"
-              formControlName="status_rumah"
-
-            >
-            <option *ngFor="let ref_status_rumah of ref_status_rumah" value="{{ ref_status_rumah.description }}">
-              {{ ref_status_rumah.description }}
-            </option>
+            <select class="form-control" value="" id="status_rumah" formControlName="status_rumah">
+              <option *ngFor="let ref_status_rumah of ref_status_rumah" value="{{ ref_status_rumah.description }}">
+                {{ ref_status_rumah.description }}
+              </option>
             </select>
           </div>
-          <span [hidden]="(personalInfoForm.controls.status_rumah.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              personalInfoForm.controls.status_rumah.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             Status Rumah Harus Diisi
           </span>
         </div>
@@ -386,8 +432,16 @@
             placeholder="Lama Menetap"
             id="lama_menetap"
             formControlName="lama_menetap"
+            (keypress)="keyPressNumbers($event)"
           />
-          <span [hidden]="(personalInfoForm.controls.lama_menetap.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              personalInfoForm.controls.lama_menetap.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             Lama Menetap Harus Diisi
           </span>
         </div>
@@ -397,18 +451,19 @@
         <label class="col-sm-3 col-form-label">Punya Kendaraan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              class="form-control"
-              id="status_kendaraan"
-              formControlName="status_kendaraan"
-              [(ngModel)]="tipe_kendaraan"
-
-            >
+            <select class="form-control" id="status_kendaraan" formControlName="status_kendaraan" [(ngModel)]="tipe_kendaraan">
               <option value="1">Ya</option>
               <option value="0">Tidak</option>
             </select>
           </div>
-          <span [hidden]="(personalInfoForm.controls.status_kendaraan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              personalInfoForm.controls.status_kendaraan.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             Kepemilikan Kendaraan Harus Diisi
           </span>
         </div>
@@ -418,18 +473,20 @@
         <label class="col-sm-3 col-form-label">Tipe Kendaraan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              class="form-control"
-              id="tipe_kendaraan"
-              formControlName="tipe_kendaraan"
-
-            >
-            <option *ngFor="let ref_list_tipe_kendaraan of ref_list_tipe_kendaraan" value="{{ ref_list_tipe_kendaraan.deskripsi }}">
-              {{ ref_list_tipe_kendaraan.deskripsi }}
-            </option>
+            <select class="form-control" id="tipe_kendaraan" formControlName="tipe_kendaraan">
+              <option *ngFor="let ref_list_tipe_kendaraan of ref_list_tipe_kendaraan" value="{{ ref_list_tipe_kendaraan.deskripsi }}">
+                {{ ref_list_tipe_kendaraan.deskripsi }}
+              </option>
             </select>
           </div>
-          <span [hidden]="(personalInfoForm.controls.tipe_kendaraan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              personalInfoForm.controls.tipe_kendaraan.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             Tipe Kendaraan Harus Diisi
           </span>
         </div>
@@ -448,13 +505,15 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Alamat KTP</label>
         <div class="col-sm-9">
-          <textarea
-            class="form-control h-150px"
-            rows="6"
-            id="alamat_ktp"
-            formControlName="alamat_ktp"
-          ></textarea>
-          <span [hidden]="(personalInfoForm.controls.alamat_ktp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <textarea class="form-control h-150px" rows="6" id="alamat_ktp" formControlName="alamat_ktp"></textarea>
+          <span
+            [hidden]="
+              personalInfoForm.controls.alamat_ktp.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             Alamat KTP Harus Diisi
           </span>
         </div>
@@ -464,13 +523,7 @@
         <label class="col-sm-3 col-form-label">Provinsi</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              class="form-control"
-              #provinsi_saat
-              id="provinsi_cabang"
-              (change)="onChange(provinsi_cabang)"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-            >
+            <select class="form-control" #provinsi_saat id="provinsi_cabang" (change)="onChange(provinsi_cabang)">
               <option value="{{ personalInfoModel.provinsi }}">{{ personalInfoModel.provinsi }}</option>
               <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                 {{ daWaprof.namaWilayah }}
@@ -484,12 +537,7 @@
         <label class="col-sm-3 col-form-label">Kota</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              class="form-control"
-              (change)="onChangekota(kabkota_cabang)"
-              id="kabkota_cabang"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-            >
+            <select class="form-control" (change)="onChangekota(kabkota_cabang)" id="kabkota_cabang">
               <option value="{{ personalInfoModel.kabkota }}">{{ personalInfoModel.kabkota }}</option>
               <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
                 {{ daWakota.namaWilayah }}
@@ -503,12 +551,7 @@
         <label class="col-sm-3 col-form-label">Kecamatan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              class="form-control"
-              (change)="onChangekecamatan(kecamatan)"
-              id="kecamatan"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-            >
+            <select class="form-control" (change)="onChangekecamatan(kecamatan)" id="kecamatan">
               <option value="{{ personalInfoModel.kecamatan }}">{{ personalInfoModel.kecamatan }}</option>
               <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
                 {{ daWakecamatan.namaWilayah }}
@@ -522,12 +565,7 @@
         <label class="col-sm-3 col-form-label">Kelurahan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              (change)="onChangekelurahan(kelurahan)"
-              class="form-control"
-              id="kelurahan"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-            >
+            <select (change)="onChangekelurahan(kelurahan)" class="form-control" id="kelurahan">
               <option value="{{ personalInfoModel.kelurahan }}">{{ personalInfoModel.kelurahan }}</option>
               <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
                 {{ daWakelurahan.namaWilayah }}
@@ -543,22 +581,15 @@
           <div class="input-group mb-3">
             <input
               #kodepos
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
               type="tel"
-              onkeypress="return onlyNumberKey(event)"
+              (keypress)="keyPressNumbers($event)"
               class="form-control"
               id="kode_pos"
               value="{{ personalInfoModel.kode_pos }}"
               [(ngModel)]="validasiKodePos"
             />
             <div class="input-group-append">
-              <button
-                onclick="buatisi()"
-                class="btn btn-outline-dark"
-                type="button"
-                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-                (click)="kodePosApi(kodepos.value,0)"
-              >
+              <button onclick="buatisi()" class="btn btn-outline-dark" type="button" (click)="kodePosApi(kodepos.value, 0)">
                 Cari Data
               </button>
             </div>
@@ -576,23 +607,34 @@
             maxlength="3"
             id="rt"
             formControlName="rt"
+            (keypress)="keyPressNumbers($event)"
           />
-          <span [hidden]="(personalInfoForm.controls.rt.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              personalInfoForm.controls.rt.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             RT Harus Diisi
           </span>
         </div>
         <div class="col">RT</div>
         <div class="col">
           <input
-
             type="tel"
             class="form-control"
             placeholder="RW"
             maxlength="3"
             id="rw"
             formControlName="rw"
+            (keypress)="keyPressNumbers($event)"
           />
-          <span [hidden]="(personalInfoForm.controls.rw.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              personalInfoForm.controls.rw.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             RW Harus Diisi
           </span>
         </div>
@@ -626,13 +668,15 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Alamat Domisili</label>
         <div class="col-sm-9">
-          <textarea
-            class="form-control h-150px"
-            rows="6"
-            id="alamat_domisili"
-            formControlName="alamat_domisili"
-          ></textarea>
-          <span [hidden]="(personalInfoForm.controls.alamat_domisili.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <textarea class="form-control h-150px" rows="6" id="alamat_domisili" formControlName="alamat_domisili"></textarea>
+          <span
+            [hidden]="
+              personalInfoForm.controls.alamat_domisili.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             Alamat Harus Diisi
           </span>
         </div>
@@ -642,12 +686,7 @@
         <label class="col-sm-3 col-form-label">Provinsi</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              class="form-control"
-              (change)="onChangeD(provinsi_cabang)"
-              id="provinsi_domisili"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-            >
+            <select class="form-control" (change)="onChangeD(provinsi_cabang)" id="provinsi_domisili">
               <option>{{ personalInfoModel.provinsi_domisili }}</option>
               <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                 {{ daWaprof.namaWilayah }}
@@ -661,12 +700,7 @@
         <label class="col-sm-3 col-form-label">Kota</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              class="form-control"
-              (change)="onChangekotaD(kabkota_cabang)"
-              id="kabkota_domisili"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-            >
+            <select class="form-control" (change)="onChangekotaD(kabkota_cabang)" id="kabkota_domisili">
               <option value="{{ personalInfoModel.kabkota_domisili }}">{{ personalInfoModel.kabkota_domisili }}</option>
               <option *ngFor="let daWakotaD of daWakotaD" value="{{ daWakotaD.kdWilayah }}|{{ daWakotaD.namaWilayah }}">
                 {{ daWakotaD.namaWilayah }}
@@ -680,12 +714,7 @@
         <label class="col-sm-3 col-form-label">kecamatan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              class="form-control"
-              (change)="onChangekecamatanD(kecamatan)"
-              id="kecamatan_domisili"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-            >
+            <select class="form-control" (change)="onChangekecamatanD(kecamatan)" id="kecamatan_domisili">
               <option>{{ personalInfoModel.kecamatan_domisili }}</option>
               <option *ngFor="let daWakecamatanD of kecamatanD" value="{{ daWakecamatanD.kdWilayah }}|{{ daWakecamatanD.namaWilayah }}">
                 {{ daWakecamatanD.namaWilayah }}
@@ -699,12 +728,7 @@
         <label class="col-sm-3 col-form-label">Kelurahan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select
-              class="form-control"
-              (change)="onChangekelurahanD(kelurahan)"
-              id="kelurahan_domisili"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-            >
+            <select class="form-control" (change)="onChangekelurahanD(kelurahan)" id="kelurahan_domisili">
               <option>{{ personalInfoModel.kelurahan_domisili }}</option>
               <option *ngFor="let daWakelurahanD of kelurahanD" value="{{ daWakelurahanD.kdPos }}|{{ daWakelurahanD.namaWilayah }}">
                 {{ daWakelurahanD.namaWilayah }}
@@ -720,7 +744,7 @@
           <div class="input-group mb-3">
             <input
               #kodeposdomisili
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              (keypress)="keyPressNumbers($event)"
               type="tel"
               onkeypress="return onlyNumberKey(event)"
               maxlength="8"
@@ -734,8 +758,7 @@
                 class="btn btn-outline-dark"
                 id="kode_pos_domisilihilang"
                 type="button"
-                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-                (click)="kodePosApiDomisili(kodeposdomisili.value,0)"
+                (click)="kodePosApiDomisili(kodeposdomisili.value, 0)"
               >
                 Cari Data
               </button>
@@ -748,7 +771,7 @@
         <label class="col-sm-3 col-form-label">RT / RW</label>
         <div class="col">
           <input
-
+            (keypress)="keyPressNumbers($event)"
             type="tel"
             maxlength="3"
             class="form-control"
@@ -756,14 +779,21 @@
             id="rt_domisili"
             formControlName="rt_domisili"
           />
-          <span [hidden]="(personalInfoForm.controls.rt_domisili.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              personalInfoForm.controls.rt_domisili.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             RT Harus Diisi
           </span>
         </div>
         <div class="col">RT</div>
         <div class="col">
           <input
-
+            (keypress)="keyPressNumbers($event)"
             type="tel"
             class="form-control"
             placeholder="RW"
@@ -771,7 +801,14 @@
             id="rw_domisili"
             formControlName="rw_domisili"
           />
-          <span [hidden]="(personalInfoForm.controls.rw_domisili.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              personalInfoForm.controls.rw_domisili.valid ||
+              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             RW Harus Diisi
           </span>
         </div>
@@ -788,7 +825,12 @@
         >
           Simpan Data
         </button>
-        <button [hidden]="this.untukSessionRole == 'AO'" (click)="gotojobinfo(personalInfoModel.curef, personalInfoModel.status_perkawinan, personalInfoModel.app_no_de)" type="button" class="btn btn-warning">
+        <button
+          [hidden]="this.untukSessionRole == 'AO'"
+          (click)="gotojobinfo(this.personalInfoModel.curef, this.personalInfoModel.status_perkawinan, this.personalInfoModel.app_no_de)"
+          type="button"
+          class="btn btn-warning"
+        >
           Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
         </button>
       </div>

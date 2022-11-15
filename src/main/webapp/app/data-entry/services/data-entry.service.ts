@@ -34,33 +34,111 @@ export class DataEntryService {
     this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
   }
 
+  // //////////////////////////// REF Tujuan Pembiayaan //////////////////////////////////////////////////
+  protected getRefTujuan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_tujuan_pembiayaan');
+  // //////////////////////////// REF Tujuan Pembiayaan //////////////////////////////////////////////////
+
+  // //////////////////////////// Margin Step Up //////////////////////////////////////////////////
+  protected getMarginStepUp = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-de/list_margin_stepup?ss='
+  );
+  // //////////////////////////// Margin Step Up //////////////////////////////////////////////////
+
+  // ////////////////////// Ref Tenor  /////////////////////////////
+  protected refTenorFix = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_tenor_fix?ss=');
+  protected refTenorNon = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_tenor_stepup?ss=');
+  // ////////////////////// Ref Tenor /////////////////////////////
+
+  // //////////////////////////// Kode Skema //////////////////////////////////////////////////
+  protected getskema = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_skema?ss=');
+  // //////////////////////////// Kode Skema //////////////////////////////////////////////////
+
+  // //////////////////////////// Kode Produk //////////////////////////////////////////////////
+  protected getKodeProduknya = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_produk?sp=');
+  // //////////////////////////// Kode Produk //////////////////////////////////////////////////
+
+  // //////////////////////////// Kode Program //////////////////////////////////////////////////
+  protected getKodeProgram = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_program?sp=');
+  // //////////////////////////// Kode Program //////////////////////////////////////////////////
+
+  // //////////////////////////// Kode Fasilitas //////////////////////////////////////////////////
+  protected getKodeFasilitas = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_fasilitas');
+  // //////////////////////////// Kode Fasilitas //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Kendaraan //////////////////////////////////////////////////
+  protected refListKendaraan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_kendaraan');
+  // //////////////////////////// Ref List Kendaraan //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Sertifikat //////////////////////////////////////////////////
+  protected refListSertifikat = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_status_sertifikat'
+  );
+  // //////////////////////////// Ref List Sertifikat //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Objek Agunan //////////////////////////////////////////////////
+  protected refListDeveloper = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_developer');
+  // //////////////////////////// Ref List Objek Agunan //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Objek Agunan //////////////////////////////////////////////////
+  protected refListObjekAgunan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_jenis_objek_agunan'
+  );
+  // //////////////////////////// Ref List Objek Agunan //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Properti //////////////////////////////////////////////////
+  protected refListTipeAgunan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/list_tipe_agunan');
+  // //////////////////////////// Ref List Pemegang Hak //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Properti //////////////////////////////////////////////////
+  protected refListProperti = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-de/list_tipe_properti?sp='
+  );
+  // //////////////////////////// Ref List Pemegang Hak //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Pemegang Hak //////////////////////////////////////////////////
+  protected refListPemegangHak = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_hubungan_agunan'
+  );
+  // //////////////////////////// Ref List Pemegang Hak //////////////////////////////////////////////////
+
   // //////////////////////////// Ref List Tipe Perusahaan //////////////////////////////////////////////////
-  protected refTipePerusahaan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_perusahaan');
+  protected refTipePerusahaan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_perusahaan'
+  );
   // //////////////////////////// Ref List Tipe Perusahaan //////////////////////////////////////////////////
 
   // //////////////////////////// Ref List Jumlah Karyawan //////////////////////////////////////////////////
-  protected refListJumlahKaryawan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_jumlah_karyawan');
+  protected refListJumlahKaryawan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_jumlah_karyawan'
+  );
   // //////////////////////////// Ref List Jumlah Karyawan //////////////////////////////////////////////////
 
   // //////////////////////////// Ref List Jabatan //////////////////////////////////////////////////
   protected refListJabatan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_jabatan');
   // //////////////////////////// Ref List Jabatan //////////////////////////////////////////////////
 
-
   // //////////////////////////// Ref List Jabatan //////////////////////////////////////////////////
-  protected refJenisPekerjaan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_jenis_pekerjaan');
+  protected refJenisPekerjaan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_jenis_pekerjaan'
+  );
   // //////////////////////////// Ref List Jabatan //////////////////////////////////////////////////
 
   // //////////////////////////// Ref List Tipe Pekerjaan //////////////////////////////////////////////////
-  protected refListTipePekerjaan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_pekerjaan?sc=');
+  protected refListTipePekerjaan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_pekerjaan?sc='
+  );
   // //////////////////////////// Ref List Tipe Pekerjaan //////////////////////////////////////////////////
 
   // //////////////////////////// Ref Tipe Kendaraan //////////////////////////////////////////////////
-  protected ListTipeKendaraaan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_kendaraan');
+  protected ListTipeKendaraaan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_kendaraan'
+  );
   // //////////////////////////// Ref Tipe Kendaraan //////////////////////////////////////////////////
 
   // //////////////////////////// Ref Status Perkawinan //////////////////////////////////////////////////
-  protected refStatusPerkawinan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_status_perkawinan');
+  protected refStatusPerkawinan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_status_perkawinan'
+  );
   // //////////////////////////// Ref Status Perkawinan //////////////////////////////////////////////////
 
   // ///////////////////////////// Data Entry \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -80,7 +158,6 @@ export class DataEntryService {
   // ///////////////////////////// Get Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected getJobById = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobById?si=');
   // ///////////////////////////// Get Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
 
   // ///////////////////////////// Get View Job \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected getViewJob = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getVJobByCuref?sj=');
@@ -123,6 +200,12 @@ export class DataEntryService {
     'http://10.20.34.110:8805/api/v1/efos-de/getCollateralByCuref?sc='
   );
   // ///////////////////////////// Get api listagunan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ///////////////////////////// Get ai List Agunan BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected getListAgunanById = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-de/getCollateralById?si='
+  );
+  // ///////////////////////////// Get api List Agunan BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
@@ -206,13 +289,11 @@ export class DataEntryService {
   }
   // /////////////////////////// listagunan ////////////////////////////////////////////
 
-
   ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
   getFetchListTipeKendaraaan(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.ListTipeKendaraaan);
   }
   ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
-
 
   ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
   getFetchStatusPerkawinan(): Observable<ApiResponse> {
@@ -220,13 +301,11 @@ export class DataEntryService {
   }
   ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
 
-
   ////////////////////////////////////// REF List Tipe Pekerjaan //////////////////////////////////////////////
   getFetchListTipePekerjaan(id: any): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.refListTipePekerjaan + id);
   }
   ////////////////////////////////////// REF List Tipe Pekerjaan //////////////////////////////////////////////
-
 
   ////////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
   getFetchListJabatan(): Observable<ApiResponse> {
@@ -234,13 +313,11 @@ export class DataEntryService {
   }
   ////////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
 
-
   ////////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
   getFetchListJenisPekerjaan(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.refJenisPekerjaan);
   }
   ////////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
-
 
   ////////////////////////////////////// REF List Jumlah Karyawan //////////////////////////////////////////////
   getFetchListJumlahKaryawan(): Observable<ApiResponse> {
@@ -254,7 +331,98 @@ export class DataEntryService {
   }
   // //////////////////////////// Ref List Tipe Perusahaan //////////////////////////////////////////////////
 
+  // //////////////////////////// Ref List Pemegang Hak //////////////////////////////////////////////////
+  getFetchListPemegangHak(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListPemegangHak);
+  }
+  // //////////////////////////// Ref List Pemegang Hak //////////////////////////////////////////////////
 
+  // //////////////////////////// Ref List Properti //////////////////////////////////////////////////
+  getFetchListTipeProperti(agunan: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListProperti + agunan);
+  }
+  // //////////////////////////// Ref List Properti //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Agunan //////////////////////////////////////////////////
+  getFetchListTipeAgunan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListTipeAgunan);
+  }
+  // //////////////////////////// Ref List Agunan //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Objek Agunan //////////////////////////////////////////////////
+  getFetchListObjekAgunan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListObjekAgunan);
+  }
+  // //////////////////////////// Ref List Objek Agunan //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Developer //////////////////////////////////////////////////
+  getFetchListDeveloper(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListDeveloper);
+  }
+  // //////////////////////////// Ref List Developer //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Sertifikat //////////////////////////////////////////////////
+  getFetchListSertifikat(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListSertifikat);
+  }
+  // //////////////////////////// Ref List Sertifikat //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List Kendaraan //////////////////////////////////////////////////
+  getFetchListKendaraan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListKendaraan);
+  }
+  // //////////////////////////// Ref List Kendaraan //////////////////////////////////////////////////
+
+  // //////////////////////////// Kode Fasilitas //////////////////////////////////////////////////
+  getFetchKodeFasilitas(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getKodeFasilitas);
+  }
+  // //////////////////////////// Kode Fasilitas //////////////////////////////////////////////////
+
+  // //////////////////////////// Kode Program //////////////////////////////////////////////////
+  getFetchProgramByKode(program: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getKodeProgram + program);
+  }
+  // //////////////////////////// Kode Program //////////////////////////////////////////////////
+
+  // //////////////////////////// Kode Produk //////////////////////////////////////////////////
+  getFetchProdukByKode(produk: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getKodeProduknya + produk);
+  }
+  // //////////////////////////// Kode Produk //////////////////////////////////////////////////
+
+  // //////////////////////////// Kode Skema //////////////////////////////////////////////////
+  getFetchSkemaByKode(skema: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getskema + skema);
+  }
+  // //////////////////////////// Kode Skema //////////////////////////////////////////////////
+
+  // ////////////////////// Ref Tenor \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getTenorFix(skema: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refTenorFix + skema);
+  }
+  getTenorNon(skema: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refTenorNon + skema);
+  }
+  // ////////////////////// Ref Tenor \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // //////////////////////////// Kode Skema //////////////////////////////////////////////////
+  getFetchMarginStepUp(jangkaWaktu: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getMarginStepUp + jangkaWaktu);
+  }
+  // //////////////////////////// Kode Skema //////////////////////////////////////////////////
+
+  // //////////////////////////// REF Tujuan Pembiayaan //////////////////////////////////////////////////
+  getFetchTujuanPembiayaan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getRefTujuan);
+  }
+  // //////////////////////////// REF Tujuan Pembiayaan //////////////////////////////////////////////////
+
+  // ///////////////////////////// Get api List Agunan BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getFetchListAgunanById(id: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getListAgunanById + id);
+  }
+  // ///////////////////////////// Get api List Agunan BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   getprovinsi(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     const httpOptions = {
@@ -319,5 +487,4 @@ export class DataEntryService {
     });
     // alert('CONTOHkecamatan');
   }
-
 }

@@ -54,7 +54,7 @@ export class MemoComponent implements OnInit {
 
     this.load();
   }
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
   load() {
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {

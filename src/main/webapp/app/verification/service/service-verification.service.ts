@@ -9,6 +9,10 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   providedIn: 'root',
 })
 export class ServiceVerificationService {
+  // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
+  protected getMapis = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/getDataAppraisal?sd=');
+  // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
+
   // //////////////////////service daftar aplikasi waiting assign\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected allDataVerif = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_app_verif');
   protected listAprisal = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_appraisal');
@@ -215,6 +219,12 @@ export class ServiceVerificationService {
     return this.http.get<ApiResponse>(this.allAnalisaPembiayaan + app_no_de);
   }
   // ////////////////////// get Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
+  fetchMapis(app_no_de: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getMapis + app_no_de);
+  }
+  // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
 
   // ///////////////////// REF ////////////////////////////////////////////////
   // ////////////////////// Ref Hubungan Agunan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

@@ -158,24 +158,78 @@ export class JobInfoComponent implements OnInit {
     // localStorage.setItem('daftar_aplikasi_de', job_info_retrive)
     ////////////////////////////// Validasi ////////////////////////////////////////////////////////
     this.jobInfoForm = this.formBuilder.group({
-      tipe_pekerjaan: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      payroll: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      posisi: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      nama_perusahaan: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      alamat_perusahaan: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      rt: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      rw: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      no_siup: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      umur_pensiun: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      lama_bekerja_tahun: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      lama_bekerja_bulan: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      jumlah_karyawan: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      pendapatan: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      pendapatan_lain: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      tunjangan: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      total_pendapatan: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      tipe_perusahaan: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
-      tipe_kepegawaian: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'},Validators.required],
+      tipe_pekerjaan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      payroll: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      posisi: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      nama_perusahaan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      alamat_perusahaan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      rt: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      rw: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      no_siup: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      umur_pensiun: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      lama_bekerja_tahun: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      lama_bekerja_bulan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      jumlah_karyawan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      pendapatan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      pendapatan_lain: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      tunjangan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      total_pendapatan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      tipe_perusahaan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      tipe_kepegawaian: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
     });
     this.datajobsebelum = this.formBuilder.group({
       kategori_pekerjaan_sebelum: '',
@@ -220,9 +274,9 @@ export class JobInfoComponent implements OnInit {
       this.nampungdatakatagoripekerjaan = this.dataEntry.kategori_pekerjaan;
 
       // untuk list job
-      if(this.dataEntry.kategori_pekerjaan == 'Fix Income'){
+      if (this.dataEntry.kategori_pekerjaan == 'Fix Income') {
         this.untukListJob = 1;
-      } else if(this.dataEntry.kategori_pekerjaan == 'Non Fix Income'){
+      } else if (this.dataEntry.kategori_pekerjaan == 'Non Fix Income') {
         this.untukListJob = 2;
       }
 
@@ -232,8 +286,8 @@ export class JobInfoComponent implements OnInit {
     });
 
     this.datEntryService.getFetchListJenisPekerjaan().subscribe(data => {
-      this.listJabatan =  data.result;
-    })
+      this.listJabatan = data.result;
+    });
 
     this.gettokendukcapil();
     this.getstatuspernikahan();
@@ -243,16 +297,15 @@ export class JobInfoComponent implements OnInit {
         this.daWa = res.body?.result;
       },
     });
-    this.datEntryService.getFetchSemuaDataJob(this.curef).subscribe( data => {
-      this.jobInfo = data.result
-      console.log(this.jobInfo)
+    this.datEntryService.getFetchSemuaDataJob(this.curef).subscribe(data => {
+      this.jobInfo = data.result;
+      console.log(this.jobInfo);
       // alert(this.jobInfo[0] == null)
     });
     this.sebelum().subscribe({
       next: (res: EntityArrayResponseDaWa1) => {
         // console.log(res.body?.result);
         console.warn('sebelum', res.body?.result);
-
 
         // if (res.body?.result == null) {
         this.nampungsebelum = res.body?.result;
@@ -304,15 +357,15 @@ export class JobInfoComponent implements OnInit {
             tipe_kepegawaian_sebelum: '',
           };
           this.datajobsebelum.setValue(retrivejobsebelum);
-          this.dataretriveprovinsisebelum ='pilih provinsi';
+          this.dataretriveprovinsisebelum = 'pilih provinsi';
           this.dataretrivekabkotasebelum = 'pilih kota';
-          this.dataretrivekecamatansebelum ='pilih kecamatan';
+          this.dataretrivekecamatansebelum = 'pilih kecamatan';
           this.dataretrivekelurahansebelum = 'pilih kelurahan';
           this.dataretrivetipepegawaiansebelum = 'pilih tipe kepegawaian';
           this.dataretrivetikategoripekerjaansebelum = 'pilih kategori pekerjaan';
           this.dataretrivetipepekerjaansebelum = 'pilih tipe pekerjaan';
           this.dataretrivejenisbidangsebelum = 'pilih jenis bidang ';
-          this.dataretrivesektorekosebelum ='pilih jenis sektor';
+          this.dataretrivesektorekosebelum = 'pilih jenis sektor';
         } else {
           this.dataretrivejobsebelumMap = res.body?.result;
           let retrivejobsebelum = {
@@ -414,7 +467,6 @@ export class JobInfoComponent implements OnInit {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   load2() {
     this.sebelum().subscribe({
       next: (res: EntityArrayResponseDaWa1) => {
@@ -745,7 +797,6 @@ export class JobInfoComponent implements OnInit {
     // this.onResponseSuccess(res);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto() {
     // this.onResponseSuccess(res);
     // alert(this.statusPerkawinan);
@@ -771,8 +822,8 @@ export class JobInfoComponent implements OnInit {
   }
 
   updatejobsebelum() {
-    if(this.daWa == ''){
-      alert('Perkerjaan Belum Ada')
+    if (this.daWa == '') {
+      alert('Perkerjaan Belum Ada');
       return;
     } else {
       const kategori_pekerjaan_sebelum = document.getElementById('kategori_pekerjaan_sebelum') as HTMLInputElement | any;
@@ -959,8 +1010,8 @@ export class JobInfoComponent implements OnInit {
     });
   }
 
-  buatcreatejobinfo(provinsi:any, kota:any, kecamatan:any, kelurahan:any) {
-    if(
+  buatcreatejobinfo(provinsi: any, kota: any, kecamatan: any, kelurahan: any) {
+    if (
       this.tipePekerjaanValidasi == '' ||
       this.payrollValidasi == '' ||
       this.posisiValidasi == '' ||
@@ -982,7 +1033,7 @@ export class JobInfoComponent implements OnInit {
       this.jumlahKaryawanValidasi == '' ||
       this.tipePerusahaanValidasi == '' ||
       this.tipeKepegawaianValidasi == ''
-    ){
+    ) {
       // alert("Bisa")
       return;
     } else {
@@ -1070,9 +1121,9 @@ export class JobInfoComponent implements OnInit {
       // }else{
       //   this.dfgdf = jumlah_karyawan2.value
       // }
-      alert(this.jobInfoForm.get('total_pendapatan')?.value)
+      alert(this.jobInfoForm.get('total_pendapatan')?.value);
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-ide/create_job_info', {
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_job_info', {
           // headers: headers,
           alamat_perusahaan: this.jobInfoForm.get('alamat_perusahaan')?.value,
           curef: this.curef,
@@ -1104,31 +1155,30 @@ export class JobInfoComponent implements OnInit {
           total_pendapatan: this.jobInfoForm.get('total_pendapatan')?.value,
           tunjangan: this.jobInfoForm.get('tunjangan')?.value,
           umur_pensiun: this.jobInfoForm.get('umur_pensiun')?.value,
-          lama_bekerja_bulan_sebelum: "",
-          lama_bekerja_tahun_sebelum: ""
+          lama_bekerja_bulan_sebelum: '',
+          lama_bekerja_tahun_sebelum: '',
         })
 
         .subscribe({
           next: response => {
-            if(response.code){
-              alert("Berhasil Menyimpan Data");
+            if (response.code) {
+              alert('Berhasil Menyimpan Data');
               setTimeout(() => {
                 window.location.reload();
               }, 1000);
             }
           },
-          error: error =>{
-            if(error.error.code == 400){
-              alert("Gagal Menyimpan Data")
-              alert(error.error.message)
+          error: error => {
+            if (error.error.code == 400) {
+              alert('Gagal Menyimpan Data');
+              alert(error.error.message);
             }
           },
         });
     }
   }
 
-  carimenggunakankodepost(kodepost:any,req:any){
-
+  carimenggunakankodepost(kodepost: any, req: any) {
     this.getkodepostnya(kodepost, req).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kodepost', res);
@@ -1137,18 +1187,13 @@ export class JobInfoComponent implements OnInit {
         // alert(this.postId);
         // this.onResponseSuccess(res);
 
-        this.retriveprovinsi=res.body?.result.provKec.nm_prov;
+        this.retriveprovinsi = res.body?.result.provKec.nm_prov;
 
+        this.retrivekabkota = res.body?.result.provKec.nm_kota;
 
-        this.retrivekabkota=res.body?.result.provKec.nm_kota;
+        this.retrivekecamatan = res.body?.result.provKec.nm_kec;
 
-
-        this.retrivekecamatan=res.body?.result.provKec.nm_kec;
-
-
-        this.retrivekelurahan=res.body?.result.provKec.nm_kel;
-
-
+        this.retrivekelurahan = res.body?.result.provKec.nm_kel;
 
         // $('#provinsi_cabang').attr('selected', 'selected').val(this.provinsi_cabangkode + '|' +    this.provinsi_cabang);
         $('#provinsi_cabang_perusahaan option:first').text(this.retriveprovinsi);
@@ -1172,14 +1217,11 @@ export class JobInfoComponent implements OnInit {
     });
 
     console.log(req);
-
-
   }
 
   ////sebelum
 
-  carimenggunakankodepostsebelum(kodepost:any,req:any){
-
+  carimenggunakankodepostsebelum(kodepost: any, req: any) {
     this.getkodepostnya(kodepost, req).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kodepost', res);
@@ -1188,18 +1230,13 @@ export class JobInfoComponent implements OnInit {
         // alert(this.postId);
         // this.onResponseSuccess(res);
 
-        this.dataretriveprovinsisebelum=res.body?.result.provKec.nm_prov;
+        this.dataretriveprovinsisebelum = res.body?.result.provKec.nm_prov;
 
+        this.dataretrivekabkotasebelum = res.body?.result.provKec.nm_kota;
 
-        this.dataretrivekabkotasebelum=res.body?.result.provKec.nm_kota;
+        this.dataretrivekecamatansebelum = res.body?.result.provKec.nm_kec;
 
-
-        this.dataretrivekecamatansebelum=res.body?.result.provKec.nm_kec;
-
-
-        this.dataretrivekelurahansebelum=res.body?.result.provKec.nm_kel;
-
-
+        this.dataretrivekelurahansebelum = res.body?.result.provKec.nm_kel;
 
         // $('#provinsi_cabang').attr('selected', 'selected').val(this.dataretriveprovinsisebelum + '|' +    this.dataretriveprovinsisebelum);
         $('#provinsi_sebelum option:first').text(this.dataretriveprovinsisebelum);
@@ -1220,15 +1257,11 @@ export class JobInfoComponent implements OnInit {
     });
 
     console.log(req);
-
-
   }
-
 
   ////sebelum
 
-  getkodepostnya(kodepst:any,req:any){
-
+  getkodepostnya(kodepst: any, req: any) {
     const options = createRequestOption(req);
     const httpOptions = {
       // 'Authorization': token,
@@ -1242,7 +1275,6 @@ export class JobInfoComponent implements OnInit {
       params: options,
       observe: 'response',
     });
-
   }
 
   hapusJobList(idJob: any): void {
@@ -1255,16 +1287,17 @@ export class JobInfoComponent implements OnInit {
       cancelButtonText: 'Tidak, Simpan Data',
     }).then(result => {
       if (result.value) {
-        this.http.post<any>('http://10.20.34.110:8805/api/v1/efos-de/delete_jobinfo', {
-          id: idJob
-        }).subscribe({});
+        this.http
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-de/delete_jobinfo', {
+            id: idJob,
+          })
+          .subscribe({});
         Swal.fire('Terhapus!', 'File Sudah Tidak Ada', 'success').then((message: any) => {
           window.location.reload();
-        })
+        });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire('Cancelled', 'File disimpan', 'error');
       }
     });
   }
-
 }

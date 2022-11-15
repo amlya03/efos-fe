@@ -1,4 +1,4 @@
-export class listAgunan{
+export class listAgunan {
   id_collateral_detail?: Number;
   id_collateral?: Number;
   app_no_de?: String;
@@ -26,7 +26,7 @@ export class listAgunan{
   kode_pos_agunan?: Number;
   luas_bangunan?: Number;
   luas_tanah?: Number;
-  harga_objek?: Number;
+  harga_objek?: string | number | null | undefined;
   alamat_sesuai_sertifikat?: String;
   provinsi_sesuai_sertifikat?: String;
   kabkota_sesuai_sertifikat?: String;
@@ -36,13 +36,13 @@ export class listAgunan{
   tipe_kendaraan?: String;
   merk?: String;
   model?: String;
-  seri?:  String;
-  nomor_bpkb?:  String;
-  no_plat?:  String;
-  warna?:  String;
-  no_mesin?:  String;
-  no_rangka?:  String;
-  nama_bpkb?:  String;
+  seri?: String;
+  nomor_bpkb?: String;
+  no_plat?: String;
+  warna?: String;
+  no_mesin?: String;
+  no_rangka?: String;
+  nama_bpkb?: String;
   jenis_objek?: Number;
   status_developer?: String;
   rt?: Number;

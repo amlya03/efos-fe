@@ -842,7 +842,7 @@
             formControlName="total_penghasilan_bersih"
             (keypress)="keyPressNumbers($event)"
             #total_penghasilan_bersih1
-            value="{{ +total_penghasilan_kotor1.value - (+kewajiban_bank1.value - +kewajiban_lainnya1.value) }}"
+            value="{{ +total_penghasilan_kotor1.value - +kewajiban_bank1.value - +kewajiban_lainnya1.value }}"
           />
         </div>
       </div>

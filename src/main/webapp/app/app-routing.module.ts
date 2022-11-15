@@ -44,6 +44,7 @@ import { KesimpulanComponent } from './verification/kesimpulan/kesimpulan.compon
 import { MemoVerificationComponent } from './verification/memo-verification/memo-verification.component';
 import { DaftarAplikasiIsiMapisComponent } from './verification/daftar-aplikasi-isi-mapis/daftar-aplikasi-isi-mapis.component';
 import { MapisComponent } from './verification/daftar-aplikasi-isi-mapis/mapis/mapis.component';
+import { InputScoringComponent } from './input-scoring/input-scoring.component';
 
 @NgModule({
   imports: [
@@ -221,6 +222,10 @@ import { MapisComponent } from './verification/daftar-aplikasi-isi-mapis/mapis/m
         {
           path: 'mapis',
           component: MapisComponent,
+        },
+        {
+          path: 'input-scoring-manual',
+          component: InputScoringComponent,
         },
         {
           path: '',

@@ -51,9 +51,7 @@ export class CallReportNonComponent implements OnInit {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getCallReportByDe?sd=');
-  // eslint-disable-next-line @typescript-eslint/member-ordering
   protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
   protected apgetnowawancara = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/get_call_report_seq');
   protected apiskalaperusahaan = this.applicationConfigService.getEndpointFor(
@@ -66,9 +64,8 @@ export class CallReportNonComponent implements OnInit {
     this.load();
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   load() {
-    alert( this.untukSessionRole)
+    alert(this.untukSessionRole);
     // $('#denganini').val(
     //   'JALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALAN'
     // );
@@ -78,7 +75,7 @@ export class CallReportNonComponent implements OnInit {
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('callreportnon', res);
 
-        if (res.body?.result == null) {
+        if (res.body?.result === null) {
           this.daWa = 0;
           // this.daWade = 0;
         } else {
@@ -87,19 +84,19 @@ export class CallReportNonComponent implements OnInit {
 
           // alert(this.checkboxCek);
           for (let i = 0; i < this.checkboxCek.length; i++) {
-            // alert(this.checkboxCek[i] == "Sertifikat")
-            if (this.checkboxCek[i] == 'SIU') {
+            // alert(this.checkboxCek[i] === "Sertifikat")
+            if (this.checkboxCek[i] === 'SIU') {
               this.checkboxCeksiu = 'SIU';
               // alert(this.checkboxCeksiu);
-            } else if (this.checkboxCek[i] == 'SIUP') {
+            } else if (this.checkboxCek[i] === 'SIUP') {
               this.checkboxCeksiup = 'SIUP';
-            } else if (this.checkboxCek[i] == 'NIB') {
+            } else if (this.checkboxCek[i] === 'NIB') {
               this.checkboxCeknib = 'NIB';
-            } else if (this.checkboxCek[i] == 'SKDU') {
+            } else if (this.checkboxCek[i] === 'SKDU') {
               this.checkboxCekskdu = 'SKDU';
-            } else if (this.checkboxCek[i] == 'SKDP') {
+            } else if (this.checkboxCek[i] === 'SKDP') {
               this.checkboxCekskdp = 'SKDP';
-            } else if (this.checkboxCek[i] == 'Akta Pendirian') {
+            } else if (this.checkboxCek[i] === 'Akta Pendirian') {
               this.checkboxCekaktapendirian = 'Akta Pendirian';
             }
           }
@@ -129,7 +126,7 @@ export class CallReportNonComponent implements OnInit {
     });
     // alert(this.checkboxCek);
 
-    if (this.daWa == null) {
+    if (this.daWa === null) {
       this.getnomorwawancara().subscribe({
         next: (res: EntityArrayResponseDaWa) => {
           console.warn('contohwawancarano', res);
@@ -142,7 +139,6 @@ export class CallReportNonComponent implements OnInit {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto() {
     // alert(this.app_no_de);
     // this.router.navigate(['/memo'], { queryParams: {  } });

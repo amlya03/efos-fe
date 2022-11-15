@@ -181,6 +181,17 @@
                 [queryParams]="{
                   curef: this.curef,
                   statusPerkawinan: this.statusPerkawinan,
+                  app_no_de: this.app_no_de,
+                  datakirimanid: this.datakirimanid
+                }"
+                routerLink="data-entry/editcollateral"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                [queryParams]="{
+                  curef: this.curef,
+                  statusPerkawinan: this.statusPerkawinan,
                   app_no_de: this.app_no_de
                 }"
                 routerLink="data-entry/struktur-pembiayaan"
@@ -770,6 +781,15 @@
       router.url ===
         '/data-entry/collateral?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
       router.url ===
+        '/data-entry/editcollateral?curef=' +
+          this.curef +
+          '&statusPerkawinan=' +
+          this.statusPerkawinan +
+          '&app_no_de=' +
+          this.app_no_de +
+          '&datakirimanid=' +
+          this.datakirimanid ||
+      router.url ===
         '/data-entry/struktur-pembiayaan?curef=' +
           this.curef +
           '&statusPerkawinan=' +
@@ -884,6 +904,17 @@
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'AO'"
     >
+      <span
+        class="col nav-link"
+        [queryParams]="{
+          curef: this.curef,
+          statusPerkawinan: this.statusPerkawinan,
+          app_no_de: this.app_no_de,
+          datakirimanid: this.datakirimanid
+        }"
+        routerLink="data-entry/editcollateral"
+        hidden
+      ></span>
       <h6>Collateral</h6>
     </a>
     <a

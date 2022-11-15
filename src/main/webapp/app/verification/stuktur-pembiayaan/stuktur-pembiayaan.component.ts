@@ -55,6 +55,7 @@ export class StukturPembiayaanComponent implements OnInit {
 
   // Hasil Scoring
   hasilScoring: any;
+  hasilStatus: any;
 
   optionsMoney = { prefix: 'Rp ', thousands: ',', decimal: '.', inputMode: CurrencyMaskInputMode.NATURAL };
 
@@ -233,14 +234,15 @@ export class StukturPembiayaanComponent implements OnInit {
 
             setTimeout(() => {
               this.http
-                .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/getHitungScoring', {
+                .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/getHitungScoring', {
                   dsr: this.analisaDsr,
                   app_no_de: this.dataEntry.app_no_de,
                 })
                 .subscribe({
                   next: data => {
                     this.hasilScoring = data.result.score_value;
-                    alert(this.hasilScoring)
+                    this.hasilStatus = data.result.score_desc;
+                    console.warn(data);
                   },
                 });
             }, 300);
@@ -267,6 +269,7 @@ export class StukturPembiayaanComponent implements OnInit {
     const maxDsr = max_dsr.replace(' %', '');
     const persentace = persentase_pembiayaan_existing.replace('%', '');
     const valueMax_angsuran = max_angsuran.replace(/\,/g, '').replace('Rp ', '');
+    const totPendapat = total_angsuran.replace(/\,/g, '').replace('Rp ', '');
     // alert(valueMax_angsuran)
     if (this.strukturPembiayaan == null) {
       this.http
@@ -285,7 +288,7 @@ export class StukturPembiayaanComponent implements OnInit {
           persentase_pembiayaan_existing: persentace,
           skema: Skemanya[2],
           tenor: tenor,
-          total_angsuran: total_angsuran,
+          total_angsuran: totPendapat,
           skema_code: Skemanya[0],
           skema_master: Skemanya[1],
         })
@@ -310,7 +313,7 @@ export class StukturPembiayaanComponent implements OnInit {
           persentase_pembiayaan_existing: persentace,
           skema: Skemanya[2],
           tenor: tenor,
-          total_angsuran: total_angsuran,
+          total_angsuran: totPendapat,
           skema_code: Skemanya[0],
           skema_master: Skemanya[1],
         })

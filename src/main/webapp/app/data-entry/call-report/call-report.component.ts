@@ -59,7 +59,7 @@ export class CallReportComponent implements OnInit {
     this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
     this.load();
   }
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
   load() {
     // $('#denganini').val(
     //   'JALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALAN'
@@ -116,7 +116,6 @@ export class CallReportComponent implements OnInit {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   goto() {
     // this.router.navigate(['/memo'], { queryParams: {  } });
     // alert(this.app_no_dea);

@@ -599,8 +599,11 @@
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Hasil Scoring</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="hasil_scoring" name="hasil_scoring" [value]="this.hasilScoring"/>
+        <div class="col-sm-3">
+          <input type="text" readonly class="form-control" id="hasil_scoring" name="hasil_scoring" [value]="this.hasilScoring" />
+        </div>
+        <div class="col-sm-3">
+          <label>{{ this.hasilStatus }}</label>
         </div>
       </div>
     </div>
