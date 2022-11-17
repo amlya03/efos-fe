@@ -46,9 +46,8 @@ export class CallReportComponent implements OnInit {
     this.untukSessionFullName = this.localStorageService.retrieve('sessionFullName');
   }
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
+  
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getCallReportByDe?sd=');
-  // eslint-disable-next-line @typescript-eslint/member-ordering
   protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDataEntryByDe?sd=');
   protected apiskalaperusahaan = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.178:8805/api/v1/efos-ref/list_skala_perusahaan'
@@ -59,17 +58,13 @@ export class CallReportComponent implements OnInit {
     this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
     this.load();
   }
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  
   load() {
-    // $('#denganini').val(
-    //   'JALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALAN'
-    // );
-
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('callreportnon', res);
 
-        if (res.body?.result == null) {
+        if (res.body?.result === null) {
           this.daWa = 0;
           this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
           this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
@@ -79,7 +74,7 @@ export class CallReportComponent implements OnInit {
           this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
         }
 
-        if (this.daWa == null) {
+        if (this.daWa === null) {
           this.getnomorwawancara().subscribe({
             next: (res: EntityArrayResponseDaWa) => {
               console.warn('contohwawancarano', res);
@@ -116,7 +111,7 @@ export class CallReportComponent implements OnInit {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  
   goto() {
     // this.router.navigate(['/memo'], { queryParams: {  } });
     alert(this.app_no_de);
@@ -132,17 +127,14 @@ export class CallReportComponent implements OnInit {
 
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return this.http.get<ApiResponse>(this.resourceUrl + this.app_no_de, { params: options, observe: 'response' });
   }
   getdataentrynama(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return this.http.get<ApiResponse>(this.resourceUrl1 + this.app_no_de, { params: options, observe: 'response' });
   }
   getnomorwawancara(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return this.http.get<ApiResponse>(this.apgetnowawancara, { params: options, observe: 'response' });
   }
 
