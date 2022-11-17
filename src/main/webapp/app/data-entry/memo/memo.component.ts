@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+import { LocalStorageService } from 'ngx-webstorage';
 import { memomodel } from './memo-model';
+import { ServicesUploadDocumentService } from 'app/upload-document/services/services-upload-document.service';
+import { getMemoUploadModel } from 'app/upload-document/services/config/getMemoUploadModel.model';
+import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { DataEntryService } from '../services/data-entry.service';
 
 export type EntityResponseDaWa = HttpResponse<memomodel>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -18,28 +21,35 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./memo.component.scss'],
 })
 export class MemoComponent implements OnInit {
-  datakirimiancure: any;
-  app_no_de: any;
-  daWa: any;
-  daWa1: any;
+  file?: File; // Variable to store file
+  curef: string | undefined;
+  app_no_de: string | undefined;
+  statusPerkawinan: string | undefined;
+  getMemoUpload: getMemoUploadModel = new getMemoUploadModel();
+  daWa: memomodel[] = [];
+  daWa1: fetchAllDe = new fetchAllDe();
   tampilanfixornon: any;
   untukSessionRole: any;
   untukSessionusername: any;
   untukSessionfullname: any;
+  popup: any;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    protected fileUploadService: ServicesUploadDocumentService,
+    protected dataEntryService: DataEntryService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.datakirimiancure = params['datakirimiancure'];
+      this.curef = params['curef'];
     });
 
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
+      this.statusPerkawinan = params['statusPerkawinan'];
     });
   }
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -54,7 +64,7 @@ export class MemoComponent implements OnInit {
 
     this.load();
   }
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
   load() {
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
@@ -71,8 +81,12 @@ export class MemoComponent implements OnInit {
 
         this.tampilanfixornon = res.body?.result.kategori_pekerjaan;
 
-        alert(this.tampilanfixornon);
+        // alert(this.tampilanfixornon);
       },
+    });
+
+    this.fileUploadService.getMemoUpload(this.curef, this.app_no_de).subscribe(data => {
+      this.getMemoUpload = data.result;
     });
   }
 
@@ -125,7 +139,7 @@ export class MemoComponent implements OnInit {
   }
 
   kembalikede(): void {
-    alert('BackStatustoDe');
+    // alert('BackStatustoDe');
 
     const keterangan = document.getElementById('keterangan') as HTMLInputElement | any;
     const status_aplikasi_desc = document.getElementById('status_aplikasi_desc') as HTMLInputElement | any;
@@ -158,33 +172,15 @@ export class MemoComponent implements OnInit {
   }
 
   cetakmemo(): void {
-    alert('cetak');
-
-    //  var divToPrint=document.getElementById("example");
-    //         newWin= window.open("");
-    //         newWin.document.write(divToPrint.outerHTML);
-    //         newWin.print();
-    //         newWin.close();
-
-    // let printContents, popupWin;
-    // printContents = document.getElementById('#example').innerHTML;
-    // popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
-    // popupWin.document.open();
-    // popupWin.document.write(`
-    //   <html>
-    //     <head>
-    //       <title>Print tab</title>
-    //       // You need to insert the stylesheet to the print function
-    //       <link rel="stylesheet" href="correct href to your stylesheet">
-    //     </head>
-    // <body onload="window.print();window.close()">${printContents}</body>
-    //   </html>`
-    // );
-    // popupWin.document.close();
+    const divToPrint = document.getElementById('example') as HTMLInputElement | any;
+    this.popup = window.open('');
+    this.popup.document.write(divToPrint.outerHTML);
+    this.popup.print();
+    this.popup.close();
   }
 
   updatekeupload(): void {
-    alert('cetak');
+    // alert('cetak');
     const status_aplikasi_desc = document.getElementById('status_aplikasi_desc') as HTMLInputElement | any;
 
     this.http
@@ -226,7 +222,7 @@ export class MemoComponent implements OnInit {
   }
 
   updatestatus(): void {
-    alert('cetak');
+    // alert('cetak');
     const status_aplikasi_desc = document.getElementById('status_aplikasi_desc') as HTMLInputElement | any;
 
     this.http
@@ -247,5 +243,44 @@ export class MemoComponent implements OnInit {
           });
         },
       });
+  }
+  backtoverifikatro(): void {
+    this.router.navigate(['/daftar-aplikasi-waiting-assigment'], {
+      // queryParams: {
+      //   // datakirimanappde: this.datakirimande,
+      //   // datakirimiancure: this.datakirimancuref,
+      //   // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+      // },
+    });
+  }
+  pilihFile(pilih: any) {
+    this.file = pilih.target.files[0];
+  }
+  thisFileUpload() {
+    if (this.getMemoUpload === null) {
+      this.fileUploadService.uploadMemo(this.file, this.app_no_de, this.curef).subscribe({
+        next: bawaan => {
+          alert('Data Berhasil diupload');
+        },
+      });
+    } else {
+      alert('Data Sudah diupload');
+    }
+  }
+  download() {
+    const buatPdf = this.getMemoUpload.nama_dokumen?.split('.').pop();
+    if (buatPdf == 'pdf') {
+      window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + this.getMemoUpload.nama_dokumen + '');
+    } else {
+      const url = 'http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + this.getMemoUpload.nama_dokumen + '';
+      const img = '<img src="' + url + '">';
+      this.popup = window.open('');
+      this.popup.document.write(img);
+    }
+  }
+  view(id: number | null | undefined) {
+    this.dataEntryService.getFetchListMemo(id).subscribe(data => {
+      this.daWa = data.result;
+    });
   }
 }

@@ -7,7 +7,14 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { DataEntryService } from '../services/data-entry.service';
 import { LocalStorageService } from 'ngx-webstorage';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { getJobPasangan } from '../services/config/getJobPasangan.model';
+import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { getListTipePekerjaan } from '../services/config/getListTipePekerjaan.model';
+import { refJenisPekerjaan } from '../services/config/refJenisPekerjaan.model';
+import { refListJumlahKaryawan } from '../services/config/refListJumlahKaryawan.model';
+import { refListJabatan } from '../services/config/refListJabatan.model';
+import { refTipePerusahaan } from '../services/config/refTipePerusahaan.model';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 export type EntityArrayResponseDaWa1 = HttpResponse<ApiResponse>;
@@ -17,13 +24,22 @@ export type EntityArrayResponseDaWa1 = HttpResponse<ApiResponse>;
   styleUrls: ['./pekerjaan-pasangan.component.scss'],
 })
 export class PekerjaanPasanganComponent implements OnInit {
-  datakirimiancure: any;
-
+  formPekerjaanPasangan!: FormGroup;
+  listJobPasangan: getJobPasangan = new getJobPasangan();
+  dataEntry: fetchAllDe = new fetchAllDe();
+  listTipePekerjaan: getListTipePekerjaan[] = [];
+  listJabatan: refJenisPekerjaan[] = [];
+  listJabatanAll: refListJabatan[] = [];
+  ListJumlahKaryawan: refListJumlahKaryawan[] = [];
+  listTipePerusahaan: refTipePerusahaan[] = [];
   app_no_de: any;
   curef: any;
   statusPerkawinan: any;
-  daWa: any;
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobPasanganByCuref?sc=');
+  kategoriPekerjaan: any;
+  tipePekerjaanChange: any;
+  kirimKatePeker: any;
+  kirimUmurPensi: any;
+
   kirimansiup: any;
   jenispekerjaan: any;
   getjabatan: any;
@@ -36,7 +52,6 @@ export class PekerjaanPasanganComponent implements OnInit {
   getdatasektorekonomi: any;
   getjenisbidangdariapi: any;
   untukSessionRole: any;
-  formpekerjaanpasangan: any;
   pemisahkategoripekerjaan: any;
   pemisahtipeperusahaan: any;
   pemisahtipekejeraan: any;
@@ -48,6 +63,10 @@ export class PekerjaanPasanganComponent implements OnInit {
   unutkjenissektor: any;
   untuktipepekerjaan: any;
   gettipeperusahaandariapi: any;
+  retriveprovinsi: any;
+  retrivekabkota: any;
+  retrivekecamatan: any;
+  retrivekelurahan: any;
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -66,168 +85,171 @@ export class PekerjaanPasanganComponent implements OnInit {
   }
   protected apilistjenisbidang = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/list_jenis_bidang');
 
-  protected apigetjenispekeraan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_pekerjaan?sc='
-  );
-  protected apilisttipeperusahaan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_perusahaan'
-  );
-  protected apilistjabatan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_jabatan');
-
   ngOnInit(): void {
     this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
-    this.formpekerjaanpasangan = this.formBuilder.group({
-      kate_peker: '',
-      tipe_pekerjaan: '',
-      posisi1: '',
-      nama_perusahaan: '',
-      id: '',
-      alamat_perusahaan1: '',
-      provinsi1: '',
-      kabkota1: '',
-      kecamatan1: '',
-      kelurahan1: '',
-      kode_pos1: '',
-      siup2: '',
-      jenis_bidang: '',
-      sektor_ekonomi: '',
-      jumlah_karyawan: '',
-      tipe_perusahaan: '',
-      lama_bekerja_bulan1: '',
-      lama_bekerja_tahun1: '',
-      status_kepegawaian: '',
-      pendapatan: '',
-      tunjangan: '',
-      pendapatan_lain: '',
-      total_pendapatan: '',
-      usia: '',
+
+    //////////////////////////// validasi /////////////////////////////////////////
+    this.formPekerjaanPasangan = this.formBuilder.group({
+      posisi: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      nama_perusahaan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      alamat_perusahaan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      no_siup: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      jenis_bidang: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      sektor_ekonomi: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      jumlah_karyawan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      tipe_perusahaan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      lama_bekerja_bulan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      lama_bekerja_tahun: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      status_kepegawaian: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      pendapatan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      tunjangan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      pendapatan_lain: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      total_pendapatan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      umur_pensiun: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      kategori_pekerjaan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      tipe_pekerjaan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      jarak_lokasi_usaha: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      kode_pos: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
     });
     this.load();
   }
 
   load(): void {
     this.gettokendukcapil();
-    // alert(this.curef);
-
-    this.getdataentry().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        // console.log(res.body?.result);
-        console.warn('strukturdata', res);
-
-        // console.warn('!!!!!!!!!!!!!!!!!!!', this.datakiriman);
-        // console.warn('@@@@@@@@@@@@@', this.datakiriman);
-        // console.warn('@31231231231',this.route.snapshot.paramMap.get('datakiriman'));
-        this.daWa = res.body?.result;
-
-        // console.warn('buatpemisah', res);
-        // console.warn('buatoemisah', res.body);
-        // /////////////////////// Untuk COnvert hasil yang angka ///////////////////////////////////
-        if (this.daWa.kategori_pekerjaan == 1) {
-          this.daWa.kategori_pekerjaan = 'Fix Income';
-        }
-        if (this.daWa.kategori_pekerjaan == 2) {
-          this.daWa.kategori_pekerjaan = 'Non Fix Income';
-        }
-        if (this.daWa.kategori_pekerjaan == 3) {
-          this.daWa.kategori_pekerjaan = 'Lainnya';
-        }
-        if (this.daWa.tipe_pekerjaan == 1) {
-          this.daWa.tipe_pekerjaan = 'Pegawai Negeri Sipil';
-        }
-        if (this.daWa.tipe_pekerjaan == 2) {
-          this.daWa.tipe_pekerjaan = 'Pegawai Swasta';
-        }
-        if (this.daWa.tipe_pekerjaan == 3) {
-          this.daWa.tipe_pekerjaan = 'Wiraswasta';
-        }
-        if (this.daWa.tipe_pekerjaan == 4) {
-          this.daWa.tipe_pekerjaan = 'Profesional';
-        }
-        if (this.daWa.tipe_pekerjaan == 5) {
-          this.daWa.tipe_pekerjaan = 'Pensiunan';
-        }
-        if (this.daWa.tipe_pekerjaan == 6) {
-          this.daWa.tipe_pekerjaan = 'Tidak Bekerja';
-        }
-        if (this.daWa.tipe_pekerjaan == 7) {
-          this.daWa.tipe_pekerjaan = 'TNI / POLRI';
-        }
-        if (this.daWa.tipe_pekerjaan == 8) {
-          this.daWa.tipe_pekerjaan = 'Pegawai BUMN';
-        }
-        if (this.daWa.tipe_perusahaan == 1) {
-          this.daWa.tipe_perusahaan = 'Perseorangan';
-        }
-        if (this.daWa.tipe_perusahaan == 2) {
-          this.daWa.tipe_perusahaan = 'PT Terbuka (Perseroan Terbatas TBK)';
-        }
-        if (this.daWa.tipe_perusahaan == 3) {
-          this.daWa.tipe_perusahaan = 'PT (Perseroan Terbatas)';
-        }
-        if (this.daWa.tipe_perusahaan == 5) {
-          this.daWa.tipe_perusahaan = 'CV';
-        }
-        if (this.daWa.tipe_perusahaan == 6) {
-          this.daWa.tipe_perusahaan = 'Tidak Bekerja';
-        }
-
-        if (this.daWa == null) {
-        } else {
-          let retrivejobpasangan = {
-            kate_peker: this.daWa.kategori_pekerjaan,
-            tipe_pekerjaan: this.daWa.tipe_pekerjaan,
-            posisi1: this.daWa.posisi,
-            nama_perusahaan: this.daWa.nama_perusahaan,
-            id: this.daWa.id,
-            alamat_perusahaan1: this.daWa.alamat_perusahaan,
-            provinsi1: this.daWa.provinsi,
-            kabkota1: this.daWa.kabkota,
-            kecamatan1: this.daWa.kecamatan,
-            kelurahan1: this.daWa.kelurahan,
-            kode_pos1: this.daWa.kode_pos,
-            siup2: this.daWa.no_siup,
-            jenis_bidang: this.daWa.jenis_bidang,
-            sektor_ekonomi: this.daWa.sektor_ekonomi,
-            jumlah_karyawan: this.daWa.jumlah_karyawan,
-            tipe_perusahaan: this.daWa.tipe_perusahaan,
-            lama_bekerja_bulan1: this.daWa.lama_bekerja_bulan,
-            lama_bekerja_tahun1: this.daWa.lama_bekerja_tahun,
-            status_kepegawaian: this.daWa.status_kepegawaian,
-            pendapatan: this.daWa.pendapatan,
-            tunjangan: this.daWa.tunjangan,
-            pendapatan_lain: this.daWa.pendapatan_lain,
-            total_pendapatan: this.daWa.total_pendapatan,
-            usia: this.daWa.umur_pensiun,
-          };
-
-          this.formpekerjaanpasangan.setValue(retrivejobpasangan);
-          this.pemisahkategoripekerjaan = 0;
-          this.pemisahtipeperusahaan = 0;
-          this.pemisahtipekejeraan = 0;
-          this.untukprovinsijobpasangan = this.daWa.provinsi;
-          this.untukkobkotajobpasangan = this.daWa.kabkota;
-          this.untukkecamatanjobpasangan = this.daWa.kecamatan;
-          this.untukkelurahanjobpasangan = this.daWa.kelurahan;
-          this.untukjenisbidang = this.daWa.jenis_bidang;
-          this.unutkjenissektor = this.daWa.sektor_ekonomi;
-          this.untuktipepekerjaan = this.daWa.tipe_pekerjaan;
-        }
-
-        // /////////////////////// Untuk COnvert hasil yang angka ///////////////////////////////////
-        // alert(this.daWa.tipe_perusahaan)
-      },
+    ///////////////////////////// REF ////////////////////////////////////////
+    this.datEntryService.getFetchListJenisPekerjaan().subscribe(data => {
+      this.listJabatan = data.result;
+    });
+    this.datEntryService.getFetchListJabatan().subscribe(data => {
+      this.listJabatanAll = data.result;
+    });
+    this.datEntryService.getFetchTipePerusahaan().subscribe(data => {
+      this.listTipePerusahaan = data.result;
+    });
+    this.datEntryService.getFetchListJumlahKaryawan().subscribe(data => {
+      this.ListJumlahKaryawan = data.result;
     });
 
-    this.getlistjabatanpasangan().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('jabatansebelum', res);
+    ///////////////////////////// REF ////////////////////////////////////////
 
-        this.getjabatan = res.body?.result;
-        // alert(this.postId);
-        // this.onResponseSuccess(res);
-      },
+    // setTimeout(() => {
+    this.datEntryService.getSemuaDataJobPasangan(this.curef).subscribe(data => {
+      this.listJobPasangan = data.result;
+      ////////////////////////////////////////////////////////////////////////////
+      if (this.listJobPasangan.kategori_pekerjaan == 'Fix Income') {
+        this.kategoriPekerjaan = 1;
+      } else if (this.listJobPasangan.kategori_pekerjaan == 'Non Fix Income') {
+        this.kategoriPekerjaan = 2;
+      } else {
+        this.kategoriPekerjaan = 3;
+      }
+      // alert(this.listJobPasangan.kategori_pekerjaan)
+      this.datEntryService.getFetchListTipePekerjaan(this.kategoriPekerjaan).subscribe(data => {
+        this.listTipePekerjaan = data.result;
+        // console.log('tipe '+ this.listTipePekerjaan)
+      });
+      let retrivejobpasangan = {
+        kategori_pekerjaan: this.kategoriPekerjaan,
+        tipe_pekerjaan: this.listJobPasangan.tipe_pekerjaan,
+        posisi: this.listJobPasangan.posisi,
+        nama_perusahaan: this.listJobPasangan.nama_perusahaan,
+        alamat_perusahaan: this.listJobPasangan.alamat_perusahaan,
+        no_siup: this.listJobPasangan.no_siup,
+        jenis_bidang: this.listJobPasangan.jenis_bidang,
+        sektor_ekonomi: this.listJobPasangan.sektor_ekonomi,
+        jumlah_karyawan: this.listJobPasangan.jumlah_karyawan,
+        tipe_perusahaan: this.listJobPasangan.tipe_perusahaan,
+        lama_bekerja_bulan: this.listJobPasangan.lama_bekerja_bulan,
+        lama_bekerja_tahun: this.listJobPasangan.lama_bekerja_tahun,
+        status_kepegawaian: this.listJobPasangan.status_kepegawaian,
+        pendapatan: this.listJobPasangan.pendapatan,
+        tunjangan: this.listJobPasangan.tunjangan,
+        pendapatan_lain: this.listJobPasangan.pendapatan_lain,
+        total_pendapatan: this.listJobPasangan.total_pendapatan,
+        umur_pensiun: this.listJobPasangan.umur_pensiun,
+        jarak_lokasi_usaha: this.listJobPasangan.jarak_lokasi_usaha,
+        kode_pos: this.listJobPasangan.kode_pos,
+      };
+      this.formPekerjaanPasangan.setValue(retrivejobpasangan);
+
+      this.untukprovinsijobpasangan = this.listJobPasangan.provinsi;
+      this.untukkobkotajobpasangan = this.listJobPasangan.kabkota;
+      this.untukkecamatanjobpasangan = this.listJobPasangan.kecamatan;
+      this.untukkelurahanjobpasangan = this.listJobPasangan.kelurahan;
+      this.untukjenisbidang = this.listJobPasangan.jenis_bidang;
+      this.unutkjenissektor = this.listJobPasangan.sektor_ekonomi;
+    });
+    // }, 1000);
+  }
+
+  pilihTipePeker(value: any) {
+    // alert(value)
+    this.datEntryService.getFetchListTipePekerjaan(value).subscribe(data => {
+      this.listTipePekerjaan = data.result;
+      console.log('tipe ' + this.listTipePekerjaan);
     });
   }
+
   gettokendukcapil(): void {
     this.http
       .post<any>('http://10.20.82.12:8083/token/generate-token', {
@@ -267,14 +289,6 @@ export class PekerjaanPasanganComponent implements OnInit {
         this.getjenisbidangdariapi = res.body?.result;
       },
     });
-
-    this.getlisttipeperusahaan().subscribe({
-      next: (res: EntityArrayResponseDaWa1) => {
-        // console.log(res.body?.result);
-        console.warn('tipe_perusahaan', res.body?.result);
-        this.gettipeperusahaandariapi = res.body?.result;
-      },
-    });
   }
 
   jenisbidangsebelumselect() {
@@ -296,11 +310,6 @@ export class PekerjaanPasanganComponent implements OnInit {
   getlistjenisbidang(req1?: any): Observable<EntityArrayResponseDaWa1> {
     const options = createRequestOption(req1);
     return this.http.get<ApiResponse>(this.apilistjenisbidang, { params: options, observe: 'response' });
-  }
-
-  getlisttipeperusahaan(req1?: any): Observable<EntityArrayResponseDaWa1> {
-    const options = createRequestOption(req1);
-    return this.http.get<ApiResponse>(this.apilisttipeperusahaan, { params: options, observe: 'response' });
   }
 
   getsektorekonomi(idsktor: any, req?: any): Observable<EntityArrayResponseDaWa> {
@@ -360,57 +369,25 @@ export class PekerjaanPasanganComponent implements OnInit {
   }
   onChangekelurahan(selectedStatus: any) {
     // alert(this.postId);
-    alert('ganti');
+    // alert('ganti');
     const provinsi_cabang = document.getElementById('kelurahan_swasta') as HTMLInputElement | any;
     var kode_post = document.getElementById('kode_pos_swasta') as HTMLInputElement | any;
     const datakodepos = provinsi_cabang.value.split('|');
 
     this.daWakodepos = datakodepos[0];
 
-    alert(this.daWakodepos);
+    // alert(this.daWakodepos);
     // kode_post.innerHTML=this.daWakodepos ;
     kode_post.value = this.daWakodepos;
-    alert('kodepos' + kode_post);
+    // alert('kodepos' + kode_post);
     // document.getElementById('kode_pos').value=this.daWakodepos;
     // alert(this.daWakodepos);
     // this.onResponseSuccess(res);
   }
 
-  katagoripekerjaanselect() {
-    const provinsi_cabang = document.getElementById('kate_peker') as HTMLInputElement | any;
-
-    // alert(this.postId);
-
-    this.getjenispekerjaan(provinsi_cabang.value).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kota', res);
-
-        this.jenispekerjaan = res.body?.result;
-        // alert(this.postId);
-        // this.onResponseSuccess(res);
-      },
-    });
-  }
-
-  getjenispekerjaan(katagori_pekerjaansebelum: any, req1?: any): Observable<EntityArrayResponseDaWa1> {
-    const options = createRequestOption(req1);
-    var katagori_pekerjaansebelumvalue = katagori_pekerjaansebelum.split('|');
-
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.apigetjenispekeraan + katagori_pekerjaansebelumvalue[0], {
-      params: options,
-      observe: 'response',
-    });
-  }
-
-  getlistjabatanpasangan(req1?: any): Observable<EntityArrayResponseDaWa1> {
-    const options = createRequestOption(req1);
-    return this.http.get<ApiResponse>(this.apilistjabatan, { params: options, observe: 'response' });
-  }
-
   goto(): void {
     // this.onResponseSuccess(res);
-    alert('otw collateral1 ');
+    // alert('otw collateral1 ');
     // console.warn('colalteral', this.app_no_de, this.curef, this.datakirimanakategoripekerjaan);
     this.router.navigate(['/data-entry/collateral'], {
       queryParams: {
@@ -422,43 +399,31 @@ export class PekerjaanPasanganComponent implements OnInit {
     });
   }
 
-  getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl + this.curef, { params: options, observe: 'response' });
-  }
-
   updatejobpasangan(contohtampungancuref: any) {
-    // this.onResponseSuccess(res);
-    // alert(contohtampungancuref);
-    // alert(this.app_no_de);
-    // alert(this.curef);
-
-    const kate_peker = document.getElementById('kate_peker') as HTMLInputElement | any;
-    const tipe_pekerjaan = document.getElementById('tipe_pekerjaan') as HTMLInputElement | any;
-    const posisi1 = document.getElementById('posisi1') as HTMLInputElement | any;
-    const nama_perusahaan = document.getElementById('nama_perusahaan') as HTMLInputElement | any;
-    const alamat_perusahaan1 = document.getElementById('alamat_perusahaan1') as HTMLInputElement | any;
+    // alert(this.listJobPasangan == null);
     const provinsi_cabang_swasta = document.getElementById('provinsi_cabang_swasta') as HTMLInputElement | any;
     const kabkota_cabang_swasta = document.getElementById('kabkota_cabang_swasta') as HTMLInputElement | any;
     const kecamatan_swasta = document.getElementById('kecamatan_swasta') as HTMLInputElement | any;
     const kelurahan_swasta = document.getElementById('kelurahan_swasta') as HTMLInputElement | any;
-    const kode_pos_swasta = document.getElementById('kode_pos_swasta') as HTMLInputElement | any;
-    const siup2 = document.getElementById('siup2') as HTMLInputElement | any;
     const jenis_bidang = document.getElementById('jenis_bidang') as HTMLInputElement | any;
     const sektor_ekonomi = document.getElementById('sektor_ekonomi') as HTMLInputElement | any;
-    const jumlah_karyawan = document.getElementById('jumlah_karyawan') as HTMLInputElement | any;
-    const tipe_perusahaan = document.getElementById('tipe_perusahaan') as HTMLInputElement | any;
-    const lama_bekerja_bulan1 = document.getElementById('lama_bekerja_bulan1') as HTMLInputElement | any;
-    const lama_bekerja_tahun1 = document.getElementById('lama_bekerja_tahun1') as HTMLInputElement | any;
-    const status_kepegawaian = document.getElementById('status_kepegawaian') as HTMLInputElement | any;
-    const pendapatan = document.getElementById('pendapatan') as HTMLInputElement | any;
-    const tunjangan = document.getElementById('tunjangan') as HTMLInputElement | any;
-    const pendapatan_lain = document.getElementById('pendapatan_lain') as HTMLInputElement | any;
-    const total_pendapatan = document.getElementById('total_pendapatan') as HTMLInputElement | any;
-    const usia = document.getElementById('usia') as HTMLInputElement | any;
-    const id = document.getElementById('id') as HTMLInputElement | any;
-    const curef = document.getElementById('curef') as HTMLInputElement | any;
+    let totalPendapatan =
+      Number(this.formPekerjaanPasangan.get('pendapatan')?.value) +
+      Number(this.formPekerjaanPasangan.get('tunjangan')?.value) +
+      Number(this.formPekerjaanPasangan.get('pendapatan_lain')?.value);
+    //////////////////// LOGIC //////////////////////////////////
+    if (this.formPekerjaanPasangan.get('kategori_pekerjaan')?.value == 1) {
+      this.kirimKatePeker = 'Fix Income';
+    } else if (this.formPekerjaanPasangan.get('kategori_pekerjaan')?.value == 2) {
+      this.kirimKatePeker = 'Non Fix Income';
+    } else {
+      this.kirimKatePeker = 'Lain-lainnya';
+    }
+    if (this.formPekerjaanPasangan.get('umur_pensiun')?.value != null) {
+      const umurPensi = this.formPekerjaanPasangan.get('umur_pensiun')?.value;
+    } else {
+      const umurPensi = 0;
+    }
 
     var potonganprov = provinsi_cabang_swasta.value.split('|');
     if (provinsi_cabang_swasta.value.indexOf('|') !== -1) {
@@ -490,140 +455,159 @@ export class PekerjaanPasanganComponent implements OnInit {
     } else {
       var kirimjenisbidang = jenis_bidang.value;
     }
-    // var potongansektorekonomi = jenis_bidang.value.split('|');
-    // if (jenis_bidang.value.indexOf('|') !== -1) {
-    //   var kirimjenisbidang = potonganjenisbidang[1];
-    // } else {
-    //   var kirimjenisbidang = jenis_bidang.value;
-    // }
-
-    if (tipe_pekerjaan.value != 'Wiraswasta' || tipe_pekerjaan.value != 'Wiraswasta') {
-      this.kirimansiup = '';
-    } else {
-      this.kirimansiup = siup2.value;
-    }
-    alert(id.value);
-    alert(contohtampungancuref);
-
-    if (this.daWa == null) {
-      alert('kosong');
+    if (this.listJobPasangan == null) {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_job_info_pasangan', {
-          // headers: headers,
-
           curef: this.curef,
-          alamat_perusahaan: alamat_perusahaan1.value,
-          // created_by: app_no_ide.value,
-          // created_date: jenis_kelamin.value,
-          id: id.value,
-          // jarak_lokasi_usaha: curef.value,
-          jenis_bidang: kirimjenisbidang,
-          // jenis_pekerjaan: id.value,
-          jumlah_karyawan: jumlah_karyawan.value,
+          created_by: this.localStorageService.retrieve('sessionUserName'),
+          kategori_pekerjaan: this.kirimKatePeker,
+          tipe_pekerjaan: this.formPekerjaanPasangan.get('tipe_pekerjaan')?.value,
+          posisi: this.formPekerjaanPasangan.get('posisi')?.value,
+          nama_perusahaan: this.formPekerjaanPasangan.get('nama_perusahaan')?.value,
+          alamat_perusahaan: this.formPekerjaanPasangan.get('alamat_perusahaan')?.value,
+          provinsi: kirimanpro,
           kabkota: kirimankabkota,
-          kategori_pekerjaan: kate_peker.value,
           kecamatan: kirimankec,
           kelurahan: kirimankel,
-          kode_pos: kode_pos_swasta.value,
-          lama_bekerja_bulan: lama_bekerja_bulan1.value,
-          lama_bekerja_tahun: lama_bekerja_tahun1.value,
-          nama_perusahaan: nama_perusahaan.value,
-          no_siup: this.kirimansiup,
-          pendapatan: pendapatan.value,
-          pendapatan_lain: pendapatan_lain.value,
-          posisi: posisi1.value,
-          provinsi: kirimanpro,
-          // rt: provinsi_cabang.value,
-          // rw: tanggal_exp_ktp_pasangan.value,
+          kode_pos: this.formPekerjaanPasangan.get('kode_pos')?.value,
+          jenis_bidang: kirimjenisbidang,
           sektor_ekonomi: sektor_ekonomi.value,
-          status_kepegawaian: status_kepegawaian.value,
-          tipe_pekerjaan: tipe_pekerjaan.value,
-          tipe_perusahaan: tipe_perusahaan.value,
-          total_pendapatan: total_pendapatan.value,
-          // total_pengeluaran: provinsi_pasangan.value,
-          tunjangan: tunjangan.value,
-          // umur_pensiun: rw_pasangan.value,
-          // updated_by: provinsi_cabang.value,
-          // updated_date: tanggal_exp_ktp_pasangan.value,
+          jumlah_karyawan: this.formPekerjaanPasangan.get('jumlah_karyawan')?.value,
+          tipe_perusahaan: this.formPekerjaanPasangan.get('tipe_perusahaan')?.value,
+          lama_bekerja_bulan: this.formPekerjaanPasangan.get('lama_bekerja_bulan')?.value,
+          lama_bekerja_tahun: this.formPekerjaanPasangan.get('lama_bekerja_tahun')?.value,
+          status_kepegawaian: this.formPekerjaanPasangan.get('status_kepegawaian')?.value,
+          pendapatan: this.formPekerjaanPasangan.get('pendapatan')?.value,
+          tunjangan: this.formPekerjaanPasangan.get('tunjangan')?.value,
+          pendapatan_lain: this.formPekerjaanPasangan.get('pendapatan_lain')?.value,
+          total_pendapatan: totalPendapatan,
+          no_siup: this.formPekerjaanPasangan.get('no_siup')?.value,
+          umur_pensiun: this.kirimUmurPensi,
+          jarak_lokasi_usaha: this.formPekerjaanPasangan.get('jarak_lokasi_usaha')?.value,
         })
 
         .subscribe({
           next: bawaan => {
-            //           this.contohdata = bawaan.result.app_no_de;
-            // this.databawaan = bawaan.result.app_no_de;
-            // alert('MASUKAJAHSUSAH');
+            alert('Berhasil Menyimpan Data');
+            // setTimeout(() => {
             this.router.navigate(['/data-entry/collateral'], {
               queryParams: {
-                app_no_de: this.app_no_de,
                 curef: this.curef,
-                // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+                statusPerkawinan: this.statusPerkawinan,
+                app_no_de: this.app_no_de,
               },
             });
           },
         });
     } else {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-de/update_job_info_pasangan', {
-          // headers: headers,
-
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_job_info_pasangan', {
           curef: this.curef,
-          alamat_perusahaan: alamat_perusahaan1.value,
-          // created_by: app_no_ide.value,
-          // created_date: jenis_kelamin.value,
-          id: id.value,
-          // jarak_lokasi_usaha: curef.value,
-          jenis_bidang: kirimjenisbidang,
-          // jenis_pekerjaan: id.value,
-          jumlah_karyawan: jumlah_karyawan.value,
+          updated_by: this.localStorageService.retrieve('sessionUserName'),
+          kategori_pekerjaan: this.kirimKatePeker,
+          tipe_pekerjaan: this.formPekerjaanPasangan.get('tipe_pekerjaan')?.value,
+          posisi: this.formPekerjaanPasangan.get('posisi')?.value,
+          nama_perusahaan: this.formPekerjaanPasangan.get('nama_perusahaan')?.value,
+          alamat_perusahaan: this.formPekerjaanPasangan.get('alamat_perusahaan')?.value,
+          provinsi: kirimanpro,
           kabkota: kirimankabkota,
-          kategori_pekerjaan: kate_peker.value,
           kecamatan: kirimankec,
           kelurahan: kirimankel,
-          kode_pos: kode_pos_swasta.value,
-          lama_bekerja_bulan: lama_bekerja_bulan1.value,
-          lama_bekerja_tahun: lama_bekerja_tahun1.value,
-          nama_perusahaan: nama_perusahaan.value,
-          no_siup: this.kirimansiup,
-          pendapatan: pendapatan.value,
-          pendapatan_lain: pendapatan_lain.value,
-          posisi: posisi1.value,
-          provinsi: kirimanpro,
-          // rt: provinsi_cabang.value,
-          // rw: tanggal_exp_ktp_pasangan.value,
+          kode_pos: this.formPekerjaanPasangan.get('kode_pos')?.value,
+          jenis_bidang: kirimjenisbidang,
           sektor_ekonomi: sektor_ekonomi.value,
-          status_kepegawaian: status_kepegawaian.value,
-          tipe_pekerjaan: tipe_pekerjaan.value,
-          tipe_perusahaan: tipe_perusahaan.value,
-          total_pendapatan: total_pendapatan.value,
-          // total_pengeluaran: provinsi_pasangan.value,
-          tunjangan: tunjangan.value,
-          // umur_pensiun: rw_pasangan.value,
-          // updated_by: provinsi_cabang.value,
-          // updated_date: tanggal_exp_ktp_pasangan.value,
+          jumlah_karyawan: this.formPekerjaanPasangan.get('jumlah_karyawan')?.value,
+          tipe_perusahaan: this.formPekerjaanPasangan.get('tipe_perusahaan')?.value,
+          lama_bekerja_bulan: this.formPekerjaanPasangan.get('lama_bekerja_bulan')?.value,
+          lama_bekerja_tahun: this.formPekerjaanPasangan.get('lama_bekerja_tahun')?.value,
+          status_kepegawaian: this.formPekerjaanPasangan.get('status_kepegawaian')?.value,
+          pendapatan: this.formPekerjaanPasangan.get('pendapatan')?.value,
+          tunjangan: this.formPekerjaanPasangan.get('tunjangan')?.value,
+          pendapatan_lain: this.formPekerjaanPasangan.get('pendapatan_lain')?.value,
+          total_pendapatan: totalPendapatan,
+          no_siup: this.formPekerjaanPasangan.get('no_siup')?.value,
+          umur_pensiun: this.kirimUmurPensi,
+          jarak_lokasi_usaha: this.formPekerjaanPasangan.get('jarak_lokasi_usaha')?.value,
         })
 
         .subscribe({
           next: bawaan => {
-            //           this.contohdata = bawaan.result.app_no_de;
-            // this.databawaan = bawaan.result.app_no_de;
-            // alert('MASUKAJAHSUSAH');
+            alert('Berhasil Menyimpan Data');
+            // setTimeout(() => {
             this.router.navigate(['/data-entry/collateral'], {
               queryParams: {
-                app_no_de: this.app_no_de,
                 curef: this.curef,
-                // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
+                statusPerkawinan: this.statusPerkawinan,
+                app_no_de: this.app_no_de,
               },
             });
           },
         });
     }
+  }
 
-    // this.router.navigate(['/data-entry/collateral'], {
-    //   queryParams: {
-    //     app_no_de: this.app_no_de,
-    //     curef: this.curef,
-    //     // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
-    //   },
-    // });
+  carimenggunakankodepos(kodepost: any, req: any) {
+    // alert(kodepost)
+    this.getkodepostnya(kodepost, req).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kodepost', res);
+
+        // this.dawakodepost = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+
+        this.untukprovinsijobpasangan = res.body?.result.provKec.nm_prov;
+
+        this.untukkobkotajobpasangan = res.body?.result.provKec.nm_kota;
+
+        this.untukkecamatanjobpasangan = res.body?.result.provKec.nm_kec;
+
+        this.untukkelurahanjobpasangan = res.body?.result.provKec.nm_kel;
+
+        // $('#provinsi_cabang').attr('selected', 'selected').val(this.provinsi_cabangkode + '|' +    this.provinsi_cabang);
+        $('#provinsi_cabang_swasta option:first').text(this.untukprovinsijobpasangan);
+
+        // $('#kabkota').append(this.kabkota_cabang);
+
+        $('#kabkota_cabang_swasta option:first').text(this.untukkobkotajobpasangan);
+        // $('#kabkota_cabang').attr('selected', 'selected').val(this.kabkota_cabangkode + '|' +    this.kabkota_cabang);
+
+        // $('#kecamatan').attr('selected', 'selected').val(this.kecamatankode + '|' +    this.kecamatan);
+        $('#kecamatan_swasta option:first').text(this.untukkecamatanjobpasangan);
+
+        // $('#kelurahan').attr('selected', 'selected').val(this.kelurahankode + '|' +    this.kelurahan);
+        $('#kelurahan_swasta option:first').text(this.untukkelurahanjobpasangan);
+        // alert(this.provinsi_cabang)
+      },
+    });
+
+    console.log(req);
+  }
+
+  getkodepostnya(kodepst: any, req: any) {
+    const options = createRequestOption(req);
+    const httpOptions = {
+      // 'Authorization': token,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.postId}`,
+    };
+    // const kodepotongan = kodekota.split('|');
+
+    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvKecByKdPos/' + kodepst, {
+      headers: httpOptions,
+      params: options,
+      observe: 'response',
+    });
+  }
+
+  // Only Numbers
+  keyPressNumbers(event?: any): void {
+    const charCode = event.which ? event.which : event.keyCode;
+    // charCode.toLocaleString('id-ID',{style: 'currency', currency:'IDR'})
+    // Only Numbers 0-9
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+      return;
+    }
   }
 }

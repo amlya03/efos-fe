@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CallReportNonComponent } from './call-report-non.component';
+import { KomiteComponent } from './komite.component';
 
-describe('CallReportNonComponent', () => {
-  let component: CallReportNonComponent;
-  let fixture: ComponentFixture<CallReportNonComponent>;
+describe('KomiteComponent', () => {
+  let component: KomiteComponent;
+  let fixture: ComponentFixture<KomiteComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CallReportNonComponent],
+      declarations: [KomiteComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CallReportNonComponent);
+    fixture = TestBed.createComponent(KomiteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

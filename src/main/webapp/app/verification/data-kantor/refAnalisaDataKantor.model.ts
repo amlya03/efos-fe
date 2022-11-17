@@ -50,4 +50,5 @@ export class refAnalisaDataKantor {
   updated_date?: string;
   created_by?: string;
   updated_by?: string;
+  waktu_verifikasi?: String
 }

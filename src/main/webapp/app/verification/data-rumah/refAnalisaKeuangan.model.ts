@@ -1,8 +1,8 @@
 export class refAnalisaKeuangan {
   id?: number;
-  angsuran_kewajiban_kantor?: Number;
-  angsuran_kewajiban_kantor_pasangan?: Number;
-  total_angsuran_kewajiban_kantor?: Number;
+  angsuran_kewajiban_kantor?: number;
+  angsuran_kewajiban_kantor_pasangan?: number;
+  total_angsuran_kewajiban_kantor?: number;
   app_no_de?: number;
   nama_perusahaan?: string;
   alamat_perusahaan?: string;

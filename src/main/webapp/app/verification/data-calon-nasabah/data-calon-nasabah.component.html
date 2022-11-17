@@ -9,42 +9,35 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nomor Customer</label>
         <div class="col-sm-8">
-          <input value="{{ this.dataEntry.curef }}" class="form-control" type="text" id="no_customer" name="no_customer" readonly />
+          <input value="{{this.dataEntry.curef}}" class="form-control" type="text" id="no_customer" name="no_customer" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nomor Aplikasi</label>
         <div class="col-sm-8">
-          <input
-            value="{{ this.dataEntry.app_no_de }}"
-            class="form-control"
-            type="text"
-            id="nomor_aplikasi"
-            name="nomor_aplikasi"
-            readonly
-          />
+          <input value="{{this.dataEntry.app_no_de}}" class="form-control" type="text" id="nomor_aplikasi" name="nomor_aplikasi" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama</label>
         <div class="col-sm-8">
-          <input value="{{ this.dataEntry.nama }}" class="form-control" type="text" id="nama" name="nama" readonly />
+          <input value="{{this.dataEntry.nama}}" class="form-control" type="text" id="nama" name="nama" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nomor HP</label>
         <div class="col-sm-8">
-          <input value="{{ this.dataEntry.no_handphone }}" class="form-control" type="text" id="nomor_hp" name="nomor_hp" readonly />
+          <input value="{{this.dataEntry.no_handphone}}" class="form-control" type="text" id="nomor_hp" name="nomor_hp" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
         <div class="col-sm-8">
-          <input value="{{ this.dataEntry.jenis_kelamin }}" name="jenis_kelamin" id="jenis_kelamin" class="form-control" readonly />
+          <input value="{{this.dataEntry.jenis_kelamin}}" name="jenis_kelamin" id="jenis_kelamin" class="form-control" readonly />
         </div>
       </div>
     </div>
@@ -57,17 +50,13 @@
             class="form-control"
             type="date"
             formControlName="tanggal_verifikasi"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.tanggal_verification.errors }"
             id="tanggal_verification"
             name="tanggal_verification"
             onchange="submitBday()"
+            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.tanggal_verification.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.tanggal_verification.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
-      <!-- formControlName="tanggal_verification" -->
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Pemberi Keterangan</label>
@@ -76,15 +65,12 @@
             class="form-control"
             type="text"
             formControlName="pemberi_keterangan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.pemberi_keterangan.errors }"
             id="pemberi_keterangan"
             name="pemberi_keterangan"
             onchange="submitBday()"
             maxlength="200"
+            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.pemberi_keterangan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.pemberi_keterangan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
@@ -92,22 +78,17 @@
         <label class="col-sm-4 col-form-label">Hubungan dengan pemberi Keterangan</label>
         <div class="col-sm-8">
           <select
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             name="hubungan_dengen_pemberi_keterangan"
             id="hubungan_dengen_pemberi_keterangan"
             class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.hubungan_dengen_pemberi_keterangan.errors }"
+            formControlName="hubungan_pemberi_keterangan"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
           >
             <option value="">Pilih Data</option>
-            <option *ngFor="let refHubunganEmergency of refHubunganEmergency" value="{{ refHubunganEmergency.deskripsi }}">
+            <option *ngFor="let refHubunganEmergency of refHubunganEmergency" value="{{refHubunganEmergency.deskripsi}}">
               {{ refHubunganEmergency.deskripsi }}
             </option>
           </select>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.hubungan_dengen_pemberi_keterangan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.hubungan_dengen_pemberi_keterangan.errors.required">
-              Harap Pilih Data
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -133,7 +114,7 @@
             id="alamat_rumah"
             cols="49"
             rows="2"
-            value="{{ this.dataEntry.alamat_ktp }}"
+            value="{{this.dataEntry.alamat_ktp}}"
             readonly
           ></textarea>
         </div>
@@ -142,32 +123,25 @@
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_alamat_rumah_ya"
         formControlName="verif_alamat"
         value="1"
+        [disabled]="this.verifikatorMelihat"
       />
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_alamat_rumah_tidak"
         formControlName="verif_alamat"
         value="0"
+        [disabled]="this.verifikatorMelihat"
       />
-      <!--formControlName="verif_alamat" -->
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <textarea
-          class="form-control"
-          [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
-          name="note_alamat_rumah"
-          id="note_alamat_rumah"
-          formControlName="note_verif_alamat"
-        ></textarea>
+        <textarea class="form-control" [readonly]="this.untukSessionRole == 'VER_PRESCR'" name="note_alamat_rumah" id="note_alamat_rumah" formControlName="note_verif_alamat"></textarea>
       </div>
     </div>
   </div>
@@ -184,7 +158,7 @@
             id="rt"
             name="rt"
             maxlength="3"
-            value="{{ this.dataEntry.rt }}"
+            value="{{this.dataEntry.rt}}"
             readonly
           />
         </div>
@@ -197,7 +171,7 @@
             id="rw"
             name="rw"
             maxlength="3"
-            value="{{ this.dataEntry.rw }}"
+            value="{{this.dataEntry.rw}}"
             maxlength="3"
             readonly
           />
@@ -208,7 +182,7 @@
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_rt_rw_ya"
         formControlName="verif_rt_rw"
@@ -216,7 +190,7 @@
       /><!-- -->
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_rt_rw_tidak"
         formControlName="verif_rt_rw"
@@ -227,7 +201,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           name="note_rt_rw"
           id="note_rt_rw"
           class="form-control"
@@ -242,7 +216,12 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Provinsi</label>
         <div class="col-sm-8">
-          <input name="provinsi" id="provinsi" class="form-control" value="{{ this.dataEntry.provinsi }}" readonly />
+          <input
+            name="provinsi"
+            id="provinsi"
+            class="form-control"
+            value="{{this.dataEntry.provinsi}}"
+            readonly />
           <!-- <option *ngFor="let getProvinsi of getProvinsi" [ngValue]="getProvinsi.kdWilayah">
               {{ getProvinsi.namaWilayah }}
             </option> -->
@@ -253,7 +232,7 @@
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_provinsi_ya"
         formControlName="verif_provinsi"
@@ -262,7 +241,7 @@
       <!--- formControlName="verif_provinsi" -->
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_provinsi_tidak"
         formControlName="verif_provinsi"
@@ -273,11 +252,11 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
           name="note_provinsi"
           id="note_provinsi"
           class="form-control"
           formControlName="note_verif_provinsi"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
         />
       </div>
     </div>
@@ -288,7 +267,12 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kota</label>
         <div class="col-sm-8">
-          <input name="kota" id="kota" class="form-control" value="{{ this.dataEntry.kabkota }}" readonly />
+          <input
+            name="kota"
+            id="kota"
+            class="form-control"
+            value="{{this.dataEntry.kabkota}}"
+            readonly />
           <!-- <option *ngFor="let getKota of getKota" value="{{ getKota.kdWilayah }}">
               {{ getKota.namaWilayah }}
             </option>
@@ -299,7 +283,7 @@
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_kota_ya"
         value="1"
@@ -309,7 +293,7 @@
       <!--- formControlName="verif_kabkota" -->
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_kota_tidak"
         value="0"
@@ -321,7 +305,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           name="note_kota"
           id="note_kota"
           class="form-control"
@@ -336,7 +320,12 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kecamatan</label>
         <div class="col-sm-8">
-          <input name="kecamatan" id="kecamatan" class="form-control" value="{{ this.dataEntry.kecamatan }}" readonly />
+          <input
+            name="kecamatan"
+            id="kecamatan"
+            class="form-control"
+            value="{{this.dataEntry.kecamatan}}"
+            readonly />
           <!-- <option *ngFor="let getKecamatan of getKecamatan" value="{{ getKecamatan.kdWilayah }}">
               {{ getKecamatan.namaWilayah }}
             </option>
@@ -347,7 +336,7 @@
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_kecamatan_ya"
         value="1"
@@ -357,7 +346,7 @@
       <!---- formControlName="verif_kecamatan" -->
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_kecamatan_tidak"
         value="0"
@@ -369,7 +358,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           name="kelurahan"
           id="kelurahan"
           class="form-control"
@@ -384,7 +373,12 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kelurahan</label>
         <div class="col-sm-8">
-          <input name="kelurahan" id="kelurahan" class="form-control" value="{{ this.dataEntry.kelurahan }}" readonly />
+          <input
+            name="kelurahan"
+            id="kelurahan"
+            class="form-control"
+            value="{{this.dataEntry.kelurahan}}"
+            readonly />
           <!-- <option *ngFor="let getKelurahan of getKelurahan" value="{{ getKelurahan.kdPos }}">
               {{ getKelurahan.namaWilayah }}
             </option>
@@ -395,7 +389,7 @@
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_kelurahan_ya"
         value="1"
@@ -403,7 +397,7 @@
       />
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_kelurahan_tidak"
         value="0"
@@ -414,7 +408,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           id="note_kelurahan"
           name="note_kelurahan"
           type="text"
@@ -436,7 +430,7 @@
               class="form-control"
               id="kode_pos"
               name="kode_pos"
-              value="{{ this.dataEntry.kode_pos }}"
+              value="{{this.dataEntry.kode_pos}}"
               (keypress)="keyPressNumbers($event)"
               maxlength="8"
               readonly
@@ -451,7 +445,7 @@
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_kodepos_ya"
         value="1"
@@ -459,7 +453,7 @@
       />
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_kodepos_tidak"
         value="0"
@@ -471,7 +465,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           class="form-control"
           type="text"
           id="note_kodepos"
@@ -488,13 +482,13 @@
         <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
         <div class="col-sm-8">
           <input
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            readonly
             class="form-control"
             type="date"
             id="tanggal_lahir"
             name="tanggal_lahir"
             onchange="submitBday()"
-            value="{{ this.dataEntry.tanggal_lahir }}"
+            value="{{this.dataEntry.tanggal_lahir}}"
           />
         </div>
       </div>
@@ -502,7 +496,7 @@
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_tanggal_lahir_ya"
         value="1"
@@ -510,7 +504,7 @@
       />
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_tanggal_lahir_tidak"
         value="0"
@@ -522,7 +516,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           name="note_verif_tanggal_lahir"
           id="note_verif_tanggal_lahir"
           class="form-control"
@@ -537,7 +531,12 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Pendidikan</label>
         <div class="col-sm-8">
-          <input name="pedidikan" id="pedidikan" class="form-control" value="{{ this.dataEntry.pendidikan }}" readonly />
+          <input
+            name="pedidikan"
+            id="pedidikan"
+            class="form-control"
+            value="{{this.dataEntry.pendidikan}}"
+            readonly />
           <!-- <option value="">Pilih Data</option>
             <option value="SMA">SMA</option>
             <option value="D3">D3</option>
@@ -551,7 +550,7 @@
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_pendidikan_ya"
         value="1"
@@ -560,7 +559,7 @@
       <!--- formControlName="verif_pendidikan" -->
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_pendidikan_tidak"
         value="0"
@@ -571,7 +570,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           name="note_pendidikan"
           id="note_pendidikan"
           class="form-control"
@@ -591,7 +590,7 @@
             id="status_perkawinan"
             #status_perkawinan
             class="form-control"
-            value="{{ this.dataEntry.status_perkawinan }}"
+            value="{{this.dataEntry.status_perkawinan}}"
             readonly
           />
           <!-- <option value="">Pilih Data</option>
@@ -605,7 +604,7 @@
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_status_menikah_ya"
         value="1"
@@ -613,7 +612,7 @@
       />
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_status_menikah_tidak"
         value="0"
@@ -625,7 +624,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           type="text"
           class="form-control"
           id="note_status_menikah"
@@ -648,19 +647,15 @@
             id="nama_ibu_kandung"
             name="nama_ibu_kandung"
             placeholder=""
-            value="{{ this.dataEntry.nama_ibu_kandung }}"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.nama_ibu_kandung.errors }"
+            value="{{this.dataEntry.nama_ibu_kandung}}"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_ibu_kandung.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_ibu_kandung.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_nama_ibu_kandung_ya"
         formControlName="verif_ibu_kandung"
@@ -668,7 +663,7 @@
       />
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_nama_ibu_kandung_tidak"
         formControlName="verif_ibu_kandung"
@@ -680,7 +675,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           type="text"
           class="form-control"
           id="note_verif_ibu_kandung"
@@ -690,7 +685,7 @@
       </div>
     </div>
   </div>
-  <br />
+  <!-- <br />
   <div class="row form-material">
     <div class="col">
       <div class="form-group row">
@@ -703,25 +698,24 @@
             id="jumlah_tanggunan"
             name="jumlah_tanggunan"
             placeholder=""
+            formControlName="jumlah_tanggunan"
             readonly
           />
         </div>
       </div>
     </div>
-    <!-- formControlName="jumlah_tanggunan" -->
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_jumlah_tanggunan_ya"
         formControlName="verif_jumlah_tanggungan"
         value="1"
       />
-      <!--verif_jumlah_tanggungan-->
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         type="radio"
         id="verifikasi_jumlah_tanggunan_tidak"
         formControlName="verif_jumlah_tanggungan"
@@ -732,7 +726,7 @@
     <div class="col">
       <div class="form-group row">
         <input
-          [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
           type="text"
           class="form-control"
           id="note_jumlah_tanggunan"
@@ -741,7 +735,7 @@
         />
       </div>
     </div>
-  </div>
+  </div> -->
   <br />
   <div [ngSwitch]="status_perkawinan.value">
     <div *ngSwitchCase="'Menikah'">
@@ -751,25 +745,21 @@
             <label class="col-sm-4 col-form-label">Nama Pasangan</label>
             <div class="col-sm-8">
               <input
-                [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+                readonly
                 type="text"
                 class="form-control"
                 id="nama_pasangan"
                 name="nama_pasangan"
                 placeholder=""
-                value="{{ this.dataEntry.nama_pasangan }}"
-                [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.nama_pasangan.errors }"
+                value="{{this.dataEntry.nama_pasangan}}"
               />
-              <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_pasangan.errors" class="text-danger">
-                <div *ngIf="submitted && dataCalonNasabahForm.controls.nama_pasangan.errors.required">Tidak Boleh Kosong</div>
-              </div>
             </div>
           </div>
         </div>
         <div class="col" style="text-align: center">
           <label>Sesuai</label>
           <input
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="radio"
             id="verifikasi_nama_pasangan_ya"
             formControlName="verif_nama_pasangan"
@@ -778,7 +768,7 @@
           <!--verif_nama_pasangan-->
           &nbsp;&nbsp;&nbsp;&nbsp;
           <input
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="radio"
             id="verifikasi_nama_pasangan_tidak"
             formControlName="verif_nama_pasangan"
@@ -789,7 +779,7 @@
         <div class="col">
           <div class="form-group row">
             <input
-              [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+              [readonly]="this.untukSessionRole == 'VER_PRESCR'"
               type="text"
               class="form-control"
               id="note_nama_pasangan"
@@ -806,12 +796,11 @@
             <label class="col-sm-4 col-form-label">Pekerjaan Pasangan</label>
             <div class="col-sm-8">
               <input
-                [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
                 type="text"
                 class="form-control"
                 id="pekerjaan_pasangan"
                 name="pekerjaan_pasangan"
-                formControlName="pekerjaan_pasangan"
+                value="{{this.dataEntry.jenis_pekerjaan_pasangan_desc}}"
                 readonly
               />
             </div>
@@ -820,7 +809,7 @@
         <div class="col" style="text-align: center">
           <label>Sesuai</label>
           <input
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="radio"
             id="verifikasi_pekerjaan_pasangan_ya"
             formControlName="verif_pekerjaan_pasangan"
@@ -829,7 +818,7 @@
           <!---verif_pekerjaan_pasangan-->
           &nbsp;&nbsp;&nbsp;&nbsp;
           <input
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="radio"
             id="verifikasi_pekerjaan_pasangan_tidak"
             formControlName="verif_pekerjaan_pasangan"
@@ -840,7 +829,7 @@
         <div class="col">
           <div class="form-group row">
             <input
-              [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+              [readonly]="this.untukSessionRole == 'VER_PRESCR'"
               type="text"
               class="form-control"
               id="note_pekerjaan_pasangan"
@@ -864,7 +853,7 @@
             id="fasilitas_pembiayaan_ke"
             name="fasilitas_pembiayaan_ke"
             placeholder=""
-            value="{{ this.dataEntry.fasilitas_ke }}"
+            value="{{this.dataEntry.fasilitas_ke}}"
             readonly
           />
         </div>
@@ -877,20 +866,16 @@
       <div class="form-group row">
         <!-- <div class="col-sm-8"> -->
         <select
-          [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
           name="karakter_calon_nasabah "
           id="karakter_calon_nasabah "
           class="form-control"
           formControlName="karakter_calon_nasabah"
-          [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.karakter_calon_nasabah.errors }"
         >
           <option value="">Pilih Data</option>
           <option value="Baik">Baik</option>
           <option value="Tidak Baik">Tidak Baik</option>
         </select>
-        <div *ngIf="submitted && dataCalonNasabahForm.controls.karakter_calon_nasabah.errors" class="text-danger">
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.karakter_calon_nasabah.errors.required">Tidak Boleh Kosong</div>
-        </div>
         <!-- </div> -->
       </div>
     </div>
@@ -907,21 +892,17 @@
         <label class="col-sm-4 col-form-label">Status Rumah</label>
         <div class="col-sm-8">
           <select
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             name="status_rumah"
             id="status_rumah"
             class="form-control"
             formControlName="status_rumah"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.status_rumah.errors }"
           >
             <option value="">Pilih Data</option>
             <option [ngValue]="refStatusRumah.description" *ngFor="let refStatusRumah of refStatusRumah">
               {{ refStatusRumah.description }}
             </option>
           </select>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.status_rumah.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.status_rumah.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
@@ -976,7 +957,7 @@
         <label class="col-sm-4 col-form-label">Rumah Dihuni</label>
         <div class="col-sm-8">
           <select
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             name="rumah_dihuni"
             id="rumah_dihuni"
             class="form-control"
@@ -992,33 +973,25 @@
         <label class="col-sm-4 col-form-label">Lama Menetap</label>
         <div class="col">
           <input
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             type="text"
             class="form-control"
             id="lama_menetap_tahun"
             name="lama_menetap_tahun"
             formControlName="lama_menetap_tahun"
             maxlength="2"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.lama_menetap_tahun.errors }"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.lama_menetap_tahun.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.lama_menetap_tahun.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
         <div class="col">Tahun</div>
         <div class="col">
           <input
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             type="text"
             class="form-control"
             id="lama_menetap_bulan"
             name="lama_menetap_bulan"
             formControlName="lama_menetap_bulan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.lama_menetap_bulan.errors }"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.lama_menetap_bulan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.lama_menetap_bulan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
         <div class="col">Bulan</div>
       </div>
@@ -1026,9 +999,9 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jenis Bangunan</label>
         <div class="col-sm-8">
-          <select [disabled]="this.untukSessionRole == 'VER_PRESCR'" name="jenis_bangunan" id="jenis_bangunan" class="form-control">
+          <select [disabled]="this.untukSessionRole == 'VER_PRESCR'" name="jenis_bangunan" id="jenis_bangunan" class="form-control" formControlName="jenis_bangunan">
             <option value="">Pilih Data</option>
-            <option [ngValue]="refListTipeProperti.properti_deskripsi" *ngFor="let refListTipeProperti of refListTipeProperti">
+            <option *ngFor="let refListTipeProperti of refListTipeProperti" value="{{refListTipeProperti.properti_deskripsi}}">
               {{ refListTipeProperti.properti_deskripsi }}
             </option>
           </select>
@@ -1039,7 +1012,7 @@
         <label class="col-sm-4 col-form-label">Lokasi Perumahan</label>
         <div class="col-sm-8">
           <select
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             name="lokasi_perumahan"
             id="lokasi_perumahan"
             class="form-control"
@@ -1057,7 +1030,7 @@
         <label class="col-sm-4 col-form-label">fasilitas Listrik</label>
         <div class="col-sm-8">
           <select
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             name="fasilitas_listrik"
             id="fasilitas_listrik"
             class="form-control"
@@ -1121,12 +1094,11 @@
         <label class="col-sm-4 col-form-label">Kondisi Lingkungan</label>
         <div class="col-sm-8">
           <select
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             name="kondisi_lingkungan"
             id="kondisi_lingkungan"
             class="form-control"
             formControlName="kondisi_lingkungan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.kondisi_lingkungan.errors }"
           >
             <option value="">Pilih Data</option>
             <option *ngFor="let listkondisilingkungan of listkondisilingkungan" value="{{ listkondisilingkungan.kondisi_lingkungan }}">
@@ -1136,9 +1108,6 @@
             <option value="Sedang">Sedang</option>
             <option value="Kurang Baik">Kurang Baik</option> -->
           </select>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.kondisi_lingkungan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.kondisi_lingkungan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
@@ -1146,55 +1115,17 @@
         <label class="col-sm-4 col-form-label">Akses Jalan Ke Rumah Tingal</label>
         <div class="col-sm-8">
           <select
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             name="akses_jalan_ke_rumah_tinggal"
             id="akses_jalan_ke_rumah_tinggal"
             class="form-control"
             formControlName="akses_jalan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.akses_jalan.errors }"
           >
             <option value="">Pilih Data</option>
             <option *ngFor="let listaksesrumah of listaksesrumah" value="{{ listaksesrumah.akses_rumah }}">
               {{ listaksesrumah.akses_rumah }}
             </option>
           </select>
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.akses_jalan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.akses_jalan.errors.required">Tidak Boleh Kosong</div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Luas Tanah</label>
-        <div class="col-sm-8">
-          <input
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-            (keypress)="keyPressNumbers($event)"
-            type="text"
-            class="form-control"
-            id="luas_tanah"
-            name="luas_tanah"
-            [value]="this.listagunan.luas_tanah"
-            placeholder=""
-          />
-          <label>m2</label>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Luas Bangunan</label>
-        <div class="col-sm-8">
-          <input
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-            (keypress)="keyPressNumbers($event)"
-            type="text"
-            class="form-control"
-            id="luas_bangunan"
-            name="luas_bangunan"
-            [value]="this.listagunan.luas_bangunan"
-            placeholder=""
-          />
-          <label>m2</label>
         </div>
       </div>
       <br />
@@ -1202,7 +1133,7 @@
         <label class="col-sm-4 col-form-label">Garasi</label>
         <div class="col-sm-8">
           <input
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="radio"
             id="garasi_ya"
             formControlName="garasi"
@@ -1212,7 +1143,7 @@
           <label class="custom-control-label">Ada</label>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <input
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="radio"
             id="garasi_tidak"
             formControlName="garasi"
@@ -1227,7 +1158,7 @@
         <label class="col-sm-4 col-form-label">Car Port</label>
         <div class="col-sm-8">
           <input
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="radio"
             id="carport_ya"
             formControlName="carport"
@@ -1237,7 +1168,7 @@
           <label class="custom-control-label">Ada</label>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <input
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="radio"
             id="carport_tidak"
             formControlName="carport"
@@ -1252,7 +1183,7 @@
         <label class="col-sm-4 col-form-label">Kendaraan</label>
         <div class="col-sm-8">
           <input
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="radio"
             id="kendaraan_ya"
             formControlName="kendaraan"
@@ -1262,7 +1193,7 @@
           <label class="custom-control-label">Ada</label>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <input
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="radio"
             id="kendaraan_tidak"
             formControlName="kendaraan"
@@ -1277,7 +1208,7 @@
         <label class="col-sm-4 col-form-label">Jumlah Kendaraan</label>
         <div class="col-sm-8">
           <input
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             type="text"
             (keypress)="keyPressNumbers($event)"
             class="form-control"
@@ -1285,11 +1216,7 @@
             name="jumlah_kendaraan"
             placeholder=""
             formControlName="jumlah_kendaraan"
-            [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.jumlah_kendaraan.errors }"
           />
-          <div *ngIf="submitted && dataCalonNasabahForm.controls.jumlah_kendaraan.errors" class="text-danger">
-            <div *ngIf="submitted && dataCalonNasabahForm.controls.jumlah_kendaraan.errors.required">Tidak Boleh Kosong</div>
-          </div>
         </div>
       </div>
       <br />
@@ -1298,7 +1225,7 @@
         <div class="col-sm-8">
           <label class="custom-control-label">Baik</label>
           <input
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="radio"
             id="kondisi_kendaraan_ya"
             class="custom-control-input"
@@ -1308,7 +1235,7 @@
           <!--formControlName="kondisi_kendaraan"-->
           &nbsp;&nbsp;&nbsp;&nbsp;
           <input
-            [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="radio"
             id="kondisi_kendaraan_tidak"
             formControlName="kondisi_kendaraan"
@@ -1321,30 +1248,25 @@
     </div>
   </div>
   <p></p>
-  <div class="row form-material">
+  <!-- <div class="row form-material">
     <label class="col-sm-3 col-form-label">Kesimpulan Hasil Investigasi</label>
     <div class="col-sm-9">
       <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
       <ngx-editor
-        [attr.disabled]="this.untukSessionRole == 'VER_PRESCR'"
+        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
         [editor]="editor"
+        [(ngModel)]="html"
+        [disabled]="false"
         [placeholder]="'Tulis Disini. . .'"
-        [ngClass]="{ 'is-invalid': submitted && dataCalonNasabahForm.controls.kesimpulan_hasil_investigasi.errors }"
+        formControlName="kesimpulan_hasil_investigasi"
       >
       </ngx-editor>
-      <!-- [(ngModel)]="html"
-      [disabled]="false" -->
-      <div *ngIf="submitted && dataCalonNasabahForm.controls.kesimpulan_hasil_investigasi.errors" class="text-danger">
-        <div *ngIf="submitted && dataCalonNasabahForm.controls.kesimpulan_hasil_investigasi.errors.required">Tidak Boleh Kosong</div>
-      </div>
     </div>
-  </div>
-  <!-- formControlName="kesimpulan_hasil_investigasi" -->
+  </div> -->
   <p></p>
   <div class="row">
     <div class="col" style="text-align: center">
-      <button [hidden]="this.untukSessionRole == 'VER_PRESCR'" class="btn btn-info">Simpan Data</button>
-      <button (click)="goto()" [hidden]="this.untukSessionRole == 'APPRAISAL1'" type="button" class="btn btn-info">selanjutnya</button>
+      <button class="btn btn-info">Simpan Data</button>
     </div>
   </div>
 </form>

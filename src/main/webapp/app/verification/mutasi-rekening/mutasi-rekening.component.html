@@ -1,38 +1,42 @@
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Daftar Calon Nasabah</h3>
 </div>
-<form
-  [formGroup]="mutasiForm"
-  (ngSubmit)="submitForm(nama_bank.value, no_rekening.value, tahun.value, bulan.value, debet.value, kredit.value, saldo.value)"
->
+<form [formGroup]="mutasiForm">
   <div class="row form-material">
     <!-- ////Colom ke 1\\\\\ -->
     <div class="col">
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Nasabah</label>
         <div class="col-sm-8">
-          <input readonly type="text" class="form-control" formControlName="nama" />
+          <input readonly type="text" class="form-control" value="{{ this.dataEntry.nama }}" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">No Aplikasi</label>
         <div class="col-sm-8">
-          <input readonly type="text" formControlName="app_no_de" class="form-control" id="no_aplikasi" name="no_aplikasi" />
+          <input
+            readonly
+            type="text"
+            formControlName="app_no_de"
+            class="form-control"
+            id="no_aplikasi"
+            value="{{ this.dataEntry.app_no_de }}"
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Fasilitas</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" formControlName="kode_fasilitas" />
+          <input type="text" readonly class="form-control" value="{{ this.dataEntry.kode_fasilitas_name }}" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Program</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" formControlName="program_pembiayaan" />
+          <input type="text" readonly class="form-control" value="{{ this.dataEntry.program_pembiayaan }}" />
         </div>
       </div>
     </div>
@@ -41,28 +45,28 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Product</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" formControlName="produk_pembiayaan" />
+          <input type="text" readonly class="form-control" value="{{ this.dataEntry.produk_pembiayaan }}" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Skema</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" formControlName="kode_fasilitas" />
+          <input type="text" readonly class="form-control" value="{{ this.dataEntry.skema_name }}" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tenor</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" formControlName="jangka_waktu" />
+          <input type="text" readonly class="form-control" value="{{ this.dataEntry.jangka_waktu }} Bulan" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" formControlName="nilai_pembiayaan" />
+          <input type="text" readonly class="form-control" value="{{ this.dataEntry.nilai_pembiayaan | currency: 'Rp ' }}" />
         </div>
       </div>
     </div>
@@ -266,8 +270,15 @@
   <p></p>
   <div class="row">
     <div class="col" style="text-align: center">
-      <button [hidden]="this.untukSessionRole == 'VER_PRESCR'" type="submit" class="btn btn-info">Simpan Data</button>
-      <button (click)="goto()" type="button" class="btn btn-info">selanjutnya</button>
+      <button
+        type="submit"
+        [hidden]="this.untukSessionRole == 'VER_PRESCR'"
+        class="btn btn-info"
+        (click)="submitForm(nama_bank.value, no_rekening.value, tahun.value, bulan.value, debet.value, kredit.value, saldo.value)"
+      >
+        Simpan Data
+      </button>
+      <button type="submit" class="btn btn-info" (click)="goto()">selanjutnya</button>
     </div>
   </div>
 </form>

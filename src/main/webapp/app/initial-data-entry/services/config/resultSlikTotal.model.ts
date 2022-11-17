@@ -1,8 +1,8 @@
 export class resultSlikTotal {
-  total_plafon_nasabah?: Number;
-  total_plafon_pasangan?: Number;
-  total_outstanding_nasabah?: Number;
-  total_outstanding_pasangan?: Number;
-  total_angsuran_nasabah?: Number;
-  total_angsuran_pasangan?: Number;
+  total_plafon_nasabah?: number;
+  total_plafon_pasangan?: number;
+  total_outstanding_nasabah?: number;
+  total_outstanding_pasangan?: number;
+  total_angsuran_nasabah?: number;
+  total_angsuran_pasangan?: number;
 }

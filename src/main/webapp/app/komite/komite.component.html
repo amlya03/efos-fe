@@ -1,0 +1,104 @@
+<div class="row form-material">
+  <div class="col-md-6">
+    <label class="m-t-5">No Aplikasi</label>
+    <input #noAplikasi type="text" class="form-control" placeholder="Masukan Nomor Aplikasi" />
+    <p></p>
+    <label class="m-t-5">Kategori Pekerjaan</label>
+    <div class="form-group">
+      <select #kategori class="form-control">
+        <option selected value="">Pilih Pencarian Berdasarkan Kategori Pekerjaan</option>
+        <option value="true">Fix Income</option>
+        <option value="false">Non Fix Income</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label class="m-t-5">Nama Nasabah</label>
+    <input #namaNasabah type="text" class="form-control" placeholder="Masukan Nama Nasabah" aria-controls="example" />
+    <p></p>
+    <label class="m-t-5">Fasilitas</label>
+    <div class="form-group">
+      <select #fasilitas class="form-control">
+        <option selected value="">Pilih Pencarian Berdasarkan Fasilitas</option>
+        <option value="PPR">PPR</option>
+        <option value="PTA">PTA</option>
+        <option value="KTM">KTM</option>
+      </select>
+    </div>
+  </div>
+  <div class="col" style="text-align: center">
+    <br />
+    <button (click)="cariButton(fasilitas.value, kategori.value, namaNasabah.value, noAplikasi.value)" class="btn btn-dark">
+      Cari Data
+    </button>
+    <button
+      class="btn btn-info"
+      (click)="noAplikasi.value = ''; namaNasabah.value = ''; fasilitas.value = ''; kategori.value = ''; clearInput()"
+    >
+      Clear Data
+    </button>
+  </div>
+  <p></p>
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Daftar Aplikasi Data Verification Assigment on Process</h3>
+  </div>
+  <p></p>
+  <div>
+    <button class="btn btn-info" style="float: right" (click)="checkuncheckall()">Pilih Semua</button>
+  </div>
+  <p></p>
+  <table id="dataTables-example" class="table table-striped table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+    <thead>
+      <tr class="table-dark">
+        <th style="text-align: center">No</th>
+        <th style="text-align: center">No Aplikasi</th>
+        <th style="text-align: center">Nama Pemohon</th>
+        <th style="text-align: center">Program</th>
+        <th style="text-align: center">Tipe Pekerjaan</th>
+        <th hidden></th>
+        <th style="text-align: center">Verification</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let daWa of daWa; index as i">
+        <td style="text-align: center">{{ i + 1 }}</td>
+        <td style="text-align: center">{{ daWa.app_no_de }}</td>
+        <td style="text-align: center">{{ daWa.nama }}</td>
+        <td style="text-align: center">{{ daWa.program_pembiayaan }}</td>
+        <td style="text-align: center">{{ daWa.kategori_pekerjaan }}</td>
+        <td hidden>{{ daWa.kategori_pekerjaan === 'Fix Income' }}</td>
+        <td style="text-align: center">{{ daWa.status_aplikasi_desc }}</td>
+        <td style="text-align: center">
+          <input
+            id="checkDaWa{{ i + 1 }}"
+            (change)="getProoduct($event, daWa.app_no_de, daWa.status_aplikasi)"
+            type="checkbox"
+            [checked]="isChecked"
+          />
+        </td>
+        <td style="text-align: center">
+          <button (click)="viewdataentry(daWa.app_no_de)" type="button" class="btn btn-outline-secondary">
+            <fa-icon icon="ellipsis"></fa-icon><br />Detail
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p></p>
+  <div class="input-group" style="justify-content: center">
+    <strong>Assigment to :</strong> &nbsp;
+    <select class="custom-select" [(ngModel)]="kirimAssign">
+      <option>Pilih Data</option>
+      <option *ngFor="let daWaAprisal of daWaAprisal">{{ daWaAprisal }}</option>
+    </select>
+    <div class="input-group-append">
+      <button type="button" (click)="postAssign()" class="btn btn-info">Assign</button>
+    </div>
+  </div>
+  <!-- <button (click)="simpleAlert()">Simple Alert</button>
+  <button (click)="alertWithSuccess()">Alert with Success</button>
+  <button (click)="confirmBox()">Confirm Box</button>
+  <button (click)="dropdownAlert()">testt</button> -->
+</div>

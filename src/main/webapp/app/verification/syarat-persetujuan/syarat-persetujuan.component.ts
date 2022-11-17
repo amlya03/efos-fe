@@ -92,30 +92,24 @@ export class SyaratPersetujuanComponent implements OnInit {
     // ambil semua data Syarat Persetujuan
     this.serviceVerificationService.getfetchSyaratPersetujuan(this.app_no_de).subscribe(data => {
       // Syarat Persetujuan
-      console.warn('contohcontoh', data.result);
       this.syaratPersetujuan = data.result.syarat;
       this.syaratPersetujuan?.forEach(element => {
-        if (element.kode_syarat == 1) {
+        if (element.kode_syarat === 1) {
           this.syaratAkad.push(element);
-        } else if (element.kode_syarat == 2) {
+        } else if (element.kode_syarat === 2) {
           this.syaratCair.push(element);
-        } else if (element.kode_syarat == 3) {
+        } else if (element.kode_syarat === 3) {
           this.syaratLainLain.push(element);
         }
       });
 
       //Cek Uji Kepatuhan
       this.cekUjiKepatuhan = data.result.cek_uji_kepatuhan;
-      // this.cekUjiKepatuhan?.forEach(element => {
-      //     console.log(element.keterangan)
-      // });
 
       //Area Of Concern
       this.areaOfConcernModel = data.result.area_of_concern;
-      // console.log("area "+ (this.areaOfConcernModel.deskripsi_area))
 
       this.dtTrigger.next(data.result.syarat);
-      // console.log(this.syaratAkad)
     });
   }
 
@@ -226,8 +220,8 @@ export class SyaratPersetujuanComponent implements OnInit {
 
     for (let i = 0; i < this.cekUjiKepatuhan.length; i++) {
       // get Radio Button Validasi
-      let kepatuhanUjiCoba = (<HTMLInputElement>document.getElementById('kepatuhan' + this.cekUjiKepatuhan[i].id)).checked;
-      if (kepatuhanUjiCoba == true) {
+      const kepatuhanUjiCoba = (<HTMLInputElement>document.getElementById('kepatuhan' + this.cekUjiKepatuhan[i].id)).checked;
+      if (kepatuhanUjiCoba === true) {
         this.kepatuhanUji = 1;
       } else {
         this.kepatuhanUji = 0;

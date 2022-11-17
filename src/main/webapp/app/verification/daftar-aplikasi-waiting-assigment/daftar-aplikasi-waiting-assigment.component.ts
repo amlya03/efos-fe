@@ -109,9 +109,8 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
   checkuncheckall() {
     for (let i = 0; i < this.getCheckDaWa.length; i++) {
       this.checklistDaWa = (<HTMLInputElement>document.getElementById('checkDaWa' + this.getCheckDaWa[i + 1])).checked;
-      alert(this.checklistDaWa);
     }
-    if (this.isChecked == true) {
+    if (this.isChecked === true) {
       this.isChecked = false;
     } else {
       this.isChecked = true;

@@ -9,6 +9,10 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   providedIn: 'root',
 })
 export class ServiceVerificationService {
+  // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
+  protected getMapis = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/getDataAppraisal?sd=');
+  // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
+
   // //////////////////////service daftar aplikasi waiting assign\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected allDataVerif = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_app_verif');
   protected listAprisal = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_appraisal');
@@ -51,6 +55,12 @@ export class ServiceVerificationService {
     'http://10.20.34.110:8805/api/v1/efos-verif/getKesimpulanVerifikasi?sd='
   );
   // ////////////////////// Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////// Get Struktur Pembiayaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected getStrukturPembiayaan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-verif/getAnalisaStrukturPembiayaan?sd='
+  );
+  // ////////////////////// Get Struktur Pembiayaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // //////////////////////////////////// URL List Syarat Persetujuan ///////////////////////////////////////////////////////////
   protected fetchSyaratPersetujuan = this.applicationConfigService.getEndpointFor(
@@ -151,58 +161,70 @@ export class ServiceVerificationService {
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////////////////// Analisa \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  fetchAnalisaKeuangan(app_no_de: any): Observable<ApiResponse> {
+  fetchAnalisaKeuangan(app_no_de: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getAnalisaKeuangan + app_no_de);
   }
   // ////////////////////////////////// Analisa \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // //////////////////////////// Slik \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  fetchSlik(app_no_de: any): Observable<ApiResponse> {
+  fetchSlik(app_no_de: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getSlik + app_no_de);
   }
   // //////////////////////////// Slik \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // //////////////////////////////////// DATA CALON NASABAH ///////////////////////////////////////////////////////////
-  fetchDataNasabah(app_no_de: any): Observable<ApiResponse> {
+  fetchDataNasabah(app_no_de: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getDataCalonNasabah + app_no_de);
   }
   // //////////////////////////////////// DATA CALON NASABAH ///////////////////////////////////////////////////////////
 
   // //////////////////////////////////// DATA KANTOR ///////////////////////////////////////////////////////////
-  fetchDataKantor(app_no_de: any): Observable<ApiResponse> {
+  fetchDataKantor(app_no_de: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getDataKantor + app_no_de);
   }
   // //////////////////////////////////// DATA KANTOR ///////////////////////////////////////////////////////////
 
   // /////////////////////LIST mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  fetchListMutasiRekening(app_no_de: any): Observable<ApiResponse> {
+  fetchListMutasiRekening(app_no_de: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.allDataMutasiRekening + app_no_de);
   }
   // //////////////////////LIST mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // /////////////////////get mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getMutasiRekening(id: any): Observable<ApiResponse> {
+  getMutasiRekening(id: number): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getMutasi + id);
   }
   // //////////////////////get mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // ///////////////////// Get Struktur Pembiayaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getFetchStrukturPembiayaan(app_no_de: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getStrukturPembiayaan + app_no_de);
+  }
+  // ////////////////////// Get Struktur Pembiayaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // ////////////////////// Syarat Persetujuan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getfetchSyaratPersetujuan(app_no_de: any): Observable<ApiResponse> {
+  getfetchSyaratPersetujuan(app_no_de: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.fetchSyaratPersetujuan + app_no_de);
   }
   // ////////////////////// Syarat Persetujuan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// get Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  fetchKesimpulan(app_no_de: any): Observable<ApiResponse> {
+  fetchKesimpulan(app_no_de: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getKesimpulan + app_no_de);
   }
   // ////////////////////// get Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// get Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  fetchAnalisaPembiayaan(app_no_de: any): Observable<ApiResponse> {
+  fetchAnalisaPembiayaan(app_no_de: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.allAnalisaPembiayaan + app_no_de);
   }
   // ////////////////////// get Kesimpulan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
+  fetchMapis(app_no_de: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getMapis + app_no_de);
+  }
+  // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
 
   // ///////////////////// REF ////////////////////////////////////////////////
   // ////////////////////// Ref Hubungan Agunan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -242,7 +264,7 @@ export class ServiceVerificationService {
   // ////////////////////// Ref Status Rumah \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// Ref SKema \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getSkema(produk: any): Observable<ApiResponse> {
+  getSkema(produk: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.refSkema + produk);
   }
   // ////////////////////// Ref SKema \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

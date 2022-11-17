@@ -1,6 +1,5 @@
 {
     "recommendations": [
-        "ms-vscode.vscode-typescript-next",
-        "Natizyskunk.sftp"
+        "ms-vscode.vscode-typescript-next"
     ]
 }

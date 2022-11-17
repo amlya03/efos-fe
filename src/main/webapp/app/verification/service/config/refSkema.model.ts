@@ -1,12 +1,12 @@
 export class refSkema {
-  id?: Number;
-  kode_produk?: String;
-  skema?: String;
-  skema_deskripsi?: String;
-  skema_master?: Number;
-  min_plafond?: Number;
-  max_plafond?: Number;
-  fasilitas?: String;
-  dp_min?: Number;
-  max_tenor?: Number;
+  id?: number;
+  kode_produk?: string;
+  skema?: string;
+  skema_deskripsi?: string;
+  skema_master?: number;
+  min_plafond?: number;
+  max_plafond?: number;
+  fasilitas?: string;
+  dp_min?: number;
+  max_tenor?: number;
 }

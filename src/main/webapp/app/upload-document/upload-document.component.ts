@@ -30,8 +30,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
-  static curef: any;
-  static this: any;
+  static curef: string | null | undefined;
+  static this: string | number | null | undefined;
 
   constructor(
     protected datEntryService: DataEntryService,

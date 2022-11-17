@@ -9,29 +9,14 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Nasabah</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
-            class="form-control"
-            id="nama"
-            name="nama"
-            readonly
-            [value]="this.dataEntry.nama"
-          />
+          <input type="text" class="form-control" id="nama" name="nama" readonly [value]="this.dataEntry.nama" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Perusahaan</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            class="form-control"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
-            id="nama_perusahaan"
-            [value]="this.dataJob.nama_perusahaan"
-            readonly
-          />
+          <input type="text" class="form-control" id="nama_perusahaan" [value]="this.dataJob.nama_perusahaan" readonly />
         </div>
       </div>
       <br />
@@ -43,7 +28,6 @@
             name="alamat_perusahaan"
             id="alamat_perusahaan"
             cols="49"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             rows="4"
             [value]="this.dataJob.alamat_perusahaan"
             readonly
@@ -55,16 +39,10 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">No Telepon Perusahaan</label>
         <div class="col-sm-8">
-          <input
-            type="number"
-            class="form-control"
-            id="no_telepon_perusahaan"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
-            name="no_telepon_perusahaan"
+          <input type="number" class="form-control" id="no_telepon_perusahaan" name="no_telepon_perusahaan" readonly />
+          <!--
             placeholder=""
-            [value]="this.dataJob.no_telepon"
-            readonly
-          />
+            [value]="this.dataJob.no_telepon" -->
         </div>
       </div>
     </div>
@@ -176,9 +154,9 @@
         <td style="text-align: center">{{ listLajangSlik.jenis_kredit_pembiayaan_ket }}</td>
         <td style="text-align: center">{{ listLajangSlik.kualitas_ket }}</td>
         <td style="text-align: center">{{ listLajangSlik.jenis_penggunaan_ket }}</td>
-        <td style="text-align: center">{{ listLajangSlik.baki_debet }}</td>
-        <td style="text-align: center">{{ listLajangSlik.plafon }}</td>
-        <td style="text-align: center">{{ listLajangSlik.angsuran }}</td>
+        <td style="text-align: center">{{ listLajangSlik.baki_debet?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
+        <td style="text-align: center">{{ listLajangSlik.plafon?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
+        <td style="text-align: center">{{ listLajangSlik.angsuran?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
         <td style="text-align: center">{{ listLajangSlik.tanggal_mulai }}</td>
         <td style="text-align: center">{{ listLajangSlik.tanggal_jatuh_tempo }}</td>
         <td style="text-align: center">{{ listLajangSlik.kondisi_ket }}</td>
@@ -187,9 +165,9 @@
     <tfoot>
       <tr>
         <th style="text-align: center" colspan="6">Total</th>
-        <th style="text-align: center">{{ this.slikTotal.total_outstanding_nasabah }}</th>
-        <th style="text-align: center">{{ this.slikTotal.total_plafon_nasabah }}</th>
-        <th style="text-align: center">{{ this.slikTotal.total_angsuran_nasabah }}</th>
+        <th style="text-align: center">{{ this.totalOutNas }}</th>
+        <th style="text-align: center">{{ this.totalPlaNas }}</th>
+        <th style="text-align: center">{{ this.totalAngNas }}</th>
       </tr>
     </tfoot>
   </table>
@@ -204,61 +182,69 @@
   <p></p>
   <button class="btn btn-info" type="button" (click)="printLajang(listLajangSlik[0].id_number)">Lihat Slik</button>
   <p></p>
-  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-    <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pasangan)</h3>
+  <div [hidden]="this.dataEntry.joint_income == 0">
+    <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+      <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pasangan)</h3>
+    </div>
+    <p></p>
+    <table class="table table-striped table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+      <thead>
+        <tr class="table-dark">
+          <th scope="col" style="text-align: center">#</th>
+          <th scope="col" style="text-align: center">NIK</th>
+          <th scope="col" style="text-align: center">Nama Bank</th>
+          <th scope="col" style="text-align: center">Jenis Fasilitas</th>
+          <th scope="col" style="text-align: center">Kolektibilitas</th>
+          <th scope="col" style="text-align: center">Keterangan</th>
+          <th scope="col" style="text-align: center">Outstanding</th>
+          <th scope="col" style="text-align: center">Plafond</th>
+          <th scope="col" style="text-align: center">Angsuran</th>
+          <th scope="col" style="text-align: center">Tanggal Mulai</th>
+          <th scope="col" style="text-align: center">Tanggal Berakhir</th>
+          <th scope="col" style="text-align: center">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let listMenikahSlik of listMenikahSlik; index as i">
+          <th scope="row" style="text-align: center">{{ i + 1 }}</th>
+          <td style="text-align: center">{{ listMenikahSlik.id_number }}</td>
+          <td style="text-align: center">{{ listMenikahSlik.ljk_ket }}</td>
+          <td style="text-align: center">{{ listMenikahSlik.jenis_kredit_pembiayaan_ket }}</td>
+          <td style="text-align: center">{{ listMenikahSlik.kualitas_ket }}</td>
+          <td style="text-align: center">{{ listMenikahSlik.jenis_penggunaan_ket }}</td>
+          <td style="text-align: center">
+            {{ listMenikahSlik.baki_debet?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}
+          </td>
+          <td style="text-align: center">{{ listMenikahSlik.plafon?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
+          <td style="text-align: center">
+            {{ listMenikahSlik.angsuran?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}
+          </td>
+          <td style="text-align: center">{{ listMenikahSlik.tanggal_mulai }}</td>
+          <td style="text-align: center">{{ listMenikahSlik.tanggal_jatuh_tempo }}</td>
+          <td style="text-align: center">{{ listMenikahSlik.kondisi_ket }}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th style="text-align: center" colspan="6">Total</th>
+          <th style="text-align: center">{{ this.totalPasOut }}</th>
+          <th style="text-align: center">{{ this.totalPasPla }}</th>
+          <th style="text-align: center">{{ this.totalPasAng }}</th>
+        </tr>
+      </tfoot>
+    </table>
+    <p></p>
+    <button class="btn btn-info" type="button" (click)="printMenikah(listMenikahSlik[0].id_number)">Lihat Slik</button>
   </div>
-  <p></p>
-  <table class="table table-striped table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-    <thead>
-      <tr class="table-dark">
-        <th scope="col" style="text-align: center">#</th>
-        <th scope="col" style="text-align: center">NIK</th>
-        <th scope="col" style="text-align: center">Nama Bank</th>
-        <th scope="col" style="text-align: center">Jenis Fasilitas</th>
-        <th scope="col" style="text-align: center">Kolektibilitas</th>
-        <th scope="col" style="text-align: center">Keterangan</th>
-        <th scope="col" style="text-align: center">Outstanding</th>
-        <th scope="col" style="text-align: center">Plafond</th>
-        <th scope="col" style="text-align: center">Angsuran</th>
-        <th scope="col" style="text-align: center">Tanggal Mulai</th>
-        <th scope="col" style="text-align: center">Tanggal Berakhir</th>
-        <th scope="col" style="text-align: center">Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let listMenikahSlik of listMenikahSlik; index as i">
-        <th scope="row" style="text-align: center">{{ i + 1 }}</th>
-        <td style="text-align: center">{{ listMenikahSlik.id_number }}</td>
-        <td style="text-align: center">{{ listMenikahSlik.ljk_ket }}</td>
-        <td style="text-align: center">{{ listMenikahSlik.jenis_kredit_pembiayaan_ket }}</td>
-        <td style="text-align: center">{{ listMenikahSlik.kualitas_ket }}</td>
-        <td style="text-align: center">{{ listMenikahSlik.jenis_penggunaan_ket }}</td>
-        <td style="text-align: center">{{ listMenikahSlik.baki_debet }}</td>
-        <td style="text-align: center">{{ listMenikahSlik.plafon }}</td>
-        <td style="text-align: center">{{ listMenikahSlik.angsuran }}</td>
-        <td style="text-align: center">{{ listMenikahSlik.tanggal_mulai }}</td>
-        <td style="text-align: center">{{ listMenikahSlik.tanggal_jatuh_tempo }}</td>
-        <td style="text-align: center">{{ listMenikahSlik.kondisi_ket }}</td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <th style="text-align: center" colspan="6">Total</th>
-        <th style="text-align: center">{{ this.slikTotal.total_outstanding_pasangan }}</th>
-        <th style="text-align: center">{{ this.slikTotal.total_plafon_pasangan }}</th>
-        <th style="text-align: center">{{ this.slikTotal.total_angsuran_pasangan }}</th>
-      </tr>
-    </tfoot>
-  </table>
-  <p></p>
-  <button class="btn btn-info" type="button" (click)="printMenikah(listMenikahSlik[0].id_number)">Lihat Slik</button>
   <p></p>
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
     <h3 style="color: #fff; text-align: center">Data Keuangan Nasabah</h3>
   </div>
   <p></p>
   <div class="row form-material">
-    <div class="col" style="text-align: center"><input type="checkbox" [checked]="this.dataEntry.joint_income == 1" /> Joint Income</div>
+    <div class="col" style="text-align: center">
+      <input type="checkbox" disabled [checked]="this.dataEntry.joint_income == 1" /> Joint Income
+    </div>
   </div>
   <p></p>
   <div [hidden]="this.dataEntry.kategori_pekerjaan == 'Non Fix Income'">
@@ -315,7 +301,6 @@
             class="form-control"
             id="gaji_kotor_total"
             name="gaji_kotor_total"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             (keypress)="keyPressNumbers($event)"
             readonly
             value="{{ +gaji_kotor1.value + +gaji_kotor_pasangan1.value | currency: 'Rp ' }}"
@@ -364,7 +349,6 @@
             class="form-control"
             id="tunjangan_total"
             name="tunjangan_total"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             readonly
             (keypress)="keyPressNumbers($event)"
             value="{{ +tunjangan1.value + +tunjangan_pasangan1.value | currency: 'Rp ' }}"
@@ -411,7 +395,6 @@
             formControlName="pendapatan_kantor_lainnya_total"
             type="text"
             class="form-control"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             id="pendapatan_kantor_lainnya_total"
             name="pendapatan_kantor_lainnya_total"
             (keypress)="keyPressNumbers($event)"
@@ -447,12 +430,12 @@
             formControlName="pendapatan_kotor_pasangan"
             type="text"
             class="form-control"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             id="pendapatan_kotor_pasangan"
             name="pendapatan_kotor_pasangan"
             (keypress)="keyPressNumbers($event)"
             #pendapatan_kotor_pasangan1
             value="{{ +gaji_kotor_pasangan1.value + +tunjangan_pasangan1.value + +pendapatan_kantor_lainnya_pasangan1.value }}"
+            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           />
         </div>
       </div>
@@ -464,7 +447,6 @@
             class="form-control"
             id="pendapatan_kotor_total"
             name="pendapatan_kotor_total"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             readonly
             (keypress)="keyPressNumbers($event)"
             value="{{ +pendapatan_kotor1.value + +pendapatan_kotor_pasangan1.value | currency: 'Rp ' }}"
@@ -511,7 +493,6 @@
             id="total_angsuran_kewajiban_kantor_total"
             (keypress)="keyPressNumbers($event)"
             formControlName="total_angsuran_kewajiban_kantor"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             value="{{ +angsuran_kewajiban_kantor1.value + +angsuran_kewajiban_kantor_pasangan1.value | currency: 'Rp ' }}"
             readonly
           />
@@ -529,7 +510,6 @@
               formControlName="pendapatan_bersih"
               type="text"
               class="form-control"
-              [readonly]="this.untukSessionRole == 'VER_PRESCR'"
               id="pendapatan_bersih"
               name="pendapatan_bersih"
               (keypress)="keyPressNumbers($event)"
@@ -548,7 +528,6 @@
             class="form-control"
             id="pendapatan_bersih_pasangan"
             name="pendapatan_bersih_pasangan"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             (keypress)="keyPressNumbers($event)"
             #pendapatan_bersih_pasangan1
             value="{{ +pendapatan_kotor_pasangan1.value - +angsuran_kewajiban_kantor_pasangan1.value }}"
@@ -564,7 +543,6 @@
             class="form-control"
             id="pendapatan_bersih_total"
             name="pendapatan_bersih_total"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             (keypress)="keyPressNumbers($event)"
             value="{{ +pendapatan_bersih1.value + +pendapatan_bersih_pasangan1.value | currency: 'Rp ' }}"
             readonly
@@ -626,7 +604,6 @@
             type="text"
             class="form-control"
             id="pendapatan_usaha_total"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             name="pendapatan_usaha_total"
             readonly
             value="{{ +pendapatan_usaha1.value + +pendapatan_usaha_pasangan1.value | currency: 'Rp ' }}"
@@ -673,7 +650,6 @@
             type="text"
             class="form-control"
             id="pendapatan_profesional_total"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             name="pendapatan_profesional_total"
             (keypress)="keyPressNumbers($event)"
             formControlName="pendapatan_profesional_total"
@@ -701,7 +677,6 @@
             id="total_penghasilan_kotor"
             name="total_penghasilan_kotor"
             (keypress)="keyPressNumbers($event)"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             formControlName="total_penghasilan_kotor"
             #total_penghasilan_kotor1
             value="{{ +pendapatan_usaha1.value + +pendapatan_profesional1.value + +pendapatan_bersih1.value }}"
@@ -718,7 +693,6 @@
             class="form-control"
             id="total_penghasilan_kotor_pasangan"
             name="total_penghasilan_kotor_pasangan"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             (keypress)="keyPressNumbers($event)"
             formControlName="total_penghasilan_kotor_pasangan"
             #total_penghasilan_kotor_pasangan1
@@ -735,7 +709,6 @@
           class="form-control"
           id="total_penghasilan_kotor_akumulasi"
           name="total_penghasilan_kotor_akumulasi"
-          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           (keypress)="keyPressNumbers($event)"
           formControlName="total_penghasilan_kotor_akumulasi"
           value="{{ +total_penghasilan_kotor1.value + +total_penghasilan_kotor_pasangan1.value | currency: 'Rp ' }}"
@@ -758,7 +731,6 @@
             readonly
             class="form-control"
             id="kewajiban_bank"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             name="kewajiban_bank"
             (keypress)="keyPressNumbers($event)"
             #kewajiban_bank1
@@ -775,7 +747,6 @@
             readonly
             class="form-control"
             id="kewajiban_bank_pasangan"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             name="kewajiban_bank_pasangan"
             (keypress)="keyPressNumbers($event)"
             #kewajiban_bank_pasangan1
@@ -787,15 +758,13 @@
     <div class="col">
       <div class="form-group row">
         <input
-          formControlName="kewajiban_bank_total"
           type="text"
-          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           readonly
           class="form-control"
           id="kewajiban_bank_total"
           name="kewajiban_bank_total"
           (keypress)="keyPressNumbers($event)"
-          value="{{ +kewajiban_bank1.value + +kewajiban_bank_pasangan1.value | currency: 'Rp ':'2' }}"
+          value="{{ this.formatIdr.format(+kewajiban_bank1.value + +kewajiban_bank_pasangan1.value) }}"
         /><!---| currency:'Rp ':'2'-->
       </div>
     </div>
@@ -815,10 +784,10 @@
             type="text"
             class="form-control"
             id="kewajiban_lainnya"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             name="kewajiban_lainnya"
             (keypress)="keyPressNumbers($event)"
             #kewajiban_lainnya1
+            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           />
         </div>
       </div>
@@ -832,9 +801,9 @@
             class="form-control"
             id="kewajiban_lainnya_pasangan"
             name="kewajiban_lainnya_pasangan"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             (keypress)="keyPressNumbers($event)"
             #kewajiban_lainnya_pasangan1
+            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           />
         </div>
       </div>
@@ -848,7 +817,6 @@
           class="form-control"
           id="kewajiban_lainnya_total"
           name="kewajiban_lainnya_total"
-          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           (keypress)="keyPressNumbers($event)"
           value="{{ +kewajiban_lainnya1.value + +kewajiban_lainnya_pasangan1.value | currency: 'Rp ' }}"
         />
@@ -874,7 +842,7 @@
             formControlName="total_penghasilan_bersih"
             (keypress)="keyPressNumbers($event)"
             #total_penghasilan_bersih1
-            value="{{ +total_penghasilan_kotor1.value - (+kewajiban_bank1.value + +kewajiban_lainnya1.value) }}"
+            value="{{ +total_penghasilan_kotor1.value - +kewajiban_bank1.value - +kewajiban_lainnya1.value }}"
           />
         </div>
       </div>
@@ -890,9 +858,8 @@
             name="total_penghasilan_bersih_pasangan"
             formControlName="total_penghasilan_bersih_pasangan"
             (keypress)="keyPressNumbers($event)"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             #total_penghasilan_bersih_pasangan1
-            value="{{ +total_penghasilan_kotor_pasangan1.value - (+kewajiban_bank_pasangan1.value + +kewajiban_lainnya_pasangan1.value) }}"
+            value="{{ +total_penghasilan_kotor_pasangan1.value - +kewajiban_bank_pasangan1.value - +kewajiban_lainnya_pasangan1.value }}"
           />
         </div>
       </div>
@@ -904,7 +871,6 @@
           readonly
           class="form-control"
           id="total_penghasilan_bersih_akumulasi"
-          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           name="total_penghasilan_bersih_akumulasi"
           formControlName="total_penghasilan_bersih_akumulasi"
           (keypress)="keyPressNumbers($event)"
@@ -917,8 +883,8 @@
   <p></p>
   <div class="row">
     <div class="col" style="text-align: center">
-      <button [hidden]="this.untukSessionRole == 'VER_PRESCR'" type="submit" class="btn btn-info">Simpan Data</button>
-      <button (click)="gotocalonnasabah()" type="button" class="btn btn-info">selanjutnya</button>
+      <button type="submit" class="btn btn-info" [hidden]="this.untukSessionRole == 'VER_PRESCR'">Simpan Data</button>
+      <button type="button" class="btn btn-info" (click)="Next()">Selanjutnya</button>
     </div>
   </div>
 </form>

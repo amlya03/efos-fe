@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { errorRoute } from './layouts/error/error.route';
 import { navbarRoute } from './layouts/navbar/navbar.route';
 import { DEBUG_INFO_ENABLED } from 'app/app.constants';
 import { Authority } from 'app/config/authority.constants';
-
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
-
 import { DaftarAplikasiWaitingAssigmentComponent } from './verification/daftar-aplikasi-waiting-assigment/daftar-aplikasi-waiting-assigment.component';
 import { DaftarAplikasiOnProcessComponent } from './verification/daftar-aplikasi-on-process/daftar-aplikasi-on-process.component';
 import { DaftarAplikasiWaitingUpdateStatusComponent } from './verification/daftar-aplikasi-waiting-update-status/daftar-aplikasi-waiting-update-status.component';
@@ -24,7 +21,6 @@ import { PekerjaanPasanganComponent } from './data-entry/pekerjaan-pasangan/peke
 import { CollateralComponent } from './data-entry/collateral/collateral.component';
 import { EmergencyContactComponent } from './data-entry/emergency-contact/emergency-contact.component';
 import { CallReportComponent } from './data-entry/call-report/call-report.component';
-import { CallReportNonComponent } from './data-entry/call-report-non/call-report-non.component';
 import { MemoComponent } from './data-entry/memo/memo.component';
 import { StrukturPembiayaanComponent } from './data-entry/struktur-pembiayaan/struktur-pembiayaan.component';
 import { DaftarAplikasiIdeComponent } from './initial-data-entry/daftar-aplikasi-ide/daftar-aplikasi-ide.component';
@@ -45,6 +41,10 @@ import { CollateralEditComponent } from './data-entry/collateral-edit/collateral
 import { SyaratPersetujuanComponent } from './verification/syarat-persetujuan/syarat-persetujuan.component';
 import { KesimpulanComponent } from './verification/kesimpulan/kesimpulan.component';
 import { MemoVerificationComponent } from './verification/memo-verification/memo-verification.component';
+import { DaftarAplikasiIsiMapisComponent } from './verification/daftar-aplikasi-isi-mapis/daftar-aplikasi-isi-mapis.component';
+import { MapisComponent } from './verification/daftar-aplikasi-isi-mapis/mapis/mapis.component';
+import { InputScoringComponent } from './input-scoring/input-scoring.component';
+import { KomiteComponent } from './komite/komite.component';
 
 @NgModule({
   imports: [
@@ -155,10 +155,6 @@ import { MemoVerificationComponent } from './verification/memo-verification/memo
           component: CallReportComponent,
         },
         {
-          path: 'data-entry/call-report-non',
-          component: CallReportNonComponent,
-        },
-        {
           path: 'data-entry/editjobinfo',
           component: EditjobinfoComponent,
         },
@@ -216,8 +212,26 @@ import { MemoVerificationComponent } from './verification/memo-verification/memo
           component: InitialDataEntryComponent,
         },
         {
+          path: 'daftar_input_mapis',
+          component: DaftarAplikasiIsiMapisComponent,
+        },
+        {
+          path: 'mapis',
+          component: MapisComponent,
+        },
+        {
+          path: 'input-scoring-manual',
+          component: InputScoringComponent,
+        },
+        {
+          path: 'komite',
+          component: KomiteComponent,
+        },
+        {
           path: '',
-          loadChildren: () => import(`./entities/entity-routing.module`).then(m => m.EntityRoutingModule),
+          // loadChildren: () => import(`./entities/entity-routing.module`).then(m => m.EntityRoutingModule),
+          redirectTo: 'login',
+          pathMatch: 'full',
         },
         navbarRoute,
         ...errorRoute,

@@ -3,403 +3,264 @@
 </div>
 <p></p>
 <p></p>
-<div class="row form-material">
-  <div class="col">
-    <div id="jointIncomeMenikah" class="form-group row">
-      <label class="col-sm-4 col-form-label">Joint Income<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <select
-            class="form-control"
-            name="joint_income"
-            id="joint_income"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          >
-            <option value="{{ daWa.joint_income }}">{{ daWa.joint_income }}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Kode Fasilitas<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <select
-            class="form-control"
-            (change)="onchangefasilitas(Kodefasilitas.fasilitas)"
-            name="kode_fasilitas"
-            id="kode_fasilitas"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          >
-            <option value="{{ daWa.kode_fasilitas_name }}">{{ daWa.kode_fasilitas_name }}</option>
-            <option *ngFor="let Kodefasilitas of Kodefasilitas" value="{{ Kodefasilitas.kode_fasilitas }}|{{ Kodefasilitas.fasilitas }}">
-              {{ Kodefasilitas.deskripsi }}
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Program<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <select
-            class="form-control"
-            (change)="onchangeprogram(0)"
-            name="program"
-            id="program"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          >
-            <option value="{{ daWa.program_name }}" selected>{{ daWa.program_name }}</option>
-            <option *ngFor="let kodeprogram of kodeprogram" value="{{ kodeprogram.kode_program }}|{{ kodeprogram.program }}">
-              {{ kodeprogram.program }}
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Product<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <select
-            class="form-control"
-            (change)="onchangeproduk(0)"
-            name="produk"
-            id="produk"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          >
-            <option value="{{ daWa.produk_name }}" selected>{{ daWa.produk_name }}</option>
-
-            <option *ngFor="let kodeproduk of kodeproduk" value="{{ kodeproduk.kode_produk }}|{{ kodeproduk.produk_deskripsi }}">
-              {{ kodeproduk.produk_deskripsi }}
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Skema<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <select
-            class="form-control"
-            (change)="onchangeskema(0)"
-            name="skema"
-            id="skema"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          >
-            <option value="{{ daWa.skema_name }}" selected>{{ daWa.skema_name }}</option>
-            <option
-              *ngFor="let kodeskema of kodeskema"
-              value="{{ kodeskema.skema }}|{{ kodeskema.skema_master }}|{{ kodeskema.skema_deskripsi }}"
-            >
-              {{ kodeskema.skema_deskripsi }}
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Jangka Waktu<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <select
-            class="form-control"
-            (change)="onchangejangkawaktu(0)"
-            name="jangka_waktu"
-            id="jangka_waktu"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          >
-            <option selected value="{{ daWa.jangka_waktu }}">{{ daWa.jangka_waktu }}</option>
-            <option *ngFor="let kodetenor of kodetenor" value="{{ kodetenor.tn_code }}|{{ kodetenor.margin }}">
-              {{ kodetenor.tn_code }}
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Tipe Margin<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <select
-            class="form-control"
-            name="tipe_margin"
-            id="tipe_margin"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          >
-            <option selected value="{{ daWa.tipe_margin }}">{{ daWa.tipe_margin }}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Tujuan Pembiayaan<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <select
-            class="form-control"
-            name="tujuan_pembiayaan"
-            id="tujuan_pembiayaan"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          >
-            <!-- 19-08-20 -->
-            <option selected value="{{ daWa.kode_fasilitas }}">{{ daWa.tujuan_pembiayaan }}</option>
-            <option *ngFor="let tujuanpembiayaan of tujuanpembiayaan" value="{{ tujuanpembiayaan.deskripsi }}">
-              {{ tujuanpembiayaan.deskripsi }}
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Fasilitas Ke<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <div class="form-group">
-          <select
-            class="form-control"
-            name="fasilitas_ke"
-            id="fasilitas_ke"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          >
-            <option value="{{ daWa.fasilitas_ke }}" selected>{{ daWa.fasilitas_ke }}</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-  </div>
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Margin<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          type="text"
-          class="form-control"
-          value="{{ daWa.margin }}"
-          readonly
-          name="margin"
-          id="margin"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          title="{{ daWa.margin }}"
-        />
-
-        <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          type="hidden"
-          class="form-control"
-          value="{{ daWa.margin }}"
-          readonly
-          name="margin1"
-          id="margin1"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          title="{{ daWa.margin }}"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Harga Objek Pembiayaan<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          type="text"
-          class="form-control"
-          placeholder="Hrga Objek Pembiayaan"
-          name="harga_objek_pembiayaan"
-          id="harga_objek_pembiayaan"
-          value="{{ daWa.harga_objek_pembiayaan }}"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Fee Base</label>
-      <div class="col-sm-8">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Rp"
-          name="fee_based"
-          id="fee_based"
-          value="{{ daWa.fee_based }}"
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-        />
-        <input
-          type="hidden"
-          class="form-control"
-          placeholder="Rp"
-          name="codekodefasilitas"
-          id="codekodefasilitas"
-          value="{{ daWa.kode_fasilitas }}"
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-        />
-        <input
-          type="hidden"
-          class="form-control"
-          placeholder="Rp"
-          name="codeprogram"
-          id="codeprogram"
-          value="{{ daWa.program }}"
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-        />
-        <input
-          type="hidden"
-          class="form-control"
-          placeholder="Rp"
-          name="codeproduk"
-          id="codeproduk"
-          value="{{ daWa.produk }}"
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-        />
-        <input
-          type="hidden"
-          class="form-control"
-          placeholder="Rp"
-          name="codeskemamaster"
-          id="codeskemamaster"
-          value="{{ daWa.skema_master }}"
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-        />
-        <input
-          type="hidden"
-          class="form-control"
-          placeholder="Rp"
-          name="codeskemaid"
-          id="codeskemaid"
-          value="{{ daWa.skema }}"
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label" name="siapsiap" id="siapsiap">DP<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <div class="input-group mb-3">
-          <input
-            type="text"
-            class="form-control"
-            name="uang_muka"
-            id="uang_muka"
-            value="{{ daWa.uang_muka }}"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          />
-          <div class="input-group-append">
-            <button
-              class="btn btn-outline-dark"
-              type="button"
-              id="rincihan"
-              style="float: right"
-              (click)="itungrincihan()"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-            >
-              Rincian Pembayaran
-            </button>
+<form [formGroup]="strukturForm" (ngSubmit)="simpanstruktur()">
+  <div class="row form-material">
+    <div class="col">
+      <div id="jointIncomeMenikah" class="form-group row">
+        <label class="col-sm-4 col-form-label">Joint Income</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" formControlName="joint_income" id="joint_income">
+              <option value="1">Ya</option>
+              <option value="0">Tidak</option>
+            </select>
           </div>
         </div>
       </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Angsuran<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          type="text"
-          class="form-control"
-          readonly
-          name="angsuran"
-          id="angsuran"
-          value="{{ daWa.angsuran }}"
-          data-toggle="tooltip"
-          data-placement="bottom"
-        />
-        <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          type="text"
-          class="form-control"
-          readonly
-          name="angsurankirim"
-          id="angsurankirim"
-          value="{{ daWa.angsuran }}"
-          data-toggle="tooltip"
-          data-placement="bottom"
-        />
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kode Fasilitas</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select
+              class="form-control"
+              (change)="onchangefasilitas(this.strukturForm.get('kode_fasilitas')?.value)"
+              formControlName="kode_fasilitas"
+              id="kode_fasilitas"
+            >
+              <option *ngFor="let Kodefasilitas of Kodefasilitas" value="{{ Kodefasilitas.kode_fasilitas }}|{{ Kodefasilitas.fasilitas }}">
+                {{ Kodefasilitas.fasilitas }}
+              </option>
+            </select>
+          </div>
+        </div>
       </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Nilai Pembiayaan<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          type="text"
-          class="form-control"
-          value="{{ daWa.nilai_pembiayaan }}"
-          readonly
-          name="hasil_pembiayaan"
-          id="hasil_pembiayaan"
-        />
-
-        <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          type="hidden"
-          class="form-control"
-          value="{{ daWa.id }}"
-          readonly
-          name="idstruktur"
-          id="idstruktur"
-        />
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Program</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select
+              class="form-control"
+              (change)="onchangeprogram(this.strukturForm.get('program')?.value)"
+              formControlName="program"
+              id="program"
+            >
+              <option *ngFor="let kodeprogram of kodeprogram" value="{{ kodeprogram.kode_program }}|{{ kodeprogram.program }}">
+                {{ kodeprogram.program }}
+              </option>
+            </select>
+          </div>
+        </div>
       </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Product</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select
+              class="form-control"
+              (change)="onchangeproduk(this.strukturForm.get('produk')?.value)"
+              formControlName="produk"
+              id="produk"
+            >
+              <option *ngFor="let kodeproduk of kodeproduk" value="{{ kodeproduk.kode_produk }}|{{ kodeproduk.produk_deskripsi }}">
+                {{ kodeproduk.produk_deskripsi }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Skema</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select
+              class="form-control"
+              (change)="onchangeskema(this.strukturForm.get('skema')?.value, this.strukturForm.get('kode_fasilitas')?.value)"
+              formControlName="skema"
+              id="skema"
+            >
+              <option
+                *ngFor="let kodeskema of kodeskema"
+                value="{{ kodeskema.skema }}|{{ kodeskema.skema_master }}|{{ kodeskema.skema_deskripsi }}"
+              >
+                {{ kodeskema.skema_deskripsi }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Jangka Waktu</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select
+              class="form-control"
+              (change)="onchangejangkawaktu(this.strukturForm.get('jangka_waktu')?.value, this.strukturForm.get('skema')?.value)"
+              formControlName="jangka_waktu"
+              id="jangka_waktu"
+            >
+              <option *ngFor="let tenor of tenor" value="{{ tenor.tn_code }}|{{ tenor.margin }}">{{ tenor.tn_code }} Bulan</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tipe Margin</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" formControlName="tipe_margin" id="tipe_margin">
+              <option value="FIX">FIX</option>
+              <option value="STEPUP">STEP UP</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tujuan Pembiayaan</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" formControlName="tujuan_pembiayaan" id="tujuan_pembiayaan">
+              <option *ngFor="let tujuanpembiayaan of tujuanpembiayaan" value="{{ tujuanpembiayaan.deskripsi }}">
+                {{ tujuanpembiayaan.deskripsi }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Fasilitas Ke</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" formControlName="fasilitas_ke" id="fasilitas_ke">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
     </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Detail Objek Pembiayaan<span class="text-danger">*</span></label>
-      <div class="col-sm-8">
-        <textarea
-          class="form-control h-150px"
-          rows="6"
-          name="detail_objek_pembiayaan"
-          id="detail_objek_pembiayaan"
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-          >{{ daWa.detail_objek_pembiayaan }}</textarea
-        >
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Margin</label>
+        <div class="col-sm-8">
+          <input
+            type="text"
+            class="form-control"
+            readonly
+            formControlName="margin"
+            id="margin"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="{{ this.strukturForm.get('margin')?.value }}"
+          />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Harga Objek Pembiayaan</label>
+        <div class="col-sm-8">
+          <input
+            (keypress)="keyPressNumbers($event)"
+            type="text"
+            class="form-control"
+            placeholder="Hrga Objek Pembiayaan"
+            formControlName="harga_objek_pembiayaan"
+            id="harga_objek_pembiayaan"
+          />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Fee Base</label>
+        <div class="col-sm-8">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Rp"
+            formControlName="fee_based"
+            id="fee_based"
+            (keypress)="keyPressNumbers($event)"
+          />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" name="siapsiap" id="siapsiap">DP</label>
+        <div class="col-sm-8">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" formControlName="uang_muka" id="uang_muka" (keypress)="keyPressNumbers($event)" />
+            <div class="input-group-append">
+              <button class="btn btn-outline-dark" type="button" id="rincihan" style="float: right" (click)="itungrincihan()">
+                Rincian Pembayaran
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Angsuran</label>
+        <div class="col-sm-8">
+          <input
+            type="text"
+            class="form-control"
+            readonly
+            formControlName="angsuran"
+            id="angsuran"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="{{ this.strukturForm.get('angsuran')?.value }}"
+          />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" readonly formControlName="nilai_pembiayaan" id="hasil_pembiayaan" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Detail Objek Pembiayaan</label>
+        <div class="col-sm-8">
+          <textarea class="form-control h-150px" rows="6" formControlName="detail_objek_pembiayaan" id="detail_objek_pembiayaan"></textarea>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="col" style="text-align: center">
-    <button
-      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
-      type="submit"
-      (click)="simpanstruktur()"
-      id="btn"
-      name="simpandata"
-      value="simpandata"
-      class="btn btn-dark"
-      onclick="return validateFormStruktur()"
-    >
-      Simpan Data
-    </button>
-    <button type="submit" (click)="goto()" id="selanjutnya" name="selanjutnya" value="selanjutnya" class="btn btn-warning">
-      Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
-    </button>
+  <div class="row">
+    <div class="col" style="text-align: center">
+      <button
+        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+        type="submit"
+        id="btn"
+        name="simpandata"
+        value="simpandata"
+        class="btn btn-dark"
+      >
+        Simpan Data
+      </button>
+      <button
+        [hidden]="this.untukSessionRole == 'AO'"
+        type="button"
+        (click)="goto()"
+        id="selanjutnya"
+        name="selanjutnya"
+        value="selanjutnya"
+        class="btn btn-warning"
+      >
+        Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
+      </button>
+    </div>
   </div>
-</div>
+</form>

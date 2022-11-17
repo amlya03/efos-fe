@@ -10,11 +10,8 @@ import { LoginService } from 'app/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { EntityArrayResponseDaWa, PersonalInfoComponent } from 'app/data-entry/personal-info/personal-info.component';
-import { createRequestOption } from 'app/core/request/request-util';
-import { Observable } from 'rxjs';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { HttpClient } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'jhi-navbar',
@@ -22,7 +19,8 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  // private loggedIn = new BehaviorSubject<boolean>(false); // {1}
+  sudahLogin = true;
   inProduction?: boolean;
   isNavbarCollapsed = true;
   languages = LANGUAGES;
@@ -46,6 +44,10 @@ export class NavbarComponent implements OnInit {
   datakirimantgllahir: any;
   datakirimanappide: any;
   datakirimanidcustomer: any;
+
+  // get isLoggedIn() {
+  //   return this.loggedIn.asObservable(); // {2}
+  // }
 
   constructor(
     protected http: HttpClient,
@@ -107,13 +109,11 @@ export class NavbarComponent implements OnInit {
     this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
     this.untukSessionFullName = this.localStorageService.retrieve('sessionFullName');
     this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
-
-    // ref personal info
-    this.getdataentry().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        this.daWa = res.body?.result;
-      },
-    });
+    this.sudahLogin = this.localStorageService.retrieve('SudahLogin');
+    // alert(this.sudahLogin)
+    if (this.sudahLogin === null) {
+      this.router.navigate(['/login']);
+    }
   }
 
   changeLanguage(languageKey: string): void {
@@ -126,22 +126,54 @@ export class NavbarComponent implements OnInit {
   }
 
   login(): void {
+    // this.router.navigate(['/login']);
+    // this.loggedIn.next(true);
     this.router.navigate(['/login']);
   }
 
   logout(): void {
-    this.collapseNavbar();
-    this.loginService.logout();
-    this.router.navigate(['']);
+    // this.collapseNavbar();
+    // this.loginService.logout();
+    // // this.router.navigate(['']);
+    // this.router.navigate(['/login']);
+    // window.location.reload()
+    // // this.router.navigate(['/login']);
+
+    Swal.fire({
+      title: 'Informasi Akun',
+      // text: " - lkdzflkxcbxbxcvbcvbcvsd",
+      // html: 'User Id : '+this.untukSessionUserName+' <p>test</p>',
+      html:
+        'User Id : ' +
+        this.untukSessionUserName +
+        ' <p>Nama : ' +
+        this.untukSessionFullName +
+        '</p><p>Saya adalah ' +
+        this.untukSessionRole +
+        '</p>',
+      imageUrl: '../../../content/images/bank-mega-syariah.png',
+      imageWidth: 100,
+      imageHeight: 70,
+      imageAlt: 'Eagle Image',
+      showCancelButton: true,
+      confirmButtonText: 'Logout',
+      cancelButtonText: 'Tidak',
+      confirmButtonColor: '#8567d3',
+      cancelButtonColor: '#999999',
+      reverseButtons: true,
+    }).then(result => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('Berhasil Logout!', '', 'warning').then((message: any) => {
+          this.loginService.logout();
+          this.router.navigate(['/login']);
+          window.location.reload();
+        });
+      }
+    });
   }
 
   toggleNavbar(): void {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
-  }
-
-  // ref personal
-  getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.resourceUrl + this.app_no_de, { params: options, observe: 'response' });
   }
 }
