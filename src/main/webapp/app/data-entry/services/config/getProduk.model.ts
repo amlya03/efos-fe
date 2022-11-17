@@ -1,6 +1,6 @@
 export class getProduk {
-  id?: Number;
-  kode_program?: String;
-  kode_produk?: String;
-  produk_deskripsi?: String;
+  id?: number;
+  kode_program?: string;
+  kode_produk?: string;
+  produk_deskripsi?: string;
 }

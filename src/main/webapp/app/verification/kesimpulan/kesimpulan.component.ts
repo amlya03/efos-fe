@@ -57,7 +57,7 @@ export class KesimpulanComponent implements OnInit {
     // ambil semua data Kesimpulan
     this.serviceVerificationService.fetchKesimpulan(this.app_no_de).subscribe(data => {
       this.kesimpulanModel = data.result;
-      let retriveKesimpulan = {
+      const retriveKesimpulan = {
         kesimpulan: this.kesimpulanModel.kesimpulan,
         rekomendasi: this.kesimpulanModel.rekomendasi,
       };
@@ -67,7 +67,7 @@ export class KesimpulanComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-    if (this.kesimpulanModel == null) {
+    if (this.kesimpulanModel === null) {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_kesimpulan_verifikasi', {
           id: 0,
@@ -86,12 +86,6 @@ export class KesimpulanComponent implements OnInit {
           error: error => console.warn(error),
         });
     }
-    // else
-    //   this.http
-    //     .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_keuangan', {
-
-    //     })
-    //     .subscribe({});
     this.router.navigate(['/verification/memo'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

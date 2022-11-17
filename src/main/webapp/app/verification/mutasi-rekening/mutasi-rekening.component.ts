@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { mutasiRekening } from './mutasiRekening.model';
 import { HttpClient } from '@angular/common/http';
@@ -90,22 +90,20 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
 
   submitForm(nama_bank: any, no_rekening: any, tahun: any, bulan: any, debet: any, kredit: any, saldo: any): void {
     // alert(this.lihatTableMutasi)
-    if (this.tambahTableMutasi == '') {
+    if (this.tambahTableMutasi === '') {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_verif_mutasi', {
           id: this.idTableMutasi,
           app_no_de: this.app_no_de,
           bulan: bulan,
-          // created_by: this.mutasiForm.get('created_by')?.value,
-          // created_date: this.mutasiForm.get('created_date')?.value,
+          created_by: this.localStorageService.retrieve('sessionUserName'),
+          created_date: '',
           debet: debet,
           kredit: kredit,
           nama_bank: nama_bank,
           no_rekening: no_rekening,
           saldo: saldo,
           tahun: tahun,
-          // updated_by: this.mutasiForm.get('updated_by')?.value,
-          // updated_date: this.mutasiForm.get('updated_date')?.value,
         })
         .subscribe({
           next: response => console.warn(response),
@@ -118,16 +116,14 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           id: this.idTableMutasi,
           app_no_de: this.app_no_de,
           bulan: bulan,
-          // created_by: this.mutasiForm.get('created_by')?.value,
-          // created_date: this.mutasiForm.get('created_date')?.value,
           debet: debet,
           kredit: kredit,
           nama_bank: nama_bank,
           no_rekening: no_rekening,
           saldo: saldo,
           tahun: tahun,
-          // updated_by: this.mutasiForm.get('updated_by')?.value,
-          // updated_date: this.mutasiForm.get('updated_date')?.value,
+          updated_by: this.localStorageService.retrieve('sessionUserName'),
+          updated_date: '',
         })
         .subscribe({
           next: response => console.warn(response),

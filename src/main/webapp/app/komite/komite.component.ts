@@ -3,19 +3,18 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
+import { daWaModel } from 'app/verification/daftar-aplikasi-waiting-assigment/daWa.model';
+import { daWaModelAprisal } from 'app/verification/daftar-aplikasi-waiting-assigment/daWaAprisal.model';
+import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
-import { ServiceVerificationService } from '../service/service-verification.service';
-import { daWaModel } from './daWa.model';
-import { daWaModelAprisal } from './daWaAprisal.model';
-declare let $: any;
 
 @Component({
-  selector: 'jhi-daftar-aplikasi-waiting-assigment',
-  templateUrl: './daftar-aplikasi-waiting-assigment.component.html',
-  styleUrls: ['./daftar-aplikasi-waiting-assigment.component.scss'],
+  selector: 'jhi-komite',
+  templateUrl: './komite.component.html',
+  styleUrls: ['./komite.component.scss'],
 })
-export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestroy {
+export class KomiteComponent implements OnInit {
   title = 'EFOS';
   numbers: Array<number> = [];
   daWa?: daWaModel[] = [];

@@ -43,7 +43,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
   // ceklis semua
   isChecked = false;
   checkuncheckall() {
-    if (this.isChecked == true) {
+    if (this.isChecked === true) {
       this.isChecked = false;
     } else {
       this.isChecked = true;

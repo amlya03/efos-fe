@@ -1,9 +1,9 @@
 export class getProgramModel {
-  id?: Number;
-  kode_program?: String;
-  kode_fasilitas?: String;
-  program?: String;
-  expired_date?: String;
-  min_plafond?: Number;
-  max_plafond?: Number;
+  id?: number;
+  kode_program?: string;
+  kode_fasilitas?: string;
+  program?: string;
+  expired_date?: string;
+  min_plafond?: number;
+  max_plafond?: number;
 }

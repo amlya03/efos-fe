@@ -5,10 +5,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { LocalStorageService } from 'ngx-webstorage';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { MemoModel } from '../service/config/memo.model';
 import Swal from 'sweetalert2';
 @Component({
@@ -69,17 +68,13 @@ export class MemoVerificationComponent implements OnInit {
     // ambil semua data DE
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
-      // alert('DE '+ this.dataEntry?.status_perkawinan)
     });
 
     // List Table Memo
     this.dataEntryService.getfetchMemo(this.app_no_de).subscribe(data => {
       this.listMemo = data.result;
-      console.log(this.listMemo);
-      console.log(data.result.keterangan);
       this.dtTrigger.next(this.listMemo);
       if (data.code === 200) {
-        // this.memo = data.result;
         console.log('MEMo ' + data.result.keterangan);
       }
     });

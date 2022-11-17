@@ -58,7 +58,7 @@
 
         <!-- ////////////////////////////// Verifikator \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
         <div *ngIf="untukSessionRole === 'VER_PRESCR'">
-          <li id="verificationNav" class="row nav-item">
+          <li class="row nav-item">
             <a
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
@@ -101,6 +101,24 @@
         </div>
         <!-- ////////////////////////////// Appraisal \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
 
+        <!-- ////////////////////////////// Approval \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <div *ngIf="untukSessionRole == 'KOMITE'">
+          <li id="verificationNav" class="row nav-item">
+            <a
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="col nav-link"
+              routerLink="komite"
+              style="text-align: center"
+            >
+              <fa-icon icon="user-tie"></fa-icon>
+              <p>APPROVAL</p>
+              <!-- <span routerLink="/analisa-keuangan" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span> -->
+            </a>
+          </li>
+        </div>
+        <!-- ////////////////////////////// Approval \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
         <div *ngIf="untukSessionRole == 'BRANCHMANAGER' || untukSessionRole === 'AO'">
           <li class="row nav-item">
             <a
@@ -115,6 +133,16 @@
               <p>Data Entry</p>
 
               <!-- tambahan -->
+              <span
+                class="col nav-link"
+                [routerLink]="['/data-entry/memo']"
+                [queryParams]="{
+                  curef: this.curef,
+                  statusPerkawinan: this.statusPerkawinan,
+                  app_no_de: this.app_no_de
+                }"
+                hidden
+              ></span>
               <span
                 class="col nav-link"
                 [routerLink]="['/data-entry/personalinfo']"
@@ -479,7 +507,6 @@
             href="javascript:void(0);"
             id="account-menu"
             data-cy="accountMenu"
-            style="border-left: disabled; border-right: disabled; border-bottom: disabled"
           >
             <span *ngIf="!account?.imageUrl">
               <fa-icon icon="user"></fa-icon>
@@ -763,8 +790,9 @@
       router.url === '/data-entry/struktur-pembiayaan' ||
       router.url === '/data-entry/emergency-contact' ||
       router.url === '/data-entry/call-report' ||
-      router.url === '/data-entry/call-report-non' ||
       router.url === '/data-entry/memo' ||
+      router.url ===
+        '/data-entry/memo?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
       router.url ===
         '/data-entry/personalinfo?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
       router.url ===
@@ -805,8 +833,6 @@
           this.app_no_de ||
       router.url ===
         '/data-entry/call-report?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
-      router.url ===
-        '/data-entry/call-report-non?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
       router.url ===
         '/data-entry/editjobinfo?app_no_de=' +
           this.app_no_de +
@@ -968,7 +994,6 @@
     <a
       class="nav-item nav-link"
       routerLink="data-entry/call-report"
-      routerLink="data-entry/call-report-non"
       [queryParams]="{
         curef: this.curef,
         statusPerkawinan: this.statusPerkawinan,
@@ -1004,6 +1029,11 @@
       routerLink="data-entry/memo"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
+      [queryParams]="{
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de
+      }"
       *ngSwitchCase="'AO'"
     >
       <h6>Memo</h6>

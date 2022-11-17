@@ -1,12 +1,12 @@
 export class listScoring {
-  id?: Number;
-  produk?: String;
-  joint_income?: Number;
-  parameter?: String;
-  data_value?: String;
-  min_value?: Number;
-  max_value?: Number;
-  score?: Number;
-  created_date?: String;
-  created_by?: String;
+  id?: number;
+  produk?: string;
+  joint_income?: number;
+  parameter?: string;
+  data_value?: string;
+  min_value?: number;
+  max_value?: number;
+  score?: number;
+  created_date?: string;
+  created_by?: string;
 }

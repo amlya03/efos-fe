@@ -83,7 +83,7 @@ export class fetchAllDe {
   produk?: string | null;
   uang_muka?: number;
   skema_name?: string | null;
-  fasilitas_ke?: Number;
+  fasilitas_ke?: number;
   joint_income?: number;
-  jenis_pekerjaan_pasangan_desc?: String;
+  jenis_pekerjaan_pasangan_desc?: string;
 }

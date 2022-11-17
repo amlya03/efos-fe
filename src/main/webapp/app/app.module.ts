@@ -47,7 +47,6 @@ import { DataPasanganComponent } from './data-entry/data-pasangan/data-pasangan.
 import { PekerjaanPasanganComponent } from './data-entry/pekerjaan-pasangan/pekerjaan-pasangan.component';
 import { CollateralComponent } from './data-entry/collateral/collateral.component';
 import { CallReportComponent } from './data-entry/call-report/call-report.component';
-import { CallReportNonComponent } from './data-entry/call-report-non/call-report-non.component';
 import { MemoComponent } from './data-entry/memo/memo.component';
 import { EmergencyContactComponent } from './data-entry/emergency-contact/emergency-contact.component';
 import { StrukturPembiayaanComponent } from './data-entry/struktur-pembiayaan/struktur-pembiayaan.component';
@@ -73,6 +72,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
 import { DaftarAplikasiIsiMapisComponent } from './verification/daftar-aplikasi-isi-mapis/daftar-aplikasi-isi-mapis.component';
 import { MapisComponent } from './verification/daftar-aplikasi-isi-mapis/mapis/mapis.component';
 import { InputScoringComponent } from './input-scoring/input-scoring.component';
+import { KomiteComponent } from './komite/komite.component';
 
 @NgModule({
   imports: [
@@ -127,7 +127,6 @@ import { InputScoringComponent } from './input-scoring/input-scoring.component';
     PekerjaanPasanganComponent,
     CollateralComponent,
     CallReportComponent,
-    CallReportNonComponent,
     MemoComponent,
     EmergencyContactComponent,
     StrukturPembiayaanComponent,
@@ -151,6 +150,7 @@ import { InputScoringComponent } from './input-scoring/input-scoring.component';
     DaftarAplikasiIsiMapisComponent,
     MapisComponent,
     InputScoringComponent,
+    KomiteComponent,
   ],
   bootstrap: [
     MainComponent,
@@ -167,13 +167,13 @@ import { InputScoringComponent } from './input-scoring/input-scoring.component';
     PekerjaanPasanganComponent,
     CollateralComponent,
     CallReportComponent,
-    CallReportNonComponent,
     MemoComponent,
     EmergencyContactComponent,
     StrukturPembiayaanComponent,
     VerificationComponent,
     SyaratPersetujuanComponent,
     MemoVerificationComponent,
+    KomiteComponent,
   ],
 })
 export class AppModule {

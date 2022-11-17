@@ -1,5 +1,5 @@
 export class refStatusSertifikat {
-  id?: Number;
-  sertifikat_deskripsi?: String;
-  active?: String;
+  id?: number;
+  sertifikat_deskripsi?: string;
+  active?: string;
 }

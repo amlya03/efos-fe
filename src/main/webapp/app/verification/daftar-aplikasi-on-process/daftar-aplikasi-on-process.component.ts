@@ -72,7 +72,7 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
   }
 
   // ReadOnly
-  readOnlyButton(app_no_de: any) {
+  readOnlyButton(app_no_de: string | null | undefined) {
     this.dataEntryService.getFetchSemuaDataDE(app_no_de).subscribe(data => {
       this.dataEntry = data.result;
       this.curef = this.dataEntry?.curef;

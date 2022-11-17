@@ -48,36 +48,34 @@
       </div>
     </div>
     <br />
-
-    <div [ngSwitch]="tampilanfixornon">
-      <div *ngSwitchCase="'Non Fix Income'">
-        <div class="form-group row">
-          <label id="changeLabelUpload" class="col-sm-4 col-form-label">Upload</label>
-          <div class="col-sm-8">
-            <div id="hideFileUploadJikaViewShow" class="input-group">
-              <div class="custom-file">
-                <input
-                  type="file"
-                  class="custom-file-input"
-                  type="file"
-                  id="fileUpload"
-                  name="uploadFile"
-                  accept="image/jpeg, image/jpg, image/png, application/pdf"
-                />
-                <label id="labelUntukUpload" class="custom-file-label">Pilih File Untuk Upload</label>
-              </div>
-              <button class="btn btn-outline-dark" type="button" id="cobaButton" name="cobaButton" onclick="thisFileUpload()">
-                Upload Document
-              </button>
-            </div>
-            <button type="button" class="btn mb-1 btn-rounded btn-secondary" id="testButton" onclick="getArchiveAjax();">
-              <span class="btn-icon-left"><i class="fa fa-download color-warning"></i> </span>View
-            </button>
+    <div class="form-group row" [hidden]="tampilanfixornon === 'Fix Income'">
+      <label id="changeLabelUpload" class="col-sm-4 col-form-label">Upload</label>
+      <div class="col-sm-8">
+        <div id="hideFileUploadJikaViewShow" class="input-group" *ngIf="this.getMemoUpload.nama_dokumen === null">
+          <div class="custom-file">
+            <input
+              class="custom-file-input"
+              type="file"
+              id="fileUpload"
+              name="uploadFile"
+              accept="image/jpeg, image/jpg, image/png, application/pdf"
+              (change)="pilihFile($event)"
+            />
           </div>
+          <button class="btn btn-outline-dark" type="button" id="cobaButton" name="cobaButton" (click)="thisFileUpload()">
+            Upload Document
+          </button>
         </div>
+        <button
+          type="button"
+          class="btn mb-1 btn-rounded btn-secondary"
+          id="testButton"
+          (click)="download()"
+          [hidden]="this.getMemoUpload.nama_dokumen === null"
+        >
+          <span class="btn-icon-left"><i class="fa fa-download color-warning"></i></span>View
+        </button>
       </div>
-
-      <div *ngSwitchDefault></div>
     </div>
   </div>
 </div>
@@ -207,8 +205,8 @@
           <td style="text-align: center" scope="col">{{ daWa.keterangan }}</td>
           <td style="text-align: center" scope="col">{{ daWa.users }}</td>
           <td style="text-align: center" scope="col">{{ daWa.role }}</td>
-          <td class="text-end">
-            <div class="btn-group"></div>
+          <td style="text-align: center">
+            <a (click)="view(daWa.id)"> <fa-icon icon="ellipsis"></fa-icon><br />Detail </a>
           </td>
         </tr>
       </tbody>

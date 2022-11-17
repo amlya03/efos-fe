@@ -1,9 +1,8 @@
-export class memomodel {
+export class getMemoUploadModel {
   id?: number;
-  keterangan?: string;
-  users?: string;
-  role?: string;
+  curef?: string;
   app_no_de?: string;
+  nama_dokumen?: string;
   created_date?: string;
   created_by?: string;
 }

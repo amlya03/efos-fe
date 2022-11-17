@@ -30,7 +30,6 @@ export class StukturPembiayaanComponent implements OnInit {
   curef: any;
   listagunan: listAgunan[] = [];
 
-  //nested
   nilaiPembiayaan: any;
   angsuranPalingTinggi: any;
   analisaDsr: any;
@@ -76,7 +75,6 @@ export class StukturPembiayaanComponent implements OnInit {
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getCollateralByCuref?sc=');
 
   ngOnInit(): void {
     this.sessionUsername = this.localStorageService.retrieve('sessionUserName');
@@ -100,7 +98,6 @@ export class StukturPembiayaanComponent implements OnInit {
     // Analisa Pembiayaan
     this.verifikasiServices.fetchAnalisaPembiayaan(this.app_no_de).subscribe(analisa => {
       this.analisaPembiayaan = analisa.result;
-      console.log('testt ' + analisa);
     });
 
     // ambil semua data Job by Curef
@@ -124,7 +121,7 @@ export class StukturPembiayaanComponent implements OnInit {
       this.comboSkema =
         this.strukturPembiayaan.skema_code + '|' + this.strukturPembiayaan.skema_master + '|' + this.strukturPembiayaan.skema;
       // retrive Tenor
-      if (this.dataEntry.kode_fasilitas_name == 'PTA') {
+      if (this.dataEntry.kode_fasilitas_name === 'PTA') {
         this.verifikasiServices.getTenorFix(this.strukturPembiayaan.skema_code).subscribe(fix => {
           this.tenor = fix.result;
         });
@@ -135,7 +132,7 @@ export class StukturPembiayaanComponent implements OnInit {
       }
 
       // alert(this.comboSkema)
-      let retrivestrukturForm = {
+      const retrivestrukturForm = {
         harga_permintaan: this.strukturPembiayaan.harga_permintaan,
         down_payment: this.strukturPembiayaan.down_payment,
         skema: this.comboSkema,
@@ -152,11 +149,9 @@ export class StukturPembiayaanComponent implements OnInit {
 
   loadSkema(produknya: any) {
     // Ref Skema
-    // alert('skema '+ produknya)
     this.verifikasiServices.getSkema(produknya).subscribe(data => {
       if (data.code === 200) {
         this.Skema = data.result;
-        // console.log(this.Skema)
       }
     });
 
@@ -168,17 +163,14 @@ export class StukturPembiayaanComponent implements OnInit {
   }
 
   tenorSkema(skemaName: any, skemaMaster: any) {
-    // alert(skemaName +' '+ skemaMaster)
     const skemaidName = skemaName.split('|');
-    if (skemaMaster == 'PTA') {
+    if (skemaMaster === 'PTA') {
       this.verifikasiServices.getTenorFix(skemaidName[0]).subscribe(fix => {
         this.tenor = fix.result;
-        // console.log('Fix ' + this.tenor);
       });
     } else {
       this.verifikasiServices.getTenorNon(skemaidName[0]).subscribe(Non => {
         this.tenor = Non.result;
-        // console.log('Non ' + this.tenor);
       });
     }
   }
@@ -186,10 +178,6 @@ export class StukturPembiayaanComponent implements OnInit {
   // Hitung Angsuran
   hitungAngsuran(skema_id: any, harga: any, dp: any) {
     const skemaidName = skema_id.split('|');
-    // const hargaPermintaan = harga.replace(/\,/g, '').replace('Rp ', '');
-    // const dpnya = dp.replace(/\,/g, '').replace('Rp ', '');
-    // alert(dpnya)
-    // alert(hargaPermintaan)
 
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-de/hitung_angsuran', {
@@ -213,7 +201,7 @@ export class StukturPembiayaanComponent implements OnInit {
           this.dpKurang = 0;
         },
         error: err => {
-          if (err.error.code == 400) {
+          if (err.error.code === 400) {
             alert(err.error.message);
             this.dpKurang = 1;
           }
@@ -230,7 +218,6 @@ export class StukturPembiayaanComponent implements OnInit {
           next: data => {
             this.analisaDsr = data.result.dsr;
             this.analisaMaxAngsuran = data.result.max_angsuran;
-            console.log('analisa ' + data.result.max_angsuran);
 
             setTimeout(() => {
               this.http
@@ -242,7 +229,6 @@ export class StukturPembiayaanComponent implements OnInit {
                   next: data => {
                     this.hasilScoring = data.result.score_value;
                     this.hasilStatus = data.result.score_desc;
-                    console.warn(data);
                   },
                 });
             }, 300);
@@ -270,7 +256,6 @@ export class StukturPembiayaanComponent implements OnInit {
     const persentace = persentase_pembiayaan_existing.replace('%', '');
     const valueMax_angsuran = max_angsuran.replace(/\,/g, '').replace('Rp ', '');
     const totPendapat = total_angsuran.replace(/\,/g, '').replace('Rp ', '');
-    // alert(valueMax_angsuran)
     if (this.strukturPembiayaan == null) {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_struktur_pembiayaan', {

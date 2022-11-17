@@ -8,7 +8,6 @@ import { ServiceVerificationService } from '../service/service-verification.serv
 import { refHubunganEmergency } from '../service/config/refHubunganEmergency.model';
 import { refStatusPerkawinan } from '../service/config/refStatusPerkawinan.model';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
-import { Observable } from 'rxjs';
 import { refBidang } from 'app/initial-data-entry/services/config/refBidang.model';
 import { refSektor } from 'app/initial-data-entry/services/config/refSektor.model';
 import { refStatusRumah } from '../service/config/refStatusRumah.model';
@@ -18,8 +17,6 @@ import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model
 import { refAnalisaCalonNasabah } from './refAnalisaCalonNasabah.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { LocalStorageService } from 'ngx-webstorage';
-import { listAgunan } from 'app/data-entry/services/config/listAgunan.model';
-// import { openStdin } from 'process';
 
 @Component({
   selector: 'jhi-data-calon-nasabah',
@@ -91,116 +88,64 @@ export class DataCalonNasabahComponent implements OnInit {
 
   ngOnInit(): void {
     this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
-    this.verifikatorMelihat = this.untukSessionRole == 'VER_PRESCR';
+    this.verifikatorMelihat = this.untukSessionRole === 'VER_PRESCR';
     this.editor = new Editor();
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.dataCalonNasabahForm = this.formBuilder.group({
-      // tanggal_verification: ['', Validators.required],
-      // no_customer: ['', [Validators.required, Validators.minLength(12)]],
-      // hubungan_dengen_pemberi_keterangan: ['', Validators.required],
-      // pemberi_keterangan: ['', Validators.required],
-      // alamat_rumah: ['', Validators.required],
-      // rt: ['', Validators.required],
-      // rw: ['', Validators.required],
-      // provinsi: ['', Validators.required],
-      // kota: ['', Validators.required],
-      // kecamatan: ['', Validators.required],
-      // kelurahan: ['', Validators.required],
-      // kode_pos: ['', Validators.required],
-      // tanggal_lahir: ['', Validators.required],
-      // pedidikan: ['', Validators.required],
-      // status_menikah: ['', Validators.required],
-      // tanggal_pemeriksa: ['', Validators.required],
-      // // nama_pasangan: ['', Validators.required],
-      // // pekerjaan_pasangan: ['', Validators.required],
-      // nama_ibu_kandung: ['', Validators.required],
-      // jumlah_tanggunan: ['', Validators.required],
-      // karakter_nasabah: ['', Validators.required],
-      // fasilitas_pembiayaan_ke: ['', Validators.required],
-      // kondisi_lingkungan: ['', Validators.required],
-      // akses_jalan_ke_rumah_tinggal: ['', Validators.required],
-      // jumlah_kendaraan: ['', Validators.required],
-      // kesimpulan_hasil_investigasi: ['', Validators.required],
-      // lama_menetap_bulan: ['', Validators.required],
-      // lama_menetap_tahun: ['', Validators.required],
-
-      // ini tambahan
-      // nama: '',
-      // curef: '',
-      // no_handphone: '',
-      // jenis_kelamin: '',
-      // alamat_ktp: '',
-      // rt: '',
-      // rw: '',
-      // provinsi: '',
-      // kabkota: '',
-      // kecamatan: '',
-      // kelurahan: '',
-      // kode_pos: '',
-      // status_perkawinan: '',
-      // tanggal_lahir: '',
-      // pendidikan: '',
-      // nama_ibu_kandung: '',
-      // kode_fasilitas: '',
-      // nama_pasangan: '',
-      // pekerjaan_pasangan: '',
-
-      // id: "",
-      // app_no_de: '',
       tanggal_verifikasi: '',
       pemberi_keterangan: '',
       hubungan_pemberi_keterangan: '',
-      verif_alamat: [{ value:'', disabled: this.verifikatorMelihat }],
-      note_verif_alamat: [{ value:'', disabled: this.verifikatorMelihat }],
-      verif_rt_rw: [{ value:'', disabled: this.verifikatorMelihat }],
-      note_verif_rt_rw: [{ value:'', disabled: this.verifikatorMelihat }],
-      verif_provinsi: [{ value:'', disabled: this.verifikatorMelihat }],
-      note_verif_provinsi: [{ value:'', disabled: this.verifikatorMelihat }],
-      verif_kabkota: [{ value:'', disabled: this.verifikatorMelihat }],
-      note_verif_kabkota: [{ value:'', disabled: this.verifikatorMelihat }],
-      verif_kecamatan: [{ value:'', disabled: this.verifikatorMelihat }],
-      note_verif_kecamatan: [{ value:'', disabled: this.verifikatorMelihat }],
-      verif_kelurahan: [{ value:'', disabled: this.verifikatorMelihat }],
-      note_verif_kelurahan: [{ value:'', disabled: this.verifikatorMelihat }],
-      verif_kode_pos: [{ value:'', disabled: this.verifikatorMelihat }],
-      note_verif_kode_pos: [{ value:'', disabled: this.verifikatorMelihat }],
-      verif_tanggal_lahir: [{ value:'', disabled: this.verifikatorMelihat }],
-      note_verif_tanggal_lahir: [{ value:'', disabled: this.verifikatorMelihat }],
-      verif_pendidikan: [{ value:'', disabled: this.verifikatorMelihat }],
-      note_verif_pendidikan: [{ value:'', disabled: this.verifikatorMelihat }],
-      verif_status_menikah: [{ value:'', disabled: this.verifikatorMelihat }],
-      note_verif_status_menikah: [{ value:'', disabled: this.verifikatorMelihat }],
-      verif_ibu_kandung: [{ value:'', disabled: this.verifikatorMelihat }],
-      note_verif_ibu_kandung: [{ value:'', disabled: this.verifikatorMelihat }],
+      verif_alamat: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_alamat: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_rt_rw: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_rt_rw: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_provinsi: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_provinsi: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_kabkota: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_kabkota: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_kecamatan: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_kecamatan: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_kelurahan: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_kelurahan: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_kode_pos: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_kode_pos: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_tanggal_lahir: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_tanggal_lahir: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_pendidikan: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_pendidikan: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_status_menikah: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_status_menikah: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_ibu_kandung: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_ibu_kandung: [{ value: '', disabled: this.verifikatorMelihat }],
       // verif_jumlah_tanggungan: '',
       // note_verif_jumlah_tanggungan: '',
-      verif_nama_pasangan: [{ value:'', disabled: this.verifikatorMelihat }],
-      note_verif_nama_pasangan: [{ value:'', disabled: this.verifikatorMelihat }],
-      verif_pekerjaan_pasangan: [{ value:'', disabled: this.verifikatorMelihat }],
-      note_verif_pekerjaan_pasangan: [{ value:'', disabled: this.verifikatorMelihat }],
-      fasilitas_pembiayaan: [{ value:'', disabled: this.verifikatorMelihat }],
-      karakter_calon_nasabah: [{ value:'', disabled: this.verifikatorMelihat }],
-      status_rumah: [{ value:'', disabled: this.verifikatorMelihat }],
+      verif_nama_pasangan: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_nama_pasangan: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_pekerjaan_pasangan: [{ value: '', disabled: this.verifikatorMelihat }],
+      note_verif_pekerjaan_pasangan: [{ value: '', disabled: this.verifikatorMelihat }],
+      fasilitas_pembiayaan: [{ value: '', disabled: this.verifikatorMelihat }],
+      karakter_calon_nasabah: [{ value: '', disabled: this.verifikatorMelihat }],
+      status_rumah: [{ value: '', disabled: this.verifikatorMelihat }],
       // cek: '',
       // cek: this.formBuilder.array([]),
       // cek: new FormArray([
       //   new FormControl(true),
       //   new FormControl(false),
       // ]),
-      rumah_dihuni: [{ value:'', disabled: this.verifikatorMelihat }],
-      lama_menetap_bulan: [{ value:'', disabled: this.verifikatorMelihat }],
-      lama_menetap_tahun: [{ value:'', disabled: this.verifikatorMelihat }],
-      jenis_bangunan: [{ value:'', disabled: this.verifikatorMelihat }],
-      lokasi_perumahan: [{ value:'', disabled: this.verifikatorMelihat }],
-      fasilitas_listrik: [{ value:'', disabled: this.verifikatorMelihat }],
+      rumah_dihuni: [{ value: '', disabled: this.verifikatorMelihat }],
+      lama_menetap_bulan: [{ value: '', disabled: this.verifikatorMelihat }],
+      lama_menetap_tahun: [{ value: '', disabled: this.verifikatorMelihat }],
+      jenis_bangunan: [{ value: '', disabled: this.verifikatorMelihat }],
+      lokasi_perumahan: [{ value: '', disabled: this.verifikatorMelihat }],
+      fasilitas_listrik: [{ value: '', disabled: this.verifikatorMelihat }],
       // isi_rumah: '',
-      kondisi_lingkungan: [{ value:'', disabled: this.verifikatorMelihat }],
-      akses_jalan: [{ value:'', disabled: this.verifikatorMelihat }],
-      garasi: [{ value:'', disabled: this.verifikatorMelihat }],
-      carport: [{ value:'', disabled: this.verifikatorMelihat }],
-      kendaraan: [{ value:'', disabled: this.verifikatorMelihat }],
-      jumlah_kendaraan: [{ value:'', disabled: this.verifikatorMelihat }],
-      kondisi_kendaraan: [{ value:'', disabled: this.verifikatorMelihat }],
+      kondisi_lingkungan: [{ value: '', disabled: this.verifikatorMelihat }],
+      akses_jalan: [{ value: '', disabled: this.verifikatorMelihat }],
+      garasi: [{ value: '', disabled: this.verifikatorMelihat }],
+      carport: [{ value: '', disabled: this.verifikatorMelihat }],
+      kendaraan: [{ value: '', disabled: this.verifikatorMelihat }],
+      jumlah_kendaraan: [{ value: '', disabled: this.verifikatorMelihat }],
+      kondisi_kendaraan: [{ value: '', disabled: this.verifikatorMelihat }],
       // created_date: "",
       // updated_date: "",
       // created_by: "",
@@ -216,9 +161,7 @@ export class DataCalonNasabahComponent implements OnInit {
     this.checkboxCekPbb = '';
     this.checkboxCekRekLis = '';
     if (e.target.checked) {
-      // cek.push(new FormControl(e.target.value));
       this.tempunganCek.push(e.target.value);
-      // alert(this.tempunganCek)
     }
   }
 
@@ -229,16 +172,13 @@ export class DataCalonNasabahComponent implements OnInit {
     this.isiRumahSofa = '';
     this.isiRumahPerabot = '';
     if (e.target.checked) {
-      // cek.push(new FormControl(e.target.value));
       this.tampunganIsiRum.push(e.target.value);
-      // alert(this.tempunganCek)
     }
   }
 
   onSubmit(): void {
-    let cekKe = this.tempunganCek.join(', ');
-    let isiRumahCek = this.tampunganIsiRum.join(', ');
-    // alert(this.dataCalonNasabahForm.get('cek')?.value)
+    const cekKe = this.tempunganCek.join(', ');
+    const isiRumahCek = this.tampunganIsiRum.join(', ');
     this.submitted = true;
     if (this.dataCalonNasabahForm.invalid) {
       return;
@@ -309,15 +249,14 @@ export class DataCalonNasabahComponent implements OnInit {
       // alert('Coba Validasi');
     }
     // Cek Ke
-    // alert(cekKe != '')
-    else if (cekKe != '') {
+    else if (cekKe !== '') {
       this.dataCalonNasabahMap.cek = cekKe;
     } else {
       this.dataCalonNasabahMap.cek = this.dataCalonNasabahMap.cek;
     }
 
     // Isi Rumah
-    if (cekKe != '') {
+    if (cekKe !== '') {
       this.dataCalonNasabahMap.isi_rumah = isiRumahCek;
     } else {
       this.dataCalonNasabahMap.isi_rumah = this.dataCalonNasabahMap.isi_rumah;
@@ -431,30 +370,7 @@ export class DataCalonNasabahComponent implements OnInit {
 
     this.dataCalonNasabah.fetchDataNasabah(this.app_no_de).subscribe(data => {
       this.dataCalonNasabahMap = data.result;
-      let retriveCalonNasabah = {
-        /// tambahan dari de
-        // nama: this.dataEntry?.nama,
-        // curef: this.dataEntry?.curef,
-        // no_handphone: this.dataEntry?.no_handphone,
-        // jenis_kelamin: this.dataEntry?.jenis_kelamin,
-        // alamat_ktp: this.dataEntry?.alamat_ktp,
-        // rt: this.dataEntry?.rt,
-        // rw: this.dataEntry?.rw,
-        // provinsi: this.dataEntry?.provinsi,
-        // kabkota: this.dataEntry?.kabkota,
-        // kecamatan: this.dataEntry?.kecamatan,
-        // kelurahan: this.dataEntry?.kelurahan,
-        // kode_pos: this.dataEntry?.kode_pos,
-        // status_perkawinan: this.dataEntry?.status_perkawinan,
-        // tanggal_lahir: this.dataEntry?.tanggal_lahir,
-        // pendidikan: this.dataEntry?.pendidikan,
-        // nama_ibu_kandung: this.dataEntry?.nama_ibu_kandung,
-        // kode_fasilitas: this.dataEntry?.kode_fasilitas,
-        // nama_pasangan: this.dataEntry?.nama_pasangan,
-        // pekerjaan_pasangan: this.dataEntry?.nama_ibu_kandung_pasangan,
-
-        // id: this.dataCalonNasabahMap ,
-        // app_no_de: this.dataCalonNasabahMap.app_no_de,
+      const retriveCalonNasabah = {
         tanggal_verifikasi: this.dataCalonNasabahMap.tanggal_verifikasi,
         pemberi_keterangan: this.dataCalonNasabahMap.pemberi_keterangan,
         hubungan_pemberi_keterangan: this.dataCalonNasabahMap.hubungan_pemberi_keterangan,
@@ -514,20 +430,20 @@ export class DataCalonNasabahComponent implements OnInit {
       // Checkbox Cek Ke
       this.checkboxCek = this.dataCalonNasabahMap.cek?.split(', ');
       for (let i = 0; i < this.checkboxCek.length; i++) {
-        // alert(this.checkboxCek[i] == "Sertifikat")
-        if (this.checkboxCek[i] == 'Sertifikat') {
+        // alert(this.checkboxCek[i] === "Sertifikat")
+        if (this.checkboxCek[i] === 'Sertifikat') {
           this.checkboxCekSertif = 'Sertifikat';
           // alert("1 "+ this.checkboxCekSertif)
-        } else if (this.checkboxCek[i] == 'Akta Jual Beli') {
+        } else if (this.checkboxCek[i] === 'Akta Jual Beli') {
           this.checkboxCekAkte = 'Akta Jual Beli';
           // alert("2 "+ this.checkboxCekAkte)
-        } else if (this.checkboxCek[i] == 'Rekening Telepon') {
+        } else if (this.checkboxCek[i] === 'Rekening Telepon') {
           this.checkboxCekRekTel = 'Rekening Telepon';
           // alert("3 "+ this.checkboxCekRekTel)
-        } else if (this.checkboxCek[i] == 'PBB') {
+        } else if (this.checkboxCek[i] === 'PBB') {
           this.checkboxCekPbb = 'PBB';
           // alert("4 "+ this.checkboxCekPbb)
-        } else if (this.checkboxCek[i] == 'Rekening Listrik') {
+        } else if (this.checkboxCek[i] === 'Rekening Listrik') {
           this.checkboxCekRekLis = 'Rekening Listrik';
           // alert("5 "+ this.checkboxCekRekLis)
         }
@@ -536,15 +452,15 @@ export class DataCalonNasabahComponent implements OnInit {
       // Checkbox Isi Rumah
       this.checkboxIsiRumah = this.dataCalonNasabahMap.isi_rumah?.split(', ');
       for (let i = 0; i < this.checkboxIsiRumah.length; i++) {
-        if (this.checkboxIsiRumah[i] == 'Mobil') {
+        if (this.checkboxIsiRumah[i] === 'Mobil') {
           this.isiRumahMobil = 'Mobil';
-        } else if (this.checkboxIsiRumah[i] == 'Motor') {
+        } else if (this.checkboxIsiRumah[i] === 'Motor') {
           this.isiRumahMotor = 'Motor';
-        } else if (this.checkboxIsiRumah[i] == 'TV') {
+        } else if (this.checkboxIsiRumah[i] === 'TV') {
           this.isiRumahTV = 'TV';
-        } else if (this.checkboxIsiRumah[i] == 'Sofa') {
+        } else if (this.checkboxIsiRumah[i] === 'Sofa') {
           this.isiRumahSofa = 'Sofa';
-        } else if (this.checkboxIsiRumah[i] == 'Perabot Lainnya') {
+        } else if (this.checkboxIsiRumah[i] === 'Perabot Lainnya') {
           this.isiRumahPerabot = 'Perabot Lainnya';
         }
       }

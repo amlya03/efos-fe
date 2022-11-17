@@ -1,6 +1,6 @@
 export class refObjekAgunan {
-  id?: Number;
-  jenis_objek_code?: Number;
-  jenis_objek_deskripsi?: String;
-  active?: String;
+  id?: number;
+  jenis_objek_code?: number;
+  jenis_objek_deskripsi?: string;
+  active?: string;
 }

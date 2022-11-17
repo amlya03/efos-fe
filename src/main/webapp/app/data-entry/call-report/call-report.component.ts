@@ -1,13 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { createRequestOption } from 'app/core/request/request-util';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
-
-export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
+import { HttpClient } from '@angular/common/http';
+import { LocalStorageService } from 'ngx-webstorage';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { DataEntryService } from '../services/data-entry.service';
+import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { getCallReportModel } from '../services/config/getCallReportModel.model';
+import { refStatusRumah } from 'app/verification/service/config/refStatusRumah.model';
+import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
+import { refListTipeKendaraan } from '../services/config/refListTipeKendaraan.model';
+import { refStatusPerkawinan } from '../services/config/refStatusPerkawinan.model';
+import { refListJumlahKaryawan } from '../services/config/refListJumlahKaryawan.model';
+import { refStatusSertifikat } from '../services/config/refStatusSertifikat.model';
 
 @Component({
   selector: 'jhi-call-report',
@@ -15,134 +20,254 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./call-report.component.scss'],
 })
 export class CallReportComponent implements OnInit {
+  callReportForm!: FormGroup;
   datakirimiancure: any;
-  app_no_de: any;
-  daWa: any;
-  daWa1: any;
+  curef: string | undefined;
+  statusPerkawinan: string | undefined;
+  app_no_de: string | undefined;
+  daWa: getCallReportModel = new getCallReportModel();
+  daWa1: fetchAllDe = new fetchAllDe();
+  ref_status_perkawinan: refStatusPerkawinan[] = [];
+  ref_status_rumah: refStatusRumah[] = [];
+  ref_list_tipe_kendaraan: refListTipeKendaraan[] = [];
+  pemegangHak: refListJumlahKaryawan[] = [];
+  listSertif: refStatusSertifikat[] = [];
+  nowawancara: any;
   contohtex: any;
+  skalaprusahaan: any;
+  checkboxCekaktapendirian: any;
+  tempunganCek: Array<number> = [];
+  checkboxCek: any;
+  textwawancara: any;
   untukSessionRole: any;
   untukSessionUserName: any;
   untukSessionFullName: any;
   untukSessionKodeCabang: any;
-  skalaprusahaan: any;
-  nowawancara: any;
+  checkboxCeksiu: any;
+  checkboxCeksiup: any;
+  checkboxCeknib: any;
+  checkboxCekskdu: any;
+  checkboxCekskdp: any;
+  legalitasUsaha: any;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private localStorageService: LocalStorageService
+    private formBuilder: FormBuilder,
+    protected dataEntryService: DataEntryService,
+    private localStorageService: LocalStorageService,
+    protected verificationServices: ServiceVerificationService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.datakirimiancure = params['datakirimiancure'];
+      this.curef = params['curef'];
     });
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
+      this.statusPerkawinan = params['statusPerkawinan'];
     });
-
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
-
-    this.untukSessionFullName = this.localStorageService.retrieve('sessionFullName');
   }
-
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getCallReportByDe?sd=');
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
-  protected apiskalaperusahaan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ref/list_skala_perusahaan'
-  );
-  protected apgetnowawancara = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/get_call_report_seq');
 
   ngOnInit(): void {
     this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
+    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionFullName = this.localStorageService.retrieve('sessionFullName');
+    this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
     this.load();
+
+    // ////////// Validasi \\\\\\\\\\\\\\\\\
+    this.callReportForm = this.formBuilder.group({
+      alamat_tinggal: '',
+      tanggal_lahir: '',
+      status_kawin: '',
+      pendidikan: '',
+      kendaraan: '',
+      status_agunan: '',
+      catatan_status_agunan: '',
+      dokumen_agunan: '',
+      catatan_dokumen_agunan: '',
+      posisi_dokumen: '',
+      catatan_posisi_dokumen: '',
+      jenis_usaha: '',
+      lama_usaha: '',
+      tipe_pekerjaan: '',
+      status_pekerjaan: '',
+      lama_bekerja_tahun: '',
+      lama_bekerja_bulan: '',
+      jabatan_terakhir: '',
+      nama_perusahaan: '',
+      bidang_usaha: '',
+      jenis_produk: '',
+      skala_perusahaan: '',
+      tahun_berdiri_perusahaan: '',
+      alamat_perusahaan: '',
+      jumlah_karyawan: '',
+      kondisi_pandemi: '',
+      kepemilikan_usaha: '',
+      no_kontak_hr: '',
+      tipe_pekerjaan_pasangan: '',
+      status_pekerjaan_pasangan: '',
+      lama_bekerja_bulan_pasangan: '',
+      lama_bekerja_tahun_pasangan: '',
+      jabatan_terakhir_pasangan: '',
+      nama_perusahaan_pasangan: '',
+      bidang_usaha_pasangan: '',
+      skala_perusahaan_pasangan: '',
+      tahun_berdiri_perusahaan_pasangan: '',
+      alamat_perusahaan_pasangan: '',
+      jumlah_karyawan_perusahaan_pasangan: '',
+      kondisi_pandemi_perusahaan_pasangan: '',
+      no_kontak_hr_pasangan: '',
+      laba_periode_1: '',
+      laba_periode_2: '',
+      laba_periode_3: '',
+      laba_periode_4: '',
+      rata_rata_laba: '',
+      estimasi_angsuran: '',
+      validasi_rekening: '',
+      tanggal_wawancara: '',
+      keterangan: '',
+      take_home_pay: '',
+    });
   }
 
   load() {
-    // $('#denganini').val(
-    //   'JALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALANJALAN'
-    // );
+    this.dataEntryService.getFetchCallReport(this.app_no_de).subscribe(call => {
+      this.daWa = call.result;
 
-    this.getdataentry().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('callreportnon', res);
+      const retriveCallReport = {
+        alamat_tinggal: this.daWa.alamat_tinggal,
+        tanggal_lahir: this.daWa.tanggal_lahir,
+        status_kawin: this.daWa.status_kawin,
+        pendidikan: this.daWa.pendidikan,
+        kendaraan: this.daWa.kendaraan,
+        status_agunan: this.daWa.status_agunan,
+        catatan_status_agunan: this.daWa.catatan_status_agunan,
+        dokumen_agunan: this.daWa.dokumen_agunan,
+        catatan_dokumen_agunan: this.daWa.catatan_dokumen_agunan,
+        posisi_dokumen: this.daWa.posisi_dokumen,
+        catatan_posisi_dokumen: this.daWa.catatan_posisi_dokumen,
+        jenis_usaha: this.daWa.jenis_usaha,
+        lama_usaha: this.daWa.lama_usaha,
+        tipe_pekerjaan: this.daWa.tipe_pekerjaan,
+        status_pekerjaan: this.daWa.status_pekerjaan,
+        lama_bekerja_tahun: this.daWa.lama_bekerja_tahun,
+        lama_bekerja_bulan: this.daWa.lama_bekerja_bulan,
+        jabatan_terakhir: this.daWa.jabatan_terakhir,
+        nama_perusahaan: this.daWa.nama_perusahaan,
+        bidang_usaha: this.daWa.bidang_usaha,
+        jenis_produk: this.daWa.jenis_produk,
+        skala_perusahaan: this.daWa.skala_perusahaan,
+        tahun_berdiri_perusahaan: this.daWa.tahun_berdiri_perusahaan,
+        alamat_perusahaan: this.daWa.alamat_perusahaan,
+        jumlah_karyawan: this.daWa.jumlah_karyawan,
+        kondisi_pandemi: this.daWa.kondisi_pandemi,
+        kepemilikan_usaha: this.daWa.kepemilikan_usaha,
+        no_kontak_hr: this.daWa.no_kontak_hr,
+        tipe_pekerjaan_pasangan: this.daWa.tipe_pekerjaan_pasangan,
+        status_pekerjaan_pasangan: this.daWa.status_pekerjaan_pasangan,
+        lama_bekerja_bulan_pasangan: this.daWa.lama_bekerja_bulan_pasangan,
+        lama_bekerja_tahun_pasangan: this.daWa.lama_bekerja_tahun_pasangan,
+        jabatan_terakhir_pasangan: this.daWa.jabatan_terakhir_pasangan,
+        nama_perusahaan_pasangan: this.daWa.nama_perusahaan_pasangan,
+        bidang_usaha_pasangan: this.daWa.bidang_usaha_pasangan,
+        skala_perusahaan_pasangan: this.daWa.skala_perusahaan_pasangan,
+        tahun_berdiri_perusahaan_pasangan: this.daWa.tahun_berdiri_perusahaan_pasangan,
+        alamat_perusahaan_pasangan: this.daWa.alamat_perusahaan_pasangan,
+        jumlah_karyawan_perusahaan_pasangan: this.daWa.jumlah_karyawan_perusahaan_pasangan,
+        kondisi_pandemi_perusahaan_pasangan: this.daWa.kondisi_pandemi_perusahaan_pasangan,
+        no_kontak_hr_pasangan: this.daWa.no_kontak_hr_pasangan,
+        laba_periode_1: this.daWa.laba_periode_1,
+        laba_periode_2: this.daWa.laba_periode_2,
+        laba_periode_3: this.daWa.laba_periode_3,
+        laba_periode_4: this.daWa.laba_periode_4,
+        rata_rata_laba: this.daWa.rata_rata_laba,
+        estimasi_angsuran: this.daWa.estimasi_angsuran,
+        validasi_rekening: this.daWa.validasi_rekening,
+        tanggal_wawancara: this.daWa.tanggal_wawancara,
+        take_home_pay: this.daWa.take_home_pay,
+        keterangan: this.daWa.keterangan,
+      };
+      this.callReportForm.setValue(retriveCallReport);
 
-        if (res.body?.result == null) {
-          this.daWa = 0;
-          this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
-          this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
-        } else {
-          this.daWa = res.body?.result;
-          this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
-          this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
+      this.checkboxCek = this.daWa.legalitas_usaha.split(', ');
+      for (let i = 0; i < this.checkboxCek.length; i++) {
+        if (this.checkboxCek[i] === 'SIU') {
+          this.checkboxCeksiu = 'SIU';
+        } else if (this.checkboxCek[i] === 'SIUP') {
+          this.checkboxCeksiup = 'SIUP';
+        } else if (this.checkboxCek[i] === 'NIB') {
+          this.checkboxCeknib = 'NIB';
+        } else if (this.checkboxCek[i] === 'SKDU') {
+          this.checkboxCekskdu = 'SKDU';
+        } else if (this.checkboxCek[i] === 'SKDP') {
+          this.checkboxCekskdp = 'SKDP';
+        } else if (this.checkboxCek[i] === 'Akta Pendirian') {
+          this.checkboxCekaktapendirian = 'Akta Pendirian';
         }
+      }
+    });
+    setTimeout(() => {
+      if (this.daWa !== null) {
+        this.nowawancara = this.daWa.no_wawancara;
+      } else {
+        this.dataEntryService.getFetchGetWawancara().subscribe(wawancara => {
+          this.nowawancara = 'CR_' + this.app_no_de + '_' + wawancara.result;
+        });
+      }
+    }, 300);
+    this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(de => {
+      this.daWa1 = de.result;
 
-        if (this.daWa == null) {
-          this.getnomorwawancara().subscribe({
-            next: (res: EntityArrayResponseDaWa) => {
-              console.warn('contohwawancarano', res);
-              this.nowawancara = res.body?.result;
-              $('#no_wawancara').val('CR' + '_' + this.app_no_de + '_' + this.nowawancara);
-              $('#no_wawancara1').val(this.nowawancara);
-            },
-          });
-        } else {
-        }
-        // this.daWa = res.body?.result;
-      },
+      this.contohtex =
+        'Dengan ini saya menyatakan hasil wawancara yang diisi oleh saya ' +
+        this.untukSessionFullName +
+        ' dan pemberi Informasi yang disebut nasabah adalah benar adanya ' +
+        this.daWa1.nama;
     });
 
-    this.getdataentrynama().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('namaatas', res);
-        this.daWa1 = res.body?.result;
-
-        this.contohtex =
-          'Dengan ini saya menyatakan hasil wawancara yang diisi oleh saya ' +
-          this.untukSessionFullName +
-          ' dan pemberi Informasi yang disebut nasabah adalah benar adanya ' +
-          this.daWa1.nama;
-      },
+    // /////////////////////////Ref////////////////////////////////////
+    this.dataEntryService.getFetchStatusPerkawinan().subscribe(data => {
+      this.ref_status_perkawinan = data.result;
     });
-
-    this.getskalaprusahaan().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        // console.log(res.body?.result);
-        console.warn('skalaperusaahaan', res.body?.result);
-        this.skalaprusahaan = res.body?.result;
-      },
+    this.verificationServices.getStatusRumah().subscribe(data => {
+      this.ref_status_rumah = data.result;
+    });
+    this.dataEntryService.getFetchListTipeKendaraaan().subscribe(data => {
+      this.ref_list_tipe_kendaraan = data.result;
+    });
+    this.dataEntryService.getFetchListPemegangHak().subscribe(data => {
+      this.pemegangHak = data.result;
+    });
+    this.dataEntryService.getFetchRefSkalaPerusahaan().subscribe(skala => {
+      this.skalaprusahaan = skala.result;
+    });
+    this.dataEntryService.getFetchListSertifikat().subscribe(sertif => {
+      this.listSertif = sertif.result;
     });
   }
 
   goto() {
-    // this.router.navigate(['/memo'], { queryParams: {  } });
-    // alert(this.app_no_dea);
     this.router.navigate(['/data-entry/memo'], {
-      queryParams: { app_no_de: this.app_no_de, datakirimiancure: this.datakirimiancure },
+      queryParams: {
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de,
+      },
     });
   }
 
-  getskalaprusahaan(req1?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req1);
-    return this.http.get<ApiResponse>(this.apiskalaperusahaan, { params: options, observe: 'response' });
-  }
-
-  getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl + this.app_no_de, { params: options, observe: 'response' });
-  }
-  getdataentrynama(req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.resourceUrl1 + this.app_no_de, { params: options, observe: 'response' });
-  }
-  getnomorwawancara(req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return this.http.get<ApiResponse>(this.apgetnowawancara, { params: options, observe: 'response' });
+  onCheckCek(e: any) {
+    this.checkboxCeksiu = '';
+    this.checkboxCeksiup = '';
+    this.checkboxCeknib = '';
+    this.checkboxCekskdu = '';
+    this.checkboxCekskdp = '';
+    this.checkboxCekaktapendirian = '';
+    if (e.target.checked) {
+      this.tempunganCek.push(e.target.value);
+    }
   }
 
   onclikwawancara(e: any) {
@@ -151,146 +276,87 @@ export class CallReportComponent implements OnInit {
     } else {
       $('#buttonsimpan').attr('hidden', 'hidden');
     }
-
-    // $('#uang_muka').removeAttr('hidden');
   }
 
   simpancallreport() {
-    // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
-    const tipe_nasabah = document.getElementById('tipe_nasabah') as HTMLInputElement | any;
-    const alamat_ktp = document.getElementById('alamat_ktp') as HTMLInputElement | any;
-    const tanggal_lahir = document.getElementById('tanggal_lahir') as HTMLInputElement | any;
-    const status_perkawinan = document.getElementById('status_perkawinan') as HTMLInputElement | any;
-    const pendidikan = document.getElementById('pendidikan') as HTMLInputElement | any;
-    const tipe_kendaraan1 = document.getElementById('tipe_kendaraan1') as HTMLInputElement | any;
-    const status_agunan = document.getElementById('status_agunan') as HTMLInputElement | any;
-    const dokumen_kepemilikan = document.getElementById('dokumen_kepemilikan') as HTMLInputElement | any;
-    const catatan_dokumen_agunan = document.getElementById('catatan_dokumen_agunan') as HTMLInputElement | any;
-    const posisi_dokumen = document.getElementById('posisi_dokumen') as HTMLInputElement | any;
-    const catatan_posisi_dokumen = document.getElementById('catatan_posisi_dokumen') as HTMLInputElement | any;
-    const jenis_usaha_call = document.getElementById('jenis_usaha_call') as HTMLInputElement | any;
-    const lama_usaha = document.getElementById('lama_usaha') as HTMLInputElement | any;
-    const bidang_usaha = document.getElementById('bidang_usaha') as HTMLInputElement | any;
-    const nama_badan_usaha = document.getElementById('nama_badan_usaha') as HTMLInputElement | any;
-    const nama_perusahaan = document.getElementById('nama_perusahan') as HTMLInputElement | any;
-    const skala_perusahaan = document.getElementById('skala_perusahaan') as HTMLInputElement | any;
-    const jenis_produk = document.getElementById('jenis_produk') as HTMLInputElement | any;
-    const tahun_berdiri_perusahaan = document.getElementById('tahun_berdiri_perusahaan') as HTMLInputElement | any;
-    const alamat_perusahaan = document.getElementById('alamat_perusahaan') as HTMLInputElement | any;
-    const jumlah_karyawan = document.getElementById('jumlah_karyawan') as HTMLInputElement | any;
-    const kondisi_pandemik = document.getElementById('kondisi_pandemik') as HTMLInputElement | any;
-    const kepemilikan_usaha = document.getElementById('kepemilikan_usaha') as HTMLInputElement | any;
+    const legalitas = this.tempunganCek.join(', ');
 
-    const tipe_pekerjaan_pasangan = document.getElementById('tipe_pekerjaan_pasangan') as HTMLInputElement | any;
-    const status_pekerjaan_pasangan = document.getElementById('status_pekerjaan_pasangan') as HTMLInputElement | any;
-    const lama_bekerja_bulan_pasangan = document.getElementById('lama_bekerja_bulan_pasangan') as HTMLInputElement | any;
-    const lama_bekerja_tahun_pasangan = document.getElementById('lama_bekerja_tahun_pasangan') as HTMLInputElement | any;
-    const jabatan_terakhir_pasangan = document.getElementById('jabatan_terakhir_pasangan') as HTMLInputElement | any;
-    const nama_perusahaan_pasangan = document.getElementById('nama_perusahaan_pasangan') as HTMLInputElement | any;
-    const bidang_usaha_pasangan = document.getElementById('bidang_usaha_pasangan') as HTMLInputElement | any;
-    const skala_perusahaan_pasangan = document.getElementById('skala_perusahaan_pasangan') as HTMLInputElement | any;
-    const tahun_berdiri_perusahaan_pasangan = document.getElementById('tahun_berdiri_perusahaan_pasangan') as HTMLInputElement | any;
-    const alamat_perusahaan_pasangan = document.getElementById('alamat_perusahaan_pasangan') as HTMLInputElement | any;
-    const jumlah_karyawan_perusahaan_pasangan = document.getElementById('jumlah_karyawan_perusahaan_pasangan') as HTMLInputElement | any;
-    const kondisi_pandemi_pasangan = document.getElementById('kondisi_pandemi_perusahaan_pasangan') as HTMLInputElement | any;
-    // const email = document.getElementById('email') as HTMLInputElement | any;
-    const no_kontak_hr_pasangan = document.getElementById('no_kontak_hr_pasangan') as HTMLInputElement | any;
-    const status_pekerjaan = document.getElementById('status_pekerjaan') as HTMLInputElement | any;
-    const no_kontak_hr = document.getElementById('no_kontak_hr') as HTMLInputElement | any;
-    const catatan_status_agunan = document.getElementById('catatan_status_agunan') as HTMLInputElement | any;
-    const jabatan_terakhir = document.getElementById('jabatan_terakhir') as HTMLInputElement | any;
-    const keterangan = document.getElementById('keterangan') as HTMLInputElement | any;
-    const estimasi_angsuran = document.getElementById('estimasi_angsuran') as HTMLInputElement | any;
-    const tercermin_rekening = document.getElementById('tercermin_rekening') as HTMLInputElement | any;
-    const tanggal_wawancara = document.getElementById('tanggal_wawancara') as HTMLInputElement | any;
-    const no_wawancara = document.getElementById('no_wawancara') as HTMLInputElement | any;
-    const takeHomepay = document.getElementById('takeHomepay') as HTMLInputElement | any;
-    const tipe_pekerjaan = document.getElementById('tipe_pekerjaan') as HTMLInputElement | any;
-    const lama_bekerja = document.getElementById('lama_bekerja') as HTMLInputElement | any;
-    const lama_bekerja_bulan = document.getElementById('lama_bekerja_bulan') as HTMLInputElement | any;
-    // const angsuran = document.getElementById('angsuran') as HTMLInputElement | any;
-    // const angsuran = document.getElementById('angsuran') as HTMLInputElement | any;
-
-    // alert('ini create');
-    const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
-
+    // Legalitas Usaha
+    if (legalitas !== '') {
+      this.legalitasUsaha = legalitas;
+    } else {
+      this.legalitasUsaha = this.daWa.legalitas_usaha;
+    }
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_call_report', {
-        // headers: headers,
-
-        alamat_perusahaan: alamat_perusahaan.value,
-        alamat_perusahaan_pasangan: alamat_perusahaan_pasangan.value,
-        alamat_tinggal: alamat_ktp.value,
+        alamat_perusahaan: this.callReportForm.get('alamat_perusahaan')?.value,
+        alamat_perusahaan_pasangan: this.callReportForm.get('alamat_perusahaan_pasangan')?.value,
+        alamat_tinggal: this.callReportForm.get('alamat_tinggal')?.value,
         app_no_de: this.app_no_de,
-        bidang_usaha: bidang_usaha.value,
-        bidang_usaha_pasangan: bidang_usaha_pasangan.value,
-        // bulan_berdiri_perusahaan: "string",
-        // bulan_berdiri_perusahaan_pasangan: "string",
-        cabang: 'string',
-        catatan_dokumen_agunan: catatan_dokumen_agunan.value,
-        catatan_posisi_dokumen: catatan_posisi_dokumen.value,
-        catatan_status_agunan: catatan_status_agunan.value,
-        created_by: 'string',
-        // created_date: "2022-10-06T07:02:19.704Z",
-        curef: this.datakirimiancure,
-        dokumen_agunan: dokumen_kepemilikan.value,
-        estimasi_angsuran: estimasi_angsuran.value,
+        bidang_usaha: this.callReportForm.get('bidang_usaha')?.value,
+        bidang_usaha_pasangan: this.callReportForm.get('bidang_usaha_pasangan')?.value,
+        cabang: this.localStorageService.retrieve('sessionKdCabang'),
+        catatan_dokumen_agunan: this.callReportForm.get('catatan_dokumen_agunan')?.value,
+        catatan_posisi_dokumen: this.callReportForm.get('catatan_posisi_dokumen')?.value,
+        catatan_status_agunan: this.callReportForm.get('catatan_status_agunan')?.value,
+        created_by: this.localStorageService.retrieve('sessionUserName'),
+        curef: this.curef,
+        dokumen_agunan: this.callReportForm.get('dokumen_agunan')?.value,
+        estimasi_angsuran: this.callReportForm.get('estimasi_angsuran')?.value,
         id: 0,
-        jabatan_terakhir: jabatan_terakhir.value,
-        jabatan_terakhir_pasangan: jabatan_terakhir_pasangan.value,
-        // jenis_produk: jenis_produk.value,
-        // jenis_usaha: jenis_usaha_call.value,
-        jumlah_karyawan: jumlah_karyawan.value,
-        jumlah_karyawan_perusahaan_pasangan: jumlah_karyawan_perusahaan_pasangan.value,
-        kategori_pekerjaan: '',
-        kendaraan: tipe_kendaraan1.value,
-        // kepemilikan_usaha: kepemilikan_usaha.value,
-        keterangan: keterangan.value,
-        kondisi_pandemi: kondisi_pandemik.value,
-        kondisi_pandemi_perusahaan_pasangan: kondisi_pandemi_pasangan.value,
-
-        lama_bekerja_bulan: lama_bekerja_bulan.value,
-        lama_bekerja_bulan_pasangan: lama_bekerja_bulan_pasangan.value,
-        lama_bekerja_tahun: lama_bekerja.value,
-        lama_bekerja_tahun_pasangan: lama_bekerja_tahun_pasangan.value,
-        // lama_usaha: lama_usaha.value,
-        // legalitas_usaha: "string",
-        nama_ao: 'string',
-        nama_perusahaan: nama_perusahaan.value,
-        nama_perusahaan_pasangan: nama_perusahaan_pasangan.value,
-        no_kontak_hr: no_kontak_hr.value,
-        no_kontak_hr_pasangan: no_kontak_hr_pasangan.value,
-        no_wawancara: no_wawancara.value,
-        pendidikan: pendidikan.value,
-        posisi_dokumen: posisi_dokumen.value,
-        // rata_rata_laba: rata_rata_laba.value,
-        skala_perusahaan: skala_perusahaan.value,
-        skala_perusahaan_pasangan: skala_perusahaan_pasangan.value,
-        status_agunan: status_agunan.value,
-        status_kawin: status_perkawinan.value,
-        status_pekerjaan: status_pekerjaan.value,
-        status_pekerjaan_pasangan: status_pekerjaan_pasangan.value,
-        tahun_berdiri_perusahaan: tahun_berdiri_perusahaan.value,
-        tahun_berdiri_perusahaan_pasangan: tahun_berdiri_perusahaan_pasangan.value,
-        take_home_pay: takeHomepay.value,
-        tanggal_lahir: tanggal_lahir.value,
-        tanggal_wawancara: tanggal_wawancara.value,
-        tipe_pekerjaan: tipe_pekerjaan.value,
-        tipe_pekerjaan_pasangan: tipe_pekerjaan_pasangan.value,
-        validasi_rekening: tercermin_rekening.value,
+        jabatan_terakhir_pasangan: this.callReportForm.get('jabatan_terakhir_pasangan')?.value,
+        jenis_produk: this.callReportForm.get('jenis_produk')?.value,
+        jenis_usaha: this.callReportForm.get('jenis_usaha')?.value,
+        jumlah_karyawan: this.callReportForm.get('jumlah_karyawan')?.value,
+        jumlah_karyawan_perusahaan_pasangan: this.callReportForm.get('jumlah_karyawan_perusahaan_pasangan')?.value,
+        kategori_pekerjaan: this.daWa1.kategori_pekerjaan,
+        kendaraan: this.callReportForm.get('kendaraan')?.value,
+        kepemilikan_usaha: this.callReportForm.get('kepemilikan_usaha')?.value,
+        kondisi_pandemi: this.callReportForm.get('kondisi_pandemi')?.value,
+        kondisi_pandemi_perusahaan_pasangan: this.callReportForm.get('kondisi_pandemi_perusahaan_pasangan')?.value,
+        laba_periode_1: this.callReportForm.get('laba_periode_1')?.value,
+        laba_periode_2: this.callReportForm.get('laba_periode_2')?.value,
+        laba_periode_3: this.callReportForm.get('laba_periode_3')?.value,
+        laba_periode_4: this.callReportForm.get('laba_periode_4')?.value,
+        lama_bekerja_bulan_pasangan: this.callReportForm.get('lama_bekerja_bulan_pasangan')?.value,
+        lama_bekerja_tahun_pasangan: this.callReportForm.get('lama_bekerja_tahun_pasangan')?.value,
+        lama_usaha: this.callReportForm.get('lama_usaha')?.value,
+        legalitas_usaha: this.legalitasUsaha,
+        nama_ao: this.localStorageService.retrieve('sessionFullName'),
+        nama_perusahaan: this.callReportForm.get('nama_perusahaan')?.value,
+        nama_perusahaan_pasangan: this.callReportForm.get('nama_perusahaan_pasangan')?.value,
+        no_kontak_hr_pasangan: this.callReportForm.get('no_kontak_hr_pasangan')?.value,
+        no_wawancara: this.nowawancara,
+        pendidikan: this.callReportForm.get('pendidikan')?.value,
+        posisi_dokumen: this.callReportForm.get('posisi_dokumen')?.value,
+        rata_rata_laba: this.callReportForm.get('rata_rata_laba')?.value,
+        skala_perusahaan: this.callReportForm.get('skala_perusahaan')?.value,
+        skala_perusahaan_pasangan: this.callReportForm.get('skala_perusahaan_pasangan')?.value,
+        status_agunan: this.callReportForm.get('status_agunan')?.value,
+        status_kawin: this.callReportForm.get('status_kawin')?.value,
+        status_pekerjaan_pasangan: this.callReportForm.get('status_pekerjaan_pasangan')?.value,
+        tahun_berdiri_perusahaan: this.callReportForm.get('tahun_berdiri_perusahaan')?.value,
+        tahun_berdiri_perusahaan_pasangan: this.callReportForm.get('tahun_berdiri_perusahaan_pasangan')?.value,
+        tanggal_lahir: this.callReportForm.get('tanggal_lahir')?.value,
+        tanggal_wawancara: this.callReportForm.get('tanggal_wawancara')?.value,
+        tipe_pekerjaan_pasangan: this.callReportForm.get('tipe_pekerjaan_pasangan')?.value,
+        validasi_rekening: this.callReportForm.get('validasi_rekening')?.value,
+        tipe_pekerjaan: this.callReportForm.get('tipe_pekerjaan')?.value,
+        status_pekerjaan: this.callReportForm.get('status_pekerjaan')?.value,
+        lama_bekerja_tahun: this.callReportForm.get('lama_bekerja_tahun')?.value,
+        lama_bekerja_bulan: this.callReportForm.get('lama_bekerja_bulan')?.value,
+        no_kontak_hr: this.callReportForm.get('no_kontak_hr')?.value,
+        take_home_pay: this.callReportForm.get('take_home_pay')?.value,
+        keterangan: this.callReportForm.get('keterangan')?.value,
       })
-
       .subscribe({
         next: bawaan => {
-          //           this.contohdata = bawaan.result.app_no_de;
-          // this.databawaan = bawaan.result.app_no_de;
-          // alert('MASUKAJAHSUSAH');
-          this.router.navigate(['data-entry/memo'], {
+          alert('Berhasil Menyimpan Data');
+          this.router.navigate(['/data-entry/memo'], {
             queryParams: {
-              datakiriman: this.datakirimiancure,
-              // statusPerkawinan: contohtampungstatuskawain,
+              curef: this.curef,
+              statusPerkawinan: this.statusPerkawinan,
               app_no_de: this.app_no_de,
-              // datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
             },
           });
         },

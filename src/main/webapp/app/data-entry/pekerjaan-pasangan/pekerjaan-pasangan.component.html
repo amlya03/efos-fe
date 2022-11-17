@@ -578,10 +578,15 @@
   <p></p>
   <div class="row">
     <div class="col" style="text-align: center">
-      <button type="button" (click)="updatejobpasangan('0')" class="btn btn-dark" [disabled]="this.untukSessionRole == 'BRANCHMANAGER'">
+      <button
+        type="button"
+        (click)="updatejobpasangan('0')"
+        class="btn btn-dark"
+        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+      >
         Simpan Data
       </button>
-      <button class="btn btn-warning" (click)="goto()">
+      <button class="btn btn-warning" (click)="goto()" [hidden]="this.untukSessionRole == 'AO'">
         Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
       </button>
     </div>

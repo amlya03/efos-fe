@@ -200,8 +200,8 @@ export class DataRumahComponent implements OnInit {
       // console.log(this.slikTotal.total_angsuran_pasangan)
       // this.struktur = ('Rp 10000').toLocaleString();
       this.struktur = 'Rp 10000'.replace('Rp', '');
-      let cekkk = 'Rp 10,000'.replace(/\,/g, '');
-      let cuukkk = cekkk.replace('Rp ', '');
+      const cekkk = 'Rp 10,000'.replace(/\,/g, '');
+      const cuukkk = cekkk.replace('Rp ', '');
       // alert(this.struktur)
       // alert(cuukkk)
 
@@ -215,10 +215,10 @@ export class DataRumahComponent implements OnInit {
         }
       });
       this.dtTrigger.next(data.result.dataSlikResult);
-      let plafonNasabah = Number(this.slikTotal.total_plafon_nasabah);
-      let plafonPasangan = Number(this.slikTotal.total_plafon_pasangan);
-      let outstandingNasabah = Number(this.slikTotal.total_outstanding_nasabah);
-      let outstandingPasangan = Number(this.slikTotal.total_outstanding_pasangan);
+      const plafonNasabah = Number(this.slikTotal.total_plafon_nasabah);
+      const plafonPasangan = Number(this.slikTotal.total_plafon_pasangan);
+      const outstandingNasabah = Number(this.slikTotal.total_outstanding_nasabah);
+      const outstandingPasangan = Number(this.slikTotal.total_outstanding_pasangan);
       this.totalPlafonSlik = plafonNasabah + plafonPasangan;
       this.totalOutstandingSlik = outstandingNasabah + outstandingPasangan;
       // alert(this.totalPlafonSlik)
@@ -410,7 +410,7 @@ export class DataRumahComponent implements OnInit {
         })
         .subscribe({});
       this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
-    } else
+    } else {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_keuangan', {
           nama_pemohon: this.dataEntry.nama,
@@ -474,14 +474,15 @@ export class DataRumahComponent implements OnInit {
           total_plafon: this.totalPlafonSlik,
         })
         .subscribe({});
-    this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+      this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+    }
   }
 
-  printLajang(ktp: any) {
+  printLajang(ktp: number | undefined) {
     window.open('http://10.20.34.110:8805/api/v1/efos-ide/downloadSlik/' + ktp);
   }
 
-  printMenikah(ktp: any) {
+  printMenikah(ktp: number | undefined) {
     console.log(ktp);
     window.open('http://10.20.34.110:8805/api/v1/efos-ide/downloadSlik/' + ktp);
   }
@@ -496,7 +497,7 @@ export class DataRumahComponent implements OnInit {
       return;
     }
   }
-  formatMoney(value?: any) {
+  formatMoney(value?: number | undefined) {
     // value?.replace(/\,/g, '').replace('Rp ', '');
     new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(value));
   }

@@ -1,9 +1,9 @@
 export class refListDeveloper {
-  id?: Number;
-  kantor_cabang?: String;
-  nama_developer?: String;
-  jenis_developer?: String;
-  active?: String;
-  created_date?: String;
-  created_by?: String;
+  id?: number;
+  kantor_cabang?: string;
+  nama_developer?: string;
+  jenis_developer?: string;
+  active?: string;
+  created_date?: string;
+  created_by?: string;
 }

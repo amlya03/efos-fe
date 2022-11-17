@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { uploadDocument } from 'app/upload-document/services/config/uploadDocument.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
@@ -88,7 +88,6 @@ export class ChecklistDocumentComponent implements OnInit {
 
     // DE
     this.uploadService.getListUploadDocument('curef_20220816_322', 'DE').subscribe(data => {
-      console.warn('ini upload de' + data);
       this.uploadDocument = data.result;
       this.dtTrigger.next(data.result);
     });
@@ -101,11 +100,11 @@ export class ChecklistDocumentComponent implements OnInit {
   }
 
   // Kirim DE
-  detailDataEntry(nama_dokumen: any) {
+  detailDataEntry(nama_dokumen: string | null | undefined) {
     window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dokumen);
   }
 
-  detailAgunan(nama_dokumen: any) {
+  detailAgunan(nama_dokumen: string | null | undefined) {
     window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dokumen);
   }
 
@@ -113,8 +112,8 @@ export class ChecklistDocumentComponent implements OnInit {
     // Upload Data Entry
     for (let i = 0; i < this.uploadDocument.length; i++) {
       // get Radio Button Validasi
-      let validasiDE = (<HTMLInputElement>document.getElementById('validasiDE' + [i + 1])).checked;
-      if (validasiDE == true) {
+      const validasiDE = (<HTMLInputElement>document.getElementById('validasiDE' + [i + 1])).checked;
+      if (validasiDE === true) {
         this.radioValidasiDE = 1;
       } else {
         this.radioValidasiDE = 0;
@@ -126,8 +125,8 @@ export class ChecklistDocumentComponent implements OnInit {
       // Upload Agunan
       for (let i = 0; i < this.uploadAgunan.length; i++) {
         // get Radio Button Validasi
-        let validasiAgunan = (<HTMLInputElement>document.getElementById('validasiAgunan' + [i + 1])).checked;
-        if (validasiAgunan == true) {
+        const validasiAgunan = (<HTMLInputElement>document.getElementById('validasiAgunan' + [i + 1])).checked;
+        if (validasiAgunan === true) {
           this.radioValidasiAgunan = 1;
         } else {
           this.radioValidasiAgunan = 0;

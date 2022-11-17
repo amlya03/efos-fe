@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { listAgunan } from 'app/data-entry/services/config/listAgunan.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
@@ -45,7 +45,6 @@ export class MapisComponent implements OnInit {
         nilai_market: '',
       });
     }
-
     this.load();
   }
 
@@ -55,8 +54,8 @@ export class MapisComponent implements OnInit {
       this.dataEntry = data.result;
       // ambil semua data Job by Curef
       setTimeout(() => {
-        this.dataEntryService.getfetchlistagunan(this.dataEntry.curef).subscribe(data => {
-          this.listagunan = data.result;
+        this.dataEntryService.getfetchlistagunan(this.dataEntry.curef).subscribe(list => {
+          this.listagunan = list.result;
           this.betaFTV = Number(this.listagunan[0].harga_objek) / Number(this.dataEntry.uang_muka);
         });
       }, 300);
@@ -64,7 +63,7 @@ export class MapisComponent implements OnInit {
 
     this.verificationService.fetchMapis(this.app_no_de).subscribe(data => {
       this.mapisModel = data.result;
-      let retriveForm = {
+      const retriveForm = {
         luas_bangunan: this.mapisModel.luas_bangunan,
         luas_tanah: this.mapisModel.luas_tanah,
         nilai_imb: this.mapisModel.nilai_imb,
@@ -94,6 +93,7 @@ export class MapisComponent implements OnInit {
       .subscribe({
         next: bawaan => {
           alert('Berhasil Menyimpan Data');
+          console.log(bawaan);
           // setTimeout(() => {
           // this.router.navigate(['/data-entry/job-info'], {
           //   queryParams: {

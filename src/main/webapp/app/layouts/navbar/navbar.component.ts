@@ -10,8 +10,6 @@ import { LoginService } from 'app/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { EntityArrayResponseDaWa } from 'app/data-entry/personal-info/personal-info.component';
-import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
 
@@ -113,7 +111,7 @@ export class NavbarComponent implements OnInit {
     this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
     this.sudahLogin = this.localStorageService.retrieve('SudahLogin');
     // alert(this.sudahLogin)
-    if (this.sudahLogin == null) {
+    if (this.sudahLogin === null) {
       this.router.navigate(['/login']);
     }
   }

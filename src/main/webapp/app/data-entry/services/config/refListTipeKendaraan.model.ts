@@ -1,5 +1,5 @@
-export class refListTipeKendaraan{
-  id?: Number;
-  deskripsi?: String;
-  active?: String;
+export class refListTipeKendaraan {
+  id?: number;
+  deskripsi?: string;
+  active?: string;
 }

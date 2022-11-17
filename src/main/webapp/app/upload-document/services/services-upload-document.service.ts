@@ -20,6 +20,17 @@ export class ServicesUploadDocumentService {
   protected FetchListUploadDocument = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.110:8805/api/v1/efos-de/getDokumenUploadByCuref?sc='
   );
+  /////////////////////////////////// Memo //////////////////////////////////////////////
+  protected linkUploadMemo = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-de/memo_upload_doc?app_no_de='
+  );
+  /////////////////////////////////// Memo /////////////////////////////////////////////
+
+  /////////////////////////////////// Get Memo /////////////////////////////////////////////
+  protected getUploadMemo = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-de/getMemoUploadByCuref?sc='
+  );
+  /////////////////////////////////// Get Memo /////////////////////////////////////////////
 
   // // /////////////////////////// Upload  ////////////////////////////////////////////
   protected uploadDataEntry = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/upload_doc?app_no_de=');
@@ -41,7 +52,7 @@ export class ServicesUploadDocumentService {
   }
 
   // Returns an observable
-  upload(file: any): Observable<any> {
+  upload(file: File): Observable<any> {
     // Create form data
     const formData = new FormData();
 
@@ -53,12 +64,12 @@ export class ServicesUploadDocumentService {
     return this.http.post(this.baseApiUrl, formData);
   }
 
-  getListUploadDocument(curef: any, type: any): Observable<ApiResponse> {
+  getListUploadDocument(curef: string | null | undefined, type: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.FetchListUploadDocument + curef + '&ss=' + type);
   }
 
   // Returns an observable
-  uploadDocument(file: any, deUpload: any, curefUpload: any, doc_type: any): Observable<any> {
+  uploadDocument(file: any, deUpload: string | null | undefined, curefUpload: string | null | undefined, doc_type: any): Observable<any> {
     // Create form data
     const formData = new FormData();
 
@@ -66,6 +77,23 @@ export class ServicesUploadDocumentService {
     formData.append('fileUpload', file);
     return this.http.post(this.uploadDataEntry + deUpload + '&curef=' + curefUpload + '&doc_type=' + doc_type, formData);
   }
+
+  // Returns an observable
+  uploadMemo(file: any, deUpload: string | null | undefined, curefUpload: string | null | undefined): Observable<any> {
+    // Create form data
+    const formData = new FormData();
+
+    // Store form name as "file" with file data
+    formData.append('fileUpload', file);
+    return this.http.post(this.linkUploadMemo + deUpload + '&curef=' + curefUpload, formData);
+  }
+
+  //////////////////////////////// get Upload Memo ///////////////////////////////////////////////////////////////
+  getMemoUpload(curef: string | undefined, de: string | undefined): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getUploadMemo + curef + '&ss=' + de);
+  }
+  //////////////////////////////// get Upload Memo ///////////////////////////////////////////////////////////////
+
   // // ////////////////////// Ref Upload Document DE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   // getListUploadDocumentDE(): Observable<ApiResponse> {
   //   // return this.http.get<ApiResponse>(this.ListUploadDocument+this.datakiriman+'&ss=DE');

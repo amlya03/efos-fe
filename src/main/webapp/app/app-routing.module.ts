@@ -21,7 +21,6 @@ import { PekerjaanPasanganComponent } from './data-entry/pekerjaan-pasangan/peke
 import { CollateralComponent } from './data-entry/collateral/collateral.component';
 import { EmergencyContactComponent } from './data-entry/emergency-contact/emergency-contact.component';
 import { CallReportComponent } from './data-entry/call-report/call-report.component';
-import { CallReportNonComponent } from './data-entry/call-report-non/call-report-non.component';
 import { MemoComponent } from './data-entry/memo/memo.component';
 import { StrukturPembiayaanComponent } from './data-entry/struktur-pembiayaan/struktur-pembiayaan.component';
 import { DaftarAplikasiIdeComponent } from './initial-data-entry/daftar-aplikasi-ide/daftar-aplikasi-ide.component';
@@ -45,6 +44,7 @@ import { MemoVerificationComponent } from './verification/memo-verification/memo
 import { DaftarAplikasiIsiMapisComponent } from './verification/daftar-aplikasi-isi-mapis/daftar-aplikasi-isi-mapis.component';
 import { MapisComponent } from './verification/daftar-aplikasi-isi-mapis/mapis/mapis.component';
 import { InputScoringComponent } from './input-scoring/input-scoring.component';
+import { KomiteComponent } from './komite/komite.component';
 
 @NgModule({
   imports: [
@@ -155,10 +155,6 @@ import { InputScoringComponent } from './input-scoring/input-scoring.component';
           component: CallReportComponent,
         },
         {
-          path: 'data-entry/call-report-non',
-          component: CallReportNonComponent,
-        },
-        {
           path: 'data-entry/editjobinfo',
           component: EditjobinfoComponent,
         },
@@ -226,6 +222,10 @@ import { InputScoringComponent } from './input-scoring/input-scoring.component';
         {
           path: 'input-scoring-manual',
           component: InputScoringComponent,
+        },
+        {
+          path: 'komite',
+          component: KomiteComponent,
         },
         {
           path: '',

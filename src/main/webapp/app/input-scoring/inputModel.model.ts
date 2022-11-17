@@ -1,8 +1,8 @@
 export class inputModel {
-  id?: Number;
-  parameter_description?: String;
-  parameter_type?: Number;
-  active?: String;
-  created_date?: String;
-  created_by?: String;
+  id?: number;
+  parameter_description?: string;
+  parameter_type?: number;
+  active?: string;
+  created_date?: string;
+  created_by?: string;
 }

@@ -74,7 +74,7 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
     // alert('knfsdkds');
   }
   // On file Select
-  onChange(event: any, id: any) {
+  onChange(event: any, id: number | null | undefined) {
     this.file = event.target.files[0];
     this.idUpload = id;
     this.buttonUpload = (<HTMLInputElement>document.getElementById('uploadData' + id)).value;
@@ -85,7 +85,12 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
   }
 
   // Upload
-  uploadData(deUpload: any, curefUpload: any, doc_type: any, file: any) {
+  uploadData(
+    deUpload: string | null | undefined,
+    curefUpload: string | null | undefined,
+    doc_type: number | null | undefined,
+    file: File | undefined
+  ) {
     this.fileUploadService.uploadDocument(file, deUpload, curefUpload, doc_type).subscribe({
       // if (typeof event === 'object') {
       //   // Short link via api response
@@ -112,7 +117,12 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
   }
 
   // Delete
-  deleteDataUpload(doc: any, id: any, id_upload: any, nama: any) {
+  deleteDataUpload(
+    doc: string | null | undefined,
+    id: number | null | undefined,
+    id_upload: number | null | undefined,
+    nama: string | null | undefined
+  ) {
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-de/deleteDocUpload', {
         created_date: '',
@@ -127,12 +137,12 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
 
   // View Upload
   viewData(nama_dok: any) {
-    let buatPdf = nama_dok.split('.').pop();
+    const buatPdf = nama_dok.split('.').pop();
     if (buatPdf == 'pdf') {
       window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dok + '');
     } else {
-      let url = 'http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dok + '';
-      let img = '<img src="' + url + '">';
+      const url = 'http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dok + '';
+      const img = '<img src="' + url + '">';
       this.popup = window.open('');
       this.popup.document.write(img);
     }

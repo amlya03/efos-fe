@@ -34,6 +34,38 @@ export class DataEntryService {
     this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
   }
 
+  // //////////////////////////// GET List Memo //////////////////////////////////////////////////
+  protected getListMemo = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDetailMemoById?si=');
+  // //////////////////////////// GET List Memo //////////////////////////////////////////////////
+
+  // //////////////////////////// GET sakala Perusahaan //////////////////////////////////////////////////
+  protected refSkalaPerusahaan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_skala_perusahaan'
+  );
+  // //////////////////////////// GET sakala Perusahaan //////////////////////////////////////////////////
+
+  // //////////////////////////// GET wawancara //////////////////////////////////////////////////
+  protected getWawancara = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/get_call_report_seq');
+  // //////////////////////////// GET wawancara //////////////////////////////////////////////////
+
+  // //////////////////////////// GET Call Repot //////////////////////////////////////////////////
+  protected getCallReportByDe = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-de/getCallReportByDe?sd='
+  );
+  // //////////////////////////// GET Call Repot //////////////////////////////////////////////////
+
+  // //////////////////////////// GET Emergency By CUref //////////////////////////////////////////////////
+  protected getEmergencyByCuref = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-de/getEmergencyByCuref?sc='
+  );
+  // //////////////////////////// GET Emergency By Curef //////////////////////////////////////////////////
+
+  // //////////////////////////// GET Emergency //////////////////////////////////////////////////
+  protected getListEmergency = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_hubungan_emergency'
+  );
+  // //////////////////////////// GET Emergency //////////////////////////////////////////////////
+
   // //////////////////////////// REF Tujuan Pembiayaan //////////////////////////////////////////////////
   protected getRefTujuan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_tujuan_pembiayaan');
   // //////////////////////////// REF Tujuan Pembiayaan //////////////////////////////////////////////////
@@ -218,43 +250,43 @@ export class DataEntryService {
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
 
   // /////////////////////////// Ref Semua Data DE ////////////////////////////////////////////
-  getFetchSemuaDataDE(app_no_de: any): Observable<ApiResponse> {
+  getFetchSemuaDataDE(app_no_de: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.fetchSemuaDataDE + app_no_de);
   }
   // /////////////////////////// Ref Semua Data DE ////////////////////////////////////////////
 
   // /////////////////////////// Ref Semua Struktur Pembiayaan Data DE ////////////////////////////////////////////
-  getFetchStrukturDE(app_no_de: any, curef: any): Observable<ApiResponse> {
+  getFetchStrukturDE(app_no_de: string | null | undefined, curef: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.fetchSemuaStrukturDE + curef + '&sd=' + app_no_de);
   }
   // /////////////////////////// Ref Semua Struktur Pembiayaan Data DE ////////////////////////////////////////////
 
   // /////////////////////////// Ref Semua Data Job ////////////////////////////////////////////
-  getFetchSemuaDataJob(curef: any): Observable<ApiResponse> {
+  getFetchSemuaDataJob(curef: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.fetchSemuaJob + curef);
   }
   // /////////////////////////// Ref Semua Data Job ////////////////////////////////////////////
 
   // /////////////////////////// Get Job By id ////////////////////////////////////////////
-  getEditJobById(id: any): Observable<ApiResponse> {
+  getEditJobById(id: number | null): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getJobById + id);
   }
   // /////////////////////////// Get Job By id ////////////////////////////////////////////
 
   // /////////////////////////// Ref Semua Data Job Pasangan ////////////////////////////////////////////
-  getSemuaDataJobPasangan(curef: any): Observable<ApiResponse> {
+  getSemuaDataJobPasangan(curef: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getJobPasangan + curef);
   }
   // /////////////////////////// Ref Semua Data Job Pasangan ////////////////////////////////////////////
 
   // /////////////////////////// Ref View Job ////////////////////////////////////////////
-  getGetViewDataJob(curef: any): Observable<ApiResponse> {
+  getGetViewDataJob(curef: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getViewJob + curef);
   }
   // /////////////////////////// Ref View Job ////////////////////////////////////////////
 
   // /////////////////////////// MEMO ////////////////////////////////////////////
-  getfetchMemo(app_no_de: any): Observable<ApiResponse> {
+  getfetchMemo(app_no_de: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.fetchMemo + app_no_de);
   }
   // /////////////////////////// MEMO ////////////////////////////////////////////
@@ -284,7 +316,7 @@ export class DataEntryService {
   // /////////////////////////// list_lokasi_rumah ////////////////////////////////////////////
 
   // /////////////////////////// listagunan ////////////////////////////////////////////
-  getfetchlistagunan(curef: any): Observable<ApiResponse> {
+  getfetchlistagunan(curef: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.fetchgetlistaguunan + curef);
   }
   // /////////////////////////// listagunan ////////////////////////////////////////////
@@ -302,7 +334,7 @@ export class DataEntryService {
   ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
 
   ////////////////////////////////////// REF List Tipe Pekerjaan //////////////////////////////////////////////
-  getFetchListTipePekerjaan(id: any): Observable<ApiResponse> {
+  getFetchListTipePekerjaan(id: number | null): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.refListTipePekerjaan + id);
   }
   ////////////////////////////////////// REF List Tipe Pekerjaan //////////////////////////////////////////////
@@ -338,7 +370,7 @@ export class DataEntryService {
   // //////////////////////////// Ref List Pemegang Hak //////////////////////////////////////////////////
 
   // //////////////////////////// Ref List Properti //////////////////////////////////////////////////
-  getFetchListTipeProperti(agunan: any): Observable<ApiResponse> {
+  getFetchListTipeProperti(agunan: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.refListProperti + agunan);
   }
   // //////////////////////////// Ref List Properti //////////////////////////////////////////////////
@@ -380,34 +412,34 @@ export class DataEntryService {
   // //////////////////////////// Kode Fasilitas //////////////////////////////////////////////////
 
   // //////////////////////////// Kode Program //////////////////////////////////////////////////
-  getFetchProgramByKode(program: any): Observable<ApiResponse> {
+  getFetchProgramByKode(program: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getKodeProgram + program);
   }
   // //////////////////////////// Kode Program //////////////////////////////////////////////////
 
   // //////////////////////////// Kode Produk //////////////////////////////////////////////////
-  getFetchProdukByKode(produk: any): Observable<ApiResponse> {
+  getFetchProdukByKode(produk: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getKodeProduknya + produk);
   }
   // //////////////////////////// Kode Produk //////////////////////////////////////////////////
 
   // //////////////////////////// Kode Skema //////////////////////////////////////////////////
-  getFetchSkemaByKode(skema: any): Observable<ApiResponse> {
+  getFetchSkemaByKode(skema: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getskema + skema);
   }
   // //////////////////////////// Kode Skema //////////////////////////////////////////////////
 
   // ////////////////////// Ref Tenor \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getTenorFix(skema: any): Observable<ApiResponse> {
+  getTenorFix(skema: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.refTenorFix + skema);
   }
-  getTenorNon(skema: any): Observable<ApiResponse> {
+  getTenorNon(skema: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.refTenorNon + skema);
   }
   // ////////////////////// Ref Tenor \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // //////////////////////////// Kode Skema //////////////////////////////////////////////////
-  getFetchMarginStepUp(jangkaWaktu: any): Observable<ApiResponse> {
+  getFetchMarginStepUp(jangkaWaktu: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getMarginStepUp + jangkaWaktu);
   }
   // //////////////////////////// Kode Skema //////////////////////////////////////////////////
@@ -419,11 +451,48 @@ export class DataEntryService {
   // //////////////////////////// REF Tujuan Pembiayaan //////////////////////////////////////////////////
 
   // ///////////////////////////// Get api List Agunan BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getFetchListAgunanById(id: any): Observable<ApiResponse> {
+  getFetchListAgunanById(id: number | null): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getListAgunanById + id);
   }
   // ///////////////////////////// Get api List Agunan BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getprovinsi(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
+
+  // //////////////////////////// GET Emergency //////////////////////////////////////////////////
+  getFetchListEmergency(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getListEmergency);
+  }
+  // //////////////////////////// GET Emergency //////////////////////////////////////////////////
+
+  // //////////////////////////// GET Emergency By Curef //////////////////////////////////////////////////
+  getFetchEmergencyByCuref(curef: string | null | undefined): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getEmergencyByCuref + curef);
+  }
+  // //////////////////////////// GET Emergency By Curef //////////////////////////////////////////////////
+
+  // //////////////////////////// GET Call Report //////////////////////////////////////////////////
+  getFetchCallReport(app_no_de: string | null | undefined): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getCallReportByDe + app_no_de);
+  }
+  // //////////////////////////// GET Call Report //////////////////////////////////////////////////
+
+  // //////////////////////////// REF get Wawancara //////////////////////////////////////////////////
+  getFetchGetWawancara(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getWawancara);
+  }
+  // //////////////////////////// REF get Wawancara //////////////////////////////////////////////////
+
+  // //////////////////////////// REF Skala Perusahaan //////////////////////////////////////////////////
+  getFetchRefSkalaPerusahaan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refSkalaPerusahaan);
+  }
+  // //////////////////////////// REF Skala Perusahaan //////////////////////////////////////////////////
+
+  // //////////////////////////// GET List Memo //////////////////////////////////////////////////
+  getFetchListMemo(id: number | null | undefined): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getListMemo + id);
+  }
+  // //////////////////////////// GET List Memo //////////////////////////////////////////////////
+
+  getprovinsi(token: string | null | undefined, req?: number | null): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     const httpOptions = {
       // 'Authorization': token,
@@ -436,10 +505,9 @@ export class DataEntryService {
       params: options,
       observe: 'response',
     });
-    // alert('CONTOH' + token);
   }
 
-  getkabkota(token: any, kodekota: any, req?: any): Observable<EntityArrayResponseDaWa> {
+  getkabkota(token: string | null | undefined, kodekota: any, req?: number | null): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     const httpOptions = {
       // 'Authorization': token,
@@ -453,11 +521,9 @@ export class DataEntryService {
       params: options,
       observe: 'response',
     });
-    // alert('CONTOHkota');
-    // alert(kodepotongan[0]);
   }
 
-  getkecamatan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
+  getkecamatan(token: string | null | undefined, kodekecamatan: any, req?: number | null): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     const httpOptions = {
       'Content-Type': 'application/json',
@@ -470,10 +536,9 @@ export class DataEntryService {
       params: options,
       observe: 'response',
     });
-    // alert('CONTOHkecamatan');
   }
 
-  getkelurahan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
+  getkelurahan(token: string | null | undefined, kodekecamatan: any, req?: number | null): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     const httpOptions = {
       'Content-Type': 'application/json',
@@ -485,6 +550,5 @@ export class DataEntryService {
       params: options,
       observe: 'response',
     });
-    // alert('CONTOHkecamatan');
   }
 }

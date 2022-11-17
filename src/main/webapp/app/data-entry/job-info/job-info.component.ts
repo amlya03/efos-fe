@@ -1121,7 +1121,7 @@ export class JobInfoComponent implements OnInit {
       // }else{
       //   this.dfgdf = jumlah_karyawan2.value
       // }
-      alert(this.jobInfoForm.get('total_pendapatan')?.value);
+      // alert(this.jobInfoForm.get('total_pendapatan')?.value);
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_job_info', {
           // headers: headers,

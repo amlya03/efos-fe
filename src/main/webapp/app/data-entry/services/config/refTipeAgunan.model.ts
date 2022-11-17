@@ -1,6 +1,6 @@
 export class refTipeAgunan {
-  id?: Number;
-  type_collateral_code?: String;
-  collateral_deskripsi?: String;
-  active?: String;
+  id?: number;
+  type_collateral_code?: string;
+  collateral_deskripsi?: string;
+  active?: string;
 }
