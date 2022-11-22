@@ -10,7 +10,7 @@ import { analisaPembiayaanModel } from '../service/config/analisaPembiayaanModel
 import { refSkema } from '../service/config/refSkema.model';
 import { refTenorFix } from '../service/config/refTenorFix.model';
 import { listAgunan } from 'app/data-entry/services/config/listAgunan.model';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { refStrukturPembiayaan } from '../service/config/refStrukturPembiayaan.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CurrencyMaskInputMode } from 'ngx-currency';
@@ -56,6 +56,9 @@ export class StukturPembiayaanComponent implements OnInit {
   hasilScoring: any;
   hasilStatus: any;
 
+  // cek result
+  cekResult = 0;
+
   optionsMoney = { prefix: 'Rp ', thousands: ',', decimal: '.', inputMode: CurrencyMaskInputMode.NATURAL };
 
   constructor(
@@ -65,7 +68,7 @@ export class StukturPembiayaanComponent implements OnInit {
     protected applicationConfigService: ApplicationConfigService,
     protected dataEntryService: DataEntryService,
     protected verifikasiServices: ServiceVerificationService,
-    private localStorageService: LocalStorageService,
+    private sessionStorageService: SessionStorageService,
     private formBuilder: FormBuilder
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -77,8 +80,8 @@ export class StukturPembiayaanComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sessionUsername = this.localStorageService.retrieve('sessionUserName');
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.sessionUsername = this.sessionStorageService.retrieve('sessionUserName');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.load();
 
     this.strukturForm = this.formBuilder.group({
@@ -110,16 +113,29 @@ export class StukturPembiayaanComponent implements OnInit {
       this.dataEntry = data.result;
       setTimeout(() => {
         this.loadSkema(this.dataEntry.produk);
-        // alert(this.dataEntry.produk)
       }, 300);
     });
 
     // get struktur pembiayaan
     this.verifikasiServices.getFetchStrukturPembiayaan(this.app_no_de).subscribe(struktur => {
+      if (struktur.result == null) {
+        this.cekResult = 0;
+      } else {
+        this.cekResult = 1;
+      }
+
       this.strukturPembiayaan = struktur.result;
+
       // console.log(this.strukturPembiayaan)
-      this.comboSkema =
-        this.strukturPembiayaan.skema_code + '|' + this.strukturPembiayaan.skema_master + '|' + this.strukturPembiayaan.skema;
+      // this.comboSkema = this.strukturPembiayaan.skema_code + '|' + this.strukturPembiayaan.skema_master + '|' + this.strukturPembiayaan.skema;
+      setTimeout(() => {
+        this.comboSkema = this.strukturPembiayaan.skema_code;
+        this.comboSkema += '|';
+        this.comboSkema += this.strukturPembiayaan.skema_master;
+        this.comboSkema += '|';
+        this.comboSkema += this.strukturPembiayaan.skema;
+      }, 300);
+
       // retrive Tenor
       if (this.dataEntry.kode_fasilitas_name === 'PTA') {
         this.verifikasiServices.getTenorFix(this.strukturPembiayaan.skema_code).subscribe(fix => {
@@ -130,8 +146,26 @@ export class StukturPembiayaanComponent implements OnInit {
           this.tenor = Non.result;
         });
       }
-
-      // alert(this.comboSkema)
+      // ////////////////////////////////////////////////////////////////////////////////////////////////////
+      setTimeout(() => {
+        if (this.cekResult === 0) {
+          this.analisaDsr = 0;
+        } else {
+          this.http
+            .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/getHitungScoring', {
+              dsr: this.strukturPembiayaan.dsr,
+              app_no_de: this.app_no_de,
+            })
+            .subscribe({
+              next: data => {
+                console.warn(data);
+                this.hasilScoring = data.result.score_value;
+                this.hasilStatus = data.result.score_desc;
+              },
+            });
+        }
+      }, 300);
+      // ////////////////////////////////////////////////////////////////////////////////////////////////////
       const retrivestrukturForm = {
         harga_permintaan: this.strukturPembiayaan.harga_permintaan,
         down_payment: this.strukturPembiayaan.down_payment,
@@ -147,7 +181,7 @@ export class StukturPembiayaanComponent implements OnInit {
     });
   }
 
-  loadSkema(produknya: any) {
+  loadSkema(produknya: any): void {
     // Ref Skema
     this.verifikasiServices.getSkema(produknya).subscribe(data => {
       if (data.code === 200) {
@@ -162,7 +196,7 @@ export class StukturPembiayaanComponent implements OnInit {
     });
   }
 
-  tenorSkema(skemaName: any, skemaMaster: any) {
+  tenorSkema(skemaName: any, skemaMaster: any): void {
     const skemaidName = skemaName.split('|');
     if (skemaMaster === 'PTA') {
       this.verifikasiServices.getTenorFix(skemaidName[0]).subscribe(fix => {
@@ -176,16 +210,16 @@ export class StukturPembiayaanComponent implements OnInit {
   }
 
   // Hitung Angsuran
-  hitungAngsuran(skema_id: any, harga: any, dp: any) {
+  hitungAngsuran(skema_id: any): void {
     const skemaidName = skema_id.split('|');
 
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-de/hitung_angsuran', {
         app_no_de: this.dataEntry.app_no_de,
         curef: this.dataEntry.curef,
-        dp: dp,
+        dp: this.strukturForm.get('down_payment')?.value,
         fasilitas: this.dataEntry.fasilitas_ke,
-        harga_objek: harga,
+        harga_objek: this.strukturForm.get('harga_permintaan')?.value,
         kode_fasilitas: this.dataEntry.kode_fasilitas,
         kode_produk: this.dataEntry.produk,
         skema_id: skemaidName[0],
@@ -195,124 +229,132 @@ export class StukturPembiayaanComponent implements OnInit {
       .subscribe({
         next: data => {
           this.nilaiPembiayaan = data.result.nilai_pembiayaan;
-          console.log(data.result);
-          this.angsuranPalingTinggi = data.result.angsuran[data.result.angsuran.length - 1];
-          console.log(this.angsuranPalingTinggi);
+          // console.log(data.result);
+          this.strukturForm.get('angsuran')?.setValue(data.result.angsuran[data.result.angsuran.length - 1]);
+          // this.angsuranPalingTinggi = data.result.angsuran[data.result.angsuran.length - 1];
+          // console.log(this.angsuranPalingTinggi);
           this.dpKurang = 0;
+
+          setTimeout(() => {
+            this.http
+              .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/getHitungAnalisaPembiayaan', {
+                angsuran: this.strukturForm.get('angsuran')?.value,
+                app_no_de: this.dataEntry.app_no_de,
+              })
+              .subscribe({
+                next: angsuran => {
+                  this.analisaDsr = angsuran.result.dsr;
+                  this.strukturForm.get('dsr')?.setValue((this.analisaDsr += ' %'));
+                  // this.analisaMaxAngsuran = data.result.max_angsuran;
+                  this.strukturForm.get('max_angsuran')?.setValue(angsuran.result.max_angsuran);
+                  setTimeout(() => {
+                    this.http
+                      .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/getHitungScoring', {
+                        dsr: this.analisaDsr,
+                        app_no_de: this.dataEntry.app_no_de,
+                      })
+                      .subscribe({
+                        next: scoring => {
+                          this.hasilScoring = scoring.result.score_value;
+                          this.hasilStatus = scoring.result.score_desc;
+                        },
+                      });
+                  }, 300);
+                },
+              });
+          }, 300);
         },
         error: err => {
-          if (err.error.code === 400) {
+          if (err.error.code === '400') {
             alert(err.error.message);
             this.dpKurang = 1;
           }
         },
       });
-
-    setTimeout(() => {
-      this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/getHitungAnalisaPembiayaan', {
-          angsuran: this.angsuranPalingTinggi,
-          app_no_de: this.dataEntry.app_no_de,
-        })
-        .subscribe({
-          next: data => {
-            this.analisaDsr = data.result.dsr;
-            this.analisaMaxAngsuran = data.result.max_angsuran;
-
-            setTimeout(() => {
-              this.http
-                .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/getHitungScoring', {
-                  dsr: this.analisaDsr,
-                  app_no_de: this.dataEntry.app_no_de,
-                })
-                .subscribe({
-                  next: data => {
-                    this.hasilScoring = data.result.score_value;
-                    this.hasilStatus = data.result.score_desc;
-                  },
-                });
-            }, 300);
-          },
-        });
-    }, 300);
   }
 
   onSubmit(
-    angsuran: any,
-    down_payment: any,
+    angsuranKirim: any,
+    down_paymentKirim: any,
     dsr: any,
-    harga_permintaan: any,
+    harga_permintaanKirim: any,
     max_angsuran: any,
     max_dsr: any,
-    nilai_pembiayaan: any,
+    nilai_pembiayaanKirim: any,
     persentase_pembiayaan_existing: any,
     skema: any,
-    tenor: any,
+    tenorKirim: any,
     total_angsuran: any
-  ) {
+  ): void {
     const Skemanya = skema.split('|');
     const analisaDsr = dsr.replace(' %', '');
     const maxDsr = max_dsr.replace(' %', '');
     const persentace = persentase_pembiayaan_existing.replace('%', '');
-    const valueMax_angsuran = max_angsuran.replace(/\,/g, '').replace('Rp ', '');
-    const totPendapat = total_angsuran.replace(/\,/g, '').replace('Rp ', '');
-    if (this.strukturPembiayaan == null) {
+    const valueMax_angsuran = max_angsuran.replace(/,/g, '').replace('Rp ', '');
+    const totPendapat = total_angsuran.replace(/,/g, '').replace('Rp ', '');
+
+    if (this.cekResult === 0) {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_struktur_pembiayaan', {
-          angsuran: angsuran,
+          angsuran: angsuranKirim,
           app_no_de: this.dataEntry.app_no_de,
           created_by: this.sessionUsername,
           created_date: '',
-          down_payment: down_payment,
+          down_payment: down_paymentKirim,
           dsr: analisaDsr,
-          harga_permintaan: harga_permintaan,
+          harga_permintaan: harga_permintaanKirim,
           id: '',
           max_angsuran: valueMax_angsuran,
           max_dsr: maxDsr,
-          nilai_pembiayaan: nilai_pembiayaan,
+          nilai_pembiayaan: nilai_pembiayaanKirim,
           persentase_pembiayaan_existing: persentace,
           skema: Skemanya[2],
-          tenor: tenor,
+          tenor: tenorKirim,
           total_angsuran: totPendapat,
           skema_code: Skemanya[0],
           skema_master: Skemanya[1],
         })
         .subscribe({
-          next: response => console.warn(response),
+          next: response => {
+            console.warn(response);
+            alert('Berhasil Menyimpan Data');
+            this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+          },
           error: error => console.warn(error),
         });
     } else {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_struktur_pembiayaan', {
-          angsuran: angsuran,
+          angsuran: angsuranKirim,
           app_no_de: this.dataEntry.app_no_de,
           updated_by: this.sessionUsername,
           updated_date: '',
-          down_payment: down_payment,
+          down_payment: down_paymentKirim,
           dsr: analisaDsr,
-          harga_permintaan: harga_permintaan,
+          harga_permintaan: harga_permintaanKirim,
           id: '',
           max_angsuran: valueMax_angsuran,
           max_dsr: maxDsr,
-          nilai_pembiayaan: nilai_pembiayaan,
+          nilai_pembiayaan: nilai_pembiayaanKirim,
           persentase_pembiayaan_existing: persentace,
           skema: Skemanya[2],
-          tenor: tenor,
+          tenor: tenorKirim,
           total_angsuran: totPendapat,
           skema_code: Skemanya[0],
           skema_master: Skemanya[1],
         })
         .subscribe({
-          next: response => console.warn(response),
+          next: response => {
+            console.warn(response);
+            alert('Berhasil Menyimpan Data');
+            this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+          },
           error: error => console.warn(error),
         });
     }
   }
 
-  viewStruktur() {
-    this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
-  }
-  goto() {
+  viewStruktur(): void {
     this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

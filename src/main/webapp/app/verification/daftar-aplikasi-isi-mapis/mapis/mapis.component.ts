@@ -7,7 +7,7 @@ import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { getMapis } from 'app/verification/service/config/getMapis.model';
 import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-mapis',
@@ -16,7 +16,7 @@ import { LocalStorageService } from 'ngx-webstorage';
 })
 export class MapisComponent implements OnInit {
   mapisForm!: FormGroup;
-  app_no_de: any;
+  app_noDe: any;
   mapisModel: getMapis = new getMapis();
   dataEntry: fetchAllDe = new fetchAllDe();
   listagunan: listAgunan[] = [];
@@ -27,12 +27,12 @@ export class MapisComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     protected http: HttpClient,
-    private localStorageService: LocalStorageService,
+    private sessionStorageService: SessionStorageService,
     protected verificationService: ServiceVerificationService,
     protected dataEntryService: DataEntryService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.app_no_de = params['app_no_de'];
+      this.app_noDe = params.app_no_de;
     });
   }
 
@@ -48,9 +48,9 @@ export class MapisComponent implements OnInit {
     this.load();
   }
 
-  load() {
+  load(): void {
     // ambil semua data DE
-    this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
+    this.dataEntryService.getFetchSemuaDataDE(this.app_noDe).subscribe(data => {
       this.dataEntry = data.result;
       // ambil semua data Job by Curef
       setTimeout(() => {
@@ -61,7 +61,7 @@ export class MapisComponent implements OnInit {
       }, 300);
     });
 
-    this.verificationService.fetchMapis(this.app_no_de).subscribe(data => {
+    this.verificationService.fetchMapis(this.app_noDe).subscribe(data => {
       this.mapisModel = data.result;
       const retriveForm = {
         luas_bangunan: this.mapisModel.luas_bangunan,
@@ -72,11 +72,11 @@ export class MapisComponent implements OnInit {
       this.mapisForm.setValue(retriveForm);
     });
   }
-  submitForm() {
+  submitForm(): void {
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_data_appraisal', {
-        app_no_de: this.app_no_de,
-        created_by: this.localStorageService.retrieve('sessionUserName'),
+        app_no_de: this.app_noDe,
+        created_by: this.sessionStorageService.retrieve('sessionUserName'),
         // created_date: 2022-11-08T08:32:53.127Z,
         ftv: this.betaFTV,
         // id: 0,
@@ -91,19 +91,20 @@ export class MapisComponent implements OnInit {
         // updated_date: 2022-11-08T08:32:53.127Z
       })
       .subscribe({
-        next: bawaan => {
-          alert('Berhasil Menyimpan Data');
-          console.log(bawaan);
-          // setTimeout(() => {
-          // this.router.navigate(['/data-entry/job-info'], {
-          //   queryParams: {
-          //     curef: this.curefGetDE,
-          //     statusPerkawinan: this.statusKawin,
-          //     app_no_de: this.app_no_de,
-          //   },
-          // });
-          // }, 1000);
-        },
+        // next: bawaan => {
+        //   alert('Berhasil Menyimpan Data');
+        //   console.warn(bawaan);
+        //   // setTimeout(() => {
+        //   // this.router.navigate(['/data-entry/job-info'], {
+        //   //   queryParams: {
+        //   //     curef: this.curefGetDE,
+        //   //     statusPerkawinan: this.statusKawin,
+        //   //     app_no_de: this.app_no_de,
+        //   //   },
+        //   // });
+        //   // }, 1000);
+        // },
       });
+    alert('Berhasil Menyimpan Data');
   }
 }

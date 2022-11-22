@@ -8,7 +8,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { jobinfolist } from './job-info-modellist';
 import { DataEntryService } from '../services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { getJob } from '../services/config/getJob.model';
@@ -120,7 +120,7 @@ export class JobInfoComponent implements OnInit {
     protected http: HttpClient,
     private formBuilder: FormBuilder,
     protected applicationConfigService: ApplicationConfigService,
-    private localStorageService: LocalStorageService, // private currencyPipe: CurrencyPipe
+    private SessionStorageService: SessionStorageService, // private currencyPipe: CurrencyPipe
     private currencyPipe: CurrencyPipe
   ) {
     this.route.queryParams.subscribe(params => {
@@ -153,7 +153,7 @@ export class JobInfoComponent implements OnInit {
   protected apilistjenisbidang = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/list_jenis_bidang');
 
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     // const job_info_retrive = (<HTMLInputElement>document.getElementById("job_info")).value;
     // localStorage.setItem('daftar_aplikasi_de', job_info_retrive)
     ////////////////////////////// Validasi ////////////////////////////////////////////////////////

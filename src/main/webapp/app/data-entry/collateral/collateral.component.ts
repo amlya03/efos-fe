@@ -6,7 +6,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { DataEntryService } from '../services/data-entry.service';
 import { colateralmodel } from './collateral-model';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { refListJumlahKaryawan } from '../services/config/refListJumlahKaryawan.model';
 import { refTipeAgunan } from '../services/config/refTipeAgunan.model';
@@ -65,53 +65,53 @@ export class CollateralComponent implements OnInit {
   getjenisobjek: any;
   getlistkendaraan: any;
   listhubunganagunan: any;
-  kirimannama_perumahan:any
-  kirimanalamatagunan:any;
-  kirimanalamat_sesuai_sertifikat:any
-  kirimanblok_rumah:any;
-  kirimanharga_objek:any;
-  kirimanhubungan_pemegang_hak:any;
-  kirimanjenisobjek:any;
-  kirimankabkota_agunan:any;
-  kirimankabkota_sesuai_sertifikat:any;
-  kirimankecamatan_agunan:any;
-  kirimankecamatan_sesuai_sertifikat:any;
-  kirimankelurahan_agunan:any;
-  kirimankelurahan_sesuai_sertifikat:any;
-  kirimankode_pos_agunan:any;
-  kirimankode_pos_sesuai_sertifikat:any;
-  kirimanluas_bangunan:any;
-  kirimanluas_tanah:any;
-  kirimanmerek:any;
-  kirimanmodel:any;
-  kirimannamabpkb:any;
-  kirimannama_pemegang_hak:any;
-  kirimanno_handphone_cp:any;
-  kirimanno_id_pemegang_hak_sertifikat:any;
-  kirimannomesin:any;
-  kirimannoplat:any;
-  kirimannorangka:any;
-  kirimanno_sertifikat:any;
-  kirimannobpkb:any;
-  kirimannomor_rumah:any;
-  kirimanprovinsi_agunan:any;
-  kirimanprovinsi_sesuai_sertifikat:any;
-  kirimanrt:any;
-  kirimanrt_sertifikat:any;
-  kirimanrw:any;
-  kirimanrw_sertifikat:any;
-  kirimanseri:any;
-  kirimanstatus_agunan:any;
-  kirimanstatus_developer:any;
-  kirimanstatus_jaminan_sebelumnya:any;
-  kirimanstatus_sertifikat:any;
-  kirimantahun_dibuat:any;
-  kirimantanggal_expired:any;
-  kirimantanggal_terbit:any;
-  kirimantipe_agunan:any;
-  kirimantipekendaraan:any;
-  kirimantipe_properti:any;
-  kirimanwarna:any;
+  kirimannama_perumahan: any;
+  kirimanalamatagunan: any;
+  kirimanalamat_sesuai_sertifikat: any;
+  kirimanblok_rumah: any;
+  kirimanharga_objek: any;
+  kirimanhubungan_pemegang_hak: any;
+  kirimanjenisobjek: any;
+  kirimankabkota_agunan: any;
+  kirimankabkota_sesuai_sertifikat: any;
+  kirimankecamatan_agunan: any;
+  kirimankecamatan_sesuai_sertifikat: any;
+  kirimankelurahan_agunan: any;
+  kirimankelurahan_sesuai_sertifikat: any;
+  kirimankode_pos_agunan: any;
+  kirimankode_pos_sesuai_sertifikat: any;
+  kirimanluas_bangunan: any;
+  kirimanluas_tanah: any;
+  kirimanmerek: any;
+  kirimanmodel: any;
+  kirimannamabpkb: any;
+  kirimannama_pemegang_hak: any;
+  kirimanno_handphone_cp: any;
+  kirimanno_id_pemegang_hak_sertifikat: any;
+  kirimannomesin: any;
+  kirimannoplat: any;
+  kirimannorangka: any;
+  kirimanno_sertifikat: any;
+  kirimannobpkb: any;
+  kirimannomor_rumah: any;
+  kirimanprovinsi_agunan: any;
+  kirimanprovinsi_sesuai_sertifikat: any;
+  kirimanrt: any;
+  kirimanrt_sertifikat: any;
+  kirimanrw: any;
+  kirimanrw_sertifikat: any;
+  kirimanseri: any;
+  kirimanstatus_agunan: any;
+  kirimanstatus_developer: any;
+  kirimanstatus_jaminan_sebelumnya: any;
+  kirimanstatus_sertifikat: any;
+  kirimantahun_dibuat: any;
+  kirimantanggal_expired: any;
+  kirimantanggal_terbit: any;
+  kirimantipe_agunan: any;
+  kirimantipekendaraan: any;
+  kirimantipe_properti: any;
+  kirimanwarna: any;
   untukprovinsiagunan: any;
   untukkobkotaagunan: any;
   untukkecamatanagunan: any;
@@ -128,7 +128,7 @@ export class CollateralComponent implements OnInit {
     private router: Router,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private localStorageService: LocalStorageService
+    private SessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
@@ -142,175 +142,175 @@ export class CollateralComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.load();
     //////////////////////////// validasi /////////////////////////////////////////
     this.collateralForm = this.formBuilder.group({
       tipe_agunan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       jenis_objek: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       tipe_kendaraan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       merk: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       model: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       seri: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       nomor_bpkb: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       no_plat: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       warna: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       no_mesin: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       no_rangka: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       nama_bpkb: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       hubungan_pemegang_hak: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       tipe_properti: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       status_agunan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       status_developer: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       developer: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       status_jaminan_sebelumnya: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       tahun_dibuat: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       status_sertifikat: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       no_sertifikat: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       nama_pemegang_hak: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       no_handphone_cp: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       no_id_pemegang_hak_sertifikat: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       alamat_agunan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       kode_pos_agunan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       rt: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       rw: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       luas_tanah: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       luas_bangunan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       harga_objek: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       alamat_sesuai_sertifikat: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       kode_pos_sesuai_sertifikat: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       rt_sertifikat: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       rw_sertifikat: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       id_rumah: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       blok_rumah: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       nomor_rumah: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       tanggal_terbit: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       tanggal_expired: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
     });
   }
 
-  load() {
-    ///////////////// REF ////////////////////////////////////////
+  load(): void {
+    // /////////////// REF ////////////////////////////////////////
     this.datEntryService.getFetchListPemegangHak().subscribe(data => {
       this.pemegangHak = data.result;
     });
@@ -329,14 +329,14 @@ export class CollateralComponent implements OnInit {
     this.datEntryService.getFetchListKendaraan().subscribe(kendaraan => {
       this.listKendaraan = kendaraan.result;
     });
-    ///////////////// REF ////////////////////////////////////////
+    // /////////////// REF ////////////////////////////////////////
     this.gettokendukcapil();
 
     this.datEntryService.getfetchlistagunan(this.curef).subscribe(table => {
       this.tableAgunan = table.result;
     });
   }
-  agunanChange(code: any) {
+  agunanChange(code: any): void {
     this.datEntryService.getFetchListTipeProperti(code).subscribe(data => {
       this.tipeProperti = data.result;
     });
@@ -361,11 +361,11 @@ export class CollateralComponent implements OnInit {
         },
       });
   }
-  onChange(selectedStatus: any) {
+  onChange(selectedStatus: any): void {
     const provinsi_cabang = document.getElementById('provinsi_agunan') as HTMLInputElement | any;
 
     // alert(this.postId);
-    console.log('kode' + selectedStatus);
+    console.warn('kode', selectedStatus);
     this.datEntryService.getkabkota(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kota', res);
@@ -377,11 +377,11 @@ export class CollateralComponent implements OnInit {
     });
   }
 
-  onChanges(selectedStatus: any) {
+  onChanges(selectedStatus: any): void {
     const provinsi_cabang = document.getElementById('provinsi_sesuai_sertifikat') as HTMLInputElement | any;
 
     // alert(this.postId);
-    console.log('kode' + selectedStatus);
+    console.warn('kode', selectedStatus);
     this.datEntryService.getkabkota(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         console.warn('kota', res);
@@ -392,7 +392,7 @@ export class CollateralComponent implements OnInit {
       },
     });
   }
-  onChangekota(selectedStatus: any) {
+  onChangekota(selectedStatus: any): void {
     // alert(this.postId);
     const provinsi_cabang = document.getElementById('kabkota_agunan') as HTMLInputElement | any;
     this.datEntryService.getkecamatan(this.postId, provinsi_cabang.value).subscribe({
@@ -404,9 +404,9 @@ export class CollateralComponent implements OnInit {
         // this.onResponseSuccess(res);
       },
     });
-    console.log(selectedStatus);
+    console.warn(selectedStatus);
   }
-  onChangekotas(selectedStatus: any) {
+  onChangekotas(selectedStatus: any): void {
     // alert(this.postId);
     const provinsi_cabang = document.getElementById('kabkota_sesuai_sertifikat') as HTMLInputElement | any;
     this.datEntryService.getkecamatan(this.postId, provinsi_cabang.value).subscribe({
@@ -418,9 +418,9 @@ export class CollateralComponent implements OnInit {
         // this.onResponseSuccess(res);
       },
     });
-    console.log(selectedStatus);
+    console.warn(selectedStatus);
   }
-  onChangekecamatan(selectedStatus: any) {
+  onChangekecamatan(selectedStatus: any): void {
     // alert(this.postId);
 
     const provinsi_cabang = document.getElementById('kecamatan_agunan') as HTMLInputElement | any;
@@ -433,9 +433,9 @@ export class CollateralComponent implements OnInit {
         // this.onResponseSuccess(res);
       },
     });
-    console.log(selectedStatus);
+    console.warn(selectedStatus);
   }
-  onChangekecamatans(selectedStatus: any) {
+  onChangekecamatans(selectedStatus: any): void {
     // alert(this.postId);
 
     const provinsi_cabang = document.getElementById('kecamatan_sesuai_sertifikat') as HTMLInputElement | any;
@@ -448,43 +448,40 @@ export class CollateralComponent implements OnInit {
         // this.onResponseSuccess(res);
       },
     });
-    console.log(selectedStatus);
+    console.warn(selectedStatus);
   }
-  onChangekelurahan(selectedStatus: any) {
+  onChangekelurahan(selectedStatus: any): void {
+    console.warn(selectedStatus);
     // alert(this.postId);
     // alert('ganti');
     const provinsi_cabang = document.getElementById('kelurahan_agunan') as HTMLInputElement | any;
-    var kode_post = document.getElementById('kode_pos_agunan') as HTMLInputElement | any;
     const datakodepos = provinsi_cabang.value.split('|');
 
     this.daWakodepos = datakodepos[0];
 
-    // kode_post.value = this.daWakodepos;
     this.collateralForm.get('kode_pos_agunan')?.setValue(this.daWakodepos);
   }
-  onChangekelurahans(selectedStatus: any) {
-    // alert(this.postId);
-    // alert('ganti');
+  onChangekelurahans(selectedStatus: any): void {
+    console.warn(selectedStatus);
     const provinsi_cabang = document.getElementById('kelurahan_sesuai_sertifikat') as HTMLInputElement | any;
-    var kode_post = document.getElementById('kode_pos_sesuai_sertifikat') as HTMLInputElement | any;
     const datakodepos = provinsi_cabang.value.split('|');
 
     this.daWakodepos = datakodepos[0];
     this.collateralForm.get('kode_pos_sesuai_sertifikat')?.setValue(this.daWakodepos);
   }
 
-  changefom() {
+  changefom(): void {
     const pilihantipeagunan = document.getElementById('tipe_anggunan') as HTMLInputElement | any;
 
     this.tampungantipeagunan = pilihantipeagunan.value;
   }
 
-  tambahcollateral() {
+  tambahcollateral(): void {
     this.tambahatautidak = 'benar';
     $('#tambahdata').attr('hidden', 'hidden');
   }
 
-  goto() {
+  goto(): void {
     this.router.navigate(['/data-entry/struktur-pembiayaan'], {
       queryParams: {
         curef: this.curef,
@@ -494,7 +491,7 @@ export class CollateralComponent implements OnInit {
     });
   }
 
-  gotoeditcollateral(idcollateral: any) {
+  gotoeditcollateral(idcollateral: any): void {
     this.router.navigate(['/data-entry/editcollateral'], {
       queryParams: {
         curef: this.curef,
@@ -505,7 +502,7 @@ export class CollateralComponent implements OnInit {
     });
   }
 
-  createcollateral() {
+  createcollateral(): void {
     const provinsi_agunan = document.getElementById('provinsi_agunan') as HTMLInputElement | any;
     const kabkota_agunan = document.getElementById('kabkota_agunan') as HTMLInputElement | any;
     const kecamatan_agunan = document.getElementById('kecamatan_agunan') as HTMLInputElement | any;
@@ -515,23 +512,23 @@ export class CollateralComponent implements OnInit {
     const kecamatan_sesuai_sertifikat = document.getElementById('kecamatan_sesuai_sertifikat') as HTMLInputElement | any;
     const kelurahan_sesuai_sertifikat = document.getElementById('kelurahan_sesuai_sertifikat') as HTMLInputElement | any;
     // alert(kabkota_sesuai_sertifikat)
-    let kirimankabkota_agunan = kabkota_agunan.value.split('|');
-    let kirimankabkota_sesuai_sertifikat = kabkota_sesuai_sertifikat.value.split('|');
-    let kirimankecamatan_agunan = kecamatan_agunan.value.split('|');
-    let kirimankecamatan_sesuai_sertifikat = kecamatan_sesuai_sertifikat.value.split('|');
-    let kirimankelurahan_agunan = kelurahan_agunan.value.split('|');
-    let kirimankelurahan_sesuai_sertifikat = kelurahan_sesuai_sertifikat.value.split('|');
-    let kirimanprovinsi_agunan = provinsi_agunan.value.split('|');
-    let kirimanprovinsi_sesuai_sertifikat = provinsi_sesuai_sertifikat.value.split('|');
+    const kirimankabkota_agunan = kabkota_agunan.value.split('|');
+    const kirimankabkota_sesuai_sertifikat = kabkota_sesuai_sertifikat.value.split('|');
+    const kirimankecamatan_agunan = kecamatan_agunan.value.split('|');
+    const kirimankecamatan_sesuai_sertifikat = kecamatan_sesuai_sertifikat.value.split('|');
+    const kirimankelurahan_agunan = kelurahan_agunan.value.split('|');
+    const kirimankelurahan_sesuai_sertifikat = kelurahan_sesuai_sertifikat.value.split('|');
+    const kirimanprovinsi_agunan = provinsi_agunan.value.split('|');
+    const kirimanprovinsi_sesuai_sertifikat = provinsi_sesuai_sertifikat.value.split('|');
     alert(kabkota_sesuai_sertifikat.value);
-  
-    if (this.collateralForm.get('tipe_agunan')?.value == 'C01') {
+
+    if (this.collateralForm.get('tipe_agunan')?.value === 'C01') {
       var tipeAgunan = 'Kendaraan';
-    } else if (this.collateralForm.get('tipe_agunan')?.value == 'E01') {
+    } else if (this.collateralForm.get('tipe_agunan')?.value === 'E01') {
       var tipeAgunan = 'Emas';
-    } else if (this.collateralForm.get('tipe_agunan')?.value == 'H01') {
+    } else if (this.collateralForm.get('tipe_agunan')?.value === 'H01') {
       var tipeAgunan = 'Tanah';
-    } else if (this.collateralForm.get('tipe_agunan')?.value == 'H02') {
+    } else if (this.collateralForm.get('tipe_agunan')?.value === 'H02') {
       var tipeAgunan = 'Bangunan';
     } else {
       var tipeAgunan = 'Tanah dan Bangunan';
@@ -585,7 +582,6 @@ export class CollateralComponent implements OnInit {
         tanggal_terbit: this.collateralForm.get('tanggal_terbit')?.value,
         tanggal_expired: this.collateralForm.get('tanggal_expired')?.value,
 
-        /// provinsiiiaanann
         provinsi_agunan: kirimanprovinsi_agunan[1],
         provinsi_sesuai_sertifikat: kirimanprovinsi_sesuai_sertifikat[1],
         kabkota_agunan: kirimankabkota_agunan[1],
@@ -600,7 +596,8 @@ export class CollateralComponent implements OnInit {
         nama_perumahan: '',
       })
       .subscribe({
-        next: bawaan => {
+        next(bawaan) {
+          console.warn(bawaan);
           alert('Berhasil Menyimpan Data');
           window.location.reload();
         },
@@ -716,7 +713,7 @@ export class CollateralComponent implements OnInit {
     let kirimankecamatan_agunan = kecamatan_agunan.value.split('|');
     let kirimankelurahan_agunan = kelurahan_agunan.value.split('|');
     let kirimanprovinsi_agunan = provinsi_agunan.value.split('|');
-    if (event.value == 1) {
+    if (event.value === 1) {
       this.collateralForm.get('alamat_sesuai_sertifikat')?.setValue(this.collateralForm.get('alamat_agunan')?.value);
       this.collateralForm.get('kode_pos_sesuai_sertifikat')?.setValue(this.collateralForm.get('kode_pos_agunan')?.value);
       this.collateralForm.get('rt_sertifikat')?.setValue(this.collateralForm.get('rt')?.value);

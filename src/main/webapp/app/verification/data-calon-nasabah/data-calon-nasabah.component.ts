@@ -16,7 +16,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { refAnalisaCalonNasabah } from './refAnalisaCalonNasabah.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-data-calon-nasabah',
@@ -37,8 +37,8 @@ export class DataCalonNasabahComponent implements OnInit {
   app_no_de: any;
   dataCalonNasabahMap: refAnalisaCalonNasabah = new refAnalisaCalonNasabah();
   dataEntry: fetchAllDe = new fetchAllDe();
-  tempunganCek: Array<number> = [];
-  tampunganIsiRum: Array<number> = [];
+  tempunganCek: number[] = [];
+  tampunganIsiRum: number[] = [];
 
   // checkbox cek ke
   checkboxCek: any;
@@ -67,6 +67,9 @@ export class DataCalonNasabahComponent implements OnInit {
   // disable
   verifikatorMelihat: any;
 
+  // Cek Result
+  cekResult: any;
+
   constructor(
     protected dataCalonNasabah: ServiceVerificationService,
     protected activatedRoute: ActivatedRoute,
@@ -76,7 +79,7 @@ export class DataCalonNasabahComponent implements OnInit {
     private formBuilder: FormBuilder,
     protected applicationConfigService: ApplicationConfigService,
     protected dataEntryService: DataEntryService,
-    private localStorageService: LocalStorageService
+    private sessionStorageService: SessionStorageService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -87,7 +90,7 @@ export class DataCalonNasabahComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.verifikatorMelihat = this.untukSessionRole === 'VER_PRESCR';
     this.editor = new Editor();
     // ////////// Validasi \\\\\\\\\\\\\\\\\
@@ -154,7 +157,7 @@ export class DataCalonNasabahComponent implements OnInit {
     this.load();
   }
 
-  onCheckCek(e: any) {
+  onCheckCek(e: any): void {
     this.checkboxCekSertif = '';
     this.checkboxCekAkte = '';
     this.checkboxCekRekTel = '';
@@ -165,7 +168,7 @@ export class DataCalonNasabahComponent implements OnInit {
     }
   }
 
-  onCheckRumah(e: any) {
+  onCheckRumah(e: any): void {
     this.isiRumahMobil = '';
     this.isiRumahMotor = '';
     this.isiRumahTV = '';
@@ -182,7 +185,7 @@ export class DataCalonNasabahComponent implements OnInit {
     this.submitted = true;
     if (this.dataCalonNasabahForm.invalid) {
       return;
-    } else if (this.dataCalonNasabahMap == null) {
+    } else if (this.cekResult === 0) {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_nasabah', {
           nama: this.dataCalonNasabahForm.get('nama')?.value,
@@ -199,7 +202,7 @@ export class DataCalonNasabahComponent implements OnInit {
           garasi: this.dataCalonNasabahForm.get('garasi')?.value,
           hubungan_pemberi_keterangan: this.dataCalonNasabahForm.get('hubungan_pemberi_keterangan')?.value,
           // id: this.dataCalonNasabahForm.get('id')?.value,
-          isi_rumah: isiRumahCek, //this.dataCalonNasabahForm.get('isi_rumah')?.value,
+          isi_rumah: isiRumahCek,
           jenis_bangunan: this.dataCalonNasabahForm.get('jenis_bangunan')?.value,
           jumlah_kendaraan: this.dataCalonNasabahForm.get('jumlah_kendaraan')?.value,
           karakter_calon_nasabah: this.dataCalonNasabahForm.get('karakter_calon_nasabah')?.value,
@@ -252,14 +255,14 @@ export class DataCalonNasabahComponent implements OnInit {
     else if (cekKe !== '') {
       this.dataCalonNasabahMap.cek = cekKe;
     } else {
-      this.dataCalonNasabahMap.cek = this.dataCalonNasabahMap.cek;
+      this.dataCalonNasabahMap.cek;
     }
 
     // Isi Rumah
     if (cekKe !== '') {
       this.dataCalonNasabahMap.isi_rumah = isiRumahCek;
     } else {
-      this.dataCalonNasabahMap.isi_rumah = this.dataCalonNasabahMap.isi_rumah;
+      this.dataCalonNasabahMap.isi_rumah;
     }
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_calon_nasabah', {
@@ -277,7 +280,7 @@ export class DataCalonNasabahComponent implements OnInit {
         garasi: this.dataCalonNasabahForm.get('garasi')?.value,
         hubungan_pemberi_keterangan: this.dataCalonNasabahForm.get('hubungan_pemberi_keterangan')?.value,
         // id: this.dataCalonNasabahForm.get('id')?.value,
-        isi_rumah: this.dataCalonNasabahMap.isi_rumah, //this.dataCalonNasabahForm.get('isi_rumah')?.value,
+        isi_rumah: this.dataCalonNasabahMap.isi_rumah,
         jenis_bangunan: this.dataCalonNasabahForm.get('jenis_bangunan')?.value,
         jumlah_kendaraan: this.dataCalonNasabahForm.get('jumlah_kendaraan')?.value,
         karakter_calon_nasabah: this.dataCalonNasabahForm.get('karakter_calon_nasabah')?.value,
@@ -339,7 +342,6 @@ export class DataCalonNasabahComponent implements OnInit {
     this.dataEntryService.getFetchListAksesRumah().subscribe(data => {
       // if(data.code === 200) {
       this.listaksesrumah = data.result;
-      console.log('ctas', this.listaksesrumah);
       // console.log("ini data de "+this.fetchAllDe);
       // }
     });
@@ -347,7 +349,6 @@ export class DataCalonNasabahComponent implements OnInit {
     this.dataEntryService.getFetchListFasilitasListrik().subscribe(data => {
       // if(data.code === 200) {
       this.listfasilitaslistrik = data.result;
-      console.log('listrik', this.listfasilitaslistrik);
       // console.log("ini data de "+this.fetchAllDe);
       // }
     });
@@ -369,6 +370,11 @@ export class DataCalonNasabahComponent implements OnInit {
     });
 
     this.dataCalonNasabah.fetchDataNasabah(this.app_no_de).subscribe(data => {
+      if (data.result === null) {
+        this.cekResult = 0;
+      } else {
+        this.cekResult = 1;
+      }
       this.dataCalonNasabahMap = data.result;
       const retriveCalonNasabah = {
         tanggal_verifikasi: this.dataCalonNasabahMap.tanggal_verifikasi,
@@ -506,5 +512,9 @@ export class DataCalonNasabahComponent implements OnInit {
       event.preventDefault();
       return;
     }
+  }
+  // Selanjutnya
+  Next(): void {
+    this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

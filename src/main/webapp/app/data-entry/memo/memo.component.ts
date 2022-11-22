@@ -5,7 +5,7 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { memomodel } from './memo-model';
 import { ServicesUploadDocumentService } from 'app/upload-document/services/services-upload-document.service';
 import { getMemoUploadModel } from 'app/upload-document/services/config/getMemoUploadModel.model';
@@ -39,7 +39,7 @@ export class MemoComponent implements OnInit {
     private router: Router,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private localStorageService: LocalStorageService,
+    private SessionStorageService: SessionStorageService,
     protected fileUploadService: ServicesUploadDocumentService,
     protected dataEntryService: DataEntryService
   ) {
@@ -58,9 +58,9 @@ export class MemoComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
-    this.untukSessionusername = this.localStorageService.retrieve('sessionUserName');
-    this.untukSessionfullname = this.localStorageService.retrieve('sessionFullName');
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
+    this.untukSessionusername = this.SessionStorageService.retrieve('sessionUserName');
+    this.untukSessionfullname = this.SessionStorageService.retrieve('sessionFullName');
 
     this.load();
   }
@@ -152,7 +152,7 @@ export class MemoComponent implements OnInit {
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_back_de', {
         app_no_de: this.app_no_de,
-        created_by: this.localStorageService.retrieve('sessionFullName'),
+        created_by: this.SessionStorageService.retrieve('sessionFullName'),
         status_aplikasi: status_aplikasi_desc.value,
       })
 
@@ -186,7 +186,7 @@ export class MemoComponent implements OnInit {
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_dataentry', {
         app_no_de: this.app_no_de,
-        created_by: this.localStorageService.retrieve('sessionFullName'),
+        created_by: this.SessionStorageService.retrieve('sessionFullName'),
         status_aplikasi: status_aplikasi_desc.value,
       })
 
@@ -228,7 +228,7 @@ export class MemoComponent implements OnInit {
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_dataentry', {
         app_no_de: this.app_no_de,
-        created_by: this.localStorageService.retrieve('sessionFullName'),
+        created_by: this.SessionStorageService.retrieve('sessionFullName'),
         status_aplikasi: status_aplikasi_desc.value,
       })
 

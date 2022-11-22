@@ -6,7 +6,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { DataEntryService } from '../services/data-entry.service';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { getJobPasangan } from '../services/config/getJobPasangan.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
@@ -75,7 +75,7 @@ export class PekerjaanPasanganComponent implements OnInit {
     private formBuilder: FormBuilder,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private localStorageService: LocalStorageService
+    private SessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
@@ -86,7 +86,7 @@ export class PekerjaanPasanganComponent implements OnInit {
   protected apilistjenisbidang = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/list_jenis_bidang');
 
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
 
     //////////////////////////// validasi /////////////////////////////////////////
     this.formPekerjaanPasangan = this.formBuilder.group({
@@ -420,9 +420,9 @@ export class PekerjaanPasanganComponent implements OnInit {
       this.kirimKatePeker = 'Lain-lainnya';
     }
     if (this.formPekerjaanPasangan.get('umur_pensiun')?.value != null) {
-      const umurPensi = this.formPekerjaanPasangan.get('umur_pensiun')?.value;
+      this.kirimUmurPensi = this.formPekerjaanPasangan.get('umur_pensiun')?.value;
     } else {
-      const umurPensi = 0;
+      this.kirimUmurPensi = 55;
     }
 
     var potonganprov = provinsi_cabang_swasta.value.split('|');
@@ -459,7 +459,7 @@ export class PekerjaanPasanganComponent implements OnInit {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_job_info_pasangan', {
           curef: this.curef,
-          created_by: this.localStorageService.retrieve('sessionUserName'),
+          created_by: this.SessionStorageService.retrieve('sessionUserName'),
           kategori_pekerjaan: this.kirimKatePeker,
           tipe_pekerjaan: this.formPekerjaanPasangan.get('tipe_pekerjaan')?.value,
           posisi: this.formPekerjaanPasangan.get('posisi')?.value,
@@ -503,7 +503,7 @@ export class PekerjaanPasanganComponent implements OnInit {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_job_info_pasangan', {
           curef: this.curef,
-          updated_by: this.localStorageService.retrieve('sessionUserName'),
+          updated_by: this.SessionStorageService.retrieve('sessionUserName'),
           kategori_pekerjaan: this.kirimKatePeker,
           tipe_pekerjaan: this.formPekerjaanPasangan.get('tipe_pekerjaan')?.value,
           posisi: this.formPekerjaanPasangan.get('posisi')?.value,

@@ -9,35 +9,42 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nomor Customer</label>
         <div class="col-sm-8">
-          <input value="{{this.dataEntry.curef}}" class="form-control" type="text" id="no_customer" name="no_customer" readonly />
+          <input value="{{ this.dataEntry.curef }}" class="form-control" type="text" id="no_customer" name="no_customer" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nomor Aplikasi</label>
         <div class="col-sm-8">
-          <input value="{{this.dataEntry.app_no_de}}" class="form-control" type="text" id="nomor_aplikasi" name="nomor_aplikasi" readonly />
+          <input
+            value="{{ this.dataEntry.app_no_de }}"
+            class="form-control"
+            type="text"
+            id="nomor_aplikasi"
+            name="nomor_aplikasi"
+            readonly
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama</label>
         <div class="col-sm-8">
-          <input value="{{this.dataEntry.nama}}" class="form-control" type="text" id="nama" name="nama" readonly />
+          <input value="{{ this.dataEntry.nama }}" class="form-control" type="text" id="nama" name="nama" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nomor HP</label>
         <div class="col-sm-8">
-          <input value="{{this.dataEntry.no_handphone}}" class="form-control" type="text" id="nomor_hp" name="nomor_hp" readonly />
+          <input value="{{ this.dataEntry.no_handphone }}" class="form-control" type="text" id="nomor_hp" name="nomor_hp" readonly />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
         <div class="col-sm-8">
-          <input value="{{this.dataEntry.jenis_kelamin}}" name="jenis_kelamin" id="jenis_kelamin" class="form-control" readonly />
+          <input value="{{ this.dataEntry.jenis_kelamin }}" name="jenis_kelamin" id="jenis_kelamin" class="form-control" readonly />
         </div>
       </div>
     </div>
@@ -85,7 +92,7 @@
             [disabled]="this.untukSessionRole == 'VER_PRESCR'"
           >
             <option value="">Pilih Data</option>
-            <option *ngFor="let refHubunganEmergency of refHubunganEmergency" value="{{refHubunganEmergency.deskripsi}}">
+            <option *ngFor="let refHubunganEmergency of refHubunganEmergency" value="{{ refHubunganEmergency.deskripsi }}">
               {{ refHubunganEmergency.deskripsi }}
             </option>
           </select>
@@ -114,7 +121,7 @@
             id="alamat_rumah"
             cols="49"
             rows="2"
-            value="{{this.dataEntry.alamat_ktp}}"
+            value="{{ this.dataEntry.alamat_ktp }}"
             readonly
           ></textarea>
         </div>
@@ -122,13 +129,7 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input
-        type="radio"
-        id="verifikasi_alamat_rumah_ya"
-        formControlName="verif_alamat"
-        value="1"
-        [disabled]="this.verifikatorMelihat"
-      />
+      <input type="radio" id="verifikasi_alamat_rumah_ya" formControlName="verif_alamat" value="1" [disabled]="this.verifikatorMelihat" />
       &nbsp;&nbsp;&nbsp;&nbsp;
       <input
         type="radio"
@@ -141,7 +142,13 @@
     </div>
     <div class="col">
       <div class="form-group row">
-        <textarea class="form-control" [readonly]="this.untukSessionRole == 'VER_PRESCR'" name="note_alamat_rumah" id="note_alamat_rumah" formControlName="note_verif_alamat"></textarea>
+        <textarea
+          class="form-control"
+          [readonly]="this.untukSessionRole == 'VER_PRESCR'"
+          name="note_alamat_rumah"
+          id="note_alamat_rumah"
+          formControlName="note_verif_alamat"
+        ></textarea>
       </div>
     </div>
   </div>
@@ -158,7 +165,7 @@
             id="rt"
             name="rt"
             maxlength="3"
-            value="{{this.dataEntry.rt}}"
+            value="{{ this.dataEntry.rt }}"
             readonly
           />
         </div>
@@ -171,7 +178,7 @@
             id="rw"
             name="rw"
             maxlength="3"
-            value="{{this.dataEntry.rw}}"
+            value="{{ this.dataEntry.rw }}"
             maxlength="3"
             readonly
           />
@@ -216,12 +223,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Provinsi</label>
         <div class="col-sm-8">
-          <input
-            name="provinsi"
-            id="provinsi"
-            class="form-control"
-            value="{{this.dataEntry.provinsi}}"
-            readonly />
+          <input name="provinsi" id="provinsi" class="form-control" value="{{ this.dataEntry.provinsi }}" readonly />
           <!-- <option *ngFor="let getProvinsi of getProvinsi" [ngValue]="getProvinsi.kdWilayah">
               {{ getProvinsi.namaWilayah }}
             </option> -->
@@ -267,12 +269,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kota</label>
         <div class="col-sm-8">
-          <input
-            name="kota"
-            id="kota"
-            class="form-control"
-            value="{{this.dataEntry.kabkota}}"
-            readonly />
+          <input name="kota" id="kota" class="form-control" value="{{ this.dataEntry.kabkota }}" readonly />
           <!-- <option *ngFor="let getKota of getKota" value="{{ getKota.kdWilayah }}">
               {{ getKota.namaWilayah }}
             </option>
@@ -320,12 +317,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kecamatan</label>
         <div class="col-sm-8">
-          <input
-            name="kecamatan"
-            id="kecamatan"
-            class="form-control"
-            value="{{this.dataEntry.kecamatan}}"
-            readonly />
+          <input name="kecamatan" id="kecamatan" class="form-control" value="{{ this.dataEntry.kecamatan }}" readonly />
           <!-- <option *ngFor="let getKecamatan of getKecamatan" value="{{ getKecamatan.kdWilayah }}">
               {{ getKecamatan.namaWilayah }}
             </option>
@@ -373,12 +365,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Kelurahan</label>
         <div class="col-sm-8">
-          <input
-            name="kelurahan"
-            id="kelurahan"
-            class="form-control"
-            value="{{this.dataEntry.kelurahan}}"
-            readonly />
+          <input name="kelurahan" id="kelurahan" class="form-control" value="{{ this.dataEntry.kelurahan }}" readonly />
           <!-- <option *ngFor="let getKelurahan of getKelurahan" value="{{ getKelurahan.kdPos }}">
               {{ getKelurahan.namaWilayah }}
             </option>
@@ -430,7 +417,7 @@
               class="form-control"
               id="kode_pos"
               name="kode_pos"
-              value="{{this.dataEntry.kode_pos}}"
+              value="{{ this.dataEntry.kode_pos }}"
               (keypress)="keyPressNumbers($event)"
               maxlength="8"
               readonly
@@ -488,7 +475,7 @@
             id="tanggal_lahir"
             name="tanggal_lahir"
             onchange="submitBday()"
-            value="{{this.dataEntry.tanggal_lahir}}"
+            value="{{ this.dataEntry.tanggal_lahir }}"
           />
         </div>
       </div>
@@ -531,12 +518,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Pendidikan</label>
         <div class="col-sm-8">
-          <input
-            name="pedidikan"
-            id="pedidikan"
-            class="form-control"
-            value="{{this.dataEntry.pendidikan}}"
-            readonly />
+          <input name="pedidikan" id="pedidikan" class="form-control" value="{{ this.dataEntry.pendidikan }}" readonly />
           <!-- <option value="">Pilih Data</option>
             <option value="SMA">SMA</option>
             <option value="D3">D3</option>
@@ -590,7 +572,7 @@
             id="status_perkawinan"
             #status_perkawinan
             class="form-control"
-            value="{{this.dataEntry.status_perkawinan}}"
+            value="{{ this.dataEntry.status_perkawinan }}"
             readonly
           />
           <!-- <option value="">Pilih Data</option>
@@ -647,7 +629,7 @@
             id="nama_ibu_kandung"
             name="nama_ibu_kandung"
             placeholder=""
-            value="{{this.dataEntry.nama_ibu_kandung}}"
+            value="{{ this.dataEntry.nama_ibu_kandung }}"
           />
         </div>
       </div>
@@ -751,7 +733,7 @@
                 id="nama_pasangan"
                 name="nama_pasangan"
                 placeholder=""
-                value="{{this.dataEntry.nama_pasangan}}"
+                value="{{ this.dataEntry.nama_pasangan }}"
               />
             </div>
           </div>
@@ -800,7 +782,7 @@
                 class="form-control"
                 id="pekerjaan_pasangan"
                 name="pekerjaan_pasangan"
-                value="{{this.dataEntry.jenis_pekerjaan_pasangan_desc}}"
+                value="{{ this.dataEntry.jenis_pekerjaan_pasangan_desc }}"
                 readonly
               />
             </div>
@@ -853,7 +835,7 @@
             id="fasilitas_pembiayaan_ke"
             name="fasilitas_pembiayaan_ke"
             placeholder=""
-            value="{{this.dataEntry.fasilitas_ke}}"
+            value="{{ this.dataEntry.fasilitas_ke }}"
             readonly
           />
         </div>
@@ -999,9 +981,15 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jenis Bangunan</label>
         <div class="col-sm-8">
-          <select [disabled]="this.untukSessionRole == 'VER_PRESCR'" name="jenis_bangunan" id="jenis_bangunan" class="form-control" formControlName="jenis_bangunan">
+          <select
+            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+            name="jenis_bangunan"
+            id="jenis_bangunan"
+            class="form-control"
+            formControlName="jenis_bangunan"
+          >
             <option value="">Pilih Data</option>
-            <option *ngFor="let refListTipeProperti of refListTipeProperti" value="{{refListTipeProperti.properti_deskripsi}}">
+            <option *ngFor="let refListTipeProperti of refListTipeProperti" value="{{ refListTipeProperti.properti_deskripsi }}">
               {{ refListTipeProperti.properti_deskripsi }}
             </option>
           </select>
@@ -1248,25 +1236,13 @@
     </div>
   </div>
   <p></p>
-  <!-- <div class="row form-material">
-    <label class="col-sm-3 col-form-label">Kesimpulan Hasil Investigasi</label>
-    <div class="col-sm-9">
-      <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
-      <ngx-editor
-        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-        [editor]="editor"
-        [(ngModel)]="html"
-        [disabled]="false"
-        [placeholder]="'Tulis Disini. . .'"
-        formControlName="kesimpulan_hasil_investigasi"
-      >
-      </ngx-editor>
-    </div>
-  </div> -->
   <p></p>
   <div class="row">
-    <div class="col" style="text-align: center">
+    <div class="col" style="text-align: center" [hidden]="this.untukSessionRole == 'VER_PRESCR'">
       <button class="btn btn-info">Simpan Data</button>
+    </div>
+    <div class="col" style="text-align: center" [hidden]="this.untukSessionRole == 'APPRAISAL'">
+      <button type="button" (click)="Next()" class="btn btn-info">Selanjutnya</button>
     </div>
   </div>
 </form>

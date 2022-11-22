@@ -148,8 +148,7 @@
 </div>
 <div class="row">
   <div class="col" style="text-align: center">
-    <button [disabled]="this.untukSessionRole == 'VER_PRESCR'" (click)="postCeklis()" class="btn btn-info">Simpan Data</button>
-    <button class="btn btn-info" (click)="updateStatus()">Update Status</button>\
-    <button class="btn btn-info" (click)="goto()">selanjutnya</button>
+    <button [hidden]="this.untukSessionRole == 'VER_PRESCR'" (click)="postCeklis()" class="btn btn-info">Simpan Data</button>
+    <button [hidden]="this.untukSessionRole == 'APPRAISAL'" class="btn btn-info" (click)="updateStatus()">Update Status</button>
   </div>
 </div>

@@ -278,7 +278,7 @@
       >
         Simpan Data
       </button>
-      <button type="submit" class="btn btn-info" (click)="goto()">selanjutnya</button>
+      <button type="button" class="btn btn-info" (click)="goto()" [hidden]="this.untukSessionRole == 'APPRAISAL'">Selanjutnya</button>
     </div>
   </div>
 </form>

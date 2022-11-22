@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
-      <!-- <span jhiTranslate="global.title" class="navbar-title">BetaNewEfos</span>
+      <!-- <span jhiTranslate="global.title" class="navbar-title">newEfos</span>
       <span class="navbar-version">{{ version }}</span> -->
     </a>
     <a
@@ -96,6 +96,8 @@
               <span routerLink="/sturktur-pembiayaan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
               <span routerLink="/checklist-document" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
               <span routerLink="/syarat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/kesimpulan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/verification/memo" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
             </a>
           </li>
         </div>
@@ -103,7 +105,7 @@
 
         <!-- ////////////////////////////// Approval \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
         <div *ngIf="untukSessionRole == 'KOMITE'">
-          <li id="verificationNav" class="row nav-item">
+          <li class="row nav-item">
             <a
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
@@ -113,7 +115,7 @@
             >
               <fa-icon icon="user-tie"></fa-icon>
               <p>APPROVAL</p>
-              <!-- <span routerLink="/analisa-keuangan" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span> -->
+              <span routerLink="/komite/detail-komite" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
             </a>
           </li>
         </div>
@@ -1066,6 +1068,18 @@
       *ngSwitchCase="'AO'"
     >
       <h6>Upload Document Agunan</h6>
+    </a>
+  </div>
+  <div *ngIf="router.url === '/komite/detail-komite?app_no_de=' + this.app_no_de + '&curef=' + this.curef">
+    <a
+      class="nav-item nav-link"
+      routerLink="/komite/detail-komite"
+      [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'KOMITE'"
+    >
+      <h6>Detail Approval</h6>
     </a>
   </div>
 </nav>

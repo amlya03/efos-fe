@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { Editor } from 'ngx-editor';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { kesimpulanVerification } from '../service/config/kesimpulanVerification.model';
 import { ServiceVerificationService } from '../service/service-verification.service';
 
@@ -30,7 +30,7 @@ export class KesimpulanComponent implements OnInit {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     private formBuilder: FormBuilder,
-    protected localStorageService: LocalStorageService,
+    protected SessionStorageService: SessionStorageService,
     protected serviceVerificationService: ServiceVerificationService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -42,8 +42,8 @@ export class KesimpulanComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
-    this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
+    this.untukSessionUserName = this.SessionStorageService.retrieve('sessionUserName');
     this.editor = new Editor();
     this.load();
     // ////////// Validasi \\\\\\\\\\\\\\\\\

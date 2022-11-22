@@ -129,65 +129,8 @@
     <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pemohon)</h3>
   </div>
   <p></p>
-  <table id="dataTables-slik" class="table table-striped table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-    <thead>
-      <tr class="table-dark">
-        <th scope="col" style="text-align: center">#</th>
-        <th scope="col" style="text-align: center">NIK</th>
-        <th scope="col" style="text-align: center">Nama Bank</th>
-        <th scope="col" style="text-align: center">Jenis Fasilitas</th>
-        <th scope="col" style="text-align: center">Kolektibilitas</th>
-        <th scope="col" style="text-align: center">Keterangan</th>
-        <th scope="col" style="text-align: center">Outstanding</th>
-        <th scope="col" style="text-align: center">Plafond</th>
-        <th scope="col" style="text-align: center">Angsuran</th>
-        <th scope="col" style="text-align: center">Tanggal Mulai</th>
-        <th scope="col" style="text-align: center">Tanggal Berakhir</th>
-        <th scope="col" style="text-align: center">Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let listLajangSlik of listLajangSlik; index as i">
-        <th scope="row" style="text-align: center">{{ i + 1 }}</th>
-        <td style="text-align: center">{{ listLajangSlik.id_number }}</td>
-        <td style="text-align: center">{{ listLajangSlik.ljk_ket }}</td>
-        <td style="text-align: center">{{ listLajangSlik.jenis_kredit_pembiayaan_ket }}</td>
-        <td style="text-align: center">{{ listLajangSlik.kualitas_ket }}</td>
-        <td style="text-align: center">{{ listLajangSlik.jenis_penggunaan_ket }}</td>
-        <td style="text-align: center">{{ listLajangSlik.baki_debet?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
-        <td style="text-align: center">{{ listLajangSlik.plafon?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
-        <td style="text-align: center">{{ listLajangSlik.angsuran?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
-        <td style="text-align: center">{{ listLajangSlik.tanggal_mulai }}</td>
-        <td style="text-align: center">{{ listLajangSlik.tanggal_jatuh_tempo }}</td>
-        <td style="text-align: center">{{ listLajangSlik.kondisi_ket }}</td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <th style="text-align: center" colspan="6">Total</th>
-        <th style="text-align: center">{{ this.totalOutNas }}</th>
-        <th style="text-align: center">{{ this.totalPlaNas }}</th>
-        <th style="text-align: center">{{ this.totalAngNas }}</th>
-      </tr>
-    </tfoot>
-  </table>
-  <div class="row form-material">
-    <div class="col">
-      <!-- {{this.plafond}} -->
-    </div>
-    <div class="col">
-      <!-- {{this.outstanding}} -->
-    </div>
-  </div>
-  <p></p>
-  <button class="btn btn-info" type="button" (click)="printLajang(listLajangSlik[0].id_number)">Lihat Slik</button>
-  <p></p>
-  <div [hidden]="this.dataEntry.joint_income == 0">
-    <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-      <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pasangan)</h3>
-    </div>
-    <p></p>
-    <table class="table table-striped table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+  <div class="table-responsive">
+    <table id="dataTables-slik" class="table table-striped table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
       <thead>
         <tr class="table-dark">
           <th scope="col" style="text-align: center">#</th>
@@ -205,34 +148,99 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let listMenikahSlik of listMenikahSlik; index as i">
+        <tr *ngFor="let listLajangSlik of listLajangSlik; index as i">
           <th scope="row" style="text-align: center">{{ i + 1 }}</th>
-          <td style="text-align: center">{{ listMenikahSlik.id_number }}</td>
-          <td style="text-align: center">{{ listMenikahSlik.ljk_ket }}</td>
-          <td style="text-align: center">{{ listMenikahSlik.jenis_kredit_pembiayaan_ket }}</td>
-          <td style="text-align: center">{{ listMenikahSlik.kualitas_ket }}</td>
-          <td style="text-align: center">{{ listMenikahSlik.jenis_penggunaan_ket }}</td>
+          <td style="text-align: center">{{ listLajangSlik.id_number }}</td>
+          <td style="text-align: center">{{ listLajangSlik.ljk_ket }}</td>
+          <td style="text-align: center">{{ listLajangSlik.jenis_kredit_pembiayaan_ket }}</td>
+          <td style="text-align: center">{{ listLajangSlik.kualitas_ket }}</td>
+          <td style="text-align: center">{{ listLajangSlik.jenis_penggunaan_ket }}</td>
           <td style="text-align: center">
-            {{ listMenikahSlik.baki_debet?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}
+            {{ listLajangSlik.baki_debet?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}
           </td>
-          <td style="text-align: center">{{ listMenikahSlik.plafon?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
-          <td style="text-align: center">
-            {{ listMenikahSlik.angsuran?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}
-          </td>
-          <td style="text-align: center">{{ listMenikahSlik.tanggal_mulai }}</td>
-          <td style="text-align: center">{{ listMenikahSlik.tanggal_jatuh_tempo }}</td>
-          <td style="text-align: center">{{ listMenikahSlik.kondisi_ket }}</td>
+          <td style="text-align: center">{{ listLajangSlik.plafon?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
+          <td style="text-align: center">{{ listLajangSlik.angsuran?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
+          <td style="text-align: center">{{ listLajangSlik.tanggal_mulai }}</td>
+          <td style="text-align: center">{{ listLajangSlik.tanggal_jatuh_tempo }}</td>
+          <td style="text-align: center">{{ listLajangSlik.kondisi_ket }}</td>
         </tr>
       </tbody>
       <tfoot>
         <tr>
           <th style="text-align: center" colspan="6">Total</th>
-          <th style="text-align: center">{{ this.totalPasOut }}</th>
-          <th style="text-align: center">{{ this.totalPasPla }}</th>
-          <th style="text-align: center">{{ this.totalPasAng }}</th>
+          <th style="text-align: center">{{ this.totalOutNas }}</th>
+          <th style="text-align: center">{{ this.totalPlaNas }}</th>
+          <th style="text-align: center">{{ this.totalAngNas }}</th>
         </tr>
       </tfoot>
     </table>
+  </div>
+  <div class="row form-material">
+    <div class="col">
+      <!-- {{this.plafond}} -->
+    </div>
+    <div class="col">
+      <!-- {{this.outstanding}} -->
+    </div>
+  </div>
+  <p></p>
+  <button class="btn btn-info" type="button" (click)="printLajang(listLajangSlik[0].id_number)">Lihat Slik</button>
+  <p></p>
+  <div [hidden]="this.dataEntry.joint_income == 0">
+    <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+      <h3 style="color: #fff; text-align: center">Hubungan dengan Bank (Pasangan)</h3>
+    </div>
+    <p></p>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+        <thead>
+          <tr class="table-dark">
+            <th scope="col" style="text-align: center">#</th>
+            <th scope="col" style="text-align: center">NIK</th>
+            <th scope="col" style="text-align: center">Nama Bank</th>
+            <th scope="col" style="text-align: center">Jenis Fasilitas</th>
+            <th scope="col" style="text-align: center">Kolektibilitas</th>
+            <th scope="col" style="text-align: center">Keterangan</th>
+            <th scope="col" style="text-align: center">Outstanding</th>
+            <th scope="col" style="text-align: center">Plafond</th>
+            <th scope="col" style="text-align: center">Angsuran</th>
+            <th scope="col" style="text-align: center">Tanggal Mulai</th>
+            <th scope="col" style="text-align: center">Tanggal Berakhir</th>
+            <th scope="col" style="text-align: center">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let listMenikahSlik of listMenikahSlik; index as i">
+            <th scope="row" style="text-align: center">{{ i + 1 }}</th>
+            <td style="text-align: center">{{ listMenikahSlik.id_number }}</td>
+            <td style="text-align: center">{{ listMenikahSlik.ljk_ket }}</td>
+            <td style="text-align: center">{{ listMenikahSlik.jenis_kredit_pembiayaan_ket }}</td>
+            <td style="text-align: center">{{ listMenikahSlik.kualitas_ket }}</td>
+            <td style="text-align: center">{{ listMenikahSlik.jenis_penggunaan_ket }}</td>
+            <td style="text-align: center">
+              {{ listMenikahSlik.baki_debet?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}
+            </td>
+            <td style="text-align: center">
+              {{ listMenikahSlik.plafon?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}
+            </td>
+            <td style="text-align: center">
+              {{ listMenikahSlik.angsuran?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}
+            </td>
+            <td style="text-align: center">{{ listMenikahSlik.tanggal_mulai }}</td>
+            <td style="text-align: center">{{ listMenikahSlik.tanggal_jatuh_tempo }}</td>
+            <td style="text-align: center">{{ listMenikahSlik.kondisi_ket }}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th style="text-align: center" colspan="6">Total</th>
+            <th style="text-align: center">{{ this.totalPasOut }}</th>
+            <th style="text-align: center">{{ this.totalPasPla }}</th>
+            <th style="text-align: center">{{ this.totalPasAng }}</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
     <p></p>
     <button class="btn btn-info" type="button" (click)="printMenikah(listMenikahSlik[0].id_number)">Lihat Slik</button>
   </div>
@@ -884,7 +892,7 @@
   <div class="row">
     <div class="col" style="text-align: center">
       <button type="submit" class="btn btn-info" [hidden]="this.untukSessionRole == 'VER_PRESCR'">Simpan Data</button>
-      <button type="button" class="btn btn-info" (click)="Next()">Selanjutnya</button>
+      <button type="button" class="btn btn-info" [hidden]="this.untukSessionRole == 'APPRAISAL'" (click)="Next()">Selanjutnya</button>
     </div>
   </div>
 </form>

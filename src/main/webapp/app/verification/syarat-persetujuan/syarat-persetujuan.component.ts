@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { Subject } from 'rxjs';
 import { syaratPersetujuanModel } from '../service/config/syaratPersetujuanModel.model';
 import Swal from 'sweetalert2';
@@ -26,12 +26,12 @@ export class SyaratPersetujuanComponent implements OnInit {
 
   // Syarat Persetujuan
   syaratPersetujuan?: syaratPersetujuanModel[];
-  syaratAkad: Array<syaratPersetujuanModel> = new Array<syaratPersetujuanModel>();
-  syaratCair: Array<syaratPersetujuanModel> = new Array<syaratPersetujuanModel>();
-  syaratLainLain: Array<syaratPersetujuanModel> = new Array<syaratPersetujuanModel>();
+  syaratAkad: syaratPersetujuanModel[] = new Array<syaratPersetujuanModel>();
+  syaratCair: syaratPersetujuanModel[] = new Array<syaratPersetujuanModel>();
+  syaratLainLain: syaratPersetujuanModel[] = new Array<syaratPersetujuanModel>();
 
   // Cek Uji Kepatuhan
-  cekUjiKepatuhan: Array<cekUjiKepatuhan> = new Array<cekUjiKepatuhan>();
+  cekUjiKepatuhan: cekUjiKepatuhan[] = new Array<cekUjiKepatuhan>();
   // keterangan Uji Kepatuhan
   kepatuhanUji: any;
   keteranganUji: any;
@@ -46,6 +46,9 @@ export class SyaratPersetujuanComponent implements OnInit {
   // Role
   untukSessionRole: any;
 
+  // Cek Result
+  cekResult: any;
+
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
@@ -58,7 +61,7 @@ export class SyaratPersetujuanComponent implements OnInit {
     protected modalService: NgbModal,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    protected localStorageService: LocalStorageService,
+    protected sessionStorageService: SessionStorageService,
     protected dataEntryService: DataEntryService,
     protected serviceVerificationService: ServiceVerificationService
   ) {
@@ -71,14 +74,14 @@ export class SyaratPersetujuanComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
       responsive: true,
     };
-    this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
+    this.untukSessionUserName = this.sessionStorageService.retrieve('sessionUserName');
     this.load();
   }
 
@@ -94,27 +97,33 @@ export class SyaratPersetujuanComponent implements OnInit {
       // Syarat Persetujuan
       this.syaratPersetujuan = data.result.syarat;
       this.syaratPersetujuan?.forEach(element => {
-        if (element.kode_syarat === 1) {
+        if (element.kode_syarat === '1') {
           this.syaratAkad.push(element);
-        } else if (element.kode_syarat === 2) {
+        } else if (element.kode_syarat === '2') {
           this.syaratCair.push(element);
-        } else if (element.kode_syarat === 3) {
+        } else if (element.kode_syarat === '3') {
           this.syaratLainLain.push(element);
         }
       });
 
-      //Cek Uji Kepatuhan
+      // Cek Uji Kepatuhan
       this.cekUjiKepatuhan = data.result.cek_uji_kepatuhan;
 
-      //Area Of Concern
+      // Area Of Concern
       this.areaOfConcernModel = data.result.area_of_concern;
+
+      if (data.result.area_of_concern === null) {
+        this.cekResult = 0;
+      } else {
+        this.cekResult = 1;
+      }
 
       this.dtTrigger.next(data.result.syarat);
     });
   }
 
   // POST sYARAT aKAD
-  async simpanSyaratAkad() {
+  async simpanSyaratAkad(): Promise<void> {
     const { value: email } = await Swal.fire({
       title: 'Input Syarat Akad',
       input: 'text',
@@ -135,14 +144,14 @@ export class SyaratPersetujuanComponent implements OnInit {
         })
         .subscribe({});
       // Swal.fire(`Entered email: ${akadValue}`);
-      Swal.fire(`Berhasil Menambahkan Syarat ${email}`);
+      Swal.fire('Berhasil Menambahkan Syarat', email);
       // alert(email)
       window.location.reload();
     }
   }
 
   // POST sYARAT Cair
-  async simpanSyaratCair() {
+  async simpanSyaratCair(): Promise<void> {
     const { value: email } = await Swal.fire({
       title: 'Input Syarat Cair',
       input: 'text',
@@ -163,14 +172,14 @@ export class SyaratPersetujuanComponent implements OnInit {
         })
         .subscribe({});
       // Swal.fire(`Entered email: ${akadValue}`);
-      Swal.fire(`Berhasil Menambahkan Syarat ${email}`);
+      Swal.fire('Berhasil Menambahkan Syarat', email);
       // alert(email)
       window.location.reload();
     }
   }
 
   // POST sYARAT Lain -Lain
-  async simpanSyaratLain() {
+  async simpanSyaratLain(): Promise<void> {
     const { value: email } = await Swal.fire({
       title: 'Input Syarat Lain - lain',
       input: 'text',
@@ -191,7 +200,7 @@ export class SyaratPersetujuanComponent implements OnInit {
         })
         .subscribe({});
       // Swal.fire(`Entered email: ${akadValue}`);
-      Swal.fire(`Berhasil Menambahkan Syarat ${email}`);
+      Swal.fire('Berhasil Menambahkan Syarat', email);
       // alert(email)
       window.location.reload();
     }
@@ -213,10 +222,10 @@ export class SyaratPersetujuanComponent implements OnInit {
   // });
 
   // simpan data Syarat PErsetujuan
-  simpanData() {
+  simpanData(): void {
     // Area Of Concern
-    this.areaOfConRadio = (<HTMLInputElement>document.getElementById('area-concern')).value;
-    this.areaOfConInput = (<HTMLInputElement>document.getElementById('deskripsiAreaConcern')).value;
+    this.areaOfConRadio = (document.getElementById('area-concern') as HTMLInputElement).value;
+    this.areaOfConInput = (document.getElementById('deskripsiAreaConcern') as HTMLInputElement).value;
 
     for (let i = 0; i < this.cekUjiKepatuhan.length; i++) {
       // get Radio Button Validasi
@@ -233,7 +242,7 @@ export class SyaratPersetujuanComponent implements OnInit {
       // alert(this.keteranganUji)
 
       // post Uji Kepatuhan Dan ASrea Of Concren
-      if (this.areaOfConcernModel == null) {
+      if (this.cekResult === 0) {
         this.http
           .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_cek_uji_kepatuhan', {
             app_no_de: this.app_no_de,
@@ -264,7 +273,7 @@ export class SyaratPersetujuanComponent implements OnInit {
     }
     this.router.navigate(['/kesimpulan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
-  goto() {
+  goto(): void {
     this.router.navigate(['/kesimpulan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

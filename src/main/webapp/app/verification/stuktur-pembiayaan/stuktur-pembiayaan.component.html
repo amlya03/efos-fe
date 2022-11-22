@@ -269,7 +269,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tenor</label>
         <div class="col-sm-8">
-          <select formControlName="tenor" id="analisa_tenor" #analisa_tenor class="form-control">
+          <select formControlName="tenor" #analisa_tenor class="form-control">
             <option *ngFor="let tenor of tenor" value="{{ tenor.tn_code }}">{{ tenor.tn_code }} Bulan</option>
           </select>
         </div>
@@ -283,7 +283,7 @@
             class="form-control"
             formControlName="harga_permintaan"
             #harga_permintaan1
-            (change)="hitungAngsuran(analisa_skema.value, harga_permintaan1.value, analisa_down_payment1.value)"
+            (change)="hitungAngsuran(this.strukturForm.get('skema')?.value)"
           />
         </div>
       </div>
@@ -305,14 +305,16 @@
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Down Payment</label>
-        <div class="col-sm-8">
+        <div class="col-sm-5">
           <input
             type="text"
             class="form-control"
             formControlName="down_payment"
             #analisa_down_payment1
-            (change)="hitungAngsuran(analisa_skema.value, harga_permintaan1.value, analisa_down_payment1.value)"
+            (change)="hitungAngsuran(this.strukturForm.get('skema')?.value)"
           />
+        </div>
+        <div class="col-sm-3">
           <label>Min 20%</label>
         </div>
       </div>
@@ -320,15 +322,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Angsuran</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="analisa_angsuran"
-            formControlName="angsuran"
-            #analisa_angsuran1
-            [value]="this.angsuranPalingTinggi"
-          />
+          <input type="text" readonly class="form-control" id="analisa_angsuran" formControlName="angsuran" #analisa_angsuran1 />
         </div>
       </div>
       <br />
@@ -342,7 +336,7 @@
             id="total_angsuran"
             formControlName="total_angsuran"
             #total_angsuran1
-            value="{{ +total_kewajiban_bank_pemohon1.value + +analisa_angsuran1.value | currency: 'Rp ' }}"
+            value="{{ +total_kewajiban_bank_pemohon1.value + +this.strukturForm.get('angsuran')?.value | currency: 'Rp ' }}"
           />
         </div>
       </div>
@@ -365,22 +359,14 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Maximal Angsuran</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="maximal_angsuran"
-            formControlName="max_angsuran"
-            #maximal_angsuran1
-            [value]="this.analisaMaxAngsuran | currency: 'Rp '"
-          />
+          <input type="text" readonly class="form-control" id="maximal_angsuran" formControlName="max_angsuran" #maximal_angsuran1 />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">DSR</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" #analisaDsr1 id="dsr" formControlName="dsr" [value]="this.analisaDsr + ' %'" />
+          <input type="text" readonly class="form-control" #analisaDsr1 id="dsr" formControlName="dsr" />
         </div>
       </div>
     </div>
@@ -610,14 +596,15 @@
   </div>
   <div class="col" style="text-align: center">
     <button
+      [hidden]="this.untukSessionRole == 'VER_PRESCR'"
       [disabled]="this.dpKurang == 1"
       type="submit"
       class="btn btn-info"
       (click)="
         onSubmit(
-          analisa_angsuran1.value,
-          analisa_down_payment1.value,
-          analisaDsr1.value,
+          this.strukturForm.get('angsuran')?.value,
+          this.strukturForm.get('down_payment')?.value,
+          this.strukturForm.get('dsr')?.value,
           harga_permintaan1.value,
           maximal_angsuran1.value,
           maximal_dsr1.value,
@@ -631,6 +618,14 @@
     >
       Simpan Data
     </button>
-    <button [disabled]="this.dpKurang == 1" type="submit" class="btn btn-primary" (click)="viewStruktur()">Proses Data</button>
+    <button
+      [disabled]="this.dpKurang == 1"
+      type="button"
+      class="btn btn-primary"
+      (click)="viewStruktur()"
+      [hidden]="this.untukSessionRole == 'APPRAISAL'"
+    >
+      Proses Data
+    </button>
   </div>
 </form>

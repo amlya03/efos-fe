@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { Observable } from 'rxjs';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +39,7 @@ export class InitialDataEntryService {
   constructor(
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private localstorateservice: LocalStorageService
+    private localstorateservice: SessionStorageService
   ) {}
 
   // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

@@ -50,7 +50,7 @@
     <!-- <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="betaNewEfosApp.book.home.refreshListLabel">Refresh list</span>
+        <span jhiTranslate="newEfosApp.book.home.refreshListLabel">Refresh list</span>
       </button>
 
       <button
@@ -60,7 +60,7 @@
         [routerLink]="['/book/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="betaNewEfosApp.book.home.createLabel"> Create a new Book </span>
+        <span jhiTranslate="newEfosApp.book.home.createLabel"> Create a new Book </span>
       </button>
     </div> -->
   </h2>
@@ -70,7 +70,7 @@
   <jhi-alert></jhi-alert>
 
   <div class="alert alert-warning" id="no-result" *ngIf="books?.length === 0">
-    <span jhiTranslate="betaNewEfosApp.book.home.notFound">No Books found</span>
+    <span jhiTranslate="newEfosApp.book.home.notFound">No Books found</span>
   </div>
 
   <div class="table-responsive table-entities" id="entities" *ngIf="books && books.length > 0">
@@ -91,7 +91,7 @@
           </th>
           <th scope="col" jhiSortBy="nama">
             <div class="d-flex">
-              <span jhiTranslate="betaNewEfosApp.book.nama">Nama Pemohon</span>
+              <span jhiTranslate="newEfosApp.book.nama">Nama Pemohon</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -104,21 +104,21 @@
           <th scope="col" jhiSortBy="program">
             <div class="d-flex">
               <span>Tipe Pekerjaan</span>
-              <!-- <span jhiTranslate="betaNewEfosApp.book.contoh">program</span> -->
+              <!-- <span jhiTranslate="newEfosApp.book.contoh">program</span> -->
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="katagori">
             <div class="d-flex">
               <span>Aprasial</span>
-              <!-- <span jhiTranslate="betaNewEfosApp.book.contoh">katagori</span> -->
+              <!-- <span jhiTranslate="newEfosApp.book.contoh">katagori</span> -->
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="appreakapalah">
             <div class="d-flex">
               <span>Verification</span>
-              <!-- <span jhiTranslate="betaNewEfosApp.book.contoh">katagori</span> -->
+              <!-- <span jhiTranslate="newEfosApp.book.contoh">katagori</span> -->
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>

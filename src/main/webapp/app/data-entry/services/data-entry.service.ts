@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { Observable } from 'rxjs';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { EntityArrayResponseDaWa } from '../data-entry-component.servis';
 import { createRequestOption } from 'app/core/request/request-util';
 
@@ -26,12 +26,12 @@ export class DataEntryService {
   constructor(
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private localStorageService: LocalStorageService
+    private SessionStorageService: SessionStorageService
   ) {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
-    this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
-    this.untukSessionFullName = this.localStorageService.retrieve('sessionFullName');
-    this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
+    this.untukSessionUserName = this.SessionStorageService.retrieve('sessionUserName');
+    this.untukSessionFullName = this.SessionStorageService.retrieve('sessionFullName');
+    this.untukSessionKodeCabang = this.SessionStorageService.retrieve('sessionKdCabang');
   }
 
   // //////////////////////////// GET List Memo //////////////////////////////////////////////////

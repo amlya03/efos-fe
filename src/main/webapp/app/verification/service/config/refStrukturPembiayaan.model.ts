@@ -3,7 +3,7 @@ export class refStrukturPembiayaan {
   app_no_de?: string;
   skema?: string;
   skema_code?: string;
-  skema_master?: number;
+  skema_master?: number | string | null | undefined;
   tenor?: number;
   harga_permintaan?: number;
   nilai_pembiayaan?: number;

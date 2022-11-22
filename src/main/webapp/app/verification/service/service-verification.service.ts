@@ -264,7 +264,7 @@ export class ServiceVerificationService {
   // ////////////////////// Ref Status Rumah \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// Ref SKema \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getSkema(produk: string): Observable<ApiResponse> {
+  getSkema(produk: string | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.refSkema + produk);
   }
   // ////////////////////// Ref SKema \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

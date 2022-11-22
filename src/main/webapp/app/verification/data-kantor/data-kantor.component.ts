@@ -15,7 +15,7 @@ import { refAnalisaDataKantor } from './refAnalisaDataKantor.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { getJob } from 'app/data-entry/services/config/getJob.model';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { getListTipePekerjaan } from 'app/data-entry/services/config/getListTipePekerjaan.model';
 
 @Component({
@@ -63,6 +63,9 @@ export class DataKantorComponent implements OnInit {
   // logic get Number
   verifikatorMelihat: any;
 
+  // Cek Result
+  cekResult: any;
+
   constructor(
     protected dataKantor: ServiceVerificationService,
     protected activatedRoute: ActivatedRoute,
@@ -72,7 +75,7 @@ export class DataKantorComponent implements OnInit {
     private formBuilder: FormBuilder,
     protected applicationConfigService: ApplicationConfigService,
     protected dataEntryService: DataEntryService,
-    private localStorageService: LocalStorageService
+    private sessionStorageService: SessionStorageService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -83,9 +86,9 @@ export class DataKantorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
-    this.verifikatorMelihat = this.untukSessionRole == 'VER_PRESCR';
-    this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
+    this.verifikatorMelihat = this.untukSessionRole === 'VER_PRESCR';
+    this.untukSessionUserName = this.sessionStorageService.retrieve('sessionUserName');
     // alert(this.untukSessionUserName)
     // this.postGetTokenDuckapil();
     // this.editor = new Editor();
@@ -93,13 +96,13 @@ export class DataKantorComponent implements OnInit {
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.formRetrive = this.formBuilder.group({
       tipe_kepegawaian: { value: '', disabled: true },
-      tipe_pekerjaan: { value: '', disabled: true }
+      tipe_pekerjaan: { value: '', disabled: true },
     });
 
     this.dataKantorForm = this.formBuilder.group({
-      tanggal_verifikasi: [{ value: '', disabled: this.verifikatorMelihat }], //['', Validators.required],
-      pemberi_keterangan: [{ value: '', disabled: this.verifikatorMelihat }], //['', Validators.required],
-      hubungan_pemberi_keterangan: [{ value: '', disabled: this.verifikatorMelihat }], //['', Validators.required],
+      tanggal_verifikasi: [{ value: '', disabled: this.verifikatorMelihat }],
+      pemberi_keterangan: [{ value: '', disabled: this.verifikatorMelihat }],
+      hubungan_pemberi_keterangan: [{ value: '', disabled: this.verifikatorMelihat }],
       verif_fax: [{ value: '', disabled: this.verifikatorMelihat }],
       note_verif_fax: [{ value: '', disabled: this.verifikatorMelihat }],
       verif_no_telepon: [{ value: '', disabled: this.verifikatorMelihat }],
@@ -169,7 +172,7 @@ export class DataKantorComponent implements OnInit {
     this.submitted = true;
     if (this.dataKantorForm.invalid) {
       return;
-    } else if (this.dataKantorMap == null) {
+    } else if (this.cekResult === 0) {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_kantor', {
           // id: 0,
@@ -241,7 +244,7 @@ export class DataKantorComponent implements OnInit {
         })
         .subscribe({});
       this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
-    } else
+    } else {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_data_kantor', {
           // id: 0,
@@ -304,6 +307,7 @@ export class DataKantorComponent implements OnInit {
           waktu_verifikasi: this.dataKantorForm.get('waktu_verifikasi')?.value,
         })
         .subscribe({});
+    }
     this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
 
     // // else{
@@ -328,29 +332,34 @@ export class DataKantorComponent implements OnInit {
     // ambil Semua Data Job
     this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(job => {
       this.dataJob = job.result[0];
-      if(this.dataJob.kategori_pekerjaan == 'Fix Income'){
-        this.changeUntukTipe = 1
-      } else if(this.dataJob.kategori_pekerjaan == 'Non Fix Income'){
-        this.changeUntukTipe = 2
+      if (this.dataJob.kategori_pekerjaan === 'Fix Income') {
+        this.changeUntukTipe = 1;
+      } else if (this.dataJob.kategori_pekerjaan === 'Non Fix Income') {
+        this.changeUntukTipe = 2;
       } else {
-        this.changeUntukTipe = 3
+        this.changeUntukTipe = 3;
       }
       this.dataEntryService.getFetchListTipePekerjaan(this.changeUntukTipe).subscribe(data => {
         this.listTipePekerjaan = data.result;
       });
       // alert(this.changeUntukTipe)
-      let retriveForm = {
+      const retriveForm = {
         tipe_kepegawaian: this.dataJob.tipe_kepegawaian,
-        tipe_pekerjaan: this.dataJob.tipe_pekerjaan
-      }
+        tipe_pekerjaan: this.dataJob.tipe_pekerjaan,
+      };
       this.formRetrive.setValue(retriveForm);
     });
 
     // ambil data Kantor
     this.dataKantor.fetchDataKantor(this.app_no_de).subscribe(data => {
+      if (data.result === null) {
+        this.cekResult = 0;
+      } else {
+        this.cekResult = 1;
+      }
       this.dataKantorMap = data.result;
       // alert(this.dataKantorMap.note_verif_alamat_perusahaan)
-      let retriveDataKantor = {
+      const retriveDataKantor = {
         tanggal_verifikasi: this.dataKantorMap.tanggal_verifikasi,
         pemberi_keterangan: this.dataKantorMap.pemberi_keterangan,
         hubungan_pemberi_keterangan: this.dataKantorMap.hubungan_pemberi_keterangan,
@@ -439,135 +448,8 @@ export class DataKantorComponent implements OnInit {
     }
   }
 
-  // Untuk Ducapil
-  // postGetTokenDuckapil(): void {
-  //   this.http
-  //     .post<any>('http://10.20.82.12:8083/token/generate-token', {
-  //       password: '3foWeb@pp',
-  //       username: 'efo',
-  //     })
-  //     .subscribe({
-  //       next: data => {
-  //         this.getToken = data.result.token;
-
-  //         this.getProvinsiDukcapil(this.getToken).subscribe(data => {
-  //           console.warn('ref', data);
-  //           if (data.status === 200) {
-  //             this.getProvinsi = data.body?.result;
-  //           }
-  //         });
-  //       },
-  //     });
-  // }
-  // getProvinsiDukcapil(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
-  //   const options = createRequestOption(req);
-  //   const httpOptions = {
-  //     'Content-Type': 'application/json',
-  //     Authorization: `Bearer ${token}`,
-  //   };
-
-  //   return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvinsi/', {
-  //     headers: httpOptions,
-  //     params: options,
-  //     observe: 'response',
-  //   });
-  // }
-  // getkabkota(token: any, kodekota: any, req?: any): Observable<EntityArrayResponseDaWa> {
-  //   const options = createRequestOption(req);
-  //   const httpOptions = {
-  //     'Content-Type': 'application/json',
-  //     Authorization: `Bearer ${token}`,
-  //   };
-  //   const kodepotongan = kodekota.split('|');
-
-  //   return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKota/' + kodepotongan[0], {
-  //     headers: httpOptions,
-  //     params: options,
-  //     observe: 'response',
-  //   });
-  // }
-
-  // getkecamatan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
-  //   const options = createRequestOption(req);
-  //   const httpOptions = {
-  //     'Content-Type': 'application/json',
-  //     Authorization: `Bearer ${token}`,
-  //   };
-
-  //   const kodepotongan = kodekecamatan.split('|');
-  //   return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKec/' + kodepotongan[0], {
-  //     headers: httpOptions,
-  //     params: options,
-  //     observe: 'response',
-  //   });
-  // }
-
-  // getkodepos(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
-  //   const options = createRequestOption(req);
-  //   const httpOptions = {
-  //     'Content-Type': 'application/json',
-  //     Authorization: `Bearer ${token}`,
-  //   };
-  //   const kodepotongan = kodekecamatan.split('|');
-  //   return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKdPos/' + kodepotongan[0], {
-  //     headers: httpOptions,
-  //     params: options,
-  //     observe: 'response',
-  //   });
-  // }
-
-  // getkelurahan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
-  //   const options = createRequestOption(req);
-  //   const httpOptions = {
-  //     'Content-Type': 'application/json',
-  //     Authorization: `Bearer ${token}`,
-  //   };
-  //   const kodepotongan = kodekecamatan.split('|');
-  //   return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getKel/' + kodepotongan[0], {
-  //     headers: httpOptions,
-  //     params: options,
-  //     observe: 'response',
-  //   });
-  // }
-  // onChangeProvinsi(valueProvinsi: any) {
-  //   this.getkabkota(this.getToken, valueProvinsi).subscribe({
-  //     next: (res: EntityArrayResponseDaWa) => {
-  //       this.getKota = res.body?.result;
-  //     },
-  //   });
-  // }
-
-  // onChangekota(valueKota: any) {
-  //   this.getkecamatan(this.getToken, valueKota).subscribe({
-  //     next: (res: EntityArrayResponseDaWa) => {
-  //       this.getKecamatan = res.body?.result;
-  //     },
-  //   });
-  // }
-
-  // onChangekecamatan(valueKecamatan: any) {
-  //   this.getkelurahan(this.getToken, valueKecamatan).subscribe({
-  //     next: (res: EntityArrayResponseDaWa) => {
-  //       this.getKelurahan = res.body?.result;
-  //     },
-  //   });
-  // }
-
-  // onChangekelurahan(valueKelurahan: any) {
-  //   const datakodepos = valueKelurahan.split('|');
-  //   this.getKodePos = datakodepos[0];
-  // }
-
-  // onChangeBidang(bidang: any) {
-  //   const poyonganGrupSektor = bidang.split('|');
-  //   // alert(poyonganGrupSektor[0])
-  //   return this.http
-  //     .get<ApiResponse>('http://10.20.34.110:8805/api/v1/efos-ide/list_sektor_ekonomi?se=' + poyonganGrupSektor[0])
-  //     .subscribe(data => {
-  //       // console.log('Sektor Ekonomi', data.result);
-  //       if (data.code === 200) {
-  //         this.refSektor = data.result;
-  //       }
-  //     });
-  // }
+  // Selanjutnya
+  Next(): void {
+    this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+  }
 }

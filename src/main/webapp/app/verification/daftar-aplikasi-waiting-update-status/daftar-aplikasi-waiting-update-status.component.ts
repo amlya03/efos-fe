@@ -62,17 +62,15 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
 
   load(): void {
     this.daWusService.getDaWuS().subscribe(data => {
-      console.warn(data);
       if (data.code === 200) {
         this.daWuS = data.result;
-        this.dtTrigger.next(data.result);
+        this.dtTrigger.next(this.daWuS);
       }
     });
   }
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
-    // alert('knfsdkds');
   }
 
   // serach datatable

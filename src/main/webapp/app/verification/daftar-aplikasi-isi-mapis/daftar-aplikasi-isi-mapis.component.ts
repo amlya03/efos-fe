@@ -11,20 +11,20 @@ import { daWaModelAprisal } from '../daftar-aplikasi-waiting-assigment/daWaApris
 @Component({
   selector: 'jhi-daftar-aplikasi-isi-mapis',
   templateUrl: './daftar-aplikasi-isi-mapis.component.html',
-  styleUrls: ['./daftar-aplikasi-isi-mapis.component.scss']
+  styleUrls: ['./daftar-aplikasi-isi-mapis.component.scss'],
 })
 export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
   title = 'EFOS';
-  numbers: Array<number> = [];
+  numbers: any;
   daWa?: daWaModel[] = [];
-  getCheckDaWa: Array<daWaModel> = new Array<daWaModel>();
+  getCheckDaWa: daWaModel[] = new Array<daWaModel>();
   // modelDawa: daWaModel = new daWaModel();
   daWaAprisal?: daWaModelAprisal[];
   onResponseSuccess: any;
   valueCariButton = '';
   kategori_pekerjaan = '';
-  kirimDe: Array<number> = [];
-  kirimStatusAplikasi: Array<number> = [];
+  kirimDe: any;
+  kirimStatusAplikasi: any;
   kirimAssign: any;
 
   // checklist dawa
@@ -103,6 +103,6 @@ export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
   }
 
   viewdataentry(getAppNoDe: any): void {
-    this.router.navigate(['/mapis'], { queryParams: { app_no_de: getAppNoDe} });
+    this.router.navigate(['/mapis'], { queryParams: { app_no_de: getAppNoDe } });
   }
 }

@@ -565,8 +565,11 @@
   <br />
   <br />
   <div class="row">
-    <div class="col" style="text-align: center">
+    <div class="col" style="text-align: center" [hidden]="this.untukSessionRole == 'VER_PRESCR'">
       <button class="btn btn-info">Simpan Data</button>
+    </div>
+    <div class="col" style="text-align: center" [hidden]="this.untukSessionRole == 'APPRAISAL'">
+      <button type="button" class="btn btn-info" (click)="Next()">Selanjutnya</button>
     </div>
   </div>
 </form>
