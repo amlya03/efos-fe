@@ -20,9 +20,9 @@
     <div class="form-group">
       <select #fasilitas class="form-control">
         <option selected value="">Pilih Pencarian Berdasarkan Fasilitas</option>
-        <option value="PPR">PPR</option>
-        <option value="PTA">PTA</option>
-        <option value="KTM">KTM</option>
+        <option *ngFor="let listFasilitas of listFasilitas" value="{{ listFasilitas.fasilitas }}">
+          {{ listFasilitas.fasilitas }}
+        </option>
       </select>
     </div>
   </div>

@@ -87,14 +87,15 @@ export class ChecklistDocumentComponent implements OnInit {
     });
 
     // DE
-    this.uploadService.getListUploadDocument('curef_20220816_322', 'DE').subscribe(data => {
+    this.uploadService.getListUploadDocument(this.curef, 'DE').subscribe(data => {
       this.uploadDocument = data.result;
+      console.warn(this.uploadDocument);
       this.dtTrigger.next(data.result);
     });
 
     // Agunan
-    this.uploadService.getListUploadDocument('curef_20220816_322', 'DEA').subscribe(data => {
-      // console.warn('ini upload de' + data);
+    this.uploadService.getListUploadDocument(this.curef, 'DEA').subscribe(data => {
+      console.warn(data.result);
       this.uploadAgunan = data.result;
     });
   }
@@ -112,7 +113,8 @@ export class ChecklistDocumentComponent implements OnInit {
     // Upload Data Entry
     for (let i = 0; i < this.uploadDocument.length; i++) {
       // get Radio Button Validasi
-      const validasiDE = (document.getElementById('validasiDE'[i + 1]) as HTMLInputElement).checked;
+      const validasiDE = $('#validasiDE' + (i + 1)).is(':checked'); //(document.getElementById('validasiDE'+ i + 1) as HTMLInputElement).checked;
+      alert(validasiDE);
       if (validasiDE === true) {
         this.radioValidasiDE = 1;
       } else {
@@ -120,12 +122,12 @@ export class ChecklistDocumentComponent implements OnInit {
       }
 
       // keterangan
-      this.keteranganDE = (document.getElementById('keteranganDE'[i + 1]) as HTMLInputElement).value;
+      this.keteranganDE = (document.getElementById('keteranganDE' + (i + 1)) as HTMLInputElement).value;
 
       // Upload Agunan
       for (let j = 0; j < this.uploadAgunan.length; j++) {
         // get Radio Button Validasi
-        const validasiAgunan = (document.getElementById('validasiAgunan'[j + 1]) as HTMLInputElement).checked;
+        const validasiAgunan = (document.getElementById('validasiAgunan' + (j + 1)) as HTMLInputElement).checked;
         if (validasiAgunan === true) {
           this.radioValidasiAgunan = 1;
         } else {
@@ -134,11 +136,11 @@ export class ChecklistDocumentComponent implements OnInit {
         // alert(this.radioValidasiAgunan)
 
         // get input Keterangan
-        this.keteranganAgunan = (document.getElementById('keteranganAgunan'[j + 1]) as HTMLInputElement).value;
+        this.keteranganAgunan = (document.getElementById('keteranganAgunan' + (j + 1)) as HTMLInputElement).value;
         // alert(this.keteranganAgunan)
 
         // get input Keterangan
-        this.keteranganAgunan = (document.getElementById('keteranganAgunan'[j + 1]) as HTMLInputElement).value;
+        this.keteranganAgunan = (document.getElementById('keteranganAgunan' + (j + 1)) as HTMLInputElement).value;
         // alert(this.keteranganAgunan)
       }
 

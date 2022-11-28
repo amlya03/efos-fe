@@ -59,7 +59,7 @@
           <div class="row">
             <div class="col">
               <input
-                [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+                [disabled]="this.untukSessionRole == 'VER_PRE_SPV'"
                 type="radio"
                 name="validasiDE{{ i + 1 }}"
                 id="validasiDE{{ i + 1 }}"
@@ -69,7 +69,7 @@
             </div>
             <div class="col">
               <input
-                [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+                [disabled]="this.untukSessionRole == 'VER_PRE_SPV'"
                 type="radio"
                 name="validasiDE{{ i + 1 }}"
                 id="validasiDE{{ i + 1 }}"
@@ -80,7 +80,7 @@
           </div>
         </td>
         <td style="text-align: center">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="text" class="form-control" id="keteranganDE{{ i + 1 }}" />
+          <input [disabled]="this.untukSessionRole == 'VER_PRE_SPV'" type="text" class="form-control" id="keteranganDE{{ i + 1 }}" />
         </td>
         <td style="text-align: center">
           <a (click)="detailDataEntry(uploadDocument.nama_dokumen)"> <fa-icon icon="ellipsis"></fa-icon><br />View Document </a>
@@ -115,7 +115,7 @@
           <div class="row">
             <div class="col">
               <input
-                [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+                [disabled]="this.untukSessionRole == 'VER_PRE_SPV'"
                 type="radio"
                 name="validasiAgunan{{ i + 1 }}"
                 id="validasiAgunan{{ i + 1 }}"
@@ -125,7 +125,7 @@
             </div>
             <div class="col">
               <input
-                [disabled]="this.untukSessionRole == 'VER_PRESCR'"
+                [disabled]="this.untukSessionRole == 'VER_PRE_SPV'"
                 type="radio"
                 name="validasiAgunan{{ i + 1 }}"
                 id="validasiAgunan{{ i + 1 }}"
@@ -136,7 +136,7 @@
           </div>
         </td>
         <td style="text-align: center">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="text" class="form-control" id="keteranganAgunan{{ i + 1 }}" />
+          <input [disabled]="this.untukSessionRole == 'VER_PRE_SPV'" type="text" class="form-control" id="keteranganAgunan{{ i + 1 }}" />
         </td>
         <td style="text-align: center">
           <a (click)="detailAgunan(uploadAgunan.nama_dokumen)"> <fa-icon icon="ellipsis"></fa-icon><br />View Document </a>
@@ -148,7 +148,7 @@
 </div>
 <div class="row">
   <div class="col" style="text-align: center">
-    <button [hidden]="this.untukSessionRole == 'VER_PRESCR'" (click)="postCeklis()" class="btn btn-info">Simpan Data</button>
-    <button [hidden]="this.untukSessionRole == 'APPRAISAL'" class="btn btn-info" (click)="updateStatus()">Update Status</button>
+    <button [hidden]="this.untukSessionRole == 'VER_PRE_SPV'" (click)="postCeklis()" class="btn btn-info">Simpan Data</button>
+    <button [hidden]="this.untukSessionRole == 'VER_PRESCR'" class="btn btn-info" (click)="updateStatus()">Update Status</button>
   </div>
 </div>

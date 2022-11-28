@@ -304,7 +304,7 @@
           </div>
           <div class="col">Tahun</div>
           <div class="col">
-            <input type="tel" class="form-control" placeholder="Tahun" formControlName="lama_bekerja_bulan" maxlength="2" />
+            <input type="tel" class="form-control" formControlName="lama_bekerja_bulan" maxlength="2" />
           </div>
           <div class="col">Bulan</div>
         </div>
@@ -312,21 +312,21 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Jabatan Terakhir</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" placeholder="" id="jabatan_terakhir" formControlName="jabatan_terakhir" />
+            <input type="text" class="form-control" id="jabatan_terakhir" formControlName="jabatan_terakhir" />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Nama Perusahaan</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" placeholder="" id="nama_perusahan" formControlName="nama_perusahan" />
+            <input type="text" class="form-control" id="nama_perusahan" formControlName="nama_perusahaan" />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Bidang Usaha</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" placeholder="" id="bidang_usaha" formControlName="bidang_usaha" />
+            <input type="text" class="form-control" id="bidang_usaha" formControlName="bidang_usaha" />
           </div>
         </div>
         <br />
@@ -352,7 +352,6 @@
               class="form-control"
               minlength="4"
               maxlength="4"
-              placeholder=""
               id="tahun_berdiri_perusahaan"
               formControlName="tahun_berdiri_perusahaan"
             />
@@ -374,7 +373,6 @@
               onkeypress="return onlyNumberKey(event)"
               class="form-control"
               maxlength="10000"
-              placeholder=""
               id="jumlah_karyawan"
               formControlName="jumlah_karyawan"
             />
@@ -400,7 +398,6 @@
               pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
               class="form-control"
               maxlength="12"
-              placeholder=""
               id="no_kontak_hr"
               formControlName="no_kontak_hr"
             />
@@ -430,7 +427,7 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Lama Usaha</label>
           <div class="col-sm-8">
-            <input type="tel" maxlength="2" class="form-control" placeholder="Tahun" id="lama_usaha" formControlName="lama_usaha" />
+            <input type="tel" maxlength="2" class="form-control" id="lama_usaha" formControlName="lama_usaha" />
           </div>
         </div>
         <br />
@@ -455,14 +452,14 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Bidang Usaha</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" placeholder="" id="bidang_usaha" formControlName="bidang_usaha" />
+            <input type="text" class="form-control" id="bidang_usaha" formControlName="bidang_usaha" />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Nama Perusahaan (Badan Usaha)</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" placeholder="" id="nama_badan_usaha" formControlName="nama_perusahaan" />
+            <input type="text" class="form-control" id="nama_badan_usaha" formControlName="nama_perusahaan" />
           </div>
         </div>
         <br />
@@ -496,7 +493,6 @@
               minlength="4"
               maxlength="4"
               class="form-control"
-              placeholder=""
               id="tahun_berdiri_perusahaan"
               formControlName="tahun_berdiri_perusahaan"
             />
@@ -513,14 +509,7 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
           <div class="col-sm-8">
-            <input
-              type="tel"
-              class="form-control"
-              maxlength="100000"
-              placeholder=""
-              id="jumlah_karyawan"
-              formControlName="jumlah_karyawan"
-            />
+            <input type="tel" class="form-control" maxlength="100000" id="jumlah_karyawan" formControlName="jumlah_karyawan" />
           </div>
         </div>
         <br />
@@ -537,7 +526,7 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Kepemilikan Usaha</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" placeholder="" id="kepemilikan_usaha" formControlName="kepemilikan_usaha" />
+            <input type="text" class="form-control" id="kepemilikan_usaha" formControlName="kepemilikan_usaha" />
           </div>
         </div>
       </div>
@@ -583,7 +572,6 @@
             <input
               type="tel"
               class="form-control"
-              placeholder="Tahun"
               id="lama_bekerja_tahun_pasangan"
               formControlName="lama_bekerja_tahun_pasangan"
               maxlength="2"
@@ -595,46 +583,28 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Jabatan Terakhir</label>
           <div class="col-sm-8">
-            <input
-              type="text"
-              class="form-control"
-              placeholder=""
-              id="jabatan_terakhir_pasangan"
-              formControlName="jabatan_terakhir_pasangan"
-            />
+            <input type="text" class="form-control" id="jabatan_terakhir_pasangan" formControlName="jabatan_terakhir_pasangan" />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Nama Perusahaan</label>
           <div class="col-sm-8">
-            <input
-              type="text"
-              class="form-control"
-              placeholder=""
-              id="nama_perusahaan_pasangan"
-              formControlName="nama_perusahaan_pasangan"
-            />
+            <input type="text" class="form-control" id="nama_perusahaan_pasangan" formControlName="nama_perusahaan_pasangan" />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Bidang Usaha</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" placeholder="" id="bidang_usaha_pasangan" formControlName="bidang_usaha_pasangan" />
+            <input type="text" class="form-control" id="bidang_usaha_pasangan" formControlName="bidang_usaha_pasangan" />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Skala Perorangan</label>
           <div class="col-sm-8">
-            <select
-              type="text"
-              class="form-control"
-              placeholder=""
-              id="skala_perusahaan_pasangan"
-              formControlName="skala_perusahaan_pasangan"
-            >
+            <select type="text" class="form-control" id="skala_perusahaan_pasangan" formControlName="skala_perusahaan_pasangan">
               <option *ngFor="let skalaprusahaan of skalaprusahaan" value="{{ skalaprusahaan.deskripsi }}">
                 {{ skalaprusahaan.deskripsi }}
               </option>
@@ -651,7 +621,6 @@
               minlength="4"
               class="form-control"
               maxlength="4"
-              placeholder=""
               id="tahun_berdiri_perusahaan_pasangan"
               formControlName="tahun_berdiri_perusahaan_pasangan"
             />
@@ -678,7 +647,6 @@
               type="tel"
               minlength="4"
               maxlength="1000"
-              placeholder=""
               id="jumlah_karyawan_perusahaan_pasangan"
               formControlName="jumlah_karyawan_perusahaan_pasangan"
             />
@@ -703,7 +671,6 @@
               pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
               class="form-control"
               maxlength="12"
-              placeholder=""
               id="no_kontak_hr_pasangan"
               formControlName="no_kontak_hr_pasangan"
             />
@@ -724,35 +691,35 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode I (Per Tahun)</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" placeholder="" id="laba_periode_1" formControlName="laba_periode_1" />
+            <input type="tel" class="form-control" id="laba_periode_1" formControlName="laba_periode_1" />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode II (Per Tahun)</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" placeholder="" id="laba_periode_2" formControlName="laba_periode_2" />
+            <input type="tel" class="form-control" id="laba_periode_2" formControlName="laba_periode_2" />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode III (Per Tahun)</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" placeholder="" id="laba_periode_3" formControlName="laba_periode_3" />
+            <input type="tel" class="form-control" id="laba_periode_3" formControlName="laba_periode_3" />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode IIII (Per Tahun)</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" placeholder="" id="laba_periode_4" formControlName="laba_periode_4" />
+            <input type="tel" class="form-control" id="laba_periode_4" formControlName="laba_periode_4" />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Rata Rata Laba Bersih Setelah Pajak (Per Bulan)</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" placeholder="" id="rata_rata_laba" formControlName="rata_rata_laba" />
+            <input type="tel" class="form-control" id="rata_rata_laba" formControlName="rata_rata_laba" />
           </div>
         </div>
       </div>
@@ -763,7 +730,6 @@
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             class="form-control"
-            placeholder=""
             id="takeHomepay"
             formControlName="take_home_pay"
           />
@@ -773,7 +739,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Estimasi Angsuran Saat Ini</label>
         <div class="col-sm-8">
-          <input type="tel" class="form-control" placeholder="" id="estimasi_angsuran" formControlName="estimasi_angsuran" />
+          <input type="tel" class="form-control" id="estimasi_angsuran" formControlName="estimasi_angsuran" />
         </div>
       </div>
       <br />
@@ -809,10 +775,10 @@
           <div class="form-group">
             <p id="denganini">
               <input
+                (change)="onclikwawancara($event)"
                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
                 style="width: 20px; height: 20px"
                 type="checkbox"
-                (click)="onclikwawancara($event)"
               />
               {{ this.contohtex }}
             </p>
@@ -861,6 +827,7 @@
         Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
       </button>
       <button
+        *ngIf="this.cekSimpanData == 1"
         type="submit"
         id="buttonsimpan"
         name="buttonsimpan"

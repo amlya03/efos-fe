@@ -243,7 +243,7 @@ export class PersonalInfoComponent implements OnInit {
       this.personalInfoModel = data.result;
       this.curefGetDE = this.personalInfoModel.curef;
       this.statusKawin = this.personalInfoModel.status_perkawinan;
-
+      // alert(this.personalInfoModel.agama)
       /////////////////////////////////////////////////////////////////////////////
       let retrivePersonalInfo = {
         nama: this.personalInfoModel.nama,

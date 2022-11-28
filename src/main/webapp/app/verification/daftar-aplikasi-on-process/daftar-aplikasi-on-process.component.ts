@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
+import { getListFasilitasModel } from 'app/data-entry/services/config/getListFasilitasModel.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { Subject } from 'rxjs';
@@ -16,6 +17,7 @@ declare let $: any;
 export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
   title = 'EFOS';
   daOp?: daOp[];
+  listFasilitas: getListFasilitasModel[] = [];
   valueFasilitas = '';
   valueKategori = '';
   valueNamaNasabah = '';
@@ -49,11 +51,16 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
     this.load();
   }
   load(): void {
+    // ///////////////////////// LIst Cari Fasilitas //////////////////////
+    this.dataEntryService.getFetchKodeFasilitas().subscribe(data => {
+      this.listFasilitas = data.result;
+    });
+    // ///////////////////////// LIst Cari Fasilitas //////////////////////
+
     this.daOpService.getDaOp().subscribe(data => {
-      console.warn(data);
       if (data.code === 200) {
         this.daOp = data.result;
-        this.dtTrigger.next(data.result);
+        this.dtTrigger.next(this.daOp);
       }
     });
   }

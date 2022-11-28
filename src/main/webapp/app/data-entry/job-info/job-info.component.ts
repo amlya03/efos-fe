@@ -1152,7 +1152,10 @@ export class JobInfoComponent implements OnInit {
           tipe_kepegawaian: this.jobInfoForm.get('tipe_kepegawaian')?.value,
           tipe_pekerjaan: this.jobInfoForm.get('tipe_pekerjaan')?.value,
           tipe_perusahaan: this.jobInfoForm.get('tipe_perusahaan')?.value,
-          total_pendapatan: this.jobInfoForm.get('total_pendapatan')?.value,
+          total_pendapatan:
+            Number(this.jobInfoForm.get('pendapatan')?.value) +
+            Number(this.jobInfoForm.get('pendapatan_lain')?.value) +
+            Number(this.jobInfoForm.get('tunjangan')?.value),
           tunjangan: this.jobInfoForm.get('tunjangan')?.value,
           umur_pensiun: this.jobInfoForm.get('umur_pensiun')?.value,
           lama_bekerja_bulan_sebelum: '',

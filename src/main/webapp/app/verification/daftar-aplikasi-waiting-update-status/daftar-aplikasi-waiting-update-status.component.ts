@@ -7,6 +7,9 @@ import Swal from 'sweetalert2';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { daWuS } from './daWuS.model';
 import { Subject } from 'rxjs';
+import { SessionStorageService } from 'ngx-webstorage';
+import { getListFasilitasModel } from 'app/data-entry/services/config/getListFasilitasModel.model';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 
 @Component({
   selector: 'jhi-daftar-aplikasi-waiting-update-status',
@@ -26,6 +29,8 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
   kirimDe: Array<number> = [];
   kirimStatusAplikasi: Array<number> = [];
   updateStatusDaWuS: Array<number> = [];
+  listFasilitas: getListFasilitasModel[] = [];
+  checkLenghtResult: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -34,10 +39,12 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
 
   constructor(
     protected daWusService: ServiceVerificationService,
+    protected dataEntryServices: DataEntryService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected http: HttpClient,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    private sessionStorageService: SessionStorageService
   ) {}
 
   // ceklis semua
@@ -61,7 +68,15 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
   }
 
   load(): void {
+    // ///////////////////////// LIst Cari Fasilitas //////////////////////
+    this.dataEntryServices.getFetchKodeFasilitas().subscribe(data => {
+      this.listFasilitas = data.result;
+    });
+    // ///////////////////////// LIst Cari Fasilitas //////////////////////
+
     this.daWusService.getDaWuS().subscribe(data => {
+      this.checkLenghtResult = data.result;
+      console.log(this.checkLenghtResult);
       if (data.code === 200) {
         this.daWuS = data.result;
         this.dtTrigger.next(this.daWuS);
@@ -98,37 +113,74 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
   }
   // update status
   postUpdateStatus(): void {
-    this.kirimDe;
-    for (let i = 0; i < this.kirimDe.length; i++) {
-      // alert(this.kirimDe[i]);
-      // alert(this.kirimStatusAplikasi[i])
-      this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
-          app_no_de: this.kirimDe[i],
-          status_aplikasi: this.kirimStatusAplikasi[i],
-          created_by: '199183174',
-        })
-        .subscribe({});
+    if (this.isChecked === false) {
+      this.kirimDe;
+      for (let i = 0; i < this.kirimDe.length; i++) {
+        // alert(this.kirimDe[i]);
+        // alert(this.kirimStatusAplikasi[i])
+        this.http
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+            app_no_de: this.kirimDe[i],
+            status_aplikasi: this.kirimStatusAplikasi[i],
+            created_by: this.sessionStorageService.retrieve('sessionUserName'),
+          })
+          .subscribe({
+            next: data => {
+              window.location.reload();
+            },
+          });
+      }
+    } else {
+      for (let i = 0; i < this.checkLenghtResult.length; i++) {
+        this.http
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+            app_no_de: this.checkLenghtResult[i].app_no_de,
+            status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+            created_by: this.sessionStorageService.retrieve('sessionUserName'),
+          })
+          .subscribe({
+            next: data => {
+              window.location.reload();
+            },
+          });
+      }
     }
-    window.location.reload();
   }
 
   // Forward
   postForward(): void {
-    this.kirimDe;
-    for (let i = 0; i < this.kirimDe.length; i++) {
-      // alert(this.kirimDe[i]);
-      // alert(this.kirimStatusAplikasi[i]);
-      // alert('created_by: 199183174 hardcode');
-      this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_status_back_analis', {
-          app_no_de: this.kirimDe[i],
-          status_aplikasi: this.kirimStatusAplikasi[i],
-          created_by: '199183174',
-        })
-        .subscribe({});
+    if (this.isChecked === false) {
+      this.kirimDe;
+      for (let i = 0; i < this.kirimDe.length; i++) {
+        // alert(this.kirimDe[i]);
+        // alert(this.kirimStatusAplikasi[i])
+        this.http
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+            app_no_de: this.kirimDe[i],
+            status_aplikasi: this.kirimStatusAplikasi[i],
+            created_by: this.sessionStorageService.retrieve('sessionUserName'),
+          })
+          .subscribe({
+            next: data => {
+              window.location.reload();
+            },
+          });
+      }
+    } else {
+      for (let i = 0; i < this.checkLenghtResult.length; i++) {
+        this.http
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+            app_no_de: this.checkLenghtResult[i].app_no_de,
+            status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+            created_by: this.sessionStorageService.retrieve('sessionUserName'),
+          })
+          .subscribe({
+            next: data => {
+              window.location.reload();
+            },
+          });
+      }
     }
-    window.location.reload();
   }
 
   // alert reject
@@ -142,17 +194,37 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
       cancelButtonText: 'Tidak, Simpan ini',
     }).then(result => {
       if (result.value) {
-        alert(this.kirimDe);
-        for (let i = 0; i < this.kirimDe.length; i++) {
-          alert(this.kirimDe[i]);
-          alert(this.kirimStatusAplikasi[i]);
-          this.http
-            .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_reject', {
-              app_no_de: this.kirimDe[i],
-              status_aplikasi: this.kirimStatusAplikasi[i],
-              created_by: '199183174',
-            })
-            .subscribe({});
+        if (this.isChecked === false) {
+          this.kirimDe;
+          for (let i = 0; i < this.kirimDe.length; i++) {
+            // alert(this.kirimDe[i]);
+            // alert(this.kirimStatusAplikasi[i])
+            this.http
+              .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+                app_no_de: this.kirimDe[i],
+                status_aplikasi: this.kirimStatusAplikasi[i],
+                created_by: this.sessionStorageService.retrieve('sessionUserName'),
+              })
+              .subscribe({
+                next: data => {
+                  window.location.reload();
+                },
+              });
+          }
+        } else {
+          for (let i = 0; i < this.checkLenghtResult.length; i++) {
+            this.http
+              .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+                app_no_de: this.checkLenghtResult[i].app_no_de,
+                status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+                created_by: this.sessionStorageService.retrieve('sessionUserName'),
+              })
+              .subscribe({
+                next: data => {
+                  window.location.reload();
+                },
+              });
+          }
         }
         Swal.fire('Data di Reject!', 'File Sudah Tidak Ada', 'success');
         window.location.reload();

@@ -9,6 +9,16 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   providedIn: 'root',
 })
 export class ServiceVerificationService {
+  // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////getListAppAppraisal
+  protected getListAppAppraisalUrl = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-verif/list_app_appraisal'
+  );
+  // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////
+
+  // ///////////////////////////////// Daftar APlikasi Waiting Assigment ///////////////////////////////////////////////////////////
+  protected getListAllVerifUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_app_verif');
+  // ///////////////////////////////// Daftar APlikasi Waiting Assigment ///////////////////////////////////////////////////////////
+
   // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
   protected getMapis = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/getDataAppraisal?sd=');
   // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
@@ -70,7 +80,7 @@ export class ServiceVerificationService {
 
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected allDataOnProcess = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-verif/list_appraisal_process'
+    'http://10.20.34.110:8805/api/v1/efos-verif/list_analisa_process'
   );
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -139,6 +149,10 @@ export class ServiceVerificationService {
   //   return this.http.get<ApiResponse>(this.allDataVerif, { params: options, observe: 'response' });
   // }
   // ///////////////////////////contoh post get di angular////////////////////////////////////////////////
+  getAllVerif(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getListAllVerifUrl);
+  }
+
   getDaWa(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.allDataVerif);
   }
@@ -225,6 +239,12 @@ export class ServiceVerificationService {
     return this.http.get<ApiResponse>(this.getMapis + app_no_de);
   }
   // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
+
+  // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////
+  getListAppAppraisal(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getListAppAppraisalUrl);
+  }
+  // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////
 
   // ///////////////////// REF ////////////////////////////////////////////////
   // ////////////////////// Ref Hubungan Agunan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

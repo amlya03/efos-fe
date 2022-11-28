@@ -4,12 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { getListFasilitasModel } from 'app/data-entry/services/config/getListFasilitasModel.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
-import { Observable, Subject } from 'rxjs';
-declare let $: any;
-import { daWuS } from './daftar-aplikasi-waiting-update-status/daWuS.model';
+import { Subject } from 'rxjs';
+import { daOp } from './daftar-aplikasi-on-process/daOp.model';
 import { ServiceVerificationService } from './service/service-verification.service';
 
 @Component({
@@ -19,7 +18,8 @@ import { ServiceVerificationService } from './service/service-verification.servi
 })
 export class VerificationComponent implements OnInit, OnDestroy {
   dataEntry?: fetchAllDe = new fetchAllDe();
-  daftarAplikasiVerif?: daWuS[];
+  daftarAplikasiVerif?: daOp[];
+  listFasilitas: getListFasilitasModel[] = [];
   curef: any;
 
   @ViewChild(DataTableDirective, { static: false })
@@ -52,8 +52,13 @@ export class VerificationComponent implements OnInit, OnDestroy {
   // }
 
   load(): void {
+    // ///////////////////////// LIst Cari Fasilitas //////////////////////
+    this.dataEntryService.getFetchKodeFasilitas().subscribe(data => {
+      this.listFasilitas = data.result;
+    });
+    // ///////////////////////// LIst Cari Fasilitas //////////////////////
+
     this.DaftarAplikasiVerifServices.getDaOp().subscribe(data => {
-      console.warn(data);
       if (data.code === 200) {
         this.daftarAplikasiVerif = data.result;
         this.dtTrigger.next(data.result);

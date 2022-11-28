@@ -14,6 +14,7 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { refStrukturPembiayaan } from '../service/config/refStrukturPembiayaan.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CurrencyMaskInputMode } from 'ngx-currency';
+import { getMapis } from '../service/config/getMapis.model';
 
 @Component({
   selector: 'jhi-stuktur-pembiayaan',
@@ -22,6 +23,8 @@ import { CurrencyMaskInputMode } from 'ngx-currency';
 })
 export class StukturPembiayaanComponent implements OnInit {
   strukturForm!: FormGroup;
+  mapisForm!: FormGroup;
+  mapisModel: getMapis = new getMapis();
   app_no_de: any;
   dataEntry: fetchAllDe = new fetchAllDe();
   analisaPembiayaan: analisaPembiayaanModel = new analisaPembiayaanModel();
@@ -85,19 +88,48 @@ export class StukturPembiayaanComponent implements OnInit {
     this.load();
 
     this.strukturForm = this.formBuilder.group({
-      harga_permintaan: '',
-      down_payment: '',
-      skema: '',
-      tenor: '',
-      nilai_pembiayaan: '',
-      angsuran: '',
-      total_angsuran: '',
-      max_angsuran: '',
-      dsr: '',
+      harga_permintaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      down_payment: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      skema: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      tenor: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      nilai_pembiayaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      angsuran: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      total_angsuran: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      max_angsuran: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      dsr: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+    });
+
+    this.mapisForm = this.formBuilder.group({
+      luas_bangunan: '',
+      luas_tanah: '',
+      nilai_imb: '',
+      nilai_market: '',
+      objek_pembiayaan: '',
+      ftv: '',
+      tipe_agunan: '',
+      jenis_objek: '',
     });
   }
 
   load(): void {
+    setTimeout(() => {
+      this.verifikasiServices.fetchMapis(this.app_no_de).subscribe(data => {
+        this.mapisModel = data.result;
+        // console.warn(data)
+        const retriveForm = {
+          luas_bangunan: this.mapisModel.luas_bangunan,
+          luas_tanah: this.mapisModel.luas_tanah,
+          nilai_imb: this.mapisModel.nilai_imb,
+          nilai_market: this.mapisModel.nilai_market,
+          objek_pembiayaan: this.mapisModel.objek_pembiayaan,
+          ftv: this.dataEntry.uang_muka,
+          tipe_agunan: this.mapisModel.tipe_agunan,
+          jenis_objek: this.mapisModel.jenis_objek,
+        };
+        this.mapisForm.setValue(retriveForm);
+      });
+    }, 300);
+
     // Analisa Pembiayaan
     this.verifikasiServices.fetchAnalisaPembiayaan(this.app_no_de).subscribe(analisa => {
       this.analisaPembiayaan = analisa.result;
@@ -128,13 +160,13 @@ export class StukturPembiayaanComponent implements OnInit {
 
       // console.log(this.strukturPembiayaan)
       // this.comboSkema = this.strukturPembiayaan.skema_code + '|' + this.strukturPembiayaan.skema_master + '|' + this.strukturPembiayaan.skema;
-      setTimeout(() => {
-        this.comboSkema = this.strukturPembiayaan.skema_code;
-        this.comboSkema += '|';
-        this.comboSkema += this.strukturPembiayaan.skema_master;
-        this.comboSkema += '|';
-        this.comboSkema += this.strukturPembiayaan.skema;
-      }, 300);
+      // setTimeout(() => {
+      this.comboSkema = this.strukturPembiayaan.skema_code;
+      this.comboSkema += '|';
+      this.comboSkema += this.strukturPembiayaan.skema_master;
+      this.comboSkema += '|';
+      this.comboSkema += this.strukturPembiayaan.skema;
+      // }, 300);
 
       // retrive Tenor
       if (this.dataEntry.kode_fasilitas_name === 'PTA') {
@@ -248,9 +280,10 @@ export class StukturPembiayaanComponent implements OnInit {
                   // this.analisaMaxAngsuran = data.result.max_angsuran;
                   this.strukturForm.get('max_angsuran')?.setValue(angsuran.result.max_angsuran);
                   setTimeout(() => {
+                    const dsrnya = this.analisaDsr.replace(' %', '');
                     this.http
                       .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/getHitungScoring', {
-                        dsr: this.analisaDsr,
+                        dsr: dsrnya,
                         app_no_de: this.dataEntry.app_no_de,
                       })
                       .subscribe({
@@ -346,8 +379,8 @@ export class StukturPembiayaanComponent implements OnInit {
         .subscribe({
           next: response => {
             console.warn(response);
-            alert('Berhasil Menyimpan Data');
-            this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+            // alert('Berhasil Menyimpan Data');
+            // this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
           },
           error: error => console.warn(error),
         });

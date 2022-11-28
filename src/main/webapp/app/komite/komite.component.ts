@@ -10,6 +10,9 @@ import { getListFasilitasModel } from '../data-entry/services/config/getListFasi
 import { getProgramModel } from '../data-entry/services/config/getProgramModel.model';
 import { KomiteService } from './services/komite.service';
 import { daftarAplkasiKomiteModel } from './services/config/daftarAplikasiKomiteModel.model';
+import { listPersetujuanKhususModel } from './services/config/listPersetujuanKhususModel.model';
+import { refPersetujuanKhususModel } from './services/config/refPersetujuanKhususModel.model';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-komite',
@@ -23,6 +26,8 @@ export class KomiteComponent implements OnInit {
   kategori_pekerjaan = '';
   Kodefasilitas: getListFasilitasModel[] = [];
   kodeprogram: getProgramModel[] = [];
+  refPersetujuanKhusus: refPersetujuanKhususModel[] = [];
+  listPersetujuanKhusus: listPersetujuanKhususModel[] = [];
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -35,6 +40,7 @@ export class KomiteComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected modalService: NgbModal,
+    private sessionStorageService: SessionStorageService,
     protected http: HttpClient
   ) {}
 
@@ -58,6 +64,11 @@ export class KomiteComponent implements OnInit {
       this.dtTrigger.next(this.modelListAgunan);
     });
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
+    // //////////////////////////////////////////////// Ref Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
+    this.komiteService.getRefPersetujuanKhusus().subscribe(data => {
+      this.refPersetujuanKhusus = data.result;
+    });
+    // //////////////////////////////////////////////// Ref Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
   }
 
   ngOnDestroy(): void {
@@ -83,7 +94,36 @@ export class KomiteComponent implements OnInit {
   }
 
   view(app_no_de: string | undefined, curef: string | undefined): void {
-    this.router.navigate(['/komite/detail-komite'], { queryParams: { app_no_de: app_no_de, curef: curef } });
+    this.komiteService.getListPersetujuanKhusus(app_no_de).subscribe(data => {
+      if (data.result == '') {
+        for (let i = 0; i < this.refPersetujuanKhusus.length; i++) {
+          this.http
+            .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/create_persetujuan_khusus', {
+              app_no_de: app_no_de,
+              created_by: this.sessionStorageService.retrieve('sessionUserName'),
+              created_date: '',
+              detail_persetujuan: '',
+              id: 0,
+              id_jenis_persetujuan: '',
+              ketentuan: '',
+              mitigasi_resiko: '',
+              persetujuan: 0,
+              usulan: '',
+            })
+            .subscribe({
+              next: data => {
+                console.warn(data);
+                this.router.navigate(['/komite/detail-komite'], { queryParams: { app_no_de: app_no_de, curef: curef } });
+              },
+              error: err => {
+                console.error(err);
+              },
+            });
+        }
+      } else {
+        this.router.navigate(['/komite/detail-komite'], { queryParams: { app_no_de: app_no_de, curef: curef } });
+      }
+    });
   }
   // /////////////////////////Untuk Alert/////////////////////////////////////
 

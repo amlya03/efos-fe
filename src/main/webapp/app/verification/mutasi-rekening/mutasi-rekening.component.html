@@ -78,7 +78,7 @@
   <p></p>
   <p></p>
   <button
-    [hidden]="this.untukSessionRole == 'VER_PRESCR'"
+    [hidden]="this.untukSessionRole == 'VER_PRE_SPV'"
     type="button"
     (click)="
       this.tambahTableMutasi = '';
@@ -272,13 +272,13 @@
     <div class="col" style="text-align: center">
       <button
         type="submit"
-        [hidden]="this.untukSessionRole == 'VER_PRESCR'"
+        [hidden]="this.untukSessionRole == 'VER_PRE_SPV'"
         class="btn btn-info"
         (click)="submitForm(nama_bank.value, no_rekening.value, tahun.value, bulan.value, debet.value, kredit.value, saldo.value)"
       >
         Simpan Data
       </button>
-      <button type="button" class="btn btn-info" (click)="goto()" [hidden]="this.untukSessionRole == 'APPRAISAL'">Selanjutnya</button>
+      <button type="button" class="btn btn-info" (click)="goto()" [hidden]="this.untukSessionRole == 'VER_PRESCR'">Selanjutnya</button>
     </div>
   </div>
 </form>

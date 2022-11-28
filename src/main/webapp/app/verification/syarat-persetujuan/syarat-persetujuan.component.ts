@@ -49,6 +49,9 @@ export class SyaratPersetujuanComponent implements OnInit {
   // Cek Result
   cekResult: any;
 
+  // retrive Kepatuhan
+  retKepatuhan: any;
+
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
@@ -244,7 +247,7 @@ export class SyaratPersetujuanComponent implements OnInit {
       // post Uji Kepatuhan Dan ASrea Of Concren
       if (this.cekResult === 0) {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_cek_uji_kepatuhan', {
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_syarat_persetujuan', {
             app_no_de: this.app_no_de,
             created_by: this.untukSessionUserName,
             curef: this.dataEntry.curef,
@@ -252,8 +255,6 @@ export class SyaratPersetujuanComponent implements OnInit {
             kegiatan: this.cekUjiKepatuhan[i].id,
             kepatuhan: this.kepatuhanUji,
             keterangan: this.keteranganUji,
-            deskripsi_area: this.areaOfConInput,
-            status_area: this.areaOfConRadio,
           })
           .subscribe({});
       } else {
@@ -269,6 +270,31 @@ export class SyaratPersetujuanComponent implements OnInit {
             status_area: this.areaOfConRadio,
           })
           .subscribe({});
+      }
+      if (this.cekResult === 0) {
+        this.http
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_area_of_concern', {
+            app_no_de: this.app_no_de,
+            created_by: this.untukSessionUserName,
+            created_date: '',
+            curef: this.dataEntry.curef,
+            deskripsi_area: this.areaOfConInput,
+            status_area: this.areaOfConRadio,
+          })
+          .subscribe({});
+      } else {
+        // this.http
+        //   .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_cek_uji_kepatuhan', {
+        //     app_no_de: this.app_no_de,
+        //     created_by: this.untukSessionUserName,
+        //     curef: this.dataEntry.curef,
+        //     kegiatan: this.cekUjiKepatuhan[i].id,
+        //     kepatuhan: this.kepatuhanUji,
+        //     keterangan: this.keteranganUji,
+        //     deskripsi_area: this.areaOfConInput,
+        //     status_area: this.areaOfConRadio,
+        //   })
+        //   .subscribe({});
       }
     }
     this.router.navigate(['/kesimpulan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });

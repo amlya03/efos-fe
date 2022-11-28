@@ -57,7 +57,6 @@
             id="nama_yang_dihubungi"
             name="nama_yang_dihubungi"
             placeholder=""
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             formControlName="nama_dihubungi"
           />
         </div>
@@ -72,7 +71,6 @@
             id="jabatan_yang_dihubungi"
             name="jabatan_yang_dihubungi"
             placeholder=""
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             formControlName="jabatan_dihubungi"
           />
         </div>
@@ -88,7 +86,6 @@
             name="tanggal_permintaan"
             placeholder=""
             formControlName="tanggal_permintaan"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           />
         </div>
       </div>
@@ -99,7 +96,6 @@
           <input
             type="date"
             class="form-control"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             id="tanggal_pemeriksa"
             name="tanggal_pemeriksa"
             placeholder=""
@@ -117,7 +113,6 @@
             id="nama_pemeriksa"
             name="nama_pemeriksa"
             placeholder=""
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             formControlName="nama_pemeriksa"
           />
         </div>
@@ -278,7 +273,6 @@
               class="form-control"
               id="gaji_kotor_pemohon"
               name="gaji_kotor_pemohon"
-              [readonly]="this.untukSessionRole == 'VER_PRESCR'"
               (keypress)="keyPressNumbers($event)"
               #gaji_kotor1
             />
@@ -294,7 +288,6 @@
             class="form-control"
             id="gaji_kotor_pasangan"
             name="gaji_kotor_pasangan"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             (keypress)="keyPressNumbers($event)"
             #gaji_kotor_pasangan1
           />
@@ -327,7 +320,6 @@
               type="text"
               class="form-control"
               id="tunjangan_pemohon"
-              [readonly]="this.untukSessionRole == 'VER_PRESCR'"
               name="tunjangan_pemohon"
               (keypress)="keyPressNumbers($event)"
               #tunjangan1
@@ -343,7 +335,6 @@
             class="form-control"
             id="tunjangan_pasangan"
             name="tunjangan_pasangan"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             (keypress)="keyPressNumbers($event)"
             #tunjangan_pasangan1
           />
@@ -376,7 +367,6 @@
               class="form-control"
               id="pendapatan_kantor_lainnya"
               name="pendapatan_kantor_lainnya"
-              [readonly]="this.untukSessionRole == 'VER_PRESCR'"
               (keypress)="keyPressNumbers($event)"
               #pendapatan_kantor_lainnya1
             />
@@ -388,7 +378,6 @@
           <input
             formControlName="pendapatan_kantor_lainnya_pasangan"
             type="text"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             class="form-control"
             id="pendapatan_kantor_lainnya_pasangan"
             name="pendapatan_kantor_lainnya_pasangan"
@@ -422,7 +411,6 @@
               formControlName="pendapatan_kotor"
               type="text"
               class="form-control"
-              [readonly]="this.untukSessionRole == 'VER_PRESCR'"
               id="pendapatan_kotor_pemohon"
               name="pendapatan_kotor_pemohon"
               (keypress)="keyPressNumbers($event)"
@@ -443,7 +431,6 @@
             (keypress)="keyPressNumbers($event)"
             #pendapatan_kotor_pasangan1
             value="{{ +gaji_kotor_pasangan1.value + +tunjangan_pasangan1.value + +pendapatan_kantor_lainnya_pasangan1.value }}"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           />
         </div>
       </div>
@@ -473,7 +460,6 @@
               class="form-control"
               id="total_angsuran_kewajiban_kantor"
               (keypress)="keyPressNumbers($event)"
-              [readonly]="this.untukSessionRole == 'VER_PRESCR'"
               formControlName="angsuran_kewajiban_kantor"
               #angsuran_kewajiban_kantor1
             />
@@ -487,7 +473,6 @@
             class="form-control"
             id="total_angsuran_kewajiban_kantor_pasangan"
             (keypress)="keyPressNumbers($event)"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             formControlName="angsuran_kewajiban_kantor_pasangan"
             #angsuran_kewajiban_kantor_pasangan1
           />
@@ -584,7 +569,6 @@
               class="form-control"
               id="pendapatan_usaha"
               name="pendapatan_usaha"
-              [readonly]="this.untukSessionRole == 'VER_PRESCR'"
               (keypress)="keyPressNumbers($event)"
               #pendapatan_usaha1
             />
@@ -598,7 +582,6 @@
             type="text"
             class="form-control"
             id="pendapatan_usaha_pasangan"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             name="pendapatan_usaha_pasangan"
             (keypress)="keyPressNumbers($event)"
             #pendapatan_usaha_pasangan1
@@ -628,7 +611,6 @@
             <input
               type="text"
               class="form-control"
-              [readonly]="this.untukSessionRole == 'VER_PRESCR'"
               id="pendapatan_profesional"
               name="pendapatan_profesional"
               (keypress)="keyPressNumbers($event)"
@@ -645,7 +627,6 @@
             class="form-control"
             id="pendapatan_profesional_pasangan"
             name="pendapatan_profesional_pasangan"
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
             (keypress)="keyPressNumbers($event)"
             formControlName="pendapatan_profesional_pasangan"
             #pendapatan_profesional_pasangan1
@@ -795,7 +776,6 @@
             name="kewajiban_lainnya"
             (keypress)="keyPressNumbers($event)"
             #kewajiban_lainnya1
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           />
         </div>
       </div>
@@ -811,7 +791,6 @@
             name="kewajiban_lainnya_pasangan"
             (keypress)="keyPressNumbers($event)"
             #kewajiban_lainnya_pasangan1
-            [readonly]="this.untukSessionRole == 'VER_PRESCR'"
           />
         </div>
       </div>
@@ -891,8 +870,8 @@
   <p></p>
   <div class="row">
     <div class="col" style="text-align: center">
-      <button type="submit" class="btn btn-info" [hidden]="this.untukSessionRole == 'VER_PRESCR'">Simpan Data</button>
-      <button type="button" class="btn btn-info" [hidden]="this.untukSessionRole == 'APPRAISAL'" (click)="Next()">Selanjutnya</button>
+      <button type="submit" class="btn btn-info" [hidden]="this.untukSessionRole == 'VER_PRE_SPV'">Simpan Data</button>
+      <button type="button" class="btn btn-info" [hidden]="this.untukSessionRole == 'VER_PRESCR'" (click)="Next()">Selanjutnya</button>
     </div>
   </div>
 </form>

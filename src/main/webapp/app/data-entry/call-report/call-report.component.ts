@@ -49,6 +49,7 @@ export class CallReportComponent implements OnInit {
   checkboxCekskdu: any;
   checkboxCekskdp: any;
   legalitasUsaha: any;
+  cekSimpanData = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -274,9 +275,9 @@ export class CallReportComponent implements OnInit {
 
   onclikwawancara(e: any) {
     if (e.target.checked) {
-      $('#buttonsimpan').removeAttr('hidden');
+      this.cekSimpanData = 1;
     } else {
-      $('#buttonsimpan').attr('hidden', 'hidden');
+      this.cekSimpanData = 0;
     }
   }
 
@@ -308,6 +309,7 @@ export class CallReportComponent implements OnInit {
         dokumen_agunan: this.callReportForm.get('dokumen_agunan')?.value,
         estimasi_angsuran: this.callReportForm.get('estimasi_angsuran')?.value,
         id: 0,
+        jabatan_terakhir: this.callReportForm.get('jabatan_terakhir')?.value,
         jabatan_terakhir_pasangan: this.callReportForm.get('jabatan_terakhir_pasangan')?.value,
         jenis_produk: this.callReportForm.get('jenis_produk')?.value,
         jenis_usaha: this.callReportForm.get('jenis_usaha')?.value,
