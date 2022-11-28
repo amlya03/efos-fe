@@ -38,6 +38,8 @@ export class SyaratPersetujuanComponent implements OnInit {
 
   // Area Of Concern
   areaOfConcernModel: areaOfConcern = new areaOfConcern();
+  bodyAreaOfconcern: any;
+  bodyDeskripsiAreaOfconcern: any;
   areaOfConRadio: any;
   areaOfConInput: any;
 
@@ -48,6 +50,7 @@ export class SyaratPersetujuanComponent implements OnInit {
 
   // Cek Result
   cekResult: any;
+  cekUjiResult = 0;
 
   // retrive Kepatuhan
   retKepatuhan: any;
@@ -111,13 +114,23 @@ export class SyaratPersetujuanComponent implements OnInit {
 
       // Cek Uji Kepatuhan
       this.cekUjiKepatuhan = data.result.cek_uji_kepatuhan;
+      // console.warn(this.cekUjiKepatuhan.keterangan)
+      if (this.cekUjiKepatuhan[0].app_no_de == null) {
+        this.cekUjiResult = 0;
+      } else {
+        this.cekUjiResult = 1;
+      }
 
       // Area Of Concern
       this.areaOfConcernModel = data.result.area_of_concern;
 
       if (data.result.area_of_concern === null) {
+        this.bodyAreaOfconcern = 0;
+        this.bodyDeskripsiAreaOfconcern = '';
         this.cekResult = 0;
       } else {
+        this.bodyAreaOfconcern = data.result.area_of_concern.status_area;
+        this.bodyDeskripsiAreaOfconcern = data.result.area_of_concern.deskripsi_area;
         this.cekResult = 1;
       }
 
@@ -226,7 +239,6 @@ export class SyaratPersetujuanComponent implements OnInit {
 
   // simpan data Syarat PErsetujuan
   simpanData(): void {
-    // Area Of Concern
     this.areaOfConRadio = (document.getElementById('area-concern') as HTMLInputElement).value;
     this.areaOfConInput = (document.getElementById('deskripsiAreaConcern') as HTMLInputElement).value;
 
@@ -241,17 +253,16 @@ export class SyaratPersetujuanComponent implements OnInit {
       // alert(this.kepatuhanUji)
 
       // get input Keterangan
-      this.keteranganUji = (<HTMLInputElement>document.getElementById('keterangan' + this.cekUjiKepatuhan[i].id)).value;
+      this.keteranganUji = (<HTMLInputElement>document.getElementById('keterangan' + (i + 1))).value;
       // alert(this.keteranganUji)
 
       // post Uji Kepatuhan Dan ASrea Of Concren
-      if (this.cekResult === 0) {
+      if (this.cekUjiResult == 0) {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_syarat_persetujuan', {
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_cek_uji_kepatuhan', {
             app_no_de: this.app_no_de,
             created_by: this.untukSessionUserName,
             curef: this.dataEntry.curef,
-            // id: this.cekUjiKepatuhan[i].id,
             kegiatan: this.cekUjiKepatuhan[i].id,
             kepatuhan: this.kepatuhanUji,
             keterangan: this.keteranganUji,
@@ -266,36 +277,34 @@ export class SyaratPersetujuanComponent implements OnInit {
             kegiatan: this.cekUjiKepatuhan[i].id,
             kepatuhan: this.kepatuhanUji,
             keterangan: this.keteranganUji,
-            deskripsi_area: this.areaOfConInput,
-            status_area: this.areaOfConRadio,
           })
           .subscribe({});
       }
-      if (this.cekResult === 0) {
-        this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_area_of_concern', {
-            app_no_de: this.app_no_de,
-            created_by: this.untukSessionUserName,
-            created_date: '',
-            curef: this.dataEntry.curef,
-            deskripsi_area: this.areaOfConInput,
-            status_area: this.areaOfConRadio,
-          })
-          .subscribe({});
-      } else {
-        // this.http
-        //   .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_cek_uji_kepatuhan', {
-        //     app_no_de: this.app_no_de,
-        //     created_by: this.untukSessionUserName,
-        //     curef: this.dataEntry.curef,
-        //     kegiatan: this.cekUjiKepatuhan[i].id,
-        //     kepatuhan: this.kepatuhanUji,
-        //     keterangan: this.keteranganUji,
-        //     deskripsi_area: this.areaOfConInput,
-        //     status_area: this.areaOfConRadio,
-        //   })
-        //   .subscribe({});
-      }
+    }
+
+    // Area Of Concern
+    if (this.cekResult === 0) {
+      this.http
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_area_of_concern', {
+          app_no_de: this.app_no_de,
+          created_by: this.untukSessionUserName,
+          created_date: '',
+          curef: this.dataEntry.curef,
+          deskripsi_area: this.areaOfConInput,
+          status_area: this.areaOfConRadio,
+        })
+        .subscribe({});
+    } else {
+      this.http
+        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_area_of_concern', {
+          app_no_de: this.app_no_de,
+          created_by: this.untukSessionUserName,
+          created_date: '',
+          curef: this.dataEntry.curef,
+          deskripsi_area: this.areaOfConInput,
+          status_area: this.areaOfConRadio,
+        })
+        .subscribe({});
     }
     this.router.navigate(['/kesimpulan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }

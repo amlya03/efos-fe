@@ -83,7 +83,6 @@ export class PekerjaanPasanganComponent implements OnInit {
       this.statusPerkawinan = params.statusPerkawinan;
     });
   }
-  protected apilistjenisbidang = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/list_jenis_bidang');
 
   ngOnInit(): void {
     this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
@@ -281,14 +280,6 @@ export class PekerjaanPasanganComponent implements OnInit {
           });
         },
       });
-
-    this.getlistjenisbidang().subscribe({
-      next: (res: EntityArrayResponseDaWa1) => {
-        // console.log(res.body?.result);
-        console.warn('jenisbidang', res.body?.result);
-        this.getjenisbidangdariapi = res.body?.result;
-      },
-    });
   }
 
   jenisbidangsebelumselect() {
@@ -305,11 +296,6 @@ export class PekerjaanPasanganComponent implements OnInit {
         // this.onResponseSuccess(res);
       },
     });
-  }
-
-  getlistjenisbidang(req1?: any): Observable<EntityArrayResponseDaWa1> {
-    const options = createRequestOption(req1);
-    return this.http.get<ApiResponse>(this.apilistjenisbidang, { params: options, observe: 'response' });
   }
 
   getsektorekonomi(idsktor: any, req?: any): Observable<EntityArrayResponseDaWa> {

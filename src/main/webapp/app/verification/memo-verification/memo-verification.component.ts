@@ -93,17 +93,34 @@ export class MemoVerificationComponent implements OnInit {
       .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_memo', {
         id: 0,
         keterangan: keterangan,
-        users: this.untukSessionUserName,
+        users: this.untukSessionFullName,
         role: this.untukSessionRole,
         app_no_de: this.app_no_de,
         created_date: '',
         created_by: this.untukSessionUserName,
       })
       .subscribe({
-        next: response => console.warn(response),
+        next: response => {
+          window.location.reload();
+        },
         error: error => console.warn(error),
       });
-    window.location.reload();
+  }
+
+  // Update STatus
+  updateStatus() {
+    this.http
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+        app_no_de: this.app_no_de,
+        created_by: this.untukSessionUserName,
+        status_aplikasi: this.dataEntry.status_aplikasi,
+      })
+      .subscribe({
+        next: response => {
+          this.router.navigate(['/daftar-aplikasi-verification']);
+        },
+        error: error => console.warn(error),
+      });
   }
 
   // detail memo

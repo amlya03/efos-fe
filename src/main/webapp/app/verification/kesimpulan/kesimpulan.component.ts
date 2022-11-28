@@ -78,8 +78,6 @@ export class KesimpulanComponent implements OnInit {
           rekomendasi: this.kesimpulanForm.get('rekomendasi')?.value,
           updated_date: '',
           updated_by: this.untukSessionUserName,
-          // updated_by: this.mutasiForm.get('updated_by')?.value,
-          // updated_date: this.mutasiForm.get('updated_date')?.value,
         })
         .subscribe({
           next: response => console.warn(response),

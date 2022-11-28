@@ -114,7 +114,7 @@ export class ChecklistDocumentComponent implements OnInit {
     for (let i = 0; i < this.uploadDocument.length; i++) {
       // get Radio Button Validasi
       const validasiDE = $('#validasiDE' + (i + 1)).is(':checked'); //(document.getElementById('validasiDE'+ i + 1) as HTMLInputElement).checked;
-      alert(validasiDE);
+      // alert(validasiDE);
       if (validasiDE === true) {
         this.radioValidasiDE = 1;
       } else {
@@ -123,26 +123,6 @@ export class ChecklistDocumentComponent implements OnInit {
 
       // keterangan
       this.keteranganDE = (document.getElementById('keteranganDE' + (i + 1)) as HTMLInputElement).value;
-
-      // Upload Agunan
-      for (let j = 0; j < this.uploadAgunan.length; j++) {
-        // get Radio Button Validasi
-        const validasiAgunan = (document.getElementById('validasiAgunan' + (j + 1)) as HTMLInputElement).checked;
-        if (validasiAgunan === true) {
-          this.radioValidasiAgunan = 1;
-        } else {
-          this.radioValidasiAgunan = 0;
-        }
-        // alert(this.radioValidasiAgunan)
-
-        // get input Keterangan
-        this.keteranganAgunan = (document.getElementById('keteranganAgunan' + (j + 1)) as HTMLInputElement).value;
-        // alert(this.keteranganAgunan)
-
-        // get input Keterangan
-        this.keteranganAgunan = (document.getElementById('keteranganAgunan' + (j + 1)) as HTMLInputElement).value;
-        // alert(this.keteranganAgunan)
-      }
 
       // Post Data Entry
       this.http
@@ -154,12 +134,26 @@ export class ChecklistDocumentComponent implements OnInit {
         })
         .subscribe({});
       this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+    }
+    // Upload Agunan
+    for (let j = 0; j < this.uploadAgunan.length; j++) {
+      // get Radio Button Validasi
+      const validasiAgunan = (document.getElementById('validasiAgunan' + (j + 1)) as HTMLInputElement).checked;
+      if (validasiAgunan === true) {
+        this.radioValidasiAgunan = 1;
+      } else {
+        this.radioValidasiAgunan = 0;
+      }
+      // alert(this.radioValidasiAgunan)
 
+      // get input Keterangan
+      this.keteranganAgunan = (document.getElementById('keteranganAgunan' + (j + 1)) as HTMLInputElement).value;
+      // alert(this.keteranganAgunan)
       // Post Agunan
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/checklist_dokumen', {
           created_by: this.untukSessionUserName,
-          id: this.uploadAgunan[i].id_upload,
+          id: this.uploadAgunan[j].id_upload,
           note_validasi: this.keteranganAgunan,
           validasi: this.radioValidasiAgunan,
         })

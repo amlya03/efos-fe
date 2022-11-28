@@ -5,4 +5,6 @@ export class uploadDocument {
   id_upload?: number;
   created_date?: string;
   id?: number;
+  note_validasi?: string;
+  validasi?: number;
 }

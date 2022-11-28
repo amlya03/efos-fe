@@ -157,7 +157,7 @@
           [hidden]="this.untukSessionRole == 'VER_PRE_SPV'"
           type="text"
           class="form-control"
-          [value]="cekUjiKepatuhan.keterangan"
+          value="{{ cekUjiKepatuhan.keterangan }}"
           id="keterangan{{ i + 1 }}"
         />
       </td>
@@ -174,12 +174,10 @@
   <label class="col-sm-2 col-form-label">Terdapat Area Concern</label>
   <div class="col-sm-10">
     <label>ada</label>
-    <input [checked]="this.areaOfConcernModel.status_area == 1" type="radio" name="area-concern" id="area-concern" value="1" />
+    <input [checked]="this.bodyAreaOfconcern == 1" type="radio" name="area-concern" id="area-concern" value="1" />
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <input [checked]="this.areaOfConcernModel.status_area == 0" type="radio" name="area-concern" id="area-concern" value="0" />
+    <input [checked]="this.bodyAreaOfconcern == 0" type="radio" name="area-concern" id="area-concern" value="0" />
     <label>Tidak ada</label>
-    <!-- [checked]="this.areaOfConcernModel.status_area == 1"
-    [checked]="this.areaOfConcernModel.status_area == 0" -->
   </div>
 </div>
 <br />
@@ -191,11 +189,10 @@
       type="text"
       class="form-control"
       id="deskripsiAreaConcern"
-      value="{{ this.areaOfConcernModel.deskripsi_area }}"
+      value="{{ this.bodyDeskripsiAreaOfconcern }}"
     />
   </div>
 </div>
-<!-- [value]="this.areaOfConcernModel.deskripsi_area"  -->
 <br />
 <br />
 <div class="input-group" style="justify-content: center">

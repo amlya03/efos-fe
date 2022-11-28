@@ -16,7 +16,6 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { Subject } from 'rxjs';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { refAnalisaKeuangan } from './refAnalisaKeuangan.model';
-import { CurrencyMaskInputMode } from 'ngx-currency';
 
 @Component({
   selector: 'jhi-data-rumah',
@@ -25,6 +24,7 @@ import { CurrencyMaskInputMode } from 'ngx-currency';
 })
 export class DataRumahComponent implements OnInit {
   analisaKeuanganForm!: FormGroup;
+  slikForm!: FormGroup;
   submitted = false;
   app_no_de: any;
   curef: any;
@@ -58,9 +58,6 @@ export class DataRumahComponent implements OnInit {
 
   // cek result
   cekResult = 0;
-  formatIdr: any;
-
-  optionsMoney = { prefix: 'Rp ', thousands: ',', decimal: '.', inputMode: CurrencyMaskInputMode.NATURAL };
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -98,8 +95,6 @@ export class DataRumahComponent implements OnInit {
     };
     this.load();
     this.formatMoney();
-    // alert(this.untukSessionRole);
-    this.formatIdr = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' });
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.analisaKeuanganForm = this.formBuilder.group({
@@ -109,7 +104,6 @@ export class DataRumahComponent implements OnInit {
       tanggal_permintaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       tanggal_pemeriksa: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
 
-      // COba: [this.formatIdr.format('')],
       // Data Keuangan Nasabah \\
       gaji_kotor: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       gaji_kotor_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
@@ -153,6 +147,12 @@ export class DataRumahComponent implements OnInit {
       angsuran_kewajiban_kantor_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       total_angsuran_kewajiban_kantor: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
     });
+
+    // slik form
+    this.slikForm = this.formBuilder.group({
+      total_angsuran_nasabah: '',
+      total_angsuran_pasangan: '',
+    });
   }
 
   load(): void {
@@ -177,6 +177,11 @@ export class DataRumahComponent implements OnInit {
     // ambil semua data Slik
     this.dataRumah.fetchSlik('app_20221017_667').subscribe(data => {
       this.slikTotal = data.result;
+      let retSlik = {
+        total_angsuran_nasabah: this.slikTotal.total_angsuran_nasabah,
+        total_angsuran_pasangan: this.slikTotal.total_angsuran_pasangan,
+      };
+      this.slikForm.setValue(retSlik);
       // alert(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_angsuran_pasangan)))
       this.totalOutNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
         Number(this.slikTotal.total_outstanding_nasabah)
