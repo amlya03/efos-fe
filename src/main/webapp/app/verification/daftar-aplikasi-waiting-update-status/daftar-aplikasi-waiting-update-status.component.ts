@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 import { SessionStorageService } from 'ngx-webstorage';
 import { getListFasilitasModel } from 'app/data-entry/services/config/getListFasilitasModel.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 
 @Component({
   selector: 'jhi-daftar-aplikasi-waiting-update-status',
@@ -19,6 +20,7 @@ import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDestroy {
   title = 'EFOS';
   daWuS?: daWuS[];
+  dataEntry: fetchAllDe = new fetchAllDe();
   onResponseSuccess: any;
   valueFasilitas = '';
   valueKategori = '';
@@ -31,6 +33,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
   updateStatusDaWuS: Array<number> = [];
   listFasilitas: getListFasilitasModel[] = [];
   checkLenghtResult: any;
+  curef: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -231,6 +234,15 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire('Cancelled', 'File disimpan', 'error');
       }
+    });
+  }
+
+  // ReadOnly
+  readOnlyButton(app_noDe: string | null | undefined): void {
+    this.dataEntryServices.getFetchSemuaDataDE(app_noDe).subscribe(data => {
+      this.dataEntry = data.result;
+      this.curef = this.dataEntry.curef;
+      this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: app_noDe, curef: this.curef } });
     });
   }
 }

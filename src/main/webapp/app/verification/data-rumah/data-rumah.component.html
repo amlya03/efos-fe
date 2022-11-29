@@ -275,6 +275,8 @@
               name="gaji_kotor_pemohon"
               (keypress)="keyPressNumbers($event)"
               #gaji_kotor1
+              currencyMask
+              [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
             />
           </div>
         </div>
@@ -290,6 +292,8 @@
             name="gaji_kotor_pasangan"
             (keypress)="keyPressNumbers($event)"
             #gaji_kotor_pasangan1
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
           />
         </div>
       </div>
@@ -304,7 +308,11 @@
             name="gaji_kotor_total"
             (keypress)="keyPressNumbers($event)"
             readonly
-            value="{{ +gaji_kotor1.value + +gaji_kotor_pasangan1.value | currency: 'Rp ' }}"
+            currencyMask
+            value="{{
+              +this.analisaKeuanganForm.get('gaji_kotor')?.value + +this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value
+                | currency: 'Rp '
+            }}"
           />
         </div>
       </div>
@@ -323,6 +331,8 @@
               name="tunjangan_pemohon"
               (keypress)="keyPressNumbers($event)"
               #tunjangan1
+              currencyMask
+              [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
             />
           </div>
         </div>
@@ -337,6 +347,8 @@
             name="tunjangan_pasangan"
             (keypress)="keyPressNumbers($event)"
             #tunjangan_pasangan1
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
           />
         </div>
       </div>
@@ -350,7 +362,11 @@
             name="tunjangan_total"
             readonly
             (keypress)="keyPressNumbers($event)"
-            value="{{ +tunjangan1.value + +tunjangan_pasangan1.value | currency: 'Rp ' }}"
+            currencyMask
+            value="{{
+              +this.analisaKeuanganForm.get('tunjangan')?.value + +this.analisaKeuanganForm.get('tunjangan_pasangan')?.value
+                | currency: 'Rp '
+            }}"
           />
         </div>
       </div>
@@ -369,6 +385,8 @@
               name="pendapatan_kantor_lainnya"
               (keypress)="keyPressNumbers($event)"
               #pendapatan_kantor_lainnya1
+              currencyMask
+              [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
             />
           </div>
         </div>
@@ -383,6 +401,8 @@
             name="pendapatan_kantor_lainnya_pasangan"
             (keypress)="keyPressNumbers($event)"
             #pendapatan_kantor_lainnya_pasangan1
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
           />
         </div>
       </div>
@@ -396,7 +416,12 @@
             name="pendapatan_kantor_lainnya_total"
             (keypress)="keyPressNumbers($event)"
             readonly
-            value="{{ +pendapatan_kantor_lainnya1.value + +pendapatan_kantor_lainnya_pasangan1.value | currency: 'Rp ' }}"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
+            value="{{
+              +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value +
+                +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value | currency: 'Rp '
+            }}"
           />
         </div>
       </div>
@@ -414,8 +439,26 @@
               id="pendapatan_kotor_pemohon"
               name="pendapatan_kotor_pemohon"
               (keypress)="keyPressNumbers($event)"
+              readonly
+              hidden
               #pendapatan_kotor1
-              value="{{ +gaji_kotor1.value + +tunjangan1.value + +pendapatan_kantor_lainnya1.value }}"
+              currencyMask
+              value="{{
+                +this.analisaKeuanganForm.get('gaji_kotor')?.value +
+                  +this.analisaKeuanganForm.get('tunjangan')?.value +
+                  +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value
+              }}"
+            />
+            <input
+              readonly
+              type="text"
+              class="form-control"
+              currencyMask
+              value="{{
+                +this.analisaKeuanganForm.get('gaji_kotor')?.value +
+                  +this.analisaKeuanganForm.get('tunjangan')?.value +
+                  +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value | currency: 'Rp '
+              }}"
             />
           </div>
         </div>
@@ -429,8 +472,26 @@
             id="pendapatan_kotor_pasangan"
             name="pendapatan_kotor_pasangan"
             (keypress)="keyPressNumbers($event)"
+            readonly
+            hidden
             #pendapatan_kotor_pasangan1
-            value="{{ +gaji_kotor_pasangan1.value + +tunjangan_pasangan1.value + +pendapatan_kantor_lainnya_pasangan1.value }}"
+            currencyMask
+            value="{{
+              +this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value +
+                +this.analisaKeuanganForm.get('tunjangan_pasangan')?.value +
+                +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value
+            }}"
+          />
+          <input
+            readonly
+            type="text"
+            class="form-control"
+            currencyMask
+            value="{{
+              +this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value +
+                +this.analisaKeuanganForm.get('tunjangan_pasangan')?.value +
+                +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value | currency: 'Rp '
+            }}"
           />
         </div>
       </div>
@@ -444,6 +505,7 @@
             name="pendapatan_kotor_total"
             readonly
             (keypress)="keyPressNumbers($event)"
+            currencyMask
             value="{{ +pendapatan_kotor1.value + +pendapatan_kotor_pasangan1.value | currency: 'Rp ' }}"
           />
         </div>
@@ -462,6 +524,8 @@
               (keypress)="keyPressNumbers($event)"
               formControlName="angsuran_kewajiban_kantor"
               #angsuran_kewajiban_kantor1
+              currencyMask
+              [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
             />
           </div>
         </div>
@@ -475,6 +539,8 @@
             (keypress)="keyPressNumbers($event)"
             formControlName="angsuran_kewajiban_kantor_pasangan"
             #angsuran_kewajiban_kantor_pasangan1
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
           />
         </div>
       </div>
@@ -486,8 +552,12 @@
             id="total_angsuran_kewajiban_kantor_total"
             (keypress)="keyPressNumbers($event)"
             formControlName="total_angsuran_kewajiban_kantor"
-            value="{{ +angsuran_kewajiban_kantor1.value + +angsuran_kewajiban_kantor_pasangan1.value | currency: 'Rp ' }}"
+            value="{{
+              +this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value +
+                +this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value | currency: 'Rp '
+            }}"
             readonly
+            currencyMask
           />
         </div>
       </div>
@@ -507,7 +577,26 @@
               name="pendapatan_bersih"
               (keypress)="keyPressNumbers($event)"
               #pendapatan_bersih1
-              value="{{ +pendapatan_kotor1.value - +angsuran_kewajiban_kantor1.value }}"
+              value="{{
+                +this.analisaKeuanganForm.get('gaji_kotor')?.value +
+                  +this.analisaKeuanganForm.get('tunjangan')?.value +
+                  +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value -
+                  +this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value
+              }}"
+              readonly
+              hidden
+              currencyMask
+            />
+            <input
+              type="text"
+              class="form-control"
+              currencyMask
+              value="{{
+                +this.analisaKeuanganForm.get('gaji_kotor')?.value +
+                  +this.analisaKeuanganForm.get('tunjangan')?.value +
+                  +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value -
+                  +this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value | currency: 'Rp '
+              }}"
               readonly
             />
           </div>
@@ -523,7 +612,26 @@
             name="pendapatan_bersih_pasangan"
             (keypress)="keyPressNumbers($event)"
             #pendapatan_bersih_pasangan1
-            value="{{ +pendapatan_kotor_pasangan1.value - +angsuran_kewajiban_kantor_pasangan1.value }}"
+            value="{{
+              +this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value +
+                +this.analisaKeuanganForm.get('tunjangan_pasangan')?.value +
+                +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value -
+                +this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value
+            }}"
+            readonly
+            hidden
+            currencyMask
+          />
+          <input
+            type="text"
+            class="form-control"
+            currencyMask
+            value="{{
+              +this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value +
+                +this.analisaKeuanganForm.get('tunjangan_pasangan')?.value +
+                +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value -
+                +this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value | currency: 'Rp '
+            }}"
             readonly
           />
         </div>
@@ -539,6 +647,7 @@
             (keypress)="keyPressNumbers($event)"
             value="{{ +pendapatan_bersih1.value + +pendapatan_bersih_pasangan1.value | currency: 'Rp ' }}"
             readonly
+            currencyMask
           />
         </div>
       </div>
@@ -572,7 +681,7 @@
               (keypress)="keyPressNumbers($event)"
               #pendapatan_usaha1
               currencyMask
-              [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+              [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
             />
           </div>
         </div>
@@ -588,7 +697,7 @@
             (keypress)="keyPressNumbers($event)"
             #pendapatan_usaha_pasangan1
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
           />
         </div>
       </div>
@@ -625,7 +734,7 @@
               formControlName="pendapatan_profesional"
               #pendapatan_profesional1
               currencyMask
-              [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+              [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
             />
           </div>
         </div>
@@ -641,7 +750,7 @@
             formControlName="pendapatan_profesional_pasangan"
             #pendapatan_profesional_pasangan1
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
           />
         </div>
       </div>
@@ -678,6 +787,7 @@
           <input
             type="text"
             readonly
+            hidden
             class="form-control"
             id="total_penghasilan_kotor"
             name="total_penghasilan_kotor"
@@ -685,8 +795,27 @@
             formControlName="total_penghasilan_kotor"
             #total_penghasilan_kotor1
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
-            value="{{ +pendapatan_usaha1.value + +pendapatan_profesional1.value + +pendapatan_bersih1.value }}"
+            value="{{
+              +this.analisaKeuanganForm.get('gaji_kotor')?.value +
+                +this.analisaKeuanganForm.get('tunjangan')?.value +
+                +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value -
+                +this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value +
+                (+this.analisaKeuanganForm.get('pendapatan_usaha')?.value + +this.analisaKeuanganForm.get('pendapatan_profesional')?.value)
+            }}"
+          />
+          <input
+            type="text"
+            class="form-control"
+            currencyMask
+            value="{{
+              +this.analisaKeuanganForm.get('gaji_kotor')?.value +
+                +this.analisaKeuanganForm.get('tunjangan')?.value +
+                +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value -
+                +this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value +
+                (+this.analisaKeuanganForm.get('pendapatan_usaha')?.value + +this.analisaKeuanganForm.get('pendapatan_profesional')?.value)
+                | currency: 'Rp '
+            }}"
+            readonly
           />
         </div>
       </div>
@@ -697,6 +826,7 @@
           <input
             type="text"
             readonly
+            hidden
             class="form-control"
             id="total_penghasilan_kotor_pasangan"
             name="total_penghasilan_kotor_pasangan"
@@ -704,8 +834,22 @@
             formControlName="total_penghasilan_kotor_pasangan"
             #total_penghasilan_kotor_pasangan1
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
             value="{{ +pendapatan_usaha_pasangan1.value + +pendapatan_profesional_pasangan1.value + +pendapatan_bersih_pasangan1.value }}"
+          />
+          <input
+            type="text"
+            class="form-control"
+            currencyMask
+            value="{{
+              +this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value +
+                +this.analisaKeuanganForm.get('tunjangan_pasangan')?.value +
+                +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value -
+                +this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value +
+                (+this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value +
+                  +this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value) | currency: 'Rp '
+            }}"
+            readonly
           />
         </div>
       </div>
@@ -721,8 +865,7 @@
           (keypress)="keyPressNumbers($event)"
           formControlName="total_penghasilan_kotor_akumulasi"
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
-          value="{{ +total_penghasilan_kotor1.value + +total_penghasilan_kotor_pasangan1.value }}"
+          value="{{ +total_penghasilan_kotor1.value + +total_penghasilan_kotor_pasangan1.value | currency: 'Rp ' }}"
         />
       </div>
     </div>
@@ -746,7 +889,7 @@
             formControlName="total_angsuran_nasabah"
             #kewajiban_bank1
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
           />
         </div>
       </div>
@@ -763,7 +906,7 @@
             formControlName="total_angsuran_pasangan"
             #kewajiban_bank_pasangan1
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
           />
         </div>
       </div>
@@ -803,7 +946,7 @@
             (keypress)="keyPressNumbers($event)"
             #kewajiban_lainnya1
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
           />
         </div>
       </div>
@@ -820,7 +963,7 @@
             (keypress)="keyPressNumbers($event)"
             #kewajiban_lainnya_pasangan1
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
           />
         </div>
       </div>
@@ -835,7 +978,7 @@
           id="kewajiban_lainnya_total"
           name="kewajiban_lainnya_total"
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
           value="{{ +kewajiban_lainnya1.value + +kewajiban_lainnya_pasangan1.value }}"
         />
       </div>
@@ -854,6 +997,7 @@
           <input
             type="text"
             readonly
+            hidden
             class="form-control"
             id="total_penghasilan_bersih"
             name="total_penghasilan_bersih"
@@ -861,8 +1005,22 @@
             (keypress)="keyPressNumbers($event)"
             #total_penghasilan_bersih1
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
-            value="{{ +total_penghasilan_kotor1.value - +kewajiban_bank1.value - +kewajiban_lainnya1.value }}"
+            value="{{
+              +this.analisaKeuanganForm.get('total_penghasilan_kotor')?.value -
+                +this.analisaKeuanganForm.get('kewajiban_lainnya')?.value -
+                +this.slikForm.get('total_angsuran_nasabah')?.value
+            }}"
+          />
+          <input
+            type="text"
+            class="form-control"
+            currencyMask
+            value="{{
+              +this.analisaKeuanganForm.get('total_penghasilan_kotor')?.value -
+                +this.analisaKeuanganForm.get('kewajiban_lainnya')?.value -
+                +this.slikForm.get('total_angsuran_nasabah')?.value | currency: 'Rp '
+            }}"
+            readonly
           />
         </div>
       </div>
@@ -873,6 +1031,7 @@
           <input
             type="text"
             readonly
+            hidden
             class="form-control"
             id="total_penghasilan_bersih_pasangan"
             name="total_penghasilan_bersih_pasangan"
@@ -880,8 +1039,22 @@
             (keypress)="keyPressNumbers($event)"
             #total_penghasilan_bersih_pasangan1
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
-            value="{{ +total_penghasilan_kotor_pasangan1.value - +kewajiban_bank_pasangan1.value - +kewajiban_lainnya_pasangan1.value }}"
+            value="{{
+              +this.analisaKeuanganForm.get('total_penghasilan_kotor_pasangan')?.value -
+                +this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value -
+                +this.slikForm.get('total_angsuran_pasangan')?.value
+            }}"
+          />
+          <input
+            type="text"
+            class="form-control"
+            currencyMask
+            value="{{
+              +this.analisaKeuanganForm.get('total_penghasilan_kotor_pasangan')?.value -
+                +this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value -
+                +this.slikForm.get('total_angsuran_pasangan')?.value | currency: 'Rp '
+            }}"
+            readonly
           />
         </div>
       </div>
@@ -896,8 +1069,8 @@
           name="total_penghasilan_bersih_akumulasi"
           formControlName="total_penghasilan_bersih_akumulasi"
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
-          value="{{ +total_penghasilan_bersih1.value + +total_penghasilan_bersih_pasangan1.value }}"
+          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
+          value="{{ +total_penghasilan_bersih1.value + +total_penghasilan_bersih_pasangan1.value | currency: 'Rp ' }}"
         />
       </div>
     </div>

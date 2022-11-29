@@ -98,60 +98,60 @@ export class DataRumahComponent implements OnInit {
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.analisaKeuanganForm = this.formBuilder.group({
-      nama_dihubungi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      nama_pemeriksa: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      jabatan_dihubungi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      tanggal_permintaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      tanggal_pemeriksa: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      nama_dihubungi: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      nama_pemeriksa: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      jabatan_dihubungi: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      tanggal_permintaan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      tanggal_pemeriksa: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
 
       // Data Keuangan Nasabah \\
-      gaji_kotor: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      gaji_kotor_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      tunjangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      pendapatan_kantor_lainnya: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      pendapatan_kotor: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      total_angsuran_kantor: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      pendapatan_bersih: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      pendapatan_usaha: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      pendapatan_profesional: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      total_penghasilan_kotor: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      // kewajiban_bank: {value:'', disabled:this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'},
-      kewajiban_lainnya: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      total_penghasilan_bersih: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      tunjangan_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      pendapatan_kantor_lainnya_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      pendapatan_kotor_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      total_angsuran_kantor_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      pendapatan_bersih_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      pendapatan_usaha_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      pendapatan_profesional_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      total_penghasilan_kotor_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      // kewajiban_bank_pasangan: {value:'', disabled:this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'},
-      kewajiban_lainnya_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      total_penghasilan_bersih_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      gaji_kotor_total: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      tunjangan_total: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      pendapatan_kantor_lainnya_total: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      pendapatan_kotor_total: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      total_angsuran_kantor_akumulasi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      pendapatan_bersih_total: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      gaji_kotor: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      gaji_kotor_pasangan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      tunjangan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      pendapatan_kantor_lainnya: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      pendapatan_kotor: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      total_angsuran_kantor: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      pendapatan_bersih: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      pendapatan_usaha: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      pendapatan_profesional: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      total_penghasilan_kotor: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      // kewajiban_bank: {value:'0', disabled:this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'},
+      kewajiban_lainnya: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      total_penghasilan_bersih: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      tunjangan_pasangan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      pendapatan_kantor_lainnya_pasangan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      pendapatan_kotor_pasangan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      total_angsuran_kantor_pasangan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      pendapatan_bersih_pasangan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      pendapatan_usaha_pasangan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      pendapatan_profesional_pasangan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      total_penghasilan_kotor_pasangan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      // kewajiban_bank_pasangan: {value:'0', disabled:this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'},
+      kewajiban_lainnya_pasangan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      total_penghasilan_bersih_pasangan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      gaji_kotor_total: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      tunjangan_total: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      pendapatan_kantor_lainnya_total: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      pendapatan_kotor_total: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      total_angsuran_kantor_akumulasi: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      pendapatan_bersih_total: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       pendapatan_usaha_total: this.sumOfNumber,
-      pendapatan_profesional_total: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      total_penghasilan_kotor_akumulasi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      // kewajiban_bank_total: {value:'', disabled:this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'},
-      kewajiban_lainnya_total: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      total_penghasilan_bersih_akumulasi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      pendapatan_profesional_total: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      total_penghasilan_kotor_akumulasi: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      // kewajiban_bank_total: {value:'0', disabled:this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'},
+      kewajiban_lainnya_total: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      total_penghasilan_bersih_akumulasi: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
 
       // tambahan
-      angsuran_kewajiban_kantor: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      angsuran_kewajiban_kantor_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      total_angsuran_kewajiban_kantor: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      angsuran_kewajiban_kantor: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      angsuran_kewajiban_kantor_pasangan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      total_angsuran_kewajiban_kantor: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
     });
 
     // slik form
     this.slikForm = this.formBuilder.group({
-      total_angsuran_nasabah: '',
-      total_angsuran_pasangan: '',
+      total_angsuran_nasabah: '0',
+      total_angsuran_pasangan: '0',
     });
   }
 
@@ -182,6 +182,7 @@ export class DataRumahComponent implements OnInit {
         total_angsuran_pasangan: this.slikTotal.total_angsuran_pasangan,
       };
       this.slikForm.setValue(retSlik);
+
       // alert(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_angsuran_pasangan)))
       this.totalOutNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
         Number(this.slikTotal.total_outstanding_nasabah)

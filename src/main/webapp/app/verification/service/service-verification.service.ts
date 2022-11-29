@@ -86,7 +86,7 @@ export class ServiceVerificationService {
 
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected allDataWaitingUpdateStatus = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-verif/list_app_analisa_review'
+    'http://10.20.34.178:8805/api/v1/efos-verif/list_app_analisa_review'
   );
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
