@@ -11,6 +11,8 @@
   </div>
 </div>
 <br />
+<form   [formGroup]="personalInfoForm">
+
 <div class="row form-material">
   <div class="col">
     <div class="form-group row">
@@ -21,37 +23,8 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.namaLengkap.substring(0, 1) === 'T'; else untuknama">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else untuknamatidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untuknamatidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaLengkap }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untuknama>
-      <!-- <div *ngIf="datadukcapilusername === ''; else untuknamatolak"> -->
-      <i class="fa fa-window-close fa-lg" style="color: rgb(0, 204, 0)"></i>
-      <p>
-        <label for="check3" style="font-size: 100%; color: rgb(0, 255, 0)">{{ datadukcapil.namaLengkap }} </label>
-      </p>
-      <!-- </div> -->
-      <!-- <input type="checkbox" id="check3" checked="checked" disabled/><p><label for="check3" style="font-size:100%">{{ datadukcapil.namaLengkap }} </label></p> -->
-    </ng-template>
-
-    <ng-template #untuknamatolak>
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaLengkap }} </label>
-      </p>
-    </ng-template>
+    <input type="radio" id="radiobtnnamasesuai" value="sesuai" name="radiobuttonnama" formControlName="radiobuttonnama" [(ngModel)]="tampunganradiobuttonnama">Sesuai &nbsp;&nbsp; &nbsp;&nbsp;
+  <input type="radio" id="radiobtnnamatidak"  value="tidak" name="radiobuttonnama" formControlName="radiobuttonnama" [(ngModel)]="tampunganradiobuttonnama">Tidak Sesuai
   </div>
 </div>
 <br />
@@ -67,28 +40,8 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.tglLahir.substring(0, 1) === 'T'; else untuktglLahir">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else untuktglLahirtidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untuktglLahir>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.tglLahir }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untuktglLahirtidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.tglLahir }} </label>
-      </p>
-    </ng-template>
-
+    <input type="radio" id="radiobtntgl_lahir_sesuai"  value="sesuai" name="radiobuttontanggal" formControlName="radiobuttontanggal" [(ngModel)]="tampunganradiobuttontanggal" >Sesuai &nbsp;&nbsp;
+    <input type="radio" id="radiobtntgl_lahir_tidak"  value="tidak" name="radiobuttontanggal" formControlName="radiobuttontanggal" [(ngModel)]="tampunganradiobuttontanggal">Tidak Sesuai
     <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
@@ -105,28 +58,8 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.statusPerkawinan.substring(0, 1) === 'T'; else untukstatuskawin">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else untukstatuskawintidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untukstatuskawin>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.statusPerkawinan }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untukstatuskawintidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.statusPerkawinan }} </label>
-      </p>
-    </ng-template>
-
+    <input type="radio" id="radiobtnstatussesuai"  value="sesuai" name="radiobuttonstatus" formControlName="radiobuttonstatus" [(ngModel)]="tampunganradiobuttonstatus" >Sesuai &nbsp;&nbsp;
+    <input type="radio" id="radiobtnstatustidak"  value="tidak" name="radiobuttonstatus"  formControlName="radiobuttonstatus" [(ngModel)]="tampunganradiobuttonstatus">Tidak Sesuai
     <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
@@ -148,28 +81,8 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.alamat.substring(0, 1) === 'T'; else untukalamat">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else untukalamattidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untukalamat>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.alamat }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untukalamattidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.alamat }} </label>
-      </p>
-    </ng-template>
-
+    <input type="radio" id="radiobtnalamatsesuai"  value="sesuai" formControlName="radiobuttonalamat" [(ngModel)]="tampunganradiobuttonalamat">Sesuai &nbsp;&nbsp;
+    <input type="radio" id="radiobtnalamattidak" value="tidak" formControlName="radiobuttonalamat" [(ngModel)]="tampunganradiobuttonalamat">Tidak Sesuai
     <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
@@ -186,28 +99,8 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.namaPropinsi.substring(0, 1) === 'T'; else untukprovinsi">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-
-      <div *ngIf="datadukcapil === null; else untukprovinsitidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untukprovinsi>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.namaPropinsi }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untukprovinsitidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaPropinsi }}</label>
-      </p>
-    </ng-template>
+    <input type="radio" id="radiobtnprovinsisesuai"  value="sesuai" name="radiobuttonprovinsi" formControlName="radiobuttonprovinsi" [(ngModel)]="tampunganradiobuttonprovinsi">Sesuai &nbsp;&nbsp;
+    <input type="radio" id="radiobtnprovinsitidak"  value="tidak" name="radiobuttonprovinsi" formControlName="radiobuttonprovinsi" [(ngModel)]="tampunganradiobuttonprovinsi">Tidak Sesuai
     <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
@@ -224,28 +117,8 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.namaKabupaten.substring(0, 1) === 'T'; else untukkota">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else untukkotatidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untukkota>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.namaKabupaten }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untukkotatidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaKabupaten }} </label>
-      </p>
-    </ng-template>
-
+    <input type="radio" id="radiobtnkotasesuai"  value="sesuai" name="radiobuttonkota" formControlName="radiobuttonkota" [(ngModel)]="tampunganradiobuttonkota">Sesuai &nbsp;&nbsp;
+    <input type="radio" id="radiobtnkotatidak"  value="tidak" name="radiobuttonkota" formControlName="radiobuttonkota" [(ngModel)]="tampunganradiobuttonkota">Tidak Sesuai
     <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
@@ -262,28 +135,9 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.namaKecamatan.substring(0, 1) === 'T'; else untukkecamatan">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else untukkecamatantidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untukkecamatan>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.namaKecamatan }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untukkecamatantidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaKecamatan }} </label>
-      </p>
-    </ng-template>
-
+    <input type="radio" id="radiobtnkecamatansesuai"  value="sesuai" name="radiobuttonkecamatan" formControlName="radiobuttonkecamatan" [(ngModel)]="tampunganradiobuttonkecamatan">Sesuai &nbsp;&nbsp;
+    <input type="radio" id="radiobtnkecamatantidak"  value="tidak" name="radiobuttonkecamatan" formControlName="radiobuttonkecamatan" [(ngModel)]="tampunganradiobuttonkecamatan">Tidak Sesuai 
+    
     <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
@@ -300,28 +154,8 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.namaKelurahan.substring(0, 1) === 'T'; else untukkelurahan">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else untukkelurahantidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untukkelurahan>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.namaKelurahan }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untukkelurahantidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaKelurahan }}</label>
-      </p>
-    </ng-template>
-
+    <input type="radio" id="radiobtnkelurahansesuai"  value="sesuai" name="radiobuttonkelurahan" formControlName="radiobuttonkelurahan" [(ngModel)]="tampunganradiobuttonkelurahan">Sesuai &nbsp;&nbsp;
+    <input type="radio" id="radiobtnkeluranantidak"  value="tidak" name="radiobuttonkelurahan" formControlName="radiobuttonkelurahan" [(ngModel)]="tampunganradiobuttonkelurahan">Tidak Sesuai 
     <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
 </div>
@@ -343,55 +177,16 @@
   <div class="col" style="text-align: center">
     <div class="row">
       <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapil === null || datadukcapil.noRT.substring(0, 1) === 'T'; else untukrt">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-
-          <div *ngIf="datadukcapil === null; else untukrttidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untukrt>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapil.noRT }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukrttidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.noRT }}</label>
-          </p>
-        </ng-template>
-
+        <input type="radio" id="radiobtnrtsesuai"  value="sesuai" name="radiobuttonrt" formControlName="radiobuttonrt" [(ngModel)]="tampunganradiobuttonrt">Sesuai &nbsp;&nbsp;
+        <input type="radio"  id="radiobtnrttidak"  value="tidak" name="radiobuttonrt" formControlName="radiobuttonrt" [(ngModel)]="tampunganradiobuttonrt">Tidak Sesuai
+       
         <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
       </div>
       <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapil === null || datadukcapil.noRW.substring(0, 1) === 'T'; else untukrw">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapil === null; else untukrwtidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
+        <input type="radio" id="radiobtnrwsesuai"  value="sesuai" name="radiobuttonrw" formControlName="radiobuttonrw" [(ngModel)]="tampunganradiobuttonrw">Sesuai &nbsp;&nbsp;
+        <input type="radio" id="radiobtnrwtidak"  value="tidak" name="radiobuttonrw" formControlName="radiobuttonrw" [(ngModel)]="tampunganradiobuttonrw">Tidak Sesuai
 
-        <ng-template #untukrw>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapil.noRW }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukrwtidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.noRW }}</label>
-          </p>
-        </ng-template>
-
-        <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
+     <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
       </div>
     </div>
   </div>
@@ -409,27 +204,8 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.jenisKelamin.substring(0, 1) === 'T'; else jenisKelamin">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else jenisKelamintidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #jenisKelamin>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.jenisKelamin }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #jenisKelamintidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.jenisKelamin }}</label>
-      </p>
-    </ng-template>
+    <input type="radio" id="radiobtnjenissesuai"  value="sesuai" name="radiobuttonjenis" formControlName="radiobuttonjenis" [(ngModel)]="tampunganradiobuttonjenis">Sesuai &nbsp;&nbsp;
+    <input type="radio" id="radiobtnjenistidak"  value="tidak" name="radiobuttonjenis" formControlName="radiobuttonjenis" [(ngModel)]="tampunganradiobuttonjenis">Tidak Sesuai
 
     <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
   </div>
@@ -461,30 +237,9 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.namaLengkap.substring(0, 1) === 'T'; else untuknama">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else untuknamatidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untuknamatidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.namaLengkap }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untuknama>
-          <!-- <div *ngIf="datadukcapilusername === ''; else untuknamatolak"> -->
-          <i class="fa fa-window-close fa-lg" style="color: rgb(0, 204, 0)"></i>
-          <p>
-            <label for="check3" style="font-size: 100%; color: rgb(0, 255, 0)">{{ datadukcapilpasangan.namaLengkap }} </label>
-          </p>
-          <!-- </div> -->
-          <!-- <input type="checkbox" id="check3" checked="checked" disabled/><p><label for="check3" style="font-size:100%">{{ datadukcapil.namaLengkap }} </label></p> -->
-        </ng-template>
+        <input type="radio" id="radiobtnnamapasangansesuai"  value="sesuai" name="radiobuttonnamapasangan" formControlName="radiobuttonnamapasangan" [(ngModel)]="tampunganradiobuttonnamapasangan">Sesuai &nbsp;&nbsp;
+        <input type="radio" id="radiobtnnamapasangantidak"  value="tidak" name="radiobuttonnamapasangan" formControlName="radiobuttonnamapasangan" [(ngModel)]="tampunganradiobuttonnamapasangan">Tidak Sesuai
+      
       </div>
     </div>
     <br />
@@ -498,27 +253,8 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.tglLahir.substring(0, 1) === 'T'; else untuktglLahir">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else untuktglLahirtidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untuktglLahir>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.tglLahir }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untuktglLahirtidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.tglLahir }} </label>
-          </p>
-        </ng-template>
+        <input type="radio" id="radiobtntgllahirpasangansesuai"  value="sesuai" name="radiobuttontanggalpasangan" formControlName="radiobuttontanggalpasangan" [(ngModel)]="tampunganradiobuttontanggalpasangan">Sesuai &nbsp;&nbsp;
+        <input type="radio" id="radiobtntgllahirpasangantidak"  value="tidak" name="radiobuttontanggalpasangan" formControlName="radiobuttontanggalpasangan" [(ngModel)]="tampunganradiobuttontanggalpasangan">Tidak Sesuai
       </div>
     </div>
     <br />
@@ -534,27 +270,8 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.statusPerkawinan.substring(0, 1) === 'T'; else untukstatuskawin">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else untukstatuskawintidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untukstatuskawin>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.statusPerkawinan }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukstatuskawintidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.statusPerkawinan }} </label>
-          </p>
-        </ng-template>
+        <input type="radio" id="radiobtnstatuspasangansesuai"  value="sesuai" name="radiobuttonstatuspasangan"  formControlName="radiobuttonstatuspasangan" [(ngModel)]="tampunganradiobuttonstatuspasangan">Sesuai &nbsp;&nbsp;
+        <input type="radio" id="radiobtnstatuspasangantidak"  value="tidak"  name="radiobuttonstatuspasangan" formControlName="radiobuttonstatuspasangan" [(ngModel)]="tampunganradiobuttonstatuspasangan">Tidak Sesuai
       </div>
     </div>
     <br />
@@ -568,27 +285,8 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.alamat.substring(0, 1) === 'T'; else untukalamat">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else untukalamattidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untukalamat>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.alamat }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukalamattidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.alamat }} </label>
-          </p>
-        </ng-template>
+        <input type="radio" id="radiobtnalamatpasanganseuai"  value="sesuai" name="radiobuttonalamatpasangan" formControlName="radiobuttonalamatpasangan" [(ngModel)]="tampunganradiobuttonalamatpasangan">Sesuai &nbsp;&nbsp;
+        <input type="radio" id="radiobtnalamatpasangantidak"  value="tidak"  name="radiobuttonalamatpasangan" formControlName="radiobuttonalamatpasangan" [(ngModel)]="tampunganradiobuttonalamatpasangan">Tidak Sesuai
       </div>
     </div>
     <br />
@@ -604,28 +302,10 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.namaPropinsi.substring(0, 1) === 'T'; else untukprovinsi">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
 
-          <div *ngIf="datadukcapilpasangan === null; else untukprovinsitidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untukprovinsi>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.namaPropinsi }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukprovinsitidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.namaPropinsi }}</label>
-          </p>
-        </ng-template>
+        <input type="radio" id="radiobtnprovinsipasangansesuai"  value="sesuai" name="radiobuttonprovinsipasangan" formControlName="radiobuttonprovinsipasangan" [(ngModel)]="tampunganradiobuttonprovinsipasangan">Sesuai &nbsp;&nbsp;
+        <input type="radio" id="radiobtnprovinsipasangantidak"  value="tidak" name="radiobuttonprovinsipasangan" formControlName="radiobuttonprovinsipasangan" [(ngModel)]="tampunganradiobuttonprovinsipasangan">Tidak Sesuai
+       
       </div>
     </div>
     <br />
@@ -641,27 +321,8 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.namaKabupaten.substring(0, 1) === 'T'; else untukkota">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else untukkotatidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untukkota>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.namaKabupaten }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukkotatidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.namaKabupaten }} </label>
-          </p>
-        </ng-template>
+        <input type="radio" id="radiobtnkotapasangansesuai"  value="sesuai" formControlName="radiobuttonkotapasangan" [(ngModel)]="tampunganradiobuttonkotapasangan">Sesuai &nbsp;&nbsp;
+        <input type="radio" id="radiobtnkotapasangantidak"  value="tidak"  formControlName="radiobuttonkotapasangan" [(ngModel)]="tampunganradiobuttonkotapasangan">Tidak Sesuai
       </div>
     </div>
     <br />
@@ -677,27 +338,8 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.namaKecamatan.substring(0, 1) === 'T'; else untukkecamatan">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else untukkecamatantidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untukkecamatan>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.namaKecamatan }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukkecamatantidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.namaKecamatan }} </label>
-          </p>
-        </ng-template>
+        <input type="radio" id="radiobtnkecamatanpasangansesuai" value="sesuai" name="radiobuttonkecamatanpasangan" formControlName="radiobuttonkecamatanpasangan" [(ngModel)]="tampunganradiobuttonkecamatanpasangan">Sesuai &nbsp;&nbsp;
+        <input type="radio" id="radiobtnkecamatanpasangantidak"  value="tidak" name="radiobuttonkecamatanpasangan" formControlName="radiobuttonkecamatanpasangan" [(ngModel)]="tampunganradiobuttonkecamatanpasangan">Tidak Sesuai
       </div>
     </div>
     <br />
@@ -713,27 +355,8 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.namaKelurahan.substring(0, 1) === 'T'; else untukkelurahan">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else untukkelurahantidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untukkelurahan>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.namaKelurahan }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukkelurahantidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.namaKelurahan }}</label>
-          </p>
-        </ng-template>
+        <input type="radio" id="radiobtnkelurahanpasangansesuai"  value="sesuai" name="radiobuttonkelurahanpasangan" formControlName="radiobuttonkelurahanpasangan" [(ngModel)]="tampunganradiobuttonkelurahanpasangan">Sesuai &nbsp;&nbsp;
+        <input type="radio" id="radiobtnkelurahanpasangantidak"  value="tidak" name="radiobuttonkelurahanpasangan" formControlName="radiobuttonkelurahanpasangan" [(ngModel)]="tampunganradiobuttonkelurahanpasangan">Tidak Sesuai
       </div>
     </div>
     <br />
@@ -754,51 +377,12 @@
       <div class="col">
         <div class="row">
           <div class="col" style="text-align: center">
-            <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.noRT.substring(0, 1) === 'T'; else untukrt">
-              <i class="fa fa-window-close fa-lg" style="color: red"></i>
-
-              <div *ngIf="datadukcapilpasangan === null; else untukrttidakktp">
-                <p>
-                  <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-                </p>
-              </div>
-            </div>
-
-            <ng-template #untukrt>
-              <input type="checkbox" id="check3" checked="checked" disabled />
-              <p>
-                <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.noRT }} </label>
-              </p>
-            </ng-template>
-
-            <ng-template #untukrttidakktp>
-              <p>
-                <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.noRT }}</label>
-              </p>
-            </ng-template>
+            <input type="radio" id="radiobtnrtpasangansesuai"  value="sesuai" name="radiobuttonrtpasangan" formControlName="radiobuttonrtpasangan" [(ngModel)]="tampunganradiobuttonrtpasangan">Sesuai &nbsp;&nbsp;
+            <input type="radio" id="radiobtnrtpasangantidak"  value="tidak" name="radiobuttonrtpasangan" formControlName="radiobuttonrtpasangan" [(ngModel)]="tampunganradiobuttonrtpasangan">Tidak Sesuai
           </div>
           <div class="col" style="text-align: center">
-            <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.noRW.substring(0, 1) === 'T'; else untukrw">
-              <i class="fa fa-window-close fa-lg" style="color: red"></i>
-              <div *ngIf="datadukcapilpasangan === null; else untukrwtidakktp">
-                <p>
-                  <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-                </p>
-              </div>
-            </div>
-
-            <ng-template #untukrw>
-              <input type="checkbox" id="check3" checked="checked" disabled />
-              <p>
-                <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.noRW }} </label>
-              </p>
-            </ng-template>
-
-            <ng-template #untukrwtidakktp>
-              <p>
-                <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.noRW }}</label>
-              </p>
-            </ng-template>
+            <input type="radio" id="radiobtnrwpasangansesuai"  value="sesuai" name="radiobuttonrwpasangan" formControlName="radiobuttonrwpasangan" [(ngModel)]="tampunganradiobuttonrwpasangan">Sesuai &nbsp;&nbsp;
+            <input type="radio" id="radiobtnrwpasangantidak"  value="tidak" name="radiobuttonrwpasangan" formControlName="radiobuttonrwpasangan" [(ngModel)]="tampunganradiobuttonrwpasangan">Tidak Sesuai
           </div>
         </div>
       </div>
@@ -816,27 +400,8 @@
         </div>
       </div>
       <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.jenisKelamin.substring(0, 1) === 'T'; else jenisKelamin">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else jenisKelamintidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #jenisKelamin>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.jenisKelamin }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #jenisKelamintidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.jenisKelamin }}</label>
-          </p>
-        </ng-template>
+        <input type="radio" id="radiobtnjenispasangansesuai"  value="sesuai" name="radiobuttonjenispasangan" formControlName="radiobuttonjenispasangan" [(ngModel)]="tampunganradiobuttonjenispasangan">Sesuai &nbsp;&nbsp;
+        <input type="radio" id="radiobtnjenispasangantidak"  value="tidak" name="radiobuttonjenispasangan" formControlName="radiobuttonjenispasangan" [(ngModel)]="tampunganradiobuttonjenispasangan">Tidak Sesuai
       </div>
     </div>
 
@@ -846,9 +411,28 @@
 
 <br />
 <br />
+<div style="color: #fff; text-align: center">
+  <button
+
+  (click)="simpanstatusktp(daWa.status_perkawinan)"
+  name="submit_button"
+  onclic="untuksubmit()"
+  class="fa fa-file-archive-o btn btn-dark"
+  >
+  Simpan status KTP
+  </button>
+
+</div>
+</div>
+</form>
+<br />
+<br />
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Hasil Pengecekan Duplicate Checking</h3>
 </div>
+
+
+
 <br />
 <div class="row form-material">
   <div class="card-body">
@@ -921,6 +505,19 @@
     </div>
   </div>
 </div>
+<div style="color: #fff; text-align: center">
+  <button
+
+  (click)="contoh()"
+  name="submit_button"
+  onclic="untuksubmit()"
+  class="fa fa-file-archive-o btn btn-dark"
+  >
+ Tambah slik jimblo
+  </button>
+  
+
+</div>
 <br />
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Hasil Pengecekan IDEB / SILK Checking Pasangan</h3>
@@ -962,6 +559,19 @@
 
   <tfoot></tfoot>
 </table>
+
+<div style="color: #fff; text-align: center">
+  <button
+
+  (click)="simpanstatusktp(daWa.status_perkawinan)"
+  name="submit_button"
+  onclic="untuksubmit()"
+  class="fa fa-file-archive-o btn btn-dark"
+  >
+ Tambah slik
+  </button>
+
+</div>
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Hasil Pengecekan Kredit_biro</h3>
 </div>

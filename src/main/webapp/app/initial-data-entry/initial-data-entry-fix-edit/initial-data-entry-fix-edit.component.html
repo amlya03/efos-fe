@@ -8,6 +8,7 @@
       <label class="col-sm-4 col-form-label">Nomor Aplikasi<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <input type="text" id="app_no_ide" name="app_no_ide" value="{{ daWa.app_no_ide }}" class="form-control" readonly />
+        <input type="text" id="idcustomer" name="idcustomer" value="{{ daWa.id }}" class="form-control" hidden />
       </div>
     </div>
     <br />
@@ -690,7 +691,6 @@
       id="prosesDataEdit"
       name="proses"
       value="proses"
-      onclick="return window.validateFormEdit()"
       type="submit"
       (click)="gotoprescreaning(daWa.app_no_ide, daWakodepos, daWa.curef,daWakodepospasangan)"
     >
@@ -701,7 +701,6 @@
       id="simpan2"
       name="simpan"
       value="simpan"
-      onclick="return window.validateFormEdit()"
       (click)="gotodaftaraplikasiide(daWa.app_no_ide, daWakodepos,daWa.curef,daWakodepospasangan)"
       type="submit"
     >
