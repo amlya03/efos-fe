@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient } from '@angular/common/http';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DataEntryService } from '../services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
@@ -49,6 +49,7 @@ export class CallReportComponent implements OnInit {
   checkboxCekskdu: any;
   checkboxCekskdp: any;
   legalitasUsaha: any;
+  cekSimpanData = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -57,7 +58,7 @@ export class CallReportComponent implements OnInit {
     protected applicationConfigService: ApplicationConfigService,
     private formBuilder: FormBuilder,
     protected dataEntryService: DataEntryService,
-    private localStorageService: LocalStorageService,
+    private SessionStorageService: SessionStorageService,
     protected verificationServices: ServiceVerificationService
   ) {
     this.route.queryParams.subscribe(params => {
@@ -70,10 +71,10 @@ export class CallReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
-    this.untukSessionFullName = this.localStorageService.retrieve('sessionFullName');
-    this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
+    this.untukSessionUserName = this.SessionStorageService.retrieve('sessionUserName');
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
+    this.untukSessionFullName = this.SessionStorageService.retrieve('sessionFullName');
+    this.untukSessionKodeCabang = this.SessionStorageService.retrieve('sessionKdCabang');
     this.load();
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
@@ -135,7 +136,26 @@ export class CallReportComponent implements OnInit {
   load() {
     this.dataEntryService.getFetchCallReport(this.app_no_de).subscribe(call => {
       this.daWa = call.result;
-
+      if (this.daWa === null) {
+        this.checkboxCek = '';
+      } else {
+        this.checkboxCek = this.daWa.legalitas_usaha.split(', ');
+        for (let i = 0; i < this.checkboxCek.length; i++) {
+          if (this.checkboxCek[i] === 'SIU') {
+            this.checkboxCeksiu = 'SIU';
+          } else if (this.checkboxCek[i] === 'SIUP') {
+            this.checkboxCeksiup = 'SIUP';
+          } else if (this.checkboxCek[i] === 'NIB') {
+            this.checkboxCeknib = 'NIB';
+          } else if (this.checkboxCek[i] === 'SKDU') {
+            this.checkboxCekskdu = 'SKDU';
+          } else if (this.checkboxCek[i] === 'SKDP') {
+            this.checkboxCekskdp = 'SKDP';
+          } else if (this.checkboxCek[i] === 'Akta Pendirian') {
+            this.checkboxCekaktapendirian = 'Akta Pendirian';
+          }
+        }
+      }
       const retriveCallReport = {
         alamat_tinggal: this.daWa.alamat_tinggal,
         tanggal_lahir: this.daWa.tanggal_lahir,
@@ -190,23 +210,6 @@ export class CallReportComponent implements OnInit {
         keterangan: this.daWa.keterangan,
       };
       this.callReportForm.setValue(retriveCallReport);
-
-      this.checkboxCek = this.daWa.legalitas_usaha.split(', ');
-      for (let i = 0; i < this.checkboxCek.length; i++) {
-        if (this.checkboxCek[i] === 'SIU') {
-          this.checkboxCeksiu = 'SIU';
-        } else if (this.checkboxCek[i] === 'SIUP') {
-          this.checkboxCeksiup = 'SIUP';
-        } else if (this.checkboxCek[i] === 'NIB') {
-          this.checkboxCeknib = 'NIB';
-        } else if (this.checkboxCek[i] === 'SKDU') {
-          this.checkboxCekskdu = 'SKDU';
-        } else if (this.checkboxCek[i] === 'SKDP') {
-          this.checkboxCekskdp = 'SKDP';
-        } else if (this.checkboxCek[i] === 'Akta Pendirian') {
-          this.checkboxCekaktapendirian = 'Akta Pendirian';
-        }
-      }
     });
     setTimeout(() => {
       if (this.daWa !== null) {
@@ -272,20 +275,22 @@ export class CallReportComponent implements OnInit {
 
   onclikwawancara(e: any) {
     if (e.target.checked) {
-      $('#buttonsimpan').removeAttr('hidden');
+      this.cekSimpanData = 1;
     } else {
-      $('#buttonsimpan').attr('hidden', 'hidden');
+      this.cekSimpanData = 0;
     }
   }
 
   simpancallreport() {
     const legalitas = this.tempunganCek.join(', ');
-
-    // Legalitas Usaha
     if (legalitas !== '') {
       this.legalitasUsaha = legalitas;
     } else {
-      this.legalitasUsaha = this.daWa.legalitas_usaha;
+      if (this.daWa === null) {
+        this.legalitasUsaha = '';
+      } else {
+        this.legalitasUsaha = this.daWa.legalitas_usaha;
+      }
     }
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_call_report', {
@@ -295,15 +300,16 @@ export class CallReportComponent implements OnInit {
         app_no_de: this.app_no_de,
         bidang_usaha: this.callReportForm.get('bidang_usaha')?.value,
         bidang_usaha_pasangan: this.callReportForm.get('bidang_usaha_pasangan')?.value,
-        cabang: this.localStorageService.retrieve('sessionKdCabang'),
+        cabang: this.SessionStorageService.retrieve('sessionKdCabang'),
         catatan_dokumen_agunan: this.callReportForm.get('catatan_dokumen_agunan')?.value,
         catatan_posisi_dokumen: this.callReportForm.get('catatan_posisi_dokumen')?.value,
         catatan_status_agunan: this.callReportForm.get('catatan_status_agunan')?.value,
-        created_by: this.localStorageService.retrieve('sessionUserName'),
+        created_by: this.SessionStorageService.retrieve('sessionUserName'),
         curef: this.curef,
         dokumen_agunan: this.callReportForm.get('dokumen_agunan')?.value,
         estimasi_angsuran: this.callReportForm.get('estimasi_angsuran')?.value,
         id: 0,
+        jabatan_terakhir: this.callReportForm.get('jabatan_terakhir')?.value,
         jabatan_terakhir_pasangan: this.callReportForm.get('jabatan_terakhir_pasangan')?.value,
         jenis_produk: this.callReportForm.get('jenis_produk')?.value,
         jenis_usaha: this.callReportForm.get('jenis_usaha')?.value,
@@ -322,7 +328,7 @@ export class CallReportComponent implements OnInit {
         lama_bekerja_tahun_pasangan: this.callReportForm.get('lama_bekerja_tahun_pasangan')?.value,
         lama_usaha: this.callReportForm.get('lama_usaha')?.value,
         legalitas_usaha: this.legalitasUsaha,
-        nama_ao: this.localStorageService.retrieve('sessionFullName'),
+        nama_ao: this.SessionStorageService.retrieve('sessionFullName'),
         nama_perusahaan: this.callReportForm.get('nama_perusahaan')?.value,
         nama_perusahaan_pasangan: this.callReportForm.get('nama_perusahaan_pasangan')?.value,
         no_kontak_hr_pasangan: this.callReportForm.get('no_kontak_hr_pasangan')?.value,

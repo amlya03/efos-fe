@@ -20,9 +20,9 @@
     <div class="form-group">
       <select #fasilitas class="form-control">
         <option selected value="">Pilih Pencarian Berdasarkan Fasilitas</option>
-        <option value="PPR">PPR</option>
-        <option value="PTA">PTA</option>
-        <option value="KTM">KTM</option>
+        <option *ngFor="let listFasilitas of listFasilitas" value="{{ listFasilitas.fasilitas }}">
+          {{ listFasilitas.fasilitas }}
+        </option>
       </select>
     </div>
   </div>
@@ -70,11 +70,16 @@
         <td style="text-align: center">{{ daWa.kategori_pekerjaan }}</td>
         <td hidden>{{ daWa.kategori_pekerjaan === 'Fix Income' }}</td>
         <td style="text-align: center">{{ daWa.status_aplikasi_desc }}</td>
-        <td style="text-align: center"><input id="checkDaWa{{ i + 1 }}" (change)="getProoduct($event, daWa.app_no_de, daWa.status_aplikasi)" type="checkbox" [checked]="isChecked"/></td>
         <td style="text-align: center">
-          <button (click)="viewdataentry(daWa.app_no_de)" type="button" class="btn btn-outline-secondary">
-            <fa-icon icon="ellipsis"></fa-icon><br />Detail
-          </button>
+          <input
+            id="checkDaWa{{ i + 1 }}"
+            (change)="getProoduct($event, daWa.app_no_de, daWa.status_aplikasi)"
+            type="checkbox"
+            [checked]="isChecked"
+          />
+        </td>
+        <td style="text-align: center">
+          <a (click)="viewdataentry(daWa.app_no_de)"> <fa-icon icon="ellipsis"></fa-icon><br />Detail </a>
         </td>
       </tr>
     </tbody>

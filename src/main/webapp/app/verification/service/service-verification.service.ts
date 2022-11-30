@@ -9,6 +9,16 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   providedIn: 'root',
 })
 export class ServiceVerificationService {
+  // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////getListAppAppraisal
+  protected getListAppAppraisalUrl = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-verif/list_app_appraisal'
+  );
+  // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////
+
+  // ///////////////////////////////// Daftar APlikasi Waiting Assigment ///////////////////////////////////////////////////////////
+  protected getListAllVerifUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_app_verif');
+  // ///////////////////////////////// Daftar APlikasi Waiting Assigment ///////////////////////////////////////////////////////////
+
   // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
   protected getMapis = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/getDataAppraisal?sd=');
   // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
@@ -70,13 +80,13 @@ export class ServiceVerificationService {
 
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected allDataOnProcess = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-verif/list_appraisal_process'
+    'http://10.20.34.110:8805/api/v1/efos-verif/list_analisa_process'
   );
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected allDataWaitingUpdateStatus = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-verif/list_app_analisa_review'
+    'http://10.20.34.178:8805/api/v1/efos-verif/list_app_analisa_review'
   );
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -139,6 +149,10 @@ export class ServiceVerificationService {
   //   return this.http.get<ApiResponse>(this.allDataVerif, { params: options, observe: 'response' });
   // }
   // ///////////////////////////contoh post get di angular////////////////////////////////////////////////
+  getAllVerif(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getListAllVerifUrl);
+  }
+
   getDaWa(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.allDataVerif);
   }
@@ -226,6 +240,12 @@ export class ServiceVerificationService {
   }
   // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
 
+  // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////
+  getListAppAppraisal(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getListAppAppraisalUrl);
+  }
+  // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////
+
   // ///////////////////// REF ////////////////////////////////////////////////
   // ////////////////////// Ref Hubungan Agunan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   getHubunganAgunan(): Observable<ApiResponse> {
@@ -264,7 +284,7 @@ export class ServiceVerificationService {
   // ////////////////////// Ref Status Rumah \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// Ref SKema \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getSkema(produk: string): Observable<ApiResponse> {
+  getSkema(produk: string | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.refSkema + produk);
   }
   // ////////////////////// Ref SKema \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

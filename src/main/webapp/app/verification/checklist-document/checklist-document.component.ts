@@ -7,7 +7,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { uploadDocument } from 'app/upload-document/services/config/uploadDocument.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { DataTableDirective } from 'angular-datatables';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { ServicesUploadDocumentService } from 'app/upload-document/services/services-upload-document.service';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 
@@ -19,25 +19,25 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./checklist-document.component.scss'],
 })
 export class ChecklistDocumentComponent implements OnInit {
-  uploadDocument: Array<uploadDocument> = new Array<uploadDocument>();
-  uploadAgunan: Array<uploadDocument> = new Array<uploadDocument>();
+  uploadDocument: uploadDocument[] = new Array<uploadDocument>();
+  uploadAgunan: uploadDocument[] = new Array<uploadDocument>();
   dataEntry: fetchAllDe = new fetchAllDe();
   daWa: any;
-  kirimDesesuai: Array<number> = [];
+  kirimDesesuai: any;
   kirimDetidak: any;
-  iddokumen: Array<number> = [];
-  keterangannya: Array<any> = [];
-  datacontoh: Array<any> = [];
-  datacontohid: Array<any> = [];
+  iddokumen: any;
+  keterangannya: any;
+  datacontoh: any;
+  datacontohid: any;
   newValue: any;
   rec: any;
   app_no_de: any;
   untukSessionUserName: any;
 
-  //Radio Validasi Agunan
+  // Radio Validasi Agunan
   radioValidasiDE: any;
   radioValidasiAgunan: any;
-  //Keterangan Agunan
+  // Keterangan Agunan
   keteranganDE: any;
   keteranganAgunan: any;
   // Role
@@ -55,7 +55,7 @@ export class ChecklistDocumentComponent implements OnInit {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     public router: Router,
-    protected localStorageService: LocalStorageService,
+    protected sessionStorageService: SessionStorageService,
     protected dataEntryService: DataEntryService,
     protected uploadService: ServicesUploadDocumentService
   ) {
@@ -68,18 +68,18 @@ export class ChecklistDocumentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
       responsive: true,
     };
-    this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
+    this.untukSessionUserName = this.sessionStorageService.retrieve('sessionUserName');
     this.load();
   }
 
-  load() {
+  load(): void {
     // ambil semua data DE
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
@@ -87,32 +87,34 @@ export class ChecklistDocumentComponent implements OnInit {
     });
 
     // DE
-    this.uploadService.getListUploadDocument('curef_20220816_322', 'DE').subscribe(data => {
+    this.uploadService.getListUploadDocument(this.curef, 'DE').subscribe(data => {
       this.uploadDocument = data.result;
+      console.warn(this.uploadDocument);
       this.dtTrigger.next(data.result);
     });
 
     // Agunan
-    this.uploadService.getListUploadDocument('curef_20220816_322', 'DEA').subscribe(data => {
-      // console.warn('ini upload de' + data);
+    this.uploadService.getListUploadDocument(this.curef, 'DEA').subscribe(data => {
+      console.warn(data.result);
       this.uploadAgunan = data.result;
     });
   }
 
   // Kirim DE
-  detailDataEntry(nama_dokumen: string | null | undefined) {
-    window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dokumen);
+  detailDataEntry(nama_dokumen: any): void {
+    window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/', nama_dokumen);
   }
 
-  detailAgunan(nama_dokumen: string | null | undefined) {
-    window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dokumen);
+  detailAgunan(nama_dokumen: any): void {
+    window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/', nama_dokumen);
   }
 
   postCeklis(): void {
     // Upload Data Entry
     for (let i = 0; i < this.uploadDocument.length; i++) {
       // get Radio Button Validasi
-      const validasiDE = (<HTMLInputElement>document.getElementById('validasiDE' + [i + 1])).checked;
+      const validasiDE = $('#validasiDE' + (i + 1)).is(':checked'); //(document.getElementById('validasiDE'+ i + 1) as HTMLInputElement).checked;
+      // alert(validasiDE);
       if (validasiDE === true) {
         this.radioValidasiDE = 1;
       } else {
@@ -120,27 +122,7 @@ export class ChecklistDocumentComponent implements OnInit {
       }
 
       // keterangan
-      this.keteranganDE = (<HTMLInputElement>document.getElementById('keteranganDE' + [i + 1])).value;
-
-      // Upload Agunan
-      for (let i = 0; i < this.uploadAgunan.length; i++) {
-        // get Radio Button Validasi
-        const validasiAgunan = (<HTMLInputElement>document.getElementById('validasiAgunan' + [i + 1])).checked;
-        if (validasiAgunan === true) {
-          this.radioValidasiAgunan = 1;
-        } else {
-          this.radioValidasiAgunan = 0;
-        }
-        // alert(this.radioValidasiAgunan)
-
-        // get input Keterangan
-        this.keteranganAgunan = (<HTMLInputElement>document.getElementById('keteranganAgunan' + [i + 1])).value;
-        // alert(this.keteranganAgunan)
-
-        // get input Keterangan
-        this.keteranganAgunan = (<HTMLInputElement>document.getElementById('keteranganAgunan' + [i + 1])).value;
-        // alert(this.keteranganAgunan)
-      }
+      this.keteranganDE = (document.getElementById('keteranganDE' + (i + 1)) as HTMLInputElement).value;
 
       // Post Data Entry
       this.http
@@ -151,23 +133,36 @@ export class ChecklistDocumentComponent implements OnInit {
           validasi: this.radioValidasiDE,
         })
         .subscribe({});
+      this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+    }
+    // Upload Agunan
+    for (let j = 0; j < this.uploadAgunan.length; j++) {
+      // get Radio Button Validasi
+      const validasiAgunan = (document.getElementById('validasiAgunan' + (j + 1)) as HTMLInputElement).checked;
+      if (validasiAgunan === true) {
+        this.radioValidasiAgunan = 1;
+      } else {
+        this.radioValidasiAgunan = 0;
+      }
+      // alert(this.radioValidasiAgunan)
 
+      // get input Keterangan
+      this.keteranganAgunan = (document.getElementById('keteranganAgunan' + (j + 1)) as HTMLInputElement).value;
+      // alert(this.keteranganAgunan)
       // Post Agunan
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/checklist_dokumen', {
           created_by: this.untukSessionUserName,
-          id: this.uploadAgunan[i].id_upload,
+          id: this.uploadAgunan[j].id_upload,
           note_validasi: this.keteranganAgunan,
           validasi: this.radioValidasiAgunan,
         })
         .subscribe({});
+      this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     }
   }
 
-  updateStatus() {
-    this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
-  }
-  goto() {
+  updateStatus(): void {
     this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

@@ -11,7 +11,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { listMutasi } from './listMutasi.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-mutasi-rekening',
@@ -47,7 +47,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     protected applicationConfigService: ApplicationConfigService,
     private http: HttpClient,
     protected dataEntryService: DataEntryService,
-    private localStorageService: LocalStorageService
+    private sessionStorageService: SessionStorageService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -59,7 +59,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -88,22 +88,22 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     this.dtTrigger.unsubscribe();
   }
 
-  submitForm(nama_bank: any, no_rekening: any, tahun: any, bulan: any, debet: any, kredit: any, saldo: any): void {
+  submitForm(nama_bank1: any, no_rekening1: any, tahun1: any, bulan1: any, debet1: any, kredit1: any, saldo1: any): void {
     // alert(this.lihatTableMutasi)
     if (this.tambahTableMutasi === '') {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_verif_mutasi', {
           id: this.idTableMutasi,
           app_no_de: this.app_no_de,
-          bulan: bulan,
-          created_by: this.localStorageService.retrieve('sessionUserName'),
+          bulan: bulan1,
+          created_by: this.sessionStorageService.retrieve('sessionUserName'),
           created_date: '',
-          debet: debet,
-          kredit: kredit,
-          nama_bank: nama_bank,
-          no_rekening: no_rekening,
-          saldo: saldo,
-          tahun: tahun,
+          debet: debet1,
+          kredit: kredit1,
+          nama_bank: nama_bank1,
+          no_rekening: no_rekening1,
+          saldo: saldo1,
+          tahun: tahun1,
         })
         .subscribe({
           next: response => console.warn(response),
@@ -115,14 +115,14 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_verif_mutasi', {
           id: this.idTableMutasi,
           app_no_de: this.app_no_de,
-          bulan: bulan,
-          debet: debet,
-          kredit: kredit,
-          nama_bank: nama_bank,
-          no_rekening: no_rekening,
-          saldo: saldo,
-          tahun: tahun,
-          updated_by: this.localStorageService.retrieve('sessionUserName'),
+          bulan: bulan1,
+          debet: debet1,
+          kredit: kredit1,
+          nama_bank: nama_bank1,
+          no_rekening: no_rekening1,
+          saldo: saldo1,
+          tahun: tahun1,
+          updated_by: this.sessionStorageService.retrieve('sessionUserName'),
           updated_date: '',
         })
         .subscribe({
@@ -134,7 +134,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   }
 
   // edit mutasi
-  editMutasi(id: any) {
+  editMutasi(id: any): void {
     this.idTableMutasi = id;
     // data
     this.mutasiRekeningService
@@ -144,7 +144,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       });
   }
 
-  goto() {
+  goto(): void {
     this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

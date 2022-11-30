@@ -5,7 +5,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { DataEntryService } from '../services/data-entry.service';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { fetchAllDe } from '../../upload-document/services/config/fetchAllDe.model';
 import { getEmergencyByCurefModel } from '../services/config/getEmergencyByCurefModel.model';
@@ -48,7 +48,7 @@ export class EmergencyContactComponent implements OnInit {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     private formBuilder: FormBuilder,
-    private localStorageService: LocalStorageService
+    private SessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.curef = params['curef'];
@@ -64,7 +64,7 @@ export class EmergencyContactComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.load();
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
@@ -284,7 +284,7 @@ export class EmergencyContactComponent implements OnInit {
           no_telepon: this.emergencyForm.get('no_telepon')?.value,
           email: this.emergencyForm.get('email')?.value,
           hubungan: this.emergencyForm.get('hubungan')?.value,
-          created_by: this.localStorageService.retrieve('sessionUserName'),
+          created_by: this.SessionStorageService.retrieve('sessionUserName'),
           created_date: '',
         })
 
@@ -319,7 +319,7 @@ export class EmergencyContactComponent implements OnInit {
           no_telepon: this.emergencyForm.get('no_telepon')?.value,
           email: this.emergencyForm.get('email')?.value,
           hubungan: this.emergencyForm.get('hubungan')?.value,
-          updated_by: this.localStorageService.retrieve('sessionUserName'),
+          updated_by: this.SessionStorageService.retrieve('sessionUserName'),
           updated_date: '',
         })
         .subscribe({

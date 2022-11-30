@@ -3,6 +3,9 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
+import { getListFasilitasModel } from 'app/data-entry/services/config/getListFasilitasModel.model';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { SessionStorageService } from 'ngx-webstorage';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ServiceVerificationService } from '../service/service-verification.service';
@@ -19,8 +22,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
   title = 'EFOS';
   numbers: Array<number> = [];
   daWa?: daWaModel[] = [];
-  getCheckDaWa: Array<daWaModel> = new Array<daWaModel>();
-  // modelDawa: daWaModel = new daWaModel();
+  listFasilitas: getListFasilitasModel[] = [];
   daWaAprisal?: daWaModelAprisal[];
   onResponseSuccess: any;
   valueCariButton = '';
@@ -30,7 +32,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
   kirimAssign: any;
 
   // checklist dawa
-  checklistDaWa: any;
+  checkLenghtResult: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -39,10 +41,12 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
 
   constructor(
     protected daWaService: ServiceVerificationService,
+    protected dataEntryServices: DataEntryService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected modalService: NgbModal,
-    protected http: HttpClient
+    protected http: HttpClient,
+    private sessionStorageService: SessionStorageService
   ) {}
 
   ngOnInit(): void {
@@ -55,27 +59,18 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
     this.load();
   }
   load(): void {
-    // ///////////////////////////jika disevicenya post get///////////////////////////////////////
-    // this.daWaService.getDaWa().subscribe({
-    //   next: (res: EntityArrayResponseDaWa) => {
-    //     // console.warn('tabel', res);
-    //     this.daWa = res.body?.result;
-
-    //     this.dtTrigger.next();
-    //     // console.log();
-    //     // this.onResponseSuccess(res);
-
-    //   }
-    // });
-    // ///////////////////////////jika disevicenya post get///////////////////////////////////////
+    // ///////////////////////// LIst Cari Fasilitas //////////////////////
+    this.dataEntryServices.getFetchKodeFasilitas().subscribe(data => {
+      this.listFasilitas = data.result;
+    });
+    // ///////////////////////// LIst Cari Fasilitas //////////////////////
 
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
     this.daWaService.getDaWa().subscribe(data => {
-      console.warn(data);
+      this.checkLenghtResult = data.result;
       if (data.code === 200) {
-        this.daWa = (data as any).result;
-        this.getCheckDaWa = data.result;
-        this.dtTrigger.next(data.result);
+        this.daWa = data.result;
+        this.dtTrigger.next(this.daWa);
       }
     });
     // ////////Aprisal/////
@@ -107,9 +102,6 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
   // ceklis semua
   isChecked = false;
   checkuncheckall() {
-    for (let i = 0; i < this.getCheckDaWa.length; i++) {
-      this.checklistDaWa = (<HTMLInputElement>document.getElementById('checkDaWa' + this.getCheckDaWa[i + 1])).checked;
-    }
     if (this.isChecked === true) {
       this.isChecked = false;
     } else {
@@ -125,27 +117,44 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
     } else {
       const index = this.kirimDe.findIndex(list => list === appNoDe);
       this.kirimDe.splice(index, 1);
-      console.warn(this.kirimStatusAplikasi);
     }
+    console.warn(this.kirimStatusAplikasi);
     console.warn(this.kirimDe);
   }
 
   // post assign
   postAssign(): void {
-    this.kirimDe;
-    for (let i = 0; i < this.kirimDe.length; i++) {
-      // alert(this.kirimDe[i]);
-      // alert(this.kirimStatusAplikasi[i])
-      // alert(this.kirimAssign)
-      this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/verif_assignment', {
-          analis_verifikasi: this.kirimAssign,
-          app_no_de: this.kirimDe[i],
-          status_aplikasi: this.kirimStatusAplikasi[i],
-          // 'created_by': '199183174'
-        })
-        .subscribe({});
-      window.location.reload();
+    if (this.isChecked === false) {
+      this.kirimDe;
+      for (let i = 0; i < this.kirimDe.length; i++) {
+        this.http
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/verif_assignment', {
+            analis_verifikasi: this.kirimAssign,
+            app_no_de: this.kirimDe[i],
+            status_aplikasi: this.kirimStatusAplikasi[i],
+            created_by: this.sessionStorageService.retrieve('sessionUserName'),
+          })
+          .subscribe({
+            next: data => {
+              window.location.reload();
+            },
+          });
+      }
+    } else {
+      for (let i = 0; i < this.checkLenghtResult.length; i++) {
+        this.http
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/verif_assignment', {
+            analis_verifikasi: this.kirimAssign,
+            app_no_de: this.checkLenghtResult[i].app_no_de,
+            status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+            created_by: this.sessionStorageService.retrieve('sessionUserName'),
+          })
+          .subscribe({
+            next: data => {
+              window.location.reload();
+            },
+          });
+      }
     }
 
     this.dtElement.dtInstance.then((dtIntance: DataTables.Api) => {

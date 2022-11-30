@@ -81,18 +81,24 @@ export class AuthServerProvider {
     console.warn('full name ', sessionFullName);
     console.warn('kode cabang ', sessionKdCabang);
     // if (rememberMe) {
-    this.localStorageService.store('sessionRole', sessionRole);
-    this.localStorageService.store('sessionUserName', sessionUserName);
-    this.localStorageService.store('sessionFullName', sessionFullName);
-    this.localStorageService.store('sessionKdCabang', sessionKdCabang);
-    this.localStorageService.store('authenticationToken', jwt);
+    // this.localStorageService.store('sessionRole', sessionRole);
+    // this.localStorageService.store('sessionUserName', sessionUserName);
+    // this.localStorageService.store('sessionFullName', sessionFullName);
+    // this.localStorageService.store('sessionKdCabang', sessionKdCabang);
+    // this.localStorageService.store('authenticationToken', jwt);
     // Store Login
-    this.localStorageService.store('SudahLogin', 1);
-    this.sessionStorageService.clear('sessionRole');
-    this.sessionStorageService.clear('sessionUserName');
-    this.sessionStorageService.clear('sessionFullName');
-    this.sessionStorageService.clear('sessionKdCabang');
-    this.sessionStorageService.clear('SudahLogin');
+    this.sessionStorageService.store('SudahLogin', 1);
+    this.sessionStorageService.store('sessionKdCabang', sessionKdCabang);
+    this.sessionStorageService.store('sessionFullName', sessionFullName);
+    this.sessionStorageService.store('sessionUserName', sessionUserName);
+    this.sessionStorageService.store('sessionRole', sessionRole);
+    this.sessionStorageService.store('authenticationToken', jwt);
+
+    // this.sessionStorageService.clear('sessionRole');
+    // this.sessionStorageService.clear('sessionUserName');
+    // this.sessionStorageService.clear('sessionFullName');
+    // this.sessionStorageService.clear('sessionKdCabang');
+    // this.sessionStorageService.clear('SudahLogin');
     // } else {
     //   this.sessionStorageService.store('authenticationToken', jwt);
     //   this.localStorageService.clear('authenticationToken');

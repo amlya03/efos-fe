@@ -586,11 +586,13 @@
         <label class="col-sm-3 col-form-label">Pendapatan</label>
         <div class="col-sm-9">
           <input
-            type="number"
+            type="text"
             class="form-control"
             placeholder="Pendapatan"
             id="pendapatan"
             formControlName="pendapatan"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
           />
           <span

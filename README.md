@@ -1,4 +1,4 @@
-# betaNewEfos
+# newEfos
 
 This application was generated using JHipster 7.9.3, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.9.3](https://www.jhipster.tech/documentation-archive/v7.9.3).
 
@@ -135,7 +135,7 @@ Refer to [Doing API-First development][] for more details.
 
 ### Packaging as jar
 
-To build the final jar and optimize the betaNewEfos application for production, run:
+To build the final jar and optimize the newEfos application for production, run:
 
 ```
 ./mvnw -Pprod clean verify

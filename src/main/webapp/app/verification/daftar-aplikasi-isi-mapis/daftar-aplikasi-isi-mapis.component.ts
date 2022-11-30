@@ -7,24 +7,26 @@ import { Subject } from 'rxjs';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { daWaModel } from '../daftar-aplikasi-waiting-assigment/daWa.model';
 import { daWaModelAprisal } from '../daftar-aplikasi-waiting-assigment/daWaAprisal.model';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { getListFasilitasModel } from 'app/data-entry/services/config/getListFasilitasModel.model';
 
 @Component({
   selector: 'jhi-daftar-aplikasi-isi-mapis',
   templateUrl: './daftar-aplikasi-isi-mapis.component.html',
-  styleUrls: ['./daftar-aplikasi-isi-mapis.component.scss']
+  styleUrls: ['./daftar-aplikasi-isi-mapis.component.scss'],
 })
 export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
   title = 'EFOS';
-  numbers: Array<number> = [];
+  numbers: any;
   daWa?: daWaModel[] = [];
-  getCheckDaWa: Array<daWaModel> = new Array<daWaModel>();
-  // modelDawa: daWaModel = new daWaModel();
+  getCheckDaWa: daWaModel[] = new Array<daWaModel>();
+  listFasilitas: getListFasilitasModel[] = [];
   daWaAprisal?: daWaModelAprisal[];
   onResponseSuccess: any;
   valueCariButton = '';
   kategori_pekerjaan = '';
-  kirimDe: Array<number> = [];
-  kirimStatusAplikasi: Array<number> = [];
+  kirimDe: any;
+  kirimStatusAplikasi: any;
   kirimAssign: any;
 
   // checklist dawa
@@ -37,6 +39,7 @@ export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
 
   constructor(
     protected daWaService: ServiceVerificationService,
+    protected dataEntryServices: DataEntryService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected modalService: NgbModal,
@@ -53,37 +56,20 @@ export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
     this.load();
   }
   load(): void {
-    // ///////////////////////////jika disevicenya post get///////////////////////////////////////
-    // this.daWaService.getDaWa().subscribe({
-    //   next: (res: EntityArrayResponseDaWa) => {
-    //     // console.warn('tabel', res);
-    //     this.daWa = res.body?.result;
-
-    //     this.dtTrigger.next();
-    //     // console.log();
-    //     // this.onResponseSuccess(res);
-
-    //   }
-    // });
-    // ///////////////////////////jika disevicenya post get///////////////////////////////////////
-
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
-    this.daWaService.getDaWa().subscribe(data => {
+    this.daWaService.getListAppAppraisal().subscribe(data => {
       console.warn(data);
       if (data.code === 200) {
-        this.daWa = (data as any).result;
+        this.daWa = data.result;
         this.getCheckDaWa = data.result;
-        this.dtTrigger.next(data.result);
-      }
-    });
-    // ////////Aprisal/////
-    this.daWaService.getDaWaAprisal().subscribe(data => {
-      console.warn('aprisal', data);
-      if (data.code === 200) {
-        this.daWaAprisal = data.result;
+        this.dtTrigger.next(this.daWa);
       }
     });
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
+    // ///////////////////////// LIst Cari Fasilitas //////////////////////
+    this.dataEntryServices.getFetchKodeFasilitas().subscribe(data => {
+      this.listFasilitas = data.result;
+    });
   }
 
   ngOnDestroy(): void {
@@ -103,6 +89,6 @@ export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
   }
 
   viewdataentry(getAppNoDe: any): void {
-    this.router.navigate(['/mapis'], { queryParams: { app_no_de: getAppNoDe} });
+    this.router.navigate(['/mapis'], { queryParams: { app_no_de: getAppNoDe } });
   }
 }

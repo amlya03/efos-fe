@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
-import { DataEntryService } from '../data-entry/services/data-entry.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { dataentrymodel } from '../data-entry/data-entry-model';
 import { ActivatedRoute, Router } from '@angular/router';
-declare let $: any;
+import { ServicesUploadDocumentService } from './services/services-upload-document.service';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-upload-document',
@@ -16,15 +16,16 @@ declare let $: any;
 export class UploadDocumentComponent implements OnInit, OnDestroy {
   title = 'EFOS';
   app_no_de!: string;
-  tampungandataygdibawa: any;
+  tampungandataygdibawa: string | undefined;
   dataEntry?: dataentrymodel[];
   valueCariButton = '';
   kategori_pekerjaan = '';
-  curef: any;
-  appNoDe: any;
-  fasilitas: any;
-  kategoriPekerjaan: any;
-  namaNasabah: any;
+  curef: string | undefined;
+  appNoDe: string | undefined;
+  fasilitas: string | undefined;
+  kategoriPekerjaan: string | undefined;
+  namaNasabah: string | undefined;
+  userName: string | undefined;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -34,11 +35,12 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   static this: string | number | null | undefined;
 
   constructor(
-    protected datEntryService: DataEntryService,
+    protected uploadSerices: ServicesUploadDocumentService,
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected sessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
@@ -46,6 +48,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.userName = this.sessionStorageService.retrieve('sessionUserName');
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -56,12 +59,12 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   }
 
   load(): void {
-    this.datEntryService.getDaftarAplikasiDataEntry().subscribe(data => {
+    this.uploadSerices.getDaftarAplikasiUpload(this.userName).subscribe(data => {
       console.warn(data);
-      if (data.code === 200) {
-        this.dataEntry = (data as any).result;
-        this.dtTrigger.next(data.result);
-      }
+      // if (data.code === 200) {
+      this.dataEntry = data.result;
+      this.dtTrigger.next(this.dataEntry);
+      // }
     });
   }
   ngOnDestroy(): void {
@@ -74,12 +77,6 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     $('#dataTables-example').DataTable().columns(3).search(inputNamaNasabah).draw();
     $('#dataTables-example').DataTable().columns(8).search(listKategori).draw();
     $('#dataTables-example').DataTable().columns(5).search(listFasilitas).draw();
-    // this.a = inputNoAplikasi
-    // this.b = inputNamaNasabah
-    // this.c = listKategori
-    // alert("1 "+ this.a)
-    // alert("2 "+ this.b)
-    // alert("3 "+ this.c)
   }
 
   clearInput(): void {

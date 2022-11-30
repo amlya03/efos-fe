@@ -21,18 +21,18 @@ import tech.jhipster.config.JHipsterConstants;
 
 @SpringBootApplication
 @EnableConfigurationProperties({ LiquibaseProperties.class, ApplicationProperties.class })
-public class BetaNewEfosApp {
+public class newEfosApp {
 
-    private static final Logger log = LoggerFactory.getLogger(BetaNewEfosApp.class);
+    private static final Logger log = LoggerFactory.getLogger(newEfosApp.class);
 
     private final Environment env;
 
-    public BetaNewEfosApp(Environment env) {
+    public newEfosApp(Environment env) {
         this.env = env;
     }
 
     /**
-     * Initializes betaNewEfos.
+     * Initializes newEfos.
      * <p>
      * Spring profiles can be configured with a program argument --spring.profiles.active=your-active-profile
      * <p>
@@ -65,7 +65,7 @@ public class BetaNewEfosApp {
      * @param args the command line arguments.
      */
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(BetaNewEfosApp.class);
+        SpringApplication app = new SpringApplication(newEfosApp.class);
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
         logApplicationStartup(env);

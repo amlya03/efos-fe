@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
+import { getListFasilitasModel } from 'app/data-entry/services/config/getListFasilitasModel.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { Subject } from 'rxjs';
@@ -16,13 +17,14 @@ declare let $: any;
 export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
   title = 'EFOS';
   daOp?: daOp[];
+  listFasilitas: getListFasilitasModel[] = [];
   valueFasilitas = '';
   valueKategori = '';
   valueNamaNasabah = '';
   valueNoAplikasi = '';
   valueCariButton = '';
   kategori_pekerjaan = '';
-  kirimDe: Array<number> = [];
+  kirimDe: any;
   dataEntry?: fetchAllDe = new fetchAllDe();
   curef: any;
 
@@ -49,11 +51,16 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
     this.load();
   }
   load(): void {
+    // ///////////////////////// LIst Cari Fasilitas //////////////////////
+    this.dataEntryService.getFetchKodeFasilitas().subscribe(data => {
+      this.listFasilitas = data.result;
+    });
+    // ///////////////////////// LIst Cari Fasilitas //////////////////////
+
     this.daOpService.getDaOp().subscribe(data => {
-      console.warn(data);
       if (data.code === 200) {
         this.daOp = data.result;
-        this.dtTrigger.next(data.result);
+        this.dtTrigger.next(this.daOp);
       }
     });
   }
@@ -72,11 +79,11 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
   }
 
   // ReadOnly
-  readOnlyButton(app_no_de: string | null | undefined) {
-    this.dataEntryService.getFetchSemuaDataDE(app_no_de).subscribe(data => {
+  readOnlyButton(app_noDe: string | null | undefined): void {
+    this.dataEntryService.getFetchSemuaDataDE(app_noDe).subscribe(data => {
       this.dataEntry = data.result;
       this.curef = this.dataEntry?.curef;
-      this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: app_no_de, curef: this.curef } });
+      this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: app_noDe, curef: this.curef } });
     });
   }
 }

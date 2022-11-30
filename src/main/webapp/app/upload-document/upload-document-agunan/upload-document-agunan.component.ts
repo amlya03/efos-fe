@@ -59,7 +59,7 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
     // get Semua DE
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.fetchAllAgunan = data.result;
-      // console.log(this.dataEntry);
+      // alert(this.fetchAllAgunan.status_aplikasi);
     });
 
     // get List DE
@@ -151,7 +151,7 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
   // Update Status
   updateStatus() {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_kesimpulan_verifikasi', {
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
         app_no_de: this.app_no_de,
         created_by: this.curef,
         status_aplikasi: this.fetchAllAgunan.status_aplikasi,
@@ -160,6 +160,7 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
         next: response => console.warn(response),
         error: error => console.warn(error),
       });
-    this.router.navigate(['/data-entry'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+    // this.router.navigate(['/data-entry'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+    this.router.navigate(['/data-entry']);
   }
 }

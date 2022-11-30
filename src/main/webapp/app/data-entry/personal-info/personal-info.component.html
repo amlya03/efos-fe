@@ -293,9 +293,9 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label"> KTP Seumur Hidup</label>
         <div class="col-sm-9">
-          <input type="radio" id="ktp_seumur_hidup_ya" formControlName="status_ktp" [(ngModel)]="ktp_seumur_hidup" value="1" />
+          <input type="radio" id="ktp_seumur_hidup_ya" formControlName="status_ktp" value="1" />
           Ya
-          <input type="radio" formControlName="status_ktp" value="0" [(ngModel)]="ktp_seumur_hidup" />
+          <input type="radio" formControlName="status_ktp" value="0" />
           Tidak
 
           <span
@@ -310,7 +310,7 @@
           </span>
         </div>
       </div>
-      <div class="form-group row" *ngIf="ktp_seumur_hidup == 0">
+      <div class="form-group row" *ngIf="this.personalInfoForm.get('status_ktp')?.value == 0">
         <br />
         <label class="col-sm-3 col-form-label">Tanggal Exipred KTP</label>
         <div class="col-sm-9">

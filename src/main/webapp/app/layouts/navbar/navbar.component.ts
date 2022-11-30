@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { VERSION } from 'app/app.constants';
 import { LANGUAGES } from 'app/config/language.constants';
 import { Account } from 'app/core/auth/account.model';
@@ -28,16 +28,16 @@ export class NavbarComponent implements OnInit {
   version = '';
   account: Account | null = null;
   entitiesNavbarItems: any[] = [];
-  untukSessionRole: any;
-  untukSessionUserName: any;
-  untukSessionFullName: any;
-  untukSessionKodeCabang: any;
-  role: any;
-  navbarPersonalInfo: any;
-  app_no_de: any;
+  untukSessionRole: string | undefined;
+  untukSessionUserName: string | undefined;
+  untukSessionFullName: string | undefined;
+  untukSessionKodeCabang: string | undefined;
+  role: string | undefined;
+  navbarPersonalInfo: string | undefined;
+  app_no_de: string | undefined;
   daWa: any;
-  curef: any;
-  statusPerkawinan: any;
+  curef: string | undefined;
+  statusPerkawinan: string | undefined;
   datakirimanakategoripekerjaan: any;
   datakirimanakategoripekerjaanNav: any;
   datakirimanid: any;
@@ -45,13 +45,9 @@ export class NavbarComponent implements OnInit {
   datakirimanappide: any;
   datakirimanidcustomer: any;
 
-  // get isLoggedIn() {
-  //   return this.loggedIn.asObservable(); // {2}
-  // }
-
   constructor(
     protected http: HttpClient,
-    private localStorageService: LocalStorageService,
+    private SessionStorageService: SessionStorageService,
     private loginService: LoginService,
     private translateService: TranslateService,
     private sessionStorageService: SessionStorageService,
@@ -83,18 +79,6 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // alert(this.curef)
-    // alert(this.datakirimanid)
-    // alert(this.datakirimantgllahir)
-    // alert(this.datakirimanappide)
-    // alert(this.datakiriman);
-    // alert(this.app_no_de);
-    // alert(this.statusPerkawinan);
-    // alert(this.datakirimanidcustomer);
-    // const personal_info_retrive = (<HTMLInputElement>document.getElementById("personal_info")).value;
-    // alert((<HTMLInputElement>document.getElementById("personal_info")).value)
-    // this.navbarPersonalInfo = personal_info_retrive
-    // ////////////////////////////////////////
     this.entitiesNavbarItems = EntityNavbarItems;
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;
@@ -105,12 +89,11 @@ export class NavbarComponent implements OnInit {
       this.account = account;
     });
 
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
-    this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
-    this.untukSessionFullName = this.localStorageService.retrieve('sessionFullName');
-    this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
-    this.sudahLogin = this.localStorageService.retrieve('SudahLogin');
-    // alert(this.sudahLogin)
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
+    this.untukSessionUserName = this.SessionStorageService.retrieve('sessionUserName');
+    this.untukSessionFullName = this.SessionStorageService.retrieve('sessionFullName');
+    this.untukSessionKodeCabang = this.SessionStorageService.retrieve('sessionKdCabang');
+    this.sudahLogin = this.SessionStorageService.retrieve('SudahLogin');
     if (this.sudahLogin === null) {
       this.router.navigate(['/login']);
     }
@@ -126,23 +109,12 @@ export class NavbarComponent implements OnInit {
   }
 
   login(): void {
-    // this.router.navigate(['/login']);
-    // this.loggedIn.next(true);
     this.router.navigate(['/login']);
   }
 
   logout(): void {
-    // this.collapseNavbar();
-    // this.loginService.logout();
-    // // this.router.navigate(['']);
-    // this.router.navigate(['/login']);
-    // window.location.reload()
-    // // this.router.navigate(['/login']);
-
     Swal.fire({
       title: 'Informasi Akun',
-      // text: " - lkdzflkxcbxbxcvbcvbcvsd",
-      // html: 'User Id : '+this.untukSessionUserName+' <p>test</p>',
       html:
         'User Id : ' +
         this.untukSessionUserName +

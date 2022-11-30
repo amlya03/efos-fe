@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
-      <!-- <span jhiTranslate="global.title" class="navbar-title">BetaNewEfos</span>
+      <!-- <span jhiTranslate="global.title" class="navbar-title">newEfos</span>
       <span class="navbar-version">{{ version }}</span> -->
     </a>
     <a
@@ -57,7 +57,7 @@
         </div>
 
         <!-- ////////////////////////////// Verifikator \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-        <div *ngIf="untukSessionRole === 'VER_PRESCR'">
+        <div *ngIf="untukSessionRole === 'VER_PRE_SPV'">
           <li class="row nav-item">
             <a
               routerLinkActive="active"
@@ -71,6 +71,15 @@
               <span class="col nav-link" routerLink="daftar-aplikasi-waiting-assigment" hidden></span>
               <span class="col nav-link" routerLink="daftar-aplikasi-on-process" hidden></span>
               <span class="col nav-link" routerLink="daftar-aplikasi-waiting-update-status" hidden></span>
+              <span routerLink="/analisa-keuangan" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+              <span routerLink="/data-calon-nasabah" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+              <span routerLink="/data-kantor" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+              <span routerLink="/mutasi-rekening" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/sturktur-pembiayaan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/checklist-document" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/syarat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/kesimpulan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/verification/memo" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
             </a>
           </li>
         </div>
@@ -78,7 +87,25 @@
 
         <!-- ////////////////////////////// Appraisal \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
         <div *ngIf="untukSessionRole == 'APPRAISAL'">
-          <li id="verificationNav" class="row nav-item">
+          <li class="row nav-item">
+            <a
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="col nav-link"
+              routerLink="daftar_input_mapis"
+              style="text-align: center"
+            >
+              <fa-icon icon="user-pen"></fa-icon>
+              <p>Appraisal</p>
+              <span routerLink="/mapis" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
+            </a>
+          </li>
+        </div>
+        <!-- ////////////////////////////// Appraisal \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
+        <!-- ////////////////////////////// ANALIS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <div *ngIf="untukSessionRole == 'VER_PRESCR'">
+          <li class="row nav-item">
             <a
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
@@ -96,6 +123,8 @@
               <span routerLink="/sturktur-pembiayaan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
               <span routerLink="/checklist-document" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
               <span routerLink="/syarat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/kesimpulan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/verification/memo" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
             </a>
           </li>
         </div>
@@ -103,7 +132,7 @@
 
         <!-- ////////////////////////////// Approval \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
         <div *ngIf="untukSessionRole == 'KOMITE'">
-          <li id="verificationNav" class="row nav-item">
+          <li class="row nav-item">
             <a
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
@@ -113,7 +142,7 @@
             >
               <fa-icon icon="user-tie"></fa-icon>
               <p>APPROVAL</p>
-              <!-- <span routerLink="/analisa-keuangan" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span> -->
+              <span routerLink="/komite/detail-komite" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
             </a>
           </li>
         </div>
@@ -596,7 +625,7 @@
       routerLink="daftar-aplikasi-waiting-assigment"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'VER_PRESCR'"
+      *ngSwitchCase="'VER_PRE_SPV'"
     >
       <h6>Daftar Aplikasi Waiting Assigment</h6>
     </a>
@@ -605,7 +634,7 @@
       routerLink="daftar-aplikasi-on-process"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'VER_PRESCR'"
+      *ngSwitchCase="'VER_PRE_SPV'"
     >
       <h6>Daftar Aplikasi On Process</h6>
     </a>
@@ -614,7 +643,7 @@
       routerLink="daftar-aplikasi-waiting-update-status"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'VER_PRESCR'"
+      *ngSwitchCase="'VER_PRE_SPV'"
     >
       <h6>Daftar Aplikasi Waiting Update Satatus</h6>
     </a>
@@ -647,7 +676,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'APPRAISAL' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Analisa Keuangan</h6>
     </a>
@@ -657,7 +686,7 @@
       [routerLinkActive]="'active'"
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'APPRAISAL' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Detail Analisa</h6>
     </a>
@@ -667,7 +696,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'APPRAISAL' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Data Kantor</h6>
     </a>
@@ -677,7 +706,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'APPRAISAL' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Mutasi Rekening</h6>
     </a>
@@ -687,7 +716,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'APPRAISAL' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Struktur Pembiayaan</h6>
     </a>
@@ -697,7 +726,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'APPRAISAL' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Checklist Document</h6>
     </a>
@@ -707,7 +736,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'APPRAISAL' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Syarat Persetujuan</h6>
     </a>
@@ -717,7 +746,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'APPRAISAL' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Kesimpulan</h6>
     </a>
@@ -727,7 +756,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'APPRAISAL' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Memo</h6>
     </a>
@@ -1066,6 +1095,18 @@
       *ngSwitchCase="'AO'"
     >
       <h6>Upload Document Agunan</h6>
+    </a>
+  </div>
+  <div *ngIf="router.url === '/komite/detail-komite?app_no_de=' + this.app_no_de + '&curef=' + this.curef">
+    <a
+      class="nav-item nav-link"
+      routerLink="/komite/detail-komite"
+      [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'KOMITE'"
+    >
+      <h6>Detail Approval</h6>
     </a>
   </div>
 </nav>

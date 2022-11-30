@@ -1,0 +1,535 @@
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Detail Data Aplikasi</h3>
+</div>
+<p></p>
+<div class="row form-material">
+  <!-- ////Colom ke 1\\\\\ -->
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">No Aplikasi</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" value="{{ this.dataEntry.app_no_de }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nama Pemohon</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="nama" name="nama" value="{{ this.dataEntry.nama }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Cabang</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" value="{{ this.cabang }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nama AO</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" value="" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nama BM</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" value="" />
+      </div>
+    </div>
+    <br />
+  </div>
+  <!-- ////Colom ke 2\\\\\ -->
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" value="{{ this.dataEntry.jenis_kelamin }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Alamat</label>
+      <div class="col-sm-8">
+        <textarea name="" id="" cols="10" rows="3" readonly class="form-control">{{ this.dataEntry.alamat_ktp }}</textarea>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
+      <div class="col-sm-8">
+        <input type="date" readonly class="form-control" value="{{ this.dataEntry.tanggal_lahir }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">KTP</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" value="{{ this.dataEntry.no_ktp }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Jenis Pekerjaan</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="angsuran"
+          name="angsuran"
+          value="{{ this.fetchJob.tipe_pekerjaan_deskripsi }}"
+        />
+      </div>
+    </div>
+    <br />
+  </div>
+</div>
+<p></p>
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Fasilitas Yang Diminta</h3>
+</div>
+<p></p>
+<div class="row formm-material">
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nama Fasilitas</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="fasilitas" name="fasilitas" value="{{ this.dataEntry.kode_fasilitas_name }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Program</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="program" name="program" value="{{ this.dataEntry.program_pembiayaan }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Product</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="product" name="product" value="{{ this.dataEntry.produk_pembiayaan }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Skema</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="skema" name="skema" value="{{ this.dataEntry.skema_name }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tipe Margin</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" value="{{ this.strukturByDe.tipe_margin }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Fasilitas Ke</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" value="{{ this.dataEntry.fasilitas_ke }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Joint Income</label>
+      <div class="col-sm-8">
+        <input style="width: 20px; height: 20px" type="checkbox" disabled [checked]="dataEntry.joint_income === 1" />
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tujuan Pembiayaan</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" value="{{ this.strukturByDe.tujuan_pembiayaan }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row" [formGroup]="komiteFasilitasYangDimintaForm">
+      <label class="col-sm-4 col-form-label">Maximal Pembiayaan</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          (blur)="hitungFasilitasYangDiminta()"
+          formControlName="harga_permintaan"
+          (keypress)="keyPressNumbers($event)"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row" [formGroup]="komiteFasilitasYangDimintaForm">
+      <label class="col-sm-4 col-form-label">Jangka Waktu</label>
+      <div class="col-sm-8">
+        <select type="text" class="form-control" (blur)="hitungFasilitasYangDiminta()" formControlName="tenor">
+          <option *ngFor="let tenor of tenor" value="{{ tenor.tn_code }}">{{ tenor.tn_code }} Bulan</option>
+        </select>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row" [formGroup]="komiteFasilitasYangDimintaForm">
+      <label class="col-sm-4 col-form-label">Down Payment</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          (blur)="hitungFasilitasYangDiminta()"
+          formControlName="down_payment"
+          (keypress)="keyPressNumbers($event)"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row" [formGroup]="komiteFasilitasYangDimintaForm">
+      <label class="col-sm-4 col-form-label">Angsuran</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          readonly
+          formControlName="angsuran"
+          data-toggle="tooltip"
+          data-placement="bottom"
+          title="{{ this.komiteFasilitasYangDimintaForm.get('angsuran')?.value }}"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Total Pendapatan</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" value="{{ this.jobByCurefDE.total_pendapatan }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row" [formGroup]="komiteFasilitasYangDimintaForm">
+      <label class="col-sm-4 col-form-label">DSR</label>
+      <div class="col-sm-5">
+        <input type="text" readonly class="form-control" formControlName="dsr" />
+      </div>
+      <div class="col-sm-1">%</div>
+    </div>
+  </div>
+</div>
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Rekomendasi System</h3>
+</div>
+<p></p>
+<div class="row formm-material">
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Maximal Pembiayaan</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" value="{{ this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Jangka Waktu</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" value="{{ this.komiteFasilitasYangDimintaForm.get('tenor')?.value + ' Bulan' }}" />
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Down Payment</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" value="{{ this.komiteFasilitasYangDimintaForm.get('down_payment')?.value }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Angsuran</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          value="{{ this.komiteFasilitasYangDimintaForm.get('angsuran')?.value }}"
+          data-toggle="tooltip"
+          data-placement="bottom"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Scoring</label>
+      <div class="col-sm-2">
+        <input type="text" readonly class="form-control" value="{{ this.hasilScoring }}" />
+      </div>
+      <div class="col-sm-2" *ngIf="this.hasilStatus === 'BAD'">
+        <h6 style="color: red">{{ this.hasilStatus }}</h6>
+      </div>
+      <div class="col-sm-2" [hidden]="this.hasilStatus === 'BAD'">
+        <h6 style="color: green">{{ this.hasilStatus }}</h6>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Keputusan Pembiayaan</h3>
+</div>
+<p></p>
+<div class="row formm-material" [formGroup]="keputusanPembiayaanForm">
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Skema</label>
+      <div class="col-sm-8">
+        <select
+          class="form-control"
+          formControlName="skema"
+          (change)="changeKeputusanPembiayaan(this.keputusanPembiayaanForm.get('skema')?.value)"
+        >
+          <option *ngFor="let Skema of Skema" value="{{ Skema.skema }}|{{ Skema.skema_master }}|{{ Skema.skema_deskripsi }}">
+            {{ Skema.skema_deskripsi }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tipe Margin</label>
+      <div class="col-sm-8">
+        <select class="form-control" formControlName="tipe_margin">
+          <option value="FIX">FIX</option>
+          <option value="STEPUP">STEPUP</option>
+        </select>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Jangka Waktu</label>
+      <div class="col-sm-8">
+        <select type="text" class="form-control" formControlName="jangka_waktu" (blur)="hitungRekomendasiSystem()">
+          <option *ngFor="let tenorRekomendasi of tenorRekomendasi" value="{{ tenorRekomendasi.tn_code }}">
+            {{ tenorRekomendasi.tn_code }} Bulan
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Maximal Pembiayaan</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          formControlName="harga_permintaan"
+          (blur)="hitungRekomendasiSystem()"
+          class="form-control"
+          (keypress)="keyPressNumbers($event)"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Down Payment</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          formControlName="down_payment"
+          (blur)="hitungRekomendasiSystem()"
+          class="form-control"
+          (keypress)="keyPressNumbers($event)"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Angsuran</label>
+      <div class="col-sm-8">
+        <input
+          readonly
+          type="text"
+          formControlName="angsuran"
+          class="form-control"
+          data-toggle="tooltip"
+          data-placement="bottom"
+          title="{{ this.keputusanPembiayaanForm.get('angsuran')?.value }}"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Persetujuan Khusus</h3>
+</div>
+<br />
+<table class="table table-borderless">
+  <thead>
+    <tr>
+      <th scope="col" style="text-align: center">#</th>
+      <th scope="col" style="text-align: center">Jenis Persetujuan</th>
+      <th scope="col" style="text-align: center">Detail Persetujuan</th>
+      <th scope="col" style="text-align: center">Usulan</th>
+      <th scope="col" style="text-align: center">Ketentuan yang Berlaku</th>
+      <th scope="col" style="text-align: center">Mitigasi Resiko</th>
+      <th scope="col" style="text-align: center" colspan="2">Persetujuan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let refPersetujuanKhusus of refPersetujuanKhusus; index as i">
+      <th scope="row" style="text-align: center">{{ i + 1 }}</th>
+      <td>{{ refPersetujuanKhusus.deskripsi }}</td>
+      <td hidden><input type="text" id="id{{ i }}" value="{{ this.listPersetujuanKhusus[i].id }}" /></td>
+      <td hidden>
+        <input
+          type="text"
+          value="{{ this.listPersetujuanKhusus[i].id_jenis_persetujuan }}"
+          id="id_jenis_persetujuan{{ i }}"
+          class="form-control"
+        />
+      </td>
+      <td style="text-align: center">
+        <input
+          type="text"
+          value="{{ this.listPersetujuanKhusus[i].detail_persetujuan }}"
+          id="detail_persetujuan{{ i }}"
+          class="form-control"
+        />
+      </td>
+      <td style="text-align: center">
+        <input type="text" value="{{ this.listPersetujuanKhusus[i].usulan }}" id="usulan{{ i }}" class="form-control" />
+      </td>
+      <td style="text-align: center">
+        <input type="text" value="{{ this.listPersetujuanKhusus[i].ketentuan }}" id="ketentuan{{ i }}" class="form-control" />
+      </td>
+      <td style="text-align: center">
+        <input type="text" value="{{ this.listPersetujuanKhusus[i].mitigasi_resiko }}" id="mitigasi_resiko{{ i }}" class="form-control" />
+      </td>
+      <td style="text-align: center">
+        <input
+          type="radio"
+          name="persetujuan{{ i }}"
+          id="persetujuan_ya{{ i }}"
+          [checked]="this.listPersetujuanKhusus[i].persetujuan === '1'"
+          value="1"
+        />
+        <label for="persetujuan_ya">Ya</label>
+      </td>
+      <td style="text-align: center">
+        <input
+          type="radio"
+          name="persetujuan{{ i }}"
+          id="persetujuan_tidak{{ i }}"
+          [checked]="this.listPersetujuanKhusus[i].persetujuan === '0'"
+          value="0"
+        />
+        <label for="persetujuan_tidak">Tidak</label>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p></p>
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">History Pengajuan</h3>
+</div>
+<br />
+<table class="table table-borderless">
+  <thead>
+    <tr>
+      <th scope="col" style="text-align: center">No</th>
+      <th scope="col" style="text-align: center">Approve By</th>
+      <th scope="col" style="text-align: center">Approve Date</th>
+      <th scope="col" style="text-align: center">Keputusan</th>
+      <th scope="col" style="text-align: center">Keterangan Alasan Penolakan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let persetujuanPembiayaan of persetujuanPembiayaan; index as i">
+      <th scope="row" style="text-align: center">{{ i + 1 }}</th>
+      <td style="text-align: center">{{ persetujuanPembiayaan.approved_by }}</td>
+      <td style="text-align: center">{{ persetujuanPembiayaan.approved_date }}</td>
+      <td style="text-align: center">{{ persetujuanPembiayaan.keputusan }}</td>
+      <td style="text-align: center">{{ persetujuanPembiayaan.alasan_penolakan }}</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Persetujuan Pembiayaan</h3>
+</div>
+<p></p>
+<div class="row form-material" [formGroup]="persetujuanPembiayaanForm">
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Limit Kewenangan Memutus</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" formControlName="limit_kewenangan_memutus" (keypress)="keyPressNumbers($event)" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Plafond Pembiayaan yang Akan Diputus</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" formControlName="plafon_pembiayaan" (keypress)="keyPressNumbers($event)" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Keputusan</label>
+      <div class="col-sm-1">
+        &nbsp;&nbsp;&nbsp;
+        <input type="radio" style="width: 20px; height: 20px" id="keputusan_approve" formControlName="keputusan" value="Approve" />
+        <br />
+        <label for="keputusan_approve">Approve</label>
+      </div>
+      <div class="col-sm-1">
+        &nbsp;
+        <input type="radio" style="width: 20px; height: 20px" id="keputusan_reject" formControlName="keputusan" value="Reject" />
+        <br />
+        <label for="keputusan_reject">Reject</label>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row" *ngIf="this.persetujuanPembiayaanForm.get('keputusan')?.value === 'Reject'">
+      <label class="col-sm-4 col-form-label">Alasan Penolakan</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" formControlName="alasan_penolakan" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Keterangan</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" formControlName="keterangan" />
+      </div>
+    </div>
+    <br />
+  </div>
+</div>
+<div class="row" style="text-align: center">
+  <div
+    class="col"
+    *ngIf="
+      +this.persetujuanPembiayaanForm.get('limit_kewenangan_memutus')?.value <=
+      +this.persetujuanPembiayaanForm.get('plafon_pembiayaan')?.value
+    "
+  >
+    <button type="button" class="btn btn-info" (click)="approve()">Approve</button>
+  </div>
+  <div
+    class="col"
+    *ngIf="
+      +this.persetujuanPembiayaanForm.get('limit_kewenangan_memutus')?.value >
+      +this.persetujuanPembiayaanForm.get('plafon_pembiayaan')?.value
+    "
+  >
+    <button type="button" class="btn btn-primary" (click)="forward()">Forward To</button>
+  </div>
+  <div class="col">
+    <button type="button" class="btn btn-danger" (click)="reject()">Reject</button>
+  </div>
+</div>

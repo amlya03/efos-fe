@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
-import { LocalStorageService } from 'ngx-webstorage';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -15,6 +14,13 @@ export class ServicesUploadDocumentService {
 
   // API url
   baseApiUrl = 'https://file.io';
+
+  // /////////////////////////////// Get List Daftar APlikasi Upload /////////////////////////////////
+  protected FetchDaftarAplikasiUpload = this.applicationConfigService.getEndpointFor(
+    // 'http://10.20.34.110:8805/api/v1/efos-de/list_app_de_upload?sc=%20&sf=%20&si=%20&sk=%20&sn=%20&su=199183174'
+    'http://10.20.34.110:8805/api/v1/efos-de/list_app_de_upload?su='
+  );
+  // /////////////////////////////// Get List Daftar APlikasi Upload /////////////////////////////////
 
   // get Upload
   protected FetchListUploadDocument = this.applicationConfigService.getEndpointFor(
@@ -94,6 +100,11 @@ export class ServicesUploadDocumentService {
   }
   //////////////////////////////// get Upload Memo ///////////////////////////////////////////////////////////////
 
+  //////////////////////////////// get Upload Memo ///////////////////////////////////////////////////////////////
+  getDaftarAplikasiUpload(userId: string | undefined): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.FetchDaftarAplikasiUpload + userId);
+  }
+  //////////////////////////////// get Upload Memo ///////////////////////////////////////////////////////////////
   // // ////////////////////// Ref Upload Document DE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   // getListUploadDocumentDE(): Observable<ApiResponse> {
   //   // return this.http.get<ApiResponse>(this.ListUploadDocument+this.datakiriman+'&ss=DE');

@@ -269,7 +269,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tenor</label>
         <div class="col-sm-8">
-          <select formControlName="tenor" id="analisa_tenor" #analisa_tenor class="form-control">
+          <select formControlName="tenor" #analisa_tenor class="form-control">
             <option *ngFor="let tenor of tenor" value="{{ tenor.tn_code }}">{{ tenor.tn_code }} Bulan</option>
           </select>
         </div>
@@ -283,7 +283,7 @@
             class="form-control"
             formControlName="harga_permintaan"
             #harga_permintaan1
-            (change)="hitungAngsuran(analisa_skema.value, harga_permintaan1.value, analisa_down_payment1.value)"
+            (change)="hitungAngsuran(this.strukturForm.get('skema')?.value)"
           />
         </div>
       </div>
@@ -305,14 +305,16 @@
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Down Payment</label>
-        <div class="col-sm-8">
+        <div class="col-sm-5">
           <input
             type="text"
             class="form-control"
             formControlName="down_payment"
             #analisa_down_payment1
-            (change)="hitungAngsuran(analisa_skema.value, harga_permintaan1.value, analisa_down_payment1.value)"
+            (change)="hitungAngsuran(this.strukturForm.get('skema')?.value)"
           />
+        </div>
+        <div class="col-sm-3">
           <label>Min 20%</label>
         </div>
       </div>
@@ -320,15 +322,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Angsuran</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="analisa_angsuran"
-            formControlName="angsuran"
-            #analisa_angsuran1
-            [value]="this.angsuranPalingTinggi"
-          />
+          <input type="text" readonly class="form-control" id="analisa_angsuran" formControlName="angsuran" #analisa_angsuran1 />
         </div>
       </div>
       <br />
@@ -342,7 +336,7 @@
             id="total_angsuran"
             formControlName="total_angsuran"
             #total_angsuran1
-            value="{{ +total_kewajiban_bank_pemohon1.value + +analisa_angsuran1.value | currency: 'Rp ' }}"
+            value="{{ +total_kewajiban_bank_pemohon1.value + +this.strukturForm.get('angsuran')?.value | currency: 'Rp ' }}"
           />
         </div>
       </div>
@@ -365,22 +359,14 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Maximal Angsuran</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="maximal_angsuran"
-            formControlName="max_angsuran"
-            #maximal_angsuran1
-            [value]="this.analisaMaxAngsuran | currency: 'Rp '"
-          />
+          <input type="text" readonly class="form-control" id="maximal_angsuran" formControlName="max_angsuran" #maximal_angsuran1 />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">DSR</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" #analisaDsr1 id="dsr" formControlName="dsr" [value]="this.analisaDsr + ' %'" />
+          <input type="text" readonly class="form-control" #analisaDsr1 id="dsr" formControlName="dsr" />
         </div>
       </div>
     </div>
@@ -390,34 +376,34 @@
     <h3 style="color: #fff; text-align: center">Analisa Agunan</h3>
   </div>
   <p></p>
-  <div class="row form-material">
+  <div class="row form-material" [formGroup]="mapisForm">
     <!-- ////Colom ke 1\\\\\ -->
     <div class="col">
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Market</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nilai_market" name="nilai_market" />
+          <input type="text" readonly class="form-control" id="nilai_market" formControlName="nilai_market" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai IMB</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nilai_imb" name="nilai_imb" />
+          <input type="text" readonly class="form-control" id="nilai_imb" formControlName="nilai_imb" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Luas Tanah</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="luas_tanah" name="luas_tanah" />
+          <input type="text" readonly class="form-control" id="luas_tanah" formControlName="luas_tanah" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Luas Bangunan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="luas_bangunan" name="luas_bangunan" />
+          <input type="text" readonly class="form-control" id="luas_bangunan" formControlName="luas_bangunan" />
         </div>
       </div>
     </div>
@@ -426,51 +412,37 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Objek Pembiayaan</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="objek_pembiayaan"
-            name="objek_pembiayaan"
-            value="{{ this.listagunan[0].tipe_properti }}"
-          />
+          <input type="text" readonly class="form-control" id="objek_pembiayaan" formControlName="objek_pembiayaan" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tipe Angunan</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="tipe_agunan"
-            name="tipe_agunan"
-            value="{{ this.listagunan[0].tipe_agunan }}"
-          />
+          <input type="text" readonly class="form-control" id="tipe_agunan" formControlName="tipe_agunan" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jenis Objek</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="jenis_objek"
-            name="jenis_objek"
-            value="{{ listagunan[0].jenis_objek_deskripsi }}"
-          />
+          <input type="text" readonly class="form-control" id="jenis_objek" formControlName="jenis_objek" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">FTV</label>
         <div class="col-sm-6">
-          <input type="text" readonly class="form-control" id="ftv" name="ftv" value="{{ this.dataEntry.uang_muka | currency: 'Rp ' }}" />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="ftv"
+            formControlName="ftv"
+            [value]="this.mapisForm.get('ftv')?.value | currency: 'Rp '"
+          />
         </div>
-        <div class="col-sm-2">{{ this.betaFTV }} %</div>
+        <div class="col-sm-2">{{ this.mapisModel.ftv }} %</div>
       </div>
     </div>
   </div>
@@ -603,21 +575,23 @@
           <input type="text" readonly class="form-control" id="hasil_scoring" name="hasil_scoring" [value]="this.hasilScoring" />
         </div>
         <div class="col-sm-3">
-          <label>{{ this.hasilStatus }}</label>
+          <h5 [hidden]="this.hasilStatus !== 'BAD'" style="color: red">{{ this.hasilStatus }}</h5>
+          <h5 [hidden]="this.hasilStatus === 'BAD'" style="color: green">{{ this.hasilStatus }}</h5>
         </div>
       </div>
     </div>
   </div>
   <div class="col" style="text-align: center">
     <button
+      [hidden]="this.untukSessionRole == 'VER_PRE_SPV'"
       [disabled]="this.dpKurang == 1"
       type="submit"
       class="btn btn-info"
       (click)="
         onSubmit(
-          analisa_angsuran1.value,
-          analisa_down_payment1.value,
-          analisaDsr1.value,
+          this.strukturForm.get('angsuran')?.value,
+          this.strukturForm.get('down_payment')?.value,
+          this.strukturForm.get('dsr')?.value,
           harga_permintaan1.value,
           maximal_angsuran1.value,
           maximal_dsr1.value,
@@ -631,6 +605,14 @@
     >
       Simpan Data
     </button>
-    <button [disabled]="this.dpKurang == 1" type="submit" class="btn btn-primary" (click)="viewStruktur()">Proses Data</button>
+    <button
+      [disabled]="this.dpKurang == 1"
+      type="button"
+      class="btn btn-info"
+      (click)="viewStruktur()"
+      [hidden]="this.untukSessionRole == 'VER_PRESCR'"
+    >
+      Selanjutnya
+    </button>
   </div>
 </form>

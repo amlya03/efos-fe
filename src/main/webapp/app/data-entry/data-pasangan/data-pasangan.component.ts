@@ -6,7 +6,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { datapasangamodel } from './data-pasangan-model';
 import { DataEntryService } from '../services/data-entry.service';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 
@@ -48,7 +48,7 @@ export class DataPasanganComponent implements OnInit {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     private formBuilder: FormBuilder,
-    private localStorageService: LocalStorageService
+    private SessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.statusPerkawinan = params.statusPerkawinan;
@@ -58,7 +58,7 @@ export class DataPasanganComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.load();
 
     this.dataPasanganForm = this.formBuilder.group({
@@ -341,7 +341,7 @@ export class DataPasanganComponent implements OnInit {
         nama_pasangan: this.dataPasanganForm.get('nama_pasangan')?.value,
         alamat_ktp_pasangan: this.dataPasanganForm.get('alamat_ktp_pasangan')?.value,
         jenis_kelamin_pasangan: this.dataPasanganForm.get('jenis_kelamin_pasangan')?.value,
-        updated_by: this.localStorageService.retrieve('sessionUserName'),
+        updated_by: this.SessionStorageService.retrieve('sessionUserName'),
         curef: this.dataEntry.curef,
         email_pasangan: this.dataPasanganForm.get('email_pasangan')?.value,
         npwp_pasangan: this.dataPasanganForm.get('npwp_pasangan')?.value,

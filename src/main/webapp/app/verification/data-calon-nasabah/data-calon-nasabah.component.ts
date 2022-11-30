@@ -16,7 +16,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { refAnalisaCalonNasabah } from './refAnalisaCalonNasabah.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-data-calon-nasabah',
@@ -37,8 +37,8 @@ export class DataCalonNasabahComponent implements OnInit {
   app_no_de: any;
   dataCalonNasabahMap: refAnalisaCalonNasabah = new refAnalisaCalonNasabah();
   dataEntry: fetchAllDe = new fetchAllDe();
-  tempunganCek: Array<number> = [];
-  tampunganIsiRum: Array<number> = [];
+  tempunganCek: number[] = [];
+  tampunganIsiRum: number[] = [];
 
   // checkbox cek ke
   checkboxCek: any;
@@ -67,6 +67,9 @@ export class DataCalonNasabahComponent implements OnInit {
   // disable
   verifikatorMelihat: any;
 
+  // Cek Result
+  cekResult: any;
+
   constructor(
     protected dataCalonNasabah: ServiceVerificationService,
     protected activatedRoute: ActivatedRoute,
@@ -76,7 +79,7 @@ export class DataCalonNasabahComponent implements OnInit {
     private formBuilder: FormBuilder,
     protected applicationConfigService: ApplicationConfigService,
     protected dataEntryService: DataEntryService,
-    private localStorageService: LocalStorageService
+    private sessionStorageService: SessionStorageService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -87,65 +90,65 @@ export class DataCalonNasabahComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.verifikatorMelihat = this.untukSessionRole === 'VER_PRESCR';
     this.editor = new Editor();
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.dataCalonNasabahForm = this.formBuilder.group({
-      tanggal_verifikasi: '',
-      pemberi_keterangan: '',
-      hubungan_pemberi_keterangan: '',
-      verif_alamat: [{ value: '', disabled: this.verifikatorMelihat }],
-      note_verif_alamat: [{ value: '', disabled: this.verifikatorMelihat }],
-      verif_rt_rw: [{ value: '', disabled: this.verifikatorMelihat }],
-      note_verif_rt_rw: [{ value: '', disabled: this.verifikatorMelihat }],
-      verif_provinsi: [{ value: '', disabled: this.verifikatorMelihat }],
-      note_verif_provinsi: [{ value: '', disabled: this.verifikatorMelihat }],
-      verif_kabkota: [{ value: '', disabled: this.verifikatorMelihat }],
-      note_verif_kabkota: [{ value: '', disabled: this.verifikatorMelihat }],
-      verif_kecamatan: [{ value: '', disabled: this.verifikatorMelihat }],
-      note_verif_kecamatan: [{ value: '', disabled: this.verifikatorMelihat }],
-      verif_kelurahan: [{ value: '', disabled: this.verifikatorMelihat }],
-      note_verif_kelurahan: [{ value: '', disabled: this.verifikatorMelihat }],
-      verif_kode_pos: [{ value: '', disabled: this.verifikatorMelihat }],
-      note_verif_kode_pos: [{ value: '', disabled: this.verifikatorMelihat }],
-      verif_tanggal_lahir: [{ value: '', disabled: this.verifikatorMelihat }],
-      note_verif_tanggal_lahir: [{ value: '', disabled: this.verifikatorMelihat }],
-      verif_pendidikan: [{ value: '', disabled: this.verifikatorMelihat }],
-      note_verif_pendidikan: [{ value: '', disabled: this.verifikatorMelihat }],
-      verif_status_menikah: [{ value: '', disabled: this.verifikatorMelihat }],
-      note_verif_status_menikah: [{ value: '', disabled: this.verifikatorMelihat }],
-      verif_ibu_kandung: [{ value: '', disabled: this.verifikatorMelihat }],
-      note_verif_ibu_kandung: [{ value: '', disabled: this.verifikatorMelihat }],
+      tanggal_verifikasi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      pemberi_keterangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      hubungan_pemberi_keterangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      verif_alamat: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      note_verif_alamat: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      verif_rt_rw: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      note_verif_rt_rw: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      verif_provinsi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      note_verif_provinsi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      verif_kabkota: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      note_verif_kabkota: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      verif_kecamatan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      note_verif_kecamatan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      verif_kelurahan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      note_verif_kelurahan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      verif_kode_pos: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      note_verif_kode_pos: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      verif_tanggal_lahir: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      note_verif_tanggal_lahir: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      verif_pendidikan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      note_verif_pendidikan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      verif_status_menikah: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      note_verif_status_menikah: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      verif_ibu_kandung: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      note_verif_ibu_kandung: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       // verif_jumlah_tanggungan: '',
       // note_verif_jumlah_tanggungan: '',
-      verif_nama_pasangan: [{ value: '', disabled: this.verifikatorMelihat }],
-      note_verif_nama_pasangan: [{ value: '', disabled: this.verifikatorMelihat }],
-      verif_pekerjaan_pasangan: [{ value: '', disabled: this.verifikatorMelihat }],
-      note_verif_pekerjaan_pasangan: [{ value: '', disabled: this.verifikatorMelihat }],
-      fasilitas_pembiayaan: [{ value: '', disabled: this.verifikatorMelihat }],
-      karakter_calon_nasabah: [{ value: '', disabled: this.verifikatorMelihat }],
-      status_rumah: [{ value: '', disabled: this.verifikatorMelihat }],
+      verif_nama_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      note_verif_nama_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      verif_pekerjaan_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      note_verif_pekerjaan_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      fasilitas_pembiayaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      karakter_calon_nasabah: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      status_rumah: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       // cek: '',
       // cek: this.formBuilder.array([]),
       // cek: new FormArray([
       //   new FormControl(true),
       //   new FormControl(false),
       // ]),
-      rumah_dihuni: [{ value: '', disabled: this.verifikatorMelihat }],
-      lama_menetap_bulan: [{ value: '', disabled: this.verifikatorMelihat }],
-      lama_menetap_tahun: [{ value: '', disabled: this.verifikatorMelihat }],
-      jenis_bangunan: [{ value: '', disabled: this.verifikatorMelihat }],
-      lokasi_perumahan: [{ value: '', disabled: this.verifikatorMelihat }],
-      fasilitas_listrik: [{ value: '', disabled: this.verifikatorMelihat }],
+      rumah_dihuni: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      lama_menetap_bulan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      lama_menetap_tahun: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      jenis_bangunan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      lokasi_perumahan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      fasilitas_listrik: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       // isi_rumah: '',
-      kondisi_lingkungan: [{ value: '', disabled: this.verifikatorMelihat }],
-      akses_jalan: [{ value: '', disabled: this.verifikatorMelihat }],
-      garasi: [{ value: '', disabled: this.verifikatorMelihat }],
-      carport: [{ value: '', disabled: this.verifikatorMelihat }],
-      kendaraan: [{ value: '', disabled: this.verifikatorMelihat }],
-      jumlah_kendaraan: [{ value: '', disabled: this.verifikatorMelihat }],
-      kondisi_kendaraan: [{ value: '', disabled: this.verifikatorMelihat }],
+      kondisi_lingkungan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      akses_jalan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      garasi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      carport: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      kendaraan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      jumlah_kendaraan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      kondisi_kendaraan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       // created_date: "",
       // updated_date: "",
       // created_by: "",
@@ -154,7 +157,7 @@ export class DataCalonNasabahComponent implements OnInit {
     this.load();
   }
 
-  onCheckCek(e: any) {
+  onCheckCek(e: any): void {
     this.checkboxCekSertif = '';
     this.checkboxCekAkte = '';
     this.checkboxCekRekTel = '';
@@ -165,7 +168,7 @@ export class DataCalonNasabahComponent implements OnInit {
     }
   }
 
-  onCheckRumah(e: any) {
+  onCheckRumah(e: any): void {
     this.isiRumahMobil = '';
     this.isiRumahMotor = '';
     this.isiRumahTV = '';
@@ -182,7 +185,7 @@ export class DataCalonNasabahComponent implements OnInit {
     this.submitted = true;
     if (this.dataCalonNasabahForm.invalid) {
       return;
-    } else if (this.dataCalonNasabahMap == null) {
+    } else if (this.cekResult === 0) {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_nasabah', {
           nama: this.dataCalonNasabahForm.get('nama')?.value,
@@ -199,7 +202,7 @@ export class DataCalonNasabahComponent implements OnInit {
           garasi: this.dataCalonNasabahForm.get('garasi')?.value,
           hubungan_pemberi_keterangan: this.dataCalonNasabahForm.get('hubungan_pemberi_keterangan')?.value,
           // id: this.dataCalonNasabahForm.get('id')?.value,
-          isi_rumah: isiRumahCek, //this.dataCalonNasabahForm.get('isi_rumah')?.value,
+          isi_rumah: isiRumahCek,
           jenis_bangunan: this.dataCalonNasabahForm.get('jenis_bangunan')?.value,
           jumlah_kendaraan: this.dataCalonNasabahForm.get('jumlah_kendaraan')?.value,
           karakter_calon_nasabah: this.dataCalonNasabahForm.get('karakter_calon_nasabah')?.value,
@@ -252,14 +255,14 @@ export class DataCalonNasabahComponent implements OnInit {
     else if (cekKe !== '') {
       this.dataCalonNasabahMap.cek = cekKe;
     } else {
-      this.dataCalonNasabahMap.cek = this.dataCalonNasabahMap.cek;
+      this.dataCalonNasabahMap.cek;
     }
 
     // Isi Rumah
     if (cekKe !== '') {
       this.dataCalonNasabahMap.isi_rumah = isiRumahCek;
     } else {
-      this.dataCalonNasabahMap.isi_rumah = this.dataCalonNasabahMap.isi_rumah;
+      this.dataCalonNasabahMap.isi_rumah;
     }
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_calon_nasabah', {
@@ -277,7 +280,7 @@ export class DataCalonNasabahComponent implements OnInit {
         garasi: this.dataCalonNasabahForm.get('garasi')?.value,
         hubungan_pemberi_keterangan: this.dataCalonNasabahForm.get('hubungan_pemberi_keterangan')?.value,
         // id: this.dataCalonNasabahForm.get('id')?.value,
-        isi_rumah: this.dataCalonNasabahMap.isi_rumah, //this.dataCalonNasabahForm.get('isi_rumah')?.value,
+        isi_rumah: this.dataCalonNasabahMap.isi_rumah,
         jenis_bangunan: this.dataCalonNasabahForm.get('jenis_bangunan')?.value,
         jumlah_kendaraan: this.dataCalonNasabahForm.get('jumlah_kendaraan')?.value,
         karakter_calon_nasabah: this.dataCalonNasabahForm.get('karakter_calon_nasabah')?.value,
@@ -339,7 +342,6 @@ export class DataCalonNasabahComponent implements OnInit {
     this.dataEntryService.getFetchListAksesRumah().subscribe(data => {
       // if(data.code === 200) {
       this.listaksesrumah = data.result;
-      console.log('ctas', this.listaksesrumah);
       // console.log("ini data de "+this.fetchAllDe);
       // }
     });
@@ -347,7 +349,6 @@ export class DataCalonNasabahComponent implements OnInit {
     this.dataEntryService.getFetchListFasilitasListrik().subscribe(data => {
       // if(data.code === 200) {
       this.listfasilitaslistrik = data.result;
-      console.log('listrik', this.listfasilitaslistrik);
       // console.log("ini data de "+this.fetchAllDe);
       // }
     });
@@ -369,6 +370,11 @@ export class DataCalonNasabahComponent implements OnInit {
     });
 
     this.dataCalonNasabah.fetchDataNasabah(this.app_no_de).subscribe(data => {
+      if (data.result === null) {
+        this.cekResult = 0;
+      } else {
+        this.cekResult = 1;
+      }
       this.dataCalonNasabahMap = data.result;
       const retriveCalonNasabah = {
         tanggal_verifikasi: this.dataCalonNasabahMap.tanggal_verifikasi,
@@ -506,5 +512,9 @@ export class DataCalonNasabahComponent implements OnInit {
       event.preventDefault();
       return;
     }
+  }
+  // Selanjutnya
+  Next(): void {
+    this.router.navigate(['/data-kantor'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

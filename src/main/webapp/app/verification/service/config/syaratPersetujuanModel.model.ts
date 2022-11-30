@@ -4,7 +4,7 @@ export class syaratPersetujuanModel {
   curef?: string;
   syarat?: number;
   keterangan?: string;
-  kode_syarat?: number;
+  kode_syarat?: number | string;
   created_date?: string;
   created_by?: string;
 }

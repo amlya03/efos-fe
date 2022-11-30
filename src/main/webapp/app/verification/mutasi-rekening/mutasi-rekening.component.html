@@ -78,7 +78,7 @@
   <p></p>
   <p></p>
   <button
-    [hidden]="this.untukSessionRole == 'VER_PRESCR'"
+    [hidden]="this.untukSessionRole == 'VER_PRE_SPV'"
     type="button"
     (click)="
       this.tambahTableMutasi = '';
@@ -119,9 +119,9 @@
         <td style="text-align: center">{{ mutasiRekening.no_rekening }}</td>
         <td style="text-align: center">{{ mutasiRekening.tahun }}</td>
         <td style="text-align: center">{{ mutasiRekening.bulan }}</td>
-        <td style="text-align: center">{{ mutasiRekening.debet }}</td>
-        <td style="text-align: center">{{ mutasiRekening.kredit }}</td>
-        <td style="text-align: center">{{ mutasiRekening.saldo }}</td>
+        <td style="text-align: center">{{ mutasiRekening.debet | currency: 'Rp ' }}</td>
+        <td style="text-align: center">{{ mutasiRekening.kredit | currency: 'Rp ' }}</td>
+        <td style="text-align: center">{{ mutasiRekening.saldo | currency: 'Rp ' }}</td>
         <td style="text-align: center">
           <a
             type="button"
@@ -231,6 +231,8 @@
               id="debet"
               name="debet"
               [disabled]="this.lihatTableMutasi == 1"
+              currencyMask
+              [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
             />
           </div>
         </div>
@@ -246,6 +248,8 @@
               id="kredit"
               name="kredit"
               [disabled]="this.lihatTableMutasi == 1"
+              currencyMask
+              [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
             />
           </div>
         </div>
@@ -261,6 +265,8 @@
               id="saldo"
               name="saldo"
               [disabled]="this.lihatTableMutasi == 1"
+              currencyMask
+              [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
             />
           </div>
         </div>
@@ -272,13 +278,13 @@
     <div class="col" style="text-align: center">
       <button
         type="submit"
-        [hidden]="this.untukSessionRole == 'VER_PRESCR'"
+        [hidden]="this.untukSessionRole == 'VER_PRE_SPV'"
         class="btn btn-info"
         (click)="submitForm(nama_bank.value, no_rekening.value, tahun.value, bulan.value, debet.value, kredit.value, saldo.value)"
       >
         Simpan Data
       </button>
-      <button type="submit" class="btn btn-info" (click)="goto()">selanjutnya</button>
+      <button type="button" class="btn btn-info" (click)="goto()" [hidden]="this.untukSessionRole == 'VER_PRESCR'">Selanjutnya</button>
     </div>
   </div>
 </form>

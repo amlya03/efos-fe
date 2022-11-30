@@ -6,7 +6,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { DataEntryService } from '../services/data-entry.service';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { refListTipeProperti } from 'app/verification/service/config/refListTipeProperti.model';
 import Swal from 'sweetalert2';
@@ -76,54 +76,54 @@ export class CollateralEditComponent implements OnInit {
   untukKodeKecamatanAgunan: any;
   untukKodeKelurahanAgunan: any;
 
-  kirimanid_rumah:any;
-  kirimannama_perumahan:any
-  kirimanalamatagunan:any;
-  kirimanalamat_sesuai_sertifikat:any
-  kirimanblok_rumah:any;
-  kirimanharga_objek:any;
-  kirimanhubungan_pemegang_hak:any;
-  kirimanjenisobjek:any;
-  kirimankabkota_agunan:any;
-  kirimankabkota_sesuai_sertifikat:any;
-  kirimankecamatan_agunan:any;
-  kirimankecamatan_sesuai_sertifikat:any;
-  kirimankelurahan_agunan:any;
-  kirimankelurahan_sesuai_sertifikat:any;
-  kirimankode_pos_agunan:any;
-  kirimankode_pos_sesuai_sertifikat:any;
-  kirimanluas_bangunan:any;
-  kirimanluas_tanah:any;
-  kirimanmerek:any;
-  kirimanmodel:any;
-  kirimannamabpkb:any;
-  kirimannama_pemegang_hak:any;
-  kirimanno_handphone_cp:any;
-  kirimanno_id_pemegang_hak_sertifikat:any;
-  kirimannomesin:any;
-  kirimannoplat:any;
-  kirimannorangka:any;
-  kirimanno_sertifikat:any;
-  kirimannobpkb:any;
-  kirimannomor_rumah:any;
-  kirimanprovinsi_agunan:any;
-  kirimanprovinsi_sesuai_sertifikat:any;
-  kirimanrt:any;
-  kirimanrt_sertifikat:any;
-  kirimanrw:any;
-  kirimanrw_sertifikat:any;
-  kirimanseri:any;
-  kirimanstatus_agunan:any;
-  kirimanstatus_developer:any;
-  kirimanstatus_jaminan_sebelumnya:any;
-  kirimanstatus_sertifikat:any;
-  kirimantahun_dibuat:any;
-  kirimantanggal_expired:any;
-  kirimantanggal_terbit:any;
-  kirimantipe_agunan:any;
-  kirimantipekendaraan:any;
-  kirimantipe_properti:any;
-  kirimanwarna:any;
+  kirimanid_rumah: any;
+  kirimannama_perumahan: any;
+  kirimanalamatagunan: any;
+  kirimanalamat_sesuai_sertifikat: any;
+  kirimanblok_rumah: any;
+  kirimanharga_objek: any;
+  kirimanhubungan_pemegang_hak: any;
+  kirimanjenisobjek: any;
+  kirimankabkota_agunan: any;
+  kirimankabkota_sesuai_sertifikat: any;
+  kirimankecamatan_agunan: any;
+  kirimankecamatan_sesuai_sertifikat: any;
+  kirimankelurahan_agunan: any;
+  kirimankelurahan_sesuai_sertifikat: any;
+  kirimankode_pos_agunan: any;
+  kirimankode_pos_sesuai_sertifikat: any;
+  kirimanluas_bangunan: any;
+  kirimanluas_tanah: any;
+  kirimanmerek: any;
+  kirimanmodel: any;
+  kirimannamabpkb: any;
+  kirimannama_pemegang_hak: any;
+  kirimanno_handphone_cp: any;
+  kirimanno_id_pemegang_hak_sertifikat: any;
+  kirimannomesin: any;
+  kirimannoplat: any;
+  kirimannorangka: any;
+  kirimanno_sertifikat: any;
+  kirimannobpkb: any;
+  kirimannomor_rumah: any;
+  kirimanprovinsi_agunan: any;
+  kirimanprovinsi_sesuai_sertifikat: any;
+  kirimanrt: any;
+  kirimanrt_sertifikat: any;
+  kirimanrw: any;
+  kirimanrw_sertifikat: any;
+  kirimanseri: any;
+  kirimanstatus_agunan: any;
+  kirimanstatus_developer: any;
+  kirimanstatus_jaminan_sebelumnya: any;
+  kirimanstatus_sertifikat: any;
+  kirimantahun_dibuat: any;
+  kirimantanggal_expired: any;
+  kirimantanggal_terbit: any;
+  kirimantipe_agunan: any;
+  kirimantipekendaraan: any;
+  kirimantipe_properti: any;
+  kirimanwarna: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -132,7 +132,7 @@ export class CollateralEditComponent implements OnInit {
     private router: Router,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private localStorageService: LocalStorageService
+    private SessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
@@ -147,7 +147,7 @@ export class CollateralEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.load();
     //////////////////////////// validasi /////////////////////////////////////////
     this.editCollateralForm = this.formBuilder.group({

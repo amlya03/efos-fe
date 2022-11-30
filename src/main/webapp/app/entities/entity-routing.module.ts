@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {
         path: 'book',
-        data: { pageTitle: 'betaNewEfosApp.book.home.title' },
+        data: { pageTitle: 'newEfosApp.book.home.title' },
         loadChildren: () => import('./book/book.module').then(m => m.BookModule),
       },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */

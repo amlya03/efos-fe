@@ -20,9 +20,9 @@
     <div class="form-group">
       <select #fasilitas class="form-control">
         <option selected value="">Pilih Pencarian Berdasarkan Fasilitas</option>
-        <option value="PPR">PPR</option>
-        <option value="PTA">PTA</option>
-        <option value="KTM">KTM</option>
+        <option *ngFor="let listFasilitas of listFasilitas" value="{{ listFasilitas.fasilitas }}">
+          {{ listFasilitas.fasilitas }}
+        </option>
       </select>
     </div>
   </div>
@@ -68,9 +68,7 @@
         <td style="text-align: center">{{ daftarAplikasiVerif.analis_verifikasi }}</td>
         <td style="text-align: center">{{ daftarAplikasiVerif.sla }} Hari</td>
         <td style="text-align: center">
-          <a (click)="viewVerification(daftarAplikasiVerif.app_no_de)">
-            <fa-icon icon="ellipsis"></fa-icon><br />Detail
-          </a>
+          <a (click)="viewVerification(daftarAplikasiVerif.app_no_de)"> <fa-icon icon="ellipsis"></fa-icon><br />Detail </a>
         </td>
       </tr>
     </tbody>

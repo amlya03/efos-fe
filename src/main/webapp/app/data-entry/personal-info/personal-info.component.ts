@@ -4,7 +4,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { createRequestOption } from 'app/core/request/request-util';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { DataEntryService } from '../services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -36,7 +36,6 @@ export class PersonalInfoComponent implements OnInit {
   ref_list_tipe_kendaraan: refListTipeKendaraan[] = [];
 
   // Retrive Radio BUtoon dan select Option Kondisi
-  ktp_seumur_hidup: any;
   tipe_kendaraan: any;
   validasiKodePos: any;
 
@@ -106,7 +105,7 @@ export class PersonalInfoComponent implements OnInit {
     private router: Router,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private localStorageService: LocalStorageService,
+    private SessionStorageService: SessionStorageService,
     private formBuilder: FormBuilder,
     protected verificationServices: ServiceVerificationService
   ) {
@@ -118,7 +117,7 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.load();
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
@@ -244,7 +243,7 @@ export class PersonalInfoComponent implements OnInit {
       this.personalInfoModel = data.result;
       this.curefGetDE = this.personalInfoModel.curef;
       this.statusKawin = this.personalInfoModel.status_perkawinan;
-
+      // alert(this.personalInfoModel.agama)
       /////////////////////////////////////////////////////////////////////////////
       let retrivePersonalInfo = {
         nama: this.personalInfoModel.nama,
@@ -433,7 +432,7 @@ export class PersonalInfoComponent implements OnInit {
         tanggal_exp_ktp: this.personalInfoForm.get('tanggal_exp_ktp')?.value,
         no_handphone: this.personalInfoForm.get('no_handphone')?.value,
         no_telepon: this.personalInfoForm.get('no_telepon')?.value,
-        updated_by: this.localStorageService.retrieve('sessionUserName'),
+        updated_by: this.SessionStorageService.retrieve('sessionUserName'),
         tipe_kendaraan: this.personalInfoForm.get('tipe_kendaraan')?.value,
         // updated_date: '1 ',
       })

@@ -8,7 +8,6 @@
         <label class="col-sm-4 col-form-label">Tanggal Verification</label>
         <div class="col-sm-8">
           <input
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             class="form-control"
             type="date"
             formControlName="tanggal_verifikasi"
@@ -21,7 +20,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Pemberi Keterangan</label>
         <div class="col-sm-8">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="text" class="form-control" formControlName="pemberi_keterangan" />
+          <input type="text" class="form-control" formControlName="pemberi_keterangan" />
         </div>
       </div>
     </div>
@@ -29,21 +28,14 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Waktu Verification</label>
         <div class="col-sm-8">
-          <input
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-            class="form-control"
-            type="time"
-            id="waktu_verification"
-            name="waktu_verification"
-            formControlName="waktu_verifikasi"
-          />
+          <input class="form-control" type="time" id="waktu_verification" name="waktu_verification" formControlName="waktu_verifikasi" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Hubungan Pemohon dengan Pemberi Keterangan</label>
         <div class="col-sm-8">
-          <select [disabled]="this.untukSessionRole == 'VER_PRESCR'" class="form-control" formControlName="hubungan_pemberi_keterangan">
+          <select class="form-control" formControlName="hubungan_pemberi_keterangan">
             <option value="">Pilih Data</option>
             <option value="Penjual (Developer dan Pembeli)">Penjual (Developer dan Pembeli)</option>
           </select>
@@ -72,14 +64,14 @@
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <!--verif_no_telepon-->
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_no_telepon" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_no_telepon" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_no_telepon" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_no_telepon" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" formControlName="note_verif_no_telepon" class="form-control" />
+        <input formControlName="note_verif_no_telepon" class="form-control" />
       </div>
     </div>
   </div>
@@ -89,21 +81,21 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Fax</label>
         <div class="col-sm-8">
-          <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="text" class="form-control" [value]="this.dataEntry.no_telepon" />
+          <input type="text" class="form-control" [value]="this.dataEntry.no_telepon" />
         </div>
       </div>
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <!--verif_fax-->
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_fax" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_fax" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_fax" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_fax" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" formControlName="note_verif_fax" class="form-control" />
+        <input formControlName="note_verif_fax" class="form-control" />
       </div>
     </div>
   </div>
@@ -119,14 +111,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_nama_perusahaan" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_nama_perusahaan" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_nama_perusahaan" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_nama_perusahaan" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" formControlName="note_verif_nama_perusahaan" class="form-control" />
+        <input formControlName="note_verif_nama_perusahaan" class="form-control" />
       </div>
     </div>
   </div>
@@ -136,30 +128,21 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Alamat Perusahaan</label>
         <div class="col-sm-8">
-          <textarea
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-            class="form-control"
-            [value]="this.dataJob.alamat_perusahaan"
-            readonly
-          ></textarea>
+          <textarea class="form-control" [value]="this.dataJob.alamat_perusahaan" readonly></textarea>
         </div>
       </div>
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
       <!--verif_alamat_perusahaan-->
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_alamat_perusahaan" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_alamat_perusahaan" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_alamat_perusahaan" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_alamat_perusahaan" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <textarea
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-          class="form-control"
-          formControlName="note_verif_alamat_perusahaan"
-        ></textarea>
+        <textarea class="form-control" formControlName="note_verif_alamat_perusahaan"></textarea>
       </div>
     </div>
   </div>
@@ -179,14 +162,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_provinsi" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_provinsi" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_provinsi" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_provinsi" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" class="form-control" formControlName="note_verif_provinsi" />
+        <input class="form-control" formControlName="note_verif_provinsi" />
       </div>
     </div>
   </div>
@@ -206,14 +189,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_kabkota" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_kabkota" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_kabkota" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_kabkota" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" formControlName="note_verif_kabkota" type="text" class="form-control" />
+        <input formControlName="note_verif_kabkota" type="text" class="form-control" />
       </div>
     </div>
   </div>
@@ -233,14 +216,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_kecamatan" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_kecamatan" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_kecamatan" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_kecamatan" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" class="form-control" type="text" formControlName="note_verif_kecamatan" />
+        <input class="form-control" type="text" formControlName="note_verif_kecamatan" />
       </div>
     </div>
   </div>
@@ -260,14 +243,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_kelurahan" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_kelurahan" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_kelurahan" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_kelurahan" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" formControlName="note_verif_kelurahan" class="form-control" />
+        <input formControlName="note_verif_kelurahan" class="form-control" />
       </div>
     </div>
   </div>
@@ -297,14 +280,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_kode_pos" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_kode_pos" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_kode_pos" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_kode_pos" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="text" class="form-control" formControlName="note_verif_kode_pos" />
+        <input type="text" class="form-control" formControlName="note_verif_kode_pos" />
       </div>
     </div>
   </div>
@@ -315,7 +298,6 @@
         <label class="col-sm-4 col-form-label">Lama Bekerja</label>
         <div class="col">
           <input
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="text"
             class="form-control"
             id="lama_bekerja_tahun"
@@ -329,7 +311,6 @@
         <div class="col"><label>Tahun</label></div>
         <div class="col">
           <input
-            [disabled]="this.untukSessionRole == 'VER_PRESCR'"
             type="text"
             (keypress)="keyPressNumbers($event)"
             maxlength="2"
@@ -345,20 +326,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_lama_bekerja" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_lama_bekerja" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_lama_bekerja" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_lama_bekerja" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-          (keypress)="keyPressNumbers($event)"
-          type="text"
-          class="form-control"
-          formControlName="note_verif_lama_bekerja"
-        />
+        <input (keypress)="keyPressNumbers($event)" type="text" class="form-control" formControlName="note_verif_lama_bekerja" />
       </div>
     </div>
   </div>
@@ -379,19 +354,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_bidang_usaha" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_bidang_usaha" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_bidang_usaha" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_bidang_usaha" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-          type="text"
-          class="form-control"
-          formControlName="note_verif_bidang_usaha"
-        />
+        <input type="text" class="form-control" formControlName="note_verif_bidang_usaha" />
       </div>
     </div>
   </div>
@@ -412,19 +382,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_sektor_ekonomi" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_sektor_ekonomi" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_sektor_ekonomi" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_sektor_ekonomi" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-          type="text"
-          class="form-control"
-          formControlName="note_verif_sektor_ekonomi"
-        />
+        <input type="text" class="form-control" formControlName="note_verif_sektor_ekonomi" />
       </div>
     </div>
   </div>
@@ -444,19 +409,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_tipe_pekerjaan" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_tipe_pekerjaan" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_tipe_pekerjaan" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_tipe_pekerjaan" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-          type="text"
-          class="form-control"
-          formControlName="note_verif_tipe_pekerjaan"
-        />
+        <input type="text" class="form-control" formControlName="note_verif_tipe_pekerjaan" />
       </div>
     </div>
   </div>
@@ -475,19 +435,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_status_kepegawaian" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_status_kepegawaian" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_status_kepegawaian" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_status_kepegawaian" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-          type="text"
-          class="form-control"
-          formControlName="note_verif_status_kepegawaian"
-        />
+        <input type="text" class="form-control" formControlName="note_verif_status_kepegawaian" />
       </div>
     </div>
   </div>
@@ -503,14 +458,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_jabatan" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_jabatan" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_jabatan" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_jabatan" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="text" class="form-control" formControlName="note_verif_jabatan" />
+        <input type="text" class="form-control" formControlName="note_verif_jabatan" />
       </div>
     </div>
   </div>
@@ -526,19 +481,14 @@
     </div>
     <div class="col" style="text-align: center">
       <label>Sesuai</label>
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_usia_pensiun" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_usia_pensiun" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="verif_usia_pensiun" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="verif_usia_pensiun" value="0" />
       <label>Tidak Sesuai</label>
     </div>
     <div class="col">
       <div class="form-group row">
-        <input
-          [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-          type="text"
-          class="form-control"
-          formControlName="note_verif_usia_pensiun"
-        />
+        <input type="text" class="form-control" formControlName="note_verif_usia_pensiun" />
       </div>
     </div>
   </div>
@@ -546,7 +496,7 @@
   <div class="row form-material">
     <label class="col-sm-2 col-form-label">Bagian / Divisi</label>
     <div class="col-sm-10">
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="text" class="form-control" formControlName="divisi" />
+      <input type="text" class="form-control" formControlName="divisi" />
     </div>
   </div>
   <br />
@@ -555,9 +505,9 @@
     <label class="col-sm-3 col-form-label">Aspek Syariah</label>
     <div class="col-sm-9">
       <label>Objek yang dibiayai tidak sesuai aspek Syariah</label>
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="aspek_syariah" value="1" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="aspek_syariah" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" formControlName="aspek_syariah" value="0" />
+      <input type="radio" style="width: 20px; height: 20px" formControlName="aspek_syariah" value="0" />
       <label>Objek yang dibiayai sesuai aspek Syariah</label>
     </div>
   </div>
@@ -565,8 +515,11 @@
   <br />
   <br />
   <div class="row">
-    <div class="col" style="text-align: center">
+    <div class="col" style="text-align: center" [hidden]="this.untukSessionRole == 'VER_PRE_SPV'">
       <button class="btn btn-info">Simpan Data</button>
+    </div>
+    <div class="col" style="text-align: center" [hidden]="this.untukSessionRole == 'VER_PRESCR'">
+      <button type="button" class="btn btn-info" (click)="Next()">Selanjutnya</button>
     </div>
   </div>
 </form>

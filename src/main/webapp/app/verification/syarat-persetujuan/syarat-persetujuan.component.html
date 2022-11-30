@@ -35,7 +35,7 @@
   <h3 style="color: #fff; text-align: center">Syarat Akad</h3>
 </div>
 <br />
-<button class="btn btn-info" style="float: right" (click)="simpanSyaratAkad()" [hidden]="this.untukSessionRole == 'VER_PRESCR'">
+<button class="btn btn-info" style="float: right" (click)="simpanSyaratAkad()" [hidden]="this.untukSessionRole == 'VER_PRE_SPV'">
   Tambah Syarat
 </button>
 <br />
@@ -53,7 +53,7 @@
       <th style="text-align: center" scope="row">{{ i + 1 }}</th>
       <td>{{ syaratAkad.syarat }}</td>
       <td>
-        <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRESCR'">
+        <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRE_SPV'">
           <option>Disyaratkan</option>
           <option>Tidak Disyaratkan</option>
         </select>
@@ -67,7 +67,7 @@
   <h3 style="color: #fff; text-align: center">Syarat Cair</h3>
 </div>
 <br />
-<button class="btn btn-info" style="float: right" (click)="simpanSyaratCair()" [hidden]="this.untukSessionRole == 'VER_PRESCR'">
+<button class="btn btn-info" style="float: right" (click)="simpanSyaratCair()" [hidden]="this.untukSessionRole == 'VER_PRE_SPV'">
   Tambah Syarat
 </button>
 <br />
@@ -85,7 +85,7 @@
       <th style="text-align: center" scope="row">{{ i + 1 }}</th>
       <td>{{ syaratCair.syarat }}</td>
       <td>
-        <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRESCR'">
+        <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRE_SPV'">
           <option>Disyaratkan</option>
           <option>Tidak Disyaratkan</option>
         </select>
@@ -99,7 +99,7 @@
   <h3 style="color: #fff; text-align: center">Syarat Lain-lain</h3>
 </div>
 <br />
-<button class="btn btn-info" style="float: right" (click)="simpanSyaratLain()" [hidden]="this.untukSessionRole == 'VER_PRESCR'">
+<button class="btn btn-info" style="float: right" (click)="simpanSyaratLain()" [hidden]="this.untukSessionRole == 'VER_PRE_SPV'">
   Tambah Syarat
 </button>
 <br />
@@ -117,7 +117,7 @@
       <th style="text-align: center" scope="row">{{ i + 1 }}</th>
       <td>{{ syaratLainLain.syarat }}</td>
       <td>
-        <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRESCR'">
+        <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRE_SPV'">
           <option>Disyaratkan</option>
           <option>Tidak Disyaratkan</option>
         </select>
@@ -147,19 +147,18 @@
       <td>{{ cekUjiKepatuhan.kegiatan_deskripsi }}</td>
       <td style="text-align: center">
         <label>Ada</label>
-        <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" name="kepatuhan{{ i + 1 }}" id="kepatuhan{{ i + 1 }}" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" name="kepatuhan{{ i + 1 }}" id="kepatuhan{{ i + 1 }}" />
+        <input [checked]="this.cekUjiKepatuhan.kepatuhan == 1" type="radio" name="kepatuhan{{ i + 1 }}" id="kepatuhan{{ i + 1 }}" />
+        &nbsp;&nbsp;<label></label>&nbsp;&nbsp;&nbsp;
+        <input [checked]="this.cekUjiKepatuhan.kepatuhan == 0" type="radio" name="kepatuhan{{ i + 1 }}" id="kepatuhan{{ i + 1 }}" />
         <label>Tidak Ada</label>
       </td>
       <td>
         <input
-          [hidden]="this.untukSessionRole == 'VER_PRESCR'"
+          [hidden]="this.untukSessionRole == 'VER_PRE_SPV'"
           type="text"
           class="form-control"
-          [value]="cekUjiKepatuhan.keterangan"
+          value="{{ cekUjiKepatuhan.keterangan }}"
           id="keterangan{{ i + 1 }}"
-          value="contoh"
         />
       </td>
     </tr>
@@ -175,26 +174,29 @@
   <label class="col-sm-2 col-form-label">Terdapat Area Concern</label>
   <div class="col-sm-10">
     <label>ada</label>
-    <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" name="area-concern" id="area-concern" value="1" />
+    <input [checked]="this.bodyAreaOfconcern == 1" type="radio" name="area-concern" id="area-concern" value="1" />
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="radio" name="area-concern" id="area-concern" value="0" />
+    <input [checked]="this.bodyAreaOfconcern == 0" type="radio" name="area-concern" id="area-concern" value="0" />
     <label>Tidak ada</label>
-    <!-- [checked]="this.areaOfConcernModel.status_area == 1"
-    [checked]="this.areaOfConcernModel.status_area == 0" -->
   </div>
 </div>
 <br />
 <div class="row form-material">
   <label class="col-sm-2 col-form-label">Deskripsi Area Concern</label>
   <div class="col-sm-10">
-    <input [disabled]="this.untukSessionRole == 'VER_PRESCR'" type="text" class="form-control" id="deskripsiAreaConcern" />
+    <input
+      [disabled]="this.untukSessionRole == 'VER_PRE_SPV'"
+      type="text"
+      class="form-control"
+      id="deskripsiAreaConcern"
+      value="{{ this.bodyDeskripsiAreaOfconcern }}"
+    />
   </div>
 </div>
-<!-- [value]="this.areaOfConcernModel.deskripsi_area"  -->
 <br />
 <br />
 <div class="input-group" style="justify-content: center">
-  <button [hidden]="this.untukSessionRole == 'VER_PRESCR'" type="button" class="btn btn-info" (click)="simpanData()">Simpan Data</button>
-  <button (click)="goto()" type="button" class="btn btn-info">selanjutnya</button>
+  <button [hidden]="this.untukSessionRole == 'VER_PRE_SPV'" type="button" class="btn btn-info" (click)="simpanData()">Simpan Data</button>
+  <button (click)="goto()" [hidden]="this.untukSessionRole == 'VER_PRESCR'" type="button" class="btn btn-info">Selanjutnya</button>
 </div>
 <br />

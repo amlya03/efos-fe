@@ -1,8 +1,8 @@
 package co.id.megasyariah.efo;
 
-import co.id.megasyariah.efo.BetaNewEfosApp;
 import co.id.megasyariah.efo.config.AsyncSyncConfiguration;
 import co.id.megasyariah.efo.config.EmbeddedSQL;
+import co.id.megasyariah.efo.newEfosApp;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -15,7 +15,7 @@ import org.springframework.test.annotation.DirtiesContext;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@SpringBootTest(classes = { BetaNewEfosApp.class, AsyncSyncConfiguration.class })
+@SpringBootTest(classes = { newEfosApp.class, AsyncSyncConfiguration.class })
 @EmbeddedSQL
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public @interface IntegrationTest {

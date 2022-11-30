@@ -4,7 +4,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { strukturpembiayaanmodel } from './struktur-pembiayaan-model';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataEntryService } from '../services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
@@ -13,6 +13,7 @@ import { refSkema } from 'app/verification/service/config/refSkema.model';
 import { getStrukturPembiayaan } from '../services/config/getStrukturPembiayaan.model';
 import { getProgramModel } from '../services/config/getProgramModel.model';
 import { getProduk } from '../services/config/getProduk.model';
+import { getListFasilitasModel } from '../services/config/getListFasilitasModel.model';
 
 export type EntityResponseDaWa = HttpResponse<strukturpembiayaanmodel>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -40,7 +41,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   datakirimanakategoripekerjaan: any;
   app_no_de: any;
 
-  Kodefasilitas: any;
+  Kodefasilitas: getListFasilitasModel[] = [];
   kodeprogram: getProgramModel[] = [];
   kodeproduk: getProduk[] = [];
   kodetenor: any;
@@ -57,7 +58,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     private router: Router,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private localStorageService: LocalStorageService,
+    private SessionStorageService: SessionStorageService,
     private formBuilder: FormBuilder
   ) {
     this.route.queryParams.subscribe(params => {
@@ -80,7 +81,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.load();
     this.strukturForm = this.formBuilder.group({
       joint_income: [
@@ -409,7 +410,7 @@ export class StrukturPembiayaanComponent implements OnInit {
         .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_struktur_pembiayaan', {
           angsuran: angsurannya[0],
           app_no_de: this.app_no_de,
-          created_by: this.localStorageService.retrieve('sessionUserName'),
+          created_by: this.SessionStorageService.retrieve('sessionUserName'),
           created_date: '',
           curef: this.curef,
           detail_objek_pembiayaan: this.strukturForm.get('detail_objek_pembiayaan')?.value,
@@ -457,7 +458,7 @@ export class StrukturPembiayaanComponent implements OnInit {
         .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_struktur_pembiayaan', {
           angsuran: angsurannya[0],
           app_no_de: this.app_no_de,
-          updated_by: this.localStorageService.retrieve('sessionUserName'),
+          updated_by: this.SessionStorageService.retrieve('sessionUserName'),
           updated_date: '',
           curef: this.curef,
           detail_objek_pembiayaan: this.strukturForm.get('detail_objek_pembiayaan')?.value,

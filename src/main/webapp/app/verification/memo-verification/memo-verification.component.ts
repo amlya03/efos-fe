@@ -6,7 +6,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
-import { LocalStorageService } from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { Subject } from 'rxjs';
 import { MemoModel } from '../service/config/memo.model';
 import Swal from 'sweetalert2';
@@ -39,13 +39,13 @@ export class MemoVerificationComponent implements OnInit {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     protected dataEntryService: DataEntryService,
-    private localStorageService: LocalStorageService
+    private SessionStorageService: SessionStorageService
   ) {
     // ///////////////////////////// Session /////////////////////////////////////////////
-    this.untukSessionRole = this.localStorageService.retrieve('sessionRole');
-    this.untukSessionUserName = this.localStorageService.retrieve('sessionUserName');
-    this.untukSessionFullName = this.localStorageService.retrieve('sessionFullName');
-    this.untukSessionKodeCabang = this.localStorageService.retrieve('sessionKdCabang');
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
+    this.untukSessionUserName = this.SessionStorageService.retrieve('sessionUserName');
+    this.untukSessionFullName = this.SessionStorageService.retrieve('sessionFullName');
+    this.untukSessionKodeCabang = this.SessionStorageService.retrieve('sessionKdCabang');
     // ///////////////////////////// Session /////////////////////////////////////////////
 
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -93,17 +93,34 @@ export class MemoVerificationComponent implements OnInit {
       .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_memo', {
         id: 0,
         keterangan: keterangan,
-        users: this.untukSessionUserName,
+        users: this.untukSessionFullName,
         role: this.untukSessionRole,
         app_no_de: this.app_no_de,
         created_date: '',
         created_by: this.untukSessionUserName,
       })
       .subscribe({
-        next: response => console.warn(response),
+        next: response => {
+          window.location.reload();
+        },
         error: error => console.warn(error),
       });
-    window.location.reload();
+  }
+
+  // Update STatus
+  updateStatus() {
+    this.http
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+        app_no_de: this.app_no_de,
+        created_by: this.untukSessionUserName,
+        status_aplikasi: this.dataEntry.status_aplikasi,
+      })
+      .subscribe({
+        next: response => {
+          this.router.navigate(['/daftar-aplikasi-verification']);
+        },
+        error: error => console.warn(error),
+      });
   }
 
   // detail memo

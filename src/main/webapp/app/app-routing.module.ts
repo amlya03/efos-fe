@@ -45,6 +45,7 @@ import { DaftarAplikasiIsiMapisComponent } from './verification/daftar-aplikasi-
 import { MapisComponent } from './verification/daftar-aplikasi-isi-mapis/mapis/mapis.component';
 import { InputScoringComponent } from './input-scoring/input-scoring.component';
 import { KomiteComponent } from './komite/komite.component';
+import { DetailKomiteComponent } from './komite/detail-komite/detail-komite.component';
 
 @NgModule({
   imports: [
@@ -226,6 +227,10 @@ import { KomiteComponent } from './komite/komite.component';
         {
           path: 'komite',
           component: KomiteComponent,
+        },
+        {
+          path: 'komite/detail-komite',
+          component: DetailKomiteComponent,
         },
         {
           path: '',
