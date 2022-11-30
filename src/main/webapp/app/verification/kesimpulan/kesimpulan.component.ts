@@ -80,10 +80,25 @@ export class KesimpulanComponent implements OnInit {
           updated_by: this.untukSessionUserName,
         })
         .subscribe({
-          next: response => console.warn(response),
+          next: response => this.router.navigate(['/verification/memo'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } }),
+          error: error => console.warn(error),
+        });
+    } else {
+      this.http
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_kesimpulan_verifikasi', {
+          id: 0,
+          app_no_de: this.app_no_de,
+          created_date: '',
+          created_by: this.untukSessionUserName,
+          kesimpulan: this.kesimpulanForm.get('kesimpulan')?.value,
+          rekomendasi: this.kesimpulanForm.get('rekomendasi')?.value,
+          updated_date: '',
+          updated_by: this.untukSessionUserName,
+        })
+        .subscribe({
+          next: response => this.router.navigate(['/verification/memo'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } }),
           error: error => console.warn(error),
         });
     }
-    this.router.navigate(['/verification/memo'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

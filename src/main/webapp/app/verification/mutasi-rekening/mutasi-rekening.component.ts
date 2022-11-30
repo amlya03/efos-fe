@@ -12,6 +12,7 @@ import { listMutasi } from './listMutasi.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { SessionStorageService } from 'ngx-webstorage';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'jhi-mutasi-rekening',
@@ -24,8 +25,8 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   app_no_de: any;
   dataEntry: fetchAllDe = new fetchAllDe();
   // show form by table id
-  lihatTableMutasi: any;
-  tambahTableMutasi: any;
+  lihatTableMutasi = 0;
+  tambahTableMutasi = 1;
   idTableMutasi: any;
   getTableMutasi: listMutasi = new listMutasi();
 
@@ -67,6 +68,16 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       responsive: true,
     };
     this.load();
+
+    this.mutasiForm = this.formBuilder.group({
+      nama_bank: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
+      no_rekening: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
+      tahun: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
+      bulan: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
+      debet: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
+      kredit: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
+      saldo: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
+    });
   }
 
   load(): void {
@@ -88,22 +99,22 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     this.dtTrigger.unsubscribe();
   }
 
-  submitForm(nama_bank1: any, no_rekening1: any, tahun1: any, bulan1: any, debet1: any, kredit1: any, saldo1: any): void {
+  submitForm(): void {
     // alert(this.lihatTableMutasi)
-    if (this.tambahTableMutasi === '') {
+    if (this.tambahTableMutasi == 0) {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_verif_mutasi', {
           id: this.idTableMutasi,
           app_no_de: this.app_no_de,
-          bulan: bulan1,
+          bulan: this.mutasiForm.get('bulan')?.value,
           created_by: this.sessionStorageService.retrieve('sessionUserName'),
           created_date: '',
-          debet: debet1,
-          kredit: kredit1,
-          nama_bank: nama_bank1,
-          no_rekening: no_rekening1,
-          saldo: saldo1,
-          tahun: tahun1,
+          debet: this.mutasiForm.get('debet')?.value,
+          kredit: this.mutasiForm.get('kredit')?.value,
+          nama_bank: this.mutasiForm.get('nama_bank')?.value,
+          no_rekening: this.mutasiForm.get('no_rekening')?.value,
+          saldo: this.mutasiForm.get('saldo')?.value,
+          tahun: this.mutasiForm.get('tahun')?.value,
         })
         .subscribe({
           next: response => console.warn(response),
@@ -115,13 +126,13 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
         .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_verif_mutasi', {
           id: this.idTableMutasi,
           app_no_de: this.app_no_de,
-          bulan: bulan1,
-          debet: debet1,
-          kredit: kredit1,
-          nama_bank: nama_bank1,
-          no_rekening: no_rekening1,
-          saldo: saldo1,
-          tahun: tahun1,
+          bulan: this.mutasiForm.get('bulan')?.value,
+          debet: this.mutasiForm.get('debet')?.value,
+          kredit: this.mutasiForm.get('kredit')?.value,
+          nama_bank: this.mutasiForm.get('nama_bank')?.value,
+          no_rekening: this.mutasiForm.get('no_rekening')?.value,
+          saldo: this.mutasiForm.get('saldo')?.value,
+          tahun: this.mutasiForm.get('tahun')?.value,
           updated_by: this.sessionStorageService.retrieve('sessionUserName'),
           updated_date: '',
         })
@@ -141,9 +152,48 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       .getMutasiRekening(id) // by id dari table atas
       .subscribe(data => {
         this.getTableMutasi = data.result;
+        let retriveMutasi = {
+          nama_bank: this.getTableMutasi.nama_bank,
+          no_rekening: this.getTableMutasi.no_rekening,
+          tahun: this.getTableMutasi.tahun,
+          bulan: this.getTableMutasi.bulan,
+          debet: this.getTableMutasi.debet,
+          kredit: this.getTableMutasi.kredit,
+          saldo: this.getTableMutasi.saldo,
+        };
+        this.mutasiForm.setValue(retriveMutasi);
       });
   }
 
+  // delete Mutasi
+  deleteMutasi(id: any) {
+    Swal.fire({
+      title: 'Hapus Data Mutasi Rekening?',
+      text: 'Data akan dihapus dari table Mutasi Rekening!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, Hapus!',
+      cancelButtonText: 'Tidak, Simpan Data ini',
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire('Berhasil dihapus!', 'Data Sudah Tidak Ada pada Table Mutasi', 'success').then(result => {
+          this.http
+            .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/delete_verif_mutasi_rekening', {
+              id: id,
+            })
+            .subscribe({
+              next: response => {
+                console.warn(response);
+                window.location.reload();
+              },
+              error: error => console.warn(error),
+            });
+        });
+      }
+    });
+  }
   goto(): void {
     this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }

@@ -95,7 +95,7 @@ export class ChecklistDocumentComponent implements OnInit {
 
     // Agunan
     this.uploadService.getListUploadDocument(this.curef, 'DEA').subscribe(data => {
-      console.warn(data.result);
+      console.warn('meeting head ', data.result);
       this.uploadAgunan = data.result;
     });
   }
@@ -132,33 +132,31 @@ export class ChecklistDocumentComponent implements OnInit {
           note_validasi: this.keteranganDE,
           validasi: this.radioValidasiDE,
         })
-        .subscribe({});
-      this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
-    }
-    // Upload Agunan
-    for (let j = 0; j < this.uploadAgunan.length; j++) {
-      // get Radio Button Validasi
-      const validasiAgunan = (document.getElementById('validasiAgunan' + (j + 1)) as HTMLInputElement).checked;
-      if (validasiAgunan === true) {
-        this.radioValidasiAgunan = 1;
-      } else {
-        this.radioValidasiAgunan = 0;
-      }
-      // alert(this.radioValidasiAgunan)
-
-      // get input Keterangan
-      this.keteranganAgunan = (document.getElementById('keteranganAgunan' + (j + 1)) as HTMLInputElement).value;
-      // alert(this.keteranganAgunan)
-      // Post Agunan
-      this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/checklist_dokumen', {
-          created_by: this.untukSessionUserName,
-          id: this.uploadAgunan[j].id_upload,
-          note_validasi: this.keteranganAgunan,
-          validasi: this.radioValidasiAgunan,
-        })
-        .subscribe({});
-      this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+        .subscribe({
+          next: sukses => {
+            // Upload Agunan
+            for (let j = 0; j < this.uploadAgunan.length; j++) {
+              // get Radio Button Validasi
+              const validasiAgunan = (document.getElementById('validasiAgunan' + (j + 1)) as HTMLInputElement).checked;
+              if (validasiAgunan === true) {
+                this.radioValidasiAgunan = 1;
+              } else {
+                this.radioValidasiAgunan = 0;
+              }
+              // get input Keterangan
+              this.keteranganAgunan = (document.getElementById('keteranganAgunan' + (j + 1)) as HTMLInputElement).value;
+              this.http
+                .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/checklist_dokumen', {
+                  created_by: this.untukSessionUserName,
+                  id: this.uploadAgunan[j].id_upload,
+                  note_validasi: this.keteranganAgunan,
+                  validasi: this.radioValidasiAgunan,
+                })
+                .subscribe({});
+              this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+            }
+          },
+        });
     }
   }
 

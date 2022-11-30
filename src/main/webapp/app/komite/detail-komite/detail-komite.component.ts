@@ -125,7 +125,8 @@ export class DetailKomiteComponent implements OnInit {
     // //////////////////// Get Approval ////////////////////////////////////////////////
     this.komiteServices.getDetailApproval(this.app_no_de).subscribe(data => {
       this.detailApproval = data.result;
-      if (data.result !== null) {
+      console.warn(this.detailApproval);
+      if (data.result == null) {
         this.cekDetailKomite = 0;
       } else {
         this.cekDetailKomite = 1;
@@ -569,7 +570,7 @@ export class DetailKomiteComponent implements OnInit {
     // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
     setTimeout(() => {
       alert('Data Berhasil Disimpan');
-      // window.location.reload();
+      window.location.reload();
     }, 100);
   }
 

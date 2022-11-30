@@ -161,6 +161,8 @@
           (blur)="hitungFasilitasYangDiminta()"
           formControlName="harga_permintaan"
           (keypress)="keyPressNumbers($event)"
+          currencyMask
+          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
         />
       </div>
     </div>
@@ -183,6 +185,8 @@
           (blur)="hitungFasilitasYangDiminta()"
           formControlName="down_payment"
           (keypress)="keyPressNumbers($event)"
+          currencyMask
+          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
         />
       </div>
     </div>
@@ -205,7 +209,7 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Total Pendapatan</label>
       <div class="col-sm-8">
-        <input type="text" readonly class="form-control" value="{{ this.jobByCurefDE.total_pendapatan }}" />
+        <input type="text" readonly class="form-control" currencyMask value="{{ this.jobByCurefDE.total_pendapatan | currency: 'Rp ' }}" />
       </div>
     </div>
     <br />
@@ -228,7 +232,13 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Maximal Pembiayaan</label>
       <div class="col-sm-8">
-        <input type="text" readonly class="form-control" value="{{ this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value }}" />
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          currencyMask
+          value="{{ this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value | currency: 'Rp ' }}"
+        />
       </div>
     </div>
     <br />
@@ -243,7 +253,13 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Down Payment</label>
       <div class="col-sm-8">
-        <input type="text" readonly class="form-control" value="{{ this.komiteFasilitasYangDimintaForm.get('down_payment')?.value }}" />
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          currencyMask
+          value="{{ this.komiteFasilitasYangDimintaForm.get('down_payment')?.value | currency: 'Rp ' }}"
+        />
       </div>
     </div>
     <br />
@@ -328,6 +344,8 @@
           (blur)="hitungRekomendasiSystem()"
           class="form-control"
           (keypress)="keyPressNumbers($event)"
+          currencyMask
+          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
         />
       </div>
     </div>
@@ -341,6 +359,8 @@
           (blur)="hitungRekomendasiSystem()"
           class="form-control"
           (keypress)="keyPressNumbers($event)"
+          currencyMask
+          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
         />
       </div>
     </div>
@@ -467,14 +487,28 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Limit Kewenangan Memutus</label>
       <div class="col-sm-8">
-        <input type="text" class="form-control" formControlName="limit_kewenangan_memutus" (keypress)="keyPressNumbers($event)" />
+        <input
+          type="text"
+          class="form-control"
+          formControlName="limit_kewenangan_memutus"
+          (keypress)="keyPressNumbers($event)"
+          currencyMask
+          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
+        />
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Plafond Pembiayaan yang Akan Diputus</label>
       <div class="col-sm-8">
-        <input type="text" class="form-control" formControlName="plafon_pembiayaan" (keypress)="keyPressNumbers($event)" />
+        <input
+          type="text"
+          class="form-control"
+          formControlName="plafon_pembiayaan"
+          (keypress)="keyPressNumbers($event)"
+          currencyMask
+          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
+        />
       </div>
     </div>
     <br />
