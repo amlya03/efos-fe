@@ -492,11 +492,10 @@
           class="form-control"
           id="ftv"
           formControlName="ftv"
-          currencyMask
           [value]="this.mapisForm.get('ftv')?.value | currency: 'Rp '"
         />
       </div>
-      <div class="col-sm-2">{{ this.mapisModel.ftv }} %</div>
+      <div class="col-sm-2">{{ this.betaFTV }} %</div>
     </div>
   </div>
 </div>

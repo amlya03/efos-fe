@@ -931,7 +931,7 @@ export class JobInfoComponent implements OnInit {
           // jabatan_sebelum: contohtampungancuref,
           jenis_bidang_sebelum: kirimanjenisbidang,
           // jenis_pekerjaan_sebelum: usia.value,
-          jumlah_karyawan_sebelum: jumlah_karyawan_sebelum.value,
+          // jumlah_karyawan_sebelum: jumlah_karyawan_sebelum.value,
           kategori_pekerjaan_sebelum: kategori_pekerjaan_sebelum.value,
           kabkota_sebelum: kirimankabkota,
           kecamatan_sebelum: kirimankecamatan,

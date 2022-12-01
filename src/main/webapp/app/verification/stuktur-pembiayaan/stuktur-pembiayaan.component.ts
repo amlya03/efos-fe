@@ -179,7 +179,6 @@ export class StukturPembiayaanComponent implements OnInit {
 
       this.strukturPembiayaan = struktur.result;
 
-      // console.log(this.strukturPembiayaan)
       // this.comboSkema = this.strukturPembiayaan.skema_code + '|' + this.strukturPembiayaan.skema_master + '|' + this.strukturPembiayaan.skema;
       // setTimeout(() => {
       this.comboSkema = this.strukturPembiayaan.skema_code;
@@ -188,6 +187,7 @@ export class StukturPembiayaanComponent implements OnInit {
       this.comboSkema += '|';
       this.comboSkema += this.strukturPembiayaan.skema;
       // }, 300);
+      // alert(this.comboSkema)
 
       // ////////////////////////////////////////////////////////////////////////////////////////////////////
       setTimeout(() => {

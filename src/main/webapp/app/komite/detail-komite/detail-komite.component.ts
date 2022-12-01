@@ -433,45 +433,6 @@ export class DetailKomiteComponent implements OnInit {
   }
 
   approve() {
-    // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
-    for (let i = 0; i < this.refPersetujuanKhusus.length; i++) {
-      if ($('#persetujuan_ya' + i).is(':checked')) {
-        this.persetujuanPost = 1;
-      } else if ($('#persetujuan_tidak' + i).is(':checked')) {
-        this.persetujuanPost = 0;
-      } else {
-        this.persetujuanPost = 0;
-      }
-      let idPost = $('#id' + i).val();
-      let detail_persetujuanPost = $('#detail_persetujuan' + i).val();
-      let ketentuanPost = $('#ketentuan' + i).val();
-      let mitigasi_resikoPost = $('#mitigasi_resiko' + i).val();
-      let usulanPost = $('#usulan' + i).val();
-
-      this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/update_persetujuan_khusus', {
-          app_no_de: this.app_no_de,
-          updated_by: this.sessionStorageService.retrieve('sessionUserName'),
-          updated_date: '',
-          detail_persetujuan: detail_persetujuanPost,
-          id: idPost,
-          id_jenis_persetujuan: idPost,
-          ketentuan: ketentuanPost,
-          mitigasi_resiko: mitigasi_resikoPost,
-          persetujuan: this.persetujuanPost,
-          usulan: usulanPost,
-        })
-        .subscribe({
-          next: data => {
-            console.warn(data);
-          },
-          error: err => {
-            console.error(err);
-          },
-        });
-    }
-    // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
-
     // /////////////////////// Create Approval /////////////////////////////
     // contooohhhhh// this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value.replace(/,/g, '').replace('Rp ', '').split('.')[0]
     const skemaFull = this.keputusanPembiayaanForm.get('skema')?.value.split('|');
@@ -509,6 +470,66 @@ export class DetailKomiteComponent implements OnInit {
         .subscribe({
           next: data => {
             console.warn(data);
+            // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
+            this.http
+              .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/create_history_persetujuan', {
+                id: 1,
+                app_no_de: this.app_no_de,
+                limit_kewenangan_memutus: this.persetujuanPembiayaanForm.get('limit_kewenangan_memutus')?.value,
+                plafon_pembiayaan: this.persetujuanPembiayaanForm.get('plafon_pembiayaan')?.value,
+                keputusan: this.persetujuanPembiayaanForm.get('keputusan')?.value,
+                alasan_penolakan: this.persetujuanPembiayaanForm.get('alasan_penolakan')?.value,
+                keterangan: this.persetujuanPembiayaanForm.get('keterangan')?.value,
+                approved_by: this.sessionStorageService.retrieve('sessionUserName'),
+                approved_date: '',
+              })
+              .subscribe({
+                next: data => {
+                  console.warn(data);
+                  // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
+                  for (let i = 0; i < this.refPersetujuanKhusus.length; i++) {
+                    if ($('#persetujuan_ya' + i).is(':checked')) {
+                      this.persetujuanPost = 1;
+                    } else if ($('#persetujuan_tidak' + i).is(':checked')) {
+                      this.persetujuanPost = 0;
+                    } else {
+                      this.persetujuanPost = 0;
+                    }
+                    let idPost = $('#id' + i).val();
+                    let detail_persetujuanPost = $('#detail_persetujuan' + i).val();
+                    let ketentuanPost = $('#ketentuan' + i).val();
+                    let mitigasi_resikoPost = $('#mitigasi_resiko' + i).val();
+                    let usulanPost = $('#usulan' + i).val();
+
+                    this.http
+                      .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/update_persetujuan_khusus', {
+                        app_no_de: this.app_no_de,
+                        updated_by: this.sessionStorageService.retrieve('sessionUserName'),
+                        updated_date: '',
+                        detail_persetujuan: detail_persetujuanPost,
+                        id: idPost,
+                        id_jenis_persetujuan: idPost,
+                        ketentuan: ketentuanPost,
+                        mitigasi_resiko: mitigasi_resikoPost,
+                        persetujuan: this.persetujuanPost,
+                        usulan: usulanPost,
+                      })
+                      .subscribe({
+                        next: data => {
+                          console.warn(data);
+                        },
+                        error: err => {
+                          console.error(err);
+                        },
+                      });
+                  }
+                  // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
+                },
+                error: err => {
+                  console.error(err);
+                },
+              });
+            // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
           },
           error: err => {
             console.error(err);
@@ -538,6 +559,70 @@ export class DetailKomiteComponent implements OnInit {
         .subscribe({
           next: data => {
             console.warn(data);
+            // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
+            this.http
+              .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/create_history_persetujuan', {
+                id: 1,
+                app_no_de: this.app_no_de,
+                limit_kewenangan_memutus: this.persetujuanPembiayaanForm.get('limit_kewenangan_memutus')?.value,
+                plafon_pembiayaan: this.persetujuanPembiayaanForm.get('plafon_pembiayaan')?.value,
+                keputusan: this.persetujuanPembiayaanForm.get('keputusan')?.value,
+                alasan_penolakan: this.persetujuanPembiayaanForm.get('alasan_penolakan')?.value,
+                keterangan: this.persetujuanPembiayaanForm.get('keterangan')?.value,
+                approved_by: this.sessionStorageService.retrieve('sessionUserName'),
+                approved_date: '',
+              })
+              .subscribe({
+                next: data => {
+                  console.warn(data);
+                  // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
+                  for (let i = 0; i < this.refPersetujuanKhusus.length; i++) {
+                    if ($('#persetujuan_ya' + i).is(':checked')) {
+                      this.persetujuanPost = 1;
+                    } else if ($('#persetujuan_tidak' + i).is(':checked')) {
+                      this.persetujuanPost = 0;
+                    } else {
+                      this.persetujuanPost = 0;
+                    }
+                    let idPost = $('#id' + i).val();
+                    let detail_persetujuanPost = $('#detail_persetujuan' + i).val();
+                    let ketentuanPost = $('#ketentuan' + i).val();
+                    let mitigasi_resikoPost = $('#mitigasi_resiko' + i).val();
+                    let usulanPost = $('#usulan' + i).val();
+
+                    this.http
+                      .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/update_persetujuan_khusus', {
+                        app_no_de: this.app_no_de,
+                        updated_by: this.sessionStorageService.retrieve('sessionUserName'),
+                        updated_date: '',
+                        detail_persetujuan: detail_persetujuanPost,
+                        id: idPost,
+                        id_jenis_persetujuan: idPost,
+                        ketentuan: ketentuanPost,
+                        mitigasi_resiko: mitigasi_resikoPost,
+                        persetujuan: this.persetujuanPost,
+                        usulan: usulanPost,
+                      })
+                      .subscribe({
+                        next: data => {
+                          console.warn(data);
+                        },
+                        error: err => {
+                          console.error(err);
+                        },
+                      });
+                  }
+                  setTimeout(() => {
+                    alert('Data Berhasil Disimpan');
+                    window.location.reload();
+                  }, 300);
+                  // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
+                },
+                error: err => {
+                  console.error(err);
+                },
+              });
+            // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
           },
           error: err => {
             console.error(err);
@@ -545,33 +630,6 @@ export class DetailKomiteComponent implements OnInit {
         });
     }
     // /////////////////////// Create Approval /////////////////////////////
-
-    // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
-    this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/create_history_persetujuan', {
-        id: 1,
-        app_no_de: this.app_no_de,
-        limit_kewenangan_memutus: this.persetujuanPembiayaanForm.get('limit_kewenangan_memutus')?.value,
-        plafon_pembiayaan: this.persetujuanPembiayaanForm.get('plafon_pembiayaan')?.value,
-        keputusan: this.persetujuanPembiayaanForm.get('keputusan')?.value,
-        alasan_penolakan: this.persetujuanPembiayaanForm.get('alasan_penolakan')?.value,
-        keterangan: this.persetujuanPembiayaanForm.get('keterangan')?.value,
-        approved_by: this.sessionStorageService.retrieve('sessionUserName'),
-        approved_date: '',
-      })
-      .subscribe({
-        next: data => {
-          console.warn(data);
-        },
-        error: err => {
-          console.error(err);
-        },
-      });
-    // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
-    setTimeout(() => {
-      alert('Data Berhasil Disimpan');
-      window.location.reload();
-    }, 100);
   }
 
   forward() {

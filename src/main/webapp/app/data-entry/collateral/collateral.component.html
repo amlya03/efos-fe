@@ -577,7 +577,12 @@
               <label class="col-sm-3 col-form-label">Provinsi</label>
               <div class="col-sm-9">
                 <div class="form-group">
-                  <select class="form-control" (change)="onChange(0)" id="provinsi_agunan" name="provinsi_agunan" #prov_col>
+                  <select
+                    class="form-control"
+                    (change)="provinsiChange(this.collateralForm.get('provinsi_agunan')?.value)"
+                    id="provinsi_agunan"
+                    formControlName="provinsi_agunan"
+                  >
                     <option value="">Pilih Provinsi</option>
                     <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                       {{ daWaprof.namaWilayah }}
@@ -585,7 +590,11 @@
                   </select>
                 </div>
                 <span
-                  [hidden]="prov_col.value != '' || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'"
+                  [hidden]="
+                    this.collateralForm.get('provinsi_agunan')?.value != '' ||
+                    this.untukSessionRole == 'VER_PRESCR' ||
+                    this.untukSessionRole == 'BRANCHMANAGER'
+                  "
                   class="text-danger"
                 >
                   Provinsi Harus Diisi
@@ -597,7 +606,12 @@
               <label class="col-sm-3 col-form-label">Kota</label>
               <div class="col-sm-9">
                 <div class="form-group">
-                  <select class="form-control" (change)="onChangekota(0)" id="kabkota_agunan" name="kabkota_agunan" #kota_col>
+                  <select
+                    class="form-control"
+                    (change)="kotaChange(this.collateralForm.get('kabkota_agunan')?.value)"
+                    id="kabkota_agunan"
+                    formControlName="kabkota_agunan"
+                  >
                     <option value="">Pilih Kota</option>
                     <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
                       {{ daWakota.namaWilayah }}
@@ -605,7 +619,11 @@
                   </select>
                 </div>
                 <span
-                  [hidden]="kota_col.value != '' || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'"
+                  [hidden]="
+                    this.collateralForm.get('kabkota_agunan')?.value != '' ||
+                    this.untukSessionRole == 'VER_PRESCR' ||
+                    this.untukSessionRole == 'BRANCHMANAGER'
+                  "
                   class="text-danger"
                 >
                   Kota Harus Diisi
@@ -617,7 +635,12 @@
               <label class="col-sm-3 col-form-label">Kecamatan</label>
               <div class="col-sm-9">
                 <div class="form-group">
-                  <select class="form-control" (change)="onChangekecamatan(0)" id="kecamatan_agunan" name="kecamatan_agunan" #kec_col>
+                  <select
+                    class="form-control"
+                    (change)="kecamatanChange(this.collateralForm.get('kecamatan_agunan')?.value)"
+                    id="kecamatan_agunan"
+                    formControlName="kecamatan_agunan"
+                  >
                     <option value="">Pilih Kecamatan</option>
                     <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
                       {{ daWakecamatan.namaWilayah }}
@@ -625,7 +648,11 @@
                   </select>
                 </div>
                 <span
-                  [hidden]="kec_col.value != '' || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'"
+                  [hidden]="
+                    this.collateralForm.get('kecamatan_agunan')?.value != '' ||
+                    this.untukSessionRole == 'VER_PRESCR' ||
+                    this.untukSessionRole == 'BRANCHMANAGER'
+                  "
                   class="text-danger"
                 >
                   Kecamatan Harus Diisi
@@ -637,7 +664,12 @@
               <label class="col-sm-3 col-form-label">Kelurahan</label>
               <div class="col-sm-9">
                 <div class="form-group">
-                  <select class="form-control" (change)="onChangekelurahan(0)" id="kelurahan_agunan" name="kelurahan_agunan" #kel_col>
+                  <select
+                    class="form-control"
+                    (change)="kelurahanChange(this.collateralForm.get('kelurahan_agunan')?.value)"
+                    id="kelurahan_agunan"
+                    formControlName="kelurahan_agunan"
+                  >
                     <option value="">Pilih Kelurahan</option>
                     <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
                       {{ daWakelurahan.namaWilayah }}
@@ -645,7 +677,11 @@
                   </select>
                 </div>
                 <span
-                  [hidden]="kel_col.value != '' || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'"
+                  [hidden]="
+                    this.collateralForm.get('kelurahan_agunan')?.value != '' ||
+                    this.untukSessionRole == 'VER_PRESCR' ||
+                    this.untukSessionRole == 'BRANCHMANAGER'
+                  "
                   class="text-danger"
                 >
                   Kelurahan Harus Diisi
@@ -668,7 +704,7 @@
                   <div class="input-group-append">
                     <button
                       class="btn btn-outline-dark"
-                      (click)="carimenggunakankodeposagunan(this.collateralForm.get('kode_pos_agunan')?.value, 0)"
+                      (click)="carimenggunakankodeposagunan(this.collateralForm.get('kode_pos_agunan')?.value)"
                       type="button"
                     >
                       Cari Data
@@ -844,7 +880,7 @@
                 <div class="form-group">
                   <select
                     class="form-control"
-                    (change)="onChanges(0)"
+                    (change)="provinsiSertifChange(provSer_col.value)"
                     id="provinsi_sesuai_sertifikat"
                     name="provinsi_sesuai_sertifikat"
                     #provSer_col
