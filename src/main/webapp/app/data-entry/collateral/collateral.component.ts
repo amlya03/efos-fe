@@ -552,17 +552,28 @@ export class CollateralComponent implements OnInit {
         this.untukKodeProvinsiAgunan = sukses.body?.result.provKec.kd_prov;
         this.untukKodeKobkotAagunan = sukses.body?.result.provKec.kd_kota;
         this.untukKodeKecamatanAgunan = sukses.body?.result.provKec.kd_kec;
-        this.untukKodeKelurahanAgunan = sukses.body?.result.provKec.kd_kel;
+        // this.untukKodeKelurahanAgunan = sukses.body?.result.provKec.kd_kel;
         this.untukprovinsiagunan = sukses.body?.result.provKec.nm_prov;
         this.untukkobkotaagunan = sukses.body?.result.provKec.nm_kota;
         this.untukkecamatanagunan = sukses.body?.result.provKec.nm_kec;
-        this.untukkelurahanagunan = sukses.body?.result.provKec.nm_kel;
-        // console.warn(sukses)
+        // this.untukkelurahanagunan = sukses.body?.result.provKec.nm_kel;
+        console.warn(sukses);
+        if (this.untukKodeKelurahanAgunan == null) {
+          this.untukKodeKelurahanAgunan = sukses.body?.result.kels[0].kdWilayah;
+          this.untukkelurahanagunan = sukses.body?.result.kels[0].namaWilayah;
+          this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
+          // alert(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan)
+          //kdPos
+        } else {
+          this.untukKodeKelurahanAgunan = sukses.body?.result.provKec.kd_kel;
+          this.untukkelurahanagunan = sukses.body?.result.provKec.nm_kel;
+          this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
+          // alert(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan)
+        }
         this.collateralForm.get('provinsi_agunan')?.setValue(this.untukKodeProvinsiAgunan + '|' + this.untukprovinsiagunan);
         this.provinsiChange(this.untukKodeProvinsiAgunan + '|' + this.untukprovinsiagunan);
         this.kotaChange(this.untukKodeKobkotAagunan + '|' + this.untukkobkotaagunan);
         this.kecamatanChange(this.untukKodeKecamatanAgunan + '|' + this.untukkecamatanagunan);
-        this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
         // this.datEntryService.getkabkota(this.postId, this.untukKodeProvinsiAgunan).subscribe( data => {
         //   console.warn(data)
         //   this.daWakota = data.body?.result;
