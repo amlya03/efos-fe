@@ -3,21 +3,7 @@
 </div>
 <br />
 <br />
-<form
-  [formGroup]="editCollateralForm"
-  (ngSubmit)="
-    createcollateral(
-      provinsi_agunan.value,
-      kabkota_agunan.value,
-      kecamatan_agunan.value,
-      kelurahan_agunan.value,
-      provinsi_sesuai_sertifikat.value,
-      kabkota_sesuai_sertifikat.value,
-      kecamatan_sesuai_sertifikat.value,
-      kelurahan_sesuai_sertifikat.value
-    )
-  "
->
+<form [formGroup]="editCollateralForm" (ngSubmit)="createcollateral()">
   <div class="row form-material">
     <div class="col">
       <div class="form-group row">
@@ -345,8 +331,12 @@
           <label class="col-sm-3 col-form-label">Provinsi</label>
           <div class="col-sm-9">
             <div class="form-group">
-              <select class="form-control" (change)="onChange(0)" id="provinsi_agunan" #provinsi_agunan>
-                <option value="">{{ tableAgunan.provinsi_agunan }}</option>
+              <select
+                class="form-control"
+                (change)="provinsiChange(this.editCollateralForm.get('provinsi_agunan')?.value)"
+                id="provinsi_agunan"
+                formControlName="provinsi_agunan"
+              >
                 <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                   {{ daWaprof.namaWilayah }}
                 </option>
@@ -359,8 +349,12 @@
           <label class="col-sm-3 col-form-label">Kota</label>
           <div class="col-sm-9">
             <div class="form-group">
-              <select class="form-control" (change)="onChangekota(0)" id="kabkota_agunan" #kabkota_agunan>
-                <option value="">{{ tableAgunan.kabkota_agunan }}</option>
+              <select
+                class="form-control"
+                (change)="kotaChange(this.editCollateralForm.get('kabkota_agunan')?.value)"
+                id="kabkota_agunan"
+                formControlName="kabkota_agunan"
+              >
                 <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
                   {{ daWakota.namaWilayah }}
                 </option>
@@ -373,8 +367,12 @@
           <label class="col-sm-3 col-form-label">Kecamatan</label>
           <div class="col-sm-9">
             <div class="form-group">
-              <select class="form-control" (change)="onChangekecamatan(0)" id="kecamatan_agunan" #kecamatan_agunan>
-                <option value="">{{ tableAgunan.kecamatan_agunan }}</option>
+              <select
+                class="form-control"
+                (change)="kecamatanChange(this.editCollateralForm.get('kecamatan_agunan')?.value)"
+                id="kecamatan_agunan"
+                formControlName="kecamatan_agunan"
+              >
                 <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
                   {{ daWakecamatan.namaWilayah }}
                 </option>
@@ -387,8 +385,12 @@
           <label class="col-sm-3 col-form-label">Kelurahan</label>
           <div class="col-sm-9">
             <div class="form-group">
-              <select class="form-control" (change)="onChangekelurahan(0)" id="kelurahan_agunan" #kelurahan_agunan>
-                <option value="">{{ tableAgunan.kelurahan_agunan }}</option>
+              <select
+                class="form-control"
+                (change)="kelurahanChange(this.editCollateralForm.get('kelurahan_agunan')?.value)"
+                id="kelurahan_agunan"
+                formControlName="kelurahan_agunan"
+              >
                 <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
                   {{ daWakelurahan.namaWilayah }}
                 </option>
@@ -405,7 +407,7 @@
               <div class="input-group-append">
                 <button
                   class="btn btn-outline-dark"
-                  (click)="carimenggunakankodeposagunan(this.editCollateralForm.get('kode_pos_agunan')?.value, 0)"
+                  (click)="carimenggunakankodeposagunan(this.editCollateralForm.get('kode_pos_agunan')?.value)"
                   type="button"
                 >
                   Cari Data
@@ -513,8 +515,12 @@
           <label class="col-sm-3 col-form-label">Provinsi</label>
           <div class="col-sm-9">
             <div class="form-group">
-              <select class="form-control" (change)="onChanges(0)" id="provinsi_sesuai_sertifikat" #provinsi_sesuai_sertifikat>
-                <option value="">{{ tableAgunan.provinsi_sesuai_sertifikat }}</option>
+              <select
+                class="form-control"
+                (change)="SertifProvChange(this.editCollateralForm.get('provinsi_sesuai_sertifikat')?.value)"
+                id="provinsi_sesuai_sertifikat"
+                formControlName="provinsi_sesuai_sertifikat"
+              >
                 <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                   {{ daWaprof.namaWilayah }}
                 </option>
@@ -527,8 +533,12 @@
           <label class="col-sm-3 col-form-label">Kota</label>
           <div class="col-sm-9">
             <div class="form-group">
-              <select class="form-control" (change)="onChangekotas(0)" id="kabkota_sesuai_sertifikat" #kabkota_sesuai_sertifikat>
-                <option value="">{{ tableAgunan.kabkota_sesuai_sertifikat }}</option>
+              <select
+                class="form-control"
+                (change)="SertifKotaChange(this.editCollateralForm.get('kabkota_sesuai_sertifikat')?.value)"
+                id="kabkota_sesuai_sertifikat"
+                formControlName="kabkota_sesuai_sertifikat"
+              >
                 <option *ngFor="let daWakotas of daWakotas" value="{{ daWakotas.kdWilayah }}|{{ daWakotas.namaWilayah }}">
                   {{ daWakotas.namaWilayah }}
                 </option>
@@ -541,8 +551,12 @@
           <label class="col-sm-3 col-form-label">Kecamatan</label>
           <div class="col-sm-9">
             <div class="form-group">
-              <select class="form-control" (change)="onChangekecamatans(0)" id="kecamatan_sesuai_sertifikat" #kecamatan_sesuai_sertifikat>
-                <option value="">{{ tableAgunan.kecamatan_sesuai_sertifikat }}</option>
+              <select
+                class="form-control"
+                (change)="SertifKecamatanChange(this.editCollateralForm.get('kecamatan_sesuai_sertifikat')?.value)"
+                id="kecamatan_sesuai_sertifikat"
+                formControlName="kecamatan_sesuai_sertifikat"
+              >
                 <option *ngFor="let kecamatans of kecamatans" value="{{ kecamatans.kdWilayah }}|{{ kecamatans.namaWilayah }}">
                   {{ kecamatans.namaWilayah }}
                 </option>
@@ -555,8 +569,12 @@
           <label class="col-sm-3 col-form-label">Kelurahan</label>
           <div class="col-sm-9">
             <div class="form-group">
-              <select (change)="onChangekelurahans(0)" class="form-control" id="kelurahan_sesuai_sertifikat" #kelurahan_sesuai_sertifikat>
-                <option value="{{ this.tableAgunan.kelurahan_sesuai_sertifikat }}">{{ tableAgunan.kelurahan_sesuai_sertifikat }}</option>
+              <select
+                (change)="SertifKelurahanChange(this.editCollateralForm.get('kelurahan_sesuai_sertifikat')?.value)"
+                class="form-control"
+                id="kelurahan_sesuai_sertifikat"
+                formControlName="kelurahan_sesuai_sertifikat"
+              >
                 <option *ngFor="let kelurahans of kelurahans" value="{{ kelurahans.kdPos }}|{{ kelurahans.namaWilayah }}">
                   {{ kelurahans.namaWilayah }}
                 </option>
@@ -579,7 +597,7 @@
               <div class="input-group-append">
                 <button
                   class="btn btn-outline-dark"
-                  (click)="carimenggunakankodepossertifikat(this.editCollateralForm.get('kode_pos_agunan')?.value, 0)"
+                  (click)="carimenggunakankodepossertifikat(this.editCollateralForm.get('kode_pos_sesuai_sertifikat')?.value)"
                   type="button"
                 >
                   Cari Data

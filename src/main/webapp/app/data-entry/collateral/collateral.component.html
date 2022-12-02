@@ -880,19 +880,22 @@
                 <div class="form-group">
                   <select
                     class="form-control"
-                    (change)="provinsiSertifChange(provSer_col.value)"
+                    (change)="provinsiSertifChange(this.collateralForm.get('provinsi_sesuai_sertifikat')?.value)"
                     id="provinsi_sesuai_sertifikat"
-                    name="provinsi_sesuai_sertifikat"
-                    #provSer_col
+                    formControlName="provinsi_sesuai_sertifikat"
                   >
-                    <option>Pilih Provinsi</option>
+                    <option value="">Pilih Provinsi</option>
                     <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                       {{ daWaprof.namaWilayah }}
                     </option>
                   </select>
                 </div>
                 <span
-                  [hidden]="provSer_col.value != '' || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'"
+                  [hidden]="
+                    this.collateralForm.get('provinsi_sesuai_sertifikat')?.value != '' ||
+                    this.untukSessionRole == 'VER_PRESCR' ||
+                    this.untukSessionRole == 'BRANCHMANAGER'
+                  "
                   class="text-danger"
                 >
                   Provinsi Harus Diisi
@@ -906,19 +909,22 @@
                 <div class="form-group">
                   <select
                     class="form-control"
-                    (change)="onChangekotas(0)"
+                    (change)="kotasSertifChange(this.collateralForm.get('kabkota_sesuai_sertifikat')?.value)"
                     id="kabkota_sesuai_sertifikat"
-                    name="kabkota_sesuai_sertifikat"
-                    #kotaSer_col
+                    formControlName="kabkota_sesuai_sertifikat"
                   >
-                    <option>Pilih Kota</option>
+                    <option value="">Pilih Kota</option>
                     <option *ngFor="let daWakotas of daWakotas" value="{{ daWakotas.kdWilayah }}|{{ daWakotas.namaWilayah }}">
                       {{ daWakotas.namaWilayah }}
                     </option>
                   </select>
                 </div>
                 <span
-                  [hidden]="kotaSer_col.value != '' || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'"
+                  [hidden]="
+                    this.collateralForm.get('kabkota_sesuai_sertifikat')?.value != '' ||
+                    this.untukSessionRole == 'VER_PRESCR' ||
+                    this.untukSessionRole == 'BRANCHMANAGER'
+                  "
                   class="text-danger"
                 >
                   Kota Harus Diisi
@@ -932,19 +938,22 @@
                 <div class="form-group">
                   <select
                     class="form-control"
-                    (change)="onChangekecamatans(0)"
+                    (change)="kecamatanSertifChange(this.collateralForm.get('kecamatan_sesuai_sertifikat')?.value)"
                     id="kecamatan_sesuai_sertifikat"
-                    name="kecamatan_sesuai_sertifikat"
-                    #kecSer_col
+                    formControlName="kecamatan_sesuai_sertifikat"
                   >
-                    <option>Pilih Kecamatan</option>
+                    <option value="">Pilih Kecamatan</option>
                     <option *ngFor="let kecamatans of kecamatans" value="{{ kecamatans.kdWilayah }}|{{ kecamatans.namaWilayah }}">
                       {{ kecamatans.namaWilayah }}
                     </option>
                   </select>
                 </div>
                 <span
-                  [hidden]="kecSer_col.value != '' || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'"
+                  [hidden]="
+                    this.collateralForm.get('kecamatan_sesuai_sertifikat')?.value != '' ||
+                    this.untukSessionRole == 'VER_PRESCR' ||
+                    this.untukSessionRole == 'BRANCHMANAGER'
+                  "
                   class="text-danger"
                 >
                   Kecamatan Harus Diisi
@@ -957,20 +966,23 @@
               <div class="col-sm-9">
                 <div class="form-group">
                   <select
-                    (change)="onChangekelurahans(0)"
+                    (change)="kelurahanSertifChange(this.collateralForm.get('kelurahan_sesuai_sertifikat')?.value)"
                     class="form-control"
                     id="kelurahan_sesuai_sertifikat"
-                    name="kelurahan_sesuai_sertifikat"
-                    #kelSer_col
+                    formControlName="kelurahan_sesuai_sertifikat"
                   >
-                    <option>Pilih Kelurahan</option>
+                    <option value="">Pilih Kelurahan</option>
                     <option *ngFor="let kelurahans of kelurahans" value="{{ kelurahans.kdPos }}|{{ kelurahans.namaWilayah }}">
                       {{ kelurahans.namaWilayah }}
                     </option>
                   </select>
                 </div>
                 <span
-                  [hidden]="kelSer_col.value != '' || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'"
+                  [hidden]="
+                    this.collateralForm.get('kelurahan_sesuai_sertifikat')?.value != '' ||
+                    this.untukSessionRole == 'VER_PRESCR' ||
+                    this.untukSessionRole == 'BRANCHMANAGER'
+                  "
                   class="text-danger"
                 >
                   Kecamatan Harus Diisi
@@ -993,7 +1005,7 @@
                   <div class="input-group-append">
                     <button
                       class="btn btn-outline-dark"
-                      (click)="carimenggunakankodepossertifikat(this.collateralForm.get('kode_pos_agunan')?.value, 0)"
+                      (click)="carimenggunakankodepossertifikat(this.collateralForm.get('kode_pos_sesuai_sertifikat')?.value)"
                       type="button"
                     >
                       Cari Data
