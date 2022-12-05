@@ -280,8 +280,9 @@ export class StrukturPembiayaanComponent implements OnInit {
   goto() {
     this.router.navigate(['/data-entry/emergency-contact'], {
       queryParams: {
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de,
-        datakirimiancure: this.datakirimiancure,
       },
     });
   }
