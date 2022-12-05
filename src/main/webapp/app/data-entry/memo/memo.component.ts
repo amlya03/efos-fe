@@ -23,7 +23,7 @@ export class MemoComponent implements OnInit {
   statusPerkawinan: string | undefined;
   getMemoUpload: getMemoUploadModel = new getMemoUploadModel();
   memoModel: memomodel[] = [];
-  modelResultmemo: any;
+  modelResultmemo = 0;
   dataEntryModel: fetchAllDe = new fetchAllDe();
   tampilanfixornon: any;
   untukSessionRole: any;
@@ -66,13 +66,21 @@ export class MemoComponent implements OnInit {
   load() {
     this.dataEntryService.getfetchMemo(this.app_no_de).subscribe(data => {
       this.memoModel = data.result;
-      this.modelResultmemo = data.result;
+      setTimeout(() => {
+        if (data.result == null || data.result == '') {
+          this.modelResultmemo = 1;
+        } else {
+          this.modelResultmemo = 0;
+        }
+        // alert(this.modelResultmemo)
+      }, 300);
     });
 
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntryModel = data.result;
       this.tampilanfixornon = data.result.kategori_pekerjaan;
     });
+
     this.fileUploadService.getMemoUpload(this.curef, this.app_no_de).subscribe(data => {
       this.getMemoUpload = data.result;
     });
@@ -145,10 +153,11 @@ export class MemoComponent implements OnInit {
     this.file = pilih.target.files[0];
   }
   thisFileUpload() {
-    if (this.getMemoUpload === null) {
+    if (this.getMemoUpload == null) {
       this.fileUploadService.uploadMemo(this.file, this.app_no_de, this.curef).subscribe({
         next: bawaan => {
           alert('Data Berhasil diupload');
+          window.location.reload();
         },
       });
     } else {

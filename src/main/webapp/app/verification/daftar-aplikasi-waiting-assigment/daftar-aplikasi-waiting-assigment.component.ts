@@ -75,7 +75,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
     });
     // ////////Aprisal/////
     this.daWaService.getDaWaAprisal().subscribe(data => {
-      console.warn('aprisal', data);
+      // console.warn('aprisal', data);
       if (data.code === 200) {
         this.daWaAprisal = data.result;
       }
@@ -118,8 +118,8 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
       const index = this.kirimDe.findIndex(list => list === appNoDe);
       this.kirimDe.splice(index, 1);
     }
-    console.warn(this.kirimStatusAplikasi);
-    console.warn(this.kirimDe);
+    // console.warn(this.kirimStatusAplikasi);
+    // console.warn(this.kirimDe);
   }
 
   // post assign
@@ -169,10 +169,11 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
     });
   }
 
-  viewdataentry(getAppNoDe: any): void {
-    alert(getAppNoDe);
-    // this.router.navigate(['/data-entry/personalinfo'], { queryParams: { curef: getCuref, statusPerkawinan: getStatus, app_no_de: getAppNoDe} });
-    this.router.navigate(['/data-entry/personalinfo'], { queryParams: { app_no_de: getAppNoDe } });
+  viewdataentry(getCuref: any, getStatus: any, getAppNoDe: any): void {
+    this.router.navigate(['/data-entry/personalinfo'], {
+      queryParams: { curef: getCuref, statusPerkawinan: getStatus, app_no_de: getAppNoDe },
+    });
+    // this.router.navigate(['/data-entry/personalinfo'], { queryParams: { app_no_de: getAppNoDe } });
   }
   // /////////////////////////Untuk Alert/////////////////////////////////////
 

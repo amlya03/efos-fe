@@ -51,7 +51,7 @@
     <div class="form-group row" [hidden]="tampilanfixornon === 'Fix Income'">
       <label id="changeLabelUpload" class="col-sm-4 col-form-label">Upload</label>
       <div class="col-sm-8">
-        <div id="hideFileUploadJikaViewShow" class="input-group" *ngIf="this.getMemoUpload.nama_dokumen === null">
+        <div id="hideFileUploadJikaViewShow" class="input-group" *ngIf="this.getMemoUpload.nama_dokumen == null">
           <div class="custom-file">
             <input
               class="custom-file-input"
@@ -71,7 +71,7 @@
           class="btn mb-1 btn-rounded btn-secondary"
           id="testButton"
           (click)="download()"
-          [hidden]="this.getMemoUpload.nama_dokumen === null"
+          [hidden]="this.getMemoUpload.nama_dokumen == null"
         >
           <span class="btn-icon-left"><i class="fa fa-download color-warning"></i></span>View
         </button>
@@ -84,7 +84,7 @@
   <label class="col-sm-2 col-form-label">Isi Memo</label>
   <div class="col-sm-10">
     <textarea
-      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
       class="form-control"
       rows="6"
       id="keterangan"
@@ -95,7 +95,7 @@
 <br />
 <div class="text-center">
   <button
-    [hidden]="this.untukSessionRole == 'VER_PRESCR'"
+    [hidden]="this.untukSessionRole == 'VER_PRE_SPV'"
     (click)="simpanmemo()"
     type="submit"
     id="update_memo"
@@ -105,12 +105,18 @@
   >
     Simpan Memo
   </button>
-  <button [hidden]="this.untukSessionRole == 'VER_PRESCR'" type="button" (click)="cetakmemo()" id="cetakYuk" class="btn mb-1 btn-secondary">
+  <button
+    [hidden]="this.untukSessionRole == 'VER_PRE_SPV'"
+    type="button"
+    (click)="cetakmemo()"
+    id="cetakYuk"
+    class="btn mb-1 btn-secondary"
+  >
     Cetak Memo<span class="btn-icon-right"><i class="fa fa-print"></i></span>
   </button>
   <button
     type="button"
-    [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR' || this.modelResultmemo == ''"
+    [hidden]="this.modelResultmemo == 1 || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
     (click)="updatekeupload()"
     id="simpan_memo"
     name="simpan_memo"
@@ -121,7 +127,7 @@
   </button>
   <button
     (click)="kembalikede()"
-    [hidden]="this.untukSessionRole == 'AO' || this.untukSessionRole == 'VER_PRESCR'"
+    [hidden]="this.untukSessionRole == 'AO' || this.untukSessionRole == 'VER_PRE_SPV'"
     type="button"
     id="kembalide"
     name="kembalide"

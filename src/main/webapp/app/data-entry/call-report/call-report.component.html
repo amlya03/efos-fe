@@ -346,7 +346,7 @@
           <label class="col-sm-4 col-form-label">Tahun Berdiri</label>
           <div class="col-sm-8">
             <input
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               type="tel"
               onkeypress="return onlyNumberKey(event)"
               class="form-control"
@@ -393,7 +393,7 @@
           <label class="col-sm-4 col-form-label">No Kontak HR</label>
           <div class="col-sm-8">
             <input
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               type="tel"
               pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
               class="form-control"
@@ -691,35 +691,70 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode I (Per Tahun)</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" id="laba_periode_1" formControlName="laba_periode_1" />
+            <input
+              type="tel"
+              class="form-control"
+              id="laba_periode_1"
+              formControlName="laba_periode_1"
+              currencyMask
+              [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode II (Per Tahun)</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" id="laba_periode_2" formControlName="laba_periode_2" />
+            <input
+              type="tel"
+              class="form-control"
+              id="laba_periode_2"
+              formControlName="laba_periode_2"
+              currencyMask
+              [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode III (Per Tahun)</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" id="laba_periode_3" formControlName="laba_periode_3" />
+            <input
+              type="tel"
+              class="form-control"
+              id="laba_periode_3"
+              formControlName="laba_periode_3"
+              currencyMask
+              [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode IIII (Per Tahun)</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" id="laba_periode_4" formControlName="laba_periode_4" />
+            <input
+              type="tel"
+              class="form-control"
+              id="laba_periode_4"
+              formControlName="laba_periode_4"
+              currencyMask
+              [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            />
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Rata Rata Laba Bersih Setelah Pajak (Per Bulan)</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" id="rata_rata_laba" formControlName="rata_rata_laba" />
+            <input
+              type="tel"
+              class="form-control"
+              id="rata_rata_laba"
+              formControlName="rata_rata_laba"
+              currencyMask
+              [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            />
           </div>
         </div>
       </div>
@@ -739,7 +774,14 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Estimasi Angsuran Saat Ini</label>
         <div class="col-sm-8">
-          <input type="tel" class="form-control" id="estimasi_angsuran" formControlName="estimasi_angsuran" />
+          <input
+            type="tel"
+            class="form-control"
+            id="estimasi_angsuran"
+            formControlName="estimasi_angsuran"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+          />
         </div>
       </div>
       <br />
@@ -752,7 +794,7 @@
             class="form-control"
             cols="100"
             rows="6"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           ></textarea>
           <br />
         </div>
@@ -776,7 +818,7 @@
             <p id="denganini">
               <input
                 (change)="onclikwawancara($event)"
-                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
                 style="width: 20px; height: 20px"
                 type="checkbox"
               />
@@ -797,6 +839,15 @@
               formControlName="tanggal_wawancara"
               onchange="tanggalWawancara()"
             />
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tanggal Appraisal</label>
+        <div class="col-md-8">
+          <div class="form-group">
+            <input class="form-control" type="date" formControlName="tanggal_appraisal" />
           </div>
         </div>
       </div>
@@ -833,7 +884,7 @@
         name="buttonsimpan"
         value="buttonsimpan"
         class="btn mb-1 btn-dark"
-        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
       >
         Simpan Data<span class="btn-icon-right"><i class="fa fa-floppy-o"></i></span>
       </button>

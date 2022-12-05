@@ -175,6 +175,8 @@
             placeholder="Hrga Objek Pembiayaan"
             formControlName="harga_objek_pembiayaan"
             id="harga_objek_pembiayaan"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
           />
         </div>
       </div>
@@ -189,6 +191,8 @@
             formControlName="fee_based"
             id="fee_based"
             (keypress)="keyPressNumbers($event)"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
           />
         </div>
       </div>
@@ -197,7 +201,15 @@
         <label class="col-sm-4 col-form-label" name="siapsiap" id="siapsiap">DP</label>
         <div class="col-sm-8">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" formControlName="uang_muka" id="uang_muka" (keypress)="keyPressNumbers($event)" />
+            <input
+              type="text"
+              class="form-control"
+              formControlName="uang_muka"
+              id="uang_muka"
+              (keypress)="keyPressNumbers($event)"
+              currencyMask
+              [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            />
             <div class="input-group-append">
               <button class="btn btn-outline-dark" type="button" id="rincihan" style="float: right" (click)="itungrincihan()">
                 Rincian Pembayaran
@@ -226,7 +238,15 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" readonly formControlName="nilai_pembiayaan" id="hasil_pembiayaan" />
+          <input
+            type="text"
+            class="form-control"
+            readonly
+            formControlName="nilai_pembiayaan"
+            id="hasil_pembiayaan"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+          />
         </div>
       </div>
       <br />
@@ -241,7 +261,7 @@
   <div class="row">
     <div class="col" style="text-align: center">
       <button
-        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
         type="submit"
         id="btn"
         name="simpandata"

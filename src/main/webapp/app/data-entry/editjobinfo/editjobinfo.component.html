@@ -1,9 +1,8 @@
-
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Informasi Pekerjaan Nasabah</h3>
 </div>
-<br/>
-<br/>
+<br />
+<br />
 <form [formGroup]="editJobForm" (ngSubmit)="updatejobinfo()">
   <div class="row form-material">
     <div class="col">
@@ -12,7 +11,7 @@
         <div class="col-sm-9">
           <div class="form-group">
             <input
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               type="text"
               id="kategori_pekerjaan"
               name="kategori_pekerjaan"
@@ -23,7 +22,7 @@
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Tipe Pekerjaan</label>
         <div class="col-sm-9">
@@ -32,7 +31,7 @@
               class="form-control"
               id="tipe_pekerjaan"
               formControlName="tipe_pekerjaan"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               [(ngModel)]="tipePekerjaanChange"
             >
               <option *ngFor="let listTipePekerjaan of listTipePekerjaan" value="{{ listTipePekerjaan.job_type_id }}">
@@ -43,7 +42,7 @@
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Payroll :</label>
         <div class="col-sm-9">
@@ -54,7 +53,7 @@
                 formControlName="payroll"
                 id="payroll"
                 value="1"
-                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               />Payroll</label
             >
             <label class="radio-inline mr-3">
@@ -63,13 +62,13 @@
                 formControlName="payroll"
                 id="payroll1"
                 value="0"
-                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               />Non Payroll</label
             >
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label" [hidden]="tipePekerjaanChange == '4'">Posisi</label>
         <label class="col-sm-3 col-form-label" *ngIf="tipePekerjaanChange == '4'">Jenis Pekerjaan</label>
@@ -79,7 +78,7 @@
               class="form-control"
               id="posisi"
               formControlName="posisi"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
               <option *ngFor="let getjabatandariapi of getjabatandariapi" value="{{ getjabatandariapi.jabatan_deskripsi }}">
                 {{ getjabatandariapi.jabatan_deskripsi }}
@@ -93,32 +92,39 @@
               class="form-control"
               id="jenis_pekerjaan"
               formControlName="posisi"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
               <option *ngFor="let listJabatan of listJabatan" value="{{ listJabatan.deskripsi }}">{{ listJabatan.deskripsi }}</option>
             </select>
           </div>
         </div>
       </div>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Nama Perusahaan</label>
         <div class="col-sm-9">
           <input
             type="text"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             class="form-control"
             id="nama_perusahaan"
             formControlName="nama_perusahaan"
             placeholder="Nama Perusahaan"
           />
-          <span [hidden]="(editJobForm.controls.nama_perusahaan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              Nama Perusahaan Harus Diisi
+          <span
+            [hidden]="
+              editJobForm.controls.nama_perusahaan.valid ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            Nama Perusahaan Harus Diisi
           </span>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Alamat</label>
         <div class="col-sm-9">
@@ -128,27 +134,33 @@
             id="comment"
             id="alamat_perusahaan"
             formControlName="alamat_perusahaan"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >{{ this.editJob.alamat_perusahaan }}</textarea
           >
-          <span [hidden]="(editJobForm.controls.alamat_perusahaan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              Alamat Perusahaan Harus Diisi
+          <span
+            [hidden]="
+              editJobForm.controls.alamat_perusahaan.valid ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            Alamat Perusahaan Harus Diisi
           </span>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Provinsi</label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
               class="form-control"
-              (change)="onChange()"
+              (change)="onChange(this.editJobForm.get('provinsi')?.value)"
               id="provinsi_cabang"
-              name="provinsi"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              formControlName="provinsi"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
-              <option value="{{ retriveprovinsi}}">{{ retriveprovinsi}}</option>
               <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                 {{ daWaprof.namaWilayah }}
               </option>
@@ -156,19 +168,18 @@
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Kota</label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
               class="form-control"
-              (change)="onChangekota()"
+              (change)="onChangekota(this.editJobForm.get('kabkota')?.value)"
               id="kabkota_cabang"
-              name="kabkota"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              formControlName="kabkota"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
-              <option value="{{retrivekabkota }}">{{ retrivekabkota }}</option>
               <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
                 {{ daWakota.namaWilayah }}
               </option>
@@ -176,42 +187,37 @@
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Kecamatan</label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
               class="form-control"
-              (change)="onChangekecamatan()"
+              (change)="onChangekecamatan(this.editJobForm.get('kecamatan')?.value)"
               id="kecamatan"
-              name="kecamatan"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              formControlName="kecamatan"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
-              <option value="{{ retrivekecamatan }}">{{ retrivekecamatan}}</option>
-              <option
-                *ngFor="let daWakecamatan of kecamatan"
-                value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}"
-              >
+              <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
                 {{ daWakecamatan.namaWilayah }}
               </option>
             </select>
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Kelurahan</label>
         <div class="col-sm-9">
           <div class="form-group">
             <select
               class="form-control"
-              (change)="onChangekelurahan()"
+              (change)="onChangekelurahan(this.editJobForm.get('kelurahan')?.value)"
               id="kelurahan"
-              name="kelurahan"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              formControlName="kelurahan"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
-              <option value="{{ retrivekelurahan }}">{{ retrivekelurahan}}</option>
               <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
                 {{ daWakelurahan.namaWilayah }}
               </option>
@@ -219,29 +225,27 @@
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Kode Pos</label>
         <div class="col-sm-9">
           <div class="input-group mb-3">
             <input
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               type="tel"
-              onkeypress="return onlyNumberKey(event)"
+              (keypress)="keyPressNumbers($event)"
               maxlength="8"
               class="form-control"
               id="kode_pos"
-              name="kode_pos"
-              value="{{ this.editJob.kode_pos }}"
-              #kodepos
+              formControlName="kode_pos"
             />
             <div class="input-group-append">
               <button
-              (click)="carimenggunakankodepos(kodepos.value,0)"
+                (click)="carimenggunakankodepos(this.editJobForm.get('kode_pos')?.value)"
                 class="btn btn-outline-dark"
                 id="kode_poshilang"
                 type="button"
-                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               >
                 Cari Data
               </button>
@@ -249,59 +253,70 @@
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">RT / RW</label>
         <div class="col">
           <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             type="tel"
-            onkeypress="return onlyNumberKey(event)"
+            (keypress)="keyPressNumbers($event)"
             maxlength="3"
             class="form-control"
             placeholder="RT"
             id="rt"
             formControlName="rt"
           />
-          <span [hidden]="(editJobForm.controls.rt.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              RT Harus Diisi
+          <span
+            [hidden]="editJobForm.controls.rt.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'"
+            class="text-danger"
+          >
+            RT Harus Diisi
           </span>
         </div>
         <div class="col">RT</div>
         <div class="col">
           <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             type="tel"
-            onkeypress="return onlyNumberKey(event)"
+            (keypress)="keyPressNumbers($event)"
             class="form-control"
             placeholder="RW"
             maxlength="3"
             id="rw"
             formControlName="rw"
           />
-          <span [hidden]="(editJobForm.controls.rw.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              RW Harus Diisi
+          <span
+            [hidden]="editJobForm.controls.rw.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'"
+            class="text-danger"
+          >
+            RW Harus Diisi
           </span>
         </div>
         <div class="col">RW</div>
       </div>
-      <br/>
+      <br />
       <div>
         <div class="form-group row">
           <label class="col-sm-3 col-form-label" [hidden]="tipePekerjaanChange == '4'">Nomor SIUP</label>
           <label class="col-sm-3 col-form-label" *ngIf="tipePekerjaanChange == '4'">Nomor SIP</label>
           <div class="col-sm-9">
             <input
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               type="tel"
-              onkeypress="return onlyNumberKey(event)"
+              (keypress)="keyPressNumbers($event)"
               maxlength="16"
               id="no_siup"
               formControlName="no_siup"
               class="form-control"
             />
-            <span [hidden]="(editJobForm.controls.no_siup.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-                No SIUP Harus Diisi
+            <span
+              [hidden]="
+                editJobForm.controls.no_siup.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
+              "
+              class="text-danger"
+            >
+              No SIUP Harus Diisi
             </span>
           </div>
         </div>
@@ -317,7 +332,7 @@
               class="form-control"
               id="jenis_bidang"
               name="jenis_bidang"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
               <option value="{{ this.editJob.jenis_bidang }}">{{ this.editJob.jenis_bidang }}</option>
               <option
@@ -330,7 +345,7 @@
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Sektor Ekonomi</label>
         <div class="col-sm-9">
@@ -339,91 +354,114 @@
               class="form-control"
               id="jenis_sektor"
               name="sektor_ekonomi"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
               <option value="{{ this.editJob.sektor_ekonomi }}">{{ this.editJob.sektor_ekonomi }}</option>
-              <option
-                *ngFor="let getdatasektorekonomi of getdatasektorekonomi"
-                value="{{ getdatasektorekonomi.nama_sub_sektor }}"
-              >
+              <option *ngFor="let getdatasektorekonomi of getdatasektorekonomi" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
                 {{ getdatasektorekonomi.nama_sub_sektor }}
               </option>
             </select>
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Umur Pensiun</label>
         <div class="col-sm-9">
           <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             type="tel"
-            onkeypress="return onlyNumberKey(event)"
+            (keypress)="keyPressNumbers($event)"
             maxlength="2"
             class="form-control"
             placeholder="Umur Pensiun"
             id="umur_pensiun"
             formControlName="umur_pensiun"
           />
-          <span [hidden]="(editJobForm.controls.umur_pensiun.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              Umur Pensiun Harus Diisi
+          <span
+            [hidden]="
+              editJobForm.controls.umur_pensiun.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            Umur Pensiun Harus Diisi
           </span>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Lama Bekerja</label>
         <div class="col">
           <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             type="tel"
-            onkeypress="return onlyNumberKey(event)"
+            (keypress)="keyPressNumbers($event)"
             maxlength="2"
             class="form-control"
             placeholder="Tahun"
             id="lama_bekerja_tahun"
             formControlName="lama_bekerja_tahun"
           />
-          <span [hidden]="(editJobForm.controls.lama_bekerja_tahun.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
-              Lama Bekerja Tahun Harus Diisi
+          <span
+            [hidden]="
+              editJobForm.controls.lama_bekerja_tahun.valid ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            Lama Bekerja Tahun Harus Diisi
           </span>
         </div>
         <div class="col">Tahun</div>
         <div class="col">
           <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             type="tel"
-            onkeypress="return onlyNumberKey(event)"
+            (keypress)="keyPressNumbers($event)"
             maxlength="2"
             class="form-control"
             placeholder="Bulan"
             id="lama_bekerja_bulan"
             formControlName="lama_bekerja_bulan"
           />
-          <span [hidden]="(editJobForm.controls.lama_bekerja_bulan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              editJobForm.controls.lama_bekerja_bulan.valid ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             Lama Bekerja Bulan Harus Diisi
           </span>
         </div>
         <div class="col">Bulan</div>
       </div>
-      <br/>
+      <br />
       <div [ngSwitch]="nampungdatakatagoripekerjaan">
         <div *ngSwitchCase="'Fix Income'">
           <div id="jumlahKaryawanFix" class="form-group row">
             <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
             <div class="col-sm-9">
               <input
-                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
                 type="tel"
-                onkeypress="return onlyNumberKey(event)"
+                (keypress)="keyPressNumbers($event)"
                 maxlength="13"
                 class="form-control"
                 placeholder="Jumlah Karyawan"
                 id="jumlah_karyawan"
                 formControlName="jumlah_karyawan"
               />
-              <span [hidden]="(editJobForm.controls.jumlah_karyawan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+              <span
+                [hidden]="
+                  editJobForm.controls.jumlah_karyawan.valid ||
+                  this.untukSessionRole == 'VER_PRE_SPV' ||
+                  this.untukSessionRole == 'BRANCHMANAGER'
+                "
+                class="text-danger"
+              >
                 Jumlah Karyawan Harus Diisi
               </span>
             </div>
@@ -438,87 +476,137 @@
                   class="form-control"
                   id="jumlah_karyawan2"
                   formControlName="jumlah_karyawan"
-                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
                 >
-                  <option *ngFor="let ListJumlahKaryawan of ListJumlahKaryawan" value="{{ListJumlahKaryawan.deskripsi}}">{{ListJumlahKaryawan.deskripsi}}</option>
+                  <option *ngFor="let ListJumlahKaryawan of ListJumlahKaryawan" value="{{ ListJumlahKaryawan.deskripsi }}">
+                    {{ ListJumlahKaryawan.deskripsi }}
+                  </option>
                 </select>
               </div>
-              <span [hidden]="(editJobForm.controls.jumlah_karyawan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+              <span
+                [hidden]="
+                  editJobForm.controls.jumlah_karyawan.valid ||
+                  this.untukSessionRole == 'VER_PRE_SPV' ||
+                  this.untukSessionRole == 'BRANCHMANAGER'
+                "
+                class="text-danger"
+              >
                 Jumlah Karyawan Harus Diisi
               </span>
             </div>
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Pendapatan</label>
         <div class="col-sm-9">
           <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             type="text"
             class="form-control"
             placeholder="Pendapatan"
             id="pendapatan"
             formControlName="pendapatan"
+            (keypress)="keyPressNumbers($event)"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
           />
-          <span [hidden]="(editJobForm.controls.pendapatan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              editJobForm.controls.pendapatan.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             Pendapatan Harus Diisi
           </span>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Pendapatan Lain</label>
         <div class="col-sm-9">
           <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             type="text"
             class="form-control"
             placeholder="Pendapatan Lain"
             id="pendapatan_lain"
             formControlName="pendapatan_lain"
+            (keypress)="keyPressNumbers($event)"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
           />
-          <span [hidden]="(editJobForm.controls.pendapatan_lain.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              editJobForm.controls.pendapatan_lain.valid ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             Pendapatan Lain Harus Diisi
           </span>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Tunjangan</label>
         <div class="col-sm-9">
           <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             type="text"
             class="form-control"
             placeholder="Tunjangan"
             id="tunjangan"
             formControlName="tunjangan"
-            onchange="dagu()"
+            (keypress)="keyPressNumbers($event)"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
           />
-          <span [hidden]="(editJobForm.controls.tunjangan.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER')" class="text-danger">
+          <span
+            [hidden]="
+              editJobForm.controls.tunjangan.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
             Tunjangan Harus Diisi
           </span>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Total Pendapatan</label>
         <div class="col-sm-9">
           <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             type="text"
             class="form-control"
             placeholder="Total Pendapatan"
             id="total_pendapatan"
             formControlName="total_pendapatan"
+            (keypress)="keyPressNumbers($event)"
+            hidden
+            value="{{
+              +this.editJobForm.get('pendapatan')?.value +
+                +this.editJobForm.get('pendapatan_lain')?.value +
+                +this.editJobForm.get('tunjangan')?.value
+            }}"
+          />
+          <input
+            type="text"
+            class="form-control"
             readonly
-            value="{{ (+this.editJobForm.get('pendapatan')?.value) + (+this.editJobForm.get('pendapatan_lain')?.value) + (+this.editJobForm.get('tunjangan')?.value) }}"
+            currencyMask
+            value="{{
+              +this.editJobForm.get('pendapatan')?.value +
+                +this.editJobForm.get('pendapatan_lain')?.value +
+                +this.editJobForm.get('tunjangan')?.value | currency: 'Rp '
+            }}"
           />
         </div>
       </div>
-      <br/>
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Tipe Perusahaan</label>
         <div class="col-sm-9">
@@ -527,19 +615,16 @@
               class="form-control"
               id="tipe_perusahaan"
               formControlName="tipe_perusahaan"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
-              <option
-                *ngFor="let gettipeperusahaandariapi of gettipeperusahaandariapi"
-                value="{{ gettipeperusahaandariapi.company_code }}"
-              >
+              <option *ngFor="let gettipeperusahaandariapi of gettipeperusahaandariapi" value="{{ gettipeperusahaandariapi.company_code }}">
                 {{ gettipeperusahaandariapi.company_deskripsi }}
               </option>
             </select>
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div id="hideJikaNFITipeKep" class="form-group row">
         <label class="col-sm-3 col-form-label">Tipe Kepegawaian</label>
         <div class="col-sm-9">
@@ -548,7 +633,7 @@
               class="form-control"
               id="tipe_kepegawaian"
               formControlName="tipe_kepegawaian"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
               <option value="1">Pegawai tetap</option>
               <option value="2">Pegawai kontrak</option>
@@ -556,15 +641,15 @@
           </div>
         </div>
       </div>
-      <br/>
+      <br />
     </div>
   </div>
-  <br/>
-  <br/>
+  <br />
+  <br />
   <div class="row">
     <div class="col" style="text-align: center">
       <button
-        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
         type="submit"
         id="btn"
         name="updatedata"

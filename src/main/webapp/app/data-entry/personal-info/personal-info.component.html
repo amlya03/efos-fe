@@ -22,20 +22,12 @@
           <input type="text" class="form-control" placeholder="Nama Lengkap" formControlName="nama" id="nama" />
           <span
             [hidden]="
-              personalInfoForm.controls.nama.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+              personalInfoForm.controls.nama.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
           >
             Nama Harus Diisi
           </span>
-          <input
-            type="hidden"
-            class="form-control"
-            placeholder="Nama Lengkap"
-            formControlName="app_no_ide"
-            id="app_no_ide"
-            [value]="personalInfoModel.app_no_ide"
-          />
         </div>
       </div>
       <br />
@@ -51,7 +43,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.jenis_kelamin.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -69,7 +61,7 @@
         <span
           [hidden]="
             personalInfoForm.controls.tanggal_lahir.valid ||
-            this.untukSessionRole == 'VER_PRESCR' ||
+            this.untukSessionRole == 'VER_PRE_SPV' ||
             this.untukSessionRole == 'BRANCHMANAGER'
           "
           class="text-danger"
@@ -85,7 +77,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.tempat_lahir.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -101,7 +93,7 @@
           <input type="tel" maxlength="2" class="form-control" placeholder="Usia" id="usia" formControlName="usia" readonly />
           <span
             [hidden]="
-              personalInfoForm.controls.usia.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+              personalInfoForm.controls.usia.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
           >
@@ -125,7 +117,7 @@
           </div>
           <span
             [hidden]="
-              personalInfoForm.controls.agama.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+              personalInfoForm.controls.agama.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
           >
@@ -149,7 +141,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.pendidikan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -171,7 +163,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.kewarganegaraan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -198,7 +190,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.no_telepon.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -214,7 +206,7 @@
           <input type="email" class="form-control" placeholder="Email" id="email" formControlName="email" />
           <span
             [hidden]="
-              personalInfoForm.controls.email.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+              personalInfoForm.controls.email.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
           >
@@ -239,7 +231,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.no_handphone.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -264,7 +256,7 @@
           />
           <span
             [hidden]="
-              personalInfoForm.controls.no_ktp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+              personalInfoForm.controls.no_ktp.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
           >
@@ -280,7 +272,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.tanggal_terbit_ktp.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -301,7 +293,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.status_ktp.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -318,7 +310,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.tanggal_exp_ktp.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -342,7 +334,7 @@
           />
           <span
             [hidden]="
-              personalInfoForm.controls.npwp.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+              personalInfoForm.controls.npwp.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
           >
@@ -364,7 +356,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.status_perkawinan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -389,7 +381,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.jumlah_anak.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -412,7 +404,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.status_rumah.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -528,9 +520,8 @@
               #provinsi_saat
               formControlName="provinsi"
               id="provinsi_cabang"
-              (change)="onChange(provinsi_cabang)"
+              (change)="onChange(this.personalInfoForm.get('provinsi')?.value)"
             >
-              <option value="{{ personalInfoModel.provinsi }}">{{ personalInfoModel.provinsi }}</option>
               <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                 {{ daWaprof.namaWilayah }}
               </option>
@@ -543,8 +534,12 @@
         <label class="col-sm-3 col-form-label">Kota</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select class="form-control" formControlName="kabkota" (change)="onChangekota(kabkota_cabang)" id="kabkota_cabang">
-              <option value="{{ personalInfoModel.kabkota }}">{{ personalInfoModel.kabkota }}</option>
+            <select
+              class="form-control"
+              formControlName="kabkota"
+              (change)="onChangekota(this.personalInfoForm.get('kabkota')?.value)"
+              id="kabkota_cabang"
+            >
               <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
                 {{ daWakota.namaWilayah }}
               </option>
@@ -557,8 +552,12 @@
         <label class="col-sm-3 col-form-label">Kecamatan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select class="form-control" formControlName="kecamatan" (change)="onChangekecamatan(kecamatan)" id="kecamatan">
-              <option value="{{ personalInfoModel.kecamatan }}">{{ personalInfoModel.kecamatan }}</option>
+            <select
+              class="form-control"
+              formControlName="kecamatan"
+              (change)="onChangekecamatan(this.personalInfoForm.get('kecamatan')?.value)"
+              id="kecamatan"
+            >
               <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
                 {{ daWakecamatan.namaWilayah }}
               </option>
@@ -571,8 +570,12 @@
         <label class="col-sm-3 col-form-label">Kelurahan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select (change)="onChangekelurahan(kelurahan)" formControlName="kelurahan" class="form-control" id="kelurahan">
-              <option value="{{ personalInfoModel.kelurahan }}">{{ personalInfoModel.kelurahan }}</option>
+            <select
+              (change)="onChangekelurahan(this.personalInfoForm.get('kelurahan')?.value)"
+              formControlName="kelurahan"
+              class="form-control"
+              id="kelurahan"
+            >
               <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
                 {{ daWakelurahan.namaWilayah }}
               </option>
@@ -585,17 +588,14 @@
         <label class="col-sm-3 col-form-label">Kode Pos</label>
         <div class="col-sm-9">
           <div class="input-group mb-3">
-            <input
-              #kodepos
-              type="tel"
-              (keypress)="keyPressNumbers($event)"
-              class="form-control"
-              id="kode_pos"
-              value="{{ personalInfoModel.kode_pos }}"
-              [(ngModel)]="validasiKodePos"
-            />
+            <input #kodepos type="tel" (keypress)="keyPressNumbers($event)" class="form-control" id="kode_pos" formControlName="kode_pos" />
             <div class="input-group-append">
-              <button onclick="buatisi()" class="btn btn-outline-dark" type="button" (click)="kodePosApi(kodepos.value, 0)">
+              <button
+                onclick="buatisi()"
+                class="btn btn-outline-dark"
+                type="button"
+                (click)="kodePosApi(this.personalInfoForm.get('kode_pos')?.value)"
+              >
                 Cari Data
               </button>
             </div>
@@ -692,8 +692,12 @@
         <label class="col-sm-3 col-form-label">Provinsi</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select class="form-control" (change)="onChangeD(provinsi_cabang)" id="provinsi_domisili">
-              <option>{{ personalInfoModel.provinsi_domisili }}</option>
+            <select
+              class="form-control"
+              (change)="onChangeD(this.personalInfoForm.get('provinsi_domisili')?.value)"
+              id="provinsi_domisili"
+              formControlName="provinsi_domisili"
+            >
               <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                 {{ daWaprof.namaWilayah }}
               </option>
@@ -706,8 +710,12 @@
         <label class="col-sm-3 col-form-label">Kota</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select class="form-control" (change)="onChangekotaD(kabkota_cabang)" id="kabkota_domisili">
-              <option value="{{ personalInfoModel.kabkota_domisili }}">{{ personalInfoModel.kabkota_domisili }}</option>
+            <select
+              class="form-control"
+              (change)="onChangekotaD(this.personalInfoForm.get('kabkota_domisili')?.value)"
+              id="kabkota_domisili"
+              formControlName="kabkota_domisili"
+            >
               <option *ngFor="let daWakotaD of daWakotaD" value="{{ daWakotaD.kdWilayah }}|{{ daWakotaD.namaWilayah }}">
                 {{ daWakotaD.namaWilayah }}
               </option>
@@ -720,8 +728,12 @@
         <label class="col-sm-3 col-form-label">kecamatan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select class="form-control" (change)="onChangekecamatanD(kecamatan)" id="kecamatan_domisili">
-              <option>{{ personalInfoModel.kecamatan_domisili }}</option>
+            <select
+              class="form-control"
+              (change)="onChangekecamatanD(this.personalInfoForm.get('kecamatan_domisili')?.value)"
+              id="kecamatan_domisili"
+              formControlName="kecamatan_domisili"
+            >
               <option *ngFor="let daWakecamatanD of kecamatanD" value="{{ daWakecamatanD.kdWilayah }}|{{ daWakecamatanD.namaWilayah }}">
                 {{ daWakecamatanD.namaWilayah }}
               </option>
@@ -734,8 +746,12 @@
         <label class="col-sm-3 col-form-label">Kelurahan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select class="form-control" (change)="onChangekelurahanD(kelurahan)" id="kelurahan_domisili">
-              <option>{{ personalInfoModel.kelurahan_domisili }}</option>
+            <select
+              class="form-control"
+              (change)="onChangekelurahanD(this.personalInfoForm.get('kelurahan_domisili')?.value)"
+              id="kelurahan_domisili"
+              formControlName="kelurahan_domisili"
+            >
               <option *ngFor="let daWakelurahanD of kelurahanD" value="{{ daWakelurahanD.kdPos }}|{{ daWakelurahanD.namaWilayah }}">
                 {{ daWakelurahanD.namaWilayah }}
               </option>
@@ -756,7 +772,7 @@
               maxlength="8"
               class="form-control"
               id="kode_pos_domisili"
-              value="{{ personalInfoModel.kode_pos_domisili }}"
+              formControlName="kode_pos_domisili"
             />
             <div class="input-group-append">
               <button
@@ -764,7 +780,7 @@
                 class="btn btn-outline-dark"
                 id="kode_pos_domisilihilang"
                 type="button"
-                (click)="kodePosApiDomisili(kodeposdomisili.value, 0)"
+                (click)="kodePosApiDomisili(this.personalInfoForm.get('kode_pos_domisili')?.value)"
               >
                 Cari Data
               </button>
@@ -825,7 +841,7 @@
     <div class="raw">
       <div class="col" style="text-align: center">
         <button
-          [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+          [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           type="submit"
           class="btn btn-dark"
         >

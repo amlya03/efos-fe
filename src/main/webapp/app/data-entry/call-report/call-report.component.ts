@@ -130,6 +130,7 @@ export class CallReportComponent implements OnInit {
       tanggal_wawancara: '',
       keterangan: '',
       take_home_pay: '',
+      tanggal_appraisal: '',
     });
   }
 
@@ -208,6 +209,7 @@ export class CallReportComponent implements OnInit {
         tanggal_wawancara: this.daWa.tanggal_wawancara,
         take_home_pay: this.daWa.take_home_pay,
         keterangan: this.daWa.keterangan,
+        tanggal_appraisal: this.daWa.tanggal_appraisal,
       };
       this.callReportForm.setValue(retriveCallReport);
     });
@@ -354,6 +356,7 @@ export class CallReportComponent implements OnInit {
         no_kontak_hr: this.callReportForm.get('no_kontak_hr')?.value,
         take_home_pay: this.callReportForm.get('take_home_pay')?.value,
         keterangan: this.callReportForm.get('keterangan')?.value,
+        tanggal_appraisal: this.callReportForm.get('tanggal_appraisal')?.value,
       })
       .subscribe({
         next: bawaan => {

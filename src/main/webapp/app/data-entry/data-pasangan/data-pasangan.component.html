@@ -13,7 +13,7 @@
           <span
             [hidden]="
               dataPasanganForm.controls.nama_pasangan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole === 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -35,7 +35,7 @@
           <span
             [hidden]="
               dataPasanganForm.controls.jenis_kelamin_pasangan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole === 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -52,7 +52,7 @@
           <span
             [hidden]="
               dataPasanganForm.controls.alamat_ktp_pasangan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole === 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -66,8 +66,12 @@
         <label class="col-sm-3 col-form-label">Provinsi</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select (change)="onChange(0)" class="form-control" id="provinsi_pasangan" name="provinsi_pasangan">
-              <option>{{ retriveprovinsi }}</option>
+            <select
+              (change)="onChange(this.dataPasanganForm.get('provinsi_pasangan')?.value)"
+              class="form-control"
+              id="provinsi_pasangan"
+              formControlName="provinsi_pasangan"
+            >
               <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                 {{ daWaprof.namaWilayah }}
               </option>
@@ -80,8 +84,12 @@
         <label class="col-sm-3 col-form-label">Kota</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select class="form-control" (change)="onChangekota(0)" id="kabkota_pasangan" name="kabkota_pasangan">
-              <option>{{ retrivekabkota }}</option>
+            <select
+              class="form-control"
+              (change)="onChangekota(this.dataPasanganForm.get('kabkota_pasangan')?.value)"
+              id="kabkota_pasangan"
+              formControlName="kabkota_pasangan"
+            >
               <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
                 {{ daWakota.namaWilayah }}
               </option>
@@ -94,8 +102,12 @@
         <label class="col-sm-3 col-form-label">Kecamatan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select class="form-control" (change)="onChangekecamatan(kecamatan)" id="kecamatan_pasangan" name="kecamatan_pasangan">
-              <option>{{ retrivekecamatan }}</option>
+            <select
+              class="form-control"
+              (change)="onChangekecamatan(this.dataPasanganForm.get('kecamatan_pasangan')?.value)"
+              id="kecamatan_pasangan"
+              formControlName="kecamatan_pasangan"
+            >
               <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
                 {{ daWakecamatan.namaWilayah }}
               </option>
@@ -108,8 +120,12 @@
         <label class="col-sm-3 col-form-label">Kelurahan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select (change)="onChangekelurahan(kelurahan)" class="form-control" id="kelurahan_pasangan" name="kelurahan_pasangan">
-              <option>{{ retrivekelurahan }}</option>
+            <select
+              (change)="onChangekelurahan(this.dataPasanganForm.get('kelurahan_pasangan')?.value)"
+              class="form-control"
+              id="kelurahan_pasangan"
+              formControlName="kelurahan_pasangan"
+            >
               <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
                 {{ daWakelurahan.namaWilayah }}
               </option>
@@ -128,17 +144,15 @@
               maxlength="8"
               class="form-control"
               id="kode_pos_pasangan"
-              name="kode_pos_pasangan"
-              #kodepos
-              value="{{ dataEntry.kode_pos_pasangan }}"
+              formControlName="kode_pos_pasangan"
             />
             <div class="input-group-append">
               <button
                 id="btnkdphilang"
-                (click)="carimenggunakankodepos(kodepos.value, 0)"
+                (click)="carimenggunakankodepos(this.dataPasanganForm.get('kode_pos_pasangan')?.value)"
                 class="btn btn-outline-dark"
                 type="button"
-                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+                [disabled]="this.untukSessionRole === 'BRANCHMANAGER' || this.untukSessionRole === 'VER_PRE_SPV'"
               >
                 Cari Data
               </button>
@@ -162,7 +176,7 @@
           <span
             [hidden]="
               dataPasanganForm.controls.rt_pasangan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole === 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -184,7 +198,7 @@
           <span
             [hidden]="
               dataPasanganForm.controls.rw_pasangan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole === 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -210,7 +224,7 @@
           <span
             [hidden]="
               dataPasanganForm.controls.tanggal_lahir_pasangan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole === 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -227,7 +241,7 @@
           <span
             [hidden]="
               dataPasanganForm.controls.usia_pasangan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole === 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -249,7 +263,7 @@
           <span
             [hidden]="
               dataPasanganForm.controls.kewarganegaraan_pasangan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole === 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -274,7 +288,7 @@
           <span
             [hidden]="
               dataPasanganForm.controls.pendidikan_pasangan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -291,7 +305,7 @@
           <span
             [hidden]="
               dataPasanganForm.controls.email_pasangan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -317,7 +331,7 @@
           <span
             [hidden]="
               dataPasanganForm.controls.no_handphone_pasangan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -342,7 +356,7 @@
           <span
             [hidden]="
               dataPasanganForm.controls.no_ktp_pasangan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -359,7 +373,7 @@
           <span
             [hidden]="
               dataPasanganForm.controls.tanggal_terbit_ktp_pasangan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -394,7 +408,7 @@
               <span
                 [hidden]="
                   dataPasanganForm.controls.tanggal_exp_ktp_pasangan.valid ||
-                  this.untukSessionRole == 'VER_PRESCR' ||
+                  this.untukSessionRole == 'VER_PRE_SPV' ||
                   this.untukSessionRole == 'BRANCHMANAGER'
                 "
                 class="text-danger"
@@ -423,7 +437,7 @@
           <span
             [hidden]="
               dataPasanganForm.controls.npwp_pasangan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -439,7 +453,7 @@
       <button
         type="submit"
         class="btn btn-dark"
-        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
       >
         Simpan Data
       </button>

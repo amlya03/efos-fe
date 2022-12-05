@@ -645,7 +645,7 @@
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'VER_PRE_SPV'"
     >
-      <h6>Daftar Aplikasi Waiting Update Satatus</h6>
+      <h6>Daftar Aplikasi Waiting Update Status</h6>
     </a>
   </div>
   <div
@@ -887,7 +887,7 @@
       }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'AO'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
     >
       <h6>Personal Info</h6>
     </a>
@@ -902,7 +902,7 @@
       routerLink="data-entry/job-info"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'AO'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
     >
       <span
         class="col nav-link"
@@ -928,7 +928,7 @@
       routerLink="data-entry/data-pasangan"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'AO'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
     >
       <h6>Data Pasangan</h6>
     </a>
@@ -943,7 +943,7 @@
       routerLink="data-entry/pekerjaan-pasangan"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'AO'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
     >
       <h6>Pekerjaan Pasangan</h6>
     </a>
@@ -957,7 +957,7 @@
       routerLink="data-entry/collateral"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'AO'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
     >
       <span
         class="col nav-link"
@@ -982,7 +982,7 @@
       routerLink="data-entry/struktur-pembiayaan"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'AO'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
     >
       <h6>Struktur Pembiayaan</h6>
     </a>
@@ -996,29 +996,9 @@
       routerLink="data-entry/emergency-contact"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'AO'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
     >
       <h6>Emergency Contact</h6>
-    </a>
-    <a
-      hidden
-      class="nav-item nav-link"
-      routerLink="data-entry/duplicate-checking"
-      [routerLinkActive]="'active'"
-      [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'AO'"
-    >
-      <h6>Blacklist / Duplicate Checking</h6>
-    </a>
-    <a
-      hidden
-      class="nav-item nav-link"
-      routerLink="data-entry/scoring"
-      [routerLinkActive]="'active'"
-      [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'AO'"
-    >
-      <h6>Scoring</h6>
     </a>
     <a
       class="nav-item nav-link"
@@ -1030,7 +1010,7 @@
       }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'AO'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
     >
       <h6>Call Report</h6>
     </a>
@@ -1063,7 +1043,7 @@
         statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de
       }"
-      *ngSwitchCase="'AO'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
     >
       <h6>Memo</h6>
     </a>

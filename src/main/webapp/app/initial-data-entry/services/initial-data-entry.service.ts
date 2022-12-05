@@ -36,6 +36,12 @@ export class InitialDataEntryService {
   protected getJenisBidang = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/list_jenis_bidang');
   // /////////////////////////// Reff Jenis Bidang ////////////////////////////////////////////
 
+  // /////////////////////////// Reff Sektor Ekonomi ////////////////////////////////////////////
+  protected getListSektor = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ide/list_sektor_ekonomi?se='
+  );
+  // /////////////////////////// Reff Sektor Ekonomi ////////////////////////////////////////////
+
   constructor(
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
@@ -78,4 +84,10 @@ export class InitialDataEntryService {
     return this.http.get<ApiResponse>(this.getJenisBidang);
   }
   // ////////////////////// Ref Jenis BIdang  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // /////////////////////////// Reff Sektor Ekonomi ////////////////////////////////////////////
+  getSektor(id: string | number | null | undefined): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getListSektor + id);
+  }
+  // /////////////////////////// Reff Sektor Ekonomi ////////////////////////////////////////////
 }

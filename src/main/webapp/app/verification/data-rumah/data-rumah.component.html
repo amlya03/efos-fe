@@ -1111,7 +1111,7 @@
 <p></p>
 <div class="row">
   <div class="col" style="text-align: center">
-    <button type="submit" class="btn btn-info" [hidden]="this.untukSessionRole == 'VER_PRE_SPV'" (click)="onSubmit()">Simpan Data</button>
+    <button type="submit" class="btn btn-info" [hidden]="this.untukSessionRole === 'VER_PRE_SPV'" (click)="onSubmit()">Simpan Data</button>
     <button type="button" class="btn btn-info" [hidden]="this.untukSessionRole == 'VER_PRESCR'" (click)="Next()">Selanjutnya</button>
   </div>
 </div>

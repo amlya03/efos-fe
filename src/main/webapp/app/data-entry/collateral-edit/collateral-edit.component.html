@@ -492,6 +492,8 @@
               placeholder=""
               formControlName="harga_objek"
               id="harga_objek"
+              currencyMask
+              [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
             />
           </div>
         </div>
@@ -646,7 +648,7 @@
   </div>
   <br />
   <br />
-  <div class="row">
+  <div class="row" [hidden]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'">
     <div class="col" style="text-align: center">
       <button type="submit" class="btn btn-dark">
         Simpan Data<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
