@@ -738,14 +738,14 @@ export class InitialDataEntryNonComponent implements OnInit {
               jabatan_sebelum: '',
               jenis_bidang: this.jenis_bidang,
               jenis_bidang_sebelum: this.jenis_bidang_sebelum,
-              jenis_pekerjaan: this.status_perkawinan,
-              jenis_pekerjaan_sebelum: this.nama,
+              jenis_pekerjaan: '',
+              jenis_pekerjaan_sebelum: '',
               jumlah_karyawan: this.jumlah_karyawan,
-              jumlah_karyawan_sebelum: this.nama,
+              jumlah_karyawan_sebelum: '',
               kabkota_sebelum: '',
               kabkota: kirimankabkotajobn,
-              kategori_pekerjaan: this.agama,
-              kategori_pekerjaan_sebelum: this.nama,
+              kategori_pekerjaan: '',
+              kategori_pekerjaan_sebelum: '',
               kecamatan: kirimankecamatanjobn,
               kecamatan_sebelum: '',
               kelurahan: kirimankelurahanjobn,
@@ -753,9 +753,10 @@ export class InitialDataEntryNonComponent implements OnInit {
               kepemilikan_perusahaan: this.kepemilikan_perusahaan,
               kode_pos: '',
               kode_pos_sebelum: '',
-              lama_bekerja_tahun: this.nama,
-              lama_bekerja_bulan_sebelum: this.alamat_ktp,
-              lama_bekerja_tahun_sebelum: this.nama,
+              lama_bekerja_tahun: '',
+              lama_bekerja_bulan: '',
+              lama_bekerja_bulan_sebelum: '',
+              lama_bekerja_tahun_sebelum: '',
               nama_perusahaan: this.nama,
               nama_perusahaan_sebelum: '',
               no_siup: this.no_siup,
@@ -941,8 +942,11 @@ export class InitialDataEntryNonComponent implements OnInit {
           usia_pasangan: '',
         })
         .subscribe(resposne => {
-          console.log(resposne);
+          alert(resposne.result);
+          console.log('ini respon' + resposne.result);
           this.contohdata = resposne.result.id;
+          this.app_no_ide = resposne.result.app_no_ide;
+          this.tanggal_lahir = resposne.result.tanggal_lahir;
 
           alert('gagal nih ');
           this.http
@@ -960,13 +964,13 @@ export class InitialDataEntryNonComponent implements OnInit {
               jenis_bidang: this.jenis_bidang,
               jenis_bidang_sebelum: this.jenis_bidang_sebelum,
               jenis_pekerjaan: this.status_perkawinan,
-              jenis_pekerjaan_sebelum: this.nama,
+              jenis_pekerjaan_sebelum: '',
               jumlah_karyawan: this.jumlah_karyawan,
-              jumlah_karyawan_sebelum: this.nama,
+              jumlah_karyawan_sebelum: '',
               kabkota_sebelum: '',
               kabkota: kirimankabkotajobn,
-              kategori_pekerjaan: this.agama,
-              kategori_pekerjaan_sebelum: this.nama,
+              kategori_pekerjaan: '',
+              kategori_pekerjaan_sebelum: '',
               kecamatan: kirimankecamatanjobn,
               kecamatan_sebelum: '',
               kelurahan: kirimankelurahanjobn,
@@ -974,9 +978,10 @@ export class InitialDataEntryNonComponent implements OnInit {
               kepemilikan_perusahaan: this.kepemilikan_perusahaan,
               kode_pos: '',
               kode_pos_sebelum: '',
-              lama_bekerja_tahun: this.nama,
-              lama_bekerja_bulan_sebelum: this.alamat_ktp,
-              lama_bekerja_tahun_sebelum: this.nama,
+              lama_bekerja_tahun: '',
+              lama_bekerja_bulan: '',
+              lama_bekerja_bulan_sebelum: '',
+              lama_bekerja_tahun_sebelum: '',
               nama_perusahaan: this.nama,
               nama_perusahaan_sebelum: '',
               no_siup: this.no_siup,
@@ -1013,9 +1018,8 @@ export class InitialDataEntryNonComponent implements OnInit {
             })
             .subscribe({
               next: data => {
+                alert(data.result);
                 // this.contohdata = data.result.id;
-                this.app_no_ide = data.result.app_no_ide;
-                this.tanggal_lahir = data.result.tanggal_lahir;
 
                 this.router.navigate(['/hasilprescreening'], {
                   queryParams: {
