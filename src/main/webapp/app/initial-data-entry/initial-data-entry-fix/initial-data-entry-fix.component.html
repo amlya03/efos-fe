@@ -2,20 +2,37 @@
   <h3 style="color: #fff; text-align: center">Informasi Pemohon Pembiayaan</h3>
 </div>
 <br />
-<form>
+<form [formGroup]="dataentryfixfom">
   <div class="row form-material">
     <div class="col">
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nomor Aplikasi<span class="text-danger">*</span></label>
         <div class="col-sm-8">
-          <input type="text" id="app_no_ide" [(ngModel)]="app_no_ide" [value]="daWa" name="app_no_ide" class="form-control" readonly />
+          <input
+            type="text"
+            id="app_no_ide"
+            formControlName="noaplikasi"
+            [(ngModel)]="app_no_ide"
+            [value]="daWa"
+            name="app_no_ide"
+            class="form-control"
+            readonly
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Lengkap<span class="text-danger">*</span></label>
         <div class="col-sm-8">
-          <input type="name" id="nama" [(ngModel)]="nama" name="nama" class="form-control" placeholder="Nama Lengkap" />
+          <input
+            type="name"
+            id="nama"
+            formControlName="nama"
+            [(ngModel)]="nama"
+            name="nama"
+            class="form-control"
+            placeholder="Nama Lengkap"
+          />
         </div>
       </div>
       <br />
@@ -23,7 +40,7 @@
         <label class="col-sm-4 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <div class="form-group">
-            <select class="form-control" id="jenis_kelamin" [(ngModel)]="jenis_kelamin" name="jenis_kelamin">
+            <select class="form-control" formControlName="jeniskelamin" id="jenis_kelamin" [(ngModel)]="jenis_kelamin" name="jenis_kelamin">
               <option value="">Pilih Jenis Kelamin</option>
               <option value="Laki-laki">Laki - laki</option>
               <option value="Perempuan">Perempuan</option>
@@ -36,6 +53,7 @@
         <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <input
+            formControlName="tanggallahir"
             class="form-control"
             type="date"
             id="tanggal_lahir"
@@ -43,15 +61,7 @@
             name="tanggal_lahir"
             (change)="submitBday()"
           />
-          <input
-          class="form-control"
-          type="text"
-          [(ngModel)]="umur"
-          id="umur"
-          name="umur"
-
-        />
-
+          <input formControlName="umurform" class="form-control" type="text" [(ngModel)]="umur" id="umur" name="umur" />
         </div>
       </div>
       <br />
@@ -59,6 +69,7 @@
         <label class="col-sm-4 col-form-label">Tempat Lahir<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <input
+            formControlName="tempatlahir"
             type="text"
             class="form-control"
             placeholder="Tempat Lahir"
@@ -73,7 +84,13 @@
         <label class="col-sm-4 col-form-label">Status Perkawinan<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <div class="form-group">
-            <select class="form-control" id="status_perkawinan" [(ngModel)]="status_perkawinan" name="status_perkawinan">
+            <select
+              class="form-control"
+              id="status_perkawinan"
+              [(ngModel)]="status_perkawinan"
+              formControlName="statusperkawinan"
+              name="status_perkawinan"
+            >
               <option *ngFor="let refStatusPerkawinan of refStatusPerkawinan" value="{{ refStatusPerkawinan.deskripsi }}">
                 {{ refStatusPerkawinan.deskripsi }}
               </option>
@@ -86,7 +103,7 @@
         <label class="col-sm-4 col-form-label">Agama<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <div class="form-group">
-            <select class="form-control" [(ngModel)]="agama" id="agama" name="agama">
+            <select class="form-control" [(ngModel)]="agama" formControlName="agamaform" id="agama" name="agama">
               <option value="Pilih Agama">Pilih Agama</option>
               <option value="islam">Islam</option>
               <option value="kristen">Kristen</option>
@@ -103,7 +120,7 @@
         <label class="col-sm-4 col-form-label">Pendidikan<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <div class="form-group">
-            <select class="form-control" id="pendidikan" [(ngModel)]="pendidikan" name="pendidikan">
+            <select class="form-control" id="pendidikan" [(ngModel)]="pendidikan" formControlName="pendidikanform" name="pendidikan">
               <option value="">Pilih Pendidikan</option>
               <option value="SMA">SMA</option>
               <option value="D3">D3</option>
@@ -119,7 +136,13 @@
         <label class="col-sm-4 col-form-label">Kewarganegaraan<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <div class="form-group">
-            <select class="form-control" id="kewarganegaraan" [(ngModel)]="kewarganegaraan" name="kewarganegaraan">
+            <select
+              class="form-control"
+              id="kewarganegaraan"
+              formControlName="kewarganegaraanform"
+              [(ngModel)]="kewarganegaraan"
+              name="kewarganegaraan"
+            >
               <option value="">Pilih Kewarganegaraan</option>
               <option value="WNI">WNI</option>
               <option value="WNA">WNA</option>
@@ -132,6 +155,7 @@
         <label class="col-sm-4 col-form-label">Ibu Kandung<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <input
+            formControlName="ibukandung"
             type="text"
             class="form-control"
             placeholder=""
@@ -146,6 +170,7 @@
         <label class="col-sm-4 col-form-label">NPWP<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <input
+            formControlName="npwpform"
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             class="form-control"
@@ -162,6 +187,7 @@
         <label class="col-sm-4 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <textarea
+            formControlName="alamatktp"
             class="form-control h-150px"
             rows="6"
             id="alamat_ktp"
@@ -178,6 +204,7 @@
         <div class="col-sm-8">
           <div class="form-group">
             <select
+              formControlName="provinsiform"
               (change)="onChange(provinsi_cabang)"
               class="form-control"
               [(ngModel)]="provinsi_cabang"
@@ -199,6 +226,7 @@
         <div class="col-sm-8">
           <div class="form-group">
             <select
+              formControlName="kotaform"
               (change)="onChangekota(kabkota_cabang)"
               class="form-control"
               [(ngModel)]="kabkota_cabang"
@@ -206,7 +234,7 @@
               id="kabkota_cabang"
               name="kabkota"
             >
-              <option >Pilih Kota</option>
+              <option>Pilih Kota</option>
               <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
                 {{ daWakota.namaWilayah }}
               </option>
@@ -219,8 +247,16 @@
         <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <div class="form-group">
-            <select (change)="onChangekecamatan(kecamatan)" [(value)]="kecamatan" class="form-control" id="kecamatan" [(ngModel)]="kecamatan" name="kecamatan">
-              <option >Pilih Kecamatan</option>
+            <select
+              (change)="onChangekecamatan(kecamatan)"
+              formControlName="kecamatanform"
+              [(value)]="kecamatan"
+              class="form-control"
+              id="kecamatan"
+              [(ngModel)]="kecamatan"
+              name="kecamatan"
+            >
+              <option>Pilih Kecamatan</option>
               <option *ngFor="let daWakecamatan of daWakecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
                 {{ daWakecamatan.namaWilayah }}
               </option>
@@ -233,8 +269,16 @@
         <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <div class="form-group">
-            <select (change)="onChangekelurahan(kelurahan)" [(value)]="kelurahan" class="form-control" id="kelurahan" [(ngModel)]="kelurahan" name="kelurahan">
-              <option >Pilih Kelurahan</option>
+            <select
+              (change)="onChangekelurahan(kelurahan)"
+              formControlName="kelurahanform"
+              [(value)]="kelurahan"
+              class="form-control"
+              id="kelurahan"
+              [(ngModel)]="kelurahan"
+              name="kelurahan"
+            >
+              <option>Pilih Kelurahan</option>
               <option *ngFor="let daWakelurahan of daWakelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
                 {{ daWakelurahan.namaWilayah }}
               </option>
@@ -248,6 +292,7 @@
         <div class="col-sm-8">
           <div class="input-group mb-3">
             <input
+              formControlName="kodeposform"
               type="tel"
               onkeypress="return onlyNumberKey(event)"
               maxlength="8"
@@ -258,7 +303,7 @@
               [(ngModel)]="kode_pos"
             />
             <div class="input-group-append">
-              <button   (click)="carimenggunakankodepost(kode_pos,0)"  class="btn btn-outline-dark" type="button">Cari Data</button>
+              <button (click)="carimenggunakankodepost(kode_pos, 0)" class="btn btn-outline-dark" type="button">Cari Data</button>
             </div>
           </div>
         </div>
@@ -269,6 +314,7 @@
         <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
         <div class="col">
           <input
+            formControlName="rtform"
             maxlength="3"
             type="tel"
             onkeypress="return onlyNumberKey(event)"
@@ -282,6 +328,7 @@
         <div class="col">RT</div>
         <div class="col">
           <input
+            formControlName="rwform"
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             class="form-control"
@@ -299,6 +346,7 @@
         <label class="col-sm-4 col-form-label">No KTP<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <input
+            formControlName="noktp"
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             class="form-control"
@@ -316,15 +364,39 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
         <div class="col-sm-8">
-          <input class="form-control" [(ngModel)]="tanggal_terbit_ktp" type="date" id="tanggal_terbit_ktp" name="tanggal_terbit_ktp" />
+          <input
+            class="form-control"
+            formControlName="tanggalterbit"
+            [(ngModel)]="tanggal_terbit_ktp"
+            type="date"
+            id="tanggal_terbit_ktp"
+            name="tanggal_terbit_ktp"
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
         <div class="col-sm-8">
-          <input type="radio" id="ktp_seumur_hidup_ya" name="ktp_seumur_hidup" [(ngModel)]="ktp_seumur_hidup" [value]="'Ya'" checked /> Ya
-          <input type="radio" id="ktp_seumur_hidup_tidak" name="ktp_seumur_hidup" [(ngModel)]="ktp_seumur_hidup" [value]="'Tidak'" /> Tidak
+          <input
+            type="radio"
+            id="ktp_seumur_hidup_ya"
+            formControlName="ktpseumurhidup"
+            name="ktp_seumur_hidup"
+            [(ngModel)]="ktp_seumur_hidup"
+            [value]="'Ya'"
+            checked
+          />
+          Ya
+          <input
+            type="radio"
+            id="ktp_seumur_hidup_tidak"
+            formControlName="ktpseumurhidup"
+            name="ktp_seumur_hidup"
+            [(ngModel)]="ktp_seumur_hidup"
+            [value]="'Tidak'"
+          />
+          Tidak
         </div>
       </div>
       <div *ngIf="ktp_seumur_hidup == 'Tidak'">
@@ -332,7 +404,14 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Tanggal Exipred KTP<span class="text-danger">*</span></label>
           <div class="col-sm-8">
-            <input class="form-control" type="date" [(ngModel)]="tanggal_exp_ktp" id="tanggal_exp_ktp" name="tanggal_exp_ktp" />
+            <input
+              class="form-control"
+              type="date"
+              formControlName="tanggalexpktp"
+              [(ngModel)]="tanggal_exp_ktp"
+              id="tanggal_exp_ktp"
+              name="tanggal_exp_ktp"
+            />
           </div>
         </div>
       </div>
@@ -341,6 +420,7 @@
         <label class="col-sm-4 col-form-label">No Handphone<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <input
+            formControlName="nohandphone"
             type="tel"
             onkeypress="return onlyNumberKey(event)"
             pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
@@ -369,7 +449,15 @@
           <div class="form-group row">
             <label class="col-sm-4 col-form-label">Nama Lengkap<span class="text-danger">*</span></label>
             <div class="col-sm-8">
-              <input type="text" class="form-control"  [(ngModel)]="nama_pasangan" placeholder="Nama Lengkap" id="nama_pasangan" name="nama_pasangan" />
+              <input
+                type="text"
+                class="form-control"
+                formControlName="namapasangan"
+                [(ngModel)]="nama_pasangan"
+                placeholder="Nama Lengkap"
+                id="nama_pasangan"
+                name="nama_pasangan"
+              />
             </div>
           </div>
           <br />
@@ -377,7 +465,13 @@
             <label class="col-sm-4 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
             <div class="col-sm-8">
               <div class="form-group">
-                <select class="form-control" id="jenis_kelamin_pasangan" [(ngModel)]="jenis_kelamin_pasangan" name="jenis_kelamin_pasangan">
+                <select
+                  class="form-control"
+                  id="jenis_kelamin_pasangan"
+                  formControlName="jeniskelaminpasangan"
+                  [(ngModel)]="jenis_kelamin_pasangan"
+                  name="jenis_kelamin_pasangan"
+                >
                   <option id="jPil" value="">Pilih Jenis Kelamin</option>
                   <option id="jLaki" value="Laki-laki">Laki - laki</option>
                   <option id="jPere" value="Perempuan">Perempuan</option>
@@ -389,15 +483,38 @@
           <div class="form-group row">
             <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
             <div class="col-sm-8">
-              <input class="form-control" type="date" [(ngModel)]="tanggal_lahir_pasangan" id="tanggal_lahir_pasangan"  name="tanggal_lahir_pasangan"   (change)="submitBdayp()" />
-              <input class="form-control" type="text" [(ngModel)]="umur" id="umurpasangan" name="umurpasangan"  />
+              <input
+                class="form-control"
+                type="date"
+                formControlName="tanggallahirpasangan"
+                [(ngModel)]="tanggal_lahir_pasangan"
+                id="tanggal_lahir_pasangan"
+                name="tanggal_lahir_pasangan"
+                (change)="submitBdayp()"
+              />
+              <input
+                class="form-control"
+                type="text"
+                formControlName="umurformpasangan"
+                [(ngModel)]="umur"
+                id="umurpasangan"
+                name="umurpasangan"
+              />
             </div>
           </div>
           <br />
           <div class="form-group row">
             <label class="col-sm-4 col-form-label">Tempat Lahir<span class="text-danger">*</span></label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" [(ngModel)]="tempat_lahir_pasangan" placeholder="Tempat Lahir" id="tempat_lahir_pasangan" name="tempat_lahir_pasangan" />
+              <input
+                type="text"
+                class="form-control"
+                formControlName="tempatlahirpasangan"
+                [(ngModel)]="tempat_lahir_pasangan"
+                placeholder="Tempat Lahir"
+                id="tempat_lahir_pasangan"
+                name="tempat_lahir_pasangan"
+              />
             </div>
           </div>
           <br />
@@ -405,7 +522,13 @@
             <label class="col-sm-4 col-form-label">Agama<span class="text-danger">*</span></label>
             <div class="col-sm-8">
               <div class="form-group">
-                <select class="form-control" [(ngModel)]="agama_pasangan" id="agama_pasangan" name="agama_pasangan">
+                <select
+                  class="form-control"
+                  formControlName="agamaformpasangan"
+                  [(ngModel)]="agama_pasangan"
+                  id="agama_pasangan"
+                  name="agama_pasangan"
+                >
                   <option value="">Pilih Agama</option>
                   <option value="islam">Islam</option>
                   <option value="kristen">Kristen</option>
@@ -422,7 +545,13 @@
             <label class="col-sm-4 col-form-label">Pendidikan</label>
             <div class="col-sm-8">
               <div class="form-group">
-                <select class="form-control" [(ngModel)]="pendidikan_pasangan" id="pendidikan_pasangan" name="pendidikan_pasangan">
+                <select
+                  class="form-control"
+                  formControlName="pendidikanformpasangan"
+                  [(ngModel)]="pendidikan_pasangan"
+                  id="pendidikan_pasangan"
+                  name="pendidikan_pasangan"
+                >
                   <option value="SMA">SMA</option>
                   <option value="D3">D3</option>
                   <option value="S1">S1</option>
@@ -437,7 +566,13 @@
             <label class="col-sm-4 col-form-label">Kewarganegaraan</label>
             <div class="col-sm-8">
               <div class="form-group">
-                <select class="form-control" id="kewarganegaraan_pasangan" [(ngModel)]="kewarganegaraan_pasangan" name="kewarganegaraan_pasangan">
+                <select
+                  class="form-control"
+                  id="kewarganegaraan_pasangan"
+                  formControlName="kewarganegaraanformpasangan"
+                  [(ngModel)]="kewarganegaraan_pasangan"
+                  name="kewarganegaraan_pasangan"
+                >
                   <option value="WNI">WNI</option>
                   <option value="WNA">WNA</option>
                 </select>
@@ -448,7 +583,15 @@
           <div class="form-group row">
             <label class="col-sm-4 col-form-label">Ibu Kandung<span class="text-danger">*</span></label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" placeholder="" [(ngModel)]="nama_ibu_kandung_pasangan" id="nama_ibu_kandung_pasangan" name="nama_ibu_kandung_pasangan" />
+              <input
+                type="text"
+                class="form-control"
+                placeholder=""
+                formControlName="ibukandungpasangan"
+                [(ngModel)]="nama_ibu_kandung_pasangan"
+                id="nama_ibu_kandung_pasangan"
+                name="nama_ibu_kandung_pasangan"
+              />
             </div>
           </div>
           <br />
@@ -456,6 +599,7 @@
             <label class="col-sm-4 col-form-label">NPWP</label>
             <div class="col-sm-8">
               <input
+                formControlName="npwpformpasangan"
                 type="tel"
                 onkeypress="return onlyNumberKey(event)"
                 class="form-control"
@@ -479,7 +623,14 @@
           <div class="form-group row">
             <label class="col-sm-4 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
             <div class="col-sm-8">
-              <textarea class="form-control h-150px" rows="6" [(ngModel)]="alamat_ktp_pasangan" id="alamat_ktp_pasangan" name="alamat_ktp_pasangan"></textarea>
+              <textarea
+                class="form-control h-150px"
+                rows="6"
+                formControlName="alamatktppasangan"
+                [(ngModel)]="alamat_ktp_pasangan"
+                id="alamat_ktp_pasangan"
+                name="alamat_ktp_pasangan"
+              ></textarea>
             </div>
           </div>
         </div>
@@ -489,6 +640,7 @@
             <div class="col-sm-8">
               <div class="form-group">
                 <select
+                  formControlName="provinsiformpasangan"
                   (change)="onChangep(provinsi_cabang_pasangan)"
                   class="form-control"
                   [(ngModel)]="provinsi_cabang_pasangan"
@@ -509,13 +661,14 @@
             <div class="col-sm-8">
               <div class="form-group">
                 <select
+                  formControlName="kotaformpasangan"
                   (change)="onChangekotap(kabkota_cabang_pasangan)"
                   class="form-control"
                   [(ngModel)]="kabkota_cabang_pasangan"
                   id="kabkota_pasangan"
                   name="kabkota_pasangan"
                 >
-                  <option >Pilih Kota</option>
+                  <option>Pilih Kota</option>
                   <option *ngFor="let daWakota of daWakotap" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
                     {{ daWakota.namaWilayah }}
                   </option>
@@ -529,13 +682,14 @@
             <div class="col-sm-8">
               <div class="form-group">
                 <select
+                  formControlName="kecamatanformpasangan"
                   (change)="onChangekecamatanp(kecamatan_pasangan)"
                   class="form-control"
                   id="kecamatan_pasangan"
                   [(ngModel)]="kecamatan_pasangan"
                   name="kecamatan_pasangan"
                 >
-                  <option >Pilih Kecamatan</option>
+                  <option>Pilih Kecamatan</option>
                   <option
                     *ngFor="let daWakecamatan of daWakecamatanp"
                     value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}"
@@ -552,13 +706,14 @@
             <div class="col-sm-8">
               <div class="form-group">
                 <select
+                  formControlName="kelurahanformpasangan"
                   (change)="onChangekelurahanp(kelurahan_pasangan)"
                   class="form-control"
                   id="kelurahan_pasangan"
                   [(ngModel)]="kelurahan_pasangan"
                   name="kelurahan_pasangan"
                 >
-                  <option >Pilih Kelurahan</option>
+                  <option>Pilih Kelurahan</option>
                   <option *ngFor="let daWakelurahan of daWakelurahanp" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
                     {{ daWakelurahan.namaWilayah }}
                   </option>
@@ -572,6 +727,7 @@
             <div class="col-sm-8">
               <div class="input-group mb-3">
                 <input
+                  formControlName="kodeposformpasangan"
                   type="tel"
                   onkeypress="return onlyNumberKey(event)"
                   maxlength="8"
@@ -582,7 +738,9 @@
                   [(ngModel)]="kode_pos_pasangan"
                 />
                 <div class="input-group-append">
-                  <button class="btn btn-outline-dark" (click)="carimenggunakankodepostp(kode_pos_pasangan,0)"  type="button">Cari Data</button>
+                  <button class="btn btn-outline-dark" (click)="carimenggunakankodepostp(kode_pos_pasangan, 0)" type="button">
+                    Cari Data
+                  </button>
                 </div>
               </div>
             </div>
@@ -592,6 +750,7 @@
             <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
             <div class="col">
               <input
+                formControlName="rtformpasangan"
                 maxlength="3"
                 type="tel"
                 onkeypress="return onlyNumberKey(event)"
@@ -605,6 +764,7 @@
             <div class="col">RT</div>
             <div class="col">
               <input
+                formControlName="rwformpasangan"
                 type="tel"
                 onkeypress="return onlyNumberKey(event)"
                 class="form-control"
@@ -622,6 +782,7 @@
             <label class="col-sm-4 col-form-label">No KTP<span class="text-danger">*</span></label>
             <div class="col-sm-8">
               <input
+                formControlName="noktppasangan"
                 type="tel"
                 onkeypress="return onlyNumberKey(event)"
                 class="form-control"
@@ -639,22 +800,41 @@
           <div class="form-group row">
             <label class="col-sm-4 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
             <div class="col-sm-8">
-              <input class="form-control" type="date" [(ngModel)]="tanggal_terbit_ktp_pasangan" id="tanggal_terbit_ktp_pasangan" name="tanggal_terbit_ktp_pasangan" />
+              <input
+                class="form-control"
+                formControlName="tanggalterbitpasangan"
+                type="date"
+                [(ngModel)]="tanggal_terbit_ktp_pasangan"
+                id="tanggal_terbit_ktp_pasangan"
+                name="tanggal_terbit_ktp_pasangan"
+              />
             </div>
           </div>
           <br />
           <div class="form-group row">
             <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
             <div class="col-sm-8">
-              <label for="chkYes2"> <input type="radio" id="chkYes2" name="chkPinNo2" checked="checked" value="fix" /> Ya </label>
-              <label for="chkNo2"> <input type="radio" id="chkNo2" name="chkPinNo2" value="non" /> Tidak </label>
+              <label for="chkYes2">
+                <input type="radio" formControlName="ktpseumurhiduppasangan" id="chkYes2" name="chkPinNo2" checked="checked" value="fix" />
+                Ya
+              </label>
+              <label for="chkNo2">
+                <input type="radio" formControlName="ktpseumurhiduppasangan" id="chkNo2" name="chkPinNo2" value="non" /> Tidak
+              </label>
             </div>
           </div>
           <br />
           <div class="form-group row">
             <label class="col-sm-4 col-form-label">Tanggal Expired KTP</label>
             <div class="col-sm-8">
-              <input class="form-control" type="date" [(ngModel)]="tanggal_exp_ktp_pasangan" id="tanggal_exp_ktp_pasangan" name="tanggal_exp_ktp_pasangan" />
+              <input
+                class="form-control"
+                type="date"
+                formControlName="tanggalexpktppasangan"
+                [(ngModel)]="tanggal_exp_ktp_pasangan"
+                id="tanggal_exp_ktp_pasangan"
+                name="tanggal_exp_ktp_pasangan"
+              />
             </div>
           </div>
           <br />
@@ -662,6 +842,7 @@
             <label class="col-sm-4 col-form-label">No Handphone<span class="text-danger">*</span></label>
             <div class="col-sm-8">
               <input
+                formControlName="nohandphonepasangan"
                 type="tel"
                 pattern="^(\+62|62)?[\s-]?0?8[1-9]{1}\d{1}[\s-]?\d{4}[\s-]?\d{2,5}$"
                 class="form-control"
@@ -686,7 +867,7 @@
         id="prosesData"
         name="proses"
         value="proses"
-        (click)="gotoprescreaning(daWa, daWakodepos, daWacuref,daWakodeposp)"
+        (click)="gotoprescreaning(daWa, daWakodepos, daWacuref, daWakodeposp, kode_pos, kode_pos_pasangan)"
         type="submit"
       >
         Proses Data
@@ -696,7 +877,7 @@
         id="simpandata2"
         name="simpan"
         value="simpan"
-        (click)="gotodaftaraplikasiide(daWa, daWakodepos, daWacuref,daWakodeposp)"
+        (click)="gotodaftaraplikasiide(daWa, daWakodepos, daWacuref, daWakodeposp, kode_pos, kode_pos_pasangan)"
         type="submit"
       >
         Simpan data
