@@ -2,7 +2,7 @@
   "generator-jhipster": {
     "applicationType": "monolith",
     "authenticationType": "jwt",
-    "baseName": "newEfos",
+    "baseName": "EFOS",
     "blueprints": [],
     "buildTool": "maven",
     "cacheProvider": "ehcache",
