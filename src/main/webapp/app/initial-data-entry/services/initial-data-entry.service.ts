@@ -10,6 +10,11 @@ import { SessionStorageService } from 'ngx-webstorage';
 })
 export class InitialDataEntryService {
   koderetirvt = '';
+
+  // /////////////////////////// Download Slik ////////////////////////////////////////////
+  protected getDownloadSlikUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/fetchSlikPdf?sd=');
+  // /////////////////////////// Download Slik ////////////////////////////////////////////
+
   // /////////////////////////// DAFTAR APLIKASI INITIAL DATA ENTRY ////////////////////////////////////////////
   protected daftarAplikasiInitialDataEntry = this.applicationConfigService.getEndpointFor(
     'http://10.20.34.110:8805/api/v1/efos-ide/list_app_ide?sc='
@@ -90,4 +95,10 @@ export class InitialDataEntryService {
     return this.http.get<ApiResponse>(this.getListSektor + id);
   }
   // /////////////////////////// Reff Sektor Ekonomi ////////////////////////////////////////////
+
+  // /////////////////////////// Download Slik ////////////////////////////////////////////
+  getDownloadSlik(id_number: string | number | null | undefined): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getDownloadSlikUrl + id_number);
+  }
+  // /////////////////////////// Download Slik ////////////////////////////////////////////
 }

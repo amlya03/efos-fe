@@ -102,11 +102,11 @@ export class ChecklistDocumentComponent implements OnInit {
 
   // Kirim DE
   detailDataEntry(nama_dokumen: any): void {
-    window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/', nama_dokumen);
+    window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dokumen);
   }
 
   detailAgunan(nama_dokumen: any): void {
-    window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/', nama_dokumen);
+    window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dokumen);
   }
 
   postCeklis(): void {

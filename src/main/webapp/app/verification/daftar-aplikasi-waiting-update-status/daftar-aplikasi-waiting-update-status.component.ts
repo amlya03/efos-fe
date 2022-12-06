@@ -152,38 +152,90 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
 
   // Forward
   postForward(): void {
-    if (this.isChecked === false) {
-      this.kirimDe;
-      for (let i = 0; i < this.kirimDe.length; i++) {
-        // alert(this.kirimDe[i]);
-        // alert(this.kirimStatusAplikasi[i])
-        this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
-            app_no_de: this.kirimDe[i],
-            status_aplikasi: this.kirimStatusAplikasi[i],
-            created_by: this.sessionStorageService.retrieve('sessionUserName'),
-          })
-          .subscribe({
-            next: data => {
-              window.location.reload();
-            },
+    Swal.fire({
+      title: 'Forward Ke Data Entry atau Forward Ke Analys Staff?',
+      text: 'Pilih Forward Ke Data Entry atau Forward Ke Analys Staff',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Forward Ke Data Entry!',
+      cancelButtonText: 'Forward Ke Analys Staff!',
+    }).then(result => {
+      if (result.value) {
+        if (this.isChecked === false) {
+          this.kirimDe;
+          for (let i = 0; i < this.kirimDe.length; i++) {
+            // alert(this.kirimDe[i]);
+            // alert(this.kirimStatusAplikasi[i])
+            this.http
+              .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_back_de', {
+                app_no_de: this.kirimDe[i],
+                status_aplikasi: this.kirimStatusAplikasi[i],
+                created_by: this.sessionStorageService.retrieve('sessionUserName'),
+              })
+              .subscribe({
+                next: data => {
+                  // window.location.reload();
+                },
+              });
+          }
+        } else {
+          for (let i = 0; i < this.checkLenghtResult.length; i++) {
+            this.http
+              .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_back_de', {
+                app_no_de: this.checkLenghtResult[i].app_no_de,
+                status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+                created_by: this.sessionStorageService.retrieve('sessionUserName'),
+              })
+              .subscribe({
+                next: data => {
+                  // window.location.reload();
+                },
+              });
+          }
+        }
+        setTimeout(() => {
+          Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Data Entry', 'success').then(() => {
+            window.location.reload();
           });
-      }
-    } else {
-      for (let i = 0; i < this.checkLenghtResult.length; i++) {
-        this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
-            app_no_de: this.checkLenghtResult[i].app_no_de,
-            status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
-            created_by: this.sessionStorageService.retrieve('sessionUserName'),
-          })
-          .subscribe({
-            next: data => {
-              window.location.reload();
-            },
+        }, 1000);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        setTimeout(() => {
+          if (this.isChecked === false) {
+            this.kirimDe;
+            for (let i = 0; i < this.kirimDe.length; i++) {
+              this.http
+                .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_status_back_analis', {
+                  app_no_de: this.kirimDe[i],
+                  status_aplikasi: this.kirimStatusAplikasi[i],
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({
+                  next: data => {
+                    // window.location.reload();
+                  },
+                });
+            }
+          } else {
+            for (let i = 0; i < this.checkLenghtResult.length; i++) {
+              this.http
+                .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_status_back_analis', {
+                  app_no_de: this.checkLenghtResult[i].app_no_de,
+                  status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({
+                  next: data => {
+                    // window.location.reload();
+                  },
+                });
+            }
+          }
+          Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Analys Staff', 'success').then(() => {
+            window.location.reload();
           });
+        }, 1000);
       }
-    }
+    });
   }
 
   // alert reject

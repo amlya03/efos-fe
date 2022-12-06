@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { inputModel } from '../hasil-prescreening/inputslikModel.model';
 import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
 import { slik } from '../services/config/slik.model';
+import { InitialDataEntryService } from '../services/initial-data-entry.service';
 // import { count } from 'console';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -72,13 +73,17 @@ export class HasilPrescreeningComponent implements OnInit {
   listLajangSlik: slik[] = new Array<slik>();
   listMenikahSlik: slik[] = new Array<slik>();
   appidmanual: any;
+  dataEntry: any;
+  downloadSlik: any;
+
   constructor(
     protected dataRumah: ServiceVerificationService,
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
     private formBuilder: FormBuilder,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    protected initialDataEntry: InitialDataEntryService
   ) {
     this.route.queryParams.subscribe(params => {
       this.datakirimanid = params['datakirimanid'];
@@ -141,6 +146,7 @@ export class HasilPrescreeningComponent implements OnInit {
         this.ktp_pasangan = res.body?.result.customer.no_ktp_pasangan;
         this.dawastatuspernikaham = res.body?.result.customer.status_perkawinan;
 
+        this.dataEntry = res.body?.result;
         // console.warn('customer', res.body?.result.customer);
         // alert(this.dawastatuspernikaham);
         // this.onResponseSuccess(res);
@@ -151,7 +157,12 @@ export class HasilPrescreeningComponent implements OnInit {
         this.cekslik(tglLahir, tglLahirpasangan);
         //  this.cekdukcapil(tglLahir, tglLahirpasangan);
         // this.checkstatusktpmanual(nik);
-
+        setTimeout(() => {
+          this.initialDataEntry.getDownloadSlik('3302024506980004').subscribe(data => {
+            console.warn('Download', data);
+            this.downloadSlik = data.result;
+          });
+        }, 300);
         this.getduplikatc(this.ktp, this.nama).subscribe({
           next: (res: EntityArrayResponseDaWa) => {
             this.duplikate = res.body?.result;
@@ -1189,5 +1200,8 @@ export class HasilPrescreeningComponent implements OnInit {
           });
       }
     });
+  }
+  joinRoom(jenis: any) {
+    alert(jenis);
   }
 }

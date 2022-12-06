@@ -135,11 +135,12 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
             created_by: this.sessionStorageService.retrieve('sessionUserName'),
           })
           .subscribe({
-            next: data => {
-              window.location.reload();
-            },
+            next: data => {},
           });
       }
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } else {
       for (let i = 0; i < this.checkLenghtResult.length; i++) {
         this.http
@@ -150,11 +151,12 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
             created_by: this.sessionStorageService.retrieve('sessionUserName'),
           })
           .subscribe({
-            next: data => {
-              window.location.reload();
-            },
+            next: data => {},
           });
       }
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     }
 
     this.dtElement.dtInstance.then((dtIntance: DataTables.Api) => {

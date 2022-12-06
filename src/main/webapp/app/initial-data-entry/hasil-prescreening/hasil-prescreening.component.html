@@ -860,12 +860,7 @@
     </div>
   </div>
   <div style="color: #fff; text-align: center">
-    <button
-      (click)="simpanstatusktp(daWa.status_perkawinan)"
-      name="submit_button"
-      onclic="untuksubmit()"
-      class="fa fa-file-archive-o btn btn-dark"
-    >
+    <button (click)="simpanstatusktp(daWa.status_perkawinan)" name="submit_button" class="fa fa-file-archive-o btn btn-dark">
       Simpan status KTP
     </button>
   </div>
@@ -943,7 +938,7 @@
     </div>
   </div>
   <!-- <div style="color: #fff; text-align: center">
-    <button (click)="contoh()" name="submit_button" onclic="untuksubmit()" class="fa fa-file-archive-o btn btn-dark">
+    <button (click)="contoh()" name="submit_button" class="fa fa-file-archive-o btn btn-dark">
       Tambah slik jimblo
     </button>
   </div> -->
@@ -991,7 +986,7 @@
       </div>
       <!--
       <div style="color: #fff; text-align: center">
-        <button (click)="contohpasangan()" name="submit_button" onclic="untuksubmit()" class="fa fa-file-archive-o btn btn-dark">
+        <button (click)="contohpasangan()" name="submit_button" class="fa fa-file-archive-o btn btn-dark">
           Tambah slik
         </button>
       </div> -->
@@ -999,10 +994,17 @@
   </div>
 
   <div style="color: #fff; text-align: center">
-    <button (click)="cekkembalislik()" name="submit_button" onclic="untuksubmit()" class="fa fa-file-archive-o btn btn-dark">
-      Cekkembali
-    </button>
+    <button (click)="cekkembalislik()" name="submit_button" class="fa fa-file-archive-o btn btn-dark">Cek kembali</button>
   </div>
+
+  <table style="color: #fff; text-align: center">
+    <tr>
+      <th></th>
+    </tr>
+    <tr *ngFor="let room of this.downloadSlik; let i = index">
+      <td><button class="fa fa-file-archive-o btn btn-dark" (click)="joinRoom(room.id_number)">Download</button></td>
+    </tr>
+  </table>
 
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
     <h3 style="color: #fff; text-align: center">Hasil Pengecekan Kredit_biro</h3>
@@ -1018,26 +1020,21 @@
   <br />
   <div class="row form-material">
     <div class="col" style="text-align: center">
-      <button
-        (click)="gotopersonalinfo(daWa.app_no_ide, daWa.curef)"
-        name="submit_button"
-        onclic="untuksubmit()"
-        class="fa fa-file-archive-o btn btn-dark"
-      >
+      <button (click)="gotopersonalinfo(daWa.app_no_ide, daWa.curef)" name="submit_button" class="fa fa-file-archive-o btn btn-dark">
         prosesssss
       </button>
 
       <button name="submit_button" (click)="backtoide()" class="fa fa-file-archive-o btn btn-dark">Tolak</button>
 
       <!-- <div *ngIf="dataif != 00; else untukbutton">
-      <button name="submit_button" onclic="untuksubmit()" class="fa fa-file-archive-o btn btn-dark">Tolak</button>
+      <button name="submit_button" class="fa fa-file-archive-o btn btn-dark">Tolak</button>
     </div> -->
 
       <!-- <ng-template #untukbutton>
       <button
         (click)="gotopersonalinfo(daWa.app_no_ide, daWa.curef)"
         name="submit_button"
-        onclic="untuksubmit()"
+
         class="fa fa-file-archive-o btn btn-dark"
       >
         prosesssss
@@ -1050,7 +1047,7 @@
 
       <!-- <div [ngSwitch]= "'{{ dataif}}'">
       <div *ngSwitchCase="'00'">
-<button (click)="gotodaftaraplikaside()" name="submit_button" onclic="untuksubmit()" class="fa fa-file-archive-o btn btn-dark">
+<button (click)="gotodaftaraplikaside()" name="submit_button" class="fa fa-file-archive-o btn btn-dark">
       Proses Data
     </button>
         </div>

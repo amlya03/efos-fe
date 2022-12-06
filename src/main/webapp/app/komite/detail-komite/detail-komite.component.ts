@@ -44,6 +44,7 @@ export class DetailKomiteComponent implements OnInit {
   tenor: refTenorFix[] = [];
   tenorRekomendasi: refTenorFix[] = [];
   persetujuanPembiayaan: getPersetujuanPembiayaanModel[] = [];
+  userNya: any;
 
   // Hasil Scoring
   hasilScoring: any;
@@ -108,6 +109,12 @@ export class DetailKomiteComponent implements OnInit {
     });
   }
   load() {
+    // //////////////////////////////////////////////// Get Data Users ///////////////////////////////////////////////////////////////////////
+    this.komiteServices.getDataUsers(this.app_no_de).subscribe(data => {
+      this.userNya = data.result;
+    });
+    // //////////////////////////////////////////////// Get Data Users ///////////////////////////////////////////////////////////////////////
+
     // ////////////////// Get Persetujuan Pembiayaan ////////////////////////////////
     this.komiteServices.getPersetujuanPembiayaan(this.app_no_de).subscribe(data => {
       this.persetujuanPembiayaan = data.result;
