@@ -173,8 +173,8 @@
       <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" (change)="onChange(provinsi_cabang)"  #provinsi_cabang  id="provinsi_cabang" name="provinsi">
-            <option >{{provinsifix }}</option>
+          <select class="form-control" (change)="onChange(provinsi_cabang)" #provinsi_cabang id="provinsi_cabang" name="provinsi">
+            <option>{{ provinsifix }}</option>
             <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
               {{ daWaprof.namaWilayah }}
             </option>
@@ -188,7 +188,7 @@
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" (change)="onChangekota(kabkota_cabang)" #kabkota_cabang id="kabkota_cabang" name="kabkota">
-            <option>{{ kabkotafix}}</option>
+            <option>{{ kabkotafix }}</option>
             <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
               {{ daWakota.namaWilayah }}
             </option>
@@ -202,7 +202,7 @@
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" (change)="onChangekecamatan(kecamatan)" #kecamatan id="kecamatan" name="kecamatan">
-            <option>{{ kecamatanfix}}</option>
+            <option>{{ kecamatanfix }}</option>
             <option *ngFor="let daWakecamatan of daWakecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
               {{ daWakecamatan.namaWilayah }}
             </option>
@@ -235,11 +235,11 @@
             class="form-control"
             id="kode_pos"
             name="kode_pos"
-            value="{{ daWakodepos}}"
+            value="{{ daWakodepos }}"
             #kode_pos
           />
           <div class="input-group-append">
-            <button class="btn btn-outline-dark" (click)="carimenggunakankodepost(kode_pos,0)" type="button">Cari Data</button>
+            <button class="btn btn-outline-dark" (click)="carimenggunakankodepost(kode_pos, 0)" type="button">Cari Data</button>
           </div>
         </div>
       </div>
@@ -339,7 +339,7 @@
 </div>
 <br />
 
-<div [ngSwitch]="daWa.status_perkawinan ">
+<div [ngSwitch]="daWa.status_perkawinan">
   <div *ngSwitchCase="'Menikah'">
     <br />
     <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
@@ -367,7 +367,7 @@
           <div class="col-sm-8">
             <div class="form-group">
               <select class="form-control" id="jenis_kelamin_pasangan" value="" name="jenis_kelamin_pasangan">
-                <option >{{ daWa.jenis_kelamin_pasangan }}</option>
+                <option>{{ daWa.jenis_kelamin_pasangan }}</option>
                 <option id="jLakiEdit" value="Laki-laki">Laki - laki</option>
                 <option id="jPereEdit" value="Perempuan">Perempuan</option>
               </select>
@@ -408,7 +408,7 @@
           <div class="col-sm-8">
             <div class="form-group">
               <select class="form-control" id="agama_pasangan" name="agama_pasangan" value="">
-                <option >{{ daWa.agama_pasangan }}</option>
+                <option>{{ daWa.agama_pasangan }}</option>
                 <option value="islam">Islam</option>
                 <option value="kristen">Kristen</option>
                 <option value="khatolik">Khatolik</option>
@@ -425,7 +425,7 @@
           <div class="col-sm-8">
             <div class="form-group">
               <select class="form-control" id="pendidikan_pasangan" value="" name="pendidikan_pasangan">
-                <option >{{ daWa.pendidikan_pasangan }}</option>
+                <option>{{ daWa.pendidikan_pasangan }}</option>
                 <option value="SMA">SMA</option>
                 <option value="D3">D3</option>
                 <option value="S1">S1</option>
@@ -441,7 +441,7 @@
           <div class="col-sm-8">
             <div class="form-group">
               <select class="form-control" id="kewarganegaraan_pasangan" value="" name="kewarganegaraan_pasangan">
-                <option >{{ daWa.kewarganegaraan_pasangan }}</option>
+                <option>{{ daWa.kewarganegaraan_pasangan }}</option>
                 <option value="WNI">WNI</option>
                 <option value="WNA">WNA</option>
               </select>
@@ -501,9 +501,18 @@
           <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
           <div class="col-sm-8">
             <div class="form-group">
-              <select class="form-control"  (change)="onChangepasangan(provinsi_pasangan)" #provinsi_pasangan id="provinsi_cabang_pasangan" name="provinsi_pasangan">
+              <select
+                class="form-control"
+                (change)="onChangepasangan(provinsi_pasangan)"
+                #provinsi_pasangan
+                id="provinsi_cabang_pasangan"
+                name="provinsi_pasangan"
+              >
                 <option>{{ daWa.provinsi_pasangan }}</option>
-                <option *ngFor="let daWaprofpasangan of daWaprofpasangan" value="{{ daWaprofpasangan.kdWilayah }}|{{ daWaprofpasangan.namaWilayah }}">
+                <option
+                  *ngFor="let daWaprofpasangan of daWaprofpasangan"
+                  value="{{ daWaprofpasangan.kdWilayah }}|{{ daWaprofpasangan.namaWilayah }}"
+                >
                   {{ daWaprofpasangan.namaWilayah }}
                 </option>
               </select>
@@ -515,9 +524,18 @@
           <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
           <div class="col-sm-8">
             <div class="form-group">
-              <select class="form-control"  (change)="onChangekotapasangan(kabkota_pasangan)" #kabkota_pasangan id="kabkota_cabang_pasangan" name="kabkota_pasangan">
+              <select
+                class="form-control"
+                (change)="onChangekotapasangan(kabkota_pasangan)"
+                #kabkota_pasangan
+                id="kabkota_cabang_pasangan"
+                name="kabkota_pasangan"
+              >
                 <option>{{ daWa.kabkota_pasangan }}</option>
-                <option *ngFor="let daWakotapasangan of daWakotapasangan" value="{{ daWakotapasangan.kdWilayah }}|{{ daWakotapasangan.namaWilayah }}">
+                <option
+                  *ngFor="let daWakotapasangan of daWakotapasangan"
+                  value="{{ daWakotapasangan.kdWilayah }}|{{ daWakotapasangan.namaWilayah }}"
+                >
                   {{ daWakotapasangan.namaWilayah }}
                 </option>
               </select>
@@ -529,9 +547,18 @@
           <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
           <div class="col-sm-8">
             <div class="form-group">
-              <select class="form-control" (change)="onChangekecamatanpasangan(kecamatan_pasangan)" #kecamatan_pasangan id="kecamatan_pasangan" name="kecamatan_pasangan">
+              <select
+                class="form-control"
+                (change)="onChangekecamatanpasangan(kecamatan_pasangan)"
+                #kecamatan_pasangan
+                id="kecamatan_pasangan"
+                name="kecamatan_pasangan"
+              >
                 <option>{{ daWa.kecamatan_pasangan }}</option>
-                <option *ngFor="let daWakecamatanpasangan of daWakecamatanpasangan" value="{{ daWakecamatanpasangan.kdWilayah }}|{{ daWakecamatanpasangan.namaWilayah }}">
+                <option
+                  *ngFor="let daWakecamatanpasangan of daWakecamatanpasangan"
+                  value="{{ daWakecamatanpasangan.kdWilayah }}|{{ daWakecamatanpasangan.namaWilayah }}"
+                >
                   {{ daWakecamatanpasangan.namaWilayah }}
                 </option>
               </select>
@@ -543,9 +570,18 @@
           <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
           <div class="col-sm-8">
             <div class="form-group">
-              <select class="form-control" (change)="onChangekelurahan(kelurahan_pasangan)" #kelurahan_pasangan id="kelurahan_pasangan" name="kelurahan_pasangan">
+              <select
+                class="form-control"
+                (change)="onChangekelurahan(kelurahan_pasangan)"
+                #kelurahan_pasangan
+                id="kelurahan_pasangan"
+                name="kelurahan_pasangan"
+              >
                 <option>{{ daWa.kelurahan_pasangan }}</option>
-                <option *ngFor="let daWakelurahanpasangan of daWakelurahanpasangan" value="{{ daWakelurahanpasangan.kdPos }}|{{ daWakelurahanpasangan.namaWilayah }}">
+                <option
+                  *ngFor="let daWakelurahanpasangan of daWakelurahanpasangan"
+                  value="{{ daWakelurahanpasangan.kdPos }}|{{ daWakelurahanpasangan.namaWilayah }}"
+                >
                   {{ daWakelurahanpasangan.namaWilayah }}
                 </option>
               </select>
@@ -567,7 +603,9 @@
                 #kode_post_pasangan
               />
               <div class="input-group-append">
-                <button class="btn btn-outline-dark" (click)="carimenggunakankodepospasangan(kode_post_pasangan,0)" type="button">Cari Data</button>
+                <button class="btn btn-outline-dark" (click)="carimenggunakankodepospasangan(kode_post_pasangan, 0)" type="button">
+                  Cari Data
+                </button>
               </div>
             </div>
           </div>
@@ -676,12 +714,8 @@
       </div>
     </div>
     <br />
-
   </div>
-
 </div>
-
-
 
 <br />
 <div class="row">
@@ -692,7 +726,7 @@
       name="proses"
       value="proses"
       type="submit"
-      (click)="gotoprescreaning(daWa.app_no_ide, daWakodepos, daWa.curef,daWakodepospasangan)"
+      (click)="gotoprescreaning(daWa.app_no_ide, daWakodepos, daWa.curef, daWakodepospasangan)"
     >
       Proses Data
     </button>
@@ -701,7 +735,7 @@
       id="simpan2"
       name="simpan"
       value="simpan"
-      (click)="gotodaftaraplikasiide(daWa.app_no_ide, daWakodepos,daWa.curef,daWakodepospasangan)"
+      (click)="gotodaftaraplikasiide(daWa.app_no_ide, daWakodepos, daWa.curef, daWakodepospasangan)"
       type="submit"
     >
       simpan data
