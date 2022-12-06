@@ -594,10 +594,10 @@
             <select
               formControlName="provinsiformperusahaan"
               class="form-control"
-              (change)="onChange(provinsi_perusahaan)"
+              (change)="onChangek(provinsi_perusahaan)"
               id="provinsi_perusahaan"
               [(ngModel)]="provinsi_perusahaan"
-              name="provinsi_perusahaan"
+              name="provinsiformperusahaan"
             >
               <option>Pilih Provinsi</option>
 
@@ -616,14 +616,14 @@
             <select
               formControlName="kotaformperusahaan"
               class="form-control"
-              (change)="onChangekota(kabkota_perusahaan)"
+              (change)="onChangekotapekerjaan(kabkota_perusahaan)"
               id="kabkota_perusahaan"
               [(ngModel)]="kabkota_perusahaan"
-              name="kabkota_perusahaan"
+              name="kotaformperusahaan"
             >
               <option>Pilih Kota</option>
-              <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
-                {{ daWakota.namaWilayah }}
+              <option *ngFor="let daWakotak of daWakotak" value="{{ daWakotak.kdWilayah }}|{{ daWakotak.namaWilayah }}">
+                {{ daWakotak.namaWilayah }}
               </option>
             </select>
           </div>
@@ -637,14 +637,17 @@
             <select
               formControlName="kecamatanformperusahaan"
               class="form-control"
-              (change)="onChangekecamatan(kecamatan_perusahaan)"
+              (change)="onChangekecamatanpekerjaan(kecamatan_perusahaan)"
               id="kecamatan_perusahaan"
               [(ngModel)]="kecamatan_perusahaan"
-              name="kecamatan_perusahaan"
+              name="kecamatanformperusahaan"
             >
               <option>Pilih Kecamatan</option>
-              <option *ngFor="let daWakecamatan of daWakecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
-                {{ daWakecamatan.namaWilayah }}
+              <option
+                *ngFor="let daWakecamatanpasanganpekerjaan of daWakecamatanpasanganpekerjaan"
+                value="{{ daWakecamatanpasanganpekerjaan.kdWilayah }}|{{ daWakecamatanpasanganpekerjaan.namaWilayah }}"
+              >
+                {{ daWakecamatanpasanganpekerjaan.namaWilayah }}
               </option>
             </select>
           </div>
@@ -658,14 +661,17 @@
             <select
               formControlName="kelurahanperusahaan"
               class="form-control"
-              (change)="onChangekelurahan(kelurahan_perusahaan)"
+              (change)="onChangekelurahanpekerjaan(kelurahan_perusahaan)"
               id="kelurahan_perusahaan"
               [(ngModel)]="kelurahan_perusahaan"
-              name="kelurahan_perusahaan"
+              name="kelurahanperusahaan"
             >
               <option>Pilih Kelurahan</option>
-              <option *ngFor="let daWakelurahan of daWakelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
-                {{ daWakelurahan.namaWilayah }}
+              <option
+                *ngFor="let daWakelurahanpekerjaan of daWakelurahanpekerjaan"
+                value="{{ daWakelurahanpekerjaan.kdPos }}|{{ daWakelurahanpekerjaan.namaWilayah }}"
+              >
+                {{ daWakelurahanpekerjaan.namaWilayah }}
               </option>
             </select>
           </div>
@@ -684,8 +690,9 @@
               maxlength="8"
               class="form-control"
               [(ngModel)]="kode_pos_perusahaan"
-              id="kode_pos_pasangan"
-              name="kode_pos_pasangan"
+              id="kode_pos_pekerjaan"
+              value="{{ daWakodepospekerjaan }}"
+              name="kode_pos_pekerjaan"
             />
             <div class="input-group-append">
               <button class="btn btn-outline-dark" (click)="carimenggunakankodepostj(kode_pos_perusahaan, 0)" type="button">
@@ -1195,12 +1202,16 @@
               <div class="form-group">
                 <select
                   class="form-control"
+                  (change)="onChangep(provinsi_cabang_pasangan)"
                   formControlName="provinsiformpasangan"
                   id="provinsi_cabang_pasangan"
                   [(ngModel)]="provinsi_cabang_pasangan"
-                  name="provinsi_pasangan"
+                  name="provinsiformpasangan"
                 >
                   <option>Pilih Provinsi</option>
+                  <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+                    {{ daWaprof.namaWilayah }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -1214,10 +1225,14 @@
                   class="form-control"
                   formControlName="kotaformpasangan"
                   id="kabkota_cabang_pasangan"
+                  (change)="onChangekotapasangan(kabkota_cabang_pasangan)"
                   [(ngModel)]="kabkota_cabang_pasangan"
-                  name="kabkota_pasangan"
+                  name="kotaformpasangan"
                 >
                   <option>Pilih Kota</option>
+                  <option *ngFor="let daWakotap of daWakotap" value="{{ daWakotap.kdWilayah }}|{{ daWakotap.namaWilayah }}">
+                    {{ daWakotap.namaWilayah }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -1231,10 +1246,17 @@
                   class="form-control"
                   formControlName="kecamatanformpasangan"
                   id="kecamatan_pasangan"
+                  (change)="onChangekecamatanpasangan(kecamatan_pasangan)"
                   [(ngModel)]="kecamatan_pasangan"
-                  name="kecamatan_pasangan"
+                  name="kecamatanformpasangan"
                 >
                   <option>Pilih Kecamatan</option>
+                  <option
+                    *ngFor="let daWakecamatanpasangan of daWakecamatanpasangan"
+                    value="{{ daWakecamatanpasangan.kdWilayah }}|{{ daWakecamatanpasangan.namaWilayah }}"
+                  >
+                    {{ daWakecamatanpasangan.namaWilayah }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -1248,10 +1270,17 @@
                   class="form-control"
                   formControlName="kelurahanformpasangan"
                   id="kelurahan_pasangan"
+                  (change)="onChangekelurahanpasangan(kelurahan_pasangan)"
                   [(ngModel)]="kelurahan_pasangan"
-                  name="kelurahan_pasangan"
+                  name="kelurahanformpasangan"
                 >
                   <option>Pilih Kelurahan</option>
+                  <option
+                    *ngFor="let daWakelurahanpasangan of daWakelurahanpasangan"
+                    value="{{ daWakelurahanpasangan.kdPos }}|{{ daWakelurahanpasangan.namaWilayah }}"
+                  >
+                    {{ daWakelurahanpasangan.namaWilayah }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -1269,6 +1298,7 @@
                   class="form-control"
                   [(ngModel)]="kode_pos_pasangan"
                   id="kode_pos_pasangan"
+                  value="{{ kode_pos_pasangan }}"
                   name="kode_pos_pasangan"
                 />
                 <div class="input-group-append">

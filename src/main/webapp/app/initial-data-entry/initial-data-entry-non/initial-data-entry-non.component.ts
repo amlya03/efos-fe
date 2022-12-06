@@ -49,6 +49,13 @@ export class InitialDataEntryNonComponent implements OnInit {
   getdatasektorekonomisebelum: any;
 
   dataentrynonfixfrom!: FormGroup;
+  daWakodepospekerjaan: any;
+  daWakelurahanpasangan: any;
+  daWakelurahanpekerjaan: any;
+  daWakecamatanpasangan: any;
+  daWakecamatanpasanganpekerjaan: any;
+  daWakotap: any;
+  daWakotak: any;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -1517,6 +1524,36 @@ export class InitialDataEntryNonComponent implements OnInit {
 
     console.log(selectedStatus);
   }
+  onChangep(selectedStatus: any) {
+    // alert(this.postId);
+
+    this.getkabkota(this.postId, selectedStatus).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kota', res);
+
+        this.daWakotap = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+
+    console.log(selectedStatus);
+  }
+  onChangek(selectedStatus: any) {
+    // alert(this.postId);
+
+    this.getkabkota(this.postId, selectedStatus).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kota', res);
+
+        this.daWakotak = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+
+    console.log(selectedStatus);
+  }
 
   onChangekota(selectedStatus: any) {
     // alert(this.postId);
@@ -1525,6 +1562,34 @@ export class InitialDataEntryNonComponent implements OnInit {
         console.warn('kecamata', res);
 
         this.daWakecamatan = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+    console.log(selectedStatus);
+  }
+
+  onChangekotapasangan(selectedStatus: any) {
+    // alert(this.postId);
+    this.getkecamatan(this.postId, selectedStatus).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kecamata', res);
+
+        this.daWakecamatanpasangan = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+    console.log(selectedStatus);
+  }
+
+  onChangekotapekerjaan(selectedStatus: any) {
+    // alert(this.postId);
+    this.getkecamatan(this.postId, selectedStatus).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kecamata', res);
+
+        this.daWakecamatanpasanganpekerjaan = res.body?.result;
         // alert(this.postId);
         // this.onResponseSuccess(res);
       },
@@ -1546,11 +1611,63 @@ export class InitialDataEntryNonComponent implements OnInit {
     console.log(selectedStatus);
   }
 
+  onChangekecamatanpasangan(selectedStatus: any) {
+    // alert(this.postId);
+    this.getkelurahan(this.postId, selectedStatus).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kelurahan', res);
+
+        this.daWakelurahanpasangan = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+    console.log(selectedStatus);
+  }
+
+  onChangekecamatanpekerjaan(selectedStatus: any) {
+    // alert(this.postId);
+    this.getkelurahan(this.postId, selectedStatus).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        console.warn('kelurahan', res);
+
+        this.daWakelurahanpekerjaan = res.body?.result;
+        // alert(this.postId);
+        // this.onResponseSuccess(res);
+      },
+    });
+    console.log(selectedStatus);
+  }
+
+  onChangekelurahanpekerjaan(selectedStatus: any) {
+    // alert(this.postId);
+    const datakodepos = selectedStatus.split('|');
+
+    this.daWakodepospekerjaan = datakodepos[0];
+
+    // alert(this.daWakodepos);
+    // this.onResponseSuccess(res);
+
+    console.log(selectedStatus);
+  }
+
   onChangekelurahan(selectedStatus: any) {
     // alert(this.postId);
     const datakodepos = selectedStatus.split('|');
 
     this.daWakodepos = datakodepos[0];
+
+    // alert(this.daWakodepos);
+    // this.onResponseSuccess(res);
+
+    console.log(selectedStatus);
+  }
+
+  onChangekelurahanpasangan(selectedStatus: any) {
+    // alert(this.postId);
+    const datakodepos = selectedStatus.split('|');
+
+    this.kode_pos_pasangan = datakodepos[0];
 
     // alert(this.daWakodepos);
     // this.onResponseSuccess(res);

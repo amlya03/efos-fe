@@ -147,16 +147,16 @@ export class HasilPrescreeningComponent implements OnInit {
         const tglLahir = this.daWa.tanggal_lahir;
         const tglLahirpasangan = this.daWa.tanggal_lahir_pasangan;
         const nik = this.ktp;
-        // this.cekdukcapil(tglLahir, tglLahirpasangan);
-        this.checkstatusktpmanual(nik);
+        this.cekdukcapil(tglLahir, tglLahirpasangan);
+        // this.checkstatusktpmanual(nik);
 
-        // this.getduplikatc( this.ktp, this.nama).subscribe({
-        //   next: (res: EntityArrayResponseDaWa) => {
-        //    this.duplikate = res.body?.result;
-        //     console.warn('duplikat', this.dataslik);
-        //     console.warn('duplikat',res);
-        //   },
-        // });
+        this.getduplikatc(this.ktp, this.nama).subscribe({
+          next: (res: EntityArrayResponseDaWa) => {
+            this.duplikate = res.body?.result;
+            console.warn('duplikat', this.dataslik);
+            console.warn('duplikat', res);
+          },
+        });
       },
     });
 
@@ -176,18 +176,17 @@ export class HasilPrescreeningComponent implements OnInit {
         }
       });
     });
-    //     this.getdataslik().subscribe({
-    //       next: (res: EntityArrayResponseDaWa) => {
-    //       },
-    //     });
+    this.getdataslik().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {},
+    });
 
-    //     this.getdataslikp().subscribe({
-    //       next: (res: EntityArrayResponseDaWa) => {
-    //  this.dataslikp = res.body?.result.dataSlikResult;
-    //         console.warn('sliknih', this.dataslik);
-    //         console.warn('sliknih',res);
-    //       },
-    //     });
+    this.getdataslikp().subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        this.dataslikp = res.body?.result.dataSlikResult;
+        console.warn('sliknih', this.dataslik);
+        console.warn('sliknih', res);
+      },
+    });
   }
   simpanstatusktp(status: any) {
     alert(status);
@@ -320,7 +319,7 @@ export class HasilPrescreeningComponent implements OnInit {
     var str = new Date().setSeconds(0, 0);
     var dt = new Date(str1).toISOString();
 
-    var str2 = new Date().setSeconds(0, 0);
+    var str2 = new Date();
     var dt2 = new Date(str2).toISOString().replace(/-/g, '');
     var stringhapustitik = dt2.replace(/T/g, '');
     var stringhilangz = stringhapustitik.replace(/Z/g, '');
@@ -343,12 +342,25 @@ export class HasilPrescreeningComponent implements OnInit {
     var hasilmiripdongfinal = hasilmiripdong?.replace(/:/g, '');
     // yyyy/mm/dd HH:mm:ss
 
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    var hour = today.getHours();
+    // today.getMinutes() <10?'0':'';
+    var menit = String(today.getMinutes()).padStart(2, '0');
+    var secon = today.getSeconds();
+    var milisecon = today.getMilliseconds();
+    var reffnumbernya = yyyy + mm + dd + hour + menit + secon + milisecon;
+
     var datanih = d.setTime(d.getTime() + d.getTimezoneOffset() * 60 * 1000);
 
     var strnih = ['-', ':', '.', 'T'];
     var rplc = ['', '', '', ''];
     // var hasilakhirlelah=dt.replace(strnih,rplc);
-    console.log('makantuh' + finalhasil);
+
+    console.log('makantuh2' + reffnumbernya);
+    console.log('makantuh' + menit);
     console.log(finalhasil2);
     console.log(datanih);
     console.log('benar' + dt);
@@ -387,7 +399,7 @@ export class HasilPrescreeningComponent implements OnInit {
           no_id: this.datakirimanappide,
           tanggal_lahir: this.datakirimanappide,
 
-          reffNumber: hasilmiripdongfinal,
+          reffNumber: reffnumbernya,
           timestamp: timestamp,
           channelID: 'EFOS',
           NIK: this.daWa.no_ktp,
@@ -445,7 +457,7 @@ export class HasilPrescreeningComponent implements OnInit {
           no_id: this.datakirimanappide,
           tanggal_lahir: this.datakirimanappide,
 
-          reffNumber: hasilmiripdongfinal,
+          reffNumber: reffnumbernya,
           timestamp: timestamp,
           channelID: 'EFOS',
           NIK: this.daWa.no_ktp_pasangan,
@@ -503,7 +515,7 @@ export class HasilPrescreeningComponent implements OnInit {
           no_id: this.datakirimanappide,
           tanggal_lahir: this.datakirimanappide,
 
-          reffNumber: hasilmiripdongfinal,
+          reffNumber: reffnumbernya,
           timestamp: timestamp,
           channelID: 'EFOS',
           NIK: this.daWa.no_ktp,
