@@ -609,7 +609,7 @@ gotoprescreaning(getappide: any, kodeposget: any, getcuref: any,kodeposgetp:any)
     // alert(kirimanprovinsipasangan);
     // alert(kirimanprovinsipasangan.indexOf('|') !== -1);
     this.http
-    .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
+    .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide', {
       headers: headers,
       nama: nama.value,
       nama_pasangan: nama_pasangan.value,
@@ -663,7 +663,7 @@ gotoprescreaning(getappide: any, kodeposget: any, getcuref: any,kodeposgetp:any)
       created_date: '',
       email: '',
       email_pasangan: '',
-      id: 0,
+      id: this.idcustomer,
       jumlah_anak: '',
       rt: rt.value,
       rt_domisili: '',
@@ -754,7 +754,7 @@ gotoprescreaning(getappide: any, kodeposget: any, getcuref: any,kodeposgetp:any)
 
   // alert(this.umur);
     this.http
-    .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
+    .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide', {
       headers: headers,
       nama: nama.value,
       nama_pasangan: '',
@@ -808,7 +808,7 @@ gotoprescreaning(getappide: any, kodeposget: any, getcuref: any,kodeposgetp:any)
       created_date: '',
       email: '',
       email_pasangan: '',
-      id: 0,
+      id: this.idcustomer,
       jumlah_anak: '',
       rt: rt.value,
       rt_domisili: '',
@@ -895,6 +895,7 @@ gotoprescreaning(getappide: any, kodeposget: any, getcuref: any,kodeposgetp:any)
       const tanggal_terbit_ktp_pasangan = document.getElementById('tanggal_terbit_ktp_pasangan') as HTMLInputElement | any;
       const tanggal_exp_ktp_pasangan = document.getElementById('tanggal_exp_ktp_pasangan') as HTMLInputElement | any;
       const no_handphone_pasangan = document.getElementById('no_handphone_pasangan') as HTMLInputElement | any;
+    
 
 
 
@@ -1014,7 +1015,7 @@ gotoprescreaning(getappide: any, kodeposget: any, getcuref: any,kodeposgetp:any)
           created_date: '',
           email: '',
           email_pasangan: '',
-          id: 0,
+          id: this.idcustomer,
           jumlah_anak: '',
           rt: rt.value,
           rt_domisili: '',

@@ -7,6 +7,11 @@ import { Observable } from 'rxjs';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { DatePipe } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { inputModel } from '../hasil-prescreening/inputslikModel.model';
+import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
+import { slik } from '../services/config/slik.model';
 // import { count } from 'console';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -30,17 +35,49 @@ export class HasilPrescreeningComponent implements OnInit {
   datadukcapilusername: any;
   datadukcapilpasangan: any;
   dawastatuspernikaham: any;
-  dataslik: any;
+  dataslik?: slik[];
   dataslikp: any;
   nama: any;
   ktp: any;
   duplikate: any;
   potongankakotanihpasangan: any;
-
+  tampunganradiobuttonnama: any;
+  tampunganradiobuttontanggal: any;
+  tampunganradiobuttonstatus: any;
+  tampunganradiobuttonalamat: any;
+  tampunganradiobuttonprovinsi: any;
+  tampunganradiobuttonkota: any;
+  tampunganradiobuttonkecamatan: any;
+  tampunganradiobuttonkelurahan: any;
+  tampunganradiobuttonrt: any;
+  tampunganradiobuttonrw: any;
+  tampunganradiobuttonjenis: any;
+  tampunganradiobuttonnamapasangan: any;
+  tampunganradiobuttontanggalpasangan: any;
+  tampunganradiobuttonstatuspasangan: any;
+  tampunganradiobuttonalamatpasangan: any;
+  tampunganradiobuttonprovinsipasangan: any;
+  tampunganradiobuttonkotapasangan: any;
+  tampunganradiobuttonkecamatanpasangan: any;
+  tampunganradiobuttonkelurahanpasangan: any;
+  tampunganradiobuttonrtpasangan: any;
+  tampunganradiobuttonrwpasangan: any;
+  tampunganradiobuttonjenispasangan: any;
+  personalInfoForm!: FormGroup;
+  personalInfoFormpasangan!: FormGroup;
+  personalInfoModel: any;
+  id: any;
+  ktp_pasangan: any;
+  inputScoring: inputModel[] = [];
+  listLajangSlik: slik[] = new Array<slik>();
+  listMenikahSlik: slik[] = new Array<slik>();
+  appidmanual: any;
   constructor(
+    protected dataRumah: ServiceVerificationService,
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
+    private formBuilder: FormBuilder,
     protected applicationConfigService: ApplicationConfigService
   ) {
     this.route.queryParams.subscribe(params => {
@@ -59,9 +96,35 @@ export class HasilPrescreeningComponent implements OnInit {
   protected apigetslit = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/fetchDataSlik?sd=');
   protected apigetduplikat = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getDuplicateCheck?sk=');
 
-
   ngOnInit(): void {
     this.load();
+    this.personalInfoForm = this.formBuilder.group({
+      radiobuttonnama: [{ value: '' || null }, Validators.required],
+      radiobuttontanggal: [{ value: '' || null }, Validators.required],
+      radiobuttonstatus: [{ value: '' || null }, Validators.required],
+      radiobuttonalamat: [{ value: '' || null }, Validators.required],
+      radiobuttonprovinsi: [{ value: '' || null }, Validators.required],
+      radiobuttonkota: [{ value: '' || null }, Validators.required],
+      radiobuttonkecamatan: [{ value: '' || null }, Validators.required],
+      radiobuttonkelurahan: [{ value: '' || null }, Validators.required],
+      radiobuttonrt: [{ value: '' || null }, Validators.required],
+      radiobuttonrw: [{ value: '' || null }, Validators.required],
+      radiobuttonjenis: [{ value: '' || null }, Validators.required],
+    });
+
+    this.personalInfoFormpasangan = this.formBuilder.group({
+      radiobuttonnamapasangan: [{ value: '' || null }, Validators.required],
+      radiobuttontanggalpasangan: [{ value: '' || null }, Validators.required],
+      radiobuttonstatuspasangan: [{ value: '' || null }, Validators.required],
+      radiobuttonalamatpasangan: [{ value: '' || null }, Validators.required],
+      radiobuttonprovinsipasangan: [{ value: '' || null }, Validators.required],
+      radiobuttonkotapasangan: [{ value: '' || null }, Validators.required],
+      radiobuttonkecamatanpasangan: [{ value: '' || null }, Validators.required],
+      radiobuttonkelurahanpasangan: [{ value: '' || null }, Validators.required],
+      radiobuttonrtpasangan: [{ value: '' || null }, Validators.required],
+      radiobuttonrwpasangan: [{ value: '' || null }, Validators.required],
+      radiobuttonjenispasangan: [{ value: '' || null }, Validators.required],
+    });
   }
 
   load() {
@@ -73,62 +136,182 @@ export class HasilPrescreeningComponent implements OnInit {
         this.daWa = res.body?.result.customer;
         this.nama = res.body?.result.customer.nama;
         this.ktp = res.body?.result.customer.no_ktp;
-        this.dawastatuspernikaham=res.body?.result.customer.status_perkawinan;
+        this.id = res.body?.result.customer.id;
+        this.appidmanual = res.body?.result.customer.id;
+        this.ktp_pasangan = res.body?.result.customer.no_ktp_pasangan;
+        this.dawastatuspernikaham = res.body?.result.customer.status_perkawinan;
+
         console.warn('customer', res.body?.result.customer);
-        alert( this.dawastatuspernikaham);
+        alert(this.dawastatuspernikaham);
         // this.onResponseSuccess(res);
-      ;
         const tglLahir = this.daWa.tanggal_lahir;
         const tglLahirpasangan = this.daWa.tanggal_lahir_pasangan;
-        this.cekdukcapil(tglLahir, tglLahirpasangan);
+        const nik = this.ktp;
+        // this.cekdukcapil(tglLahir, tglLahirpasangan);
+        this.checkstatusktpmanual(nik);
 
-        this.getduplikatc( this.ktp, this.nama).subscribe({
-          next: (res: EntityArrayResponseDaWa) => {
-           this.duplikate = res.body?.result;
-            console.warn('duplikat', this.dataslik);
-            console.warn('duplikat',res);
+        // this.getduplikatc( this.ktp, this.nama).subscribe({
+        //   next: (res: EntityArrayResponseDaWa) => {
+        //    this.duplikate = res.body?.result;
+        //     console.warn('duplikat', this.dataslik);
+        //     console.warn('duplikat',res);
+        //   },
+        // });
+      },
+    });
+
+    this.dataRumah.fetchSlik(this.datakirimanappide).subscribe(data => {
+      this.dataslik = data.result.dataSlikResult;
+      console.warn('ttesttt', this.dataslik);
+      this.dataslik?.forEach(element => {
+        console.warn('element', element.response_description == 'get SLIK Result Success');
+        if (element.response_description == 'get Slik Result Success') {
+          if (element.status_applicant === 'Debitur Utama Individu') {
+            this.listLajangSlik.push(element);
+            console.warn('lajang', this.listLajangSlik);
+          } else {
+            this.listMenikahSlik.push(element);
+            console.warn('menikah', this.listMenikahSlik);
+          }
+        }
+      });
+    });
+    //     this.getdataslik().subscribe({
+    //       next: (res: EntityArrayResponseDaWa) => {
+    //       },
+    //     });
+
+    //     this.getdataslikp().subscribe({
+    //       next: (res: EntityArrayResponseDaWa) => {
+    //  this.dataslikp = res.body?.result.dataSlikResult;
+    //         console.warn('sliknih', this.dataslik);
+    //         console.warn('sliknih',res);
+    //       },
+    //     });
+  }
+  simpanstatusktp(status: any) {
+    alert(status);
+    if (status == 'Lajang') {
+      var pipe = new DatePipe('en-US');
+      var hasilmiripdong = pipe.transform(Date.now(), 'yyyy:mm:ddHH:mm:ss');
+      //  var hasilmiripdong1 = hasilmiripdong?.replace(/|/g,'');
+      var hasilmiripdongfinal = hasilmiripdong?.replace(/:/g, '');
+
+      this.http
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify_manual', {
+          alamat_ktp: this.personalInfoForm.get('radiobuttonalamat')?.value,
+          id: this.id,
+          jenis_kelamin: this.personalInfoForm.get('radiobuttonjenis')?.value,
+          kecamatan: this.personalInfoForm.get('radiobuttonkecamatan')?.value,
+          kelurahan: this.personalInfoForm.get('radiobuttonkelurahan')?.value,
+          kota: this.personalInfoForm.get('radiobuttonkota')?.value,
+          nama_lengkap: this.personalInfoForm.get('radiobuttonnama')?.value,
+          nik: this.ktp,
+          provinsi: this.personalInfoForm.get('radiobuttonprovinsi')?.value,
+          ref_number: hasilmiripdongfinal,
+          rt: this.personalInfoForm.get('radiobuttonrt')?.value,
+          rw: this.personalInfoForm.get('radiobuttonrw')?.value,
+          status_kawin: this.personalInfoForm.get('radiobuttonstatus')?.value,
+          tanggal_lahir: this.personalInfoForm.get('radiobuttontanggal')?.value,
+        })
+        .subscribe({
+          next: data => {
+            this.contohdata = data.result.app_no_de;
+
+            this.router.navigate(['/hasilprescreening'], {
+              queryParams: {
+                datakirimanid: this.datakirimanid,
+                datakirimantgllahir: this.datakirimantgllahir,
+                datakirimanappide: this.datakirimanappide,
+              },
+            });
           },
         });
+    } else {
+      var pipe = new DatePipe('en-US');
+      var hasilmiripdong = pipe.transform(Date.now(), 'yyyy:mm:ddHH:mm:ss');
+      //  var hasilmiripdong1 = hasilmiripdong?.replace(/|/g,'');
+      var hasilmiripdongfinal = hasilmiripdong?.replace(/:/g, '');
 
-      },
-    });
+      // const radiobtnnama = document.getElementById('umur') as HTMLInputElement | any;
+      // if(radiobtnnama == 'sesuai'){
+      //   const kirimradiobtnnama='sesuai'
+      // }else{
 
-    this.getdataslik().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
- this.dataslik = res.body?.result.dataSlikResult;
-        console.warn('sliknih', this.dataslik);
-        console.warn('sliknih',res);
-      },
-    });
+      // }
+      const radiobtntgl = document.getElementById('kode_pos') as HTMLInputElement | any;
+      const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
-    this.getdataslikp().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
- this.dataslikp = res.body?.result.dataSlikResult;
-        console.warn('sliknih', this.dataslik);
-        console.warn('sliknih',res);
-      },
-    });
+      this.http
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify_manual', {
+          headers: headers,
+          alamat_ktp: this.personalInfoForm.get('radiobuttonalamat')?.value,
+          id: this.id,
+          jenis_kelamin: this.personalInfoForm.get('radiobuttonjenis')?.value,
+          kecamatan: this.personalInfoForm.get('radiobuttonkecamatan')?.value,
+          kelurahan: this.personalInfoForm.get('radiobuttonkelurahan')?.value,
+          kota: this.personalInfoForm.get('radiobuttonkota')?.value,
+          nama_lengkap: this.personalInfoForm.get('radiobuttonnama')?.value,
+          nik: this.ktp,
+          provinsi: this.personalInfoForm.get('radiobuttonprovinsi')?.value,
+          ref_number: hasilmiripdongfinal,
+          rt: this.personalInfoForm.get('radiobuttonrt')?.value,
+          rw: this.personalInfoForm.get('radiobuttonrw')?.value,
+          status_kawin: this.personalInfoForm.get('radiobuttonstatus')?.value,
+          tanggal_lahir: this.personalInfoForm.get('radiobuttontanggal')?.value,
+        })
+        .subscribe(resposne => {
+          this.contohdata = resposne.result.id;
+          console.log('responsesimpndataktp', resposne);
+          this.http
+            .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify_manual', {
+              headers: headers,
+              alamat_ktp: this.personalInfoFormpasangan.get('radiobuttonalamatpasangan')?.value,
+              id: this.id,
+              jenis_kelamin: this.personalInfoFormpasangan.get('radiobuttonjenispasangan')?.value,
+              kecamatan: this.personalInfoFormpasangan.get('radiobuttonkecamatanpasangan')?.value,
+              kelurahan: this.personalInfoFormpasangan.get('radiobuttonkelurahanpasangan')?.value,
+              kota: this.personalInfoFormpasangan.get('radiobuttonkotapasangan')?.value,
+              nama_lengkap: this.personalInfoFormpasangan.get('radiobuttonnamapasangan')?.value,
+              nik: this.ktp_pasangan,
+              provinsi: this.personalInfoFormpasangan.get('radiobuttonprovinsipasangan')?.value,
+              ref_number: hasilmiripdongfinal,
+              rt: this.personalInfoFormpasangan.get('radiobuttonrtpasangan')?.value,
+              rw: this.personalInfoFormpasangan.get('radiobuttonrwpasangan')?.value,
+              status_kawin: this.personalInfoFormpasangan.get('radiobuttonstatuspasangan')?.value,
+              tanggal_lahir: this.personalInfoFormpasangan.get('radiobuttontanggalpasangan')?.value,
+            })
+            .subscribe({
+              next: data => {
+                this.contohdata = data.result.app_no_de;
 
-
-
+                this.router.navigate(['/hasilprescreening'], {
+                  queryParams: {
+                    datakirimanid: this.datakirimanid,
+                    datakirimantgllahir: this.datakirimantgllahir,
+                    datakirimanappide: this.datakirimanappide,
+                  },
+                });
+              },
+            });
+        });
+    }
   }
 
   getdataslik(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.apigetslit + 'app_20221017_667', { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.apigetslit + this.datakirimanappide, { params: options, observe: 'response' });
   }
 
   getdataslikp(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.apigetslit + 'app_20221017_667', { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.apigetslit + this.datakirimanappide, { params: options, observe: 'response' });
   }
 
-
-  getduplikatc(noktp:any,nama:any,req?: any): Observable<EntityArrayResponseDaWa> {
+  getduplikatc(noktp: any, nama: any, req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.apigetduplikat + noktp +'&sn='+nama, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.apigetduplikat + noktp + '&sn=' + nama, { params: options, observe: 'response' });
   }
-
 
   cekdukcapil(tglLahir: any, tglLahirpasangan: any) {
     // let dateTime = new Date()
@@ -284,7 +467,7 @@ export class HasilPrescreeningComponent implements OnInit {
           kodeKecamatan: '',
           kodeKelurahan: '',
           namaPropinsi: this.daWa.provinsi_pasangan,
-          namaKabupaten:  this.potongankakotanihpasangan,
+          namaKabupaten: this.potongankakotanihpasangan,
           namaKecamatan: this.daWa.kecamatan_pasangan,
           namaKelurahan: this.daWa.kelurahan_pasangan,
           noRW: this.daWa.rw_pasangan,
@@ -429,10 +612,341 @@ export class HasilPrescreeningComponent implements OnInit {
         },
       });
   }
+
+  checkstatusktpmanual(value: any) {
+    if (this.dawastatuspernikaham == 'Lajang') {
+      this.http
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/get_data_dukcapil_manual', {
+          nik: value,
+        })
+        .subscribe({
+          next: data => {
+            this.personalInfoModel = data.result;
+            console.warn('INIDIAPIBN', this.personalInfoModel);
+            // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
+            // return this.postId;
+            alert(this.personalInfoModel.tanggal_lahir);
+
+            let retrivePersonalInfo = {
+              radiobuttonnama: this.personalInfoModel.nama_lengkap,
+              radiobuttontanggal: this.personalInfoModel.tanggal_lahir,
+              radiobuttonstatus: this.personalInfoModel.status_kawin,
+              radiobuttonalamat: this.personalInfoModel.alamat_ktp,
+              radiobuttonprovinsi: this.personalInfoModel.provinsi,
+              radiobuttonkota: this.personalInfoModel.kota,
+              radiobuttonkecamatan: this.personalInfoModel.kecamatan,
+              radiobuttonkelurahan: this.personalInfoModel.kelurahan,
+              radiobuttonrt: this.personalInfoModel.rt,
+              radiobuttonrw: this.personalInfoModel.rw,
+              radiobuttonjenis: this.personalInfoModel.jenis_kelamin,
+            };
+            this.personalInfoForm.setValue(retrivePersonalInfo);
+          },
+        });
+    } else {
+      alert('fungsi else jalan');
+      this.http
+        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/get_data_dukcapil_manual', {
+          nik: value,
+        })
+        .subscribe({
+          next: data => {
+            this.personalInfoModel = data.result;
+            console.warn('punyaelsenya', this.personalInfoModel);
+            // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
+            // return this.postId;
+            alert(this.personalInfoModel.tanggal_lahir);
+
+            let retrivePersonalInfo = {
+              radiobuttonnama: this.personalInfoModel.nama_lengkap,
+              radiobuttontanggal: this.personalInfoModel.tanggal_lahir,
+              radiobuttonstatus: this.personalInfoModel.status_kawin,
+              radiobuttonalamat: this.personalInfoModel.alamat_ktp,
+              radiobuttonprovinsi: this.personalInfoModel.provinsi,
+              radiobuttonkota: this.personalInfoModel.kota,
+              radiobuttonkecamatan: this.personalInfoModel.kecamatan,
+              radiobuttonkelurahan: this.personalInfoModel.kelurahan,
+              radiobuttonrt: this.personalInfoModel.rt,
+              radiobuttonrw: this.personalInfoModel.rw,
+              radiobuttonjenis: this.personalInfoModel.jenis_kelamin,
+            };
+            this.personalInfoForm.setValue(retrivePersonalInfo);
+            this.checkstatusktpmanualpasangan();
+          },
+        });
+    }
+  }
+
+  checkstatusktpmanualpasangan() {
+    alert('fungsipasangam');
+    this.http
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/get_data_dukcapil_manual', {
+        nik: this.ktp_pasangan,
+      })
+      .subscribe({
+        next: data => {
+          this.personalInfoModel = data.result;
+          console.warn('INIDIAPIBN', this.personalInfoModel);
+          // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
+          // return this.postId;
+          alert(this.personalInfoModel.tanggal_lahir);
+
+          let retrivePersonalInfopasangan = {
+            radiobuttonnamapasangan: this.personalInfoModel.nama_lengkap,
+            radiobuttontanggalpasangan: this.personalInfoModel.tanggal_lahir,
+            radiobuttonstatuspasangan: this.personalInfoModel.status_kawin,
+            radiobuttonalamatpasangan: this.personalInfoModel.alamat_ktp,
+            radiobuttonprovinsipasangan: this.personalInfoModel.provinsi,
+            radiobuttonkotapasangan: this.personalInfoModel.kota,
+            radiobuttonkecamatanpasangan: this.personalInfoModel.kecamatan,
+            radiobuttonkelurahanpasangan: this.personalInfoModel.kelurahan,
+            radiobuttonrtpasangan: this.personalInfoModel.rt,
+            radiobuttonrwpasangan: this.personalInfoModel.rw,
+            radiobuttonjenispasangan: this.personalInfoModel.jenis_kelamin,
+          };
+          this.personalInfoFormpasangan.setValue(retrivePersonalInfopasangan);
+        },
+      });
+  }
+
   backtoide(): void {
     this.router.navigate(['/daftaraplikasiide'], {
       queryParams: {},
     });
   }
+  contoh(): void {
+    let options = this.inputScoring.map((option: any) => {
+      return `
+        <option key="${option}" value="${option.parameter_type}">
+            ${option.parameter_description}
+        </option>
+      `;
+    });
+    $(document).ready(function () {
+      $('#parameter').change(function () {
+        let parameterValue = $(this).val();
+        if (parameterValue === '1') {
+          $('#minMaxDiv').hide();
+          $('#dataValueDiv').show();
+        } else {
+          $('#minMaxDiv').show();
+          $('#dataValueDiv').hide();
+        }
+      });
+    });
+    // const { value: formValues } = await Swal.fire({
+    Swal.fire({
+      title: 'Tambah SLIK',
+      html:
+        '<br />' +
+        '<div class="row form-material"><div class="form-group row">' +
+        '<div class="form-group row"><label class="col-sm-3 col-form-label">Nama Bank?</label>' +
+        '<div class="col-sm-9"><input type="text" class="form-control" id="Nama_bank"/>' +
+        '</div></div>' +
+        '<div class="form-group row"><label class="col-sm-3 col-form-label">Jenis fasilitas?</label>' +
+        '<div class="col-sm-9"><input type="text" class="form-control" id="Jenis_fasilitas"/>' +
+        '</div></div>' +
+        '<label class="col-sm-3 col-form-label">Kolektibilitas</label>' +
+        '<div class="col-sm-9"><select id="kolektibilitas" class="form-control"><option value="">Pilih</option><option value="Lancar">Lancar</option><option value="Nyandet">Nyandet</option><option value="gkbisabayar">Gk bisa bayar</option></select>' +
+        '</div></div>' +
+        '<label class="col-sm-3 col-form-label">Keteranga</label>' +
+        '<div class="col-sm-9"><select id="keterangan" class="form-control"><option value="">Pilih</option><option value="Komsumsi">Komsumsi</option><option value="Investasi">Investasi</option><option value="GkTau">Gk Tau</option></select>' +
+        '</div></div>' +
+        '<div class="form-group row"><label class="col-sm-3 col-form-label">Tanggal Mulai?</label>' +
+        '<div class="col-sm-9"><input type="date" class="form-control" id="tangal_mulai"/>' +
+        '</div></div>' +
+        '<div class="form-group row"><label class="col-sm-3 col-form-label">tanggal jatuh tempo</label>' +
+        '<div class="col-sm-9"><input type="date" class="form-control" id="tangal_akhir"/>' +
+        '</div></div>' +
+        '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">angsuran</label>' +
+        '<div class="col-sm-9"><input type="text" class="form-control" id="angsuran"/>' +
+        '</div></div>' +
+        '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Outstanding</label>' +
+        '<div class="col-sm-9"><input type="text" class="form-control" id="Outstanding"/>' +
+        '</div></div>' +
+        '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Platform</label>' +
+        '<div class="col-sm-9"><input type="text" class="form-control" id="Platform"/>' +
+        '</div></div>' +
+        '<label class="col-sm-3 col-form-label">Status</label>' +
+        '<div class="col-sm-9"><select id="Status" class="form-control"><option value="">Pilih</option><option value="Lunas">Lunas</option><option value="Belumlunas">Belum lunas</option></select>' +
+        '</div></div>' +
+        '<div>',
+      focusConfirm: false,
+      // preConfirm: () => {
+      //   return [$('#produk').val(), $('#joint_income').val(), $('#parameter').val(), $('#data_value').val(), $('#min').val(), $('#max').val(), $('#score').val()];
+      // },
+    }).then(result => {
+      let proVal = $('#keterangan').val();
+      let joVal = $('#tangal_mulai').val();
+      let parVal = $('#tangal_akhir').val();
+      let datVal = $('#angsuran').val();
+      let namabank = $('#Nama_bank').val();
+      let jenisfasilitas = $('#Jenis_fasilitas').val();
+      let kolektibilitas = $('#kolektibilitas').val();
+      let Outstanding = $('#Outstanding').val();
+      let Platform = $('#Platform').val();
+      let Status = $('#Status').val();
+      if (proVal === '') {
+        alert('Gagal Menyimpan keterangan Belum diisi');
+        return;
+      } else if (joVal === '') {
+        alert('Gagal Menyimpan tangal mulai Belum dipilih');
+        return;
+      } else if (parVal === '') {
+        alert('Gagal Menyimpan tangal akhir Belum dipilih');
+        return;
+      } else if (datVal === '') {
+        alert('Gagal Menyimpan angsuran Belum diisi');
+        return;
+      } else {
+        this.http
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify_manual', {
+            id: '',
+            no_aplikasi: this.datakirimanappide,
+            id_number: this.ktp,
+            angsuran: datVal,
+            tanggal_jatuh_tempo: parVal,
+            response_description: 'get Slik Result Success',
+            status_applicant: 'Debitur Utama Individu',
+            tanggal_mulai: joVal,
+            jenis_kredit_pembiayaan_ket: jenisfasilitas,
+            jenis_penggunaan_ket: proVal,
+            plafon: Platform,
+            ljk_ket: namabank,
+            kondisi_ket: Status,
+            kualitas_ket: kolektibilitas,
+            baki_debet: Outstanding,
 
+            created_by: '',
+            created_date: '',
+          })
+          .subscribe({
+            next: response => {
+              console.warn(response);
+              alert('Data Berhasil disimpan');
+              window.location.reload();
+            },
+            error: error => console.warn(error),
+          });
+      }
+    });
+  }
+
+  contohpasangan(): void {
+    let options = this.inputScoring.map((option: any) => {
+      return `
+        <option key="${option}" value="${option.parameter_type}">
+            ${option.parameter_description}
+        </option>
+      `;
+    });
+    $(document).ready(function () {
+      $('#parameter').change(function () {
+        let parameterValue = $(this).val();
+        if (parameterValue === '1') {
+          $('#minMaxDiv').hide();
+          $('#dataValueDiv').show();
+        } else {
+          $('#minMaxDiv').show();
+          $('#dataValueDiv').hide();
+        }
+      });
+    });
+    // const { value: formValues } = await Swal.fire({
+    Swal.fire({
+      title: 'Tambah SLIK',
+      html:
+        '<br />' +
+        '<div class="row form-material"><div class="form-group row">' +
+        '<div class="form-group row"><label class="col-sm-3 col-form-label">Nama Bank?</label>' +
+        '<div class="col-sm-9"><input type="text" class="form-control" id="Nama_bank"/>' +
+        '</div></div>' +
+        '<div class="form-group row"><label class="col-sm-3 col-form-label">Jenis fasilitas?</label>' +
+        '<div class="col-sm-9"><input type="text" class="form-control" id="Jenis_fasilitas"/>' +
+        '</div></div>' +
+        '<label class="col-sm-3 col-form-label">Kolektibilitas</label>' +
+        '<div class="col-sm-9"><select id="kolektibilitas" class="form-control"><option value="">Pilih</option><option value="Lancar">Lancar</option><option value="Nyandet">Nyandet</option><option value="gkbisabayar">Gk bisa bayar</option></select>' +
+        '</div></div>' +
+        '<label class="col-sm-3 col-form-label">Keteranga</label>' +
+        '<div class="col-sm-9"><select id="keterangan" class="form-control"><option value="">Pilih</option><option value="Komsumsi">Komsumsi</option><option value="Investasi">Investasi</option><option value="GkTau">Gk Tau</option></select>' +
+        '</div></div>' +
+        '<div class="form-group row"><label class="col-sm-3 col-form-label">Tanggal Mulai?</label>' +
+        '<div class="col-sm-9"><input type="date" class="form-control" id="tangal_mulai"/>' +
+        '</div></div>' +
+        '<div class="form-group row"><label class="col-sm-3 col-form-label">tanggal jatuh tempo</label>' +
+        '<div class="col-sm-9"><input type="date" class="form-control" id="tangal_akhir"/>' +
+        '</div></div>' +
+        '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">angsuran</label>' +
+        '<div class="col-sm-9"><input type="text" class="form-control" id="angsuran"/>' +
+        '</div></div>' +
+        '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Outstanding</label>' +
+        '<div class="col-sm-9"><input type="text" class="form-control" id="Outstanding"/>' +
+        '</div></div>' +
+        '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Platform</label>' +
+        '<div class="col-sm-9"><input type="text" class="form-control" id="Platform"/>' +
+        '</div></div>' +
+        '<label class="col-sm-3 col-form-label">Status</label>' +
+        '<div class="col-sm-9"><select id="Status" class="form-control"><option value="">Pilih</option><option value="Lunas">Lunas</option><option value="Belumlunas">Belum lunas</option></select>' +
+        '</div></div>' +
+        '<div>',
+      focusConfirm: false,
+      // preConfirm: () => {
+      //   return [$('#produk').val(), $('#joint_income').val(), $('#parameter').val(), $('#data_value').val(), $('#min').val(), $('#max').val(), $('#score').val()];
+      // },
+    }).then(result => {
+      let proVal = $('#keterangan').val();
+      let joVal = $('#tangal_mulai').val();
+      let parVal = $('#tangal_akhir').val();
+      let datVal = $('#angsuran').val();
+      let namabank = $('#Nama_bank').val();
+      let jenisfasilitas = $('#Jenis_fasilitas').val();
+      let kolektibilitas = $('#kolektibilitas').val();
+      let Outstanding = $('#Outstanding').val();
+      let Platform = $('#Platform').val();
+      let Status = $('#Status').val();
+      if (proVal === '') {
+        alert('Gagal Menyimpan keterangan Belum diisi');
+        return;
+      } else if (joVal === '') {
+        alert('Gagal Menyimpan tangal mulai Belum dipilih');
+        return;
+      } else if (parVal === '') {
+        alert('Gagal Menyimpan tangal akhir Belum dipilih');
+        return;
+      } else if (datVal === '') {
+        alert('Gagal Menyimpan angsuran Belum diisi');
+        return;
+      } else {
+        this.http
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify_manual', {
+            id: '',
+            no_aplikasi: this.datakirimanappide,
+            id_number: this.ktp,
+            angsuran: datVal,
+            tanggal_jatuh_tempo: parVal,
+            response_description: 'get Slik Result Success',
+            status_applicant: 'Debitur Pasangan',
+            tanggal_mulai: joVal,
+            jenis_kredit_pembiayaan_ket: jenisfasilitas,
+            jenis_penggunaan_ket: proVal,
+            plafon: Platform,
+            ljk_ket: namabank,
+            kondisi_ket: Status,
+            kualitas_ket: kolektibilitas,
+            baki_debet: Outstanding,
+
+            created_by: '',
+            created_date: '',
+          })
+          .subscribe({
+            next: response => {
+              console.warn(response);
+              alert('Data Berhasil disimpan');
+              window.location.reload();
+            },
+            error: error => console.warn(error),
+          });
+      }
+    });
+  }
 }
