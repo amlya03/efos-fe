@@ -88,7 +88,7 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
             "browserTarget": "beta-new-efos:build:development",
-            "port": 4200
+            "port": 4999
           },
           "configurations": {
             "production": {

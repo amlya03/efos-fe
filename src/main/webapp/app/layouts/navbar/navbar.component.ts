@@ -74,6 +74,9 @@ export class NavbarComponent implements OnInit {
       this.statusPerkawinan = params.statusPerkawinan;
       this.datakirimanakategoripekerjaan = params.datakirimanakategoripekerjaan;
       this.datakirimanakategoripekerjaanNav = params.datakirimanakategoripekerjaan;
+      this.datakirimanid = params.datakirimanid;
+      this.datakirimantgllahir = params.datakirimantgllahir;
+      this.datakirimanappide = params.datakirimanappide;
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }

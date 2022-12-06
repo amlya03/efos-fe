@@ -132,7 +132,7 @@ export class HasilPrescreeningComponent implements OnInit {
 
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('tabel', res);
+        // console.warn('tabel', res);
         this.daWa = res.body?.result.customer;
         this.nama = res.body?.result.customer.nama;
         this.ktp = res.body?.result.customer.no_ktp;
@@ -141,14 +141,14 @@ export class HasilPrescreeningComponent implements OnInit {
         this.ktp_pasangan = res.body?.result.customer.no_ktp_pasangan;
         this.dawastatuspernikaham = res.body?.result.customer.status_perkawinan;
 
-        console.warn('customer', res.body?.result.customer);
-        alert(this.dawastatuspernikaham);
+        // console.warn('customer', res.body?.result.customer);
+        // alert(this.dawastatuspernikaham);
         // this.onResponseSuccess(res);
         const tglLahir = this.daWa.tanggal_lahir;
         const tglLahirpasangan = this.daWa.tanggal_lahir_pasangan;
         const nik = this.ktp;
-        // this.cekdukcapil(tglLahir, tglLahirpasangan);
-        this.checkstatusktpmanual(nik);
+        this.cekdukcapil(tglLahir, tglLahirpasangan);
+        // this.checkstatusktpmanual(nik);
 
         // this.getduplikatc( this.ktp, this.nama).subscribe({
         //   next: (res: EntityArrayResponseDaWa) => {
@@ -162,16 +162,16 @@ export class HasilPrescreeningComponent implements OnInit {
 
     this.dataRumah.fetchSlik(this.datakirimanappide).subscribe(data => {
       this.dataslik = data.result.dataSlikResult;
-      console.warn('ttesttt', this.dataslik);
+      // console.warn('ttesttt', this.dataslik);
       this.dataslik?.forEach(element => {
-        console.warn('element', element.response_description == 'get SLIK Result Success');
+        // console.warn('element', element.response_description == 'get SLIK Result Success');
         if (element.response_description == 'get Slik Result Success') {
           if (element.status_applicant === 'Debitur Utama Individu') {
             this.listLajangSlik.push(element);
-            console.warn('lajang', this.listLajangSlik);
+            // console.warn('lajang', this.listLajangSlik);
           } else {
             this.listMenikahSlik.push(element);
-            console.warn('menikah', this.listMenikahSlik);
+            // console.warn('menikah', this.listMenikahSlik);
           }
         }
       });
@@ -189,114 +189,114 @@ export class HasilPrescreeningComponent implements OnInit {
     //       },
     //     });
   }
-  simpanstatusktp(status: any) {
-    alert(status);
-    if (status == 'Lajang') {
-      var pipe = new DatePipe('en-US');
-      var hasilmiripdong = pipe.transform(Date.now(), 'yyyy:mm:ddHH:mm:ss');
-      //  var hasilmiripdong1 = hasilmiripdong?.replace(/|/g,'');
-      var hasilmiripdongfinal = hasilmiripdong?.replace(/:/g, '');
+  // simpanstatusktp(status: any) {
+  //   alert(status);
+  //   if (status == 'Lajang') {
+  //     var pipe = new DatePipe('en-US');
+  //     var hasilmiripdong = pipe.transform(Date.now(), 'yyyy:mm:ddHH:mm:ss');
+  //     //  var hasilmiripdong1 = hasilmiripdong?.replace(/|/g,'');
+  //     var hasilmiripdongfinal = hasilmiripdong?.replace(/:/g, '');
 
-      this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify_manual', {
-          alamat_ktp: this.personalInfoForm.get('radiobuttonalamat')?.value,
-          id: this.id,
-          jenis_kelamin: this.personalInfoForm.get('radiobuttonjenis')?.value,
-          kecamatan: this.personalInfoForm.get('radiobuttonkecamatan')?.value,
-          kelurahan: this.personalInfoForm.get('radiobuttonkelurahan')?.value,
-          kota: this.personalInfoForm.get('radiobuttonkota')?.value,
-          nama_lengkap: this.personalInfoForm.get('radiobuttonnama')?.value,
-          nik: this.ktp,
-          provinsi: this.personalInfoForm.get('radiobuttonprovinsi')?.value,
-          ref_number: hasilmiripdongfinal,
-          rt: this.personalInfoForm.get('radiobuttonrt')?.value,
-          rw: this.personalInfoForm.get('radiobuttonrw')?.value,
-          status_kawin: this.personalInfoForm.get('radiobuttonstatus')?.value,
-          tanggal_lahir: this.personalInfoForm.get('radiobuttontanggal')?.value,
-        })
-        .subscribe({
-          next: data => {
-            this.contohdata = data.result.app_no_de;
+  //     this.http
+  //       .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify_manual', {
+  //         alamat_ktp: this.personalInfoForm.get('radiobuttonalamat')?.value,
+  //         id: this.id,
+  //         jenis_kelamin: this.personalInfoForm.get('radiobuttonjenis')?.value,
+  //         kecamatan: this.personalInfoForm.get('radiobuttonkecamatan')?.value,
+  //         kelurahan: this.personalInfoForm.get('radiobuttonkelurahan')?.value,
+  //         kota: this.personalInfoForm.get('radiobuttonkota')?.value,
+  //         nama_lengkap: this.personalInfoForm.get('radiobuttonnama')?.value,
+  //         nik: this.ktp,
+  //         provinsi: this.personalInfoForm.get('radiobuttonprovinsi')?.value,
+  //         ref_number: hasilmiripdongfinal,
+  //         rt: this.personalInfoForm.get('radiobuttonrt')?.value,
+  //         rw: this.personalInfoForm.get('radiobuttonrw')?.value,
+  //         status_kawin: this.personalInfoForm.get('radiobuttonstatus')?.value,
+  //         tanggal_lahir: this.personalInfoForm.get('radiobuttontanggal')?.value,
+  //       })
+  //       .subscribe({
+  //         next: data => {
+  //           this.contohdata = data.result.app_no_de;
 
-            this.router.navigate(['/hasilprescreening'], {
-              queryParams: {
-                datakirimanid: this.datakirimanid,
-                datakirimantgllahir: this.datakirimantgllahir,
-                datakirimanappide: this.datakirimanappide,
-              },
-            });
-          },
-        });
-    } else {
-      var pipe = new DatePipe('en-US');
-      var hasilmiripdong = pipe.transform(Date.now(), 'yyyy:mm:ddHH:mm:ss');
-      //  var hasilmiripdong1 = hasilmiripdong?.replace(/|/g,'');
-      var hasilmiripdongfinal = hasilmiripdong?.replace(/:/g, '');
+  //           this.router.navigate(['/hasilprescreening'], {
+  //             queryParams: {
+  //               datakirimanid: this.datakirimanid,
+  //               datakirimantgllahir: this.datakirimantgllahir,
+  //               datakirimanappide: this.datakirimanappide,
+  //             },
+  //           });
+  //         },
+  //       });
+  //   } else {
+  //     var pipe = new DatePipe('en-US');
+  //     var hasilmiripdong = pipe.transform(Date.now(), 'yyyy:mm:ddHH:mm:ss');
+  //     //  var hasilmiripdong1 = hasilmiripdong?.replace(/|/g,'');
+  //     var hasilmiripdongfinal = hasilmiripdong?.replace(/:/g, '');
 
-      // const radiobtnnama = document.getElementById('umur') as HTMLInputElement | any;
-      // if(radiobtnnama == 'sesuai'){
-      //   const kirimradiobtnnama='sesuai'
-      // }else{
+  //     // const radiobtnnama = document.getElementById('umur') as HTMLInputElement | any;
+  //     // if(radiobtnnama == 'sesuai'){
+  //     //   const kirimradiobtnnama='sesuai'
+  //     // }else{
 
-      // }
-      const radiobtntgl = document.getElementById('kode_pos') as HTMLInputElement | any;
-      const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
+  //     // }
+  //     const radiobtntgl = document.getElementById('kode_pos') as HTMLInputElement | any;
+  //     const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
-      this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify_manual', {
-          headers: headers,
-          alamat_ktp: this.personalInfoForm.get('radiobuttonalamat')?.value,
-          id: this.id,
-          jenis_kelamin: this.personalInfoForm.get('radiobuttonjenis')?.value,
-          kecamatan: this.personalInfoForm.get('radiobuttonkecamatan')?.value,
-          kelurahan: this.personalInfoForm.get('radiobuttonkelurahan')?.value,
-          kota: this.personalInfoForm.get('radiobuttonkota')?.value,
-          nama_lengkap: this.personalInfoForm.get('radiobuttonnama')?.value,
-          nik: this.ktp,
-          provinsi: this.personalInfoForm.get('radiobuttonprovinsi')?.value,
-          ref_number: hasilmiripdongfinal,
-          rt: this.personalInfoForm.get('radiobuttonrt')?.value,
-          rw: this.personalInfoForm.get('radiobuttonrw')?.value,
-          status_kawin: this.personalInfoForm.get('radiobuttonstatus')?.value,
-          tanggal_lahir: this.personalInfoForm.get('radiobuttontanggal')?.value,
-        })
-        .subscribe(resposne => {
-          this.contohdata = resposne.result.id;
-          console.log('responsesimpndataktp', resposne);
-          this.http
-            .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify_manual', {
-              headers: headers,
-              alamat_ktp: this.personalInfoFormpasangan.get('radiobuttonalamatpasangan')?.value,
-              id: this.id,
-              jenis_kelamin: this.personalInfoFormpasangan.get('radiobuttonjenispasangan')?.value,
-              kecamatan: this.personalInfoFormpasangan.get('radiobuttonkecamatanpasangan')?.value,
-              kelurahan: this.personalInfoFormpasangan.get('radiobuttonkelurahanpasangan')?.value,
-              kota: this.personalInfoFormpasangan.get('radiobuttonkotapasangan')?.value,
-              nama_lengkap: this.personalInfoFormpasangan.get('radiobuttonnamapasangan')?.value,
-              nik: this.ktp_pasangan,
-              provinsi: this.personalInfoFormpasangan.get('radiobuttonprovinsipasangan')?.value,
-              ref_number: hasilmiripdongfinal,
-              rt: this.personalInfoFormpasangan.get('radiobuttonrtpasangan')?.value,
-              rw: this.personalInfoFormpasangan.get('radiobuttonrwpasangan')?.value,
-              status_kawin: this.personalInfoFormpasangan.get('radiobuttonstatuspasangan')?.value,
-              tanggal_lahir: this.personalInfoFormpasangan.get('radiobuttontanggalpasangan')?.value,
-            })
-            .subscribe({
-              next: data => {
-                this.contohdata = data.result.app_no_de;
+  //     this.http
+  //       .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify_manual', {
+  //         headers: headers,
+  //         alamat_ktp: this.personalInfoForm.get('radiobuttonalamat')?.value,
+  //         id: this.id,
+  //         jenis_kelamin: this.personalInfoForm.get('radiobuttonjenis')?.value,
+  //         kecamatan: this.personalInfoForm.get('radiobuttonkecamatan')?.value,
+  //         kelurahan: this.personalInfoForm.get('radiobuttonkelurahan')?.value,
+  //         kota: this.personalInfoForm.get('radiobuttonkota')?.value,
+  //         nama_lengkap: this.personalInfoForm.get('radiobuttonnama')?.value,
+  //         nik: this.ktp,
+  //         provinsi: this.personalInfoForm.get('radiobuttonprovinsi')?.value,
+  //         ref_number: hasilmiripdongfinal,
+  //         rt: this.personalInfoForm.get('radiobuttonrt')?.value,
+  //         rw: this.personalInfoForm.get('radiobuttonrw')?.value,
+  //         status_kawin: this.personalInfoForm.get('radiobuttonstatus')?.value,
+  //         tanggal_lahir: this.personalInfoForm.get('radiobuttontanggal')?.value,
+  //       })
+  //       .subscribe(resposne => {
+  //         this.contohdata = resposne.result.id;
+  //         console.log('responsesimpndataktp', resposne);
+  //         this.http
+  //           .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify_manual', {
+  //             headers: headers,
+  //             alamat_ktp: this.personalInfoFormpasangan.get('radiobuttonalamatpasangan')?.value,
+  //             id: this.id,
+  //             jenis_kelamin: this.personalInfoFormpasangan.get('radiobuttonjenispasangan')?.value,
+  //             kecamatan: this.personalInfoFormpasangan.get('radiobuttonkecamatanpasangan')?.value,
+  //             kelurahan: this.personalInfoFormpasangan.get('radiobuttonkelurahanpasangan')?.value,
+  //             kota: this.personalInfoFormpasangan.get('radiobuttonkotapasangan')?.value,
+  //             nama_lengkap: this.personalInfoFormpasangan.get('radiobuttonnamapasangan')?.value,
+  //             nik: this.ktp_pasangan,
+  //             provinsi: this.personalInfoFormpasangan.get('radiobuttonprovinsipasangan')?.value,
+  //             ref_number: hasilmiripdongfinal,
+  //             rt: this.personalInfoFormpasangan.get('radiobuttonrtpasangan')?.value,
+  //             rw: this.personalInfoFormpasangan.get('radiobuttonrwpasangan')?.value,
+  //             status_kawin: this.personalInfoFormpasangan.get('radiobuttonstatuspasangan')?.value,
+  //             tanggal_lahir: this.personalInfoFormpasangan.get('radiobuttontanggalpasangan')?.value,
+  //           })
+  //           .subscribe({
+  //             next: data => {
+  //               this.contohdata = data.result.app_no_de;
 
-                this.router.navigate(['/hasilprescreening'], {
-                  queryParams: {
-                    datakirimanid: this.datakirimanid,
-                    datakirimantgllahir: this.datakirimantgllahir,
-                    datakirimanappide: this.datakirimanappide,
-                  },
-                });
-              },
-            });
-        });
-    }
-  }
+  //               this.router.navigate(['/hasilprescreening'], {
+  //                 queryParams: {
+  //                   datakirimanid: this.datakirimanid,
+  //                   datakirimantgllahir: this.datakirimantgllahir,
+  //                   datakirimanappide: this.datakirimanappide,
+  //                 },
+  //               });
+  //             },
+  //           });
+  //       });
+  //   }
+  // }
 
   getdataslik(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
@@ -314,6 +314,7 @@ export class HasilPrescreeningComponent implements OnInit {
   }
 
   cekdukcapil(tglLahir: any, tglLahirpasangan: any) {
+    // alert('LOL');
     // let dateTime = new Date()
     let dateTime = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
     var str1 = new Date();
@@ -348,16 +349,16 @@ export class HasilPrescreeningComponent implements OnInit {
     var strnih = ['-', ':', '.', 'T'];
     var rplc = ['', '', '', ''];
     // var hasilakhirlelah=dt.replace(strnih,rplc);
-    console.log('makantuh' + finalhasil);
-    console.log(finalhasil2);
-    console.log(datanih);
-    console.log('benar' + dt);
-    console.log('data' + str4);
-    console.log(hasilmiripdong);
-    console.log(hasilmiripdongfinal);
-    console.log('tgl ini bener ' + tgllahirkirim);
-    console.log('tgllahir' + datee);
-    console.log('tgllahir' + hasilmiripdongbanyak);
+    // console.log('makantuh' + finalhasil);
+    // console.log(finalhasil2);
+    // console.log(datanih);
+    // console.log('benar' + dt);
+    // console.log('data' + str4);
+    // console.log(hasilmiripdong);
+    // console.log(hasilmiripdongfinal);
+    // console.log('tgl ini bener ' + tgllahirkirim);
+    // console.log('tgllahir' + datee);
+    // console.log('tgllahir' + hasilmiripdongbanyak);
     const reffNumber = 'aaa';
     // const timestamp = 'aaa';
     const local = 'aaa';
@@ -419,22 +420,22 @@ export class HasilPrescreeningComponent implements OnInit {
         .subscribe({
           next: data => {
             const codeverifducapilapi = data.code;
-            console.warn(codeverifducapilapi);
+            // console.warn(codeverifducapilapi);
 
             if (codeverifducapilapi != 200) {
               alert('gagal !200');
             } else {
               if (data.result.responseCode != '00') {
-                alert('ini gagal');
+                // alert('ini gagal');
                 alert(data.result.responseDesc);
                 this.datadukcapil = null;
-                console.warn('dukcapil' + this.datadukcapil);
+                // console.warn('dukcapil' + this.datadukcapil);
                 this.datadukcapilusername = null;
               } else {
                 this.datadukcapil = data.result;
-                console.warn('dukcapil' + this.datadukcapil);
+                // console.warn('dukcapil' + this.datadukcapil);
                 this.dataif = data.result.responseCode;
-                alert('berhasil ');
+                // alert('berhasil ');
               }
             }
           },
@@ -477,27 +478,28 @@ export class HasilPrescreeningComponent implements OnInit {
         .subscribe({
           next: data => {
             const codeverifducapilapi = data.code;
-            console.warn(codeverifducapilapi);
+            // console.warn(codeverifducapilapi);
 
             if (codeverifducapilapi != 200) {
               alert('gagal !200');
             } else {
               if (data.result.responseCode != '00') {
-                alert('ini gagal');
+                // alert('ini gagal');
                 alert(data.result.responseDesc);
                 this.datadukcapilpasangan = null;
-                console.warn('dukcapil' + this.datadukcapilpasangan);
+                // console.warn('dukcapil' + this.datadukcapilpasangan);
                 this.datadukcapilusername = null;
               } else {
                 this.datadukcapilpasangan = data.result;
-                console.warn('dukcapil' + this.datadukcapilpasangan);
+                // console.warn('dukcapil' + this.datadukcapilpasangan);
                 this.dataif = data.result.responseCode;
-                alert('berhasil ');
+                // alert('berhasil ');
               }
             }
           },
         });
     } else {
+      // alert('gagal');
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify', {
           no_id: this.datakirimanappide,
@@ -534,23 +536,25 @@ export class HasilPrescreeningComponent implements OnInit {
         })
         .subscribe({
           next: data => {
+            // alert(data);
             const codeverifducapilapi = data.code;
-            console.warn(codeverifducapilapi);
+            // console.warn('kllkk'+data);
 
             if (codeverifducapilapi != 200) {
               alert('gagal !200');
             } else {
+              // alert('inielse')
               if (data.result.responseCode != '00') {
-                alert('ini gagal');
+                // alert('ini gagal');
                 alert(data.result.responseDesc);
                 this.datadukcapil = null;
-                console.warn('dukcapil' + this.datadukcapil);
+                // console.warn('dukcapil' + this.datadukcapil);
                 this.datadukcapilusername = null;
               } else {
                 this.datadukcapil = data.result;
-                console.warn('dukcapil' + this.datadukcapil);
+                // console.warn('dukcapil' + this.datadukcapil);
                 this.dataif = data.result.responseCode;
-                alert('berhasil ');
+                // alert('berhasil ');
               }
             }
           },
@@ -607,8 +611,8 @@ export class HasilPrescreeningComponent implements OnInit {
           // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
           // return this.postId;
 
-          console.warn(data.result.token);
-          console.warn(this.hasildhn);
+          // console.warn(data.result.token);
+          // console.warn(this.hasildhn);
         },
       });
   }
@@ -622,10 +626,10 @@ export class HasilPrescreeningComponent implements OnInit {
         .subscribe({
           next: data => {
             this.personalInfoModel = data.result;
-            console.warn('INIDIAPIBN', this.personalInfoModel);
+            // console.warn('INIDIAPIBN', this.personalInfoModel);
             // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
             // return this.postId;
-            alert(this.personalInfoModel.tanggal_lahir);
+            // alert(this.personalInfoModel.tanggal_lahir);
 
             let retrivePersonalInfo = {
               radiobuttonnama: this.personalInfoModel.nama_lengkap,
@@ -644,7 +648,7 @@ export class HasilPrescreeningComponent implements OnInit {
           },
         });
     } else {
-      alert('fungsi else jalan');
+      // alert('fungsi else jalan');
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/get_data_dukcapil_manual', {
           nik: value,
@@ -652,10 +656,10 @@ export class HasilPrescreeningComponent implements OnInit {
         .subscribe({
           next: data => {
             this.personalInfoModel = data.result;
-            console.warn('punyaelsenya', this.personalInfoModel);
+            // console.warn('punyaelsenya', this.personalInfoModel);
             // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
             // return this.postId;
-            alert(this.personalInfoModel.tanggal_lahir);
+            // alert(this.personalInfoModel.tanggal_lahir);
 
             let retrivePersonalInfo = {
               radiobuttonnama: this.personalInfoModel.nama_lengkap,
@@ -678,7 +682,7 @@ export class HasilPrescreeningComponent implements OnInit {
   }
 
   checkstatusktpmanualpasangan() {
-    alert('fungsipasangam');
+    // alert('fungsipasangam');
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/get_data_dukcapil_manual', {
         nik: this.ktp_pasangan,
@@ -686,10 +690,10 @@ export class HasilPrescreeningComponent implements OnInit {
       .subscribe({
         next: data => {
           this.personalInfoModel = data.result;
-          console.warn('INIDIAPIBN', this.personalInfoModel);
+          // console.warn('INIDIAPIBN', this.personalInfoModel);
           // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
           // return this.postId;
-          alert(this.personalInfoModel.tanggal_lahir);
+          // alert(this.personalInfoModel.tanggal_lahir);
 
           let retrivePersonalInfopasangan = {
             radiobuttonnamapasangan: this.personalInfoModel.nama_lengkap,
@@ -822,7 +826,7 @@ export class HasilPrescreeningComponent implements OnInit {
           })
           .subscribe({
             next: response => {
-              console.warn(response);
+              // console.warn(response);
               alert('Data Berhasil disimpan');
               window.location.reload();
             },
@@ -940,7 +944,7 @@ export class HasilPrescreeningComponent implements OnInit {
           })
           .subscribe({
             next: response => {
-              console.warn(response);
+              // console.warn(response);
               alert('Data Berhasil disimpan');
               window.location.reload();
             },

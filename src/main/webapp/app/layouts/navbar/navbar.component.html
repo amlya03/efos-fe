@@ -48,7 +48,16 @@
                 <p>Initial Data Entry</p>
                 <span routerLink="/initial-data-entrynon" hidden></span>
                 <span routerLink="/initial-data-entryfix" hidden></span>
-                <span routerLink="/hasilprescreening" hidden></span>
+                <span
+                  routerLink="/hasilprescreening"
+                  [queryParams]="{
+                    datakirimanid: this.datakirimanid,
+                    datakirimantgllahir: this.datakirimantgllahir,
+                    datakirimanappide: this.datakirimanappide,
+                    datakirimanidcustomer: this.datakirimanidcustomer
+                  }"
+                  hidden
+                ></span>
                 <span routerLink="/editidefix" [queryParams]="{ datakirimanidcustomer: this.datakirimanidcustomer }" hidden></span>
                 <span routerLink="/editidenon" [queryParams]="{ datakirimanidcustomer: this.datakirimanidcustomer }" hidden></span>
               </a>
@@ -767,8 +776,22 @@
       router.url === '/initial-data-entrynon' ||
       router.url === '/editidenon' ||
       router.url === '/editidenon?datakirimanidcustomer=' + this.datakirimanidcustomer ||
+      router.url ===
+        '/editidenon?datakirimanid=' +
+          this.datakirimanid +
+          '&datakirimantgllahir=' +
+          this.datakirimantgllahir +
+          '&datakirimanappide=' +
+          this.datakirimanappide ||
       router.url === '/editidefix' ||
       router.url === '/editidefix?datakirimanidcustomer=' + this.datakirimanidcustomer ||
+      router.url ===
+        '/editidefix?datakirimanid=' +
+          this.datakirimanid +
+          '&datakirimantgllahir=' +
+          this.datakirimantgllahir +
+          '&datakirimanappide=' +
+          this.datakirimanappide ||
       router.url === '/hasilprescreening' ||
       router.url ===
         '/hasilprescreening?datakirimanid=' +
@@ -786,6 +809,11 @@
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'AO'"
+      [queryParams]="{
+        datakirimanid: this.datakirimanid,
+        datakirimantgllahir: this.datakirimantgllahir,
+        datakirimanappide: this.datakirimanappide
+      }"
     >
       <h6>Initial Data Entry</h6>
       <span routerLink="/initial-data-entrynon" hidden></span>
