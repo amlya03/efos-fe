@@ -132,7 +132,7 @@ export class HasilPrescreeningComponent implements OnInit {
 
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('tabel', res);
+        // console.warn('tabel', res);
         this.daWa = res.body?.result.customer;
         this.nama = res.body?.result.customer.nama;
         this.ktp = res.body?.result.customer.no_ktp;
@@ -141,55 +141,62 @@ export class HasilPrescreeningComponent implements OnInit {
         this.ktp_pasangan = res.body?.result.customer.no_ktp_pasangan;
         this.dawastatuspernikaham = res.body?.result.customer.status_perkawinan;
 
-        console.warn('customer', res.body?.result.customer);
-        alert(this.dawastatuspernikaham);
+        // console.warn('customer', res.body?.result.customer);
+        // alert(this.dawastatuspernikaham);
         // this.onResponseSuccess(res);
         const tglLahir = this.daWa.tanggal_lahir;
         const tglLahirpasangan = this.daWa.tanggal_lahir_pasangan;
         const nik = this.ktp;
         this.cekdukcapil(tglLahir, tglLahirpasangan);
+        this.cekslik(tglLahir, tglLahirpasangan);
+        //  this.cekdukcapil(tglLahir, tglLahirpasangan);
         // this.checkstatusktpmanual(nik);
 
         this.getduplikatc(this.ktp, this.nama).subscribe({
           next: (res: EntityArrayResponseDaWa) => {
             this.duplikate = res.body?.result;
-            console.warn('duplikat', this.dataslik);
-            console.warn('duplikat', res);
+            // console.warn('duplikat', this.dataslik);
+            // console.warn('duplikat',res);
           },
         });
       },
     });
 
+    //     this.getdataslik().subscribe({
+    //       next: (res: EntityArrayResponseDaWa) => {
+    //       },
+    //     });
+
+    //     this.getdataslikp().subscribe({
+    //       next: (res: EntityArrayResponseDaWa) => {
+    //  this.dataslikp = res.body?.result.dataSlikResult;
+    //         // console.warn('sliknih', this.dataslik);
+    //         // console.warn('sliknih',res);
+    //       },
+    //     });
+  }
+
+  cekkembalislik() {
     this.dataRumah.fetchSlik(this.datakirimanappide).subscribe(data => {
       this.dataslik = data.result.dataSlikResult;
-      console.warn('ttesttt', this.dataslik);
+      // console.warn('ttesttt', this.dataslik);
       this.dataslik?.forEach(element => {
-        console.warn('element', element.response_description == 'get SLIK Result Success');
+        // console.warn('element', element.response_description == 'get SLIK Result Success');
         if (element.response_description == 'get Slik Result Success') {
           if (element.status_applicant === 'Debitur Utama Individu') {
             this.listLajangSlik.push(element);
-            console.warn('lajang', this.listLajangSlik);
+            // console.warn('lajang', this.listLajangSlik);
           } else {
             this.listMenikahSlik.push(element);
-            console.warn('menikah', this.listMenikahSlik);
+            // console.warn('menikah', this.listMenikahSlik);
           }
         }
       });
     });
-    this.getdataslik().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {},
-    });
-
-    this.getdataslikp().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        this.dataslikp = res.body?.result.dataSlikResult;
-        console.warn('sliknih', this.dataslik);
-        console.warn('sliknih', res);
-      },
-    });
   }
+
   simpanstatusktp(status: any) {
-    alert(status);
+    // alert(status);
     if (status == 'Lajang') {
       var pipe = new DatePipe('en-US');
       var hasilmiripdong = pipe.transform(Date.now(), 'yyyy:mm:ddHH:mm:ss');
@@ -261,7 +268,7 @@ export class HasilPrescreeningComponent implements OnInit {
         })
         .subscribe(resposne => {
           this.contohdata = resposne.result.id;
-          console.log('responsesimpndataktp', resposne);
+          // console.log('responsesimpndataktp', resposne);
           this.http
             .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify_manual', {
               headers: headers,
@@ -312,6 +319,228 @@ export class HasilPrescreeningComponent implements OnInit {
     return this.http.get<ApiResponse>(this.apigetduplikat + noktp + '&sn=' + nama, { params: options, observe: 'response' });
   }
 
+  cekslik(tglLahir: any, tglLahirpasangan: any) {
+    // let dateTime = new Date()
+    let dateTime = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
+    var str1 = new Date();
+    var str = new Date().setSeconds(0, 0);
+    var dt = new Date(str1).toISOString();
+
+    var str2 = new Date();
+    var dt2 = new Date(str2).toISOString().replace(/-/g, '');
+    var stringhapustitik = dt2.replace(/T/g, '');
+    var stringhilangz = stringhapustitik.replace(/Z/g, '');
+    var stringhilangtitik = stringhilangz.replace(/'.'/g, '');
+    var finalhasil = stringhilangtitik.replace(/:/g, '');
+    var finalhasil2 = stringhilangtitik.replace(/./g, '');
+    var d = new Date();
+    var Datenih = new Date();
+    var pipe = new DatePipe('en-US');
+    var datee = tglLahir;
+    var dateepasangan = tglLahirpasangan;
+
+    const str4 = new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta' });
+    var timestamp = pipe.transform(Date.now(), 'yyyy-mm-dd HH:mm:ss');
+    var tgllahirkirim = pipe.transform(datee, 'dd-MM-yyyy');
+    var tgllahirkirimpasangan = pipe.transform(dateepasangan, 'dd-MM-yyyy');
+    var hasilmiripdongbanyak = pipe.transform(datee, 'yyyy:MM:dd ');
+    var hasilmiripdong = pipe.transform(Date.now(), 'yyyy:mm:ddHH:mm:ss');
+    //  var hasilmiripdong1 = hasilmiripdong?.replace(/|/g,'');
+    var hasilmiripdongfinal = hasilmiripdong?.replace(/:/g, '');
+    // yyyy/mm/dd HH:mm:ss
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    var hour = today.getHours();
+    // today.getMinutes() <10?'0':'';
+    var menit = String(today.getMinutes()).padStart(2, '0');
+    var secon = today.getSeconds();
+    var milisecon = today.getMilliseconds();
+    var reffnumbernya = yyyy + mm + dd + hour + menit + secon + milisecon;
+
+    var datanih = d.setTime(d.getTime() + d.getTimezoneOffset() * 60 * 1000);
+
+    var strnih = ['-', ':', '.', 'T'];
+    var rplc = ['', '', '', ''];
+    // var hasilakhirlelah=dt.replace(strnih,rplc);
+
+    // console.log('makantuh2' + reffnumbernya);
+    // console.log('makantuh' + menit);
+    // console.log(finalhasil2);
+    // console.log(datanih);
+    // console.log('benar' + dt);
+    // console.log('data' + str4);
+    // console.log(hasilmiripdong);
+    // console.log(hasilmiripdongfinal);
+    // console.log('tgl ini bener ' + tgllahirkirim);
+    // console.log('tgllahir' + datee);
+    // console.log('tgllahir' + hasilmiripdongbanyak);
+    const reffNumber = 'aaa';
+    // const timestamp = 'aaa';
+    const local = 'aaa';
+    const now = 'aaa';
+
+    const kirimanprovinsi = this.daWa.provinsi.split('|');
+    const kirimankabkota = this.daWa.kabkota.split('|');
+    const kirimankecamatan = this.daWa.kecamatan.split('|');
+    const kirimankelurahan = this.daWa.kelurahan.split('|');
+
+    if (this.daWa.kabkota.indexOf(' ')) {
+      this.potongankakotanih = this.daWa.kabkota.replace('Kota ', '');
+    }
+
+    if (this.daWa.kabkota_pasangan.indexOf(' ')) {
+      this.potongankakotanihpasangan = this.daWa.kabkota.replace('Kota ', '');
+    }
+    if (this.daWa.status_perkawinan === 'Menikah') {
+      this.statusnikah = 'KAWIN';
+    } else {
+      this.statusnikah = 'BELUM KAWIN';
+    }
+
+    // if (this.daWa.status_perkawinan === 'Menikah') {
+    //   this.http
+    //     .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify', {
+    // channelID: 'EFOS',
+    // idUSerCabang:'',
+    // jenisKelamin: this.daWa.jenis_kelamin,
+    // kodeCabang:'',
+    // namaNasabah: this.daWa.nama,
+    // noAplikasi: this.datakirimanappide,
+    // noKtp: this.daWa.no_ktp,
+    // npwp:'',
+    // reffNumber: reffnumbernya,
+    // tempatLahir: '',
+    // tglLahir: tgllahirkirim,
+    // timestamp: timestamp,
+    // TujuanSlikCheking: '',
+    // namaPasangan: '',
+    // noKtpPasangan: '',
+    // tempatLahirPasangan: '',
+    // tglLahirPasangan: '',
+    // jenisKelaminPAsangan: '',
+    // StatusMenikah: '',
+    //     })
+    //     .subscribe({
+    //       next: data => {
+    //         const codeverifducapilapi = data.code;
+    //         // console.warn(codeverifducapilapi);
+
+    //         if (codeverifducapilapi != 200) {
+    //           // alert('gagal !200');
+    //         } else {
+    //           if (data.result.responseCode != '00') {
+    //             // alert('ini gagal');
+    //             // alert(data.result.responseDesc);
+    //             this.datadukcapil = null;
+    //             // console.warn('dukcapil' + this.datadukcapil);
+    //             this.datadukcapilusername = null;
+    //           } else {
+    //             this.datadukcapil = data.result;
+    //             // console.warn('dukcapil' + this.datadukcapil);
+    //             this.dataif = data.result.responseCode;
+    //             // alert('berhasil ');
+    //           }
+    //         }
+    //       },
+    //     });
+
+    //   this.http
+    //     .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify', {
+    //       channelID: 'EFOS',
+    //       idUSerCabang:'',
+    //       jenisKelamin: this.daWa.jenis_kelamin,
+    //       kodeCabang:'',
+    //       namaNasabah: this.daWa.nama,
+    //       noAplikasi: this.datakirimanappide,
+    //       noKtp: this.daWa.no_ktp,
+    //       npwp:'',
+    //       reffNumber: reffnumbernya,
+    //       tempatLahir: '',
+    //       tglLahir: tgllahirkirim,
+    //       timestamp: timestamp,
+    //       TujuanSlikCheking: '',
+    //       namaPasangan: '',
+    //       noKtpPasangan: '',
+    //       tempatLahirPasangan: '',
+    //       tglLahirPasangan: '',
+    //       jenisKelaminPAsangan: '',
+    //       StatusMenikah: '',
+    //     })
+    //     .subscribe({
+    //       next: data => {
+    //         const codeverifducapilapi = data.code;
+    //         // console.warn(codeverifducapilapi);
+
+    //         if (codeverifducapilapi != 200) {
+    //           // alert('gagal !200');
+    //         } else {
+    //           if (data.result.responseCode != '00') {
+    //             // alert('ini gagal');
+    //             // alert(data.result.responseDesc);
+    //             this.datadukcapilpasangan = null;
+    //             // console.warn('dukcapil' + this.datadukcapilpasangan);
+    //             this.datadukcapilusername = null;
+    //           } else {
+    //             this.datadukcapilpasangan = data.result;
+    //             // console.warn('dukcapil' + this.datadukcapilpasangan);
+    //             this.dataif = data.result.responseCode;
+    //             // alert('berhasil ');
+    //           }
+    //         }
+    //       },
+    //     });
+    // } else {
+    this.http
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify', {
+        channelID: 'EFOS',
+        idUSerCabang: '',
+        jenisKelamin: this.daWa.jenis_kelamin,
+        kodeCabang: '',
+        namaNasabah: this.daWa.nama,
+        noAplikasi: this.datakirimanappide,
+        noKtp: this.daWa.no_ktp,
+        npwp: '',
+        reffNumber: reffnumbernya,
+        tempatLahir: '',
+        tglLahir: tgllahirkirim,
+        timestamp: timestamp,
+        TujuanSlikCheking: '99',
+        namaPasangan: this.daWa.nama_pasangan,
+        noKtpPasangan: this.daWa.no_ktp_pasangan,
+        tempatLahirPasangan: this.daWa.tempat_lahir_pasangan,
+        tglLahirPasangan: this.daWa.no_ktp.tanggal_lahir_pasangan,
+        jenisKelaminPAsangan: this.daWa.jenis_kelamin_pasangan,
+        StatusMenikah: this.daWa.no_ktp.status_perkawinan,
+      })
+      .subscribe({
+        next: data => {
+          const codeverifducapilapi = data.code;
+          // console.warn(codeverifducapilapi);
+
+          if (codeverifducapilapi != 200) {
+            // alert('gagal !200');
+          } else {
+            if (data.result.responseCode != '00') {
+              // alert('ini gagal');
+              // alert(data.result.responseDesc);
+              this.datadukcapil = null;
+              // console.warn('dukcapil' + this.datadukcapil);
+              this.datadukcapilusername = null;
+            } else {
+              this.datadukcapil = data.result;
+              // console.warn('dukcapil' + this.datadukcapil);
+              this.dataif = data.result.responseCode;
+              // alert('berhasil ');
+            }
+          }
+        },
+      });
+    // }
+  }
+
   cekdukcapil(tglLahir: any, tglLahirpasangan: any) {
     // let dateTime = new Date()
     let dateTime = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
@@ -359,17 +588,17 @@ export class HasilPrescreeningComponent implements OnInit {
     var rplc = ['', '', '', ''];
     // var hasilakhirlelah=dt.replace(strnih,rplc);
 
-    console.log('makantuh2' + reffnumbernya);
-    console.log('makantuh' + menit);
-    console.log(finalhasil2);
-    console.log(datanih);
-    console.log('benar' + dt);
-    console.log('data' + str4);
-    console.log(hasilmiripdong);
-    console.log(hasilmiripdongfinal);
-    console.log('tgl ini bener ' + tgllahirkirim);
-    console.log('tgllahir' + datee);
-    console.log('tgllahir' + hasilmiripdongbanyak);
+    // console.log('makantuh2' + reffnumbernya);
+    // console.log('makantuh' + menit);
+    // console.log(finalhasil2);
+    // console.log(datanih);
+    // console.log('benar' + dt);
+    // console.log('data' + str4);
+    // console.log(hasilmiripdong);
+    // console.log(hasilmiripdongfinal);
+    // console.log('tgl ini bener ' + tgllahirkirim);
+    // console.log('tgllahir' + datee);
+    // console.log('tgllahir' + hasilmiripdongbanyak);
     const reffNumber = 'aaa';
     // const timestamp = 'aaa';
     const local = 'aaa';
@@ -431,22 +660,22 @@ export class HasilPrescreeningComponent implements OnInit {
         .subscribe({
           next: data => {
             const codeverifducapilapi = data.code;
-            console.warn(codeverifducapilapi);
+            // console.warn(codeverifducapilapi);
 
             if (codeverifducapilapi != 200) {
-              alert('gagal !200');
+              // alert('gagal !200');
             } else {
               if (data.result.responseCode != '00') {
-                alert('ini gagal');
-                alert(data.result.responseDesc);
+                // alert('ini gagal');
+                // alert(data.result.responseDesc);
                 this.datadukcapil = null;
-                console.warn('dukcapil' + this.datadukcapil);
+                // console.warn('dukcapil' + this.datadukcapil);
                 this.datadukcapilusername = null;
               } else {
                 this.datadukcapil = data.result;
-                console.warn('dukcapil' + this.datadukcapil);
+                // console.warn('dukcapil' + this.datadukcapil);
                 this.dataif = data.result.responseCode;
-                alert('berhasil ');
+                // alert('berhasil ');
               }
             }
           },
@@ -489,22 +718,22 @@ export class HasilPrescreeningComponent implements OnInit {
         .subscribe({
           next: data => {
             const codeverifducapilapi = data.code;
-            console.warn(codeverifducapilapi);
+            // console.warn(codeverifducapilapi);
 
             if (codeverifducapilapi != 200) {
-              alert('gagal !200');
+              // alert('gagal !200');
             } else {
               if (data.result.responseCode != '00') {
-                alert('ini gagal');
-                alert(data.result.responseDesc);
+                // alert('ini gagal');
+                // alert(data.result.responseDesc);
                 this.datadukcapilpasangan = null;
-                console.warn('dukcapil' + this.datadukcapilpasangan);
+                // console.warn('dukcapil' + this.datadukcapilpasangan);
                 this.datadukcapilusername = null;
               } else {
                 this.datadukcapilpasangan = data.result;
-                console.warn('dukcapil' + this.datadukcapilpasangan);
+                // console.warn('dukcapil' + this.datadukcapilpasangan);
                 this.dataif = data.result.responseCode;
-                alert('berhasil ');
+                // alert('berhasil ');
               }
             }
           },
@@ -547,22 +776,22 @@ export class HasilPrescreeningComponent implements OnInit {
         .subscribe({
           next: data => {
             const codeverifducapilapi = data.code;
-            console.warn(codeverifducapilapi);
+            // console.warn(codeverifducapilapi);
 
             if (codeverifducapilapi != 200) {
-              alert('gagal !200');
+              // alert('gagal !200');
             } else {
               if (data.result.responseCode != '00') {
-                alert('ini gagal');
-                alert(data.result.responseDesc);
+                // alert('ini gagal');
+                // alert(data.result.responseDesc);
                 this.datadukcapil = null;
-                console.warn('dukcapil' + this.datadukcapil);
+                // console.warn('dukcapil' + this.datadukcapil);
                 this.datadukcapilusername = null;
               } else {
                 this.datadukcapil = data.result;
-                console.warn('dukcapil' + this.datadukcapil);
+                // console.warn('dukcapil' + this.datadukcapil);
                 this.dataif = data.result.responseCode;
-                alert('berhasil ');
+                // alert('berhasil ');
               }
             }
           },
@@ -619,8 +848,8 @@ export class HasilPrescreeningComponent implements OnInit {
           // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
           // return this.postId;
 
-          console.warn(data.result.token);
-          console.warn(this.hasildhn);
+          // console.warn(data.result.token);
+          // console.warn(this.hasildhn);
         },
       });
   }
@@ -634,10 +863,10 @@ export class HasilPrescreeningComponent implements OnInit {
         .subscribe({
           next: data => {
             this.personalInfoModel = data.result;
-            console.warn('INIDIAPIBN', this.personalInfoModel);
+            // console.warn('INIDIAPIBN', this.personalInfoModel);
             // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
             // return this.postId;
-            alert(this.personalInfoModel.tanggal_lahir);
+            // alert(this.personalInfoModel.tanggal_lahir);
 
             let retrivePersonalInfo = {
               radiobuttonnama: this.personalInfoModel.nama_lengkap,
@@ -656,7 +885,7 @@ export class HasilPrescreeningComponent implements OnInit {
           },
         });
     } else {
-      alert('fungsi else jalan');
+      // alert('fungsi else jalan');
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/get_data_dukcapil_manual', {
           nik: value,
@@ -664,10 +893,10 @@ export class HasilPrescreeningComponent implements OnInit {
         .subscribe({
           next: data => {
             this.personalInfoModel = data.result;
-            console.warn('punyaelsenya', this.personalInfoModel);
+            // console.warn('punyaelsenya', this.personalInfoModel);
             // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
             // return this.postId;
-            alert(this.personalInfoModel.tanggal_lahir);
+            // alert(this.personalInfoModel.tanggal_lahir);
 
             let retrivePersonalInfo = {
               radiobuttonnama: this.personalInfoModel.nama_lengkap,
@@ -690,7 +919,7 @@ export class HasilPrescreeningComponent implements OnInit {
   }
 
   checkstatusktpmanualpasangan() {
-    alert('fungsipasangam');
+    // alert('fungsipasangam');
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/get_data_dukcapil_manual', {
         nik: this.ktp_pasangan,
@@ -698,10 +927,10 @@ export class HasilPrescreeningComponent implements OnInit {
       .subscribe({
         next: data => {
           this.personalInfoModel = data.result;
-          console.warn('INIDIAPIBN', this.personalInfoModel);
+          // console.warn('INIDIAPIBN', this.personalInfoModel);
           // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
           // return this.postId;
-          alert(this.personalInfoModel.tanggal_lahir);
+          // alert(this.personalInfoModel.tanggal_lahir);
 
           let retrivePersonalInfopasangan = {
             radiobuttonnamapasangan: this.personalInfoModel.nama_lengkap,
@@ -834,7 +1063,7 @@ export class HasilPrescreeningComponent implements OnInit {
           })
           .subscribe({
             next: response => {
-              console.warn(response);
+              // console.warn(response);
               alert('Data Berhasil disimpan');
               window.location.reload();
             },
