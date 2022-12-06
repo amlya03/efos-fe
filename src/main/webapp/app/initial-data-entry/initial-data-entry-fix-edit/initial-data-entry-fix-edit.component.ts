@@ -70,9 +70,9 @@ export class InitialDataEntryFixEditComponent implements OnInit {
     this.getdataentry().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         // console.log(res.body?.result);
-        console.warn('EDITFIX job', res.body?.result.job);
-        console.warn('EDITFIX job', res.body?.result.customer);
-        console.warn('EDITFIX job', res.body?.result.customer.status_perkawinan);
+        // console.warn('EDITFIX job', res.body?.result.job);
+        // console.warn('EDITFIX job', res.body?.result.customer);
+        // console.warn('EDITFIX job', res.body?.result.customer.status_perkawinan);
         this.daWa = res.body?.result.customer;
         this.idcustomer = res.body?.result.customer.id;
         this.daWakodepos = res.body?.result.customer.kode_pos;
@@ -111,8 +111,8 @@ export class InitialDataEntryFixEditComponent implements OnInit {
           // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
           // return this.postId;
 
-          console.warn(data.result.token);
-          console.warn(this.postId);
+          // console.warn(data.result.token);
+          // console.warn(this.postId);
           // this.router.navigate(['/daftaraplikasiide'], {
           //   queryParams: {},
           // });
@@ -120,14 +120,14 @@ export class InitialDataEntryFixEditComponent implements OnInit {
 
           this.getprovinsi(this.postId).subscribe({
             next: (res: EntityArrayResponseDaWa) => {
-              console.warn('PROVINSI', res);
+              // console.warn('PROVINSI', res);
               this.daWaprof = res.body?.result;
             },
           });
 
           this.getprovinsipasangan(this.postId).subscribe({
             next: (res: EntityArrayResponseDaWa) => {
-              console.warn('PROVINSI', res);
+              // console.warn('PROVINSI', res);
               this.daWaprofpasangan = res.body?.result;
             },
           });
@@ -189,22 +189,22 @@ export class InitialDataEntryFixEditComponent implements OnInit {
     alert(selectedStatus.value);
     this.getkabkota(this.postId, selectedStatus.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kota', res);
+        // console.warn('kota', res);
         this.daWakota = res.body?.result;
       },
     });
-    console.log(selectedStatus);
+    // console.log(selectedStatus);
   }
 
   onChangepasangan(selectedStatus: any) {
-    alert(selectedStatus.value);
+    // alert(selectedStatus.value);
     this.getkabkotapasangan(this.postId, selectedStatus.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kota', res);
+        //  console.warn('kota', res);
         this.daWakotapasangan = res.body?.result;
       },
     });
-    console.log(selectedStatus);
+    //  console.log(selectedStatus);
   }
 
   getkabkota(token: any, kodekota: any, req?: any): Observable<EntityArrayResponseDaWa> {
@@ -241,28 +241,28 @@ export class InitialDataEntryFixEditComponent implements OnInit {
     // alert(this.postId);
     this.getkecamatan(this.postId, selectedStatus.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kecamata', res);
+        // console.warn('kecamata', res);
 
         this.daWakecamatan = res.body?.result;
         // alert(this.postId);
         // this.onResponseSuccess(res);
       },
     });
-    console.log(selectedStatus);
+    // console.log(selectedStatus);
   }
 
   onChangekotapasangan(selectedStatus: any) {
     // alert(this.postId);
     this.getkecamatanpasangan(this.postId, selectedStatus.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kecamata', res);
+        // console.warn('kecamata', res);
 
         this.daWakecamatanpasangan = res.body?.result;
         // alert(this.postId);
         // this.onResponseSuccess(res);
       },
     });
-    console.log(selectedStatus);
+    // console.log(selectedStatus);
   }
 
   getkecamatan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
@@ -297,28 +297,28 @@ export class InitialDataEntryFixEditComponent implements OnInit {
     // alert(this.postId);
     this.getkelurahan(this.postId, selectedStatus.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kelurahan', res);
+        // console.warn('kelurahan', res);
 
         this.daWakelurahan = res.body?.result;
         // alert(this.postId);
         // this.onResponseSuccess(res);
       },
     });
-    console.log(selectedStatus);
+    // console.log(selectedStatus);
   }
 
   onChangekecamatanpasangan(selectedStatus: any) {
     // alert(this.postId);
     this.getkelurahanpasangan(this.postId, selectedStatus.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kelurahan', res);
+        // console.warn('kelurahan', res);
 
         this.daWakelurahanpasangan = res.body?.result;
         // alert(this.postId);
         // this.onResponseSuccess(res);
       },
     });
-    console.log(selectedStatus);
+    // console.log(selectedStatus);
   }
 
   getkelurahan(token: any, kodekecamatan: any, req?: any): Observable<EntityArrayResponseDaWa> {
@@ -352,19 +352,19 @@ export class InitialDataEntryFixEditComponent implements OnInit {
   onChangekelurahan(selectedStatus: any) {
     const datakodepos = selectedStatus.value.split('|');
     this.daWakodepos = datakodepos[0];
-    console.log(selectedStatus);
+    // console.log(selectedStatus);
   }
 
   onChangekelurahanpasangan(selectedStatus: any) {
     const datakodepos = selectedStatus.value.split('|');
     this.daWakodepospasangan = datakodepos[0];
-    console.log(selectedStatus);
+    // console.log(selectedStatus);
   }
 
   carimenggunakankodepost(kodepost: any, req: any) {
     this.getkodepostnya(kodepost.value, req).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kodepost', res);
+        // console.warn('kodepost', res);
 
         // this.dawakodepost = res.body?.result;
         // alert(this.postId);
@@ -396,13 +396,13 @@ export class InitialDataEntryFixEditComponent implements OnInit {
       },
     });
 
-    console.log(req);
+    // console.log(req);
   }
 
   carimenggunakankodepospasangan(kodepost: any, req: any) {
     this.getkodepostnya(kodepost.value, req).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kodepost', res);
+        // console.warn('kodepost', res);
 
         // this.dawakodepost = res.body?.result;
         // alert(this.postId);
@@ -434,7 +434,7 @@ export class InitialDataEntryFixEditComponent implements OnInit {
       },
     });
 
-    console.log(req);
+    // console.log(req);
   }
 
   getkodepostnya(kodepst: any, req: any) {
@@ -658,7 +658,7 @@ export class InitialDataEntryFixEditComponent implements OnInit {
               queryParams: { datakirimanid: this.contohdata, datakirimantgllahir: this.tanggal_lahir, datakirimanappide: this.app_no_ide },
             });
 
-            alert(this.contohdata);
+            // alert(this.contohdata);
           },
         });
     } else {
@@ -802,7 +802,7 @@ export class InitialDataEntryFixEditComponent implements OnInit {
               queryParams: { datakirimanid: this.contohdata, datakirimantgllahir: this.tanggal_lahir, datakirimanappide: this.app_no_ide },
             });
 
-            alert(this.contohdata);
+            // alert(this.contohdata);
           },
         });
     }
@@ -1000,11 +1000,11 @@ export class InitialDataEntryFixEditComponent implements OnInit {
               // queryParams: { datakirimanid: this.contohdata, datakirimantgllahir: this.tanggal_lahir, datakirimanappide: this.app_no_ide },
             });
 
-            alert(this.contohdata);
+            // alert(this.contohdata);
           },
         });
     } else {
-      alert(this.idcustomer);
+      // alert( this.idcustomer);
       const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
       const umur = document.getElementById('umur') as HTMLInputElement | any;
 
@@ -1146,7 +1146,7 @@ export class InitialDataEntryFixEditComponent implements OnInit {
               // queryParams: { datakirimanid: this.contohdata, datakirimantgllahir: this.tanggal_lahir, datakirimanappide: this.app_no_ide },
             });
 
-            alert(this.contohdata);
+            // alert(this.contohdata);
           },
         });
     }

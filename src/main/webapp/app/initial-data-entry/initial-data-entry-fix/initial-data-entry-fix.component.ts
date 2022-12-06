@@ -198,7 +198,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     this.postUpdateStatus();
 
     this.ideFixServices.getIdeById().subscribe(data => {
-      console.warn(data);
+      // console.warn(data);
       if (data.code === 200) {
         this.daWa = (data as any).result;
       } else {
@@ -207,7 +207,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     });
 
     this.ideFixServices.getIdeByCuref().subscribe(data => {
-      console.warn(data);
+      // console.warn(data);
       if (data.code === 200) {
         this.daWacuref = (data as any).result;
       } else {
@@ -595,8 +595,8 @@ export class InitialDataEntryFixComponent implements OnInit {
       }
 
       // alert(this.umur);
-      alert(this.dataentryfixfom.get('provinsiform')?.value);
-      alert(this.dataentryfixfom.get('kotaform')?.value);
+      // alert(this.dataentryfixfom.get('provinsiform')?.value);
+      // alert(this.dataentryfixfom.get('kotaform')?.value);
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
           headers: headers,
@@ -703,8 +703,8 @@ export class InitialDataEntryFixComponent implements OnInit {
           // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
           // return this.postId;
 
-          console.warn(data.result.token);
-          console.warn(this.postId);
+          // console.warn(data.result.token);
+          // console.warn(this.postId);
           // this.router.navigate(['/daftaraplikasiide'], {
           //   queryParams: {},
           // });
@@ -712,7 +712,7 @@ export class InitialDataEntryFixComponent implements OnInit {
 
           this.getdataentry1(this.postId).subscribe({
             next: (res: EntityArrayResponseDaWa) => {
-              console.warn('PROVINSI', res);
+              // console.warn('PROVINSI', res);
 
               this.daWaprof = res.body?.result;
 
@@ -723,7 +723,7 @@ export class InitialDataEntryFixComponent implements OnInit {
 
           this.getdataentry1p(this.postId).subscribe({
             next: (res: EntityArrayResponseDaWa) => {
-              console.warn('PROVINSI', res);
+              // console.warn('PROVINSI', res);
 
               this.daWaprofp = res.body?.result;
 
@@ -1170,7 +1170,7 @@ export class InitialDataEntryFixComponent implements OnInit {
 
     this.getkabkotap(this.postId, selectedStatus).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kota', res);
+        // console.warn('kota', res);
 
         this.daWakotap = res.body?.result;
         // alert(this.postId);
@@ -1178,35 +1178,35 @@ export class InitialDataEntryFixComponent implements OnInit {
       },
     });
 
-    console.log(selectedStatus);
+    // console.log(selectedStatus);
   }
 
   onChangekotap(selectedStatus: any) {
     // alert(this.postId);
     this.getkecamatanp(this.postId, selectedStatus).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kecamata', res);
+        // console.warn('kecamata', res);
 
         this.daWakecamatanp = res.body?.result;
         // alert(this.postId);
         // this.onResponseSuccess(res);
       },
     });
-    console.log(selectedStatus);
+    // console.log(selectedStatus);
   }
 
   onChangekecamatanp(selectedStatus: any) {
     // alert(this.postId);
     this.getkelurahanp(this.postId, selectedStatus).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kelurahan', res);
+        // console.warn('kelurahan', res);
 
         this.daWakelurahanp = res.body?.result;
         // alert(this.postId);
         // this.onResponseSuccess(res);
       },
     });
-    console.log(selectedStatus);
+    // console.log(selectedStatus);
   }
 
   onChangekelurahanp(selectedStatus: any) {
@@ -1218,7 +1218,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     // alert(this.daWakodepos);
     // this.onResponseSuccess(res);
 
-    console.log(selectedStatus);
+    // console.log(selectedStatus);
   }
 
   onChange(selectedStatus: any) {
@@ -1226,7 +1226,7 @@ export class InitialDataEntryFixComponent implements OnInit {
 
     this.getkabkota(this.postId, selectedStatus).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kota', res);
+        // console.warn('kota', res);
 
         this.daWakota = res.body?.result;
         // alert(this.postId);
@@ -1234,35 +1234,35 @@ export class InitialDataEntryFixComponent implements OnInit {
       },
     });
 
-    console.log(selectedStatus);
+    // console.log(selectedStatus);
   }
 
   onChangekota(selectedStatus: any) {
     // alert(this.postId);
     this.getkecamatan(this.postId, selectedStatus).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kecamata', res);
+        // console.warn('kecamata', res);
 
         this.daWakecamatan = res.body?.result;
         // alert(this.postId);
         // this.onResponseSuccess(res);
       },
     });
-    console.log(selectedStatus);
+    // console.log(selectedStatus);
   }
 
   onChangekecamatan(selectedStatus: any) {
     // alert(this.postId);
     this.getkelurahan(this.postId, selectedStatus).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kelurahan', res);
+        // console.warn('kelurahan', res);
 
         this.daWakelurahan = res.body?.result;
         // alert(this.postId);
         // this.onResponseSuccess(res);
       },
     });
-    console.log(selectedStatus);
+    // console.log(selectedStatus);
   }
 
   onChangekelurahan(selectedStatus: any) {
@@ -1274,13 +1274,13 @@ export class InitialDataEntryFixComponent implements OnInit {
     // alert(this.daWakodepos);
     // this.onResponseSuccess(res);
 
-    console.log(selectedStatus);
+    // console.log(selectedStatus);
   }
 
   carimenggunakankodepost(kodepost: any, req: any) {
     this.getkodepostnya(kodepost, req).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kodepost', res);
+        // console.warn('kodepost', res);
 
         this.dawakodepost = res.body?.result;
         // alert(this.postId);
@@ -1315,11 +1315,11 @@ export class InitialDataEntryFixComponent implements OnInit {
 
         if (this.kelurahan == null) {
           this.kelurahanbanyak = res.body?.result.kels;
-          console.warn('kodepost', this.kelurahanbanyak);
+          // console.warn('kodepost', this.kelurahanbanyak);
           let kelurahan = '';
           $('#kelurahan').empty();
           $.each(this.kelurahanbanyak, function (i, n) {
-            console.log(n['namaWilayah']);
+            // console.log(n['namaWilayah']);
 
             kelurahan = '<option  value="' + n['kdPos'] + '|' + n['namaWilayah'] + '">' + n['namaWilayah'] + '</option>';
             kelurahan = kelurahan + '';
@@ -1345,7 +1345,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       },
     });
 
-    console.log(req);
+    // console.log(req);
   }
 
   getkodepostnya(kodepst: any, req: any) {
@@ -1369,7 +1369,7 @@ export class InitialDataEntryFixComponent implements OnInit {
   carimenggunakankodepostp(kodepost: any, req: any) {
     this.getkodepostnyap(kodepost, req).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kodepost', res);
+        // console.warn('kodepost', res);
 
         this.dawakodepost = res.body?.result;
         // alert(this.postId);
@@ -1410,7 +1410,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       },
     });
 
-    console.log(req);
+    // console.log(req);
   }
 
   getkodepostnyap(kodepst: any, req: any) {
