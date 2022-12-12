@@ -366,7 +366,7 @@
       </div>
       <br />
       <div>
-        <div class="form-group row">
+        <div class="form-group row" [hidden]="this.untukListJob == '1'">
           <label class="col-sm-3 col-form-label" [hidden]="tipePekerjaanValidasi == '4'">Nomor SIUP</label>
           <label class="col-sm-3 col-form-label" *ngIf="tipePekerjaanValidasi == '4'">Nomor SIP</label>
           <div class="col-sm-9">

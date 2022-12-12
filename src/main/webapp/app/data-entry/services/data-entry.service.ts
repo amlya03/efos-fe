@@ -241,10 +241,15 @@ export class DataEntryService {
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
-    this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
-      // 'http://10.20.34.110:8805/api/v1/efos-de/list_app_de?sc='+this.untukSessionKodeCabang+'&su='+this.untukSessionUserName
-      'http://10.20.34.110:8805/api/v1/efos-de/list_app_de?sc=&su=' + this.untukSessionUserName
-    );
+    if (this.untukSessionRole === 'BRANCHMANAGER') {
+      this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
+        'http://10.20.34.110:8805/api/v1/efos-de/list_app_de?sc=' + this.untukSessionKodeCabang
+      );
+    } else {
+      this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
+        'http://10.20.34.110:8805/api/v1/efos-de/list_app_de?&su=' + this.untukSessionUserName
+      );
+    }
     return this.http.get<ApiResponse>(this.daftarAplikasiDataEntry);
   }
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////

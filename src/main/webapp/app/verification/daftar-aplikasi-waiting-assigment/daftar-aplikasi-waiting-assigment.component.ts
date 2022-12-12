@@ -138,9 +138,6 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
             next: data => {},
           });
       }
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
     } else {
       for (let i = 0; i < this.checkLenghtResult.length; i++) {
         this.http
@@ -154,10 +151,15 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
             next: data => {},
           });
       }
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
     }
+    setTimeout(() => {
+      // alert(this.kirimDe.length == 0)
+      if (this.kirimDe.length == 0) {
+        alert('Harap Pilih Data Terlebih Dahulu');
+      } else {
+        window.location.reload();
+      }
+    }, 1000);
 
     this.dtElement.dtInstance.then((dtIntance: DataTables.Api) => {
       dtIntance.destroy();

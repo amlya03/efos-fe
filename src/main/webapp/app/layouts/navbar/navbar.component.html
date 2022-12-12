@@ -157,7 +157,7 @@
         </div>
         <!-- ////////////////////////////// Approval \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
 
-        <div *ngIf="untukSessionRole == 'BRANCHMANAGER' || untukSessionRole === 'AO'">
+        <div *ngIf="untukSessionRole === 'BRANCHMANAGER' || untukSessionRole === 'AO'">
           <li class="row nav-item">
             <a
               routerLinkActive="active"
@@ -915,7 +915,7 @@
       }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
     >
       <h6>Personal Info</h6>
     </a>
@@ -930,7 +930,7 @@
       routerLink="data-entry/job-info"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
     >
       <span
         class="col nav-link"
@@ -956,7 +956,7 @@
       routerLink="data-entry/data-pasangan"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
     >
       <h6>Data Pasangan</h6>
     </a>
@@ -971,7 +971,7 @@
       routerLink="data-entry/pekerjaan-pasangan"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
     >
       <h6>Pekerjaan Pasangan</h6>
     </a>
@@ -985,7 +985,7 @@
       routerLink="data-entry/collateral"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
     >
       <span
         class="col nav-link"
@@ -1010,7 +1010,7 @@
       routerLink="data-entry/struktur-pembiayaan"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
     >
       <h6>Struktur Pembiayaan</h6>
     </a>
@@ -1024,7 +1024,7 @@
       routerLink="data-entry/emergency-contact"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
     >
       <h6>Emergency Contact</h6>
     </a>
@@ -1038,7 +1038,7 @@
       }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
     >
       <h6>Call Report</h6>
     </a>
@@ -1071,7 +1071,7 @@
         statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de
       }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV'"
+      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
     >
       <h6>Memo</h6>
     </a>

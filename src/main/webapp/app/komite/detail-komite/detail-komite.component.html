@@ -90,7 +90,7 @@
 <p></p>
 <br />
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Fasilitas Yang Diminta</h3>
+  <h3 style="color: #fff; text-align: center">Fasilitas Yang Direkomendasikan</h3>
 </div>
 <p></p>
 <div class="row formm-material">
@@ -552,7 +552,14 @@
       +this.persetujuanPembiayaanForm.get('plafon_pembiayaan')?.value
     "
   >
-    <button type="button" class="btn btn-info" (click)="approve()">Approve</button>
+    <button
+      type="button"
+      class="btn btn-info"
+      (click)="approve()"
+      *ngIf="this.persetujuanPembiayaanForm.get('keputusan')?.value === 'Approve'"
+    >
+      Approve
+    </button>
   </div>
   <div
     class="col"
@@ -564,6 +571,13 @@
     <button type="button" class="btn btn-primary" (click)="forward()">Forward To</button>
   </div>
   <div class="col">
-    <button type="button" class="btn btn-danger" (click)="reject()">Reject</button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="reject()"
+      *ngIf="this.persetujuanPembiayaanForm.get('keputusan')?.value === 'Reject'"
+    >
+      Reject
+    </button>
   </div>
 </div>

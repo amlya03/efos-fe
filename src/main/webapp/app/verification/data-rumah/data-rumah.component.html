@@ -129,6 +129,7 @@
         <th scope="col" style="text-align: center">Outstanding</th>
         <th scope="col" style="text-align: center">Plafond</th>
         <th scope="col" style="text-align: center">Angsuran</th>
+        <th scope="col" style="text-align: center">Suku Bunga</th>
         <th scope="col" style="text-align: center">Tanggal Mulai</th>
         <th scope="col" style="text-align: center">Tanggal Berakhir</th>
         <th scope="col" style="text-align: center">Status</th>
@@ -147,6 +148,7 @@
         </td>
         <td style="text-align: center">{{ listLajangSlik.plafon?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
         <td style="text-align: center">{{ listLajangSlik.angsuran?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
+        <td style="text-align: center">{{ listLajangSlik.suku_bunga_imbalan }}%</td>
         <td style="text-align: center">{{ listLajangSlik.tanggal_mulai }}</td>
         <td style="text-align: center">{{ listLajangSlik.tanggal_jatuh_tempo }}</td>
         <td style="text-align: center">{{ listLajangSlik.kondisi_ket }}</td>
@@ -257,7 +259,7 @@
   <div class="row form-material" [formGroup]="analisaKeuanganForm">
     <div class="col">
       <div class="form-group row">
-        <label class="col-sm-5 col-form-label">Gaji Kotor</label>
+        <label class="col-sm-5 col-form-label">Gaji Pokok</label>
         <div class="col-sm-7">
           <input
             formControlName="gaji_kotor"
@@ -313,7 +315,7 @@
   <div class="row form-material" [formGroup]="analisaKeuanganForm">
     <div class="col">
       <div class="form-group row">
-        <label class="col-sm-5 col-form-label">Tunjangan</label>
+        <label class="col-sm-5 col-form-label">Tunjangan Tetap</label>
         <div class="col-sm-7">
           <input
             formControlName="tunjangan"
@@ -355,6 +357,7 @@
           readonly
           (keypress)="keyPressNumbers($event)"
           currencyMask
+          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
           value="{{
             +this.analisaKeuanganForm.get('tunjangan')?.value + +this.analisaKeuanganForm.get('tunjangan_pasangan')?.value | currency: 'Rp '
           }}"
@@ -366,7 +369,7 @@
   <div class="row form-material" [formGroup]="analisaKeuanganForm">
     <div class="col">
       <div class="form-group row">
-        <label class="col-sm-5 col-form-label">Pendapatan Kantor Lainnya</label>
+        <label class="col-sm-5 col-form-label">Tunjangan Tidak Tetap</label>
         <div class="col-sm-7">
           <input
             formControlName="pendapatan_kantor_lainnya"
@@ -497,7 +500,14 @@
           readonly
           (keypress)="keyPressNumbers($event)"
           currencyMask
-          value="{{ +pendapatan_kotor1.value + +pendapatan_kotor_pasangan1.value | currency: 'Rp ' }}"
+          value="{{
+            +this.analisaKeuanganForm.get('gaji_kotor')?.value +
+              +this.analisaKeuanganForm.get('tunjangan')?.value +
+              +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value +
+              (+this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value +
+                +this.analisaKeuanganForm.get('tunjangan_pasangan')?.value +
+                +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value) | currency: 'Rp '
+          }}"
         />
       </div>
     </div>
@@ -506,7 +516,7 @@
   <div class="row form-material" [formGroup]="analisaKeuanganForm">
     <div class="col">
       <div class="form-group row">
-        <label class="col-sm-5 col-form-label">Total Angsuran Kewajiban Kantor</label>
+        <label class="col-sm-5 col-form-label">Total Potongan Kantor</label>
         <div class="col-sm-7">
           <input
             type="text"
@@ -555,7 +565,7 @@
   </div>
   <br />
   <p></p>
-  <div class="row form-material" [formGroup]="analisaKeuanganForm">
+  <div class="row form-material" [formGroup]="analisaKeuanganForm" hidden>
     <div class="col">
       <div class="form-group row">
         <label class="col-sm-5 col-form-label">Pendapatan Bersih</label>
@@ -767,7 +777,7 @@
 </div>
 <p></p>
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Total Penghasilan Kotor</h3>
+  <h3 style="color: #fff; text-align: center">Total Penghasilan</h3>
 </div>
 <p></p>
 <div class="row form-material" [formGroup]="analisaKeuanganForm">
@@ -1102,7 +1112,23 @@
         formControlName="total_penghasilan_bersih_akumulasi"
         currencyMask
         [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
-        value="{{ +total_penghasilan_bersih1.value + +total_penghasilan_bersih_pasangan1.value | currency: 'Rp ' }}"
+        value="{{
+          +this.analisaKeuanganForm.get('gaji_kotor')?.value +
+            +this.analisaKeuanganForm.get('tunjangan')?.value +
+            +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value -
+            +this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value +
+            (+this.analisaKeuanganForm.get('pendapatan_usaha')?.value + +this.analisaKeuanganForm.get('pendapatan_profesional')?.value) -
+            +this.analisaKeuanganForm.get('kewajiban_lainnya')?.value -
+            +this.slikForm.get('total_angsuran_nasabah')?.value +
+            (+this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value +
+              +this.analisaKeuanganForm.get('tunjangan_pasangan')?.value +
+              +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value -
+              +this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value +
+              (+this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value +
+                +this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value) -
+              +this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value -
+              +this.slikForm.get('total_angsuran_pasangan')?.value) | currency: 'Rp '
+        }}"
       />
     </div>
   </div>

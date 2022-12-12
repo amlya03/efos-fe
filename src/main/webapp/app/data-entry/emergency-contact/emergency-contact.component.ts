@@ -279,6 +279,7 @@ export class EmergencyContactComponent implements OnInit {
 
         .subscribe({
           next: bawaan => {
+            alert('Berhasil Menyimpan Data');
             this.router.navigate(['/data-entry/call-report'], {
               queryParams: {
                 curef: this.curef,

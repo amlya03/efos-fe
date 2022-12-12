@@ -107,12 +107,12 @@
         <div class="col-sm-9">
           <div class="form-group">
             <select class="form-control" id="agama" formControlName="agama">
-              <option value="islam">Islam</option>
-              <option value="kristen">Kristen</option>
-              <option value="khatolik">Khatolik</option>
-              <option value="budha">Budha</option>
-              <option value="hindu">Hindu</option>
-              <option value="kong hu chu">Kong Hu Chu</option>
+              <option value="Islam">Islam</option>
+              <option value="Kristen">Kristen</option>
+              <option value="Khatolik">Khatolik</option>
+              <option value="Budha">Budha</option>
+              <option value="Hindu">Hindu</option>
+              <option value="Kong Hu Chu">Kong Hu Chu</option>
             </select>
           </div>
           <span
@@ -429,7 +429,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.lama_menetap.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -451,7 +451,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.status_kendaraan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -474,7 +474,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.tipe_kendaraan.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -501,7 +501,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.alamat_ktp.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -617,7 +617,7 @@
           />
           <span
             [hidden]="
-              personalInfoForm.controls.rt.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+              personalInfoForm.controls.rt.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
           >
@@ -637,7 +637,7 @@
           />
           <span
             [hidden]="
-              personalInfoForm.controls.rw.valid || this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'
+              personalInfoForm.controls.rw.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
           >
@@ -654,7 +654,7 @@
             type="radio"
             name="testtt"
             value="0"
-            [disabled]="this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'"
+            [disabled]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'"
             (change)="onItemChange($event.target)"
             [checked]="this.personalInfoForm.get('alamat_ktp')?.value != this.personalInfoForm.get('alamat_domisili')?.value"
           />Tidak Sama
@@ -662,7 +662,7 @@
             type="radio"
             name="testtt"
             value="1"
-            [disabled]="this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER'"
+            [disabled]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'"
             (change)="onItemChange($event.target)"
             [checked]="this.personalInfoForm.get('alamat_ktp')?.value == this.personalInfoForm.get('alamat_domisili')?.value"
           />Sama
@@ -678,7 +678,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.alamat_domisili.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -804,7 +804,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.rt_domisili.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"
@@ -826,7 +826,7 @@
           <span
             [hidden]="
               personalInfoForm.controls.rw_domisili.valid ||
-              this.untukSessionRole == 'VER_PRESCR' ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
               this.untukSessionRole == 'BRANCHMANAGER'
             "
             class="text-danger"

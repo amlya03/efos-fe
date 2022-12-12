@@ -9,6 +9,8 @@ import { getMemoUploadModel } from 'app/upload-document/services/config/getMemoU
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { DataEntryService } from '../services/data-entry.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { detailMemo } from '../services/config/detailMemo.model';
 
 @Component({
   selector: 'jhi-memo',
@@ -22,7 +24,9 @@ export class MemoComponent implements OnInit {
   app_no_de: string | undefined;
   statusPerkawinan: string | undefined;
   getMemoUpload: getMemoUploadModel = new getMemoUploadModel();
+  resultGetMemoUpload = 0;
   memoModel: memomodel[] = [];
+  detailMemoModel: detailMemo = new detailMemo();
   modelResultmemo = 0;
   dataEntryModel: fetchAllDe = new fetchAllDe();
   tampilanfixornon: any;
@@ -83,6 +87,11 @@ export class MemoComponent implements OnInit {
 
     this.fileUploadService.getMemoUpload(this.curef, this.app_no_de).subscribe(data => {
       this.getMemoUpload = data.result;
+      if (this.getMemoUpload.nama_dokumen == null) {
+        this.resultGetMemoUpload = 0;
+      } else {
+        this.resultGetMemoUpload = 1;
+      }
     });
   }
 
@@ -137,9 +146,13 @@ export class MemoComponent implements OnInit {
       .subscribe({
         next: bawaan => {
           if (this.untukSessionRole === 'BRANCHMANAGER') {
+            alert('Berhasil Menyimpan Data');
             this.router.navigate(['/data-entry']);
           } else {
-            this.router.navigate(['/upload_document']);
+            alert('Berhasil Menyimpan Data');
+            this.router.navigate(['/upload_document/upload_document_de'], {
+              queryParams: { curef: this.curef, app_no_de: this.app_no_de },
+            });
           }
         },
       });
@@ -177,7 +190,51 @@ export class MemoComponent implements OnInit {
   }
   view(id: number | null | undefined) {
     this.dataEntryService.getFetchListMemo(id).subscribe(data => {
-      this.memoModel = data.result;
+      this.detailMemoModel = data.result;
+      Swal.fire({
+        // title: 'Detail Memo',
+        imageUrl: '../../../content/images/bank-mega-syariah.png',
+        imageHeight: 100,
+        html:
+          '<div class="row"><div class="col">' +
+          '<br/>' +
+          '<ul><h5>Keterangan Memo :</h5><li>' +
+          '<h6 style="text-align: left;">' +
+          this.detailMemoModel.keterangan +
+          '</h6>' +
+          '</li></ul></div>' +
+          '<div class="col">' +
+          '<h4>' +
+          this.dataEntryModel.nama +
+          '</h4>' +
+          '<p class="text-muted">Dibuat Oleh ' +
+          this.detailMemoModel.role +
+          ' /  ' +
+          this.detailMemoModel.users +
+          '</p>' +
+          '<ul style="text-align: left;"><h6>' +
+          this.dataEntryModel.produk_pembiayaan +
+          '</h6>' +
+          '<li style="text-align: left;"><label>Fasilitas</label> : ' +
+          this.dataEntryModel.kode_fasilitas_name +
+          '</li>' +
+          '<li><label>Plafond</label>: ' +
+          Number(this.dataEntryModel.nilai_pembiayaan).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) +
+          '</li>' +
+          '<li><label>Tenor</label> : ' +
+          this.dataEntryModel.jangka_waktu +
+          '</li>' +
+          '</ul></div></div>',
+        focusConfirm: false,
+        // preConfirm: () => {
+        //   return [$('#produk').val(), $('#joint_income').val(), $('#parameter').val(), $('#data_value').val(), $('#min').val(), $('#max').val(), $('#score').val()];
+        // },
+      }).then(result => {});
+
+      // if (formValues) {
+      //   Swal.fire(JSON.stringify(formValues));
+      // }
+      // ////////////// Pop Up Input Scoring ////////////////////////
     });
   }
 }

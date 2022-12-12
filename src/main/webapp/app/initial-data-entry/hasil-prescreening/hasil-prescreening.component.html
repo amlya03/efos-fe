@@ -994,7 +994,13 @@
   </div>
 
   <div style="color: #fff; text-align: center">
-    <button (click)="cekkembalislik()" name="submit_button" class="fa fa-file-archive-o btn btn-dark">Cek kembali</button>
+    <button
+      (click)="cekslik(this.dataEntry.tanggal_lahir, this.dataEntry.tanggal_lahir_pasangan)"
+      name="submit_button"
+      class="fa fa-file-archive-o btn btn-dark"
+    >
+      Cek kembali
+    </button>
   </div>
 
   <table style="color: #fff; text-align: center">

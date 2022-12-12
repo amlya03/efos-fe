@@ -13,7 +13,6 @@ import { listAgunan } from 'app/data-entry/services/config/listAgunan.model';
 import { SessionStorageService } from 'ngx-webstorage';
 import { refStrukturPembiayaan } from '../service/config/refStrukturPembiayaan.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CurrencyMaskInputMode } from 'ngx-currency';
 import { getMapis } from '../service/config/getMapis.model';
 
 @Component({
@@ -378,7 +377,7 @@ export class StukturPembiayaanComponent implements OnInit {
           next: response => {
             console.warn(response);
             // alert('Berhasil Menyimpan Data');
-            // this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+            this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
           },
           error: error => console.warn(error),
         });

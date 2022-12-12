@@ -655,4 +655,9 @@
       </button>
     </div>
   </div>
+  <div class="row" *ngIf="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'">
+    <div class="col" style="text-align: center">
+      <button type="button" class="btn btn-warning" (click)="goto()">Selanjutnya<span></span></button>
+    </div>
+  </div>
 </form>

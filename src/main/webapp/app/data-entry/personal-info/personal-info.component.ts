@@ -302,7 +302,7 @@ export class PersonalInfoComponent implements OnInit {
       this.personalInfoModel = data.result;
       this.curefGetDE = this.personalInfoModel.curef;
       this.statusKawin = this.personalInfoModel.status_perkawinan;
-      // alert(this.personalInfoModel.agama)
+      // alert(this.personalInfoModel.jenis_kelamin)
       /////////////////////////////////////////////////////////////////////////////
       let retrivePersonalInfo = {
         nama: this.personalInfoModel.nama,

@@ -7,6 +7,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 
 import { createRequestOption } from 'app/core/request/request-util';
+import { SessionStorageService } from 'ngx-webstorage';
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 
 @Component({
@@ -58,7 +59,8 @@ export class InitialDataEntryNonEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    protected sessionServices: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.datakiriman = params['datakiriman'];
@@ -823,8 +825,8 @@ export class InitialDataEntryNonEditComponent implements OnInit {
           kode_pos_domisili: '',
           kode_pos_pasangan: '',
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.sessionServices.retrieve('sessionKdCabang'),
+          created_by: this.sessionServices.retrieve('sessionUserName'),
           created_date: '',
           email: '',
           email_pasangan: '',
@@ -1105,8 +1107,8 @@ export class InitialDataEntryNonEditComponent implements OnInit {
           kode_pos_domisili: '',
           kode_pos_pasangan: '',
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.sessionServices.retrieve('sessionKdCabang'),
+          created_by: this.sessionServices.retrieve('sessionUserName'),
           created_date: '',
           email: '',
           email_pasangan: '',
@@ -1438,8 +1440,8 @@ export class InitialDataEntryNonEditComponent implements OnInit {
           kode_pos_domisili: '',
           kode_pos_pasangan: kode_pos_pasangan.value,
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.sessionServices.retrieve('sessionKdCabang'),
+          created_by: this.sessionServices.retrieve('sessionUserName'),
           created_date: '',
           email: '',
           email_pasangan: '',
@@ -1711,8 +1713,8 @@ export class InitialDataEntryNonEditComponent implements OnInit {
           kode_pos_domisili: '',
           kode_pos_pasangan: '',
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.sessionServices.retrieve('sessionKdCabang'),
+          created_by: this.sessionServices.retrieve('sessionUserName'),
           created_date: '',
           email: '',
           email_pasangan: '',

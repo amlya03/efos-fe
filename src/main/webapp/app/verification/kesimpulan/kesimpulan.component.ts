@@ -48,8 +48,8 @@ export class KesimpulanComponent implements OnInit {
     this.load();
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.kesimpulanForm = this.formBuilder.group({
-      kesimpulan: '',
-      rekomendasi: '',
+      kesimpulan: { value: '', disabled: this.SessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      rekomendasi: { value: '', disabled: this.SessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
     });
   }
 

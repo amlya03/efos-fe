@@ -55,7 +55,7 @@ export class DataEntryComponent implements OnInit, OnDestroy {
 
   load(): void {
     this.datEntryService.getDaftarAplikasiDataEntry().subscribe(data => {
-      console.warn(data);
+      // console.warn(data);
       if (data.code === 200) {
         this.dataEntry = (data as any).result;
         this.dtTrigger.next(data.result);
@@ -87,6 +87,8 @@ export class DataEntryComponent implements OnInit, OnDestroy {
 
   viewdataentry(getAppNoDe: any, getStatus: any, getCuref: any): void {
     // alert(getAppNoDe);curef=curef_20220819_342&statusPerkawinan=Menikah&app_no_de=de220820000156
-    this.router.navigate(['/data-entry/personalinfo'], { queryParams: { curef: getCuref, statusPerkawinan: getStatus, app_no_de: getAppNoDe} });
+    this.router.navigate(['/data-entry/personalinfo'], {
+      queryParams: { curef: getCuref, statusPerkawinan: getStatus, app_no_de: getAppNoDe },
+    });
   }
 }

@@ -763,10 +763,11 @@
         <div class="col-sm-8">
           <input
             type="tel"
-            onkeypress="return onlyNumberKey(event)"
             class="form-control"
             id="takeHomepay"
             formControlName="take_home_pay"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
           />
         </div>
       </div>

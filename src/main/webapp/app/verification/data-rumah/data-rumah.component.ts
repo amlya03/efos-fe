@@ -59,6 +59,9 @@ export class DataRumahComponent implements OnInit {
   // cek result
   cekResult = 0;
 
+  // kewajiban bank pasangan
+  kewajibanBankPasangan: any;
+
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
@@ -298,6 +301,14 @@ export class DataRumahComponent implements OnInit {
         // updated_by: 'null'
       };
       this.analisaKeuanganForm.setValue(retriveAnalisaKeuangan);
+      setTimeout(() => {
+        if (this.dataEntry.joint_income == 0) {
+          this.slikForm.get('total_angsuran_pasangan')?.setValue('0');
+        }
+        {
+          this.slikForm.get('total_angsuran_pasangan')?.setValue(this.analisaKeuanganMap.kewajiban_lainnya_pasangan);
+        }
+      }, 300);
     });
   }
 

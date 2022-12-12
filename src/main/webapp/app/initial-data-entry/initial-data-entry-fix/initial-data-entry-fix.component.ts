@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { initialdataentryfix } from './initial-data-entry-model';
@@ -10,6 +10,7 @@ import { InitialDataEntryService } from '../services/initial-data-entry.service'
 import { refStatusPerkawinan } from 'app/verification/service/config/refStatusPerkawinan.model';
 import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { SessionStorageService } from 'ngx-webstorage';
 
 export type EntityResponseDaWa = HttpResponse<initialdataentryfix>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -103,7 +104,8 @@ export class InitialDataEntryFixComponent implements OnInit {
     private router: Router,
     protected applicationConfigService: ApplicationConfigService,
     protected ideFixServices: InitialDataEntryService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    protected sessionServices: SessionStorageService
   ) {}
 
   protected getcuref = this.applicationConfigService.getEndpointFor(' http://10.20.34.110:8805/api/v1/efos-ide/getCuref');
@@ -521,8 +523,8 @@ export class InitialDataEntryFixComponent implements OnInit {
           kode_pos_domisili: '',
           kode_pos_pasangan: kirimandatakodepostp,
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.sessionServices.retrieve('sessionKdCabang'),
+          created_by: this.sessionServices.retrieve('sessionUserName'),
           created_date: '',
           email: '',
           email_pasangan: '',
@@ -544,8 +546,8 @@ export class InitialDataEntryFixComponent implements OnInit {
           no_handphone: this.dataentryfixfom.get('nohandphone')?.value,
           no_handphone_pasangan: this.dataentryfixfom.get('nohandphonepasangan')?.value,
           no_telepon: '',
-          updated_by: '',
-          updated_date: '',
+          // updated_by: '',
+          // updated_date: '',
           usia_pasangan: '',
         })
         .subscribe({
@@ -647,8 +649,8 @@ export class InitialDataEntryFixComponent implements OnInit {
           kode_pos_domisili: '',
           kode_pos_pasangan: '',
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.sessionServices.retrieve('sessionKdCabang'),
+          created_by: this.sessionServices.retrieve('sessionUserName'),
           created_date: '',
           email: '',
           email_pasangan: '',
@@ -670,8 +672,8 @@ export class InitialDataEntryFixComponent implements OnInit {
           no_handphone: this.dataentryfixfom.get('nohandphone')?.value,
           no_handphone_pasangan: '',
           no_telepon: '',
-          updated_by: '',
-          updated_date: '',
+          // updated_by: '',
+          // updated_date: '',
           usia_pasangan: '',
         })
         .subscribe({
@@ -870,8 +872,8 @@ export class InitialDataEntryFixComponent implements OnInit {
           kode_pos_domisili: '',
           kode_pos_pasangan: kirimandatakodepostp,
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.sessionServices.retrieve('sessionKdCabang'),
+          created_by: this.sessionServices.retrieve('sessionUserName'),
           created_date: '',
           email: '',
           email_pasangan: '',
@@ -893,8 +895,8 @@ export class InitialDataEntryFixComponent implements OnInit {
           no_handphone: this.no_handphone,
           no_handphone_pasangan: this.no_handphone_pasangan,
           no_telepon: '',
-          updated_by: '',
-          updated_date: '',
+          // updated_by: '',
+          // updated_date: '',
           usia_pasangan: umurpasangan.value,
         })
         .subscribe({
@@ -995,8 +997,8 @@ export class InitialDataEntryFixComponent implements OnInit {
           kode_pos_domisili: '',
           kode_pos_pasangan: '',
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.sessionServices.retrieve('sessionKdCabang'),
+          created_by: this.sessionServices.retrieve('sessionUserName'),
           created_date: '',
           email: '',
           email_pasangan: '',
@@ -1018,8 +1020,8 @@ export class InitialDataEntryFixComponent implements OnInit {
           no_handphone: this.no_handphone,
           no_handphone_pasangan: '',
           no_telepon: '',
-          updated_by: '',
-          updated_date: '',
+          // updated_by: '',
+          // updated_date: '',
           usia_pasangan: '',
         })
         .subscribe({

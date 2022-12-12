@@ -51,7 +51,7 @@
     <div class="form-group row" [hidden]="tampilanfixornon === 'Fix Income'">
       <label id="changeLabelUpload" class="col-sm-4 col-form-label">Upload</label>
       <div class="col-sm-8">
-        <div id="hideFileUploadJikaViewShow" class="input-group" *ngIf="this.getMemoUpload.nama_dokumen == null">
+        <div id="hideFileUploadJikaViewShow" class="input-group" *ngIf="this.resultGetMemoUpload == 0">
           <div class="custom-file">
             <input
               class="custom-file-input"
@@ -71,7 +71,7 @@
           class="btn mb-1 btn-rounded btn-secondary"
           id="testButton"
           (click)="download()"
-          [hidden]="this.getMemoUpload.nama_dokumen == null"
+          [hidden]="this.resultGetMemoUpload == 0 || this.untukSessionRole === 'AO'"
         >
           <span class="btn-icon-left"><i class="fa fa-download color-warning"></i></span>View
         </button>
@@ -136,7 +136,6 @@
   >
     Kembali Ke De
   </button>
-
   <button
     type="button"
     [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'AO'"
@@ -174,7 +173,6 @@
           <th scope="col"></th>
         </tr>
       </thead>
-      <form action=""></form>
       <tbody>
         <tr *ngFor="let memoModel of memoModel; let i = index">
           <td style="text-align: center" scope="col">{{ i + 1 }}</td>

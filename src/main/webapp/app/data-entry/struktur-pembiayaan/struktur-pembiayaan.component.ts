@@ -52,6 +52,9 @@ export class StrukturPembiayaanComponent implements OnInit {
   untukSessionRole: any;
   tujuanpembiayaan: any;
 
+  // only show margin dan angsuran
+  showAngsuran: any;
+
   constructor(
     protected dataEntryService: DataEntryService,
     private route: ActivatedRoute,
@@ -122,11 +125,11 @@ export class StrukturPembiayaanComponent implements OnInit {
         Validators.required,
       ],
       fee_based: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '0' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
         Validators.required,
       ],
       uang_muka: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '0' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
         Validators.required,
       ],
       detail_objek_pembiayaan: [
@@ -185,7 +188,7 @@ export class StrukturPembiayaanComponent implements OnInit {
           fee_based: this.strukturModel.fee_based,
           uang_muka: this.strukturModel.uang_muka,
           detail_objek_pembiayaan: this.strukturModel.detail_objek_pembiayaan,
-          margin: 'Margin = ' + this.strukturModel.margin,
+          margin: this.strukturModel.margin,
           angsuran: this.strukturModel.angsuran,
           nilai_pembiayaan: this.strukturModel.nilai_pembiayaan,
         };
@@ -251,11 +254,16 @@ export class StrukturPembiayaanComponent implements OnInit {
                 let anguran2 = data.result.angsuran[1];
 
                 if (anguran2 == null) {
-                  this.strukturForm.get('angsuran')?.setValue('Angsuran = ' + anguran1);
+                  this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ');
+                  this.showAngsuran = 'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
                 } else {
-                  this.strukturForm
-                    .get('angsuran')
-                    ?.setValue('Angsuran Tahun Ke 1 = ' + anguran1 + '; ' + 'Angsuran Tahun Ke 2 = ' + anguran2);
+                  this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ' + anguran2);
+                  this.showAngsuran =
+                    'Angsuran Tahun Ke 1 = ' +
+                    Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) +
+                    '; ' +
+                    'Angsuran Tahun Ke 2 = ' +
+                    Number(anguran2).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
                 }
               },
               error: err => {
@@ -377,9 +385,16 @@ export class StrukturPembiayaanComponent implements OnInit {
           var nilai = data.result.nilai_pembiayaan;
 
           if (anguran2 == null) {
-            this.strukturForm.get('angsuran')?.setValue('Angsuran = ' + anguran1);
+            this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ');
+            this.showAngsuran = 'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
           } else {
-            this.strukturForm.get('angsuran')?.setValue('Angsuran Tahun Ke 1 = ' + anguran1 + '; ' + 'Angsuran Tahun Ke 2 = ' + anguran2);
+            this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ' + anguran2);
+            this.showAngsuran =
+              'Angsuran Tahun Ke 1 = ' +
+              Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) +
+              '; ' +
+              'Angsuran Tahun Ke 2 = ' +
+              Number(anguran2).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
           }
           this.strukturForm.get('nilai_pembiayaan')?.setValue(nilai);
         },
@@ -401,10 +416,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     let marginNon1 = marginfix.replace('Margin Tahun Ke 1 = ', '');
     let marginNon2 = marginNon1.replace('Margin Tahun Ke 2 = ', '');
     let marginnya = marginNon2.split('; ');
-    let angsuranfix = this.strukturForm.get('angsuran')?.value.replace('Angsuran = ', '');
-    let angsuranNon1 = angsuranfix.replace('Angsuran Tahun Ke 1 = ', '');
-    let angsuranNon2 = angsuranNon1.replace('Angsuran Tahun Ke 2 = ', '');
-    let angsurannya = angsuranNon2.split('; ');
+    let angsurannya = this.strukturForm.get('angsuran')?.value.split('; ');
 
     if (this.strukturModel == null) {
       this.http

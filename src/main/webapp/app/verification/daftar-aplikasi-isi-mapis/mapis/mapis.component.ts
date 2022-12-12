@@ -59,7 +59,12 @@ export class MapisComponent implements OnInit {
       setTimeout(() => {
         this.dataEntryService.getfetchlistagunan(this.dataEntry.curef).subscribe(list => {
           this.listagunan = list.result;
-          this.betaFTV = Number(this.listagunan[0].harga_objek) / Number(this.dataEntry.uang_muka);
+
+          setTimeout(() => {
+            this.dataEntryService.getFetchStrukturDE(this.app_noDe, this.dataEntry.curef).subscribe(struktur => {
+              this.betaFTV = Number(this.dataEntry.nilai_pembiayaan) / Number(struktur.result.harga_objek_pembiayaan);
+            });
+          }, 100);
         });
       }, 300);
     });

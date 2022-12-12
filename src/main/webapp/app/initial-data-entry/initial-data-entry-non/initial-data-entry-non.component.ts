@@ -8,6 +8,7 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { InitialDataEntryService } from '../services/initial-data-entry.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { SessionStorageService } from 'ngx-webstorage';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 export type EntityArrayResponseDaWa1 = HttpResponse<ApiResponse>;
@@ -62,7 +63,8 @@ export class InitialDataEntryNonComponent implements OnInit {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     protected ideNonServices: InitialDataEntryService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    protected sessionServices: SessionStorageService
   ) {}
 
   // protected getcuref = this.applicationConfigService.getEndpointFor(' http://10.20.34.110:8805/api/v1/efos-ide/getCuref');
@@ -699,8 +701,8 @@ export class InitialDataEntryNonComponent implements OnInit {
           kode_pos_domisili: '',
           kode_pos_pasangan: '',
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.sessionServices.retrieve('sessionKdCabang'),
+          created_by: this.sessionServices.retrieve('sessionUserName'),
           created_date: '',
           email: '',
           email_pasangan: '',
@@ -921,8 +923,8 @@ export class InitialDataEntryNonComponent implements OnInit {
           kode_pos_domisili: '',
           kode_pos_pasangan: '',
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.sessionServices.retrieve('sessionKdCabang'),
+          created_by: this.sessionServices.retrieve('sessionUserName'),
           created_date: '',
           email: '',
           email_pasangan: '',
@@ -1177,8 +1179,8 @@ export class InitialDataEntryNonComponent implements OnInit {
           kode_pos_domisili: '',
           kode_pos_pasangan: '',
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.sessionServices.retrieve('sessionKdCabang'),
+          created_by: this.sessionServices.retrieve('sessionUserName'),
           created_date: '',
           email: '',
           email_pasangan: '',
@@ -1394,8 +1396,8 @@ export class InitialDataEntryNonComponent implements OnInit {
           kode_pos_domisili: '',
           kode_pos_pasangan: '',
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.sessionServices.retrieve('sessionKdCabang'),
+          created_by: this.sessionServices.retrieve('sessionUserName'),
           created_date: '',
           email: '',
           email_pasangan: '',

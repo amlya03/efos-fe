@@ -13,6 +13,7 @@ import { inputModel } from '../hasil-prescreening/inputslikModel.model';
 import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
 import { slik } from '../services/config/slik.model';
 import { InitialDataEntryService } from '../services/initial-data-entry.service';
+import { SessionStorageService } from 'ngx-webstorage';
 // import { count } from 'console';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -76,6 +77,11 @@ export class HasilPrescreeningComponent implements OnInit {
   dataEntry: any;
   downloadSlik: any;
 
+  untukSessionRole: any;
+  untukSessionUserName: any;
+  untukSessionFullName: any;
+  untukSessionKodeCabang: any;
+
   constructor(
     protected dataRumah: ServiceVerificationService,
     private route: ActivatedRoute,
@@ -83,7 +89,8 @@ export class HasilPrescreeningComponent implements OnInit {
     protected http: HttpClient,
     private formBuilder: FormBuilder,
     protected applicationConfigService: ApplicationConfigService,
-    protected initialDataEntry: InitialDataEntryService
+    protected initialDataEntry: InitialDataEntryService,
+    private SessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.datakirimanid = params['datakirimanid'];
@@ -94,6 +101,10 @@ export class HasilPrescreeningComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.datakirimanappide = params['datakirimanappide'];
     });
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
+    this.untukSessionUserName = this.SessionStorageService.retrieve('sessionUserName');
+    this.untukSessionFullName = this.SessionStorageService.retrieve('sessionFullName');
+    this.untukSessionKodeCabang = this.SessionStorageService.retrieve('sessionKdCabang');
   }
 
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getCustomerByAppId?sc=');
@@ -146,21 +157,24 @@ export class HasilPrescreeningComponent implements OnInit {
         this.ktp_pasangan = res.body?.result.customer.no_ktp_pasangan;
         this.dawastatuspernikaham = res.body?.result.customer.status_perkawinan;
 
-        this.dataEntry = res.body?.result;
+        this.dataEntry = res.body?.result.customer;
         // console.warn('customer', res.body?.result.customer);
-        // alert(this.dawastatuspernikaham);
+        // alert(this.dataEntry.customer.npwp);
         // this.onResponseSuccess(res);
         const tglLahir = this.daWa.tanggal_lahir;
         const tglLahirpasangan = this.daWa.tanggal_lahir_pasangan;
         const nik = this.ktp;
+
         this.cekdukcapil(tglLahir, tglLahirpasangan);
-        this.cekslik(tglLahir, tglLahirpasangan);
-        //  this.cekdukcapil(tglLahir, tglLahirpasangan);
+        // this.cekslik(tglLahir, tglLahirpasangan);
         // this.checkstatusktpmanual(nik);
         setTimeout(() => {
-          this.initialDataEntry.getDownloadSlik('3302024506980004').subscribe(data => {
+          this.initialDataEntry.getDownloadSlik(this.ktp).subscribe(data => {
             console.warn('Download', data);
             this.downloadSlik = data.result;
+
+            // this.untukSlik();
+            // this.simpanstatusktp();
           });
         }, 300);
         this.getduplikatc(this.ktp, this.nama).subscribe({
@@ -186,7 +200,17 @@ export class HasilPrescreeningComponent implements OnInit {
     //       },
     //     });
   }
-
+  untukSlik() {
+    this.http
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-ide/slik_inquiry', {
+        noAplikasi: this.dataEntry.app_no_ide,
+      })
+      .subscribe({
+        next: data => {
+          console.warn(data);
+        },
+      });
+  }
   cekkembalislik() {
     this.dataRumah.fetchSlik(this.datakirimanappide).subscribe(data => {
       this.dataslik = data.result.dataSlikResult;
@@ -505,26 +529,28 @@ export class HasilPrescreeningComponent implements OnInit {
     //     });
     // } else {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-ide/slik_verify', {
         channelID: 'EFOS',
-        idUSerCabang: '',
-        jenisKelamin: this.daWa.jenis_kelamin,
-        kodeCabang: '',
-        namaNasabah: this.daWa.nama,
-        noAplikasi: this.datakirimanappide,
-        noKtp: this.daWa.no_ktp,
-        npwp: '',
+        createdBy: this.SessionStorageService.retrieve('sessionUserName'),
+        idUserCabang: this.SessionStorageService.retrieve('sessionUserName'),
+        jenisKelamin: 'F',
+        jenisKelaminPasangan: this.dataEntry.jenis_kelamin_pasangan,
+        jenisProduct: 'PTA',
+        kodeCabang: this.SessionStorageService.retrieve('sessionKdCabang'),
+        namaNasabah: this.dataEntry.nama,
+        namaPasangan: this.dataEntry.nama_pasangan,
+        noAplikasi: this.dataEntry.app_no_ide,
+        noKtp: this.dataEntry.no_ktp,
+        noKtpPasangan: this.dataEntry.no_ktp_pasangan,
+        npwp: this.dataEntry.npwp,
         reffNumber: reffnumbernya,
-        tempatLahir: '',
-        tglLahir: tgllahirkirim,
+        statusMenikah: '0',
+        tempatLahir: this.dataEntry.tempat_lahir,
+        tempatLahirPasangan: this.dataEntry.tempat_lahir_pasangan,
+        tglLahir: this.dataEntry.tanggal_lahir,
+        tglLahirPasangan: this.dataEntry.tanggal_lahir_pasangan,
         timestamp: timestamp,
-        TujuanSlikCheking: '99',
-        namaPasangan: this.daWa.nama_pasangan,
-        noKtpPasangan: this.daWa.no_ktp_pasangan,
-        tempatLahirPasangan: this.daWa.tempat_lahir_pasangan,
-        tglLahirPasangan: this.daWa.no_ktp.tanggal_lahir_pasangan,
-        jenisKelaminPAsangan: this.daWa.jenis_kelamin_pasangan,
-        StatusMenikah: this.daWa.no_ktp.status_perkawinan,
+        tujuanSlikChecking: '1',
       })
       .subscribe({
         next: data => {
@@ -824,7 +850,7 @@ export class HasilPrescreeningComponent implements OnInit {
         app_no_ide: app_no_ide,
         curef: curef,
         app_no_de: '',
-        cabang: '',
+        cabang: this.untukSessionKodeCabang,
         created_by: '',
         created_date: '',
         flag_tab: '',
@@ -966,241 +992,241 @@ export class HasilPrescreeningComponent implements OnInit {
       queryParams: {},
     });
   }
-  contoh(): void {
-    let options = this.inputScoring.map((option: any) => {
-      return `
-        <option key="${option}" value="${option.parameter_type}">
-            ${option.parameter_description}
-        </option>
-      `;
-    });
-    $(document).ready(function () {
-      $('#parameter').change(function () {
-        let parameterValue = $(this).val();
-        if (parameterValue === '1') {
-          $('#minMaxDiv').hide();
-          $('#dataValueDiv').show();
-        } else {
-          $('#minMaxDiv').show();
-          $('#dataValueDiv').hide();
-        }
-      });
-    });
-    // const { value: formValues } = await Swal.fire({
-    Swal.fire({
-      title: 'Tambah SLIK',
-      html:
-        '<br />' +
-        '<div class="row form-material"><div class="form-group row">' +
-        '<div class="form-group row"><label class="col-sm-3 col-form-label">Nama Bank?</label>' +
-        '<div class="col-sm-9"><input type="text" class="form-control" id="Nama_bank"/>' +
-        '</div></div>' +
-        '<div class="form-group row"><label class="col-sm-3 col-form-label">Jenis fasilitas?</label>' +
-        '<div class="col-sm-9"><input type="text" class="form-control" id="Jenis_fasilitas"/>' +
-        '</div></div>' +
-        '<label class="col-sm-3 col-form-label">Kolektibilitas</label>' +
-        '<div class="col-sm-9"><select id="kolektibilitas" class="form-control"><option value="">Pilih</option><option value="Lancar">Lancar</option><option value="Nyandet">Nyandet</option><option value="gkbisabayar">Gk bisa bayar</option></select>' +
-        '</div></div>' +
-        '<label class="col-sm-3 col-form-label">Keteranga</label>' +
-        '<div class="col-sm-9"><select id="keterangan" class="form-control"><option value="">Pilih</option><option value="Komsumsi">Komsumsi</option><option value="Investasi">Investasi</option><option value="GkTau">Gk Tau</option></select>' +
-        '</div></div>' +
-        '<div class="form-group row"><label class="col-sm-3 col-form-label">Tanggal Mulai?</label>' +
-        '<div class="col-sm-9"><input type="date" class="form-control" id="tangal_mulai"/>' +
-        '</div></div>' +
-        '<div class="form-group row"><label class="col-sm-3 col-form-label">tanggal jatuh tempo</label>' +
-        '<div class="col-sm-9"><input type="date" class="form-control" id="tangal_akhir"/>' +
-        '</div></div>' +
-        '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">angsuran</label>' +
-        '<div class="col-sm-9"><input type="text" class="form-control" id="angsuran"/>' +
-        '</div></div>' +
-        '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Outstanding</label>' +
-        '<div class="col-sm-9"><input type="text" class="form-control" id="Outstanding"/>' +
-        '</div></div>' +
-        '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Platform</label>' +
-        '<div class="col-sm-9"><input type="text" class="form-control" id="Platform"/>' +
-        '</div></div>' +
-        '<label class="col-sm-3 col-form-label">Status</label>' +
-        '<div class="col-sm-9"><select id="Status" class="form-control"><option value="">Pilih</option><option value="Lunas">Lunas</option><option value="Belumlunas">Belum lunas</option></select>' +
-        '</div></div>' +
-        '<div>',
-      focusConfirm: false,
-      // preConfirm: () => {
-      //   return [$('#produk').val(), $('#joint_income').val(), $('#parameter').val(), $('#data_value').val(), $('#min').val(), $('#max').val(), $('#score').val()];
-      // },
-    }).then(result => {
-      let proVal = $('#keterangan').val();
-      let joVal = $('#tangal_mulai').val();
-      let parVal = $('#tangal_akhir').val();
-      let datVal = $('#angsuran').val();
-      let namabank = $('#Nama_bank').val();
-      let jenisfasilitas = $('#Jenis_fasilitas').val();
-      let kolektibilitas = $('#kolektibilitas').val();
-      let Outstanding = $('#Outstanding').val();
-      let Platform = $('#Platform').val();
-      let Status = $('#Status').val();
-      if (proVal === '') {
-        alert('Gagal Menyimpan keterangan Belum diisi');
-        return;
-      } else if (joVal === '') {
-        alert('Gagal Menyimpan tangal mulai Belum dipilih');
-        return;
-      } else if (parVal === '') {
-        alert('Gagal Menyimpan tangal akhir Belum dipilih');
-        return;
-      } else if (datVal === '') {
-        alert('Gagal Menyimpan angsuran Belum diisi');
-        return;
-      } else {
-        this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify_manual', {
-            id: '',
-            no_aplikasi: this.datakirimanappide,
-            id_number: this.ktp,
-            angsuran: datVal,
-            tanggal_jatuh_tempo: parVal,
-            response_description: 'get Slik Result Success',
-            status_applicant: 'Debitur Utama Individu',
-            tanggal_mulai: joVal,
-            jenis_kredit_pembiayaan_ket: jenisfasilitas,
-            jenis_penggunaan_ket: proVal,
-            plafon: Platform,
-            ljk_ket: namabank,
-            kondisi_ket: Status,
-            kualitas_ket: kolektibilitas,
-            baki_debet: Outstanding,
+  // contoh(): void {
+  //   let options = this.inputScoring.map((option: any) => {
+  //     return `
+  //       <option key="${option}" value="${option.parameter_type}">
+  //           ${option.parameter_description}
+  //       </option>
+  //     `;
+  //   });
+  //   $(document).ready(function () {
+  //     $('#parameter').change(function () {
+  //       let parameterValue = $(this).val();
+  //       if (parameterValue === '1') {
+  //         $('#minMaxDiv').hide();
+  //         $('#dataValueDiv').show();
+  //       } else {
+  //         $('#minMaxDiv').show();
+  //         $('#dataValueDiv').hide();
+  //       }
+  //     });
+  //   });
+  //   // const { value: formValues } = await Swal.fire({
+  //   Swal.fire({
+  //     title: 'Tambah SLIK',
+  //     html:
+  //       '<br />' +
+  //       '<div class="row form-material"><div class="form-group row">' +
+  //       '<div class="form-group row"><label class="col-sm-3 col-form-label">Nama Bank?</label>' +
+  //       '<div class="col-sm-9"><input type="text" class="form-control" id="Nama_bank"/>' +
+  //       '</div></div>' +
+  //       '<div class="form-group row"><label class="col-sm-3 col-form-label">Jenis fasilitas?</label>' +
+  //       '<div class="col-sm-9"><input type="text" class="form-control" id="Jenis_fasilitas"/>' +
+  //       '</div></div>' +
+  //       '<label class="col-sm-3 col-form-label">Kolektibilitas</label>' +
+  //       '<div class="col-sm-9"><select id="kolektibilitas" class="form-control"><option value="">Pilih</option><option value="Lancar">Lancar</option><option value="Nyandet">Nyandet</option><option value="gkbisabayar">Gk bisa bayar</option></select>' +
+  //       '</div></div>' +
+  //       '<label class="col-sm-3 col-form-label">Keteranga</label>' +
+  //       '<div class="col-sm-9"><select id="keterangan" class="form-control"><option value="">Pilih</option><option value="Komsumsi">Komsumsi</option><option value="Investasi">Investasi</option><option value="GkTau">Gk Tau</option></select>' +
+  //       '</div></div>' +
+  //       '<div class="form-group row"><label class="col-sm-3 col-form-label">Tanggal Mulai?</label>' +
+  //       '<div class="col-sm-9"><input type="date" class="form-control" id="tangal_mulai"/>' +
+  //       '</div></div>' +
+  //       '<div class="form-group row"><label class="col-sm-3 col-form-label">tanggal jatuh tempo</label>' +
+  //       '<div class="col-sm-9"><input type="date" class="form-control" id="tangal_akhir"/>' +
+  //       '</div></div>' +
+  //       '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">angsuran</label>' +
+  //       '<div class="col-sm-9"><input type="text" class="form-control" id="angsuran"/>' +
+  //       '</div></div>' +
+  //       '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Outstanding</label>' +
+  //       '<div class="col-sm-9"><input type="text" class="form-control" id="Outstanding"/>' +
+  //       '</div></div>' +
+  //       '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Platform</label>' +
+  //       '<div class="col-sm-9"><input type="text" class="form-control" id="Platform"/>' +
+  //       '</div></div>' +
+  //       '<label class="col-sm-3 col-form-label">Status</label>' +
+  //       '<div class="col-sm-9"><select id="Status" class="form-control"><option value="">Pilih</option><option value="Lunas">Lunas</option><option value="Belumlunas">Belum lunas</option></select>' +
+  //       '</div></div>' +
+  //       '<div>',
+  //     focusConfirm: false,
+  //     // preConfirm: () => {
+  //     //   return [$('#produk').val(), $('#joint_income').val(), $('#parameter').val(), $('#data_value').val(), $('#min').val(), $('#max').val(), $('#score').val()];
+  //     // },
+  //   }).then(result => {
+  //     let proVal = $('#keterangan').val();
+  //     let joVal = $('#tangal_mulai').val();
+  //     let parVal = $('#tangal_akhir').val();
+  //     let datVal = $('#angsuran').val();
+  //     let namabank = $('#Nama_bank').val();
+  //     let jenisfasilitas = $('#Jenis_fasilitas').val();
+  //     let kolektibilitas = $('#kolektibilitas').val();
+  //     let Outstanding = $('#Outstanding').val();
+  //     let Platform = $('#Platform').val();
+  //     let Status = $('#Status').val();
+  //     if (proVal === '') {
+  //       alert('Gagal Menyimpan keterangan Belum diisi');
+  //       return;
+  //     } else if (joVal === '') {
+  //       alert('Gagal Menyimpan tangal mulai Belum dipilih');
+  //       return;
+  //     } else if (parVal === '') {
+  //       alert('Gagal Menyimpan tangal akhir Belum dipilih');
+  //       return;
+  //     } else if (datVal === '') {
+  //       alert('Gagal Menyimpan angsuran Belum diisi');
+  //       return;
+  //     } else {
+  //       this.http
+  //         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify_manual', {
+  //           id: '',
+  //           no_aplikasi: this.datakirimanappide,
+  //           id_number: this.ktp,
+  //           angsuran: datVal,
+  //           tanggal_jatuh_tempo: parVal,
+  //           response_description: 'get Slik Result Success',
+  //           status_applicant: 'Debitur Utama Individu',
+  //           tanggal_mulai: joVal,
+  //           jenis_kredit_pembiayaan_ket: jenisfasilitas,
+  //           jenis_penggunaan_ket: proVal,
+  //           plafon: Platform,
+  //           ljk_ket: namabank,
+  //           kondisi_ket: Status,
+  //           kualitas_ket: kolektibilitas,
+  //           baki_debet: Outstanding,
 
-            created_by: '',
-            created_date: '',
-          })
-          .subscribe({
-            next: response => {
-              // console.warn(response);
-              alert('Data Berhasil disimpan');
-              window.location.reload();
-            },
-            error: error => console.warn(error),
-          });
-      }
-    });
-  }
+  //           created_by: '',
+  //           created_date: '',
+  //         })
+  //         .subscribe({
+  //           next: response => {
+  //             // console.warn(response);
+  //             alert('Data Berhasil disimpan');
+  //             window.location.reload();
+  //           },
+  //           error: error => console.warn(error),
+  //         });
+  //     }
+  //   });
+  // }
 
-  contohpasangan(): void {
-    let options = this.inputScoring.map((option: any) => {
-      return `
-        <option key="${option}" value="${option.parameter_type}">
-            ${option.parameter_description}
-        </option>
-      `;
-    });
-    $(document).ready(function () {
-      $('#parameter').change(function () {
-        let parameterValue = $(this).val();
-        if (parameterValue === '1') {
-          $('#minMaxDiv').hide();
-          $('#dataValueDiv').show();
-        } else {
-          $('#minMaxDiv').show();
-          $('#dataValueDiv').hide();
-        }
-      });
-    });
-    // const { value: formValues } = await Swal.fire({
-    Swal.fire({
-      title: 'Tambah SLIK',
-      html:
-        '<br />' +
-        '<div class="row form-material"><div class="form-group row">' +
-        '<div class="form-group row"><label class="col-sm-3 col-form-label">Nama Bank?</label>' +
-        '<div class="col-sm-9"><input type="text" class="form-control" id="Nama_bank"/>' +
-        '</div></div>' +
-        '<div class="form-group row"><label class="col-sm-3 col-form-label">Jenis fasilitas?</label>' +
-        '<div class="col-sm-9"><input type="text" class="form-control" id="Jenis_fasilitas"/>' +
-        '</div></div>' +
-        '<label class="col-sm-3 col-form-label">Kolektibilitas</label>' +
-        '<div class="col-sm-9"><select id="kolektibilitas" class="form-control"><option value="">Pilih</option><option value="Lancar">Lancar</option><option value="Nyandet">Nyandet</option><option value="gkbisabayar">Gk bisa bayar</option></select>' +
-        '</div></div>' +
-        '<label class="col-sm-3 col-form-label">Keteranga</label>' +
-        '<div class="col-sm-9"><select id="keterangan" class="form-control"><option value="">Pilih</option><option value="Komsumsi">Komsumsi</option><option value="Investasi">Investasi</option><option value="GkTau">Gk Tau</option></select>' +
-        '</div></div>' +
-        '<div class="form-group row"><label class="col-sm-3 col-form-label">Tanggal Mulai?</label>' +
-        '<div class="col-sm-9"><input type="date" class="form-control" id="tangal_mulai"/>' +
-        '</div></div>' +
-        '<div class="form-group row"><label class="col-sm-3 col-form-label">tanggal jatuh tempo</label>' +
-        '<div class="col-sm-9"><input type="date" class="form-control" id="tangal_akhir"/>' +
-        '</div></div>' +
-        '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">angsuran</label>' +
-        '<div class="col-sm-9"><input type="text" class="form-control" id="angsuran"/>' +
-        '</div></div>' +
-        '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Outstanding</label>' +
-        '<div class="col-sm-9"><input type="text" class="form-control" id="Outstanding"/>' +
-        '</div></div>' +
-        '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Platform</label>' +
-        '<div class="col-sm-9"><input type="text" class="form-control" id="Platform"/>' +
-        '</div></div>' +
-        '<label class="col-sm-3 col-form-label">Status</label>' +
-        '<div class="col-sm-9"><select id="Status" class="form-control"><option value="">Pilih</option><option value="Lunas">Lunas</option><option value="Belumlunas">Belum lunas</option></select>' +
-        '</div></div>' +
-        '<div>',
-      focusConfirm: false,
-      // preConfirm: () => {
-      //   return [$('#produk').val(), $('#joint_income').val(), $('#parameter').val(), $('#data_value').val(), $('#min').val(), $('#max').val(), $('#score').val()];
-      // },
-    }).then(result => {
-      let proVal = $('#keterangan').val();
-      let joVal = $('#tangal_mulai').val();
-      let parVal = $('#tangal_akhir').val();
-      let datVal = $('#angsuran').val();
-      let namabank = $('#Nama_bank').val();
-      let jenisfasilitas = $('#Jenis_fasilitas').val();
-      let kolektibilitas = $('#kolektibilitas').val();
-      let Outstanding = $('#Outstanding').val();
-      let Platform = $('#Platform').val();
-      let Status = $('#Status').val();
-      if (proVal === '') {
-        alert('Gagal Menyimpan keterangan Belum diisi');
-        return;
-      } else if (joVal === '') {
-        alert('Gagal Menyimpan tangal mulai Belum dipilih');
-        return;
-      } else if (parVal === '') {
-        alert('Gagal Menyimpan tangal akhir Belum dipilih');
-        return;
-      } else if (datVal === '') {
-        alert('Gagal Menyimpan angsuran Belum diisi');
-        return;
-      } else {
-        this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify_manual', {
-            id: '',
-            no_aplikasi: this.datakirimanappide,
-            id_number: this.ktp,
-            angsuran: datVal,
-            tanggal_jatuh_tempo: parVal,
-            response_description: 'get Slik Result Success',
-            status_applicant: 'Debitur Pasangan',
-            tanggal_mulai: joVal,
-            jenis_kredit_pembiayaan_ket: jenisfasilitas,
-            jenis_penggunaan_ket: proVal,
-            plafon: Platform,
-            ljk_ket: namabank,
-            kondisi_ket: Status,
-            kualitas_ket: kolektibilitas,
-            baki_debet: Outstanding,
+  // contohpasangan(): void {
+  //   let options = this.inputScoring.map((option: any) => {
+  //     return `
+  //       <option key="${option}" value="${option.parameter_type}">
+  //           ${option.parameter_description}
+  //       </option>
+  //     `;
+  //   });
+  //   $(document).ready(function () {
+  //     $('#parameter').change(function () {
+  //       let parameterValue = $(this).val();
+  //       if (parameterValue === '1') {
+  //         $('#minMaxDiv').hide();
+  //         $('#dataValueDiv').show();
+  //       } else {
+  //         $('#minMaxDiv').show();
+  //         $('#dataValueDiv').hide();
+  //       }
+  //     });
+  //   });
+  //   // const { value: formValues } = await Swal.fire({
+  //   Swal.fire({
+  //     title: 'Tambah SLIK',
+  //     html:
+  //       '<br />' +
+  //       '<div class="row form-material"><div class="form-group row">' +
+  //       '<div class="form-group row"><label class="col-sm-3 col-form-label">Nama Bank?</label>' +
+  //       '<div class="col-sm-9"><input type="text" class="form-control" id="Nama_bank"/>' +
+  //       '</div></div>' +
+  //       '<div class="form-group row"><label class="col-sm-3 col-form-label">Jenis fasilitas?</label>' +
+  //       '<div class="col-sm-9"><input type="text" class="form-control" id="Jenis_fasilitas"/>' +
+  //       '</div></div>' +
+  //       '<label class="col-sm-3 col-form-label">Kolektibilitas</label>' +
+  //       '<div class="col-sm-9"><select id="kolektibilitas" class="form-control"><option value="">Pilih</option><option value="Lancar">Lancar</option><option value="Nyandet">Nyandet</option><option value="gkbisabayar">Gk bisa bayar</option></select>' +
+  //       '</div></div>' +
+  //       '<label class="col-sm-3 col-form-label">Keteranga</label>' +
+  //       '<div class="col-sm-9"><select id="keterangan" class="form-control"><option value="">Pilih</option><option value="Komsumsi">Komsumsi</option><option value="Investasi">Investasi</option><option value="GkTau">Gk Tau</option></select>' +
+  //       '</div></div>' +
+  //       '<div class="form-group row"><label class="col-sm-3 col-form-label">Tanggal Mulai?</label>' +
+  //       '<div class="col-sm-9"><input type="date" class="form-control" id="tangal_mulai"/>' +
+  //       '</div></div>' +
+  //       '<div class="form-group row"><label class="col-sm-3 col-form-label">tanggal jatuh tempo</label>' +
+  //       '<div class="col-sm-9"><input type="date" class="form-control" id="tangal_akhir"/>' +
+  //       '</div></div>' +
+  //       '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">angsuran</label>' +
+  //       '<div class="col-sm-9"><input type="text" class="form-control" id="angsuran"/>' +
+  //       '</div></div>' +
+  //       '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Outstanding</label>' +
+  //       '<div class="col-sm-9"><input type="text" class="form-control" id="Outstanding"/>' +
+  //       '</div></div>' +
+  //       '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Platform</label>' +
+  //       '<div class="col-sm-9"><input type="text" class="form-control" id="Platform"/>' +
+  //       '</div></div>' +
+  //       '<label class="col-sm-3 col-form-label">Status</label>' +
+  //       '<div class="col-sm-9"><select id="Status" class="form-control"><option value="">Pilih</option><option value="Lunas">Lunas</option><option value="Belumlunas">Belum lunas</option></select>' +
+  //       '</div></div>' +
+  //       '<div>',
+  //     focusConfirm: false,
+  //     // preConfirm: () => {
+  //     //   return [$('#produk').val(), $('#joint_income').val(), $('#parameter').val(), $('#data_value').val(), $('#min').val(), $('#max').val(), $('#score').val()];
+  //     // },
+  //   }).then(result => {
+  //     let proVal = $('#keterangan').val();
+  //     let joVal = $('#tangal_mulai').val();
+  //     let parVal = $('#tangal_akhir').val();
+  //     let datVal = $('#angsuran').val();
+  //     let namabank = $('#Nama_bank').val();
+  //     let jenisfasilitas = $('#Jenis_fasilitas').val();
+  //     let kolektibilitas = $('#kolektibilitas').val();
+  //     let Outstanding = $('#Outstanding').val();
+  //     let Platform = $('#Platform').val();
+  //     let Status = $('#Status').val();
+  //     if (proVal === '') {
+  //       alert('Gagal Menyimpan keterangan Belum diisi');
+  //       return;
+  //     } else if (joVal === '') {
+  //       alert('Gagal Menyimpan tangal mulai Belum dipilih');
+  //       return;
+  //     } else if (parVal === '') {
+  //       alert('Gagal Menyimpan tangal akhir Belum dipilih');
+  //       return;
+  //     } else if (datVal === '') {
+  //       alert('Gagal Menyimpan angsuran Belum diisi');
+  //       return;
+  //     } else {
+  //       this.http
+  //         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify_manual', {
+  //           id: '',
+  //           no_aplikasi: this.datakirimanappide,
+  //           id_number: this.ktp,
+  //           angsuran: datVal,
+  //           tanggal_jatuh_tempo: parVal,
+  //           response_description: 'get Slik Result Success',
+  //           status_applicant: 'Debitur Pasangan',
+  //           tanggal_mulai: joVal,
+  //           jenis_kredit_pembiayaan_ket: jenisfasilitas,
+  //           jenis_penggunaan_ket: proVal,
+  //           plafon: Platform,
+  //           ljk_ket: namabank,
+  //           kondisi_ket: Status,
+  //           kualitas_ket: kolektibilitas,
+  //           baki_debet: Outstanding,
 
-            created_by: '',
-            created_date: '',
-          })
-          .subscribe({
-            next: response => {
-              console.warn(response);
-              alert('Data Berhasil disimpan');
-              window.location.reload();
-            },
-            error: error => console.warn(error),
-          });
-      }
-    });
-  }
+  //           created_by: '',
+  //           created_date: '',
+  //         })
+  //         .subscribe({
+  //           next: response => {
+  //             console.warn(response);
+  //             alert('Data Berhasil disimpan');
+  //             window.location.reload();
+  //           },
+  //           error: error => console.warn(error),
+  //         });
+  //     }
+  //   });
+  // }
   joinRoom(jenis: any) {
     alert(jenis);
   }

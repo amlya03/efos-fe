@@ -173,26 +173,32 @@ export class CallReportComponent implements OnInit {
   load() {
     this.dataEntryService.getFetchCallReport(this.app_no_de).subscribe(call => {
       this.daWa = call.result;
-      if (this.daWa === null) {
-        this.checkboxCek = '';
-      } else {
-        this.checkboxCek = this.daWa.legalitas_usaha.split(', ');
-        for (let i = 0; i < this.checkboxCek.length; i++) {
-          if (this.checkboxCek[i] === 'SIU') {
-            this.checkboxCeksiu = 'SIU';
-          } else if (this.checkboxCek[i] === 'SIUP') {
-            this.checkboxCeksiup = 'SIUP';
-          } else if (this.checkboxCek[i] === 'NIB') {
-            this.checkboxCeknib = 'NIB';
-          } else if (this.checkboxCek[i] === 'SKDU') {
-            this.checkboxCekskdu = 'SKDU';
-          } else if (this.checkboxCek[i] === 'SKDP') {
-            this.checkboxCekskdp = 'SKDP';
-          } else if (this.checkboxCek[i] === 'Akta Pendirian') {
-            this.checkboxCekaktapendirian = 'Akta Pendirian';
+      setTimeout(() => {
+        if (this.daWa1.kode_fasilitas_name === 'PTA') {
+          this.checkboxCek = '';
+        } else {
+          if (this.daWa === null) {
+            this.checkboxCek = '';
+          } else {
+            this.checkboxCek = this.daWa.legalitas_usaha.split(', ');
+            for (let i = 0; i < this.checkboxCek.length; i++) {
+              if (this.checkboxCek[i] === 'SIU') {
+                this.checkboxCeksiu = 'SIU';
+              } else if (this.checkboxCek[i] === 'SIUP') {
+                this.checkboxCeksiup = 'SIUP';
+              } else if (this.checkboxCek[i] === 'NIB') {
+                this.checkboxCeknib = 'NIB';
+              } else if (this.checkboxCek[i] === 'SKDU') {
+                this.checkboxCekskdu = 'SKDU';
+              } else if (this.checkboxCek[i] === 'SKDP') {
+                this.checkboxCekskdp = 'SKDP';
+              } else if (this.checkboxCek[i] === 'Akta Pendirian') {
+                this.checkboxCekaktapendirian = 'Akta Pendirian';
+              }
+            }
           }
         }
-      }
+      }, 300);
       const retriveCallReport = {
         alamat_tinggal: this.daWa.alamat_tinggal,
         tanggal_lahir: this.daWa.tanggal_lahir,
