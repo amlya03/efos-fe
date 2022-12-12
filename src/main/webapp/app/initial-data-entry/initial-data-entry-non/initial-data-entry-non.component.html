@@ -63,21 +63,14 @@
             name="tanggal_lahir"
             (change)="submitBday()"
           />
-          <input class="form-control" formControlName="umurformpasangan" type="text" id="umur" name="umur" />
+          <input class="form-control" formControlName="umurform" type="text" id="umur" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tempat Lahir<span class="text-danger">*</span></label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            class="form-control"
-            formControlName="tempatlahir"
-            placeholder="Tempat Lahir"
-            id="tempat_lahir"
-            name="tempat_lahir"
-          />
+          <input type="text" class="form-control" formControlName="tempatlahir" placeholder="Tempat Lahir" id="tempat_lahir" />
         </div>
       </div>
       <br />
@@ -104,14 +97,14 @@
         <label class="col-sm-4 col-form-label">Agama<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <div class="form-group">
-            <select class="form-control" id="agama" formControlName="agamaform" [(ngModel)]="agama" name="agama">
+            <select class="form-control" id="agama" formControlName="agamaform" [(ngModel)]="agama">
               <option selected value="">Pilih Agama</option>
-              <option value="islam">Islam</option>
-              <option value="kristen">Kristen</option>
-              <option value="khatolik">Khatolik</option>
-              <option value="budha">Budha</option>
-              <option value="hindu">Hindu</option>
-              <option value="kong hu chu">Kong Hu Chu</option>
+              <option value="Islam">Islam</option>
+              <option value="Kristen">Kristen</option>
+              <option value="Khatolik">Khatolik</option>
+              <option value="Budha">Budha</option>
+              <option value="Hindu">Hindu</option>
+              <option value="Kong Hu Chu">Kong Hu Chu</option>
             </select>
           </div>
         </div>
@@ -121,7 +114,7 @@
         <label class="col-sm-4 col-form-label">Pendidikan<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <div class="form-group">
-            <select class="form-control" formControlName="pendidikanform" [(ngModel)]="pendidikan" id="pendidikan" name="pendidikan">
+            <select class="form-control" formControlName="pendidikanform" [(ngModel)]="pendidikan" id="pendidikan">
               <option selected value="">Pilih Pendidikan</option>
               <option value="SMA">SMA</option>
               <option value="D3">D3</option>
@@ -364,27 +357,69 @@
         <div class="col-sm-8">
           <input
             class="form-control"
-            formControlName="tanggalterbitpasangan"
+            formControlName="tanggalterbit"
             type="date"
             [(ngModel)]="tanggal_terbit_ktp"
             id="tanggal_terbit_ktp"
-            name="tanggal_terbit_ktp"
           />
         </div>
       </div>
       <br />
-      <div class="form-group row">
+      <!-- <div class="form-group row">
         <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
         <div class="col-sm-8" id="rates">
           <label for="chkYes">
-            <input type="radio" formControlName="ktpseumurhiduppasangan" id="chkYes" name="chkPinNo" value="fix" checked /> Ya
+            <input type="radio" formControlName="ktpseumurhiduppasangan" id="chkYes"  value="1"  /> Ya
           </label>
           <label for="chkNo">
-            <input type="radio" formControlName="ktpseumurhiduppasangan" id="chkNo" name="chkPinNo" value="non" /> Tidak
+            <input type="radio" formControlName="ktpseumurhiduppasangan" id="chkNo"  value="0" /> Tidak
           </label>
         </div>
+      </div> -->
+
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input
+            type="radio"
+            id="ktp_seumur_hidup_ya"
+            formControlName="ktpseumurhidup"
+            name="ktp_seumur_hidup"
+            [(ngModel)]="ktp_seumur_hidup"
+            value="1"
+            checked
+          />
+          Ya
+          <input
+            type="radio"
+            id="ktp_seumur_hidup_tidak"
+            formControlName="ktpseumurhidup"
+            name="ktp_seumur_hidup"
+            [(ngModel)]="ktp_seumur_hidup"
+            value="0"
+          />
+          Tidak
+        </div>
       </div>
-      <div class="ktpSeumurJagungNon">
+
+      <div *ngIf="ktp_seumur_hidup == '0'">
+        <br />
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Tanggal Exipred KTP<span class="text-danger">*</span></label>
+          <div class="col-sm-8">
+            <input
+              class="form-control"
+              type="date"
+              formControlName="tanggalexpktp"
+              [(ngModel)]="tanggal_exp_ktp"
+              id="tanggal_exp_ktp"
+              name="tanggal_exp_ktp"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="ktpSeumurJagungNon">
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Tanggal Exipred KTP<span class="text-danger">*</span></label>
           <div class="col-sm-8">
@@ -398,7 +433,7 @@
             />
           </div>
         </div>
-      </div>
+      </div> -->
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">No Handphone<span class="text-danger">*</span></label>
@@ -1296,13 +1331,13 @@
                   onkeypress="return onlyNumberKey(event)"
                   maxlength="8"
                   class="form-control"
-                  [(ngModel)]="kode_pos_pasangan"
+                  [(ngModel)]="kode_pos_pasangant"
                   id="kode_pos_pasangan"
                   value="{{ kode_pos_pasangan }}"
                   name="kode_pos_pasangan"
                 />
                 <div class="input-group-append">
-                  <button class="btn btn-outline-dark" (click)="carimenggunakankodepostp(kode_pos_pasangan, 0)" type="button">
+                  <button class="btn btn-outline-dark" (click)="carimenggunakankodepostp(kode_pos_pasangant, 0)" type="button">
                     Cari Data
                   </button>
                 </div>
@@ -1372,7 +1407,47 @@
               />
             </div>
           </div>
-          <div class="form-group row" id="rates2">
+
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <input
+                type="radio"
+                id="ktp_seumur_hidup_ya"
+                formControlName="ktpseumurhiduppasangan"
+                [(ngModel)]="ktp_seumur_hidup_pasangan"
+                value="1"
+                checked
+              />
+              Ya
+              <input
+                type="radio"
+                id="ktp_seumur_hidup_tidak"
+                formControlName="ktpseumurhiduppasangan"
+                [(ngModel)]="ktp_seumur_hidup_pasangan"
+                value="0"
+              />
+              Tidak
+            </div>
+          </div>
+
+          <div *ngIf="ktp_seumur_hidup_pasangan == '0'">
+            <br />
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Tanggal Exipred KTP<span class="text-danger">*</span></label>
+              <div class="col-sm-8">
+                <input
+                  class="form-control"
+                  type="date"
+                  formControlName="tanggalexpktppasangan"
+                  [(ngModel)]="tanggalexpktppasangan"
+                  id="tanggal_exp_ktp"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="form-group row" id="rates2">
             <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
             <div class="col-sm-8">
               <label for="chkYes2">
@@ -1382,8 +1457,8 @@
                 <input type="radio" formControlName="ktpseumurhiduppasangan" id="chkNo2" name="chkPinNo2" value="non" /> Tidak
               </label>
             </div>
-          </div>
-          <div class="ktpSeumurJagungNon2">
+          </div> -->
+          <!-- <div class="ktpSeumurJagungNon2">
             <div class="form-group row">
               <label class="col-sm-4 col-form-label">Tanggal Expired KTP<span class="text-danger">*</span></label>
               <div class="col-sm-8">
@@ -1397,7 +1472,7 @@
                 />
               </div>
             </div>
-          </div>
+          </div> -->
           <br />
           <div class="form-group row">
             <label class="col-sm-4 col-form-label">No Handphone<span class="text-danger">*</span></label>
@@ -1428,7 +1503,18 @@
           id="prosesData"
           name="proses"
           value="proses"
-          (click)="gotoprescreaning(daWa, daWacuref)"
+          (click)="
+            gotoprescreaning(
+              daWa,
+              daWacuref,
+              daWakodepospekerjaan,
+              daWakodepos,
+              kode_pos_perusahaan,
+              kode_pos_pasangan,
+              kode_pos,
+              kode_pos_pasangant
+            )
+          "
           type="submit"
         >
           Proses Data
@@ -1438,7 +1524,18 @@
           id="simpandata2"
           name="simpan"
           value="simpan"
-          (click)="gotodaftaraplikasiide(daWa, daWacuref)"
+          (click)="
+            gotodaftaraplikasiide(
+              daWa,
+              daWacuref,
+              daWakodepospekerjaan,
+              daWakodepos,
+              kode_pos_perusahaan,
+              kode_pos_pasangan,
+              kode_pos,
+              kode_pos_pasangant
+            )
+          "
           type="submit"
         >
           Simpan data

@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { SessionStorageService } from 'ngx-webstorage';
 
 import { createRequestOption } from 'app/core/request/request-util';
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -54,11 +56,51 @@ export class InitialDataEntryNonEditComponent implements OnInit {
   app_no_ide: any;
   daWajobid: any;
   customerid: any;
+  gettipeperusahaandariapi: any;
+  getjenispekerjaandariapi: any;
+  getjenisbidangdariapi: any;
+  getdatasektorekonomi: any;
+  kode_pos_perusahaan: any;
+  kode_pos_pasangant: any;
+
+  provinsi_perusahaan: any;
+  kabkota_perusahaan: any;
+  kecamatan_perusahaan: any;
+  kelurahan_perusahaan: any;
+
+  provinsi_cabang: any;
+  kabkota_cabang: any;
+  kecamatan: any;
+  kelurahan: any;
+
+  ktp_seumur_hidup: any;
+  tanggal_exp_ktp: any;
+
+  untukSessionRole: any;
+  untukSessionUserName: any;
+  untukSessionFullName: any;
+  untukSessionKodeCabang: any;
+  daftarAplikasiDataEntry: any;
+
+  dataentrynonfixfromedit!: FormGroup;
+  retrivejenisbidang: any;
+  retrivejenisbidangsebelum: any;
+  retrivejenissektor: any;
+  retrivejenissektorsebelum: any;
+  getjenisbidangdariapisebelum: any;
+  getdatasektorekonomisebelum: any;
+  daWaide: any;
+  daWacuref: any;
+  gettipeperusahaandariapisebelum: any;
+  getjenispekerjaandariapisebelum: any;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
+    private SessionStorageService: SessionStorageService,
+    protected applicationConfigService: ApplicationConfigService,
+    private formBuilder: FormBuilder
   ) {
     this.route.queryParams.subscribe(params => {
       this.datakiriman = params['datakiriman'];
@@ -67,7 +109,105 @@ export class InitialDataEntryNonEditComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.datakirimanidcustomer = params['datakirimanidcustomer'];
     });
+
+    this.dataentrynonfixfromedit = this.formBuilder.group({
+      noaplikasi: null,
+      nama: null,
+      jeniskelamin: null,
+      tanggallahir: null,
+      umurform: null,
+      tempatlahir: null,
+      statusperkawinan: null,
+      agamaform: null,
+      pendidikanform: null,
+      kewarganegaraanform: null,
+      ibukandung: null,
+      npwpform: null,
+      alamatktp: null,
+      provinsiform: null,
+      kotaform: null,
+      kecamatanform: null,
+      kelurahanform: null,
+      kodeposform: null,
+      rtform: null,
+      rwform: null,
+      noktp: null,
+      tanggalterbit: null,
+      ktpseumurhidup: null,
+      tanggalexpktp: null,
+      nohandphone: null,
+
+      namapasangan: null,
+      jeniskelaminpasangan: null,
+      tanggallahirpasangan: null,
+      umurformpasangan: null,
+      tempatlahirpasangan: null,
+      statusperkawinanpasangan: null,
+      agamaformpasangan: null,
+      pendidikanformpasangan: null,
+      kewarganegaraanformpasangan: null,
+      ibukandungpasangan: null,
+      npwpformpasangan: null,
+      alamatktppasangan: null,
+      provinsiformpasangan: null,
+      kotaformpasangan: null,
+      kecamatanformpasangan: null,
+      kelurahanformpasangan: null,
+      kodeposformpasangan: null,
+      rtformpasangan: null,
+      rwformpasangan: null,
+      noktppasangan: null,
+      tanggalterbitpasangan: null,
+      ktpseumurhiduppasangan: null,
+      tanggalexpktppasangan: null,
+      nohandphonepasangan: null,
+
+      namaperusahaan: null,
+      tipeperusahaan: null,
+      tipepekerjaan: null,
+      kepemilikanperusahaan: null,
+      pemilikusaha: null,
+      nomorteleponperusahaan: null,
+      jenisbidang: null,
+      jenissektor: null,
+      alamatperusahaan: null,
+      provinsiformperusahaan: null,
+      kotaformperusahaan: null,
+      kecamatanformperusahaan: null,
+      kelurahanperusahaan: null,
+      kodeposformperusahaan: null,
+      rtformperusahaan: null,
+      rwformperusahaan: null,
+      jumlahkaryawan: null,
+      npwpformperusahan: null,
+      berdirisejakbulan: null,
+      berdirisejaktahun: null,
+      nosiup: null,
+      barangajasa: null,
+
+      namaperusahansebelum: null,
+      tipeperushaansebelum: null,
+      tipepekerjaansebelum: null,
+      alamatsebelum: null,
+      jenisbidangsebelum: null,
+      jenissektorsebelum: null,
+      berdirisejakbulansebelum: null,
+      berdirisejaktahunsebelum: null,
+    });
+
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
+    this.untukSessionUserName = this.SessionStorageService.retrieve('sessionUserName');
+    this.untukSessionFullName = this.SessionStorageService.retrieve('sessionFullName');
+    this.untukSessionKodeCabang = this.SessionStorageService.retrieve('sessionKdCabang');
   }
+  protected apilisttipeperusahaan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_perusahaan'
+  );
+
+  protected apigetjenispekeraan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_pekerjaan?sc='
+  );
+  protected apilistjenisbidang = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/list_jenis_bidang');
   protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getCustomerByAppId?sc=');
   ngOnInit(): void {
     this.load();
@@ -83,6 +223,8 @@ export class InitialDataEntryNonEditComponent implements OnInit {
         // console.warn('EDITFIX', res.body?.result.customer);
 
         this.daWa = res.body?.result.customer;
+        this.daWaide = this.daWa.app_no_ide;
+        this.daWacuref = this.daWa.curef;
         this.customerappnoide = res.body?.result.customer.app_no_ide;
         this.customercuref = res.body?.result.customer.curef;
         this.customerid = res.body?.result.customer.id;
@@ -101,12 +243,104 @@ export class InitialDataEntryNonEditComponent implements OnInit {
         this.kelurahanfixpasangan = res.body?.result.customer.kelurahan_pasangan;
         this.daWajob = res.body?.result.jobinfo;
 
+        this.retrivejenisbidang = this.daWajob.jenis_bidang;
+        this.retrivejenisbidangsebelum = this.daWajob.jenis_bidang_sebelum;
+
+        this.retrivejenissektor = this.daWajob.sektor_ekonomi;
+        this.retrivejenissektorsebelum = this.daWajob.sektor_ekonomi_sebelum;
+
         this.provinsifixjob = this.daWajob.provinsi;
         this.kabkotafixjob = this.daWajob.kabkota;
         this.kecamatanfixjob = this.daWajob.kecamatan;
         this.kelurahanfixjob = this.daWajob.kelurahan;
         this.daWakodeposjob = this.daWajob.kode_pos;
         this.daWajobid = res.body?.result.jobinfo.id;
+
+        let retriveideedit = {
+          noaplikasi: this.daWa.app_no_ide,
+          nama: this.daWa.nama,
+          jeniskelamin: this.daWa.jenis_kelamin,
+          tanggallahir: this.daWa.tanggal_lahir,
+          umurform: this.daWa.usia,
+          tempatlahir: this.daWa.tempat_lahir,
+          statusperkawinan: this.daWa.status_perkawinan,
+          agamaform: this.daWa.agama,
+          pendidikanform: this.daWa.pendidikan,
+          kewarganegaraanform: this.daWa.kewarganegaraan,
+          ibukandung: this.daWa.nama_ibu_kandung,
+          npwpform: this.daWa.npwp,
+          alamatktp: this.daWa.alamat_ktp,
+          provinsiform: this.daWa.provinsi,
+          kotaform: this.daWa.kabkota,
+          kecamatanform: this.daWa.kecamatan,
+          kelurahanform: this.daWa.kelurahan,
+          kodeposform: this.daWa.kode_pos,
+          rtform: this.daWa.rt,
+          rwform: this.daWa.rw,
+          noktp: this.daWa.no_ktp,
+          tanggalterbit: this.daWa.tanggal_terbit_ktp,
+          ktpseumurhidup: this.daWa.status_ktp,
+          tanggalexpktp: this.daWa.tanggal_exp_ktp,
+          nohandphone: this.daWa.no_handphone,
+
+          namapasangan: this.daWa.nama_pasangan,
+          jeniskelaminpasangan: this.daWa.jenis_kelamin_pasangan,
+          tanggallahirpasangan: this.daWa.tanggal_lahir_pasangan,
+          umurformpasangan: this.daWa.usia_pasangan,
+          tempatlahirpasangan: this.daWa.tempat_lahir_pasangan,
+          statusperkawinanpasangan: this.daWa.status_perkawinan,
+          agamaformpasangan: this.daWa.agama_pasangan,
+          pendidikanformpasangan: this.daWa.pendidikan_pasangan,
+          kewarganegaraanformpasangan: this.daWa.kewarganegaraan_pasangan,
+          ibukandungpasangan: this.daWa.nama_ibu_kandung_pasangan,
+          npwpformpasangan: this.daWa.npwp_pasangan,
+          alamatktppasangan: this.daWa.alamat_ktp_pasangan,
+          provinsiformpasangan: this.daWa.provinsi_pasangan,
+          kotaformpasangan: this.daWa.kabkota_pasangan,
+          kecamatanformpasangan: this.daWa.kecamatan_pasangan,
+          kelurahanformpasangan: this.daWa.kelurahan_pasangan,
+          kodeposformpasangan: this.daWa.kode_pos_pasangan,
+          rtformpasangan: this.daWa.rt_pasangan,
+          rwformpasangan: this.daWa.rw_pasangan,
+          noktppasangan: this.daWa.no_ktp_pasangan,
+          tanggalterbitpasangan: this.daWa.tanggal_terbit_ktp_pasangan,
+          ktpseumurhiduppasangan: this.daWa.status_ktp_pasangan,
+          tanggalexpktppasangan: this.daWa.tanggal_exp_ktp_pasangan,
+          nohandphonepasangan: this.daWa.no_handphone_pasangan,
+
+          namaperusahaan: this.daWajob.nama_perusahaan,
+          tipeperusahaan: this.daWajob.tipe_perusahaan,
+          tipepekerjaan: this.daWajob.tipe_pekerjaan,
+          kepemilikanperusahaan: this.daWajob.kepemilikan_perusahaan,
+          pemilikusaha: this.daWajob.pemilik_usaha,
+          nomorteleponperusahaan: this.daWajob.no_telepon,
+          jenisbidang: this.daWajob.jenis_bidang,
+          jenissektor: this.daWajob.sektor_ekonomi,
+          alamatperusahaan: this.daWajob.alamat_perusahaan,
+          provinsiformperusahaan: this.daWajob.provinsi,
+          kotaformperusahaan: this.daWajob.kabkota,
+          kecamatanformperusahaan: this.daWajob.kecamatan,
+          kelurahanperusahaan: this.daWajob.kelurahan,
+          kodeposformperusahaan: this.daWajob.kode_pos,
+          rtformperusahaan: this.daWajob.rt,
+          rwformperusahaan: this.daWajob.rw,
+          jumlahkaryawan: this.daWajob.jumlah_karyawan,
+          npwpformperusahan: this.daWajob.npwp,
+          berdirisejakbulan: this.daWajob.bulan_berdiri,
+          berdirisejaktahun: this.daWajob.tahun_berdiri,
+          nosiup: this.daWajob.no_siup,
+          barangajasa: this.daWajob.barang_jasa,
+
+          namaperusahansebelum: this.daWajob.nama_perusahaan_sebelum,
+          tipeperushaansebelum: this.daWajob.tipe_perusahaan_sebelum,
+          tipepekerjaansebelum: this.daWajob.tipe_pekerjaan_sebelum,
+          alamatsebelum: this.daWajob.alamat_pekerjaan_sebelum,
+          jenisbidangsebelum: this.daWajob.jenis_bidang_sebelum,
+          jenissektorsebelum: this.daWajob.sektor_ekonomi_sebelum,
+          berdirisejakbulansebelum: this.daWajob.bulan_berdiri_sebelum,
+          berdirisejaktahunsebelum: this.daWajob.tahun_berdiri_sebelum,
+        };
+        this.dataentrynonfixfromedit.setValue(retriveideedit);
       },
     });
   }
@@ -156,6 +390,52 @@ export class InitialDataEntryNonEditComponent implements OnInit {
               this.daWaprofjob = res.body?.result;
             },
           });
+          this.getlisttipeperusahaan().subscribe({
+            next: (res: EntityArrayResponseDaWa) => {
+              // console.log(res.body?.result);
+              // console.warn('tipe_perusahaan', res.body?.result);
+              this.gettipeperusahaandariapi = res.body?.result;
+            },
+          });
+
+          this.getjenispekerjaan(2).subscribe({
+            next: (res: EntityArrayResponseDaWa) => {
+              // console.log(res.body?.result);
+              // console.warn('jenispekerjaan', res.body?.result);
+              this.getjenispekerjaandariapi = res.body?.result;
+            },
+          });
+
+          this.getlistjenisbidang().subscribe({
+            next: (res: EntityArrayResponseDaWa) => {
+              // console.log(res.body?.result);
+              // console.warn('jenisbidang', res.body?.result);
+              this.getjenisbidangdariapi = res.body?.result;
+            },
+          });
+          this.getlistjenisbidangsebelum().subscribe({
+            next: (res: EntityArrayResponseDaWa) => {
+              // console.log(res.body?.result);
+              // console.warn('jenisbidang', res.body?.result);
+              this.getjenisbidangdariapisebelum = res.body?.result;
+            },
+          });
+
+          this.getlisttipeperusahaansebelum().subscribe({
+            next: (res: EntityArrayResponseDaWa) => {
+              // console.log(res.body?.result);
+              // console.warn('tipe_perusahaan', res.body?.result);
+              this.gettipeperusahaandariapisebelum = res.body?.result;
+            },
+          });
+
+          this.getjenispekerjaansebelum(2).subscribe({
+            next: (res: EntityArrayResponseDaWa) => {
+              // console.log(res.body?.result);
+              // console.warn('jenispekerjaan', res.body?.result);
+              this.getjenispekerjaandariapisebelum = res.body?.result;
+            },
+          });
 
           // this.getdataentry1p(this.postId).subscribe({
           //   next: (res: EntityArrayResponseDaWa) => {
@@ -193,6 +473,97 @@ export class InitialDataEntryNonEditComponent implements OnInit {
       observe: 'response',
     });
     // alert('CONTOH' + token);
+  }
+
+  getlisttipeperusahaan(req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    return this.http.get<ApiResponse>(this.apilisttipeperusahaan, { params: options, observe: 'response' });
+  }
+  getjenispekerjaan(katagori_pekerjaan: any, req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+    return this.http.get<ApiResponse>(this.apigetjenispekeraan + katagori_pekerjaan, { params: options, observe: 'response' });
+  }
+
+  getlistjenisbidang(req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    return this.http.get<ApiResponse>(this.apilistjenisbidang, { params: options, observe: 'response' });
+  }
+
+  getlistjenisbidangsebelum(req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    return this.http.get<ApiResponse>(this.apilistjenisbidang, { params: options, observe: 'response' });
+  }
+
+  getsektorekonomi(idsktor: any, req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    // const httpOptions = {
+    //   // 'Authorization': token,
+    //   'Content-Type': 'application/json',
+    //   Authorization: `Bearer ${token}`,
+    // };
+    // const kodepotongan = kodekota.split('|');
+    return this.http.get<ApiResponse>('http://10.20.34.110:8805/api/v1/efos-ide/list_sektor_ekonomi?se=' + idsktor, {
+      params: options,
+      observe: 'response',
+    });
+  }
+
+  getsektorekonomisebelum(idsktor: any, req?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req);
+    // const httpOptions = {
+    //   // 'Authorization': token,
+    //   'Content-Type': 'application/json',
+    //   Authorization: `Bearer ${token}`,
+    // };
+    // const kodepotongan = kodekota.split('|');
+    return this.http.get<ApiResponse>('http://10.20.34.110:8805/api/v1/efos-ide/list_sektor_ekonomi?se=' + idsktor, {
+      params: options,
+      observe: 'response',
+    });
+  }
+
+  getlisttipeperusahaansebelum(req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    return this.http.get<ApiResponse>(this.apilisttipeperusahaan, { params: options, observe: 'response' });
+  }
+
+  getjenispekerjaansebelum(katagori_pekerjaan: any, req1?: any): Observable<EntityArrayResponseDaWa> {
+    const options = createRequestOption(req1);
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+    return this.http.get<ApiResponse>(this.apigetjenispekeraan + katagori_pekerjaan, { params: options, observe: 'response' });
+  }
+
+  jenisbidangselect() {
+    const id_sektor = document.getElementById('jenis_bidang') as HTMLInputElement | any;
+    const idsektorpotongan = id_sektor.value.split('|');
+
+    // console.log('kode' + selectedStatus);
+    this.getsektorekonomi(idsektorpotongan[0]).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        // console.warn('kota', res);
+
+        this.getdatasektorekonomi = res.body?.result;
+
+        // this.onResponseSuccess(res);
+      },
+    });
+  }
+
+  jenisbidangselectsebelum() {
+    const id_sektor = document.getElementById('jenis_bidang_sebelum') as HTMLInputElement | any;
+    const idsektorpotongan = id_sektor.value.split('|');
+
+    // console.log('kode' + selectedStatus);
+    this.getsektorekonomisebelum(idsektorpotongan[0]).subscribe({
+      next: (res: EntityArrayResponseDaWa) => {
+        // console.warn('kota', res);
+
+        this.getdatasektorekonomisebelum = res.body?.result;
+
+        // this.onResponseSuccess(res);
+      },
+    });
   }
 
   getprovinsipasangan(token: any, req?: any): Observable<EntityArrayResponseDaWa> {
@@ -609,7 +980,16 @@ export class InitialDataEntryNonEditComponent implements OnInit {
     $('#umurpasangan').val(Q4A);
   }
 
-  gotoprescreaning() {
+  gotoprescreaning(
+    app_no_ide: any,
+    curef: any,
+    kodeposjob: any,
+    kodepos: any,
+    tembakkodeposjob: any,
+    kodepospasangan: any,
+    tembakkodepos: any,
+    tembakkodepospasangan: any
+  ) {
     // alert('cekcuref'+curef)
     const nama = document.getElementById('nama') as HTMLInputElement | any;
     const jenis_kelamin = document.getElementById('jenis_kelamin') as HTMLInputElement | any;
@@ -767,6 +1147,24 @@ export class InitialDataEntryNonEditComponent implements OnInit {
         var kirimankelurahanjobn = kelurahan_perusahaan.value;
       }
 
+      if (kodeposjob == undefined) {
+        var kirimandatakodeposjob = tembakkodeposjob;
+      } else {
+        var kirimandatakodeposjob = kodeposjob;
+      }
+
+      if (kodepos == undefined) {
+        var kirimandatakodepos = tembakkodepos;
+      } else {
+        var kirimandatakodepos = kodepos;
+      }
+
+      if (kodepospasangan == undefined) {
+        var kirimandatakodeposp = tembakkodepospasangan;
+      } else {
+        var kirimandatakodeposp = kodepospasangan;
+      }
+
       const httpOptions = {
         'Content-Type': 'text/plain',
       };
@@ -776,36 +1174,110 @@ export class InitialDataEntryNonEditComponent implements OnInit {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide', {
           headers: headers,
-          nama: nama.value,
-          nama_pasangan: nama_pasangan.value,
+          // nama: nama.value,
+          // nama_pasangan: nama_pasangan.value,
+          // kategori_pekerjaan: 'Non Fix Income',
+          // curef: this.customercuref,
+          // jenis_kelamin: jenis_kelamin.value,
+          // jenis_kelamin_pasangan: jenis_kelamin_pasangan.value,
+          // usia: umur.value,
+          // app_no_ide: this.customerappnoide,
+          // tanggal_lahir: tanggal_lahir.value,
+          // tanggal_lahir_pasangan: tanggal_lahir_pasangan.value,
+          // tempat_lahir: tempat_lahir.value,
+          // tempat_lahir_pasangan: tempat_lahir_pasangan.value,
+          // status_perkawinan: status_perkawinan.value,
+          // status_alamat: '',
+          // status_kendaraan: '',
+          // status_ktp: '',
+          // status_ktp_pasangan: '',
+          // status_rumah: '',
+          // agama: agama.value,
+          // agama_pasangan: agama_pasangan.value,
+          // pendidikan: pendidikan.value,
+          // pendidikan_pasangan: pendidikan_pasangan.value,
+          // kewarganegaraan: kewarganegaraan.value,
+          // kewarganegaraan_pasangan: kewarganegaraan_pasangan.value,
+          // nama_ibu_kandung: nama_ibu_kandung.value,
+          // nama_ibu_kandung_pasangan: nama_ibu_kandung_pasangan.value,
+          // npwp: npwp.value,
+          // npwp_pasangan: npwp_pasangan.value,
+          // alamat_ktp: alamat_ktp.value,
+          // alamat_ktp_pasangan: alamat_ktp_pasangan.value,
+          // alamat_domisili: '',
+          // provinsi: kirimanprovinsid,
+          // provinsi_domisili: '',
+          // provinsi_pasangan: kirimanprovpsg,
+          // kabkota: kirimankabkotaid,
+          // kabkota_domisili: '',
+          // kabkota_pasangan: kirimankotapsg,
+          // kecamatan: kirimankecamatanid,
+          // kecamatan_domisili: '',
+          // kecamatan_pasangan: kirimankecamatanpsg,
+          // kelurahan: kirimankelurahanid,
+          // kelurahan_domisili: '',
+          // kelurahan_pasangan: kirimankelurahanpsg,
+          // kode_pos: '',
+          // kode_pos_domisili: '',
+          // kode_pos_pasangan: '',
+          // lama_menetap: '',
+          // cabang: this.untukSessionKodeCabang,
+          // created_by: '',
+          // created_date: '',
+          // email: '',
+          // email_pasangan: '',
+          // id: this.customerid,
+          // jumlah_anak: '',
+          // rt: rt.value,
+          // rt_domisili: '',
+          // rt_pasangan: rt_pasangan.value,
+          // rw: rw.value,
+          // rw_domisili: '',
+          // rw_pasangan: rw_pasangan.value,
+          // no_ktp: no_ktp.value,
+          // no_ktp_pasangan: no_ktp_pasangan.value,
+          // tanggal_terbit_ktp: tanggal_terbit_ktp.value,
+          // tanggal_terbit_ktp_pasangan: tanggal_terbit_ktp_pasangan.value,
+          // tanggal_exp_ktp: tanggal_exp_ktp.value,
+          // tanggal_exp_ktp_pasangan: tanggal_exp_ktp_pasangan.value,
+          // tipe_kendaraan: '',
+          // no_handphone: no_handphone.value,
+          // no_handphone_pasangan: no_handphone_pasangan.value,
+          // no_telepon: '',
+          // updated_by: '',
+          // updated_date: '',
+          // usia_pasangan: '',
+
+          nama: this.dataentrynonfixfromedit.get('nama')?.value,
+          nama_pasangan: this.dataentrynonfixfromedit.get('namapasangan')?.value,
           kategori_pekerjaan: 'Non Fix Income',
           curef: this.customercuref,
-          jenis_kelamin: jenis_kelamin.value,
-          jenis_kelamin_pasangan: jenis_kelamin_pasangan.value,
-          usia: umur.value,
-          app_no_ide: this.customerappnoide,
-          tanggal_lahir: tanggal_lahir.value,
-          tanggal_lahir_pasangan: tanggal_lahir_pasangan.value,
-          tempat_lahir: tempat_lahir.value,
-          tempat_lahir_pasangan: tempat_lahir_pasangan.value,
-          status_perkawinan: status_perkawinan.value,
+          jenis_kelamin: this.dataentrynonfixfromedit.get('jeniskelamin')?.value,
+          jenis_kelamin_pasangan: this.dataentrynonfixfromedit.get('jeniskelaminpasangan')?.value,
+          usia: this.dataentrynonfixfromedit.get('umurform')?.value,
+          app_no_ide: app_no_ide,
+          tanggal_lahir: this.dataentrynonfixfromedit.get('tanggallahir')?.value,
+          tanggal_lahir_pasangan: this.dataentrynonfixfromedit.get('tanggallahirpasangan')?.value,
+          tempat_lahir: this.dataentrynonfixfromedit.get('tanggallahir')?.value,
+          tempat_lahir_pasangan: this.dataentrynonfixfromedit.get('tempatlahirpasangan')?.value,
+          status_perkawinan: this.dataentrynonfixfromedit.get('statusperkawinan')?.value,
           status_alamat: '',
           status_kendaraan: '',
-          status_ktp: '',
-          status_ktp_pasangan: '',
+          status_ktp: this.dataentrynonfixfromedit.get('ktpseumurhidup')?.value,
+          status_ktp_pasangan: this.dataentrynonfixfromedit.get('ktpseumurhiduppasangan')?.value,
           status_rumah: '',
-          agama: agama.value,
-          agama_pasangan: agama_pasangan.value,
-          pendidikan: pendidikan.value,
-          pendidikan_pasangan: pendidikan_pasangan.value,
-          kewarganegaraan: kewarganegaraan.value,
-          kewarganegaraan_pasangan: kewarganegaraan_pasangan.value,
-          nama_ibu_kandung: nama_ibu_kandung.value,
-          nama_ibu_kandung_pasangan: nama_ibu_kandung_pasangan.value,
-          npwp: npwp.value,
-          npwp_pasangan: npwp_pasangan.value,
-          alamat_ktp: alamat_ktp.value,
-          alamat_ktp_pasangan: alamat_ktp_pasangan.value,
+          agama: this.dataentrynonfixfromedit.get('agamaform')?.value,
+          agama_pasangan: this.dataentrynonfixfromedit.get('agamaformpasangan')?.value,
+          pendidikan: this.dataentrynonfixfromedit.get('pendidikanform')?.value,
+          pendidikan_pasangan: this.dataentrynonfixfromedit.get('pendidikanformpasangan')?.value,
+          kewarganegaraan: this.dataentrynonfixfromedit.get('kewarganegaraanform')?.value,
+          kewarganegaraan_pasangan: this.dataentrynonfixfromedit.get('kewarganegaraanformpasangan')?.value,
+          nama_ibu_kandung: this.dataentrynonfixfromedit.get('ibukandung')?.value,
+          nama_ibu_kandung_pasangan: this.dataentrynonfixfromedit.get('ibukandungpasangan')?.value,
+          npwp: this.dataentrynonfixfromedit.get('npwpform')?.value,
+          npwp_pasangan: this.dataentrynonfixfromedit.get('npwpformpasangan')?.value,
+          alamat_ktp: this.dataentrynonfixfromedit.get('alamatktp')?.value,
+          alamat_ktp_pasangan: this.dataentrynonfixfromedit.get('alamatktppasangan')?.value,
           alamat_domisili: '',
           provinsi: kirimanprovinsid,
           provinsi_domisili: '',
@@ -819,103 +1291,183 @@ export class InitialDataEntryNonEditComponent implements OnInit {
           kelurahan: kirimankelurahanid,
           kelurahan_domisili: '',
           kelurahan_pasangan: kirimankelurahanpsg,
-          kode_pos: '',
+          kode_pos: kirimandatakodepos,
           kode_pos_domisili: '',
-          kode_pos_pasangan: '',
+          kode_pos_pasangan: kirimandatakodeposp,
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.SessionStorageService.retrieve('sessionKdCabang'),
+          created_by: this.untukSessionUserName,
           created_date: '',
           email: '',
           email_pasangan: '',
-          id: this.customerid,
+          id: this.datakirimanidcustomer,
           jumlah_anak: '',
-          rt: rt.value,
+          rt: this.dataentrynonfixfromedit.get('rtform')?.value,
           rt_domisili: '',
-          rt_pasangan: rt_pasangan.value,
-          rw: rw.value,
+          rt_pasangan: this.dataentrynonfixfromedit.get('rtformpasangan')?.value,
+          rw: this.dataentrynonfixfromedit.get('rwform')?.value,
           rw_domisili: '',
-          rw_pasangan: rw_pasangan.value,
-          no_ktp: no_ktp.value,
-          no_ktp_pasangan: no_ktp_pasangan.value,
-          tanggal_terbit_ktp: tanggal_terbit_ktp.value,
-          tanggal_terbit_ktp_pasangan: tanggal_terbit_ktp_pasangan.value,
-          tanggal_exp_ktp: tanggal_exp_ktp.value,
-          tanggal_exp_ktp_pasangan: tanggal_exp_ktp_pasangan.value,
+          rw_pasangan: this.dataentrynonfixfromedit.get('rwformpasangan')?.value,
+          no_ktp: this.dataentrynonfixfromedit.get('noktp')?.value,
+          no_ktp_pasangan: this.dataentrynonfixfromedit.get('noktppasangan')?.value,
+          tanggal_terbit_ktp: this.dataentrynonfixfromedit.get('tanggalterbit')?.value,
+          tanggal_terbit_ktp_pasangan: this.dataentrynonfixfromedit.get('tanggalterbitpasangan')?.value,
+          tanggal_exp_ktp: this.dataentrynonfixfromedit.get('tanggalexpktp')?.value,
+          tanggal_exp_ktp_pasangan: this.dataentrynonfixfromedit.get('tanggalexpktppasangan')?.value,
           tipe_kendaraan: '',
-          no_handphone: no_handphone.value,
-          no_handphone_pasangan: no_handphone_pasangan.value,
+          no_handphone: this.dataentrynonfixfromedit.get('nohandphone')?.value,
+          no_handphone_pasangan: this.dataentrynonfixfromedit.get('nohandphonepasangan')?.value,
           no_telepon: '',
           updated_by: '',
           updated_date: '',
-          usia_pasangan: '',
+          usia_pasangan: this.dataentrynonfixfromedit.get('umurformpasangan')?.value,
         })
         .subscribe(resposne => {
           this.contohdata = resposne.result.id;
+
+          const kirimanjenisbidang = this.dataentrynonfixfromedit.get('jenisbidang')?.value.split('|');
+          if (this.dataentrynonfixfromedit.get('jenisbidang')?.value.indexOf('|') !== -1) {
+            var kirimanjenisbidang1 = kirimanjenisbidang[1];
+          } else {
+            var kirimanjenisbidang1 = this.dataentrynonfixfromedit.get('jenisbidang')?.value;
+          }
+
+          const kirimanjenisbidangsebelum = this.dataentrynonfixfromedit.get('jenisbidangsebelum')?.value.split('|');
+          if (this.dataentrynonfixfromedit.get('jenisbidang')?.value.indexOf('|') !== -1) {
+            var kirimanjenisbidangsebelum1 = kirimanjenisbidangsebelum[1];
+          } else {
+            var kirimanjenisbidangsebelum1 = this.dataentrynonfixfromedit.get('jenisbidangsebelum')?.value;
+          }
 
           // console.log(resposne);
           this.http
             .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_job_info', {
               headers: headers,
-              alamat_perusahaan: alamat_perusahaan.value,
-              barang_jasa: barang_jasa.value,
-              bulan_berdiri: bulan_berdiri_perusahaan.value,
-              bulan_berdiri_sebelum: bulan_berdiri_perusahaan_sebelum.value,
-              created_by: '',
+              // alamat_perusahaan: alamat_perusahaan.value,
+              // barang_jasa: barang_jasa.value,
+              // bulan_berdiri: bulan_berdiri_perusahaan.value,
+              // bulan_berdiri_sebelum: bulan_berdiri_perusahaan_sebelum.value,
+              // created_by: '',
+              // created_date: '',
+              // curef: this.customercuref,
+              // id: this.daWajobid,
+              // jabatan: '',
+              // jabatan_sebelum: '',
+              // jenis_bidang: jenis_bidang.value,
+              // jenis_bidang_sebelum: jenis_bidang_sebelum.value,
+              // jenis_pekerjaan: status_perkawinan.value,
+              // jenis_pekerjaan_sebelum: '',
+              // jumlah_karyawan: jumlah_karyawan.value,
+              // jumlah_karyawan_sebelum: '',
+              // kabkota_sebelum: '',
+              // kabkota: kirimankabkotajobn,
+              // kategori_pekerjaan: agama.value,
+              // kategori_pekerjaan_sebelum: '',
+              // kecamatan: kirimankecamatanjobn,
+              // kecamatan_sebelum: '',
+              // kelurahan: kirimankelurahanjobn,
+              // kelurahan_sebelum: '',
+              // kepemilikan_perusahaan: kepemilikan_perusahaan.value,
+              // kode_pos: '',
+              // kode_pos_sebelum: '',
+              // lama_bekerja_tahun: '',
+              // lama_bekerja_bulan_sebelum: alamat_ktp.value,
+              // lama_bekerja_tahun_sebelum: '',
+              // nama_perusahaan: nama_perusahaan.value,
+              // nama_perusahaan_sebelum: nama_perusahaan_sebelum.value,
+              // no_siup: no_siup.value,
+              // no_telepon: no_telepon.value,
+              // npwp: '',
+              // payroll: '',
+              // payroll_sebelum: '',
+              // pemilik_usaha: pemilik_usaha.value,
+              // pendapatan: '',
+              // pendapatan_lain: '',
+              // posisi: '',
+              // posisi_sebelum: '',
+              // provinsi: kirimanprovjob,
+              // provinsi_sebelum: '',
+              // rt: rt_perusahaan.value,
+              // rt_sebelum: '',
+              // rw: rw_perusahaan.value,
+              // rw_sebelum: '',
+              // sektor_ekonomi: jenis_sektor.value,
+              // sektor_ekonomi_sebelum: jenis_sektor_sebelum.value,
+              // status_active: '',
+              // tahun_berdiri: tahun_berdiri_perusahaan.value,
+              // tahun_berdiri_sebelum: tahun_berdiri_perusahaan_sebelum.value,
+              // tipe_kepegawaian: '',
+              // tipe_kepegawaian_sebelum: '',
+              // tipe_pekerjaan: tipe_pekerjaan.value,
+              // tipe_pekerjaan_sebelum: tipe_pekerjaan_sebelum.value,
+              // tipe_perusahaan: tipe_perusahaan.value,
+              // tipe_perusahaan_sebelum: tipe_perusahaan_sebelum.value,
+              // total_pendapatan: '',
+              // tunjangan: '',
+              // umur_pensiun: '',
+              // umur_pensiun_sebelum: '',
+
+              alamat_pekerjaan_sebelum: this.dataentrynonfixfromedit.get('alamatsebelum')?.value,
+              alamat_perusahaan: this.dataentrynonfixfromedit.get('alamatperusahaan')?.value,
+              barang_jasa: this.dataentrynonfixfromedit.get('barangajasa')?.value,
+              bulan_berdiri: this.dataentrynonfixfromedit.get('berdirisejakbulan')?.value,
+              bulan_berdiri_sebelum: this.dataentrynonfixfromedit.get('berdirisejakbulansebelum')?.value,
+              created_by: this.untukSessionUserName,
               created_date: '',
-              curef: this.customercuref,
+              curef: curef,
               id: this.daWajobid,
               jabatan: '',
               jabatan_sebelum: '',
-              jenis_bidang: jenis_bidang.value,
-              jenis_bidang_sebelum: jenis_bidang_sebelum.value,
-              jenis_pekerjaan: status_perkawinan.value,
+              jenis_bidang: kirimanjenisbidang1,
+              jenis_bidang_sebelum: kirimanjenisbidangsebelum1,
+              jenis_pekerjaan: '',
               jenis_pekerjaan_sebelum: '',
-              jumlah_karyawan: jumlah_karyawan.value,
+              jumlah_karyawan: this.dataentrynonfixfromedit.get('jumlahkaryawan')?.value,
               jumlah_karyawan_sebelum: '',
               kabkota_sebelum: '',
               kabkota: kirimankabkotajobn,
-              kategori_pekerjaan: agama.value,
+              kategori_pekerjaan: '',
               kategori_pekerjaan_sebelum: '',
               kecamatan: kirimankecamatanjobn,
               kecamatan_sebelum: '',
               kelurahan: kirimankelurahanjobn,
               kelurahan_sebelum: '',
-              kepemilikan_perusahaan: kepemilikan_perusahaan.value,
-              kode_pos: '',
+              kepemilikan_perusahaan: this.dataentrynonfixfromedit.get('kepemilikanperusahaan')?.value,
+              kode_pos: kirimandatakodeposjob,
               kode_pos_sebelum: '',
               lama_bekerja_tahun: '',
-              lama_bekerja_bulan_sebelum: alamat_ktp.value,
+              lama_bekerja_bulan: '',
+              lama_bekerja_bulan_sebelum: '',
               lama_bekerja_tahun_sebelum: '',
-              nama_perusahaan: nama_perusahaan.value,
-              nama_perusahaan_sebelum: nama_perusahaan_sebelum.value,
-              no_siup: no_siup.value,
-              no_telepon: no_telepon.value,
+              nama_perusahaan: this.dataentrynonfixfromedit.get('namaperusahaan')?.value,
+              nama_perusahaan_sebelum: this.dataentrynonfixfromedit.get('namaperusahansebelum')?.value,
+              no_siup: this.dataentrynonfixfromedit.get('nosiup')?.value,
+              no_telepon: this.dataentrynonfixfromedit.get('nomorteleponperusahaan')?.value,
               npwp: '',
               payroll: '',
               payroll_sebelum: '',
-              pemilik_usaha: pemilik_usaha.value,
+              pemilik_usaha: this.dataentrynonfixfromedit.get('pemilikusaha')?.value,
               pendapatan: '',
               pendapatan_lain: '',
               posisi: '',
               posisi_sebelum: '',
               provinsi: kirimanprovjob,
               provinsi_sebelum: '',
-              rt: rt_perusahaan.value,
+              rt: this.dataentrynonfixfromedit.get('rtformperusahaan')?.value,
               rt_sebelum: '',
-              rw: rw_perusahaan.value,
+              rw: this.dataentrynonfixfromedit.get('rwformperusahaan')?.value,
               rw_sebelum: '',
-              sektor_ekonomi: jenis_sektor.value,
-              sektor_ekonomi_sebelum: jenis_sektor_sebelum.value,
+              sektor_ekonomi: this.dataentrynonfixfromedit.get('jenissektor')?.value,
+              sektor_ekonomi_sebelum: this.dataentrynonfixfromedit.get('jenissektorsebelum')?.value,
               status_active: '',
-              tahun_berdiri: tahun_berdiri_perusahaan.value,
-              tahun_berdiri_sebelum: tahun_berdiri_perusahaan_sebelum.value,
+              tahun_berdiri: this.dataentrynonfixfromedit.get('berdirisejaktahun')?.value,
+              tahun_berdiri_sebelum: this.dataentrynonfixfromedit.get('berdirisejaktahunsebelum')?.value,
               tipe_kepegawaian: '',
               tipe_kepegawaian_sebelum: '',
-              tipe_pekerjaan: tipe_pekerjaan.value,
-              tipe_pekerjaan_sebelum: tipe_pekerjaan_sebelum.value,
-              tipe_perusahaan: tipe_perusahaan.value,
-              tipe_perusahaan_sebelum: tipe_perusahaan_sebelum.value,
+              tipe_pekerjaan: this.dataentrynonfixfromedit.get('tipepekerjaan')?.value,
+              tipe_pekerjaan_sebelum: this.dataentrynonfixfromedit.get('tipepekerjaansebelum')?.value,
+              tipe_perusahaan: this.dataentrynonfixfromedit.get('tipeperusahaan')?.value,
+              tipe_perusahaan_sebelum: this.dataentrynonfixfromedit.get('tipeperushaansebelum')?.value,
               total_pendapatan: '',
               tunjangan: '',
               umur_pensiun: '',
@@ -1058,35 +1610,109 @@ export class InitialDataEntryNonEditComponent implements OnInit {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide', {
           headers: headers,
-          nama: nama.value,
+          // nama: nama.value,
+          // nama_pasangan: '',
+          // kategori_pekerjaan: 'Non Fix Income',
+          // curef: this.customercuref,
+          // jenis_kelamin: jenis_kelamin.value,
+          // jenis_kelamin_pasangan: '',
+          // usia: umur.value,
+          // app_no_ide: this.customerappnoide,
+          // tanggal_lahir: tanggal_lahir.value,
+          // tanggal_lahir_pasangan: '',
+          // tempat_lahir: tempat_lahir.value,
+          // tempat_lahir_pasangan: '',
+          // status_perkawinan: status_perkawinan.value,
+          // status_alamat: '',
+          // status_kendaraan: '',
+          // status_ktp: '',
+          // status_ktp_pasangan: '',
+          // status_rumah: '',
+          // agama: agama.value,
+          // agama_pasangan: '',
+          // pendidikan: pendidikan.value,
+          // pendidikan_pasangan: '',
+          // kewarganegaraan: kewarganegaraan.value,
+          // kewarganegaraan_pasangan: '',
+          // nama_ibu_kandung: nama_ibu_kandung.value,
+          // nama_ibu_kandung_pasangan: '',
+          // npwp: npwp.value,
+          // npwp_pasangan: '',
+          // alamat_ktp: alamat_ktp.value,
+          // alamat_ktp_pasangan: '',
+          // alamat_domisili: '',
+          // provinsi: kirimanprovinsid,
+          // provinsi_domisili: '',
+          // provinsi_pasangan: '',
+          // kabkota: kirimankabkotaid,
+          // kabkota_domisili: '',
+          // kabkota_pasangan: '',
+          // kecamatan: kirimankecamatanid,
+          // kecamatan_domisili: '',
+          // kecamatan_pasangan: '',
+          // kelurahan: kirimankelurahanid,
+          // kelurahan_domisili: '',
+          // kelurahan_pasangan: '',
+          // kode_pos: '',
+          // kode_pos_domisili: '',
+          // kode_pos_pasangan: '',
+          // lama_menetap: '',
+          // cabang: this.untukSessionKodeCabang,
+          // created_by: '',
+          // created_date: '',
+          // email: '',
+          // email_pasangan: '',
+          // id: this.customerid,
+          // jumlah_anak: '',
+          // rt: rt.value,
+          // rt_domisili: '',
+          // rt_pasangan: '',
+          // rw: rw.value,
+          // rw_domisili: '',
+          // rw_pasangan: '',
+          // no_ktp: no_ktp.value,
+          // no_ktp_pasangan: '',
+          // tanggal_terbit_ktp: tanggal_terbit_ktp.value,
+          // tanggal_terbit_ktp_pasangan: '',
+          // tanggal_exp_ktp: tanggal_exp_ktp.value,
+          // tanggal_exp_ktp_pasangan: '',
+          // tipe_kendaraan: '',
+          // no_handphone: no_handphone.value,
+          // no_handphone_pasangan: '',
+          // no_telepon: '',
+          // updated_by: '',
+          // updated_date: '',
+          // usia_pasangan: '',
+
+          nama: this.dataentrynonfixfromedit.get('nama')?.value,
           nama_pasangan: '',
           kategori_pekerjaan: 'Non Fix Income',
-          curef: this.customercuref,
-          jenis_kelamin: jenis_kelamin.value,
+          curef: curef,
+          jenis_kelamin: this.dataentrynonfixfromedit.get('jeniskelamin')?.value,
           jenis_kelamin_pasangan: '',
-          usia: umur.value,
-          app_no_ide: this.customerappnoide,
-          tanggal_lahir: tanggal_lahir.value,
+          usia: this.dataentrynonfixfromedit.get('umurform')?.value,
+          app_no_ide: app_no_ide,
+          tanggal_lahir: this.dataentrynonfixfromedit.get('tanggallahir')?.value,
           tanggal_lahir_pasangan: '',
-          tempat_lahir: tempat_lahir.value,
+          tempat_lahir: this.dataentrynonfixfromedit.get('tempatlahir')?.value,
           tempat_lahir_pasangan: '',
-          status_perkawinan: status_perkawinan.value,
+          status_perkawinan: this.dataentrynonfixfromedit.get('statusperkawinan')?.value,
           status_alamat: '',
           status_kendaraan: '',
-          status_ktp: '',
-          status_ktp_pasangan: '',
+          status_ktp: this.dataentrynonfixfromedit.get('ktpseumurhidup')?.value,
+          status_ktp_pasangan: this.dataentrynonfixfromedit.get('ktpseumurhiduppasangan')?.value,
           status_rumah: '',
-          agama: agama.value,
+          agama: this.dataentrynonfixfromedit.get('agamaform')?.value,
           agama_pasangan: '',
-          pendidikan: pendidikan.value,
+          pendidikan: this.dataentrynonfixfromedit.get('pendidikanform')?.value,
           pendidikan_pasangan: '',
-          kewarganegaraan: kewarganegaraan.value,
+          kewarganegaraan: this.dataentrynonfixfromedit.get('kewarganegaraanform')?.value,
           kewarganegaraan_pasangan: '',
-          nama_ibu_kandung: nama_ibu_kandung.value,
+          nama_ibu_kandung: this.dataentrynonfixfromedit.get('ibukandung')?.value,
           nama_ibu_kandung_pasangan: '',
-          npwp: npwp.value,
+          npwp: this.dataentrynonfixfromedit.get('npwpform')?.value,
           npwp_pasangan: '',
-          alamat_ktp: alamat_ktp.value,
+          alamat_ktp: this.dataentrynonfixfromedit.get('alamatktp')?.value,
           alamat_ktp_pasangan: '',
           alamat_domisili: '',
           provinsi: kirimanprovinsid,
@@ -1101,31 +1727,31 @@ export class InitialDataEntryNonEditComponent implements OnInit {
           kelurahan: kirimankelurahanid,
           kelurahan_domisili: '',
           kelurahan_pasangan: '',
-          kode_pos: '',
+          kode_pos: kirimandatakodepos,
           kode_pos_domisili: '',
-          kode_pos_pasangan: '',
+          kode_pos_pasangan: kirimandatakodeposp,
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.SessionStorageService.retrieve('sessionKdCabang'),
+          created_by: this.untukSessionUserName,
           created_date: '',
           email: '',
           email_pasangan: '',
-          id: this.customerid,
+          id: this.datakirimanidcustomer,
           jumlah_anak: '',
-          rt: rt.value,
+          rt: this.dataentrynonfixfromedit.get('rtform')?.value,
           rt_domisili: '',
           rt_pasangan: '',
-          rw: rw.value,
+          rw: this.dataentrynonfixfromedit.get('rwform')?.value,
           rw_domisili: '',
           rw_pasangan: '',
-          no_ktp: no_ktp.value,
+          no_ktp: this.dataentrynonfixfromedit.get('noktp')?.value,
           no_ktp_pasangan: '',
-          tanggal_terbit_ktp: tanggal_terbit_ktp.value,
+          tanggal_terbit_ktp: this.dataentrynonfixfromedit.get('tanggalterbit')?.value,
           tanggal_terbit_ktp_pasangan: '',
-          tanggal_exp_ktp: tanggal_exp_ktp.value,
+          tanggal_exp_ktp: this.dataentrynonfixfromedit.get('tanggalexpktp')?.value,
           tanggal_exp_ktp_pasangan: '',
           tipe_kendaraan: '',
-          no_handphone: no_handphone.value,
+          no_handphone: this.dataentrynonfixfromedit.get('nohandphone')?.value,
           no_handphone_pasangan: '',
           no_telepon: '',
           updated_by: '',
@@ -1137,68 +1763,148 @@ export class InitialDataEntryNonEditComponent implements OnInit {
           // console.log(resposne);
           this.contohdata = resposne.result.id;
 
+          const kirimanjenisbidang = this.dataentrynonfixfromedit.get('jenisbidang')?.value.split('|');
+          if (this.dataentrynonfixfromedit.get('jenisbidang')?.value.indexOf('|') !== -1) {
+            var kirimanjenisbidang1 = kirimanjenisbidang[1];
+          } else {
+            var kirimanjenisbidang1 = this.dataentrynonfixfromedit.get('jenisbidang')?.value;
+          }
+
+          const kirimanjenisbidangsebelum = this.dataentrynonfixfromedit.get('jenisbidangsebelum')?.value.split('|');
+          if (this.dataentrynonfixfromedit.get('jenisbidang')?.value.indexOf('|') !== -1) {
+            var kirimanjenisbidangsebelum1 = kirimanjenisbidangsebelum[1];
+          } else {
+            var kirimanjenisbidangsebelum1 = this.dataentrynonfixfromedit.get('jenisbidangsebelum')?.value;
+          }
+
           this.http
             .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_job_info', {
               headers: headers,
-              alamat_perusahaan: alamat_perusahaan.value,
-              barang_jasa: barang_jasa.value,
-              bulan_berdiri: bulan_berdiri_perusahaan.value,
-              bulan_berdiri_sebelum: bulan_berdiri_perusahaan_sebelum.value,
-              created_by: '',
+              // alamat_perusahaan: alamat_perusahaan.value,
+              // barang_jasa: barang_jasa.value,
+              // bulan_berdiri: bulan_berdiri_perusahaan.value,
+              // bulan_berdiri_sebelum: bulan_berdiri_perusahaan_sebelum.value,
+              // created_by: '',
+              // created_date: '',
+              // curef: this.customercuref,
+              // id: this.daWajobid,
+              // jabatan: '',
+              // jabatan_sebelum: '',
+              // jenis_bidang: jenis_bidang.value,
+              // jenis_bidang_sebelum: jenis_bidang_sebelum.value,
+              // jenis_pekerjaan: status_perkawinan.value,
+              // jenis_pekerjaan_sebelum: nama.value,
+              // jumlah_karyawan: jumlah_karyawan.value,
+              // jumlah_karyawan_sebelum: nama.value,
+              // kabkota_sebelum: '',
+              // kabkota: kirimankabkotajobn,
+              // kategori_pekerjaan: agama.value,
+              // kategori_pekerjaan_sebelum: nama.value,
+              // kecamatan: kirimankecamatanjobn,
+              // kecamatan_sebelum: '',
+              // kelurahan: kirimankelurahanjobn,
+              // kelurahan_sebelum: '',
+              // kepemilikan_perusahaan: kepemilikan_perusahaan.value,
+              // kode_pos: '',
+              // kode_pos_sebelum: '',
+              // lama_bekerja_tahun: nama.value,
+              // lama_bekerja_bulan_sebelum: alamat_ktp.value,
+              // lama_bekerja_tahun_sebelum: nama.value,
+              // nama_perusahaan: nama.value,
+              // nama_perusahaan_sebelum: '',
+              // no_siup: no_siup.value,
+              // no_telepon: no_telepon.value,
+              // npwp: '',
+              // payroll: '',
+              // payroll_sebelum: '',
+              // pemilik_usaha: pemilik_usaha.value,
+              // pendapatan: '',
+              // pendapatan_lain: '',
+              // posisi: '',
+              // posisi_sebelum: '',
+              // provinsi: kirimanprovjob,
+              // provinsi_sebelum: '',
+              // rt: rt_perusahaan.value,
+              // rt_sebelum: '',
+              // rw: rw_perusahaan.value,
+              // rw_sebelum: '',
+              // sektor_ekonomi: jenis_sektor.value,
+              // sektor_ekonomi_sebelum: jenis_sektor_sebelum.value,
+              // status_active: '',
+              // tahun_berdiri: tahun_berdiri_perusahaan.value,
+              // tahun_berdiri_sebelum: tahun_berdiri_perusahaan_sebelum.value,
+              // tipe_kepegawaian: '',
+              // tipe_kepegawaian_sebelum: '',
+              // tipe_pekerjaan: tipe_pekerjaan.value,
+              // tipe_pekerjaan_sebelum: tipe_pekerjaan_sebelum.value,
+              // tipe_perusahaan: tipe_perusahaan.value,
+              // tipe_perusahaan_sebelum: tipe_perusahaan_sebelum.value,
+              // total_pendapatan: '',
+              // tunjangan: '',
+              // umur_pensiun: '',
+              // umur_pensiun_sebelum: '',
+
+              alamat_pekerjaan_sebelum: this.dataentrynonfixfromedit.get('alamatsebelum')?.value,
+              alamat_perusahaan: this.dataentrynonfixfromedit.get('alamatperusahaan')?.value,
+              barang_jasa: this.dataentrynonfixfromedit.get('barangajasa')?.value,
+              bulan_berdiri: this.dataentrynonfixfromedit.get('berdirisejakbulan')?.value,
+              bulan_berdiri_sebelum: this.dataentrynonfixfromedit.get('berdirisejakbulansebelum')?.value,
+              created_by: this.untukSessionUserName,
               created_date: '',
-              curef: this.customercuref,
+              curef: curef,
               id: this.daWajobid,
               jabatan: '',
               jabatan_sebelum: '',
-              jenis_bidang: jenis_bidang.value,
-              jenis_bidang_sebelum: jenis_bidang_sebelum.value,
-              jenis_pekerjaan: status_perkawinan.value,
-              jenis_pekerjaan_sebelum: nama.value,
-              jumlah_karyawan: jumlah_karyawan.value,
-              jumlah_karyawan_sebelum: nama.value,
+              jenis_bidang: kirimanjenisbidang1,
+              jenis_bidang_sebelum: kirimanjenisbidangsebelum1,
+              jenis_pekerjaan: '',
+              jenis_pekerjaan_sebelum: '',
+              jumlah_karyawan: this.dataentrynonfixfromedit.get('jumlahkaryawan')?.value,
+              jumlah_karyawan_sebelum: '',
               kabkota_sebelum: '',
               kabkota: kirimankabkotajobn,
-              kategori_pekerjaan: agama.value,
-              kategori_pekerjaan_sebelum: nama.value,
+              kategori_pekerjaan: '',
+              kategori_pekerjaan_sebelum: '',
               kecamatan: kirimankecamatanjobn,
               kecamatan_sebelum: '',
               kelurahan: kirimankelurahanjobn,
               kelurahan_sebelum: '',
-              kepemilikan_perusahaan: kepemilikan_perusahaan.value,
-              kode_pos: '',
+              kepemilikan_perusahaan: this.dataentrynonfixfromedit.get('kepemilikanperusahaan')?.value,
+              kode_pos: kirimandatakodeposjob,
               kode_pos_sebelum: '',
-              lama_bekerja_tahun: nama.value,
-              lama_bekerja_bulan_sebelum: alamat_ktp.value,
-              lama_bekerja_tahun_sebelum: nama.value,
-              nama_perusahaan: nama.value,
-              nama_perusahaan_sebelum: '',
-              no_siup: no_siup.value,
-              no_telepon: no_telepon.value,
+              lama_bekerja_tahun: '',
+              lama_bekerja_bulan: '',
+              lama_bekerja_bulan_sebelum: '',
+              lama_bekerja_tahun_sebelum: '',
+              nama_perusahaan: this.dataentrynonfixfromedit.get('namaperusahaan')?.value,
+              nama_perusahaan_sebelum: this.dataentrynonfixfromedit.get('namaperusahansebelum')?.value,
+              no_siup: this.dataentrynonfixfromedit.get('nosiup')?.value,
+              no_telepon: this.dataentrynonfixfromedit.get('nomorteleponperusahaan')?.value,
               npwp: '',
               payroll: '',
               payroll_sebelum: '',
-              pemilik_usaha: pemilik_usaha.value,
+              pemilik_usaha: this.dataentrynonfixfromedit.get('pemilikusaha')?.value,
               pendapatan: '',
               pendapatan_lain: '',
               posisi: '',
               posisi_sebelum: '',
               provinsi: kirimanprovjob,
               provinsi_sebelum: '',
-              rt: rt_perusahaan.value,
+              rt: this.dataentrynonfixfromedit.get('rtformperusahaan')?.value,
               rt_sebelum: '',
-              rw: rw_perusahaan.value,
+              rw: this.dataentrynonfixfromedit.get('rwformperusahaan')?.value,
               rw_sebelum: '',
-              sektor_ekonomi: jenis_sektor.value,
-              sektor_ekonomi_sebelum: jenis_sektor_sebelum.value,
+              sektor_ekonomi: this.dataentrynonfixfromedit.get('jenissektor')?.value,
+              sektor_ekonomi_sebelum: this.dataentrynonfixfromedit.get('jenissektorsebelum')?.value,
               status_active: '',
-              tahun_berdiri: tahun_berdiri_perusahaan.value,
-              tahun_berdiri_sebelum: tahun_berdiri_perusahaan_sebelum.value,
+              tahun_berdiri: this.dataentrynonfixfromedit.get('berdirisejaktahun')?.value,
+              tahun_berdiri_sebelum: this.dataentrynonfixfromedit.get('berdirisejaktahunsebelum')?.value,
               tipe_kepegawaian: '',
               tipe_kepegawaian_sebelum: '',
-              tipe_pekerjaan: tipe_pekerjaan.value,
-              tipe_pekerjaan_sebelum: tipe_pekerjaan_sebelum.value,
-              tipe_perusahaan: tipe_perusahaan.value,
-              tipe_perusahaan_sebelum: tipe_perusahaan_sebelum.value,
+              tipe_pekerjaan: this.dataentrynonfixfromedit.get('tipepekerjaan')?.value,
+              tipe_pekerjaan_sebelum: this.dataentrynonfixfromedit.get('tipepekerjaansebelum')?.value,
+              tipe_perusahaan: this.dataentrynonfixfromedit.get('tipeperusahaan')?.value,
+              tipe_perusahaan_sebelum: this.dataentrynonfixfromedit.get('tipeperushaansebelum')?.value,
               total_pendapatan: '',
               tunjangan: '',
               umur_pensiun: '',
@@ -1225,8 +1931,25 @@ export class InitialDataEntryNonEditComponent implements OnInit {
     }
   }
 
-  gotodaftaraplikasiide() {
+  gotodaftaraplikasiide(
+    app_no_ide: any,
+    curef: any,
+    kodeposjob: any,
+    kodepos: any,
+    tembakkodeposjob: any,
+    kodepospasangan: any,
+    tembakkodepos: any,
+    tembakkodepospasangan: any
+  ) {
     // alert('cekcuref'+curef)
+
+    alert('kodeposjob' + kodeposjob);
+    alert('kodepos' + kodepos);
+    alert('tembakkodeposjob' + tembakkodeposjob);
+    alert('kodepospasangan' + kodepospasangan);
+    alert('tembakkodepos' + tembakkodepos);
+    alert('tembakkodepospasangan' + tembakkodepospasangan);
+
     const nama = document.getElementById('nama') as HTMLInputElement | any;
     const jenis_kelamin = document.getElementById('jenis_kelamin') as HTMLInputElement | any;
     const tanggal_lahir = document.getElementById('tanggal_lahir') as HTMLInputElement | any;
@@ -1382,6 +2105,24 @@ export class InitialDataEntryNonEditComponent implements OnInit {
         var kirimankelurahanjobn = kelurahan_perusahaan.value;
       }
 
+      if (kodeposjob == undefined || kodeposjob == null) {
+        var kirimandatakodeposjob = tembakkodeposjob;
+      } else {
+        var kirimandatakodeposjob = kodeposjob;
+      }
+
+      if (kodepos == undefined || kodepos == null) {
+        var kirimandatakodepos = tembakkodepos;
+      } else {
+        var kirimandatakodepos = kodepos;
+      }
+
+      if (kodepospasangan == undefined || kodepospasangan == null) {
+        var kirimandatakodeposp = tembakkodepospasangan;
+      } else {
+        var kirimandatakodeposp = kodepospasangan;
+      }
+
       const httpOptions = {
         'Content-Type': 'text/plain',
       };
@@ -1391,36 +2132,110 @@ export class InitialDataEntryNonEditComponent implements OnInit {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide', {
           headers: headers,
-          nama: nama.value,
-          nama_pasangan: nama_pasangan.value,
+          // nama: nama.value,
+          // nama_pasangan: nama_pasangan.value,
+          // kategori_pekerjaan: 'Non Fix Income',
+          // curef: this.customercuref,
+          // jenis_kelamin: jenis_kelamin.value,
+          // jenis_kelamin_pasangan: jenis_kelamin_pasangan.value,
+          // usia: umur.value,
+          // app_no_ide: this.customerappnoide,
+          // tanggal_lahir: tanggal_lahir.value,
+          // tanggal_lahir_pasangan: tanggal_lahir_pasangan.value,
+          // tempat_lahir: tempat_lahir.value,
+          // tempat_lahir_pasangan: tempat_lahir_pasangan.value,
+          // status_perkawinan: status_perkawinan.value,
+          // status_alamat: '',
+          // status_kendaraan: '',
+          // status_ktp: '',
+          // status_ktp_pasangan: '',
+          // status_rumah: '',
+          // agama: agama.value,
+          // agama_pasangan: agama_pasangan.value,
+          // pendidikan: pendidikan.value,
+          // pendidikan_pasangan: pendidikan_pasangan.value,
+          // kewarganegaraan: kewarganegaraan.value,
+          // kewarganegaraan_pasangan: kewarganegaraan_pasangan.value,
+          // nama_ibu_kandung: nama_ibu_kandung.value,
+          // nama_ibu_kandung_pasangan: nama_ibu_kandung_pasangan.value,
+          // npwp: npwp.value,
+          // npwp_pasangan: npwp_pasangan.value,
+          // alamat_ktp: alamat_ktp.value,
+          // alamat_ktp_pasangan: alamat_ktp_pasangan.value,
+          // alamat_domisili: '',
+          // provinsi: kirimanprovinsid,
+          // provinsi_domisili: '',
+          // provinsi_pasangan: kirimanprovpsg,
+          // kabkota: kirimankabkotaid,
+          // kabkota_domisili: '',
+          // kabkota_pasangan: kirimankotapsg,
+          // kecamatan: kirimankecamatanid,
+          // kecamatan_domisili: '',
+          // kecamatan_pasangan: kirimankecamatanpsg,
+          // kelurahan: kirimankelurahanid,
+          // kelurahan_domisili: '',
+          // kelurahan_pasangan: kirimankelurahanpsg,
+          // kode_pos: kode_pos.value,
+          // kode_pos_domisili: '',
+          // kode_pos_pasangan: kode_pos_pasangan.value,
+          // lama_menetap: '',
+          // cabang: this.untukSessionKodeCabang,
+          // created_by: '',
+          // created_date: '',
+          // email: '',
+          // email_pasangan: '',
+          // id: this.customerid,
+          // jumlah_anak: '',
+          // rt: rt.value,
+          // rt_domisili: '',
+          // rt_pasangan: rt_pasangan.value,
+          // rw: rw.value,
+          // rw_domisili: '',
+          // rw_pasangan: rw_pasangan.value,
+          // no_ktp: no_ktp.value,
+          // no_ktp_pasangan: no_ktp_pasangan.value,
+          // tanggal_terbit_ktp: tanggal_terbit_ktp.value,
+          // tanggal_terbit_ktp_pasangan: tanggal_terbit_ktp_pasangan.value,
+          // tanggal_exp_ktp: tanggal_exp_ktp.value,
+          // tanggal_exp_ktp_pasangan: tanggal_exp_ktp_pasangan.value,
+          // tipe_kendaraan: '',
+          // no_handphone: no_handphone.value,
+          // no_handphone_pasangan: no_handphone_pasangan.value,
+          // no_telepon: '',
+          // updated_by: '',
+          // updated_date: '',
+          // usia_pasangan: umur_pasangan.value,
+
+          nama: this.dataentrynonfixfromedit.get('nama')?.value,
+          nama_pasangan: this.dataentrynonfixfromedit.get('namapasangan')?.value,
           kategori_pekerjaan: 'Non Fix Income',
-          curef: this.customercuref,
-          jenis_kelamin: jenis_kelamin.value,
-          jenis_kelamin_pasangan: jenis_kelamin_pasangan.value,
-          usia: umur.value,
-          app_no_ide: this.customerappnoide,
-          tanggal_lahir: tanggal_lahir.value,
-          tanggal_lahir_pasangan: tanggal_lahir_pasangan.value,
-          tempat_lahir: tempat_lahir.value,
-          tempat_lahir_pasangan: tempat_lahir_pasangan.value,
-          status_perkawinan: status_perkawinan.value,
+          curef: curef,
+          jenis_kelamin: this.dataentrynonfixfromedit.get('jeniskelamin')?.value,
+          jenis_kelamin_pasangan: this.dataentrynonfixfromedit.get('jeniskelaminpasangan')?.value,
+          usia: this.dataentrynonfixfromedit.get('umurform')?.value,
+          app_no_ide: app_no_ide,
+          tanggal_lahir: this.dataentrynonfixfromedit.get('tanggallahir')?.value,
+          tanggal_lahir_pasangan: this.dataentrynonfixfromedit.get('tanggallahirpasangan')?.value,
+          tempat_lahir: this.dataentrynonfixfromedit.get('tanggallahir')?.value,
+          tempat_lahir_pasangan: this.dataentrynonfixfromedit.get('tempatlahirpasangan')?.value,
+          status_perkawinan: this.dataentrynonfixfromedit.get('statusperkawinan')?.value,
           status_alamat: '',
           status_kendaraan: '',
-          status_ktp: '',
+          status_ktp: this.dataentrynonfixfromedit.get('ktpseumurhidup')?.value,
           status_ktp_pasangan: '',
           status_rumah: '',
-          agama: agama.value,
-          agama_pasangan: agama_pasangan.value,
-          pendidikan: pendidikan.value,
-          pendidikan_pasangan: pendidikan_pasangan.value,
-          kewarganegaraan: kewarganegaraan.value,
-          kewarganegaraan_pasangan: kewarganegaraan_pasangan.value,
-          nama_ibu_kandung: nama_ibu_kandung.value,
-          nama_ibu_kandung_pasangan: nama_ibu_kandung_pasangan.value,
-          npwp: npwp.value,
-          npwp_pasangan: npwp_pasangan.value,
-          alamat_ktp: alamat_ktp.value,
-          alamat_ktp_pasangan: alamat_ktp_pasangan.value,
+          agama: this.dataentrynonfixfromedit.get('agamaform')?.value,
+          agama_pasangan: this.dataentrynonfixfromedit.get('agamaformpasangan')?.value,
+          pendidikan: this.dataentrynonfixfromedit.get('pendidikanform')?.value,
+          pendidikan_pasangan: this.dataentrynonfixfromedit.get('pendidikanformpasangan')?.value,
+          kewarganegaraan: this.dataentrynonfixfromedit.get('kewarganegaraanform')?.value,
+          kewarganegaraan_pasangan: this.dataentrynonfixfromedit.get('kewarganegaraanformpasangan')?.value,
+          nama_ibu_kandung: this.dataentrynonfixfromedit.get('ibukandung')?.value,
+          nama_ibu_kandung_pasangan: this.dataentrynonfixfromedit.get('ibukandungpasangan')?.value,
+          npwp: this.dataentrynonfixfromedit.get('npwpform')?.value,
+          npwp_pasangan: this.dataentrynonfixfromedit.get('npwpformpasangan')?.value,
+          alamat_ktp: this.dataentrynonfixfromedit.get('alamatktp')?.value,
+          alamat_ktp_pasangan: this.dataentrynonfixfromedit.get('alamatktppasangan')?.value,
           alamat_domisili: '',
           provinsi: kirimanprovinsid,
           provinsi_domisili: '',
@@ -1434,103 +2249,183 @@ export class InitialDataEntryNonEditComponent implements OnInit {
           kelurahan: kirimankelurahanid,
           kelurahan_domisili: '',
           kelurahan_pasangan: kirimankelurahanpsg,
-          kode_pos: kode_pos.value,
+          kode_pos: kirimandatakodepos,
           kode_pos_domisili: '',
-          kode_pos_pasangan: kode_pos_pasangan.value,
+          kode_pos_pasangan: kirimandatakodeposp,
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.SessionStorageService.retrieve('sessionKdCabang'),
+          created_by: this.untukSessionUserName,
           created_date: '',
           email: '',
           email_pasangan: '',
-          id: this.customerid,
+          id: this.datakirimanidcustomer,
           jumlah_anak: '',
-          rt: rt.value,
+          rt: this.dataentrynonfixfromedit.get('rtform')?.value,
           rt_domisili: '',
-          rt_pasangan: rt_pasangan.value,
-          rw: rw.value,
+          rt_pasangan: this.dataentrynonfixfromedit.get('rtformpasangan')?.value,
+          rw: this.dataentrynonfixfromedit.get('rwform')?.value,
           rw_domisili: '',
-          rw_pasangan: rw_pasangan.value,
-          no_ktp: no_ktp.value,
-          no_ktp_pasangan: no_ktp_pasangan.value,
-          tanggal_terbit_ktp: tanggal_terbit_ktp.value,
-          tanggal_terbit_ktp_pasangan: tanggal_terbit_ktp_pasangan.value,
-          tanggal_exp_ktp: tanggal_exp_ktp.value,
-          tanggal_exp_ktp_pasangan: tanggal_exp_ktp_pasangan.value,
+          rw_pasangan: this.dataentrynonfixfromedit.get('rwformpasangan')?.value,
+          no_ktp: this.dataentrynonfixfromedit.get('noktp')?.value,
+          no_ktp_pasangan: this.dataentrynonfixfromedit.get('noktppasangan')?.value,
+          tanggal_terbit_ktp: this.dataentrynonfixfromedit.get('tanggalterbit')?.value,
+          tanggal_terbit_ktp_pasangan: this.dataentrynonfixfromedit.get('tanggalterbitpasangan')?.value,
+          tanggal_exp_ktp: this.dataentrynonfixfromedit.get('tanggalexpktp')?.value,
+          tanggal_exp_ktp_pasangan: this.dataentrynonfixfromedit.get('tanggalexpktppasangan')?.value,
           tipe_kendaraan: '',
-          no_handphone: no_handphone.value,
-          no_handphone_pasangan: no_handphone_pasangan.value,
+          no_handphone: this.dataentrynonfixfromedit.get('nohandphone')?.value,
+          no_handphone_pasangan: this.dataentrynonfixfromedit.get('nohandphonepasangan')?.value,
           no_telepon: '',
           updated_by: '',
           updated_date: '',
-          usia_pasangan: umur_pasangan.value,
+          usia_pasangan: this.dataentrynonfixfromedit.get('umurformpasangan')?.value,
         })
         .subscribe(resposne => {
           this.contohdata = resposne.result.id;
+
+          const kirimanjenisbidang = this.dataentrynonfixfromedit.get('jenisbidang')?.value.split('|');
+          if (this.dataentrynonfixfromedit.get('jenisbidang')?.value.indexOf('|') !== -1) {
+            var kirimanjenisbidang1 = kirimanjenisbidang[1];
+          } else {
+            var kirimanjenisbidang1 = this.dataentrynonfixfromedit.get('jenisbidang')?.value;
+          }
+
+          const kirimanjenisbidangsebelum = this.dataentrynonfixfromedit.get('jenisbidangsebelum')?.value.split('|');
+          if (this.dataentrynonfixfromedit.get('jenisbidang')?.value.indexOf('|') !== -1) {
+            var kirimanjenisbidangsebelum1 = kirimanjenisbidangsebelum[1];
+          } else {
+            var kirimanjenisbidangsebelum1 = this.dataentrynonfixfromedit.get('jenisbidangsebelum')?.value;
+          }
 
           // console.log(resposne);
           this.http
             .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_job_info', {
               headers: headers,
-              alamat_perusahaan: alamat_perusahaan.value,
-              barang_jasa: barang_jasa.value,
-              bulan_berdiri: bulan_berdiri_perusahaan.value,
-              bulan_berdiri_sebelum: bulan_berdiri_perusahaan_sebelum.value,
-              created_by: '',
+              // alamat_perusahaan: alamat_perusahaan.value,
+              // barang_jasa: barang_jasa.value,
+              // bulan_berdiri: bulan_berdiri_perusahaan.value,
+              // bulan_berdiri_sebelum: bulan_berdiri_perusahaan_sebelum.value,
+              // created_by: '',
+              // created_date: '',
+              // curef: this.customercuref,
+              // id: this.daWajobid,
+              // jabatan: '',
+              // jabatan_sebelum: '',
+              // jenis_bidang: jenis_bidang.value,
+              // jenis_bidang_sebelum: jenis_bidang_sebelum.value,
+              // jenis_pekerjaan: status_perkawinan.value,
+              // jenis_pekerjaan_sebelum: '',
+              // jumlah_karyawan: jumlah_karyawan.value,
+              // jumlah_karyawan_sebelum: '',
+              // kabkota_sebelum: '',
+              // kabkota: kirimankabkotajobn,
+              // kategori_pekerjaan: agama.value,
+              // kategori_pekerjaan_sebelum: '',
+              // kecamatan: kirimankecamatanjobn,
+              // kecamatan_sebelum: '',
+              // kelurahan: kirimankelurahanjobn,
+              // kelurahan_sebelum: '',
+              // kepemilikan_perusahaan: kepemilikan_perusahaan.value,
+              // kode_pos: kode_posjob.value,
+              // kode_pos_sebelum: '',
+              // lama_bekerja_tahun: '',
+              // lama_bekerja_bulan_sebelum: alamat_ktp.value,
+              // lama_bekerja_tahun_sebelum: '',
+              // nama_perusahaan: nama_perusahaan.value,
+              // nama_perusahaan_sebelum: nama_perusahaan_sebelum.value,
+              // no_siup: no_siup.value,
+              // no_telepon: no_telepon.value,
+              // npwp: '',
+              // payroll: '',
+              // payroll_sebelum: '',
+              // pemilik_usaha: pemilik_usaha.value,
+              // pendapatan: '',
+              // pendapatan_lain: '',
+              // posisi: '',
+              // posisi_sebelum: '',
+              // provinsi: kirimanprovjob,
+              // provinsi_sebelum: '',
+              // rt: rt_perusahaan.value,
+              // rt_sebelum: '',
+              // rw: rw_perusahaan.value,
+              // rw_sebelum: '',
+              // sektor_ekonomi: jenis_sektor.value,
+              // sektor_ekonomi_sebelum: jenis_sektor_sebelum.value,
+              // status_active: '',
+              // tahun_berdiri: tahun_berdiri_perusahaan.value,
+              // tahun_berdiri_sebelum: tahun_berdiri_perusahaan_sebelum.value,
+              // tipe_kepegawaian: '',
+              // tipe_kepegawaian_sebelum: '',
+              // tipe_pekerjaan: tipe_pekerjaan.value,
+              // tipe_pekerjaan_sebelum: tipe_pekerjaan_sebelum.value,
+              // tipe_perusahaan: tipe_perusahaan.value,
+              // tipe_perusahaan_sebelum: tipe_perusahaan_sebelum.value,
+              // total_pendapatan: '',
+              // tunjangan: '',
+              // umur_pensiun: '',
+              // umur_pensiun_sebelum: '',
+
+              alamat_pekerjaan_sebelum: this.dataentrynonfixfromedit.get('alamatsebelum')?.value,
+              alamat_perusahaan: this.dataentrynonfixfromedit.get('alamatperusahaan')?.value,
+              barang_jasa: this.dataentrynonfixfromedit.get('barangajasa')?.value,
+              bulan_berdiri: this.dataentrynonfixfromedit.get('berdirisejakbulan')?.value,
+              bulan_berdiri_sebelum: this.dataentrynonfixfromedit.get('berdirisejakbulansebelum')?.value,
+              created_by: this.untukSessionUserName,
               created_date: '',
-              curef: this.customercuref,
+              curef: curef,
               id: this.daWajobid,
               jabatan: '',
               jabatan_sebelum: '',
-              jenis_bidang: jenis_bidang.value,
-              jenis_bidang_sebelum: jenis_bidang_sebelum.value,
-              jenis_pekerjaan: status_perkawinan.value,
+              jenis_bidang: kirimanjenisbidang1,
+              jenis_bidang_sebelum: kirimanjenisbidangsebelum1,
+              jenis_pekerjaan: '',
               jenis_pekerjaan_sebelum: '',
-              jumlah_karyawan: jumlah_karyawan.value,
+              jumlah_karyawan: this.dataentrynonfixfromedit.get('jumlahkaryawan')?.value,
               jumlah_karyawan_sebelum: '',
               kabkota_sebelum: '',
               kabkota: kirimankabkotajobn,
-              kategori_pekerjaan: agama.value,
+              kategori_pekerjaan: '',
               kategori_pekerjaan_sebelum: '',
               kecamatan: kirimankecamatanjobn,
               kecamatan_sebelum: '',
               kelurahan: kirimankelurahanjobn,
               kelurahan_sebelum: '',
-              kepemilikan_perusahaan: kepemilikan_perusahaan.value,
-              kode_pos: kode_posjob.value,
+              kepemilikan_perusahaan: this.dataentrynonfixfromedit.get('kepemilikanperusahaan')?.value,
+              kode_pos: kirimandatakodeposjob,
               kode_pos_sebelum: '',
               lama_bekerja_tahun: '',
-              lama_bekerja_bulan_sebelum: alamat_ktp.value,
+              lama_bekerja_bulan: '',
+              lama_bekerja_bulan_sebelum: '',
               lama_bekerja_tahun_sebelum: '',
-              nama_perusahaan: nama_perusahaan.value,
-              nama_perusahaan_sebelum: nama_perusahaan_sebelum.value,
-              no_siup: no_siup.value,
-              no_telepon: no_telepon.value,
+              nama_perusahaan: this.dataentrynonfixfromedit.get('namaperusahaan')?.value,
+              nama_perusahaan_sebelum: this.dataentrynonfixfromedit.get('namaperusahansebelum')?.value,
+              no_siup: this.dataentrynonfixfromedit.get('nosiup')?.value,
+              no_telepon: this.dataentrynonfixfromedit.get('nomorteleponperusahaan')?.value,
               npwp: '',
               payroll: '',
               payroll_sebelum: '',
-              pemilik_usaha: pemilik_usaha.value,
+              pemilik_usaha: this.dataentrynonfixfromedit.get('pemilikusaha')?.value,
               pendapatan: '',
               pendapatan_lain: '',
               posisi: '',
               posisi_sebelum: '',
               provinsi: kirimanprovjob,
               provinsi_sebelum: '',
-              rt: rt_perusahaan.value,
+              rt: this.dataentrynonfixfromedit.get('rtformperusahaan')?.value,
               rt_sebelum: '',
-              rw: rw_perusahaan.value,
+              rw: this.dataentrynonfixfromedit.get('rwformperusahaan')?.value,
               rw_sebelum: '',
-              sektor_ekonomi: jenis_sektor.value,
-              sektor_ekonomi_sebelum: jenis_sektor_sebelum.value,
+              sektor_ekonomi: this.dataentrynonfixfromedit.get('jenissektor')?.value,
+              sektor_ekonomi_sebelum: this.dataentrynonfixfromedit.get('jenissektorsebelum')?.value,
               status_active: '',
-              tahun_berdiri: tahun_berdiri_perusahaan.value,
-              tahun_berdiri_sebelum: tahun_berdiri_perusahaan_sebelum.value,
+              tahun_berdiri: this.dataentrynonfixfromedit.get('berdirisejaktahun')?.value,
+              tahun_berdiri_sebelum: this.dataentrynonfixfromedit.get('berdirisejaktahunsebelum')?.value,
               tipe_kepegawaian: '',
               tipe_kepegawaian_sebelum: '',
-              tipe_pekerjaan: tipe_pekerjaan.value,
-              tipe_pekerjaan_sebelum: tipe_pekerjaan_sebelum.value,
-              tipe_perusahaan: tipe_perusahaan.value,
-              tipe_perusahaan_sebelum: tipe_perusahaan_sebelum.value,
+              tipe_pekerjaan: this.dataentrynonfixfromedit.get('tipepekerjaan')?.value,
+              tipe_pekerjaan_sebelum: this.dataentrynonfixfromedit.get('tipepekerjaansebelum')?.value,
+              tipe_perusahaan: this.dataentrynonfixfromedit.get('tipeperusahaan')?.value,
+              tipe_perusahaan_sebelum: this.dataentrynonfixfromedit.get('tipeperushaansebelum')?.value,
               total_pendapatan: '',
               tunjangan: '',
               umur_pensiun: '',
@@ -1549,6 +2444,7 @@ export class InitialDataEntryNonEditComponent implements OnInit {
             });
         });
     } else {
+      alert('ini else ');
       const nama = document.getElementById('nama') as HTMLInputElement | any;
       const jenis_kelamin = document.getElementById('jenis_kelamin') as HTMLInputElement | any;
       const tanggal_lahir = document.getElementById('tanggal_lahir') as HTMLInputElement | any;
@@ -1654,6 +2550,24 @@ export class InitialDataEntryNonEditComponent implements OnInit {
         var kirimankelurahanjobn = kelurahan_perusahaan.value;
       }
 
+      if (kodeposjob == undefined || kodeposjob == null) {
+        var kirimandatakodeposjob = tembakkodeposjob;
+      } else {
+        var kirimandatakodeposjob = kodeposjob;
+      }
+
+      if (kodepos == undefined || kodepos == null) {
+        var kirimandatakodepos = tembakkodepos;
+      } else {
+        var kirimandatakodepos = kodepos;
+      }
+
+      if (kodepospasangan == undefined || kodepospasangan == null) {
+        var kirimandatakodeposp = tembakkodepospasangan;
+      } else {
+        var kirimandatakodeposp = kodepospasangan;
+      }
+
       // const httpOptions = {
       //   'Content-Type': 'text/plain',
       // };
@@ -1664,35 +2578,109 @@ export class InitialDataEntryNonEditComponent implements OnInit {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide', {
           headers: headers,
-          nama: nama.value,
+          // nama: nama.value,
+          // nama_pasangan: '',
+          // kategori_pekerjaan: 'Non Fix Income',
+          // curef: this.customercuref,
+          // jenis_kelamin: jenis_kelamin.value,
+          // jenis_kelamin_pasangan: '',
+          // usia: umur.value,
+          // app_no_ide: this.customerappnoide,
+          // tanggal_lahir: tanggal_lahir.value,
+          // tanggal_lahir_pasangan: '',
+          // tempat_lahir: tempat_lahir.value,
+          // tempat_lahir_pasangan: '',
+          // status_perkawinan: status_perkawinan.value,
+          // status_alamat: '',
+          // status_kendaraan: '',
+          // status_ktp: '',
+          // status_ktp_pasangan: '',
+          // status_rumah: '',
+          // agama: agama.value,
+          // agama_pasangan: '',
+          // pendidikan: pendidikan.value,
+          // pendidikan_pasangan: '',
+          // kewarganegaraan: kewarganegaraan.value,
+          // kewarganegaraan_pasangan: '',
+          // nama_ibu_kandung: nama_ibu_kandung.value,
+          // nama_ibu_kandung_pasangan: '',
+          // npwp: npwp.value,
+          // npwp_pasangan: '',
+          // alamat_ktp: alamat_ktp.value,
+          // alamat_ktp_pasangan: '',
+          // alamat_domisili: '',
+          // provinsi: kirimanprovinsid,
+          // provinsi_domisili: '',
+          // provinsi_pasangan: '',
+          // kabkota: kirimankabkotaid,
+          // kabkota_domisili: '',
+          // kabkota_pasangan: '',
+          // kecamatan: kirimankecamatanid,
+          // kecamatan_domisili: '',
+          // kecamatan_pasangan: '',
+          // kelurahan: kirimankelurahanid,
+          // kelurahan_domisili: '',
+          // kelurahan_pasangan: '',
+          // kode_pos: kode_pos.value,
+          // kode_pos_domisili: '',
+          // kode_pos_pasangan: '',
+          // lama_menetap: '',
+          // cabang: this.untukSessionKodeCabang,
+          // created_by: '',
+          // created_date: '',
+          // email: '',
+          // email_pasangan: '',
+          // id: this.customerid,
+          // jumlah_anak: '',
+          // rt: rt.value,
+          // rt_domisili: '',
+          // rt_pasangan: '',
+          // rw: rw.value,
+          // rw_domisili: '',
+          // rw_pasangan: '',
+          // no_ktp: no_ktp.value,
+          // no_ktp_pasangan: '',
+          // tanggal_terbit_ktp: tanggal_terbit_ktp.value,
+          // tanggal_terbit_ktp_pasangan: '',
+          // tanggal_exp_ktp: tanggal_exp_ktp.value,
+          // tanggal_exp_ktp_pasangan: '',
+          // tipe_kendaraan: '',
+          // no_handphone: no_handphone.value,
+          // no_handphone_pasangan: '',
+          // no_telepon: '',
+          // updated_by: '',
+          // updated_date: '',
+          // usia_pasangan: '',
+
+          nama: this.dataentrynonfixfromedit.get('nama')?.value,
           nama_pasangan: '',
           kategori_pekerjaan: 'Non Fix Income',
-          curef: this.customercuref,
-          jenis_kelamin: jenis_kelamin.value,
+          curef: curef,
+          jenis_kelamin: this.dataentrynonfixfromedit.get('jeniskelamin')?.value,
           jenis_kelamin_pasangan: '',
-          usia: umur.value,
-          app_no_ide: this.customerappnoide,
-          tanggal_lahir: tanggal_lahir.value,
+          usia: this.dataentrynonfixfromedit.get('umurform')?.value,
+          app_no_ide: app_no_ide,
+          tanggal_lahir: this.dataentrynonfixfromedit.get('tanggallahir')?.value,
           tanggal_lahir_pasangan: '',
-          tempat_lahir: tempat_lahir.value,
+          tempat_lahir: this.dataentrynonfixfromedit.get('tempatlahir')?.value,
           tempat_lahir_pasangan: '',
-          status_perkawinan: status_perkawinan.value,
+          status_perkawinan: this.dataentrynonfixfromedit.get('statusperkawinan')?.value,
           status_alamat: '',
           status_kendaraan: '',
-          status_ktp: '',
-          status_ktp_pasangan: '',
+          status_ktp: this.dataentrynonfixfromedit.get('ktpseumurhidup')?.value,
+          status_ktp_pasangan: this.dataentrynonfixfromedit.get('ktpseumurhiduppasangan')?.value,
           status_rumah: '',
-          agama: agama.value,
+          agama: this.dataentrynonfixfromedit.get('agamaform')?.value,
           agama_pasangan: '',
-          pendidikan: pendidikan.value,
+          pendidikan: this.dataentrynonfixfromedit.get('pendidikanform')?.value,
           pendidikan_pasangan: '',
-          kewarganegaraan: kewarganegaraan.value,
+          kewarganegaraan: this.dataentrynonfixfromedit.get('kewarganegaraanform')?.value,
           kewarganegaraan_pasangan: '',
-          nama_ibu_kandung: nama_ibu_kandung.value,
+          nama_ibu_kandung: this.dataentrynonfixfromedit.get('ibukandung')?.value,
           nama_ibu_kandung_pasangan: '',
-          npwp: npwp.value,
+          npwp: this.dataentrynonfixfromedit.get('npwpform')?.value,
           npwp_pasangan: '',
-          alamat_ktp: alamat_ktp.value,
+          alamat_ktp: this.dataentrynonfixfromedit.get('alamatktp')?.value,
           alamat_ktp_pasangan: '',
           alamat_domisili: '',
           provinsi: kirimanprovinsid,
@@ -1707,104 +2695,119 @@ export class InitialDataEntryNonEditComponent implements OnInit {
           kelurahan: kirimankelurahanid,
           kelurahan_domisili: '',
           kelurahan_pasangan: '',
-          kode_pos: kode_pos.value,
+          kode_pos: kirimandatakodepos,
           kode_pos_domisili: '',
-          kode_pos_pasangan: '',
+          kode_pos_pasangan: kirimandatakodeposp,
           lama_menetap: '',
-          cabang: '',
-          created_by: '',
+          cabang: this.SessionStorageService.retrieve('sessionKdCabang'),
+          created_by: this.untukSessionUserName,
           created_date: '',
           email: '',
           email_pasangan: '',
-          id: this.customerid,
+          id: this.datakirimanidcustomer,
           jumlah_anak: '',
-          rt: rt.value,
+          rt: this.dataentrynonfixfromedit.get('rtform')?.value,
           rt_domisili: '',
           rt_pasangan: '',
-          rw: rw.value,
+          rw: this.dataentrynonfixfromedit.get('rwform')?.value,
           rw_domisili: '',
           rw_pasangan: '',
-          no_ktp: no_ktp.value,
+          no_ktp: this.dataentrynonfixfromedit.get('noktp')?.value,
           no_ktp_pasangan: '',
-          tanggal_terbit_ktp: tanggal_terbit_ktp.value,
+          tanggal_terbit_ktp: this.dataentrynonfixfromedit.get('tanggalterbit')?.value,
           tanggal_terbit_ktp_pasangan: '',
-          tanggal_exp_ktp: tanggal_exp_ktp.value,
+          tanggal_exp_ktp: this.dataentrynonfixfromedit.get('tanggalexpktp')?.value,
           tanggal_exp_ktp_pasangan: '',
           tipe_kendaraan: '',
-          no_handphone: no_handphone.value,
+          no_handphone: this.dataentrynonfixfromedit.get('nohandphone')?.value,
           no_handphone_pasangan: '',
           no_telepon: '',
           updated_by: '',
           updated_date: '',
           usia_pasangan: '',
         })
-
         .subscribe(resposne => {
-          // console.log(resposne);
+          alert('jalangk ');
           this.contohdata = resposne.result.id;
+
+          const kirimanjenisbidang = this.dataentrynonfixfromedit.get('jenisbidang')?.value.split('|');
+          if (this.dataentrynonfixfromedit.get('jenisbidang')?.value.indexOf('|') !== -1) {
+            var kirimanjenisbidang1 = kirimanjenisbidang[1];
+          } else {
+            var kirimanjenisbidang1 = this.dataentrynonfixfromedit.get('jenisbidang')?.value;
+          }
+
+          const kirimanjenisbidangsebelum = this.dataentrynonfixfromedit.get('jenisbidangsebelum')?.value.split('|');
+          if (this.dataentrynonfixfromedit.get('jenisbidang')?.value.indexOf('|') !== -1) {
+            var kirimanjenisbidangsebelum1 = kirimanjenisbidangsebelum[1];
+          } else {
+            var kirimanjenisbidangsebelum1 = this.dataentrynonfixfromedit.get('jenisbidangsebelum')?.value;
+          }
 
           this.http
             .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_job_info', {
               headers: headers,
-              alamat_perusahaan: alamat_perusahaan.value,
-              barang_jasa: barang_jasa.value,
-              bulan_berdiri: bulan_berdiri_perusahaan.value,
-              bulan_berdiri_sebelum: bulan_berdiri_perusahaan_sebelum.value,
-              created_by: '',
+              alamat_pekerjaan_sebelum: this.dataentrynonfixfromedit.get('alamatsebelum')?.value,
+              alamat_perusahaan: this.dataentrynonfixfromedit.get('alamatperusahaan')?.value,
+              barang_jasa: this.dataentrynonfixfromedit.get('barangajasa')?.value,
+              bulan_berdiri: this.dataentrynonfixfromedit.get('berdirisejakbulan')?.value,
+              bulan_berdiri_sebelum: this.dataentrynonfixfromedit.get('berdirisejakbulansebelum')?.value,
+              created_by: this.untukSessionUserName,
               created_date: '',
-              curef: this.customercuref,
+              curef: curef,
               id: this.daWajobid,
               jabatan: '',
               jabatan_sebelum: '',
-              jenis_bidang: jenis_bidang.value,
-              jenis_bidang_sebelum: jenis_bidang_sebelum.value,
-              jenis_pekerjaan: status_perkawinan.value,
-              jenis_pekerjaan_sebelum: nama.value,
-              jumlah_karyawan: jumlah_karyawan.value,
-              jumlah_karyawan_sebelum: nama.value,
+              jenis_bidang: kirimanjenisbidang1,
+              jenis_bidang_sebelum: kirimanjenisbidangsebelum1,
+              jenis_pekerjaan: '',
+              jenis_pekerjaan_sebelum: '',
+              jumlah_karyawan: this.dataentrynonfixfromedit.get('jumlahkaryawan')?.value,
+              jumlah_karyawan_sebelum: '',
               kabkota_sebelum: '',
               kabkota: kirimankabkotajobn,
-              kategori_pekerjaan: agama.value,
-              kategori_pekerjaan_sebelum: nama.value,
+              kategori_pekerjaan: '',
+              kategori_pekerjaan_sebelum: '',
               kecamatan: kirimankecamatanjobn,
               kecamatan_sebelum: '',
               kelurahan: kirimankelurahanjobn,
               kelurahan_sebelum: '',
-              kepemilikan_perusahaan: kepemilikan_perusahaan.value,
-              kode_pos: kode_posjob.value,
+              kepemilikan_perusahaan: this.dataentrynonfixfromedit.get('kepemilikanperusahaan')?.value,
+              kode_pos: kirimandatakodeposjob,
               kode_pos_sebelum: '',
-              lama_bekerja_tahun: nama.value,
-              lama_bekerja_bulan_sebelum: alamat_ktp.value,
-              lama_bekerja_tahun_sebelum: nama.value,
-              nama_perusahaan: nama.value,
-              nama_perusahaan_sebelum: '',
-              no_siup: no_siup.value,
-              no_telepon: no_telepon.value,
+              lama_bekerja_tahun: '',
+              lama_bekerja_bulan: '',
+              lama_bekerja_bulan_sebelum: '',
+              lama_bekerja_tahun_sebelum: '',
+              nama_perusahaan: this.dataentrynonfixfromedit.get('namaperusahaan')?.value,
+              nama_perusahaan_sebelum: this.dataentrynonfixfromedit.get('namaperusahansebelum')?.value,
+              no_siup: this.dataentrynonfixfromedit.get('nosiup')?.value,
+              no_telepon: this.dataentrynonfixfromedit.get('nomorteleponperusahaan')?.value,
               npwp: '',
               payroll: '',
               payroll_sebelum: '',
-              pemilik_usaha: pemilik_usaha.value,
+              pemilik_usaha: this.dataentrynonfixfromedit.get('pemilikusaha')?.value,
               pendapatan: '',
               pendapatan_lain: '',
               posisi: '',
               posisi_sebelum: '',
               provinsi: kirimanprovjob,
               provinsi_sebelum: '',
-              rt: rt_perusahaan.value,
+              rt: this.dataentrynonfixfromedit.get('rtformperusahaan')?.value,
               rt_sebelum: '',
-              rw: rw_perusahaan.value,
+              rw: this.dataentrynonfixfromedit.get('rwformperusahaan')?.value,
               rw_sebelum: '',
-              sektor_ekonomi: jenis_sektor.value,
-              sektor_ekonomi_sebelum: jenis_sektor_sebelum.value,
+              sektor_ekonomi: this.dataentrynonfixfromedit.get('jenissektor')?.value,
+              sektor_ekonomi_sebelum: this.dataentrynonfixfromedit.get('jenissektorsebelum')?.value,
               status_active: '',
-              tahun_berdiri: tahun_berdiri_perusahaan.value,
-              tahun_berdiri_sebelum: tahun_berdiri_perusahaan_sebelum.value,
+              tahun_berdiri: this.dataentrynonfixfromedit.get('berdirisejaktahun')?.value,
+              tahun_berdiri_sebelum: this.dataentrynonfixfromedit.get('berdirisejaktahunsebelum')?.value,
               tipe_kepegawaian: '',
               tipe_kepegawaian_sebelum: '',
-              tipe_pekerjaan: tipe_pekerjaan.value,
-              tipe_pekerjaan_sebelum: tipe_pekerjaan_sebelum.value,
-              tipe_perusahaan: tipe_perusahaan.value,
-              tipe_perusahaan_sebelum: tipe_perusahaan_sebelum.value,
+              tipe_pekerjaan: this.dataentrynonfixfromedit.get('tipepekerjaan')?.value,
+              tipe_pekerjaan_sebelum: this.dataentrynonfixfromedit.get('tipepekerjaansebelum')?.value,
+              tipe_perusahaan: this.dataentrynonfixfromedit.get('tipeperusahaan')?.value,
+              tipe_perusahaan_sebelum: this.dataentrynonfixfromedit.get('tipeperushaansebelum')?.value,
               total_pendapatan: '',
               tunjangan: '',
               umur_pensiun: '',
