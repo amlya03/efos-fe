@@ -14,12 +14,12 @@ export class slik {
   jenis_kredit_pembiayaan_ket?: string;
   jenis_penggunaan?: number;
   jenis_penggunaan_ket?: string;
-  plafon?: number;
+  plafon?: number | string | null | undefined;
   tanggal_jatuh_tempo?: string;
   sektor_ekonomi?: string;
   sektor_ekonomi_ket?: string;
   suku_bunga_imbalan?: string;
-  baki_debet?: number;
+  baki_debet?: number | string | null | undefined;
   tanggal_mulai?: string;
   ljk?: number;
   ljk_ket?: string;

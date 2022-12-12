@@ -920,13 +920,33 @@
               <!-- <td style="text-align: center" scope="col">{{ i + 1 }}</td> -->
               <!-- <td style="text-align: center;" scope="col">{{ daWa.id }}</td> -->
               <td style="text-align: center" scope="col">{{ listLajangSlik.id }}</td>
-              <td style="text-align: center" scope="col">{{ listLajangSlik.jenis_kredit_pembiayaan_ket }}</td>
-              <td style="text-align: center" scope="col">{{ listLajangSlik.ljk_ket }}</td>
-              <td style="text-align: center" scope="col">{{ listLajangSlik.plafon }}</td>
-              <td style="text-align: center" scope="col">{{ listLajangSlik.baki_debet }}</td>
-              <td style="text-align: center" scope="col">{{ listLajangSlik.kondisi_ket }}</td>
-              <td style="text-align: center" scope="col">{{ listLajangSlik.tanggal_jatuh_tempo }}</td>
-              <td style="text-align: center" scope="col">{{ listLajangSlik.kualitas_ket }}</td>
+              <td style="text-align: center" scope="col">
+                {{
+                  listLajangSlik.jenis_kredit_pembiayaan_ket !== ''
+                    ? listLajangSlik.jenis_kredit_pembiayaan_ket
+                    : listLajangSlik.response_description
+                }}
+              </td>
+              <td style="text-align: center" scope="col">
+                {{ listLajangSlik.ljk_ket !== '' ? listLajangSlik.ljk_ket : listLajangSlik.response_description }}
+              </td>
+              <td style="text-align: center" scope="col">
+                {{ listLajangSlik.plafon !== '' ? listLajangSlik.plafon : listLajangSlik.response_description }}
+              </td>
+              <!-- <td *ngIf="listLajangSlik.kualitas_ket == null">{{ listLajangSlik.response_description }}</td> -->
+              <td style="text-align: center" scope="col">
+                {{ listLajangSlik.baki_debet !== '' ? listLajangSlik.baki_debet : listLajangSlik.response_description }}
+              </td>
+              <td style="text-align: center" scope="col">
+                {{ listLajangSlik.kondisi_ket !== '' ? listLajangSlik.kondisi_ket : listLajangSlik.response_description }}
+              </td>
+              <td style="text-align: center" scope="col">
+                {{ listLajangSlik.tanggal_jatuh_tempo !== '' ? listLajangSlik.tanggal_jatuh_tempo : listLajangSlik.response_description }}
+              </td>
+              <td style="text-align: center" scope="col">
+                {{ listLajangSlik.kualitas_ket !== '' ? listLajangSlik.kualitas_ket : listLajangSlik.response_description }}
+              </td>
+              <!-- ngIf="listLajangSlik.kualitas_ket == null"<td style="text-align: center" scope="col">{{ listLajangSlik.kualitas_ket }}||{{ listLajangSlik.response_description}}</td> -->
               <!-- (change)="getProoduct(daWa.isSelected, daWa.app_no_de)" -->
               <!-- <td> <input   (change)="getProoduct($event, daWa.app_no_de ,i+1)"  type="checkbox" > </td> -->
               <td class="text-end"></td>

@@ -167,14 +167,14 @@ export class HasilPrescreeningComponent implements OnInit {
 
         this.cekdukcapil(tglLahir, tglLahirpasangan);
         // this.cekslik(tglLahir, tglLahirpasangan);
+        //  this.cekdukcapil(tglLahir, tglLahirpasangan);
         // this.checkstatusktpmanual(nik);
         setTimeout(() => {
-          this.initialDataEntry.getDownloadSlik(this.ktp).subscribe(data => {
+          this.initialDataEntry.getDownloadSlik('3302024506980004').subscribe(data => {
             console.warn('Download', data);
             this.downloadSlik = data.result;
 
-            // this.untukSlik();
-            // this.simpanstatusktp();
+            this.untukSlik();
           });
         }, 300);
         this.getduplikatc(this.ktp, this.nama).subscribe({

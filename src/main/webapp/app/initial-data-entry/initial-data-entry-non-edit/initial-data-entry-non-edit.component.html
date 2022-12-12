@@ -9,7 +9,7 @@
           <h4 style="text-align: center">Informasi Pemohon Pembiayaan</h4>
         </div>
 
-        <form id="initial_data_entry_form" method="post" action="<?php echo site_url('ide/postUpdateIde'); ?>">
+        <form [formGroup]="dataentrynonfixfromedit">
           <div class="card">
             <div class="card-body">
               <div class="row">
@@ -17,7 +17,7 @@
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Nomor Aplikasi<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
-                      <input type="text" id="app_no_ide" name="app_no_ide" value="{{ daWa.app_no_ide }}" class="form-control" readonly />
+                      <input type="text" id="app_no_ide" formControlName="noaplikasi" class="form-control" readonly />
                     </div>
 
                     <div class="col-sm-8">
@@ -34,24 +34,14 @@
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Nama Lengkap<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
-                      <input
-                        type="name"
-                        id="nama"
-                        name="nama"
-                        class="form-control"
-                        placeholder="Nama Lengkap"
-                        value="{{ daWa.nama }}"
-                        id="nama"
-                        name="nama"
-                      />
+                      <input type="text" id="nama" name="nama" class="form-control" placeholder="Nama Lengkap" formControlName="nama" />
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
                       <div class="form-group">
-                        <select class="form-control" id="jenis_kelamin" value="<?=$jenis_kelamin?>" name="jenis_kelamin">
-                          <option value="{{ daWa.jenis_kelamin }}">{{ daWa.jenis_kelamin }}</option>
+                        <select class="form-control" id="jenis_kelamin" formControlName="jeniskelamin">
                           <option value="Laki-laki">Laki - laki</option>
                           <option value="Perempuan">Perempuan</option>
                         </select>
@@ -61,47 +51,29 @@
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
-                      <input
-                        class="form-control"
-                        type="date"
-                        id="tanggal_lahir"
-                        name="tanggal_lahir"
-                        value="{{ daWa.tanggal_lahir }}"
-                        (change)="submitBday()"
-                      />
+                      <input class="form-control" type="date" id="tanggal_lahir" formControlName="tanggallahir" (change)="submitBday()" />
                       <input
                         class="form-control"
                         type="tel"
                         onkeypress="return onlyNumberKey(event)"
                         id="umur"
-                        name="umur"
-                        value="{{ daWa.usia }}"
+                        formControlName="umurform"
                       />
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Tempat Lahir<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Tempat Lahir"
-                        id="tempat_lahir"
-                        value="{{ daWa.tempat_lahir }}"
-                        name="tempat_lahir"
-                      />
+                      <input type="text" class="form-control" placeholder="Tempat Lahir" id="tempat_lahir" formControlName="tempatlahir" />
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Status Perkawinan<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
                       <div class="form-group">
-                        <select class="form-control" id="status_perkawinan" name="status_perkawinan" value="<?=$status_perkawinan?>">
-                          <option value="{{ daWa.status_perkawinan }}">
-                            {{ daWa.status_perkawinan }}
-                          </option>
-                          <option value="1">Menikah</option>
-                          <option value="0">Lajang</option>
+                        <select class="form-control" id="status_perkawinan" formControlName="statusperkawinan">
+                          <option value="Menikah">Menikah</option>
+                          <option value="Lajang">Lajang</option>
                         </select>
                       </div>
                     </div>
@@ -110,14 +82,13 @@
                     <label class="col-sm-4 col-form-label">Agama<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
                       <div class="form-group">
-                        <select class="form-control" id="agama" value="<?=$agama?>" name="agama">
-                          <option value="{{ daWa.agama }}">{{ daWa.agama }}</option>
-                          <option value="islam">Islam</option>
-                          <option value="kristen">Kristen</option>
-                          <option value="khatolik">Khatolik</option>
-                          <option value="budha">Budha</option>
-                          <option value="hindu">Hindu</option>
-                          <option value="kong hu chu">Kong Hu Chu</option>
+                        <select class="form-control" id="agama" formControlName="agamaform">
+                          <option value="Islam">Islam</option>
+                          <option value="Kristen">Kristen</option>
+                          <option value="Khatolik">Khatolik</option>
+                          <option value="Budha">Budha</option>
+                          <option value="Hindu">Hindu</option>
+                          <option value="Kong Hu Chu">Kong Hu Chu</option>
                         </select>
                       </div>
                     </div>
@@ -126,8 +97,7 @@
                     <label class="col-sm-4 col-form-label">Pendidikan<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
                       <div class="form-group">
-                        <select class="form-control" id="pendidikan" value="<?=$pendidikan?>" name="pendidikan">
-                          <option value="{{ daWa.pendidikan }}">{{ daWa.pendidikan }}</option>
+                        <select class="form-control" id="pendidikan" formControlName="pendidikanform">
                           <option value="SMA">SMA</option>
                           <option value="D3">D3</option>
                           <option value="S1">S1</option>
@@ -141,8 +111,7 @@
                     <label class="col-sm-4 col-form-label">Kewarganegaraan<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
                       <div class="form-group">
-                        <select class="form-control" id="kewarganegaraan" value="<?=$kewarganegaraan?>" name="kewarganegaraan">
-                          <option value="{{ daWa.kewarganegaraan }}">{{ daWa.kewarganegaraan }}</option>
+                        <select class="form-control" id="kewarganegaraan" formControlName="kewarganegaraanform">
                           <option value="WNI">WNI</option>
                           <option value="WNA">WNA</option>
                         </select>
@@ -152,14 +121,7 @@
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Ibu Kandung<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder=""
-                        value="{{ daWa.nama_ibu_kandung }}"
-                        id="nama_ibu_kandung"
-                        name="nama_ibu_kandung"
-                      />
+                      <input type="text" class="form-control" placeholder="" formControlName="ibukandung" id="nama_ibu_kandung" />
                     </div>
                   </div>
                   <div class="form-group row">
@@ -171,9 +133,8 @@
                         class="form-control"
                         placeholder="NPWP"
                         maxlength="16"
-                        value="{{ daWa.npwp }}"
+                        formControlName="npwpform"
                         id="npwp"
-                        name="npwp"
                       />
                     </div>
                   </div>
@@ -182,9 +143,7 @@
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
-                      <textarea class="form-control h-150px" rows="6" id="alamat_ktp" value="alamat_ktp" name="alamat_ktp">{{
-                        daWa.alamat_ktp
-                      }}</textarea>
+                      <textarea class="form-control h-150px" rows="6" id="alamat_ktp" formControlName="alamatktp"></textarea>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -268,7 +227,6 @@
                           class="form-control"
                           id="kode_pos"
                           value="{{ daWakodepos }}"
-                          name="kode_pos"
                           #kode_pos
                         />
                         <div class="input-group-append">
@@ -288,9 +246,8 @@
                         onkeypress="return onlyNumberKey(event)"
                         class="form-control"
                         placeholder="RT"
-                        value="{{ daWa.alamat_ktp }}"
+                        formControlName="rtform"
                         id="rt"
-                        name="rt"
                       />
                     </div>
                     <h2>/</h2>
@@ -301,9 +258,8 @@
                         class="form-control"
                         placeholder="RW"
                         maxlength="3"
-                        value="{{ daWa.alamat_ktp }}"
+                        formControlName="rwform"
                         id="rw"
-                        name="rw"
                       />
                     </div>
                   </div>
@@ -316,9 +272,8 @@
                         class="form-control"
                         placeholder="Nomor KTP"
                         maxlength="16"
-                        value="{{ daWa.alamat_ktp }}"
+                        formControlName="noktp"
                         id="no_ktp"
-                        name="no_ktp"
                       />
                     </div>
                   </div>
@@ -326,13 +281,7 @@
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
-                      <input
-                        class="form-control"
-                        type="date"
-                        id="tanggal_terbit_ktp"
-                        value="{{ daWa.alamat_ktp }}"
-                        name="tanggal_terbit_ktp"
-                      />
+                      <input class="form-control" type="date" id="tanggal_terbit_ktp" formControlName="tanggalterbit" />
                     </div>
                   </div>
 
@@ -340,15 +289,15 @@
                     <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
                       <input type="text" id="retriveKtpTidak" value="<?=$status_ktp?>" hidden />
-                      <input type="radio" id="chkYes" name="chkPinNo" value="fix" /> Ya
-                      <input type="radio" id="chkNo" name="chkPinNo" value="non" /> Tidak
+                      <input type="radio" id="chkYes" formControlName="ktpseumurhidup" value="1" /> Ya
+                      <input type="radio" id="chkNo" formControlName="ktpseumurhidup" value="0" /> Tidak
                     </div>
                   </div>
                   <div class="ktpSeumurJagungNonEdit">
                     <div class="form-group row">
                       <label class="col-sm-4 col-form-label">Tanggal Exipred KTP<span class="text-danger">*</span></label>
                       <div class="col-sm-8">
-                        <input class="form-control" type="date" id="tanggal_exp_ktp" value="{{ daWa.alamat_ktp }}" name="tanggal_exp_ktp" />
+                        <input class="form-control" type="date" id="tanggal_exp_ktp" />
                       </div>
                     </div>
                   </div>
@@ -361,7 +310,7 @@
                         pattern="^^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
                         class="form-control"
                         placeholder="Nomor Handphone"
-                        value="{{ daWa.alamat_ktp }}"
+                        formControlName="nohandphone"
                         id="no_handphone"
                         name="no_handphone"
                       />
@@ -385,9 +334,8 @@
                         type="text"
                         class="form-control"
                         placeholder="Nama Perusahaan"
-                        value="{{ daWajob.nama_perusahaan }}"
+                        formControlName="namaperusahaan"
                         id="nama_perusahaan"
-                        name="nama_perusahaan"
                       />
                     </div>
                   </div>
@@ -395,16 +343,13 @@
                     <label class="col-sm-4 col-form-label">Tipe Perusahaan<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
                       <div class="form-group">
-                        <select class="form-control" id="tipe_perusahaan" value="<?=$tipe_perusahaan?>" name="tipe_perusahaan">
-                          <option value="{{ daWajob.tipe_perusahaan }}">
-                            {{ daWajob.tipe_perusahaan }}
+                        <select class="form-control" id="tipe_perusahaan" formControlName="tipeperusahaan">
+                          <option
+                            *ngFor="let gettipeperusahaandariapi of gettipeperusahaandariapi"
+                            value="{{ gettipeperusahaandariapi.company_deskripsi }}"
+                          >
+                            {{ gettipeperusahaandariapi.company_deskripsi }}
                           </option>
-                          <option value="1">Perseorangan</option>
-                          <option value="2">PT Terbuka(Perseroan Terbatas.tbk)</option>
-                          <option value="3">PT (Perseroan Terbatas)</option>
-                          <option value="4">Persero</option>
-                          <option value="5">CV</option>
-                          <option value="6">Firma</option>
                         </select>
                       </div>
                     </div>
@@ -413,18 +358,13 @@
                     <label class="col-sm-4 col-form-label">Tipe Pekerjaan<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
                       <div class="form-group">
-                        <select class="form-control" id="tipe_pekerjaan" value="{{ daWajob.tipe_pekerjaan }}" name="tipe_pekerjaan">
-                          <option value="{{ daWajob.tipe_pekerjaan }}">
-                            {{ daWajob.tipe_pekerjaan }}
+                        <select class="form-control" id="tipe_pekerjaan" formControlName="tipepekerjaan">
+                          <option
+                            *ngFor="let getjenispekerjaandariapi of getjenispekerjaandariapi"
+                            value="{{ getjenispekerjaandariapi.job_desc }}"
+                          >
+                            {{ getjenispekerjaandariapi.job_desc }}
                           </option>
-                          <option value="1">Pegawi Negeri Sipil</option>
-                          <option value="2">Pegawai Swasta</option>
-                          <option value="3">Wiraswasta</option>
-                          <option value="4">Profesional</option>
-                          <option value="5">Pensiunan</option>
-                          <option value="6">Tidak Bekerja</option>
-                          <option value="7">TNI / Polri</option>
-                          <option value="8">Pegawai BUMN</option>
                         </select>
                       </div>
                     </div>
@@ -433,18 +373,9 @@
                     <label class="col-sm-4 col-form-label">Kepemilikan Perusahaan<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
                       <div class="form-group">
-                        <select
-                          class="form-control"
-                          id="kepemilikan_perusahaan"
-                          value="<?=$kepemilikan_perusahaan?>"
-                          name="kepemilikan_perusahaan"
-                        >
-                          <option value="  {{ daWajob.kepemilikan_perusahaan }}">
-                            {{ daWajob.kepemilikan_perusahaan }}
-                          </option>
-                          <option value="Direktur">Direktur</option>
-                          <option value="Supervisor / Manager">Supervisor / Manager</option>
-                          <option value="Dibawah Supervisor">Dibawah Supervisor</option>
+                        <select class="form-control" id="kepemilikan_perusahaan" formControlName="kepemilikanperusahaan">
+                          <option value="Bukan Milik Sendiri">Bukan Milik Sendiri</option>
+                          <option value="Milik Sendiri">Milik Sendiri</option>
                         </select>
                       </div>
                     </div>
@@ -456,9 +387,8 @@
                         type="text"
                         class="form-control"
                         placeholder="Pemilik Usaha"
-                        value="{{ daWajob.kepemilikan_perusahaan }}"
+                        formControlName="pemilikusaha"
                         id="pemilik_usaha"
-                        name="pemilik_usaha"
                       />
                     </div>
                   </div>
@@ -471,9 +401,8 @@
                         pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
                         class="form-control"
                         placeholder="Nomor Telephone"
-                        value="{{ daWajob.no_telepon }}"
                         id="no_telepon"
-                        name="no_telepon"
+                        formControlName="nomorteleponperusahaan"
                         maxlength="10"
                       />
                     </div>
@@ -482,8 +411,16 @@
                     <label class="col-sm-4 col-form-label">Jenis Bidang<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
                       <div class="form-group">
-                        <select class="form-control" id="jenis_bidang" name="jenis_bidang">
-                          <option>{{ daWajob.jenis_bidang }}</option>
+                        <select class="form-control" (change)="jenisbidangselect()" id="jenis_bidang" formControlName="jenisbidang">
+                          <option value="{{ retrivejenisbidang }}">
+                            {{ retrivejenisbidang }}
+                          </option>
+                          <option
+                            *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
+                            value="{{ getjenisbidangdariapi.group_sektor }}|{{ getjenisbidangdariapi.nama_group_sektor }}"
+                          >
+                            {{ getjenisbidangdariapi.nama_group_sektor }}
+                          </option>
                         </select>
                       </div>
                     </div>
@@ -492,8 +429,16 @@
                     <label class="col-sm-4 col-form-label">Sektor Ekonomi<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
                       <div class="form-group">
-                        <select class="form-control" id="jenis_sektor" name="sektor_ekonomi">
-                          <option>{{ daWajob.sektor_ekonomi }}</option>
+                        <select class="form-control" id="jenis_sektor" formControlName="jenissektor">
+                          <option value="{{ retrivejenissektor }}">
+                            {{ retrivejenissektor }}
+                          </option>
+                          <option
+                            *ngFor="let getdatasektorekonomi of getdatasektorekonomi"
+                            value="{{ getdatasektorekonomi.nama_sub_sektor }}"
+                          >
+                            {{ getdatasektorekonomi.nama_sub_sektor }}
+                          </option>
                         </select>
                       </div>
                     </div>
@@ -505,9 +450,7 @@
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Alamat Perusahaan<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
-                      <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan" name="alamat_perusahaan">{{
-                        daWajob.alamat_perusahaan
-                      }}</textarea>
+                      <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan" formControlName="alamatperusahaan"></textarea>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -518,6 +461,7 @@
                           class="form-control"
                           (change)="onChangejob(provinsi_cabangjob)"
                           #provinsi_cabangjob
+                          [(ngModel)]="provinsi_perusahaan"
                           id="provinsi_perusahaan"
                           name="provinsi_perusahaan"
                         >
@@ -537,6 +481,7 @@
                           class="form-control"
                           (change)="onChangekotajob(kabkota_cabangjob)"
                           #kabkota_cabangjob
+                          [(ngModel)]="kabkota_perusahaan"
                           id="kabkota_perusahaan"
                           name="kabkota_perusahaan"
                         >
@@ -556,6 +501,7 @@
                           class="form-control"
                           (change)="onChangekecamatanjob(kecamatanjob)"
                           #kecamatanjob
+                          [(ngModel)]="kecamatan_perusahaan"
                           id="kecamatan_perusahaan"
                           name="kecamatan_perusahaan"
                         >
@@ -576,8 +522,9 @@
                       <div class="form-group">
                         <select
                           class="form-control"
-                          (change)="onChangekelurahan(kelurahanjob)"
+                          (change)="onChangekelurahanjob(kelurahanjob)"
                           #kelurahanjob
+                          [(ngModel)]="kelurahan_perusahaan"
                           id="kelurahan_perusahaan"
                           name="kelurahan_perusahaan"
                         >
@@ -604,8 +551,9 @@
                           class="form-control"
                           id="kode_posjob"
                           name="kode_posjob"
-                          value="{{ daWakodeposjob }}"
+                          [(ngModel)]="kode_pos_perusahaan"
                           #kode_posjob
+                          value="{{ daWakodeposjob }}"
                         />
                         <div class="input-group-append">
                           <button class="btn btn-outline-dark" (click)="carimenggunakankodeposjob(kode_posjob, 0)" type="button">
@@ -621,13 +569,12 @@
                     <div class="col">
                       <input
                         type="tel"
+                        formControlName="rtformperusahaan"
                         onkeypress="return onlyNumberKey(event)"
                         maxlength="3"
                         class="form-control"
                         placeholder="RT"
-                        value="{{ daWajob.rt }}"
                         id="rt_perusahaan"
-                        name="rt_perusahaan"
                       />
                     </div>
                     <h2>/</h2>
@@ -638,9 +585,8 @@
                         class="form-control"
                         placeholder="RW"
                         maxlength="3"
-                        value="{{ daWajob.rw }}"
+                        formControlName="rwformperusahaan"
                         id="rw_perusahaan"
-                        name="rw_perusahaan"
                       />
                     </div>
                   </div>
@@ -657,9 +603,8 @@
                         onkeypress="return onlyNumberKey(event)"
                         class="form-control"
                         placeholder="Jumlah Karyawan"
-                        value="{{ daWajob.jumlah_karyawan }}"
                         id="jumlah_karyawan"
-                        name="jumlah_karyawan"
+                        formControlName="jumlahkaryawan"
                       />
                     </div>
                   </div>
@@ -672,9 +617,8 @@
                         class="form-control"
                         placeholder="NPWP"
                         maxlength="16"
-                        value="{{ daWajob.npwp }}"
                         id="npwp_perusahaan"
-                        name="npwp_perusahaan"
+                        formControlName="npwpformperusahan"
                       />
                     </div>
                   </div>
@@ -683,24 +627,22 @@
                     <div class="col">
                       <input
                         type="tel"
+                        formControlName="berdirisejakbulan"
                         onkeypress="return onlyNumberKey(event)"
                         class="form-control"
                         placeholder=""
-                        value="{{ daWajob.tahun_berdiri }}"
                         id="bulan_berdiri_perusahaan"
-                        name="bulan_berdiri_perusahaan"
                       />
                     </div>
                     <span>Bulan</span>
                     <div class="col">
                       <input
                         type="tel"
+                        formControlName="berdirisejaktahun"
                         onkeypress="return onlyNumberKey(event)"
                         class="form-control"
                         placeholder=""
-                        value="{{ daWajob.bulan_berdiri }}"
                         id="tahun_berdiri_perusahaan"
-                        name="tahun_berdiri_perusahaan"
                       />
                     </div>
                     <span>Tahun</span>
@@ -710,29 +652,22 @@
                     <div class="col-sm-8">
                       <input
                         type="tel"
+                        formControlName="nosiup"
                         oninput="this.value = this.value.replace(/^0/g, '');"
                         onkeypress="return onlyNumberKey(event)"
                         maxlength="16"
                         class="form-control"
                         placeholder="Nomor Suip"
-                        value="{{ daWajob.no_siup }}"
                         id="no_siup"
-                        name="no_siup"
                       />
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Barang / Jasa<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
-                      <textarea
-                        class="form-control h-150px"
-                        rows="6"
-                        minlength="5"
-                        value="{{ daWajob.barang_jasa }}"
-                        id="barang_jasa"
-                        name="barang_jasa"
-                        >{{ daWajob.no_telepon }}</textarea
-                      >
+                      <textarea formControlName="barangajasa" class="form-control h-150px" rows="6" minlength="5" id="barang_jasa">{{
+                        daWajob.no_telepon
+                      }}</textarea>
                     </div>
                   </div>
                 </div>
@@ -749,11 +684,10 @@
                       <div class="col-sm-8">
                         <input
                           type="text"
+                          formControlName="namaperusahansebelum"
                           class="form-control"
                           placeholder="Nama Perusahaan"
-                          value="{{ daWajob.nama_perusahaan_sebelum }}"
                           id="nama_perusahaan_sebelum"
-                          name="nama_perusahaan_sebelum"
                         />
                       </div>
                     </div>
@@ -761,16 +695,21 @@
                       <label class="col-sm-4 col-form-label">Tipe Perusahaan<span class="text-danger">*</span></label>
                       <div class="col-sm-8">
                         <div class="form-group">
-                          <select class="form-control" id="tipe_perusahaan_sebelum" name="tipe_perusahaan_sebelum">
+                          <select
+                            class="form-control"
+                            id="tipe_perusahaan_sebelum"
+                            formControlName="tipeperushaansebelum"
+                            name="tipe_perusahaan_sebelum"
+                          >
                             <option>
                               {{ daWajob.tipe_perusahaan_sebelum }}
                             </option>
-                            <option value="1">Perseorangan</option>
-                            <option value="2">PT Terbuka(Perseroan Terbatas.tbk)</option>
-                            <option value="3">PT (Perseroan Terbatas)</option>
-                            <option value="4">Persero</option>
-                            <option value="5">CV</option>
-                            <option value="6">Firma</option>
+                            <option
+                              *ngFor="let gettipeperusahaandariapisebelum of gettipeperusahaandariapisebelum"
+                              value="{{ gettipeperusahaandariapisebelum.company_deskripsi }}"
+                            >
+                              {{ gettipeperusahaandariapisebelum.company_deskripsi }}
+                            </option>
                           </select>
                         </div>
                       </div>
@@ -781,18 +720,16 @@
                       <label class="col-sm-4 col-form-label">Tipe Pekerjaan<span class="text-danger">*</span></label>
                       <div class="col-sm-8">
                         <div class="form-group">
-                          <select class="form-control" id="tipe_pekerjaan_sebelum" name="tipe_pekerjaan_sebelum">
+                          <select class="form-control" id="tipe_pekerjaan_sebelum" formControlName="tipepekerjaansebelum">
                             <option>
                               {{ daWajob.tipe_pekerjaan_sebelum }}
                             </option>
-                            <option value="1">Pegawi Negeri Sipil</option>
-                            <option value="2">Pegawai Swasta</option>
-                            <option value="3">Wiraswasta</option>
-                            <option value="4">Profesional</option>
-                            <option value="5">Pensiunan</option>
-                            <option value="6">Tidak Bekerja</option>
-                            <option value="7">TNI / Polri</option>
-                            <option value="8">Pegawai BUMN</option>
+                            <option
+                              *ngFor="let getjenispekerjaandariapisebelum of getjenispekerjaandariapisebelum"
+                              value="{{ getjenispekerjaandariapisebelum.job_desc }}"
+                            >
+                              {{ getjenispekerjaandariapisebelum.job_desc }}
+                            </option>
                           </select>
                         </div>
                       </div>
@@ -800,7 +737,7 @@
                     <div class="form-group row">
                       <label class="col-sm-4 col-form-label">Alamat</label>
                       <div class="col-sm-8">
-                        <textarea class="form-control h-150px" rows="6" id="alamat_pekerjaan_sebelum" name="alamat_pekerjaan_sebelum">{{
+                        <textarea class="form-control h-150px" rows="6" id="alamat_pekerjaan_sebelum" formControlName="alamatsebelum">{{
                           daWajob.alamat_pekerjaan_sebelum
                         }}</textarea>
                       </div>
@@ -811,8 +748,17 @@
                       <label class="col-sm-4 col-form-label">Jenis Bidang<span class="text-danger">*</span></label>
                       <div class="col-sm-8">
                         <div class="form-group">
-                          <select class="form-control" id="jenis_bidang_sebelum" name="jenis_bidang_sebelum">
-                            <option>{{ daWajob.jabatan_sebelum }}</option>
+                          <select class="form-control" id="jenis_bidang_sebelum" formControlName="jenisbidangsebelum">
+                            <option value="{{ retrivejenisbidangsebelum }}">
+                              {{ retrivejenisbidangsebelum }}
+                            </option>
+
+                            <option
+                              *ngFor="let getjenisbidangdariapisebelum of getjenisbidangdariapisebelum"
+                              value="{{ getjenisbidangdariapisebelum.group_sektor }}|{{ getjenisbidangdariapisebelum.nama_group_sektor }}"
+                            >
+                              {{ getjenisbidangdariapisebelum.nama_group_sektor }}
+                            </option>
                           </select>
                         </div>
                       </div>
@@ -821,9 +767,15 @@
                       <label class="col-sm-4 col-form-label">Sektor Ekonomi<span class="text-danger">*</span></label>
                       <div class="col-sm-8">
                         <div class="form-group">
-                          <select class="form-control" id="jenis_sektor_sebelum" name="jenis_sektor_sebelum">
-                            <option>
-                              {{ daWajob.sektor_ekonomi_sebelum }}
+                          <select class="form-control" id="jenis_sektor_sebelum" formControlName="jenissektorsebelum">
+                            <option value="{{ retrivejenissektorsebelum }}">
+                              {{ retrivejenissektorsebelum }}
+                            </option>
+                            <option
+                              *ngFor="let getdatasektorekonomisebelum of getdatasektorekonomisebelum"
+                              value="{{ getdatasektorekonomisebelum.nama_sub_sektor }}"
+                            >
+                              {{ getdatasektorekonomisebelum.nama_sub_sektor }}
                             </option>
                           </select>
                         </div>
@@ -838,22 +790,20 @@
                           maxlength="2"
                           class="form-control"
                           placeholder=""
-                          value="{{ daWajob.bulan_berdiri_sebelum }}"
+                          formControlName="berdirisejakbulansebelum"
                           id="bulan_berdiri_perusahaan_sebelum"
-                          name="bulan_berdiri_perusahaan_sebelum"
                         />
                       </div>
                       <span>Bulan</span>
                       <div class="col">
                         <input
                           type="tel"
+                          formControlName="berdirisejaktahunsebelum"
                           onkeypress="return onlyNumberKey(event)"
                           maxlength="2"
                           class="form-control"
                           placeholder=""
-                          value="{{ daWajob.tahun_berdiri_sebelum }}"
                           id="tahun_berdiri_perusahaan_sebelum"
-                          name="tahun_berdiri_perusahaan_sebelum"
                         />
                       </div>
                       <span>Tahun</span>
@@ -875,11 +825,11 @@
                         <div class="col-sm-8">
                           <input
                             type="text"
+                            formControlName="namapasangan"
                             class="form-control"
                             placeholder="Nama Lengkap"
                             value="{{ daWa.nama_pasangan }}"
                             id="nama_pasangan"
-                            name="nama_pasangan"
                           />
                         </div>
                       </div>
@@ -887,7 +837,7 @@
                         <label class="col-sm-4 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
                         <div class="col-sm-8">
                           <div class="form-group">
-                            <select class="form-control" id="jenis_kelamin_pasangan" value="" name="jenis_kelamin_pasangan">
+                            <select class="form-control" id="jenis_kelamin_pasangan" formControlName="jeniskelaminpasangan">
                               <option>
                                 {{ daWa.jenis_kelamin_pasangan }}
                               </option>
@@ -901,11 +851,10 @@
                         <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
                         <div class="col-sm-8">
                           <input
+                            formControlName="tanggallahirpasangan"
                             class="form-control"
                             type="date"
                             id="tanggal_lahir_pasangan"
-                            value="{{ daWa.tanggal_lahir_pasangan }}"
-                            name="tanggal_lahir_pasangan"
                             (change)="submitBdayp()"
                           />
                           <input class="form-control" type="text" id="umurpasangan" name="umurpasangan" value="{{ daWa.usia_pasangan }}" />
@@ -918,9 +867,8 @@
                             type="text"
                             class="form-control"
                             placeholder="Tempat Lahir"
-                            value="{{ daWa.tempat_lahir_pasangan }}"
                             id="tempat_lahir_pasangan"
-                            name="tempat_lahir_pasangan"
+                            formControlName="tempatlahirpasangan"
                           />
                         </div>
                       </div>
@@ -928,14 +876,14 @@
                         <label class="col-sm-4 col-form-label">Agama<span class="text-danger">*</span></label>
                         <div class="col-sm-8">
                           <div class="form-group">
-                            <select class="form-control" id="agama_pasangan" name="agama_pasangan">
+                            <select class="form-control" formControlName="agamaformpasangan" id="agama_pasangan">
                               <option>{{ daWa.agama_pasangan }}</option>
-                              <option value="islam">Islam</option>
-                              <option value="kristen">Kristen</option>
-                              <option value="khatolik">Khatolik</option>
-                              <option value="budha">Budha</option>
-                              <option value="hindu">Hindu</option>
-                              <option value="kong hu chu">Kong Hu Chu</option>
+                              <option value="Islam">Islam</option>
+                              <option value="Kristen">Kristen</option>
+                              <option value="Khatolik">Khatolik</option>
+                              <option value="Budha">Budha</option>
+                              <option value="Hindu">Hindu</option>
+                              <option value="Kong Hu Chu">Kong Hu Chu</option>
                             </select>
                           </div>
                         </div>
@@ -944,7 +892,7 @@
                         <label class="col-sm-4 col-form-label">Pendidikan</label>
                         <div class="col-sm-8">
                           <div class="form-group">
-                            <select class="form-control" id="pendidikan_pasangan" name="pendidikan_pasangan">
+                            <select class="form-control" formControlName="pendidikanformpasangan" id="pendidikan_pasangan">
                               <option>
                                 {{ daWa.pendidikan_pasangan }}
                               </option>
@@ -961,7 +909,7 @@
                         <label class="col-sm-4 col-form-label">Kewarganegaraan</label>
                         <div class="col-sm-8">
                           <div class="form-group">
-                            <select class="form-control" id="kewarganegaraan_pasangan" name="kewarganegaraan_pasangan">
+                            <select class="form-control" formControlName="kewarganegaraanformpasangan" id="kewarganegaraan_pasangan">
                               <option>
                                 {{ daWa.kewarganegaraan_pasangan }}
                               </option>
@@ -978,9 +926,8 @@
                             type="text"
                             class="form-control"
                             placeholder=""
+                            formControlName="ibukandungpasangan"
                             id="nama_ibu_kandung_pasangan"
-                            value="{{ daWa.nama_ibu_kandung_pasangan }}"
-                            name="nama_ibu_kandung_pasangan"
                           />
                         </div>
                       </div>
@@ -994,13 +941,12 @@
                             placeholder="NPWP"
                             maxlength="16"
                             id="npwp_pasangan"
-                            value="{{ daWa.npwp_pasangan }}"
-                            name="npwp_pasangan"
+                            formControlName="npwpformpasangan"
                           />
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-sm-4 col-form-label" value="<?=$status_alamat?>"> Alamat Sama Dengan Pemohon</label>
+                        <label class="col-sm-4 col-form-label"> Alamat Sama Dengan Pemohon</label>
                         <div class="col-sm-8">
                           <input value="0" type="radio" name="sama" id="tidakSamaNon" /> Tidak Sama
                           <input value="1" type="radio" name="sama" id="harusSamaNon" />Sama
@@ -1011,7 +957,7 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
                         <div class="col-sm-8">
-                          <textarea class="form-control h-150px" rows="6" id="alamat_ktp_pasangan" name="alamat_ktp_pasangan">
+                          <textarea class="form-control h-150px" formControlName="alamatktppasangan" rows="6" id="alamat_ktp_pasangan">
                             {{ daWa.alamat_ktp }}</textarea
                           >
                         </div>
@@ -1111,12 +1057,13 @@
                           <div class="input-group mb-3">
                             <input
                               type="tel"
+                              formControlName="kodeposformpasangan"
                               onkeypress="return onlyNumberKey(event)"
                               maxlength="8"
                               class="form-control"
                               id="kode_pos_pasangan"
-                              value="{{ daWakodepospasangan }}"
-                              name="kode_pos_pasangan"
+                              [(ngModel)]="kode_pos_pasangant"
+                              value="{{ kode_pos_pasangan }}"
                               #kode_pos_pasangan
                             />
                             <div class="input-group-append">
@@ -1141,8 +1088,7 @@
                             class="form-control"
                             placeholder="RT"
                             id="rt_pasangan"
-                            value="{{ daWa.rt_pasangan }}"
-                            name="rt_pasangan"
+                            formControlName="rtformpasangan"
                           />
                         </div>
                         <h2>/</h2>
@@ -1154,8 +1100,7 @@
                             placeholder="RW"
                             maxlength="3"
                             id="rw_pasangan"
-                            value="{{ daWa.rw_pasangan }}"
-                            name="rw_pasangan"
+                            formControlName="rwformpasangan"
                           />
                         </div>
                       </div>
@@ -1169,8 +1114,7 @@
                             placeholder="Nomor KTP"
                             maxlength="16"
                             id="no_ktp_pasangan"
-                            value="{{ daWa.no_ktp_pasangan }}"
-                            name="no_ktp_pasangan"
+                            formControlName="noktppasangan"
                           />
                         </div>
                       </div>
@@ -1182,8 +1126,7 @@
                             class="form-control"
                             type="date"
                             id="tanggal_terbit_ktp_pasangan"
-                            value="{{ daWa.tanggal_terbit_ktp_pasangan }}"
-                            name="tanggal_terbit_ktp_pasangan"
+                            formControlName="tanggalterbitpasangan"
                           />
                         </div>
                       </div>
@@ -1192,9 +1135,9 @@
                         <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
                         <div class="col-sm-8">
                           <div class="form-row">
-                            <input type="text" id="retriveKtpTidakPasangan" value="<?=$status_ktp_pasangan?>" hidden />
-                            <input type="radio" id="chkYes2" name="chkPinNo2" value="fix" /> Ya
-                            <input type="radio" id="chkNo2" name="chkPinNo2" value="non" /> Tidak
+                            <input type="text" id="retriveKtpTidakPasangan" hidden />
+                            <input type="radio" id="chkYes2" formControlName="ktpseumurhiduppasangan" value="1" /> Ya
+                            <input type="radio" id="chkNo2" formControlName="ktpseumurhiduppasangan" value="0" /> Tidak
                           </div>
                         </div>
                       </div>
@@ -1202,13 +1145,7 @@
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Tanggal Expired KTP<span class="text-danger">*</span></label>
                           <div class="col-sm-8">
-                            <input
-                              class="form-control"
-                              type="date"
-                              id="tanggal_exp_ktp_pasangan"
-                              value="{{ daWa.tanggal_exp_ktp_pasangan }}"
-                              name="tanggal_exp_ktp_pasangan"
-                            />
+                            <input class="form-control" type="date" id="tanggal_exp_ktp_pasangan" formControlName="tanggalexpktppasangan" />
                           </div>
                         </div>
                       </div>
@@ -1222,8 +1159,7 @@
                             class="form-control"
                             placeholder="Nomor Handphone"
                             id="no_handphone_pasangan"
-                            value="{{ daWa.no_handphone_pasangan }}"
-                            name="no_handphone_pasangan"
+                            formControlName="nohandphonepasangan"
                           />
                         </div>
                       </div>
@@ -1236,7 +1172,18 @@
                 class="fa fa-file-archive-o btn btn-dark"
                 name="proses"
                 value="proses"
-                (click)="gotoprescreaning()"
+                (click)="
+                  gotoprescreaning(
+                    daWaide,
+                    daWacuref,
+                    daWakodeposjob,
+                    daWakodepos,
+                    kode_pos_perusahaan,
+                    daWakodepospasangan,
+                    kode_pos,
+                    kode_pos_pasangant
+                  )
+                "
                 type="submit"
                 style="float: right"
               >
@@ -1247,7 +1194,18 @@
                 id="simpandata2"
                 name="simpan"
                 value="simpan"
-                (click)="gotodaftaraplikasiide()"
+                (click)="
+                  gotodaftaraplikasiide(
+                    daWaide,
+                    daWacuref,
+                    daWakodeposjob,
+                    daWakodepos,
+                    kode_pos_perusahaan,
+                    daWakodepospasangan,
+                    kode_pos,
+                    kode_pos_pasangant
+                  )
+                "
                 type="submit"
                 style="float: right"
               >

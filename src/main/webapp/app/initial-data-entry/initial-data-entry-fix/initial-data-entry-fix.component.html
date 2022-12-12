@@ -110,7 +110,7 @@
               <option value="Khatolik">Khatolik</option>
               <option value="Budha">Budha</option>
               <option value="Hindu">Hindu</option>
-              <option value="Kong Hu Chu">Kong Hu Chu</option>
+              <option value="Kong hu chu">Kong Hu Chu</option>
             </select>
           </div>
         </div>
@@ -378,13 +378,13 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
         <div class="col-sm-8">
-          <input type="radio" id="ktp_seumur_hidup_ya" formControlName="ktpseumurhidup" name="ktp_seumur_hidup" value="1" checked />
+          <input type="radio" id="ktp_seumur_hidup_ya" formControlName="ktpseumurhidup" [(ngModel)]="ktp_seumur_hidup" value="1" checked />
           Ya
-          <input type="radio" id="ktp_seumur_hidup_tidak" formControlName="ktpseumurhidup" name="ktp_seumur_hidup" value="0" />
+          <input type="radio" id="ktp_seumur_hidup_tidak" formControlName="ktpseumurhidup" [(ngModel)]="ktp_seumur_hidup" value="0" />
           Tidak
         </div>
       </div>
-      <div *ngIf="this.dataentryfixfom.get('ktpseumurhidup')?.value === '0'">
+      <div *ngIf="ktp_seumur_hidup == '0'">
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Tanggal Exipred KTP<span class="text-danger">*</span></label>
@@ -799,6 +799,29 @@
           <div class="form-group row">
             <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
             <div class="col-sm-8">
+              <input
+                type="radio"
+                id="ktp_seumur_hidup_pasangan_ya"
+                formControlName="ktpseumurhiduppasangan"
+                [(ngModel)]="ktp_seumur_hidup_pasangan"
+                value="1"
+                checked
+              />
+              Ya
+              <input
+                type="radio"
+                id="ktp_seumur_hidup_pasangan_tidak"
+                formControlName="ktpseumurhiduppasangan"
+                [(ngModel)]="ktp_seumur_hidup_pasangan"
+                value="0"
+              />
+              Tidak
+            </div>
+          </div>
+
+          <!-- <div class="form-group row">
+            <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
               <label for="chkYes2">
                 <input type="radio" formControlName="ktpseumurhiduppasangan" id="chkYes2" name="chkPinNo2" value="1" />
                 Ya
@@ -807,9 +830,26 @@
                 <input type="radio" formControlName="ktpseumurhiduppasangan" id="chkNo2" name="chkPinNo2" value="0" /> Tidak
               </label>
             </div>
-          </div>
+          </div> -->
           <br />
-          <div class="form-group row" *ngIf="this.dataentryfixfom.get('ktpseumurhiduppasangan')?.value === '0'">
+
+          <div *ngIf="ktp_seumur_hidup_pasangan == '0'">
+            <br />
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Tanggal Exipred KTP<span class="text-danger">*</span></label>
+              <div class="col-sm-8">
+                <input
+                  class="form-control"
+                  type="date"
+                  formControlName="tanggalexpktp_pasangan"
+                  [(ngModel)]="tanggal_exp_ktp_pasangan"
+                  id="tanggal_exp_ktp"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="form-group row">
             <label class="col-sm-4 col-form-label">Tanggal Expired KTP</label>
             <div class="col-sm-8">
               <input
@@ -821,7 +861,7 @@
                 name="tanggal_exp_ktp_pasangan"
               />
             </div>
-          </div>
+          </div> -->
           <br />
           <div class="form-group row">
             <label class="col-sm-4 col-form-label">No Handphone<span class="text-danger">*</span></label>
