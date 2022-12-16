@@ -636,7 +636,7 @@
 
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
-      <div class="col">
+      <div class="col-sm-3">
         <input
           formControlName="rt"
           maxlength="3"
@@ -648,8 +648,8 @@
           name="rt"
         />
       </div>
-      <div class="col">RT</div>
-      <div class="col">
+      <div class="col-sm-1"><h6>/</h6></div>
+      <div class="col-sm-3">
         <input
           formControlName="rw"
           type="tel"
@@ -661,7 +661,6 @@
           name="rw_perusahaan"
         />
       </div>
-      <div class="col">RW</div>
     </div>
   </div>
   <!--penutup colom 2-->
@@ -765,7 +764,11 @@
   <!--penutup colom 3-->
 </div>
 <br />
-<div class="row" [formGroup]="jobForm" *ngIf="kategori == 2">
+<div
+  class="row"
+  [formGroup]="jobForm"
+  *ngIf="kategori == 2 && +this.jobForm.get('lama_bekerja_bulan')?.value + +this.jobForm.get('lama_bekerja_tahun')?.value * 12 < 36"
+>
   <h5>Pekerjaan Sebelumnya</h5>
   <div class="col">
     <div class="form-group row">
@@ -1050,8 +1053,8 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label"> Alamat Sama Dengan Pemohon</label>
         <div class="col-sm-8">
-          <input value="0" type="radio" formControlName="status_alamat" id="tidakSama" /> Tidak Sama
-          <input value="1" type="radio" formControlName="status_alamat" id="harusSama" /> Sama
+          <input value="0" type="radio" formControlName="status_alamat" id="tidakSama" (change)="onItemChange($event.target)" /> Tidak Sama
+          <input value="1" type="radio" formControlName="status_alamat" id="harusSama" (change)="onItemChange($event.target)" /> Sama
         </div>
       </div>
       <br />
