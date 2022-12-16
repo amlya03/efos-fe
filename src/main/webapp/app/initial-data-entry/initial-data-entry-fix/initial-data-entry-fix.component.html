@@ -22,7 +22,13 @@
       <label class="col-sm-4 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" formControlName="jenis_kelamin" id="jenis_kelamin" name="jenis_kelamin">
+          <select
+            class="form-control"
+            formControlName="jenis_kelamin"
+            id="jenis_kelamin"
+            name="jenis_kelamin"
+            (click)="changeJenis(this.ideForm.get('jenis_kelamin')?.value)"
+          >
             <option value="">Pilih Jenis Kelamin</option>
             <option value="Laki-laki">Laki - laki</option>
             <option value="Perempuan">Perempuan</option>
@@ -377,7 +383,7 @@
         <div class="form-group">
           <select class="form-control" formControlName="tipe_perusahaan" id="tipe_perusahaan" name="tipe_perusahaan">
             <option selected value="">Pilih Tipe Perusahaan</option>
-            <option *ngFor="let modelTipePerusahaan of modelTipePerusahaan" value="{{ modelTipePerusahaan.company_deskripsi }}">
+            <option *ngFor="let modelTipePerusahaan of modelTipePerusahaan" value="{{ modelTipePerusahaan.company_code }}">
               {{ modelTipePerusahaan.company_deskripsi }}
             </option>
           </select>
@@ -391,9 +397,32 @@
         <div class="form-group">
           <select class="form-control" formControlName="tipe_pekerjaan" id="ngetestNih" name="tipe_pekerjaan">
             <option value="">Tipe Pekerjaan</option>
-            <option *ngFor="let getjenispekerjaandariapi of getjenispekerjaandariapi" value="{{ getjenispekerjaandariapi.job_desc }}">
+            <option *ngFor="let getjenispekerjaandariapi of getjenispekerjaandariapi" value="{{ getjenispekerjaandariapi.job_type_id }}">
               {{ getjenispekerjaandariapi.job_desc }}
             </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label" [hidden]="this.jobForm.get('tipe_pekerjaan')?.value === '4'">Posisi</label>
+      <label class="col-sm-4 col-form-label" *ngIf="this.jobForm.get('tipe_pekerjaan')?.value === '4'">Jenis Pekerjaan</label>
+      <div class="col-sm-8">
+        <div class="form-group" [hidden]="this.jobForm.get('tipe_pekerjaan')?.value === '4'">
+          <select class="form-control" id="posisi" formControlName="posisi">
+            <option value="">Pilih Posisi</option>
+            <option *ngFor="let getjabatandariapi of refJabatanModel" value="{{ getjabatandariapi.jabatan_deskripsi }}">
+              {{ getjabatandariapi.jabatan_deskripsi }}
+            </option>
+            <!-- note -->
+          </select>
+        </div>
+
+        <div class="form-group" *ngIf="this.jobForm.get('tipe_pekerjaan')?.value === '4'">
+          <select class="form-control" id="jenis_pekerjaan" formControlName="posisi">
+            <option value="">Pilih Jabatan</option>
+            <option *ngFor="let listJabatan of listJabatan" value="{{ listJabatan.deskripsi }}">{{ listJabatan.deskripsi }}</option>
           </select>
         </div>
       </div>
@@ -454,7 +483,7 @@
             id="jenis_bidang"
             name="jenis_bidang"
           >
-            <option value="">Pilih Jenis Bidang</option>
+            <option value="{{ this.retriveBidang }}">{{ this.retriveBidang }}</option>
             <option
               *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
               value="{{ getjenisbidangdariapi.group_sektor }}|{{ getjenisbidangdariapi.nama_group_sektor }}"
@@ -471,7 +500,7 @@
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" formControlName="sektor_ekonomi" id="jenis_sektor" name="sektor_ekonomi">
-            <option value="">Pilih Sektor Ekonomi</option>
+            <option value="{{ this.retriveSektor }}">{{ this.retriveSektor }}</option>
             <option *ngFor="let getdatasektorekonomi of getdatasektorekonomi" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
               {{ getdatasektorekonomi.nama_sub_sektor }}
             </option>
@@ -764,7 +793,7 @@
             name="tipe_perusahaan_sebelum"
           >
             <option selected value="">Pilih Tipe Perusahaan</option>
-            <option *ngFor="let modelTipePerusahaan of modelTipePerusahaan" value="{{ modelTipePerusahaan.company_deskripsi }}">
+            <option *ngFor="let modelTipePerusahaan of modelTipePerusahaan" value="{{ modelTipePerusahaan.company_code }}">
               {{ modelTipePerusahaan.company_deskripsi }}
             </option>
           </select>
@@ -779,7 +808,10 @@
         <div class="form-group">
           <select class="form-control" formControlName="tipe_pekerjaan_sebelum" id="tipe_pekerjaan_sebelum" name="tipe_pekerjaan_sebelum">
             <option selected value="">Pilih Tipe Pekerjaan</option>
-            <option *ngFor="let getjenispekerjaandariapi of getjenispekerjaandariapi" value="{{ getjenispekerjaandariapi.job_desc }}">
+            <option
+              *ngFor="let getjenispekerjaandariapi of getjenispekerjaandariapi"
+              value="{{ getjenispekerjaandariapi.category_job_id }}"
+            >
               {{ getjenispekerjaandariapi.job_desc }}
             </option>
           </select>
@@ -812,7 +844,7 @@
             (change)="jenisbidangselectsebelum(this.jobForm.get('jenis_bidang_sebelum')?.value)"
             name="jenis_bidang_sebelum"
           >
-            <option value="">Pilih Jenis Bidang</option>
+            <option value="{{ this.retriveBidangSebelum }}">{{ this.retriveBidangSebelum }}</option>
             <option
               *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
               value="{{ getjenisbidangdariapi.group_sektor }}|{{ getjenisbidangdariapi.nama_group_sektor }}"
@@ -829,8 +861,8 @@
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" formControlName="sektor_ekonomi_sebelum" id="jenis_sektor_sebelum" name="jenis_sektor_sebelum">
-            <option value="">Pilih Sektor Ekonomi</option>
-            <option *ngFor="let getdatasektorekonomi of getdatasektorekonomi" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
+            <option value="{{ this.retriveSektorSebelum }}">{{ this.retriveSektorSebelum }}</option>
+            <option *ngFor="let getdatasektorekonomi of getdatasektorekonomiSebelum" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
               {{ getdatasektorekonomi.nama_sub_sektor }}
             </option>
           </select>

@@ -16,6 +16,8 @@ import { getListTipePekerjaan } from 'app/data-entry/services/config/getListTipe
 import { refBidang } from '../services/config/refBidang.model';
 import { refSektor } from '../services/config/refSektor.model';
 import { modelJobIde } from '../services/config/modelJobIde.model';
+import { refJenisPekerjaan } from '../../data-entry/services/config/refJenisPekerjaan.model';
+import { refJabatan } from '../../verification/service/config/refJabatan.model';
 @Component({
   selector: 'jhi-initial-data-entry-fix',
   templateUrl: './initial-data-entry-fix.component.html',
@@ -32,8 +34,11 @@ export class InitialDataEntryFixComponent implements OnInit {
   getjenispekerjaandariapi: getListTipePekerjaan[] = [];
   getjenisbidangdariapi: refBidang[] = [];
   getdatasektorekonomi: refSektor[] = [];
+  getdatasektorekonomiSebelum: refSektor[] = [];
   modelTipePerusahaan: refListTipePerusahaan[] = [];
   modelJob: modelJobIde = new modelJobIde();
+  listJabatan: refJenisPekerjaan[] = [];
+  refJabatanModel: refJabatan[] = [];
   /////
   untukKodeProvinsi: any;
   untukKodeKobkota: any;
@@ -77,71 +82,31 @@ export class InitialDataEntryFixComponent implements OnInit {
   sendKotaJob: any;
   sendKecJob: any;
   sendKelJob: any;
-  sendProJobSebelum: any;
-  sendKotaJobSebelum: any;
-  sendKecJobSebelum: any;
-  sendKelJobSebelum: any;
   sendJenisBidang: any;
   sendJenisBidangSebelum: any;
+  retriveBidang: any;
+  retriveBidangSebelum: any;
+  retriveSektor: any;
+  retriveSektorSebelum: any;
   // //////////////////////////////////////////////////////////////
   // //////////////////////////////////////////////////////////////
   daWaprof: any;
   postId: any;
   daWakota: any;
-  daWakecamatan: any;
-  daWakelurahan: any;
-  daWakodepos: any;
   ideForm!: FormGroup;
   jobForm!: FormGroup;
   // //////////////////////////////////////////
   refStatusPerkawinan?: refStatusPerkawinan[];
-  nama: string | undefined;
-  nama_pasangan: string | undefined;
-  jenis_kelamin: string | undefined;
-  jenis_kelamin_pasangan: string | undefined;
-  tanggal_lahir: string | undefined;
-  tanggal_lahir_pasangan: string | undefined;
-  tempat_lahir: string | undefined;
-  tempat_lahir_pasangan: string | undefined;
-  status_perkawinan: string | undefined;
-  agama: string | undefined;
-  agama_pasangan: string | undefined;
-  pendidikan: string | undefined;
-  pendidikan_pasangan: string | undefined;
-  kewarganegaraan: string | undefined;
-  kewarganegaraan_pasangan: string | undefined;
-  nama_ibu_kandung: string | undefined;
-  nama_ibu_kandung_pasangan: string | undefined;
-  npwp: string | undefined;
-  npwp_pasangan: string | undefined;
-  alamat_ktp: string | undefined;
-  alamat_ktp_pasangan: string | undefined;
-  provinsi_cabang: any;
-  kabkota_cabang: any;
+  paramtanggal_lahir: string | undefined;
   kecamatan: any;
   kecamatan_pasangan: any;
   kelurahan: any;
   kelurahan_pasangan: any;
-  kode_pos: string | undefined;
-  kode_pos_pasangan: any;
-  rt: string | undefined;
-  rw: string | undefined;
-  rt_pasangan: string | undefined;
-  rw_pasangan: string | undefined;
-  no_ktp: string | undefined;
-  tanggal_terbit_ktp: string | undefined;
-  tanggal_exp_ktp: string | undefined;
-  no_handphone: string | undefined;
-  no_ktp_pasangan: string | undefined;
-  tanggal_terbit_ktp_pasangan: string | undefined;
-  tanggal_exp_ktp_pasangan: string | undefined;
-  no_handphone_pasangan: string | undefined;
   contohdata: any;
   daWakotaD: any;
   kecamatanD: any;
   kelurahanD: any;
-  umur: any;
-
+  saveCabang: any;
   // ///////////////////////////////////////////
   constructor(
     protected dataCalonNasabah: ServiceVerificationService,
@@ -162,6 +127,7 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.saveCabang = this.sessionServices.retrieve('sessionKdCabang');
     this.load();
     this.ideForm = this.formBuilder.group({
       nama: '',
@@ -239,7 +205,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       lama_bekerja_tahun: '',
       no_siup: '',
       barang_jasa: '',
-
+      posisi: '',
       /////////////////////////////////////
       nama_perusahaan_sebelum: '',
       tipe_perusahaan_sebelum: '',
@@ -253,6 +219,12 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   load(): void {
+    this.dataEntryService.getFetchListJenisPekerjaan().subscribe(data => {
+      this.listJabatan = data.result;
+    });
+    this.dataEntryService.getFetchListJabatan().subscribe(data => {
+      this.refJabatanModel = data.result;
+    });
     setTimeout(() => {
       if (this.kategori == 1) {
         this.kirimKatePeker = 'Fix Income';
@@ -327,9 +299,24 @@ export class InitialDataEntryFixComponent implements OnInit {
         setTimeout(() => {
           this.carimenggunakankodepost(this.modelIde.kode_pos);
           this.carimenggunakankodepostp(this.modelIde.kode_pos_pasangan);
+          this.cariPekerPost(this.modelJob.kode_pos);
           this.submitBday(this.modelIde.tanggal_lahir);
           this.submitBdayp(this.modelIde.tanggal_lahir_pasangan);
         }, 300);
+
+        setTimeout(() => {
+          if (this.modelJob == null) {
+            this.retriveBidang = '';
+            this.retriveBidangSebelum = '';
+            this.retriveSektor = '';
+            this.retriveSektorSebelum = '';
+          } else {
+            this.retriveBidang = this.modelJob.jenis_bidang;
+            this.retriveBidangSebelum = this.modelJob.jenis_bidang_sebelum;
+            this.retriveSektor = this.modelJob.sektor_ekonomi;
+            this.retriveSektorSebelum = this.modelJob.sektor_ekonomi_sebelum;
+          }
+        }, 400);
 
         this.ideFixServices.getJobByCurefIDE(this.modelIde.curef).subscribe(data => {
           this.modelJob = data.result;
@@ -356,7 +343,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             lama_bekerja_tahun: this.modelJob.lama_bekerja_tahun,
             no_siup: this.modelJob.no_siup,
             barang_jasa: this.modelJob.barang_jasa,
-
+            posisi: this.modelJob.posisi,
             /////////////////////////////////////
             nama_perusahaan_sebelum: this.modelJob.nama_perusahaan_sebelum,
             tipe_perusahaan_sebelum: this.modelJob.nama_perusahaan_sebelum,
@@ -371,11 +358,6 @@ export class InitialDataEntryFixComponent implements OnInit {
         });
       },
     });
-    // setTimeout(() => {
-    //   alert(this.curef);
-    //   alert(this.app_no_ide);
-    // }, 300);
-
     setTimeout(() => {
       if (this.cekResultIde == 0) {
         this.ideFixServices.getIdeById().subscribe(data => {
@@ -389,6 +371,11 @@ export class InitialDataEntryFixComponent implements OnInit {
         this.curef = this.modelIde.curef;
       }
     }, 100);
+
+    // setTimeout(() => {
+    //   alert(this.modelJob.id);
+    // }, 1000);
+
     // alert(this.cekResultIde)
     // ref Status Menikah
     this.dataCalonNasabah.getStatusPerkawinan().subscribe(data => {
@@ -439,7 +426,6 @@ export class InitialDataEntryFixComponent implements OnInit {
       this.kirimKecPas = '';
       this.kirimKelPas = '';
     }
-
     if (this.cekResultIde == 0) {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
@@ -490,7 +476,7 @@ export class InitialDataEntryFixComponent implements OnInit {
           kode_pos_domisili: '',
           kode_pos_pasangan: this.ideForm.get('kode_pos_pasangan')?.value,
           lama_menetap: '',
-          cabang: this.sessionServices.retrieve('sessionKdCabang'),
+          cabang: this.saveCabang,
           created_by: this.sessionServices.retrieve('sessionUserName'),
           created_date: '',
           email: '',
@@ -521,13 +507,13 @@ export class InitialDataEntryFixComponent implements OnInit {
           next: data => {
             this.contohdata = data.result.id;
             this.app_no_ide = data.result.app_no_ide;
-            this.tanggal_lahir = data.result.tanggal_lahir;
+            this.paramtanggal_lahir = data.result.tanggal_lahir;
 
             if (this.kategori == 2) {
-              const proJobSebelum = this.jobForm.get('provinsi')?.value.split('|');
-              const kotaJobSebelum = this.jobForm.get('kabkota')?.value.split('|');
-              const kecJobSebelum = this.jobForm.get('kecamatan')?.value.split('|');
-              const kelJobSebelum = this.jobForm.get('kelurahan')?.value.split('|');
+              this.sendProJob = this.jobForm.get('provinsi')?.value.split('|');
+              this.sendKotaJob = this.jobForm.get('kabkota')?.value.split('|');
+              this.sendKecJob = this.jobForm.get('kecamatan')?.value.split('|');
+              this.sendKelJob = this.jobForm.get('kelurahan')?.value.split('|');
               const bidangJobNow = this.jobForm.get('jenis_bidang')?.value.split('|');
               const bidangJobSebelum = this.jobForm.get('jenis_bidang_sebelum')?.value.split('|');
               if (this.jobForm.get('jenis_bidang')?.value.indexOf('|') !== -1) {
@@ -550,23 +536,23 @@ export class InitialDataEntryFixComponent implements OnInit {
                   bulan_berdiri_sebelum: '',
                   created_by: this.sessionServices.retrieve('sessionUserName'),
                   created_date: '',
-                  curef: '',
+                  curef: this.curef,
                   id: 0,
-                  jabatan: '',
-                  jabatan_sebelum: '',
+                  jabatan: this.jobForm.get('posisi')?.value,
+                  jabatan_sebelum: this.jobForm.get('posisi_sebelum')?.value,
                   jenis_bidang: this.sendJenisBidang,
                   jenis_bidang_sebelum: this.sendJenisBidangSebelum,
-                  jenis_pekerjaan: '',
-                  jenis_pekerjaan_sebelum: '',
+                  jenis_pekerjaan: this.jobForm.get('tipe_pekerjaan')?.value,
+                  jenis_pekerjaan_sebelum: this.jobForm.get('tipe_pekerjaan_sebelum')?.value,
                   jumlah_karyawan: this.jobForm.get('jumlah_karyawan')?.value,
                   jumlah_karyawan_sebelum: '',
-                  kabkota: kotaJobSebelum[1],
+                  kabkota: this.sendKotaJob[1],
                   kabkota_sebelum: '',
-                  kategori_pekerjaan: '',
-                  kategori_pekerjaan_sebelum: '',
-                  kecamatan: kecJobSebelum[1],
+                  kategori_pekerjaan: 'Non Fix Income',
+                  kategori_pekerjaan_sebelum: 'Non Fix Income',
+                  kecamatan: this.sendKecJob[1],
                   kecamatan_sebelum: '',
-                  kelurahan: kelJobSebelum[1],
+                  kelurahan: this.sendKelJob[1],
                   kelurahan_sebelum: '',
                   kepemilikan_perusahaan: this.jobForm.get('kepemilikan_perusahaan')?.value,
                   kode_pos: this.jobForm.get('kode_pos')?.value,
@@ -585,9 +571,9 @@ export class InitialDataEntryFixComponent implements OnInit {
                   pemilik_usaha: this.jobForm.get('pemilik_usaha')?.value,
                   pendapatan: '',
                   pendapatan_lain: '',
-                  posisi: '',
-                  posisi_sebelum: '',
-                  provinsi: proJobSebelum[1],
+                  posisi: this.jobForm.get('posisi')?.value,
+                  posisi_sebelum: this.jobForm.get('posisi_sebelum')?.value,
+                  provinsi: this.sendProJob[1],
                   provinsi_sebelum: '',
                   rt: this.jobForm.get('rt')?.value,
                   rt_sebelum: '',
@@ -614,17 +600,23 @@ export class InitialDataEntryFixComponent implements OnInit {
                     this.router.navigate(['/hasilprescreening'], {
                       queryParams: {
                         datakirimanid: this.contohdata,
-                        datakirimantgllahir: this.tanggal_lahir,
+                        datakirimantgllahir: this.paramtanggal_lahir,
                         datakirimanappide: this.app_no_ide,
                       },
                     });
+                  },
+                  error: error => {
+                    if (error.error.code == 400) {
+                      alert('Gagal Menyimpan Data');
+                      alert(error.error.message);
+                    }
                   },
                 });
             } else {
               this.router.navigate(['/hasilprescreening'], {
                 queryParams: {
                   datakirimanid: this.contohdata,
-                  datakirimantgllahir: this.tanggal_lahir,
+                  datakirimantgllahir: this.paramtanggal_lahir,
                   datakirimanappide: this.app_no_ide,
                 },
               });
@@ -641,7 +633,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             alamat_ktp: this.ideForm.get('alamat_ktp')?.value,
             alamat_ktp_pasangan: this.ideForm.get('alamat_ktp_pasangan')?.value,
             app_no_ide: this.app_no_ide,
-            cabang: this.sessionServices.retrieve('sessionKdCabang'),
+            cabang: this.saveCabang,
             // created_by: '',
             // created_date: '',
             curef: this.curef,
@@ -706,12 +698,14 @@ export class InitialDataEntryFixComponent implements OnInit {
             updated_date: '',
             usia: this.ideForm.get('usia')?.value,
             usia_pasangan: this.ideForm.get('usia_pasangan')?.value,
+            tempat_lahir: this.ideForm.get('tempat_lahir')?.value,
+            tempat_lahir_pasangan: this.ideForm.get('tempat_lahir_pasangan')?.value,
           })
           .subscribe({
             next: data => {
               this.contohdata = data.result.id;
               this.app_no_ide = data.result.app_no_ide;
-              this.tanggal_lahir = data.result.tanggal_lahir;
+              this.paramtanggal_lahir = data.result.tanggal_lahir;
 
               if (this.kategori == 2) {
                 const proJobSebelum = this.jobForm.get('provinsi')?.value.split('|');
@@ -740,10 +734,10 @@ export class InitialDataEntryFixComponent implements OnInit {
                     bulan_berdiri_sebelum: '',
                     created_by: '',
                     created_date: '',
-                    curef: '',
-                    id: 0,
-                    jabatan: '',
-                    jabatan_sebelum: '',
+                    curef: this.curef,
+                    id: this.modelJob.id,
+                    jabatan: this.jobForm.get('posisi')?.value,
+                    jabatan_sebelum: this.jobForm.get('posisi_sebelum')?.value,
                     jenis_bidang: this.sendJenisBidang,
                     jenis_bidang_sebelum: this.sendJenisBidangSebelum,
                     jenis_pekerjaan: '',
@@ -775,8 +769,8 @@ export class InitialDataEntryFixComponent implements OnInit {
                     pemilik_usaha: this.jobForm.get('pemilik_usaha')?.value,
                     pendapatan: '',
                     pendapatan_lain: '',
-                    posisi: '',
-                    posisi_sebelum: '',
+                    posisi: this.jobForm.get('posisi')?.value,
+                    posisi_sebelum: this.jobForm.get('posisi_sebelum')?.value,
                     provinsi: proJobSebelum[1],
                     provinsi_sebelum: '',
                     rt: this.jobForm.get('rt')?.value,
@@ -804,17 +798,23 @@ export class InitialDataEntryFixComponent implements OnInit {
                       this.router.navigate(['/hasilprescreening'], {
                         queryParams: {
                           datakirimanid: this.contohdata,
-                          datakirimantgllahir: this.tanggal_lahir,
+                          datakirimantgllahir: this.paramtanggal_lahir,
                           datakirimanappide: this.app_no_ide,
                         },
                       });
+                    },
+                    error: error => {
+                      if (error.error.code == 400) {
+                        alert('Gagal Menyimpan Data');
+                        alert(error.error.message);
+                      }
                     },
                   });
               } else {
                 this.router.navigate(['/hasilprescreening'], {
                   queryParams: {
                     datakirimanid: this.contohdata,
-                    datakirimantgllahir: this.tanggal_lahir,
+                    datakirimantgllahir: this.paramtanggal_lahir,
                     datakirimanappide: this.app_no_ide,
                   },
                 });
@@ -830,7 +830,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             alamat_ktp: this.ideForm.get('alamat_ktp')?.value,
             alamat_ktp_pasangan: '',
             app_no_ide: this.app_no_ide,
-            cabang: this.sessionServices.retrieve('sessionKdCabang'),
+            cabang: this.saveCabang,
             // created_by: '',
             // created_date: '',
             curef: this.curef,
@@ -895,12 +895,14 @@ export class InitialDataEntryFixComponent implements OnInit {
             updated_date: '',
             usia: this.ideForm.get('usia')?.value,
             usia_pasangan: '',
+            tempat_lahir: this.ideForm.get('tempat_lahir')?.value,
+            tempat_lahir_pasangan: '',
           })
           .subscribe({
             next: data => {
               this.contohdata = data.result.id;
               this.app_no_ide = data.result.app_no_ide;
-              this.tanggal_lahir = data.result.tanggal_lahir;
+              this.paramtanggal_lahir = data.result.tanggal_lahir;
 
               if (this.kategori == 2) {
                 const proJobSebelum = this.jobForm.get('provinsi')?.value.split('|');
@@ -929,10 +931,10 @@ export class InitialDataEntryFixComponent implements OnInit {
                     bulan_berdiri_sebelum: '',
                     created_by: '',
                     created_date: '',
-                    curef: '',
-                    id: 0,
-                    jabatan: '',
-                    jabatan_sebelum: '',
+                    curef: this.curef,
+                    id: this.modelJob.id,
+                    jabatan: this.jobForm.get('posisi')?.value,
+                    jabatan_sebelum: this.jobForm.get('posisi_sebelum')?.value,
                     jenis_bidang: this.sendJenisBidang,
                     jenis_bidang_sebelum: this.sendJenisBidangSebelum,
                     jenis_pekerjaan: '',
@@ -964,8 +966,8 @@ export class InitialDataEntryFixComponent implements OnInit {
                     pemilik_usaha: this.jobForm.get('pemilik_usaha')?.value,
                     pendapatan: '',
                     pendapatan_lain: '',
-                    posisi: '',
-                    posisi_sebelum: '',
+                    posisi: this.jobForm.get('posisi')?.value,
+                    posisi_sebelum: this.jobForm.get('posisi_sebelum')?.value,
                     provinsi: proJobSebelum[1],
                     provinsi_sebelum: '',
                     rt: this.jobForm.get('rt')?.value,
@@ -993,17 +995,23 @@ export class InitialDataEntryFixComponent implements OnInit {
                       this.router.navigate(['/hasilprescreening'], {
                         queryParams: {
                           datakirimanid: this.contohdata,
-                          datakirimantgllahir: this.tanggal_lahir,
+                          datakirimantgllahir: this.paramtanggal_lahir,
                           datakirimanappide: this.app_no_ide,
                         },
                       });
+                    },
+                    error: error => {
+                      if (error.error.code == 400) {
+                        alert('Gagal Menyimpan Data');
+                        alert(error.error.message);
+                      }
                     },
                   });
               } else {
                 this.router.navigate(['/hasilprescreening'], {
                   queryParams: {
                     datakirimanid: this.contohdata,
-                    datakirimantgllahir: this.tanggal_lahir,
+                    datakirimantgllahir: this.paramtanggal_lahir,
                     datakirimanappide: this.app_no_ide,
                   },
                 });
@@ -1082,7 +1090,7 @@ export class InitialDataEntryFixComponent implements OnInit {
           kode_pos_domisili: '',
           kode_pos_pasangan: this.ideForm.get('kode_pos_pasangan')?.value,
           lama_menetap: '',
-          cabang: this.sessionServices.retrieve('sessionKdCabang'),
+          cabang: this.saveCabang,
           created_by: this.sessionServices.retrieve('sessionUserName'),
           created_date: '',
           email: '',
@@ -1112,10 +1120,10 @@ export class InitialDataEntryFixComponent implements OnInit {
         .subscribe({
           next: data => {
             if (this.kategori == 2) {
-              const proJobSebelum = this.jobForm.get('provinsi')?.value.split('|');
-              const kotaJobSebelum = this.jobForm.get('kabkota')?.value.split('|');
-              const kecJobSebelum = this.jobForm.get('kecamatan')?.value.split('|');
-              const kelJobSebelum = this.jobForm.get('kelurahan')?.value.split('|');
+              this.sendProJob = this.jobForm.get('provinsi')?.value.split('|');
+              this.sendKotaJob = this.jobForm.get('kabkota')?.value.split('|');
+              this.sendKecJob = this.jobForm.get('kecamatan')?.value.split('|');
+              this.sendKelJob = this.jobForm.get('kelurahan')?.value.split('|');
               const bidangJobNow = this.jobForm.get('jenis_bidang')?.value.split('|');
               const bidangJobSebelum = this.jobForm.get('jenis_bidang_sebelum')?.value.split('|');
               if (this.jobForm.get('jenis_bidang')?.value.indexOf('|') !== -1) {
@@ -1138,23 +1146,23 @@ export class InitialDataEntryFixComponent implements OnInit {
                   bulan_berdiri_sebelum: '',
                   created_by: this.sessionServices.retrieve('sessionUserName'),
                   created_date: '',
-                  curef: '',
+                  curef: this.curef,
                   id: 0,
-                  jabatan: '',
-                  jabatan_sebelum: '',
+                  jabatan: this.jobForm.get('posisi')?.value,
+                  jabatan_sebelum: this.jobForm.get('posisi_sebelum')?.value,
                   jenis_bidang: this.sendJenisBidang,
                   jenis_bidang_sebelum: this.sendJenisBidangSebelum,
-                  jenis_pekerjaan: '',
-                  jenis_pekerjaan_sebelum: '',
+                  jenis_pekerjaan: this.jobForm.get('tipe_pekerjaan')?.value,
+                  jenis_pekerjaan_sebelum: this.jobForm.get('tipe_pekerjaan_sebelum')?.value,
                   jumlah_karyawan: this.jobForm.get('jumlah_karyawan')?.value,
                   jumlah_karyawan_sebelum: '',
-                  kabkota: kotaJobSebelum[1],
+                  kabkota: this.sendKotaJob[1],
                   kabkota_sebelum: '',
-                  kategori_pekerjaan: '',
+                  kategori_pekerjaan: 'Non Fix Income',
                   kategori_pekerjaan_sebelum: '',
-                  kecamatan: kecJobSebelum[1],
+                  kecamatan: this.sendKecJob[1],
                   kecamatan_sebelum: '',
-                  kelurahan: kelJobSebelum[1],
+                  kelurahan: this.sendKelJob[1],
                   kelurahan_sebelum: '',
                   kepemilikan_perusahaan: this.jobForm.get('kepemilikan_perusahaan')?.value,
                   kode_pos: this.jobForm.get('kode_pos')?.value,
@@ -1173,9 +1181,9 @@ export class InitialDataEntryFixComponent implements OnInit {
                   pemilik_usaha: this.jobForm.get('pemilik_usaha')?.value,
                   pendapatan: '',
                   pendapatan_lain: '',
-                  posisi: '',
-                  posisi_sebelum: '',
-                  provinsi: proJobSebelum[1],
+                  posisi: this.jobForm.get('posisi')?.value,
+                  posisi_sebelum: this.jobForm.get('posisi_sebelum')?.value,
+                  provinsi: this.sendProJob[1],
                   provinsi_sebelum: '',
                   rt: this.jobForm.get('rt')?.value,
                   rt_sebelum: '',
@@ -1201,6 +1209,12 @@ export class InitialDataEntryFixComponent implements OnInit {
                   next: data => {
                     this.router.navigate(['/daftaraplikasiide']);
                   },
+                  error: error => {
+                    if (error.error.code == 400) {
+                      alert('Gagal Menyimpan Data');
+                      alert(error.error.message);
+                    }
+                  },
                 });
             } else {
               this.router.navigate(['/daftaraplikasiide']);
@@ -1217,7 +1231,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             alamat_ktp: this.ideForm.get('alamat_ktp')?.value,
             alamat_ktp_pasangan: this.ideForm.get('alamat_ktp_pasangan')?.value,
             app_no_ide: this.app_no_ide,
-            cabang: this.sessionServices.retrieve('sessionKdCabang'),
+            cabang: this.saveCabang,
             // created_by: '',
             // created_date: '',
             curef: this.curef,
@@ -1282,6 +1296,8 @@ export class InitialDataEntryFixComponent implements OnInit {
             updated_date: '',
             usia: this.ideForm.get('usia')?.value,
             usia_pasangan: this.ideForm.get('usia_pasangan')?.value,
+            tempat_lahir: this.ideForm.get('tempat_lahir')?.value,
+            tempat_lahir_pasangan: this.ideForm.get('tempat_lahir_pasangan')?.value,
           })
           .subscribe({
             next: data => {
@@ -1312,10 +1328,10 @@ export class InitialDataEntryFixComponent implements OnInit {
                     bulan_berdiri_sebelum: '',
                     created_by: '',
                     created_date: '',
-                    curef: '',
-                    id: 0,
-                    jabatan: '',
-                    jabatan_sebelum: '',
+                    curef: this.curef,
+                    id: this.modelJob.id,
+                    jabatan: this.jobForm.get('posisi')?.value,
+                    jabatan_sebelum: this.jobForm.get('posisi_sebelum')?.value,
                     jenis_bidang: this.sendJenisBidang,
                     jenis_bidang_sebelum: this.sendJenisBidangSebelum,
                     jenis_pekerjaan: '',
@@ -1390,7 +1406,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             alamat_ktp: this.ideForm.get('alamat_ktp')?.value,
             alamat_ktp_pasangan: '',
             app_no_ide: this.app_no_ide,
-            cabang: this.sessionServices.retrieve('sessionKdCabang'),
+            cabang: this.saveCabang,
             // created_by: '',
             // created_date: '',
             curef: this.curef,
@@ -1455,6 +1471,8 @@ export class InitialDataEntryFixComponent implements OnInit {
             updated_date: '',
             usia: this.ideForm.get('usia')?.value,
             usia_pasangan: '',
+            tempat_lahir: this.ideForm.get('tempat_lahir')?.value,
+            tempat_lahir_pasangan: '',
           })
           .subscribe({
             next: data => {
@@ -1485,10 +1503,10 @@ export class InitialDataEntryFixComponent implements OnInit {
                     bulan_berdiri_sebelum: '',
                     created_by: '',
                     created_date: '',
-                    curef: '',
-                    id: 0,
-                    jabatan: '',
-                    jabatan_sebelum: '',
+                    curef: this.curef,
+                    id: this.modelJob.id,
+                    jabatan: this.jobForm.get('posisi')?.value,
+                    jabatan_sebelum: this.jobForm.get('posisi_sebelum')?.value,
                     jenis_bidang: this.sendJenisBidang,
                     jenis_bidang_sebelum: this.sendJenisBidangSebelum,
                     jenis_pekerjaan: '',
@@ -1802,7 +1820,14 @@ export class InitialDataEntryFixComponent implements OnInit {
   jenisbidangselectsebelum(value: any) {
     const sektor = value.split('|');
     this.ideFixServices.getSektor(sektor[0]).subscribe(data => {
-      this.getdatasektorekonomi = data.result;
+      this.getdatasektorekonomiSebelum = data.result;
     });
+  }
+  changeJenis(value: string | undefined) {
+    if (value === 'Laki-laki') {
+      this.ideForm.get('jenis_kelamin_pasangan')?.setValue('Perempuan');
+    } else {
+      this.ideForm.get('jenis_kelamin_pasangan')?.setValue('Laki-laki');
+    }
   }
 }
