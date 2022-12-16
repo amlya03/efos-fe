@@ -44,6 +44,8 @@ export class NavbarComponent implements OnInit {
   datakirimantgllahir: any;
   datakirimanappide: any;
   datakirimanidcustomer: any;
+  paramId: any;
+  kategori: any;
 
   constructor(
     protected http: HttpClient,
@@ -67,7 +69,8 @@ export class NavbarComponent implements OnInit {
       this.datakirimantgllahir = params.datakirimantgllahir;
       this.datakirimanappide = params.datakirimanappide;
       this.datakirimanidcustomer = params.datakirimanidcustomer;
-
+      this.paramId = params.id;
+      this.kategori = params.kategori;
       // ///////////////// Data Entry //////////////////////////////////
       this.curef = params['curef'];
       this.app_no_de = params['app_no_de'];
@@ -82,6 +85,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // alert(this.kategori)
     this.entitiesNavbarItems = EntityNavbarItems;
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;

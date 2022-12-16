@@ -8,7 +8,6 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import dayjs from 'dayjs/esm';
 import { NgbDateAdapter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import './config/dayjs';
 import { SharedModule } from 'app/shared/shared.module';
@@ -52,11 +51,7 @@ import { EmergencyContactComponent } from './data-entry/emergency-contact/emerge
 import { StrukturPembiayaanComponent } from './data-entry/struktur-pembiayaan/struktur-pembiayaan.component';
 import { InitialDataEntryComponent } from './initial-data-entry/initial-data-entry.component';
 import { HasilPrescreeningComponent } from './initial-data-entry/hasil-prescreening/hasil-prescreening.component';
-import { DaftarAplikasiIdeComponent } from './initial-data-entry/daftar-aplikasi-ide/daftar-aplikasi-ide.component';
 import { InitialDataEntryFixComponent } from './initial-data-entry/initial-data-entry-fix/initial-data-entry-fix.component';
-import { InitialDataEntryNonComponent } from './initial-data-entry/initial-data-entry-non/initial-data-entry-non.component';
-import { InitialDataEntryNonEditComponent } from './initial-data-entry/initial-data-entry-non-edit/initial-data-entry-non-edit.component';
-import { InitialDataEntryFixEditComponent } from './initial-data-entry/initial-data-entry-fix-edit/initial-data-entry-fix-edit.component';
 import { DaftarAplikasiPilihComponent } from './initial-data-entry/daftar-aplikasi-pilih/daftar-aplikasi-pilih.component';
 import { VerificationComponent } from './verification/verification.component';
 import { EditjobinfoComponent } from './data-entry/editjobinfo/editjobinfo.component';
@@ -133,11 +128,7 @@ import { DetailKomiteComponent } from './komite/detail-komite/detail-komite.comp
     StrukturPembiayaanComponent,
     InitialDataEntryComponent,
     HasilPrescreeningComponent,
-    DaftarAplikasiIdeComponent,
     InitialDataEntryFixComponent,
-    InitialDataEntryNonComponent,
-    InitialDataEntryNonEditComponent,
-    InitialDataEntryFixEditComponent,
     DaftarAplikasiPilihComponent,
     VerificationComponent,
     EditjobinfoComponent,

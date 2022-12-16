@@ -46,8 +46,15 @@
                 <fa-icon icon="address-card"></fa-icon>
                 <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> <i class="fa-thin fa-address-card"></i>-->
                 <p>Initial Data Entry</p>
-                <span routerLink="/initial-data-entrynon" hidden></span>
-                <span routerLink="/initial-data-entryfix" hidden></span>
+                <span
+                  routerLink="/initial-data-entryfix"
+                  hidden
+                  [queryParams]="{
+                    kategori: this.kategori,
+                    id: this.paramId
+                  }"
+                >
+                </span>
                 <span
                   routerLink="/hasilprescreening"
                   [queryParams]="{
@@ -58,8 +65,6 @@
                   }"
                   hidden
                 ></span>
-                <span routerLink="/editidefix" [queryParams]="{ datakirimanidcustomer: this.datakirimanidcustomer }" hidden></span>
-                <span routerLink="/editidenon" [queryParams]="{ datakirimanidcustomer: this.datakirimanidcustomer }" hidden></span>
               </a>
             </li>
           </div>
@@ -772,27 +777,8 @@
   </div>
   <div
     *ngIf="
-      router.url === '/initial-data-entryfix' ||
-      router.url === '/initial-data-entrynon' ||
-      router.url === '/editidenon' ||
-      router.url === '/editidenon?datakirimanidcustomer=' + this.datakirimanidcustomer ||
-      router.url ===
-        '/editidenon?datakirimanid=' +
-          this.datakirimanid +
-          '&datakirimantgllahir=' +
-          this.datakirimantgllahir +
-          '&datakirimanappide=' +
-          this.datakirimanappide ||
-      router.url === '/editidefix' ||
-      router.url === '/editidefix?datakirimanidcustomer=' + this.datakirimanidcustomer ||
-      router.url ===
-        '/editidefix?datakirimanid=' +
-          this.datakirimanid +
-          '&datakirimantgllahir=' +
-          this.datakirimantgllahir +
-          '&datakirimanappide=' +
-          this.datakirimanappide ||
-      router.url === '/hasilprescreening' ||
+      router.url === '/initial-data-entryfix?kategori=' + this.kategori ||
+      router.url === '/initial-data-entryfix?kategori=' + this.kategori + '&id=' + this.paramId ||
       router.url ===
         '/hasilprescreening?datakirimanid=' +
           this.datakirimanid +
@@ -802,7 +788,6 @@
           this.datakirimanappide
     "
   >
-    <!-- [routerLink]="['/initial-data-entryfix'] || ['/initial-data-entrynon'] || ['/editidenon'] || ['/editidefix']" -->
     <a
       class="nav-item nav-link"
       [routerLink]="'/initial-data-entryfix'"
@@ -810,15 +795,11 @@
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'AO'"
       [queryParams]="{
-        datakirimanid: this.datakirimanid,
-        datakirimantgllahir: this.datakirimantgllahir,
-        datakirimanappide: this.datakirimanappide
+        kategori: this.kategori,
+        id: this.paramId
       }"
     >
       <h6>Initial Data Entry</h6>
-      <span routerLink="/initial-data-entrynon" hidden></span>
-      <span routerLink="/editidefix" [queryParams]="{ datakirimanidcustomer: this.datakirimanidcustomer }" hidden></span>
-      <span routerLink="/editidenon" [queryParams]="{ datakirimanidcustomer: this.datakirimanidcustomer }" hidden></span>
     </a>
     <a
       class="nav-item nav-link"

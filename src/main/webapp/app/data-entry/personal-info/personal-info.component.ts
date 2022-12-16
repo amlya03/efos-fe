@@ -13,9 +13,6 @@ import { refStatusRumah } from 'app/verification/service/config/refStatusRumah.m
 import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
 import { refListTipeKendaraan } from '../services/config/refListTipeKendaraan.model';
 
-// export type EntityResponseDaWa = HttpResponse<dataentrymodel>;
-export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
-
 @Component({
   selector: 'jhi-personal-info',
   templateUrl: './personal-info.component.html',

@@ -23,14 +23,10 @@ import { EmergencyContactComponent } from './data-entry/emergency-contact/emerge
 import { CallReportComponent } from './data-entry/call-report/call-report.component';
 import { MemoComponent } from './data-entry/memo/memo.component';
 import { StrukturPembiayaanComponent } from './data-entry/struktur-pembiayaan/struktur-pembiayaan.component';
-import { DaftarAplikasiIdeComponent } from './initial-data-entry/daftar-aplikasi-ide/daftar-aplikasi-ide.component';
 import { DaftarAplikasiPilihComponent } from './initial-data-entry/daftar-aplikasi-pilih/daftar-aplikasi-pilih.component';
 import { InitialDataEntryFixComponent } from './initial-data-entry/initial-data-entry-fix/initial-data-entry-fix.component';
-import { InitialDataEntryNonComponent } from './initial-data-entry/initial-data-entry-non/initial-data-entry-non.component';
 import { HasilPrescreeningComponent } from './initial-data-entry/hasil-prescreening/hasil-prescreening.component';
 import { PersonalInfoComponent } from './data-entry/personal-info/personal-info.component';
-import { InitialDataEntryFixEditComponent } from './initial-data-entry/initial-data-entry-fix-edit/initial-data-entry-fix-edit.component';
-import { InitialDataEntryNonEditComponent } from './initial-data-entry/initial-data-entry-non-edit/initial-data-entry-non-edit.component';
 import { VerificationComponent } from './verification/verification.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { UploadDocumentDeComponent } from './upload-document/upload-document-de/upload-document-de.component';
@@ -169,7 +165,7 @@ import { DetailKomiteComponent } from './komite/detail-komite/detail-komite.comp
         },
         {
           path: 'daftaraplikasiide',
-          component: DaftarAplikasiIdeComponent,
+          component: InitialDataEntryComponent,
         },
         {
           path: 'daftaraplikasiidetambahide',
@@ -180,22 +176,9 @@ import { DetailKomiteComponent } from './komite/detail-komite/detail-komite.comp
           component: InitialDataEntryFixComponent,
         },
         {
-          path: 'initial-data-entrynon',
-          component: InitialDataEntryNonComponent,
-        },
-        {
           path: 'hasilprescreening',
           component: HasilPrescreeningComponent,
         },
-        {
-          path: 'editidefix',
-          component: InitialDataEntryFixEditComponent,
-        },
-        {
-          path: 'editidenon',
-          component: InitialDataEntryNonEditComponent,
-        },
-
         {
           path: 'upload_document',
           component: UploadDocumentComponent,

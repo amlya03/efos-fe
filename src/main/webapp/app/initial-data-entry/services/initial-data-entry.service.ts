@@ -11,6 +11,24 @@ import { SessionStorageService } from 'ngx-webstorage';
 export class InitialDataEntryService {
   koderetirvt = '';
 
+  // /////////////////////////// Get Job By Cuef IDE ////////////////////////////////////////////
+  protected getJobByCurefIDEUrl = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ide/getJobByCuref?sj='
+  );
+  // /////////////////////////// Get Job By Cuef IDE ////////////////////////////////////////////
+
+  // /////////////////////////// List Tipe Perusahaan ////////////////////////////////////////////
+  protected getListTipPerusahaanUrl = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_perusahaan'
+  );
+  // /////////////////////////// List Tipe Perusahaan ////////////////////////////////////////////
+
+  // /////////////////////////// Get Customer ////////////////////////////////////////////
+  protected getCustomerUrl = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.110:8805/api/v1/efos-ide/getCustomerByAppId?sc='
+  );
+  // /////////////////////////// Get Customer ////////////////////////////////////////////
+
   // /////////////////////////// Download Slik ////////////////////////////////////////////
   protected getDownloadSlikUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/fetchSlikPdf?sd=');
   // /////////////////////////// Download Slik ////////////////////////////////////////////
@@ -33,9 +51,9 @@ export class InitialDataEntryService {
   protected getProvinsi = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/wilayahSvc/getProvinsi/');
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
 
-  // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
+  // /////////////////////////// Get Token Ducapil ////////////////////////////////////////////
   protected getTokenDucpil = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/token/generate-token');
-  // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
+  // /////////////////////////// Get Token Ducapil ////////////////////////////////////////////
 
   // /////////////////////////// Reff Jenis Bidang ////////////////////////////////////////////
   protected getJenisBidang = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/list_jenis_bidang');
@@ -78,11 +96,14 @@ export class InitialDataEntryService {
   }
   // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-  // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  // ////////////////////// Get Token Ducapil \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   getTokenDukcapil(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.getTokenDucpil);
+    return this.http.post<ApiResponse>(this.getTokenDucpil, {
+      password: '3foWeb@pp',
+      username: 'efo',
+    });
   }
-  // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  // ////////////////////// Get Token Ducapil \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// Ref Jenis BIdang  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   getBidang(): Observable<ApiResponse> {
@@ -101,4 +122,22 @@ export class InitialDataEntryService {
     return this.http.get<ApiResponse>(this.getDownloadSlikUrl + id_number);
   }
   // /////////////////////////// Download Slik ////////////////////////////////////////////
+
+  // /////////////////////////// Customer ////////////////////////////////////////////
+  getCustomer(curef: string | number | null | undefined): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getCustomerUrl + curef);
+  }
+  // /////////////////////////// Customer ////////////////////////////////////////////
+
+  // /////////////////////////// List Tipe Perusahaan ////////////////////////////////////////////
+  getListTipPerusahaan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getListTipPerusahaanUrl);
+  }
+  // /////////////////////////// List Tipe Perusahaan ////////////////////////////////////////////
+
+  // /////////////////////////// Get Job By Cuef IDE ////////////////////////////////////////////
+  getJobByCurefIDE(curef: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getJobByCurefIDEUrl + curef);
+  }
+  // /////////////////////////// Get Job By Cuef IDE ////////////////////////////////////////////
 }

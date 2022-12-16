@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
-
-import { createRequestOption } from 'app/core/request/request-util';
-export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { InitialDataEntryService } from './services/initial-data-entry.service';
+import { daftaraplikasimodelide } from './services/config/daftar-aplikasi-model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'jhi-initial-data-entry',
@@ -15,42 +13,80 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./initial-data-entry.component.scss'],
 })
 export class InitialDataEntryComponent implements OnInit {
-  datakiriman: any;
-  datakirimanidcustomer: any;
-  daWa: any;
+  datakiriman: string | undefined;
+  initialDataEntry?: daftaraplikasimodelide[];
+  kategori: any;
+
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
 
   constructor(
-    private route: ActivatedRoute,
+    protected initialDatEntryService: InitialDataEntryService,
     private router: Router,
     protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
-  ) {
-    this.route.queryParams.subscribe(params => {
-      this.datakiriman = params['datakiriman'];
-    });
+    protected modalService: NgbModal
+  ) {}
 
-    this.route.queryParams.subscribe(params => {
-      this.datakirimanidcustomer = params['datakirimanidcustomer'];
-    });
-  }
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getCustomerByAppId?sc=');
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      processing: true,
+      responsive: true,
+    };
     this.load();
   }
-
-  load() {
-    this.getdataentry().subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        // console.log(res.body?.result);
-        console.warn('EDITFIX job', res.body?.result.job);
-        console.warn('EDITFIX job', res.body?.result.customer);
-
-        this.daWa = res.body?.result.customer;
-      },
+  load(): void {
+    this.initialDatEntryService.getDaftarAplikasiInitialDataEntry().subscribe(data => {
+      if (data.code === 200) {
+        this.initialDataEntry = (data as any).result;
+        this.dtTrigger.next(data.result);
+      }
     });
   }
-  getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.resourceUrl + this.datakirimanidcustomer, { params: options, observe: 'response' });
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+    // alert('knfsdkds');
+  }
+
+  cariButton(listKategori: string, inputNamaNasabah: string, inputNoAplikasi: string): void {
+    $('#dataTables-example').DataTable().columns(4).search(inputNoAplikasi).draw();
+    $('#dataTables-example').DataTable().columns(3).search(inputNamaNasabah).draw();
+    $('#dataTables-example').DataTable().columns(2).search(listKategori).draw();
+  }
+
+  clearInput(): void {
+    $('#dataTables-example').DataTable().columns().search('').draw();
+    // alert("bbb")
+  }
+
+  goto(): void {
+    this.router.navigate(['/daftaraplikasiidetambahide']);
+  }
+
+  viewdataide(costomerid: any, kategori: any): void {
+    if (kategori === 'Fix Income') {
+      this.router.navigate(['/initial-data-entryfix'], {
+        queryParams: {
+          kategori: '1',
+          id: costomerid,
+        },
+      });
+      // this.router.navigate(['/editidefix'], {
+      //   queryParams: {
+      //     datakirimanidcustomer: costomerid,
+      //   },
+      // });
+    } else {
+      this.router.navigate(['/initial-data-entryfix'], {
+        queryParams: {
+          kategori: '2',
+          id: costomerid,
+        },
+      });
+    }
   }
 }
