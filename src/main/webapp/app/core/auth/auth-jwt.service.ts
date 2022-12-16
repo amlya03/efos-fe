@@ -75,11 +75,11 @@ export class AuthServerProvider {
     const sessionKdCabang = response.result?.kd_cabang;
     // console.warn('ttttoookkkkeeeennnn',response)
     // console.warn('ttttoookkkkeeeennnn22',response.result?.groupname)
-    console.warn('token ', jwt);
-    console.warn('role ', sessionRole);
-    console.warn('username ', sessionUserName);
-    console.warn('full name ', sessionFullName);
-    console.warn('kode cabang ', sessionKdCabang);
+    //console.warn('token ', jwt);
+    //console.warn('role ', sessionRole);
+    //console.warn('username ', sessionUserName);
+    //console.warn('full name ', sessionFullName);
+    //console.warn('kode cabang ', sessionKdCabang);
     // if (rememberMe) {
     // this.localStorageService.store('sessionRole', sessionRole);
     // this.localStorageService.store('sessionUserName', sessionUserName);

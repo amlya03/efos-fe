@@ -44,7 +44,7 @@ export class DaftarAplikasiIdeComponent implements OnInit, OnDestroy {
   }
   load(): void {
     this.initialDatEntryService.getDaftarAplikasiInitialDataEntry().subscribe(data => {
-      console.warn(data);
+      //console.warn(data);
       if (data.code === 200) {
         this.initialDataEntry = (data as any).result;
         this.dtTrigger.next(data.result);

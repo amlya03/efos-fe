@@ -200,7 +200,7 @@ export class StukturPembiayaanComponent implements OnInit {
             })
             .subscribe({
               next: data => {
-                console.warn(data);
+                //console.warn(data);
                 this.hasilScoring = data.result.score_value;
                 this.hasilStatus = data.result.score_desc;
               },
@@ -346,7 +346,7 @@ export class StukturPembiayaanComponent implements OnInit {
         })
         .subscribe({
           next: response => {
-            console.warn(response);
+            //console.warn(response);
             alert('Berhasil Menyimpan Data');
             this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
           },
@@ -375,7 +375,7 @@ export class StukturPembiayaanComponent implements OnInit {
         })
         .subscribe({
           next: response => {
-            console.warn(response);
+            //console.warn(response);
             // alert('Berhasil Menyimpan Data');
             this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
           },

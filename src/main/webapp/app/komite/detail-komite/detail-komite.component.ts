@@ -892,7 +892,7 @@ export class DetailKomiteComponent implements OnInit {
 
   formatCurrency(value: any) {
     value = value.replace(/Rp/, '').replace(/\,/g, '');
-    console.log('value ', value);
+    //console.log('value ', value);
     if (value && !isNaN(value)) {
       let num: number = value;
       // let temp = new Intl.NumberFormat("en-IN").format(num); //inplace of en-IN you can mention your country's code

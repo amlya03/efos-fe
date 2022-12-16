@@ -88,7 +88,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
 
     // list Table
     this.mutasiRekeningService.fetchListMutasiRekening(this.app_no_de).subscribe(data => {
-      console.warn(data);
+      //console.warn(data);
       if (data.code === 200) {
         this.mutasiRekening = data.result;
         this.dtTrigger.next(data.result);
@@ -117,7 +117,9 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           tahun: this.mutasiForm.get('tahun')?.value,
         })
         .subscribe({
-          next: response => console.warn(response),
+          next: response => {
+            // console.warn(response)
+          },
           error: error => console.warn(error),
         });
       this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
@@ -137,7 +139,9 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           updated_date: '',
         })
         .subscribe({
-          next: response => console.warn(response),
+          next: response => {
+            // console.warn(response)
+          },
           error: error => console.warn(error),
         });
       this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
@@ -185,7 +189,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
             })
             .subscribe({
               next: response => {
-                console.warn(response);
+                //console.warn(response);
                 window.location.reload();
               },
               error: error => console.warn(error),

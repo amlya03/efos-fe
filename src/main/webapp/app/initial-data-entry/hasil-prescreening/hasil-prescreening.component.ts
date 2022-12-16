@@ -237,10 +237,10 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                 if (element.response_description == 'get Slik Result Success') {
                   if (element.status_applicant === 'Debitur Utama') {
                     // this.listLajangSlik.push(element);
-                    console.warn('lajang', this.listLajangSlik);
+                    //console.warn('lajang', this.listLajangSlik);
                   } else {
                     // this.listMenikahSlik.push(element);
-                    console.warn('menikah', this.listMenikahSlik);
+                    //console.warn('menikah', this.listMenikahSlik);
                   }
                 }
               });

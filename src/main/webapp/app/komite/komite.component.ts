@@ -112,7 +112,7 @@ export class KomiteComponent implements OnInit {
             })
             .subscribe({
               next: data => {
-                console.warn(data);
+                //console.warn(data);
                 this.router.navigate(['/komite/detail-komite'], { queryParams: { app_no_de: app_no_de, curef: curef } });
               },
               error: err => {

@@ -320,7 +320,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     let kode = kodeProduk.split('|');
     this.dataEntryService.getFetchSkemaByKode(kode[0]).subscribe(data => {
       this.kodeskema = data.result;
-      console.warn(this.kodeskema);
+      //console.warn(this.kodeskema);
     });
   }
 

@@ -60,7 +60,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
 
   load(): void {
     this.uploadSerices.getDaftarAplikasiUpload(this.userName).subscribe(data => {
-      console.warn(data);
+      //console.warn(data);
       // if (data.code === 200) {
       this.dataEntry = data.result;
       this.dtTrigger.next(this.dataEntry);

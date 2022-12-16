@@ -75,7 +75,7 @@ export class MemoVerificationComponent implements OnInit {
       this.listMemo = data.result;
       this.dtTrigger.next(this.listMemo);
       if (data.code === 200) {
-        console.log('MEMo ' + data.result.keterangan);
+        //console.log('MEMo ' + data.result.keterangan);
       }
     });
   }

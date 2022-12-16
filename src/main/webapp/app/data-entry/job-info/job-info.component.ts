@@ -310,18 +310,18 @@ export class JobInfoComponent implements OnInit {
     });
     this.datEntryService.getFetchSemuaDataJob(this.curef).subscribe(data => {
       this.jobInfo = data.result;
-      console.log(this.jobInfo);
+      //console.log(this.jobInfo);
       // alert(this.jobInfo[0] == null)
     });
     this.sebelum().subscribe({
       next: (res: EntityArrayResponseDaWa1) => {
         // console.log(res.body?.result);
-        console.warn('sebelum', res.body?.result);
+        //console.warn('sebelum', res.body?.result);
 
         // if (res.body?.result == null) {
         this.nampungsebelum = res.body?.result;
         this.tampunganid = this.nampungsebelum[0];
-        console.warn('tampunganid', this.tampunganid);
+        //console.warn('tampunganid', this.tampunganid);
         // } else {
 
         //   this.tampunganid = this.nampungsebelum[0];
@@ -431,7 +431,7 @@ export class JobInfoComponent implements OnInit {
     this.getlisttipeperusahaan().subscribe({
       next: (res: EntityArrayResponseDaWa1) => {
         // console.log(res.body?.result);
-        console.warn('tipe_perusahaan', res.body?.result);
+        //console.warn('tipe_perusahaan', res.body?.result);
         this.gettipeperusahaandariapi = res.body?.result;
       },
     });
@@ -439,7 +439,7 @@ export class JobInfoComponent implements OnInit {
     this.getlistjabatan().subscribe({
       next: (res: EntityArrayResponseDaWa1) => {
         // console.log(res.body?.result);
-        console.warn('jabatan', res.body?.result);
+        //console.warn('jabatan', res.body?.result);
         this.getjabatandariapi = res.body?.result;
       },
     });
@@ -447,14 +447,14 @@ export class JobInfoComponent implements OnInit {
     this.getlistjenisbidang().subscribe({
       next: (res: EntityArrayResponseDaWa1) => {
         // console.log(res.body?.result);
-        console.warn('jenisbidang', res.body?.result);
+        //console.warn('jenisbidang', res.body?.result);
         this.getjenisbidangdariapi = res.body?.result;
       },
     });
     this.getjumlahkaryawan().subscribe({
       next: (res: EntityArrayResponseDaWa1) => {
         // console.log(res.body?.result);
-        console.warn('jumlahkaryawan', res.body?.result);
+        //console.warn('jumlahkaryawan', res.body?.result);
         this.getjumlahkaryawandariapi = res.body?.result;
       },
     });
@@ -462,14 +462,14 @@ export class JobInfoComponent implements OnInit {
     this.getjumlahkaryawansebelum().subscribe({
       next: (res: EntityArrayResponseDaWa1) => {
         // console.log(res.body?.result);
-        console.warn('jumlahkaryawan', res.body?.result);
+        //console.warn('jumlahkaryawan', res.body?.result);
         this.getjumlahkaryawansebelumdariapi = res.body?.result;
       },
     });
 
     this.getlistjabatansebelum().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('jabatansebelum', res);
+        //console.warn('jabatansebelum', res);
 
         this.getjabatansebelum = res.body?.result;
 
@@ -482,10 +482,10 @@ export class JobInfoComponent implements OnInit {
     this.sebelum().subscribe({
       next: (res: EntityArrayResponseDaWa1) => {
         // console.log(res.body?.result);
-        console.warn('sebelum', res.body?.result);
+        //.warn('sebelum', res.body?.result);
         this.nampungsebelum = res.body?.result;
 
-        console.warn('SEBELUMNYA', this.nampungsebelum);
+        //console.warn('SEBELUMNYA', this.nampungsebelum);
 
         // this.onResponseSuccess(res);
       },
@@ -553,7 +553,7 @@ export class JobInfoComponent implements OnInit {
     // console.log('kode' + selectedStatus);
     this.getsektorekonomi(idsektorpotongan[0]).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kota', res);
+        //console.warn('kota', res);
 
         this.getdatasektorekonomi = res.body?.result;
 
@@ -569,7 +569,7 @@ export class JobInfoComponent implements OnInit {
     // console.log('kode' + selectedStatus);
     this.getsektorekonomi(idsektorpotongan[0]).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kota', res);
+        //console.warn('kota', res);
 
         this.getdatasektorekonomi = res.body?.result;
 
@@ -627,12 +627,12 @@ export class JobInfoComponent implements OnInit {
           // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
           // return this.postId;
 
-          console.warn(data.result.token);
-          console.warn(this.postId);
+          //console.warn(data.result.token);
+          //console.warn(this.postId);
 
           this.datEntryService.getprovinsi(this.postId).subscribe({
             next: (res: EntityArrayResponseDaWa) => {
-              console.warn('PROVINSI', res);
+              //console.warn('PROVINSI', res);
 
               this.daWaprof = res.body?.result;
             },
@@ -654,7 +654,7 @@ export class JobInfoComponent implements OnInit {
     this.getsemuadataberdasarkanappde().subscribe({
       next: (res: EntityArrayResponseDaWa) => {
         // console.log(res.body?.result);
-        console.warn('cekstatuspernikahan', res.body?.result);
+        //console.warn('cekstatuspernikahan', res.body?.result);
         this.keteranganstatusnikah = res.body?.result.status_perkawinan;
       },
     });
@@ -674,7 +674,7 @@ export class JobInfoComponent implements OnInit {
 
     this.getjenispekerjaansebelum(provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kota', res.body?.result);
+        //console.warn('kota', res.body?.result);
 
         this.daWakotasebelum = res.body?.result;
 
@@ -728,7 +728,7 @@ export class JobInfoComponent implements OnInit {
 
     this.datEntryService.getkabkota(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kota', res);
+        //console.warn('kota', res);
 
         this.daWakotaD = res.body?.result;
 
@@ -741,28 +741,28 @@ export class JobInfoComponent implements OnInit {
     const provinsi_cabang = document.getElementById('kabkota_sebelum') as HTMLInputElement | any;
     this.datEntryService.getkecamatan(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kecamata', res);
+        //console.warn('kecamata', res);
 
         this.kecamatanD = res.body?.result;
 
         // this.onResponseSuccess(res);
       },
     });
-    console.log();
+    //console.log();
   }
 
   onChangekecamatanD() {
     const provinsi_cabang = document.getElementById('kecamatan_sebelum') as HTMLInputElement | any;
     this.datEntryService.getkelurahan(this.postId, provinsi_cabang.value).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kelurahan', res);
+        //console.warn('kelurahan', res);
 
         this.kelurahanD = res.body?.result;
 
         // this.onResponseSuccess(res);
       },
     });
-    console.log();
+    //console.log();
   }
 
   onChangekelurahanD() {
@@ -792,7 +792,7 @@ export class JobInfoComponent implements OnInit {
         },
       });
 
-      console.warn(this.curef);
+      //console.warn(this.curef);
     } else {
       this.router.navigate(['/data-entry/collateral'], {
         queryParams: {
@@ -961,7 +961,7 @@ export class JobInfoComponent implements OnInit {
                 },
               });
               // alert(' ini NIKAH');
-              console.warn(this.curef);
+              //console.warn(this.curef);
             } else {
               // alert('ini jomblo');
               // alert(contohtampungancuref);
@@ -1163,7 +1163,7 @@ export class JobInfoComponent implements OnInit {
   carimenggunakankodepostsebelum(kodepost: any, req: any) {
     this.getkodepostnya(kodepost, req).subscribe({
       next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kodepost', res);
+        //console.warn('kodepost', res);
 
         // this.dawakodepost = res.body?.result;
         // alert(this.postId);
@@ -1195,7 +1195,7 @@ export class JobInfoComponent implements OnInit {
       },
     });
 
-    console.log(req);
+    //console.log(req);
   }
 
   ////sebelum

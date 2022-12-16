@@ -58,7 +58,7 @@ export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
   load(): void {
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
     this.daWaService.getListAppAppraisal().subscribe(data => {
-      console.warn(data);
+      //console.warn(data);
       if (data.code === 200) {
         this.daWa = data.result;
         this.getCheckDaWa = data.result;

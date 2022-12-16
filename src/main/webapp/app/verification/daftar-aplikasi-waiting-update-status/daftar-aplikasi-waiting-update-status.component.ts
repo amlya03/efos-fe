@@ -79,7 +79,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
 
     this.daWusService.getDaWuS().subscribe(data => {
       this.checkLenghtResult = data.result;
-      console.log(this.checkLenghtResult);
+      //console.log(this.checkLenghtResult);
       if (data.code === 200) {
         this.daWuS = data.result;
         this.dtTrigger.next(this.daWuS);
@@ -112,7 +112,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
       this.kirimDe.splice(index, 1);
       // alert(statusAplikasi);
     }
-    console.warn(this.kirimDe);
+    //console.warn(this.kirimDe);
   }
   // update status
   postUpdateStatus(): void {

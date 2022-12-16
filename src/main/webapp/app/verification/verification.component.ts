@@ -63,7 +63,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
         this.daftarAplikasiVerif = data.result;
         this.dtTrigger.next(data.result);
       }
-      console.log(this.daftarAplikasiVerif);
+      //console.log(this.daftarAplikasiVerif);
     });
   }
 

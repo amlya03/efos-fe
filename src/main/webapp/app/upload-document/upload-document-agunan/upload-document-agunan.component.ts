@@ -157,7 +157,9 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
         status_aplikasi: this.fetchAllAgunan.status_aplikasi,
       })
       .subscribe({
-        next: response => console.warn(response),
+        next: response => {
+          // console.warn(response)
+        },
         error: error => console.warn(error),
       });
     // this.router.navigate(['/data-entry'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });

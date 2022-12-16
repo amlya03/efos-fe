@@ -195,7 +195,7 @@ export class InputScoringComponent implements OnInit {
           })
           .subscribe({
             next: response => {
-              console.warn(response);
+              //console.warn(response);
               alert('Data Berhasil disimpan');
               window.location.reload();
             },

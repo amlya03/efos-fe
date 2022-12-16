@@ -269,7 +269,7 @@ export class PekerjaanPasanganComponent implements OnInit {
     // alert(value)
     this.datEntryService.getFetchListTipePekerjaan(value).subscribe(data => {
       this.listTipePekerjaan = data.result;
-      console.log('tipe ' + this.listTipePekerjaan);
+      //console.log('tipe ' + this.listTipePekerjaan);
     });
   }
 
@@ -286,8 +286,8 @@ export class PekerjaanPasanganComponent implements OnInit {
           // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
           // return this.postId;
 
-          console.warn(data.result.token);
-          console.warn(this.postId);
+          // console.warn(data.result.token);
+          // console.warn(this.postId);
           // this.router.navigate(['/daftaraplikasiide'], {
           //   queryParams: {},
           // });
@@ -295,7 +295,7 @@ export class PekerjaanPasanganComponent implements OnInit {
 
           this.datEntryService.getprovinsi(this.postId).subscribe({
             next: (res: EntityArrayResponseDaWa) => {
-              console.warn('PROVINSI', res);
+              //console.warn('PROVINSI', res);
 
               this.daWaprof = res.body?.result;
               // alert(this.postId);

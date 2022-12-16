@@ -327,7 +327,7 @@ export class CollateralComponent implements OnInit {
   provinsiChange(value: any): void {
     const valueProvinsi = value.split('|');
     this.datEntryService.getkabkota(this.postId, valueProvinsi[0]).subscribe(data => {
-      console.warn(data);
+      //console.warn(data);
       this.daWakota = data.body?.result;
       this.collateralForm.get('kabkota_agunan')?.setValue(this.untukKodeKobkotAagunan + '|' + this.untukkobkotaagunan);
     });
@@ -530,7 +530,7 @@ export class CollateralComponent implements OnInit {
       })
       .subscribe({
         next(bawaan) {
-          console.warn(bawaan);
+          //console.warn(bawaan);
           alert('Berhasil Menyimpan Data');
           window.location.reload();
         },
@@ -578,7 +578,7 @@ export class CollateralComponent implements OnInit {
         this.untukKodeKobkotaSertif = sukses.body?.result.provKec.kd_kota;
         this.untukKodeKecamatanSertif = sukses.body?.result.provKec.kd_kec;
         const setNull = sukses.body?.result.provKec.kd_kel;
-        console.warn(sukses);
+        //console.warn(sukses);
         // alert(this.untukKodeKobkotaSertif + '|' + this.untukKobkotaSertif)
         if (setNull == null) {
           this.untukKodeKelurahanSertif = kodepost;
