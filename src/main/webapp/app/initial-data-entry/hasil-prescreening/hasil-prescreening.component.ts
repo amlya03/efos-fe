@@ -265,7 +265,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                       npwp: this.dataEntry.npwp,
                       reffNumber: reffnumbernya,
                       statusMenikah: this.statusMenikahHps,
-                      tempatLahir: 'Jakarta',
+                      tempatLahir: this.dataEntry.tempat_lahir,
                       tempatLahirPasangan: this.dataEntry.tempat_lahir_pasangan,
                       tglLahir: this.dataEntry.tanggal_lahir,
                       tglLahirPasangan: this.dataEntry.tanggal_lahir_pasangan,
