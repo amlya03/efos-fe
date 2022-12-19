@@ -181,7 +181,7 @@ export class ServiceVerificationService {
   // ////////////////////////////////// Analisa \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // //////////////////////////// Slik \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  fetchSlik(app_no_de: string): Observable<ApiResponse> {
+  fetchSlik(app_no_de: any): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getSlik + app_no_de);
   }
   // //////////////////////////// Slik \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

@@ -25,9 +25,9 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 })
 export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   daWa: any;
-  datakirimanid: any;
+  paramId: any;
   hasildhn: any;
-  datakirimantgllahir: any;
+  kategori: any;
   datakirimanappide: any;
   dataif: any;
   datadukcapil: any;
@@ -103,10 +103,10 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     private SessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.datakirimanid = params['datakirimanid'];
+      this.paramId = params.id;
     });
     this.route.queryParams.subscribe(params => {
-      this.datakirimantgllahir = params['datakirimantgllahir'];
+      this.kategori = params.kategori;
     });
     this.route.queryParams.subscribe(params => {
       this.datakirimanappide = params['datakirimanappide'];
@@ -230,7 +230,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
           });
         }, 300);
         setTimeout(() => {
-          this.dataRumah.fetchSlik(this.datakirimanappide).subscribe({
+          this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe({
             next: data => {
               this.dataslik = data.result.dataSlikResult;
               this.dataslik?.forEach(element => {
@@ -324,7 +324,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
             destroy: true,
           });
           this.dtElement.ngOnDestroy;
-          this.dataRumah.fetchSlik(this.datakirimanappide).subscribe(data => {
+          this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe(data => {
             this.listLajangSlik = data.result.dataSlikResult;
             this.dtTrigger.next(data.result.dataSlikResult);
           });
@@ -332,7 +332,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
       });
   }
   cekkembalislik() {
-    this.dataRumah.fetchSlik(this.datakirimanappide).subscribe(data => {
+    this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe(data => {
       this.dataslik = data.result.dataSlikResult;
       // console.warn('ttesttt', this.dataslik);
       this.dataslik?.forEach(element => {
@@ -381,9 +381,8 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
 
             this.router.navigate(['/hasilprescreening'], {
               queryParams: {
-                datakirimanid: this.datakirimanid,
-                datakirimantgllahir: this.datakirimantgllahir,
-                datakirimanappide: this.datakirimanappide,
+                kategori: this.kategori,
+                id: this.paramId,
               },
             });
           },
@@ -448,9 +447,8 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
 
                 this.router.navigate(['/hasilprescreening'], {
                   queryParams: {
-                    datakirimanid: this.datakirimanid,
-                    datakirimantgllahir: this.datakirimantgllahir,
-                    datakirimanappide: this.datakirimanappide,
+                    kategori: this.kategori,
+                    id: this.paramId,
                   },
                 });
               },
@@ -461,12 +459,12 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
 
   getdataslik(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.apigetslit + this.datakirimanappide, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.apigetslit + this.dataEntry.app_no_ide, { params: options, observe: 'response' });
   }
 
   getdataslikp(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.apigetslit + this.datakirimanappide, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.apigetslit + this.dataEntry.app_no_ide, { params: options, observe: 'response' });
   }
 
   getduplikatc(noktp: any, nama: any, req?: any): Observable<EntityArrayResponseDaWa> {
@@ -563,7 +561,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     // jenisKelamin: this.daWa.jenis_kelamin,
     // kodeCabang:'',
     // namaNasabah: this.daWa.nama,
-    // noAplikasi: this.datakirimanappide,
+    // noAplikasi: this.dataEntry.app_no_ide,
     // noKtp: this.daWa.no_ktp,
     // npwp:'',
     // reffNumber: reffnumbernya,
@@ -609,7 +607,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     //       jenisKelamin: this.daWa.jenis_kelamin,
     //       kodeCabang:'',
     //       namaNasabah: this.daWa.nama,
-    //       noAplikasi: this.datakirimanappide,
+    //       noAplikasi: this.dataEntry.app_no_ide,
     //       noKtp: this.daWa.no_ktp,
     //       npwp:'',
     //       reffNumber: reffnumbernya,
@@ -783,8 +781,8 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     if (this.daWa.status_perkawinan === 'Menikah') {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify', {
-          no_id: this.datakirimanappide,
-          tanggal_lahir: this.datakirimanappide,
+          no_id: this.dataEntry.app_no_ide,
+          tanggal_lahir: this.dataEntry.tanggal_lahir,
 
           reffNumber: reffnumbernya,
           timestamp: timestamp,
@@ -841,8 +839,8 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
 
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify', {
-          no_id: this.datakirimanappide,
-          tanggal_lahir: this.datakirimanappide,
+          no_id: this.dataEntry.app_no_ide,
+          tanggal_lahir: this.dataEntry.tanggal_lahir,
 
           reffNumber: reffnumbernya,
           timestamp: timestamp,
@@ -899,8 +897,8 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     } else {
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify', {
-          no_id: this.datakirimanappide,
-          tanggal_lahir: this.datakirimanappide,
+          no_id: this.dataEntry.app_no_ide,
+          tanggal_lahir: this.dataEntry.tanggal_lahir,
 
           reffNumber: reffnumbernya,
           timestamp: timestamp,
@@ -959,7 +957,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
 
   getdataentry(req?: any): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
-    return this.http.get<ApiResponse>(this.resourceUrl + this.datakirimanid, { params: options, observe: 'response' });
+    return this.http.get<ApiResponse>(this.resourceUrl + this.paramId, { params: options, observe: 'response' });
   }
 
   gotopersonalinfo(app_no_ide: any, curef: any) {
@@ -989,15 +987,15 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
       });
 
     // this.router.navigate(['/daftaraplikasiide'], {
-    //     queryParams: {datakirimanid: this.datakirimanid},
+    //     queryParams: {id: this.paramId},
     // });
   }
 
   postUpdateStatus(): void {
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/cekDhn', {
-        no_id: this.datakirimanappide,
-        tanggal_lahir: this.datakirimanappide,
+        no_id: this.dataEntry.app_no_ide,
+        tanggal_lahir: this.dataEntry.tanggal_lahir,
         // password_dukcapil: '3foWeb@pp',
       })
       .subscribe({
@@ -1201,7 +1199,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   //       this.http
   //         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify_manual', {
   //           id: '',
-  //           no_aplikasi: this.datakirimanappide,
+  //           no_aplikasi: this.dataEntry.app_no_ide,
   //           id_number: this.ktp,
   //           angsuran: datVal,
   //           tanggal_jatuh_tempo: parVal,
@@ -1319,7 +1317,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   //       this.http
   //         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify_manual', {
   //           id: '',
-  //           no_aplikasi: this.datakirimanappide,
+  //           no_aplikasi: this.dataEntry.app_no_ide,
   //           id_number: this.ktp,
   //           angsuran: datVal,
   //           tanggal_jatuh_tempo: parVal,

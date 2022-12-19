@@ -807,9 +807,8 @@ export class InitialDataEntryFixComponent implements OnInit {
 
                     this.router.navigate(['/hasilprescreening'], {
                       queryParams: {
-                        datakirimanid: this.contohdata,
-                        datakirimantgllahir: this.paramtanggal_lahir,
-                        datakirimanappide: this.app_no_ide,
+                        kategori: this.kategori,
+                        id: this.paramId,
                       },
                     });
                   },
@@ -977,9 +976,8 @@ export class InitialDataEntryFixComponent implements OnInit {
                       this.paramtanggal_lahir = data.result.tanggal_lahir;
                       this.router.navigate(['/hasilprescreening'], {
                         queryParams: {
-                          datakirimanid: this.contohdata,
-                          datakirimantgllahir: this.paramtanggal_lahir,
-                          datakirimanappide: this.app_no_ide,
+                          kategori: this.kategori,
+                          id: this.paramId,
                         },
                       });
                     },
@@ -1068,9 +1066,8 @@ export class InitialDataEntryFixComponent implements OnInit {
                       this.paramtanggal_lahir = data.result.tanggal_lahir;
                       this.router.navigate(['/hasilprescreening'], {
                         queryParams: {
-                          datakirimanid: this.contohdata,
-                          datakirimantgllahir: this.paramtanggal_lahir,
-                          datakirimanappide: this.app_no_ide,
+                          kategori: this.kategori,
+                          id: this.paramId,
                         },
                       });
                     },
@@ -1171,9 +1168,8 @@ export class InitialDataEntryFixComponent implements OnInit {
 
               this.router.navigate(['/hasilprescreening'], {
                 queryParams: {
-                  datakirimanid: this.contohdata,
-                  datakirimantgllahir: this.paramtanggal_lahir,
-                  datakirimanappide: this.app_no_ide,
+                  kategori: this.kategori,
+                  id: this.paramId,
                 },
               });
             },
@@ -1264,9 +1260,8 @@ export class InitialDataEntryFixComponent implements OnInit {
 
                 this.router.navigate(['/hasilprescreening'], {
                   queryParams: {
-                    datakirimanid: this.contohdata,
-                    datakirimantgllahir: this.paramtanggal_lahir,
-                    datakirimanappide: this.app_no_ide,
+                    kategori: this.kategori,
+                    id: this.paramId,
                   },
                 });
               },
@@ -1356,9 +1351,8 @@ export class InitialDataEntryFixComponent implements OnInit {
 
                 this.router.navigate(['/hasilprescreening'], {
                   queryParams: {
-                    datakirimanid: this.contohdata,
-                    datakirimantgllahir: this.paramtanggal_lahir,
-                    datakirimanappide: this.app_no_ide,
+                    kategori: this.kategori,
+                    id: this.paramId,
                   },
                 });
               },

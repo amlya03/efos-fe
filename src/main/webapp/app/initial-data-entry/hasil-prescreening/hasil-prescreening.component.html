@@ -847,11 +847,11 @@
       </div>
     </div>
   </div>
-  <div style="color: #fff; text-align: center">
+  <!-- <div style="color: #fff; text-align: center">
     <button (click)="simpanstatusktp(dataEntry.status_perkawinan)" name="submit_button" class="fa fa-file-archive-o btn btn-dark">
       Simpan status KTP
     </button>
-  </div>
+  </div> -->
 
   <br />
   <br />
@@ -1035,11 +1035,13 @@
       <th></th>
     </tr>
     <tr *ngFor="let room of this.downloadSlik; let i = index">
-      <td><button class="fa fa-file-archive-o btn btn-dark" (click)="joinRoom(room.id_number)">Download</button></td>
+      <td>
+        <button class="fa fa-file-archive-o btn btn-dark" (click)="joinRoom(room.id_number)">Download Slik - {{ i + 1 }}</button>
+      </td>
     </tr>
   </table>
 
-  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <!-- <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
     <h3 style="color: #fff; text-align: center">Hasil Pengecekan Kredit_biro</h3>
   </div>
   <br />
@@ -1048,7 +1050,7 @@
     <div class="col-sm-10">
       <input type="text" class="form-control" placeholder="Hasil Score" />
     </div>
-  </div>
+  </div> -->
   <br />
   <br />
   <div class="row form-material">
@@ -1056,12 +1058,12 @@
       <button
         (click)="gotopersonalinfo(dataEntry.app_no_ide, dataEntry.curef)"
         name="submit_button"
-        class="fa fa-file-archive-o btn btn-dark"
+        class="fa fa-file-archive-o btn btn-warning"
       >
-        prosesssss
+        Proses Data
       </button>
 
-      <button name="submit_button" (click)="backtoide()" class="fa fa-file-archive-o btn btn-dark">Tolak</button>
+      <button name="submit_button" (click)="backtoide()" class="fa fa-file-archive-o btn btn-danger">Tolak</button>
 
       <!-- <div *ngIf="dataif != 00; else untukbutton">
       <button name="submit_button" class="fa fa-file-archive-o btn btn-dark">Tolak</button>

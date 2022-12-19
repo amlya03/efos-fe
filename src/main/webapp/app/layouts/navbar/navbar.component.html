@@ -58,10 +58,8 @@
                 <span
                   routerLink="/hasilprescreening"
                   [queryParams]="{
-                    datakirimanid: this.datakirimanid,
-                    datakirimantgllahir: this.datakirimantgllahir,
-                    datakirimanappide: this.datakirimanappide,
-                    datakirimanidcustomer: this.datakirimanidcustomer
+                    kategori: this.kategori,
+                    id: this.paramId
                   }"
                   hidden
                 ></span>
@@ -779,13 +777,7 @@
     *ngIf="
       router.url === '/initial-data-entryfix?kategori=' + this.kategori ||
       router.url === '/initial-data-entryfix?kategori=' + this.kategori + '&id=' + this.paramId ||
-      router.url ===
-        '/hasilprescreening?datakirimanid=' +
-          this.datakirimanid +
-          '&datakirimantgllahir=' +
-          this.datakirimantgllahir +
-          '&datakirimanappide=' +
-          this.datakirimanappide
+      router.url === '/hasilprescreening?kategori=' + this.kategori + '&id=' + this.paramId
     "
   >
     <a
@@ -804,9 +796,8 @@
     <a
       class="nav-item nav-link"
       [queryParams]="{
-        datakirimanid: this.datakirimanid,
-        datakirimantgllahir: this.datakirimantgllahir,
-        datakirimanappide: this.datakirimanappide
+        kategori: this.kategori,
+        id: this.paramId
       }"
       routerLink="/hasilprescreening"
       [routerLinkActive]="'active'"
