@@ -316,6 +316,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     //     });
   }
   untukSlik() {
+    this.getLoading(true);
     this.http
       .post<any>('http://10.20.34.178:8805/api/v1/efos-ide/slik_inquiry', {
         noAplikasi: this.dataEntry.app_no_ide,
@@ -326,10 +327,12 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
             destroy: true,
           });
           this.dtElement.ngOnDestroy;
-          this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe(data => {
-            this.listLajangSlik = data.result.dataSlikResult;
-            this.dtTrigger.next(data.result.dataSlikResult);
-            this.getLoading(false);
+          this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe({
+            next: data => {
+              this.listLajangSlik = data.result.dataSlikResult;
+              this.dtTrigger.next(data.result.dataSlikResult);
+              this.getLoading(false);
+            },
           });
         },
       });

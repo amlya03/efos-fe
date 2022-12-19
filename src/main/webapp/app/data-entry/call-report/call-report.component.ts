@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient } from '@angular/common/http';
 import { SessionStorageService } from 'ngx-webstorage';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataEntryService } from '../services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { getCallReportModel } from '../services/config/getCallReportModel.model';
@@ -273,6 +273,32 @@ export class CallReportComponent implements OnInit {
         this.untukSessionFullName +
         ' dan pemberi Informasi yang disebut nasabah adalah benar adanya ' +
         this.daWa1.nama;
+
+      const ValidasiAlamatTinggal = <FormControl>this.callReportForm.get('alamat_tinggal');
+      const ValidasiTanggalLahir = <FormControl>this.callReportForm.get('tanggal_lahir');
+      const ValidasiStatusKawin = <FormControl>this.callReportForm.get('status_kawin');
+      const ValidasiPendidikan = <FormControl>this.callReportForm.get('pendidikan');
+      const ValidasiKendaraan = <FormControl>this.callReportForm.get('kendaraan');
+      if (this.daWa1.status_perkawinan === 'Menikah') {
+        ValidasiAlamatTinggal.setValidators([Validators.required]);
+        ValidasiTanggalLahir.setValidators([Validators.required]);
+        ValidasiStatusKawin.setValidators([Validators.required]);
+        ValidasiPendidikan.setValidators([Validators.required]);
+        ValidasiKendaraan.setValidators([Validators.required]);
+      } else {
+        ValidasiAlamatTinggal.setValidators(null);
+        ValidasiTanggalLahir.setValidators(null);
+        ValidasiStatusKawin.setValidators(null);
+        ValidasiPendidikan.setValidators(null);
+        ValidasiKendaraan.setValidators(null);
+      }
+      setTimeout(() => {
+        ValidasiAlamatTinggal.updateValueAndValidity();
+        ValidasiTanggalLahir.updateValueAndValidity();
+        ValidasiStatusKawin.updateValueAndValidity();
+        ValidasiPendidikan.updateValueAndValidity();
+        ValidasiKendaraan.updateValueAndValidity();
+      }, 100);
     });
 
     // /////////////////////////Ref////////////////////////////////////

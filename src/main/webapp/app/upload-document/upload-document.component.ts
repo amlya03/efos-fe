@@ -61,6 +61,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   }
 
   load(): void {
+    this.getLoading(true);
     this.uploadSerices.getDaftarAplikasiUpload(this.userName).subscribe({
       next: data => {
         this.dataEntry = data.result;

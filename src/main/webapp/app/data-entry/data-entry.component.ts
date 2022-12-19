@@ -56,6 +56,7 @@ export class DataEntryComponent implements OnInit, OnDestroy {
   }
 
   load(): void {
+    this.getLoading(true);
     this.datEntryService.getDaftarAplikasiDataEntry().subscribe(data => {
       // console.warn(data);
       if (data.code === 200) {

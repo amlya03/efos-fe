@@ -41,6 +41,7 @@ export class InitialDataEntryComponent implements OnInit {
     this.load();
   }
   load(): void {
+    this.getLoading(true);
     this.initialDatEntryService.getDaftarAplikasiInitialDataEntry().subscribe(data => {
       if (data.code === 200) {
         this.initialDataEntry = (data as any).result;
