@@ -279,18 +279,69 @@ export class CallReportComponent implements OnInit {
       const ValidasiStatusKawin = <FormControl>this.callReportForm.get('status_kawin');
       const ValidasiPendidikan = <FormControl>this.callReportForm.get('pendidikan');
       const ValidasiKendaraan = <FormControl>this.callReportForm.get('kendaraan');
-      if (this.daWa1.status_perkawinan === 'Menikah') {
-        ValidasiAlamatTinggal.setValidators([Validators.required]);
-        ValidasiTanggalLahir.setValidators([Validators.required]);
-        ValidasiStatusKawin.setValidators([Validators.required]);
-        ValidasiPendidikan.setValidators([Validators.required]);
-        ValidasiKendaraan.setValidators([Validators.required]);
+      const ValidasiStatusAgunan = <FormControl>this.callReportForm.get('status_agunan');
+      const ValidasiDokumenAgunan = <FormControl>this.callReportForm.get('dokumen_agunan');
+      const ValidasiPosisiDokumen = <FormControl>this.callReportForm.get('posisi_dokumen');
+      const ValidasiTanggalWawancara = <FormControl>this.callReportForm.get('tanggal_wawancara');
+      const ValidasiTanggalAppraisal = <FormControl>this.callReportForm.get('tanggal_appraisal');
+      const ValidasiValidasiRekening = <FormControl>this.callReportForm.get('validasi_rekening');
+      const ValidasiEstimasiAngsuran = <FormControl>this.callReportForm.get('estimasi_angsuran');
+
+      const ValidasiTipePekerjaan = <FormControl>this.callReportForm.get('tipe_pekerjaan');
+      const ValidasiStatusPekerjaan = <FormControl>this.callReportForm.get('status_pekerjaan');
+      const ValidasiLamaBekerjaTahun = <FormControl>this.callReportForm.get('lama_bekerja_tahun');
+      const ValidasiLamaBekerjaBulan = <FormControl>this.callReportForm.get('lama_bekerja_bulan');
+      const ValidasiJabatanTerakhir = <FormControl>this.callReportForm.get('jabatan_terakhir');
+      const ValidasiNamaPerusahaan = <FormControl>this.callReportForm.get('nama_perusahaan');
+      const ValidasiBidangUsaha = <FormControl>this.callReportForm.get('bidang_usaha');
+      const ValidasiSkalaPerusahaan = <FormControl>this.callReportForm.get('skala_perusahaan');
+      const ValidasiJumlahKaryawan = <FormControl>this.callReportForm.get('jumlah_karyawan');
+      const ValidasiKondisiPandemi = <FormControl>this.callReportForm.get('kondisi_pandemi');
+      const ValidasiNoKontakHr = <FormControl>this.callReportForm.get('no_kontak_hr');
+
+      ValidasiAlamatTinggal.setValidators([Validators.required]);
+      ValidasiTanggalLahir.setValidators([Validators.required]);
+      ValidasiStatusKawin.setValidators([Validators.required]);
+      ValidasiPendidikan.setValidators([Validators.required]);
+      ValidasiKendaraan.setValidators([Validators.required]);
+      ValidasiTanggalWawancara.setValidators([Validators.required]);
+      ValidasiTanggalAppraisal.setValidators([Validators.required]);
+      ValidasiValidasiRekening.setValidators([Validators.required]);
+      ValidasiEstimasiAngsuran.setValidators([Validators.required]);
+
+      if (this.daWa1.kode_fasilitas_name === 'PTA') {
+        ValidasiStatusAgunan.setValidators(null);
+        ValidasiDokumenAgunan.setValidators(null);
+        ValidasiPosisiDokumen.setValidators(null);
       } else {
-        ValidasiAlamatTinggal.setValidators(null);
-        ValidasiTanggalLahir.setValidators(null);
-        ValidasiStatusKawin.setValidators(null);
-        ValidasiPendidikan.setValidators(null);
-        ValidasiKendaraan.setValidators(null);
+        ValidasiStatusAgunan.setValidators([Validators.required]);
+        ValidasiDokumenAgunan.setValidators([Validators.required]);
+        ValidasiPosisiDokumen.setValidators([Validators.required]);
+      }
+      if (this.daWa1.kategori_pekerjaan === 'Fix Income') {
+        ValidasiTipePekerjaan.setValidators([Validators.required]);
+        ValidasiStatusPekerjaan.setValidators([Validators.required]);
+        ValidasiLamaBekerjaTahun.setValidators([Validators.required]);
+        ValidasiLamaBekerjaBulan.setValidators([Validators.required]);
+        ValidasiJabatanTerakhir.setValidators([Validators.required]);
+        ValidasiNamaPerusahaan.setValidators([Validators.required]);
+        ValidasiBidangUsaha.setValidators([Validators.required]);
+        ValidasiSkalaPerusahaan.setValidators([Validators.required]);
+        ValidasiJumlahKaryawan.setValidators([Validators.required]);
+        ValidasiKondisiPandemi.setValidators([Validators.required]);
+        ValidasiNoKontakHr.setValidators([Validators.required]);
+      } else {
+        ValidasiTipePekerjaan.setValidators(null);
+        ValidasiStatusPekerjaan.setValidators(null);
+        ValidasiLamaBekerjaTahun.setValidators(null);
+        ValidasiLamaBekerjaBulan.setValidators(null);
+        ValidasiJabatanTerakhir.setValidators(null);
+        ValidasiNamaPerusahaan.setValidators(null);
+        ValidasiBidangUsaha.setValidators(null);
+        ValidasiSkalaPerusahaan.setValidators(null);
+        ValidasiJumlahKaryawan.setValidators(null);
+        ValidasiKondisiPandemi.setValidators(null);
+        ValidasiNoKontakHr.setValidators(null);
       }
       setTimeout(() => {
         ValidasiAlamatTinggal.updateValueAndValidity();
@@ -298,6 +349,21 @@ export class CallReportComponent implements OnInit {
         ValidasiStatusKawin.updateValueAndValidity();
         ValidasiPendidikan.updateValueAndValidity();
         ValidasiKendaraan.updateValueAndValidity();
+        ValidasiTanggalWawancara.updateValueAndValidity();
+        ValidasiTanggalAppraisal.updateValueAndValidity();
+        ValidasiValidasiRekening.updateValueAndValidity();
+        ValidasiEstimasiAngsuran.updateValueAndValidity();
+        ValidasiTipePekerjaan.updateValueAndValidity();
+        ValidasiStatusPekerjaan.updateValueAndValidity();
+        ValidasiLamaBekerjaTahun.updateValueAndValidity();
+        ValidasiLamaBekerjaBulan.updateValueAndValidity();
+        ValidasiJabatanTerakhir.updateValueAndValidity();
+        ValidasiNamaPerusahaan.updateValueAndValidity();
+        ValidasiBidangUsaha.updateValueAndValidity();
+        ValidasiSkalaPerusahaan.updateValueAndValidity();
+        ValidasiJumlahKaryawan.updateValueAndValidity();
+        ValidasiKondisiPandemi.updateValueAndValidity();
+        ValidasiNoKontakHr.updateValueAndValidity();
       }, 100);
     });
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
@@ -26,6 +26,8 @@ export type EntityArrayResponseDaWa1 = HttpResponse<ApiResponse>;
   styleUrls: ['./job-info.component.scss'],
 })
 export class JobInfoComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   jobInfoForm!: FormGroup;
   dataEntry: fetchAllDe = new fetchAllDe();
   jobInfo: getJob[] = [];
@@ -994,6 +996,7 @@ export class JobInfoComponent implements OnInit {
   }
 
   buatcreatejobinfo() {
+    this.getLoading(true);
     if (
       this.tipePekerjaanValidasi == '' ||
       this.payrollValidasi == '' ||
@@ -1119,12 +1122,14 @@ export class JobInfoComponent implements OnInit {
             if (response.code) {
               alert('Berhasil Menyimpan Data');
               setTimeout(() => {
+                this.getLoading(false);
                 window.location.reload();
               }, 1000);
             }
           },
           error: error => {
             if (error.error.code == 400) {
+              this.getLoading(false);
               alert('Gagal Menyimpan Data');
               alert(error.error.message);
             }
@@ -1249,5 +1254,10 @@ export class JobInfoComponent implements OnInit {
       event.preventDefault();
       return;
     }
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }
