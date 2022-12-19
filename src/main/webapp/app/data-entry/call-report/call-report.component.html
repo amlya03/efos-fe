@@ -822,6 +822,7 @@
                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
                 style="width: 20px; height: 20px"
                 type="checkbox"
+                [checked]="this.callReportForm.get('tanggal_wawancara')?.value != ''"
               />
               {{ this.contohtex }}
             </p>
@@ -873,7 +874,7 @@
         Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
       </button>
       <button
-        *ngIf="this.cekSimpanData == 1"
+        *ngIf="this.cekSimpanData == 1 || this.callReportForm.get('tanggal_wawancara')?.value != ''"
         type="submit"
         id="buttonsimpan"
         name="buttonsimpan"
