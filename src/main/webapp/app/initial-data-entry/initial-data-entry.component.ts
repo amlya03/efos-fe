@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
@@ -13,6 +13,8 @@ import { DataTableDirective } from 'angular-datatables';
   styleUrls: ['./initial-data-entry.component.scss'],
 })
 export class InitialDataEntryComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   datakiriman: string | undefined;
   initialDataEntry?: daftaraplikasimodelide[];
   kategori: any;
@@ -43,6 +45,7 @@ export class InitialDataEntryComponent implements OnInit {
       if (data.code === 200) {
         this.initialDataEntry = (data as any).result;
         this.dtTrigger.next(data.result);
+        this.getLoading(false);
       }
     });
   }
@@ -88,5 +91,9 @@ export class InitialDataEntryComponent implements OnInit {
         },
       });
     }
+  }
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

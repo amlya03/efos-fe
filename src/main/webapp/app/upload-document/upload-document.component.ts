@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -14,6 +14,8 @@ import { SessionStorageService } from 'ngx-webstorage';
   styleUrls: ['./upload-document.component.scss'],
 })
 export class UploadDocumentComponent implements OnInit, OnDestroy {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   title = 'EFOS';
   app_no_de!: string;
   tampungandataygdibawa: string | undefined;
@@ -59,12 +61,12 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   }
 
   load(): void {
-    this.uploadSerices.getDaftarAplikasiUpload(this.userName).subscribe(data => {
-      //console.warn(data);
-      // if (data.code === 200) {
-      this.dataEntry = data.result;
-      this.dtTrigger.next(this.dataEntry);
-      // }
+    this.uploadSerices.getDaftarAplikasiUpload(this.userName).subscribe({
+      next: data => {
+        this.dataEntry = data.result;
+        this.dtTrigger.next(this.dataEntry);
+        this.getLoading(false);
+      },
     });
   }
   ngOnDestroy(): void {
@@ -92,5 +94,10 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     this.kategoriPekerjaan = kategori;
     // alert(this.appNoDe);
     this.router.navigate(['/upload_document/upload_document_de'], { queryParams: { curef: this.curef, app_no_de: this.appNoDe } });
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

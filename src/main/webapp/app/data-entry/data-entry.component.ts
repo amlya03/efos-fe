@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { dataentrymodel } from '../data-entry/data-entry-model';
@@ -15,6 +15,8 @@ declare let $: any;
   styleUrls: ['./data-entry.component.scss'],
 })
 export class DataEntryComponent implements OnInit, OnDestroy {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   title = 'EFOS';
   app_no_de!: string;
   tampungandataygdibawa: any;
@@ -59,6 +61,7 @@ export class DataEntryComponent implements OnInit, OnDestroy {
       if (data.code === 200) {
         this.dataEntry = (data as any).result;
         this.dtTrigger.next(data.result);
+        this.getLoading(false);
       }
     });
   }
@@ -90,5 +93,10 @@ export class DataEntryComponent implements OnInit, OnDestroy {
     this.router.navigate(['/data-entry/personalinfo'], {
       queryParams: { curef: getCuref, statusPerkawinan: getStatus, app_no_de: getAppNoDe },
     });
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

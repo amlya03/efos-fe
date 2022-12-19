@@ -200,7 +200,7 @@ export class CallReportComponent implements OnInit {
           }
         }
       }, 300);
-      const retriveCallReport = {
+      let retriveCallReport = {
         alamat_tinggal: this.daWa.alamat_tinggal,
         tanggal_lahir: this.daWa.tanggal_lahir,
         status_kawin: this.daWa.status_kawin,

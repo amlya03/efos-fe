@@ -45,10 +45,11 @@
         <td style="text-align: center">
           <a type="button" (click)="viewdataentry(dataEntry.app_no_de, dataEntry.status_perkawinan, dataEntry.curef)">
             <fa-icon icon="eye"></fa-icon>
-            <br/>Detail
+            <br />Detail
           </a>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

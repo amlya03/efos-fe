@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
@@ -24,6 +24,8 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./hasil-prescreening.component.scss'],
 })
 export class HasilPrescreeningComponent implements OnInit, OnDestroy {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   daWa: any;
   paramId: any;
   hasildhn: any;
@@ -327,6 +329,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
           this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe(data => {
             this.listLajangSlik = data.result.dataSlikResult;
             this.dtTrigger.next(data.result.dataSlikResult);
+            this.getLoading(false);
           });
         },
       });
@@ -1348,5 +1351,10 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   // }
   joinRoom(jenis: any) {
     window.open('http://10.20.34.110:8805/api/v1/efos-ide/downloadSlik/' + jenis);
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

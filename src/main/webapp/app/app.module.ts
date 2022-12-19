@@ -69,6 +69,7 @@ import { MapisComponent } from './verification/daftar-aplikasi-isi-mapis/mapis/m
 import { InputScoringComponent } from './input-scoring/input-scoring.component';
 import { KomiteComponent } from './komite/komite.component';
 import { DetailKomiteComponent } from './komite/detail-komite/detail-komite.component';
+import { LoadingScreenComponent } from './layouts/loading-screen/loading-screen.component';
 
 @NgModule({
   imports: [
@@ -144,6 +145,7 @@ import { DetailKomiteComponent } from './komite/detail-komite/detail-komite.comp
     InputScoringComponent,
     KomiteComponent,
     DetailKomiteComponent,
+    LoadingScreenComponent,
   ],
   bootstrap: [MainComponent],
 })

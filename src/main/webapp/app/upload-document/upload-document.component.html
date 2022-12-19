@@ -67,7 +67,9 @@
         <td hidden>{{ dataEntry.kategori_pekerjaan === 'Fix Income' }}</td>
         <td style="text-align: center">
           <a
-            (click)="viewUpload(dataEntry.curef, dataEntry.app_no_de, dataEntry.program_pembiayaan, dataEntry.kategori_pekerjaan, dataEntry.nama)"
+            (click)="
+              viewUpload(dataEntry.curef, dataEntry.app_no_de, dataEntry.program_pembiayaan, dataEntry.kategori_pekerjaan, dataEntry.nama)
+            "
           >
             <fa-icon icon="ellipsis"></fa-icon><br />Detail
           </a>
@@ -76,3 +78,4 @@
     </tbody>
   </table>
 </div>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>
