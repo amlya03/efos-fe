@@ -833,13 +833,7 @@
         <label class="col-sm-4 col-form-label">Tanggal wawancara</label>
         <div class="col-md-8">
           <div class="form-group">
-            <input
-              class="form-control"
-              type="date"
-              id="tanggal_wawancara"
-              formControlName="tanggal_wawancara"
-              onchange="tanggalWawancara()"
-            />
+            <input class="form-control" type="date" id="tanggal_wawancara" formControlName="tanggal_wawancara" (change)="datepicker()" />
           </div>
         </div>
       </div>
@@ -886,6 +880,7 @@
         value="buttonsimpan"
         class="btn mb-1 btn-dark"
         [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+        [disabled]="this.tanggalWawancara > 60 || this.tanggalWawancara < 0"
       >
         Simpan Data<span class="btn-icon-right"><i class="fa fa-floppy-o"></i></span>
       </button>

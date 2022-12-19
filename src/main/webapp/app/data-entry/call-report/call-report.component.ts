@@ -50,6 +50,7 @@ export class CallReportComponent implements OnInit {
   checkboxCekskdp: any;
   legalitasUsaha: any;
   cekSimpanData = 0;
+  tanggalWawancara: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -293,6 +294,9 @@ export class CallReportComponent implements OnInit {
     this.dataEntryService.getFetchListSertifikat().subscribe(sertif => {
       this.listSertif = sertif.result;
     });
+    setTimeout(() => {
+      this.datepicker();
+    }, 1000);
   }
 
   goto() {
@@ -412,5 +416,17 @@ export class CallReportComponent implements OnInit {
           });
         },
       });
+  }
+
+  datepicker() {
+    const getValueTanggal = +new Date(this.callReportForm.get('tanggal_wawancara')?.value);
+    let tanggalExpNyaPakeKoma = (Date.now() - getValueTanggal) / 86400000;
+    this.tanggalWawancara = Math.floor(tanggalExpNyaPakeKoma);
+    // alert(this.tanggalWawancara)
+    if (this.tanggalWawancara > 60) {
+      alert('Tanggal Wawancara Tidak Boleh < 60 Hari Kerja, Tanggal Wawancara Sudah Expired');
+    } else if (this.tanggalWawancara < 0) {
+      alert('Tanggal Wawancara Tidak Boleh Lebih Hari Ini');
+    }
   }
 }
