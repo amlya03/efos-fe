@@ -146,7 +146,7 @@
         <input
           formControlName="npwp"
           type="tel"
-          onkeypress="return onlyNumberKey(event)"
+          (keypress)="keyKtpNpwp($event)"
           class="form-control"
           placeholder="NPWP"
           maxlength="16"
@@ -159,14 +159,7 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
       <div class="col-sm-8">
-        <textarea
-          formControlName="alamat_ktp"
-          class="form-control h-150px"
-          rows="6"
-          id="alamat_ktp"
-          name="alamat_ktp"
-          oninput="inputAlamat()"
-        ></textarea>
+        <textarea formControlName="alamat_ktp" class="form-control h-150px" rows="6" id="alamat_ktp" name="alamat_ktp"></textarea>
       </div>
     </div>
   </div>
@@ -276,7 +269,7 @@
         <input
           formControlName="rw"
           type="tel"
-          onkeypress="return onlyNumberKey(event)"
+          (keypress)="keyPressNumbers($event)"
           class="form-control"
           placeholder="RW"
           maxlength="3"
@@ -293,14 +286,12 @@
         <input
           formControlName="no_ktp"
           type="tel"
-          onkeypress="return onlyNumberKey(event)"
+          (keypress)="keyPressNumbers($event)"
           class="form-control"
           placeholder="Nomor KTP"
           maxlength="16"
           id="no_ktp"
           name="no_ktp"
-          oninvalid="this.setCustomValidity('harap masukan 16 digit no ktp')"
-          oninput="this.setCustomValidity('')"
         />
       </div>
     </div>
@@ -337,13 +328,13 @@
         <input
           formControlName="no_handphone"
           type="tel"
-          onkeypress="return onlyNumberKey(event)"
+          (keypress)="keyPressNumbers($event)"
           pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
           class="form-control"
           placeholder="Nomor Handphone"
           id="no_handphone"
           name="no_handphone"
-          oninvalid="this.setCustomValidity('nomor tidak sesuai')"
+          oninvalid="this.setCustomValidity('Nomor Tidak Sesuai')"
           oninput="this.setCustomValidity('')"
         />
       </div>
@@ -461,7 +452,7 @@
         <input
           formControlName="no_telepon"
           type="tel"
-          onkeypress="return onlyNumberKey(event)"
+          (keypress)="keyPressNumbers($event)"
           pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
           class="form-control"
           placeholder="Nomor Telephone"
@@ -619,7 +610,7 @@
           <input
             formControlName="kode_pos"
             type="tel"
-            onkeypress="return onlyNumberKey(event)"
+            (keypress)="keyPressNumbers($event)"
             maxlength="8"
             class="form-control"
             id="kode_pos_pekerjaan"
@@ -641,7 +632,7 @@
           formControlName="rt"
           maxlength="3"
           type="tel"
-          onkeypress="return onlyNumberKey(event)"
+          (keypress)="keyPressNumbers($event)"
           class="form-control"
           placeholder="RT"
           id="rt_perusahaan"
@@ -653,7 +644,7 @@
         <input
           formControlName="rw"
           type="tel"
-          onkeypress="return onlyNumberKey(event)"
+          (keypress)="keyPressNumbers($event)"
           class="form-control"
           placeholder="RW"
           maxlength="3"
@@ -669,18 +660,12 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
       <div class="col-sm-8">
-        <input
-          formControlName="jumlah_karyawan"
-          type="tel"
-          oninput="this.value = this.value.replace(/^0/g, '');"
-          onkeypress="return onlyNumberKey(event)"
-          maxlength="13"
-          class="form-control"
-          placeholder="Jumlah Karyawan"
-          id="jumlah_karyawan"
-          name="jumlah_karyawan"
-          maxlength="20"
-        />
+        <select class="form-control" id="jumlah_karyawan" formControlName="jumlah_karyawan">
+          <option value="">Pilih Jumlah Karyawan</option>
+          <option *ngFor="let jumlahKaryawan of jumlahKaryawanModel" value="{{ jumlahKaryawan.deskripsi }}">
+            {{ jumlahKaryawan.deskripsi }}
+          </option>
+        </select>
       </div>
     </div>
     <br />
@@ -690,7 +675,7 @@
         <input
           formControlName="npwp"
           type="tel"
-          onkeypress="return onlyNumberKey(event)"
+          (keypress)="keyKtpNpwp($event)"
           class="form-control"
           placeholder="NPWP"
           maxlength="16"
@@ -706,7 +691,7 @@
         <input
           formControlName="lama_bekerja_bulan"
           type="tel"
-          onkeypress="return onlyNumberKey(event)"
+          (keypress)="keyPressNumbers($event)"
           class="form-control"
           placeholder=""
           id="bulan_berdiri_perusahaan"
@@ -719,7 +704,7 @@
         <input
           formControlName="lama_bekerja_tahun"
           type="tel"
-          onkeypress="return onlyNumberKey(event)"
+          (keypress)="keyPressNumbers($event)"
           class="form-control"
           placeholder=""
           id="tahun_berdiri_perusahaan"
@@ -731,13 +716,14 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">No SIUP<span class="text-danger">*</span></label>
+      <label class="col-sm-3 col-form-label" [hidden]="this.jobForm.get('tipe_pekerjaan')?.value === '4'">Nomor SIUP</label>
+      <label class="col-sm-3 col-form-label" *ngIf="this.jobForm.get('tipe_pekerjaan')?.value === '4'">Nomor SIP</label>
       <div class="col-sm-8">
         <input
           formControlName="no_siup"
           type="tel"
           oninput="this.value = this.value.replace(/^0/g, '');"
-          onkeypress="return onlyNumberKey(event)"
+          (keypress)="keyPressNumbers($event)"
           class="form-control"
           placeholder="Nomor Siup"
           id="no_siup"
@@ -767,7 +753,7 @@
 <div
   class="row"
   [formGroup]="jobForm"
-  *ngIf="kategori == 2 && +this.jobForm.get('lama_bekerja_bulan')?.value + +this.jobForm.get('lama_bekerja_tahun')?.value * 12 < 36"
+  *ngIf="kategori == 2 && +this.jobForm.get('lama_bekerja_bulan')?.value + +this.jobForm.get('lama_bekerja_tahun')?.value * 12 < 24"
 >
   <h5>Pekerjaan Sebelumnya</h5>
   <div class="col">
@@ -879,7 +865,7 @@
         <input
           formControlName="lama_bekerja_bulan_sebelum"
           type="tel"
-          onkeypress="return onlyNumberKey(event)"
+          (keypress)="keyPressNumbers($event)"
           class="form-control"
           maxlength="2"
           placeholder=""
@@ -892,7 +878,7 @@
         <input
           formControlName="lama_bekerja_tahun_sebelum"
           type="tel"
-          onkeypress="return onlyNumberKey(event)"
+          (keypress)="keyPressNumbers($event)"
           class="form-control"
           maxlength="2"
           placeholder=""
@@ -1040,7 +1026,7 @@
           <input
             formControlName="npwp_pasangan"
             type="tel"
-            onkeypress="return onlyNumberKey(event)"
+            (keypress)="keyKtpNpwp($event)"
             class="form-control"
             placeholder="NPWP"
             maxlength="16"
@@ -1159,7 +1145,7 @@
             <input
               formControlName="kode_pos_pasangan"
               type="tel"
-              onkeypress="return onlyNumberKey(event)"
+              (keypress)="keyPressNumbers($event)"
               maxlength="8"
               class="form-control"
               id="kode_pos_pasangan"
@@ -1185,7 +1171,7 @@
             formControlName="rt_pasangan"
             maxlength="3"
             type="tel"
-            onkeypress="return onlyNumberKey(event)"
+            (keypress)="keyPressNumbers($event)"
             class="form-control"
             placeholder="RT"
             id="rt_pasangan"
@@ -1197,7 +1183,7 @@
           <input
             formControlName="rw_pasangan"
             type="tel"
-            onkeypress="return onlyNumberKey(event)"
+            (keypress)="keyPressNumbers($event)"
             class="form-control"
             placeholder="RW"
             id="rw_pasangan"
@@ -1214,7 +1200,7 @@
           <input
             formControlName="no_ktp_pasangan"
             type="tel"
-            onkeypress="return onlyNumberKey(event)"
+            (keypress)="keyKtpNpwp($event)"
             class="form-control"
             placeholder="Nomor KTP"
             id="no_ktp_pasangan"
@@ -1294,6 +1280,12 @@
       value="proses"
       (click)="gotoprescreaning()"
       type="button"
+      [disabled]="
+        ideForm.invalid ||
+        jobForm.invalid ||
+        (this.ideForm.get('status_perkawinan')?.value === 'Lajang' && this.ideForm.get('usia')?.value < 21) ||
+          (this.ideForm.get('status_perkawinan')?.value === 'Menikah' && this.ideForm.get('usia')?.value < 18)
+      "
     >
       Proses Data
     </button>
@@ -1303,6 +1295,12 @@
       name="simpan"
       value="simpan"
       (click)="gotodaftaraplikasiide()"
+      [disabled]="
+        ideForm.invalid ||
+        jobForm.invalid ||
+        (this.ideForm.get('status_perkawinan')?.value === 'Lajang' && this.ideForm.get('usia')?.value < 21) ||
+          (this.ideForm.get('status_perkawinan')?.value === 'Menikah' && this.ideForm.get('usia')?.value < 18)
+      "
       type="button"
     >
       Simpan data

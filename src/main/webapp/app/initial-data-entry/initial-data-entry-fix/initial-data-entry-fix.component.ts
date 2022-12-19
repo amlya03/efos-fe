@@ -7,7 +7,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { InitialDataEntryService } from '../services/initial-data-entry.service';
 import { refStatusPerkawinan } from 'app/verification/service/config/refStatusPerkawinan.model';
 import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { SessionStorageService } from 'ngx-webstorage';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { modelCustomer } from '../services/config/modelCustomer.model';
@@ -18,12 +18,17 @@ import { refSektor } from '../services/config/refSektor.model';
 import { modelJobIde } from '../services/config/modelJobIde.model';
 import { refJenisPekerjaan } from '../../data-entry/services/config/refJenisPekerjaan.model';
 import { refJabatan } from '../../verification/service/config/refJabatan.model';
+import { Subscription } from 'rxjs';
+import { refListJumlahKaryawan } from '../../data-entry/services/config/refListJumlahKaryawan.model';
+
 @Component({
   selector: 'jhi-initial-data-entry-fix',
   templateUrl: './initial-data-entry-fix.component.html',
   styleUrls: ['./initial-data-entry-fix.component.scss'],
 })
 export class InitialDataEntryFixComponent implements OnInit {
+  subscription?: Subscription;
+  jumlahKaryawanModel: refListJumlahKaryawan[] = [];
   app_no_ide: any;
   curef: any;
   paramCuref: any;
@@ -108,6 +113,27 @@ export class InitialDataEntryFixComponent implements OnInit {
   kelurahanD: any;
   saveCabang: any;
   // ///////////////////////////////////////////
+  // /////////////////////////////////////////////
+  validasiNamaPasangan: any;
+  validasiJenis_kelamin_pasangan: any;
+  validasiTanggal_lahir_pasangan: any;
+  validasiTempat_lahir_pasangan: any;
+  validasiAgama_pasangan: any;
+  validasiPendidikan_pasangan: any;
+  validasiKewarganegaraan_pasangan: any;
+  validasiNama_ibu_kandung_pasangan: any;
+  validasiAlamat_ktp_pasangan: any;
+  validasiProvinsi_pasangan: any;
+  validasiKabkota_pasangan: any;
+  validasiKecamatan_pasangan: any;
+  validasiKelurahan_pasangan: any;
+  validasiKode_pos_pasangan: any;
+  validasiRt_pasangan: any;
+  validasiRw_pasangan: any;
+  validasiNo_ktp_pasangan: any;
+  validasiTanggal_terbit_ktp_pasangan: any;
+  validasiNo_handphone_pasangan: any;
+  // ////////////////////////////////////////////
   constructor(
     protected dataCalonNasabah: ServiceVerificationService,
     protected http: HttpClient,
@@ -130,30 +156,30 @@ export class InitialDataEntryFixComponent implements OnInit {
     this.saveCabang = this.sessionServices.retrieve('sessionKdCabang');
     this.load();
     this.ideForm = this.formBuilder.group({
-      nama: '',
-      jenis_kelamin: '',
-      tanggal_lahir: '',
+      nama: ['', Validators.required],
+      jenis_kelamin: ['', Validators.required],
+      tanggal_lahir: ['', Validators.required],
       usia: '',
-      tempat_lahir: '',
-      status_perkawinan: '',
-      agama: '',
-      pendidikan: '',
-      kewarganegaraan: '',
-      nama_ibu_kandung: '',
+      tempat_lahir: ['', Validators.required],
+      status_perkawinan: ['', Validators.required],
+      agama: ['', Validators.required],
+      pendidikan: ['', Validators.required],
+      kewarganegaraan: ['', Validators.required],
+      nama_ibu_kandung: ['', Validators.required],
       npwp: '',
-      alamat_ktp: '',
-      provinsi: '',
-      kabkota: '',
-      kecamatan: '',
-      kelurahan: '',
-      kode_pos: '',
-      rt: '',
-      rw: '',
-      no_ktp: '',
-      tanggal_terbit_ktp: '',
+      alamat_ktp: ['', Validators.required],
+      provinsi: ['', Validators.required],
+      kabkota: ['', Validators.required],
+      kecamatan: ['', Validators.required],
+      kelurahan: ['', Validators.required],
+      kode_pos: ['', Validators.required],
+      rt: ['', Validators.required],
+      rw: ['', Validators.required],
+      no_ktp: ['', Validators.required],
+      tanggal_terbit_ktp: ['', Validators.required],
       tanggal_exp_ktp: '',
       status_ktp: '1',
-      no_handphone: '',
+      no_handphone: ['', Validators.required],
 
       // /////////////// Pasangan /////////////////////////////////
       nama_pasangan: '',
@@ -180,6 +206,90 @@ export class InitialDataEntryFixComponent implements OnInit {
       tanggal_exp_ktp_pasangan: '',
       status_ktp_pasangan: '1',
       no_handphone_pasangan: '',
+    });
+
+    const validasiStatusPerkawinan = <FormControl>this.ideForm.get('status_perkawinan');
+    this.validasiNamaPasangan = <FormControl>this.ideForm.get('nama_pasangan');
+    this.validasiJenis_kelamin_pasangan = <FormControl>this.ideForm.get('jenis_kelamin_pasangan');
+    this.validasiTanggal_lahir_pasangan = <FormControl>this.ideForm.get('tanggal_lahir_pasangan');
+    this.validasiTempat_lahir_pasangan = <FormControl>this.ideForm.get('tempat_lahir_pasangan');
+    this.validasiAgama_pasangan = <FormControl>this.ideForm.get('agama_pasangan');
+    this.validasiPendidikan_pasangan = <FormControl>this.ideForm.get('pendidikan_pasangan');
+    this.validasiKewarganegaraan_pasangan = <FormControl>this.ideForm.get('kewarganegaraan_pasangan');
+    this.validasiNama_ibu_kandung_pasangan = <FormControl>this.ideForm.get('nama_ibu_kandung_pasangan');
+    this.validasiAlamat_ktp_pasangan = <FormControl>this.ideForm.get('alamat_ktp_pasangan');
+    // this.validasiProvinsi_pasangan = <FormControl>this.ideForm.get('provinsi_pasangan');
+    // this.validasiKabkota_pasangan = <FormControl>this.ideForm.get('kabkota_pasangan');
+    // this.validasiKecamatan_pasangan = <FormControl>this.ideForm.get('kecamatan_pasangan');
+    // this.validasiKelurahan_pasangan = <FormControl>this.ideForm.get('kelurahan_pasangan');
+    this.validasiKode_pos_pasangan = <FormControl>this.ideForm.get('kode_pos_pasangan');
+    this.validasiRt_pasangan = <FormControl>this.ideForm.get('rt_pasangan');
+    this.validasiRw_pasangan = <FormControl>this.ideForm.get('rw_pasangan');
+    this.validasiNo_ktp_pasangan = <FormControl>this.ideForm.get('no_ktp_pasangan');
+    this.validasiTanggal_terbit_ktp_pasangan = <FormControl>this.ideForm.get('tanggal_terbit_ktp_pasangan');
+    this.validasiNo_handphone_pasangan = <FormControl>this.ideForm.get('no_handphone_pasangan');
+
+    this.subscription = validasiStatusPerkawinan.valueChanges.subscribe(value => {
+      if (value === 'Menikah') {
+        this.validasiNamaPasangan.setValidators([Validators.required]);
+        this.validasiJenis_kelamin_pasangan.setValidators([Validators.required]);
+        this.validasiTanggal_lahir_pasangan.setValidators([Validators.required]);
+        this.validasiTempat_lahir_pasangan.setValidators([Validators.required]);
+        this.validasiAgama_pasangan.setValidators([Validators.required]);
+        this.validasiPendidikan_pasangan.setValidators([Validators.required]);
+        this.validasiKewarganegaraan_pasangan.setValidators([Validators.required]);
+        this.validasiNama_ibu_kandung_pasangan.setValidators([Validators.required]);
+        this.validasiAlamat_ktp_pasangan.setValidators([Validators.required]);
+        // this.validasiProvinsi_pasangan.setValidators([Validators.required]);
+        // this.validasiKabkota_pasangan.setValidators([Validators.required]);
+        // this.validasiKecamatan_pasangan.setValidators([Validators.required]);
+        // this.validasiKelurahan_pasangan.setValidators([Validators.required]);
+        this.validasiKode_pos_pasangan.setValidators([Validators.required]);
+        this.validasiRt_pasangan.setValidators([Validators.required]);
+        this.validasiRw_pasangan.setValidators([Validators.required]);
+        this.validasiNo_ktp_pasangan.setValidators([Validators.required]);
+        this.validasiTanggal_terbit_ktp_pasangan.setValidators([Validators.required]);
+        this.validasiNo_handphone_pasangan.setValidators([Validators.required]);
+      } else {
+        this.validasiNamaPasangan.setValidators(null);
+        this.validasiJenis_kelamin_pasangan.setValidators(null);
+        this.validasiTanggal_lahir_pasangan.setValidators(null);
+        this.validasiTempat_lahir_pasangan.setValidators(null);
+        this.validasiAgama_pasangan.setValidators(null);
+        this.validasiPendidikan_pasangan.setValidators(null);
+        this.validasiKewarganegaraan_pasangan.setValidators(null);
+        this.validasiNama_ibu_kandung_pasangan.setValidators(null);
+        this.validasiAlamat_ktp_pasangan.setValidators(null);
+        // this.validasiProvinsi_pasangan.setValidators(null);
+        // this.validasiKabkota_pasangan.setValidators(null);
+        // this.validasiKecamatan_pasangan.setValidators(null);
+        // this.validasiKelurahan_pasangan.setValidators(null);
+        this.validasiKode_pos_pasangan.setValidators(null);
+        this.validasiRt_pasangan.setValidators(null);
+        this.validasiRw_pasangan.setValidators(null);
+        this.validasiNo_ktp_pasangan.setValidators(null);
+        this.validasiTanggal_terbit_ktp_pasangan.setValidators(null);
+        this.validasiNo_handphone_pasangan.setValidators(null);
+      }
+      this.validasiNamaPasangan.updateValueAndValidity();
+      this.validasiJenis_kelamin_pasangan.updateValueAndValidity();
+      this.validasiTanggal_lahir_pasangan.updateValueAndValidity();
+      this.validasiTempat_lahir_pasangan.updateValueAndValidity();
+      this.validasiAgama_pasangan.updateValueAndValidity();
+      this.validasiPendidikan_pasangan.updateValueAndValidity();
+      this.validasiKewarganegaraan_pasangan.updateValueAndValidity();
+      this.validasiNama_ibu_kandung_pasangan.updateValueAndValidity();
+      this.validasiAlamat_ktp_pasangan.updateValueAndValidity();
+      // this.validasiProvinsi_pasangan.updateValueAndValidity();
+      // this.validasiKabkota_pasangan.updateValueAndValidity();
+      // this.validasiKecamatan_pasangan.updateValueAndValidity();
+      // this.validasiKelurahan_pasangan.updateValueAndValidity();
+      this.validasiKode_pos_pasangan.updateValueAndValidity();
+      this.validasiRt_pasangan.updateValueAndValidity();
+      this.validasiRw_pasangan.updateValueAndValidity();
+      this.validasiNo_ktp_pasangan.updateValueAndValidity();
+      this.validasiTanggal_terbit_ktp_pasangan.updateValueAndValidity();
+      this.validasiNo_handphone_pasangan.updateValueAndValidity();
     });
 
     this.jobForm = this.formBuilder.group({
@@ -216,9 +326,106 @@ export class InitialDataEntryFixComponent implements OnInit {
       lama_bekerja_bulan_sebelum: '0',
       lama_bekerja_tahun_sebelum: '0',
     });
+
+    const ValidasiNamaPerusahaaan = <FormControl>this.jobForm.get('nama_perusahaan');
+    const ValidasiTipePerusahaan = <FormControl>this.jobForm.get('tipe_perusahaan');
+    const ValidasiTipePekerjaan = <FormControl>this.jobForm.get('tipe_pekerjaan');
+    const ValidasiKepemilikanPerusahaan = <FormControl>this.jobForm.get('kepemilikan_perusahaan');
+    const ValidasiPemilikUsaha = <FormControl>this.jobForm.get('pemilik_usaha');
+    const ValidasiNoTelepon = <FormControl>this.jobForm.get('no_telepon');
+    // const ValidasiJenisBidang = <FormControl>this.jobForm.get('jenis_bidang');
+    // const  = <FormControl>this.jobForm.get('sektor_ekonomi');
+    const ValidasiAlamatPerusahaan = <FormControl>this.jobForm.get('alamat_perusahaan');
+    // const ValidasiProvinsiPerusahaan = <FormControl>this.jobForm.get('provinsi');
+    // const ValidasiKotaPerusahaan = <FormControl>this.jobForm.get('kabkota');
+    // const ValidasiKecamatanPerusahaan = <FormControl>this.jobForm.get('kecamatan');
+    // const ValidasiKelurahanPerusahaan = <FormControl>this.jobForm.get('kelurahan');
+    const ValidasiKodePosPerusahaan = <FormControl>this.jobForm.get('kode_pos');
+    const ValidasiRtPerusahaan = <FormControl>this.jobForm.get('rt');
+    const ValidasiRwPerusahaan = <FormControl>this.jobForm.get('rw');
+    const ValidasiJumlahKaryawan = <FormControl>this.jobForm.get('jumlah_karyawan');
+    const ValidasiLamaBekerjaBulan = <FormControl>this.jobForm.get('lama_bekerja_bulan');
+    const ValidasiLamaBekerjaTahun = <FormControl>this.jobForm.get('lama_bekerja_tahun');
+    const ValidasiNoSiup = <FormControl>this.jobForm.get('no_siup');
+    const ValidasiBarangJasa = <FormControl>this.jobForm.get('barang_jasa');
+    const ValidasiPosisi = <FormControl>this.jobForm.get('posisi');
+    if (this.kategori === '2') {
+      ValidasiNamaPerusahaaan.setValidators([Validators.required]);
+      ValidasiTipePerusahaan.setValidators([Validators.required]);
+      ValidasiTipePekerjaan.setValidators([Validators.required]);
+      ValidasiKepemilikanPerusahaan.setValidators([Validators.required]);
+      ValidasiPemilikUsaha.setValidators([Validators.required]);
+      ValidasiNoTelepon.setValidators([Validators.required]);
+      // ValidasiJenisBidang.setValidators([Validators.required]);
+      // ValidasiSektorEkonomi.setValidators([Validators.required]);
+      ValidasiAlamatPerusahaan.setValidators([Validators.required]);
+      // ValidasiProvinsiPerusahaan.setValidators([Validators.required]);
+      // ValidasiKotaPerusahaan.setValidators([Validators.required]);
+      // ValidasiKecamatanPerusahaan.setValidators([Validators.required]);
+      // ValidasiKelurahanPerusahaan.setValidators([Validators.required]);
+      ValidasiKodePosPerusahaan.setValidators([Validators.required]);
+      ValidasiRtPerusahaan.setValidators([Validators.required]);
+      ValidasiRwPerusahaan.setValidators([Validators.required]);
+      ValidasiJumlahKaryawan.setValidators([Validators.required]);
+      ValidasiLamaBekerjaBulan.setValidators([Validators.required]);
+      ValidasiLamaBekerjaTahun.setValidators([Validators.required]);
+      ValidasiNoSiup.setValidators([Validators.required]);
+      ValidasiBarangJasa.setValidators([Validators.required]);
+      ValidasiPosisi.setValidators([Validators.required]);
+    } else {
+      ValidasiNamaPerusahaaan.setValidators(null);
+      ValidasiTipePerusahaan.setValidators(null);
+      ValidasiTipePekerjaan.setValidators(null);
+      ValidasiKepemilikanPerusahaan.setValidators(null);
+      ValidasiPemilikUsaha.setValidators(null);
+      ValidasiNoTelepon.setValidators(null);
+      // ValidasiJenisBidang.setValidators(null);
+      // ValidasiSektorEkonomi.setValidators(null);
+      ValidasiAlamatPerusahaan.setValidators(null);
+      // ValidasiProvinsiPerusahaan.setValidators(null);
+      // ValidasiKotaPerusahaan.setValidators(null);
+      // ValidasiKecamatanPerusahaan.setValidators(null);
+      // ValidasiKelurahanPerusahaan.setValidators(null);
+      ValidasiKodePosPerusahaan.setValidators(null);
+      ValidasiRtPerusahaan.setValidators(null);
+      ValidasiRwPerusahaan.setValidators(null);
+      ValidasiJumlahKaryawan.setValidators(null);
+      ValidasiLamaBekerjaBulan.setValidators(null);
+      ValidasiLamaBekerjaTahun.setValidators(null);
+      ValidasiNoSiup.setValidators(null);
+      ValidasiBarangJasa.setValidators(null);
+      ValidasiPosisi.setValidators(null);
+    }
+    setTimeout(() => {
+      ValidasiNamaPerusahaaan.updateValueAndValidity();
+      ValidasiTipePerusahaan.updateValueAndValidity();
+      ValidasiTipePekerjaan.updateValueAndValidity();
+      ValidasiKepemilikanPerusahaan.updateValueAndValidity();
+      ValidasiPemilikUsaha.updateValueAndValidity();
+      ValidasiNoTelepon.updateValueAndValidity();
+      // ValidasiJenisBidang.updateValueAndValidity();
+      // ValidasiSektorEkonomi.updateValueAndValidity();
+      ValidasiAlamatPerusahaan.updateValueAndValidity();
+      // ValidasiProvinsiPerusahaan.updateValueAndValidity();
+      // ValidasiKotaPerusahaan.updateValueAndValidity();
+      // ValidasiKecamatanPerusahaan.updateValueAndValidity();
+      // ValidasiKelurahanPerusahaan.updateValueAndValidity();
+      ValidasiKodePosPerusahaan.updateValueAndValidity();
+      ValidasiRtPerusahaan.updateValueAndValidity();
+      ValidasiRwPerusahaan.updateValueAndValidity();
+      ValidasiJumlahKaryawan.updateValueAndValidity();
+      ValidasiLamaBekerjaBulan.updateValueAndValidity();
+      ValidasiLamaBekerjaTahun.updateValueAndValidity();
+      ValidasiNoSiup.updateValueAndValidity();
+      ValidasiBarangJasa.updateValueAndValidity();
+      ValidasiPosisi.updateValueAndValidity();
+    }, 300);
   }
 
   load(): void {
+    this.dataEntryService.getFetchListJumlahKaryawan().subscribe(data => {
+      this.jumlahKaryawanModel = data.result;
+    });
     this.dataEntryService.getFetchListJenisPekerjaan().subscribe(data => {
       this.listJabatan = data.result;
     });
@@ -2016,21 +2223,36 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   submitBday(tanggal: any) {
-    var Q4A = '';
-    var Bdate = tanggal;
-    var Bday = +new Date(Bdate);
+    let Q4A = '';
+    let Bdate = tanggal;
+    let Bday = +new Date(Bdate);
     Q4A += +~~((Date.now() - Bday) / 31557600000);
-    var theBday = document.getElementById('umur');
     this.ideForm.get('usia')?.setValue(Q4A);
+
+    setTimeout(() => {
+      if (
+        (this.ideForm.get('status_perkawinan')?.value === 'Lajang' && this.ideForm.get('usia')?.value < 21) ||
+        (this.ideForm.get('status_perkawinan')?.value === '' && this.ideForm.get('usia')?.value < 21)
+      ) {
+        alert('Usia Minimal 21 Tahun');
+      } else if (this.ideForm.get('status_perkawinan')?.value === 'Menikah' && this.ideForm.get('usia')?.value < 18) {
+        alert('Usia Minimal 18 Tahun');
+      }
+    }, 100);
   }
 
   submitBdayp(tanggal: any) {
-    var Q4A = '';
-    var Bdate = tanggal;
-    var Bday = +new Date(Bdate);
+    let Q4A = '';
+    let Bdate = tanggal;
+    let Bday = +new Date(Bdate);
     Q4A += +~~((Date.now() - Bday) / 31557600000);
-    var theBday = document.getElementById('umur');
     this.ideForm.get('usia_pasangan')?.setValue(Q4A);
+
+    setTimeout(() => {
+      if (this.ideForm.get('status_perkawinan')?.value === 'Menikah' && this.ideForm.get('usia_pasangan')?.value < 18) {
+        alert('Usia Minimal 18 Tahun');
+      }
+    }, 100);
   }
 
   jenisbidangselect(value: any) {
@@ -2145,6 +2367,32 @@ export class InitialDataEntryFixComponent implements OnInit {
       this.ideForm.get('kode_pos_pasangan')?.setValue('');
       this.ideForm.get('rt_pasangan')?.setValue('');
       this.ideForm.get('rw_pasangan')?.setValue('');
+    }
+  }
+
+  // Only Numbers
+  keyPressNumbers(event?: any): void {
+    const charCode = event.which ? event.which : event.keyCode;
+    // charCode.toLocaleString('id-ID',{style: 'currency', currency:'IDR'})
+    // Only Numbers 0-9
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+      return;
+    }
+  }
+  // Baut KTP dan NPWP
+  keyKtpNpwp(event?: any): void {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode < 48 || charCode > 57) {
+      event.replace(/^0/g, '');
+      // event.preventDefault();
+      return;
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 }
