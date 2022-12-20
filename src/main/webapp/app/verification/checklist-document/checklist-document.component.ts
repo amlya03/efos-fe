@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { uploadDocument } from 'app/upload-document/services/config/uploadDocument.model';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { DataTableDirective } from 'angular-datatables';
@@ -17,6 +16,12 @@ import { DataEntryService } from 'app/data-entry/services/data-entry.service';
   styleUrls: ['./checklist-document.component.scss'],
 })
 export class ChecklistDocumentComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
   uploadDocument: uploadDocument[] = new Array<uploadDocument>();
   uploadAgunan: uploadDocument[] = new Array<uploadDocument>();
   dataEntry: fetchAllDe = new fetchAllDe();
@@ -78,6 +83,7 @@ export class ChecklistDocumentComponent implements OnInit {
   }
 
   load(): void {
+    this.getLoading(true);
     // ambil semua data DE
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
@@ -85,16 +91,22 @@ export class ChecklistDocumentComponent implements OnInit {
     });
 
     // DE
-    this.uploadService.getListUploadDocument(this.curef, 'DE').subscribe(data => {
-      this.uploadDocument = data.result;
-      // alert(this.uploadDocument);
-      this.dtTrigger.next(data.result);
+    this.uploadService.getListUploadDocument(this.curef, 'DE').subscribe({
+      next: data => {
+        this.uploadDocument = data.result;
+        // alert(this.uploadDocument);
+        this.dtTrigger.next(data.result);
+        this.getLoading(false);
+      },
     });
 
     // Agunan
-    this.uploadService.getListUploadDocument(this.curef, 'DEA').subscribe(data => {
-      // console.warn('meeting head ', data.result);
-      this.uploadAgunan = data.result;
+    this.uploadService.getListUploadDocument(this.curef, 'DEA').subscribe({
+      next: data => {
+        // console.warn('meeting head ', data.result);
+        this.uploadAgunan = data.result;
+        this.getLoading(false);
+      },
     });
   }
 

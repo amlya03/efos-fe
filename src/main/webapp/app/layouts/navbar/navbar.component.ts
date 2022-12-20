@@ -12,6 +12,7 @@ import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
 
 @Component({
   selector: 'jhi-navbar',
@@ -57,7 +58,8 @@ export class NavbarComponent implements OnInit {
     private profileService: ProfileService,
     public router: Router,
     private route: ActivatedRoute,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    protected verificationServices: ServiceVerificationService
   ) {
     if (VERSION) {
       this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`;
@@ -85,7 +87,12 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // alert(this.kategori)
+    this.verificationServices.postNavbar(this.SessionStorageService.retrieve('sessionRole')).subscribe({
+      next: data => {
+        console.warn(data);
+      },
+    });
+
     this.entitiesNavbarItems = EntityNavbarItems;
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;

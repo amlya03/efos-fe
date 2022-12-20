@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
@@ -18,6 +18,12 @@ import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model
   styleUrls: ['./daftar-aplikasi-waiting-update-status.component.scss'],
 })
 export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDestroy {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
   title = 'EFOS';
   daWuS?: daWuS[];
   dataEntry: fetchAllDe = new fetchAllDe();
@@ -71,6 +77,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
   }
 
   load(): void {
+    this.getLoading(true);
     // ///////////////////////// LIst Cari Fasilitas //////////////////////
     this.dataEntryServices.getFetchKodeFasilitas().subscribe(data => {
       this.listFasilitas = data.result;
@@ -83,6 +90,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
       if (data.code === 200) {
         this.daWuS = data.result;
         this.dtTrigger.next(this.daWuS);
+        this.getLoading(false);
       }
     });
   }

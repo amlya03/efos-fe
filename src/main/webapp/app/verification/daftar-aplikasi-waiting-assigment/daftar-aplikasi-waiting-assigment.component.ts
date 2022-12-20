@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
@@ -19,6 +19,12 @@ declare let $: any;
   styleUrls: ['./daftar-aplikasi-waiting-assigment.component.scss'],
 })
 export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestroy {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
   title = 'EFOS';
   numbers: Array<number> = [];
   daWa?: daWaModel[] = [];
@@ -59,6 +65,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
     this.load();
   }
   load(): void {
+    this.getLoading(true);
     // ///////////////////////// LIst Cari Fasilitas //////////////////////
     this.dataEntryServices.getFetchKodeFasilitas().subscribe(data => {
       this.listFasilitas = data.result;
@@ -71,6 +78,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
       if (data.code === 200) {
         this.daWa = data.result;
         this.dtTrigger.next(this.daWa);
+        this.getLoading(false);
       }
     });
     // ////////Aprisal/////
