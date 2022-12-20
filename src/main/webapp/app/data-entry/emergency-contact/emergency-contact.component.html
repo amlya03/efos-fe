@@ -167,7 +167,6 @@
             id="no_telepon"
             formControlName="no_telepon"
             maxlength="12"
-            required
           />
         </div>
       </div>
@@ -216,6 +215,7 @@
         value="simpandata"
         class="btn btn-dark"
         [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+        [disabled]="emergencyForm.invalid"
       >
         Simpan Data
       </button>

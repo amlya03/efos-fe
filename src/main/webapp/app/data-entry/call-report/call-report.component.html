@@ -881,7 +881,7 @@
         value="buttonsimpan"
         class="btn mb-1 btn-dark"
         [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-        [disabled]="this.tanggalWawancara > 60 || this.tanggalWawancara < 0"
+        [disabled]="this.tanggalWawancara > 60 || this.tanggalWawancara < 0 || callReportForm.invalid"
       >
         Simpan Data<span class="btn-icon-right"><i class="fa fa-floppy-o"></i></span>
       </button>

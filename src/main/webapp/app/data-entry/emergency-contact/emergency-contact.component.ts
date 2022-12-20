@@ -6,7 +6,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { DataEntryService } from '../services/data-entry.service';
 import { SessionStorageService } from 'ngx-webstorage';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fetchAllDe } from '../../upload-document/services/config/fetchAllDe.model';
 import { getEmergencyByCurefModel } from '../services/config/getEmergencyByCurefModel.model';
 
@@ -77,25 +77,104 @@ export class EmergencyContactComponent implements OnInit {
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.emergencyForm = this.formBuilder.group({
-      nama: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-      alamat: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      nama: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      alamat: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
       // ///////////////////////////////////////
-      provinsi: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-      kabkota: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-      kecamatan: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-      kelurahan: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-      kode_pos: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      provinsi: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      kabkota: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      kecamatan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      kelurahan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      kode_pos: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
       // //////////////////////////////////////
-      rt: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-      rw: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-      no_telepon: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-      hubungan: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-      email: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      rt: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      rw: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      no_telepon: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      hubungan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      email: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
     });
   }
 
   load() {
     this.gettokendukcapil();
+
+    // const ValidasiNama = <FormControl>this.emergencyForm.get('nama');
+    // const ValidasiAlamat = <FormControl>this.emergencyForm.get('alamat');
+    // const ValidasiProvinsi = <FormControl>this.emergencyForm.get('provinsi');
+    // const ValidasiKabkota = <FormControl>this.emergencyForm.get('kabkota');
+    // const ValidasiKecamatan = <FormControl>this.emergencyForm.get('kecamatan');
+    // const ValidasiKelurahan = <FormControl>this.emergencyForm.get('kelurahan');
+    // const ValidasiKodePos = <FormControl>this.emergencyForm.get('kode_pos');
+    // const ValidasiRt = <FormControl>this.emergencyForm.get('rt');
+    // const ValidasiRw = <FormControl>this.emergencyForm.get('rw');
+    // const ValidasiNoTelepon = <FormControl>this.emergencyForm.get('no_telepon');
+    // const ValidasiHubungan = <FormControl>this.emergencyForm.get('hubungan');
+    // const ValidasiEmail = <FormControl>this.emergencyForm.get('email');
+    // setTimeout(() => {
+    //   ValidasiNama.setValidators([Validators.required]);
+    //   ValidasiAlamat.setValidators([Validators.required]);
+    //   ValidasiProvinsi.setValidators([Validators.required]);
+    //   ValidasiKabkota.setValidators([Validators.required]);
+    //   ValidasiKecamatan.setValidators([Validators.required]);
+    //   ValidasiKelurahan.setValidators([Validators.required]);
+    //   ValidasiKodePos.setValidators([Validators.required]);
+    //   ValidasiRt.setValidators([Validators.required]);
+    //   ValidasiRw.setValidators([Validators.required]);
+    //   ValidasiNoTelepon.setValidators([Validators.required]);
+    //   ValidasiHubungan.setValidators([Validators.required]);
+    //   ValidasiEmail.setValidators([Validators.required]);
+
+    //   setTimeout(() => {
+    //     ValidasiNama.updateValueAndValidity();
+    //     ValidasiAlamat.updateValueAndValidity();
+    //     ValidasiProvinsi.updateValueAndValidity();
+    //     ValidasiKabkota.updateValueAndValidity();
+    //     ValidasiKecamatan.updateValueAndValidity();
+    //     ValidasiKelurahan.updateValueAndValidity();
+    //     ValidasiKodePos.updateValueAndValidity();
+    //     ValidasiRt.updateValueAndValidity();
+    //     ValidasiRw.updateValueAndValidity();
+    //     ValidasiNoTelepon.updateValueAndValidity();
+    //     ValidasiHubungan.updateValueAndValidity();
+    //     ValidasiEmail.updateValueAndValidity();
+    //   }, 100);
+    // }, 100);
+
     this.datEntryService.getFetchEmergencyByCuref(this.curef).subscribe(de => {
       this.daWa = de.result;
 
