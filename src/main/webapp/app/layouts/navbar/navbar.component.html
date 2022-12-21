@@ -2,8 +2,6 @@
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
-      <!-- <span jhiTranslate="global.title" class="navbar-title">newEfos</span>
-      <span class="navbar-version">{{ version }}</span> -->
     </a>
     <a
       class="navbar-toggler d-lg-none"
@@ -19,441 +17,194 @@
     </a>
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
       <ul class="navbar-nav">
-        <li class="row nav-item">
-          <a
-            class="col nav-link"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            style="text-align: center"
-            routerLink="/"
-          >
-            <span>
-              <fa-icon icon="home"></fa-icon>
-              <p>Home</p>
-            </span>
-          </a>
-        </li>
-        <div [ngSwitch]="untukSessionRole">
-          <div *ngSwitchCase="'AO'">
-            <li class="row nav-item">
-              <a
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                class="col nav-link"
-                style="text-align: center"
-                routerLink="daftaraplikasiide"
-              >
-                <fa-icon icon="address-card"></fa-icon>
-                <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> <i class="fa-thin fa-address-card"></i>-->
-                <p>Initial Data Entry</p>
+        <div *ngFor="let navbar of navbarParameterize">
+          <li class="row nav-item">
+            <a
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="col nav-link"
+              style="text-align: center"
+              routerLink="{{ navbar.menu_url }}"
+            >
+              <fa-icon [icon]="navbar.menu_icon"></fa-icon>
+              <p>{{ navbar.menu_name }}</p>
+              <div *ngIf="navbar.menu_name === 'IDE'">
+                <span routerLink="/initial-data-entryfix" hidden [queryParams]="{ kategori: this.kategori, id: this.paramId }"></span>
+                <span routerLink="/hasilprescreening" [queryParams]="{ kategori: this.kategori, id: this.paramId }" hidden></span>
+              </div>
+              <div *ngIf="navbar.menu_name === 'Data Entry'">
                 <span
-                  routerLink="/initial-data-entryfix"
-                  hidden
+                  class="col nav-link"
+                  [routerLink]="['/data-entry/memo']"
                   [queryParams]="{
-                    kategori: this.kategori,
-                    id: this.paramId
+                    curef: this.curef,
+                    statusPerkawinan: this.statusPerkawinan,
+                    app_no_de: this.app_no_de
                   }"
+                  hidden
+                ></span>
+                <span
+                  class="col nav-link"
+                  [routerLink]="['/data-entry/personalinfo']"
+                  [queryParams]="{
+                    curef: this.curef,
+                    statusPerkawinan: this.statusPerkawinan,
+                    app_no_de: this.app_no_de
+                  }"
+                  hidden
+                ></span>
+                <span
+                  class="col nav-link"
+                  [routerLink]="['/data-entry/job-info']"
+                  [queryParams]="{
+                    curef: this.curef,
+                    statusPerkawinan: this.statusPerkawinan,
+                    app_no_de: this.app_no_de
+                  }"
+                  hidden
+                ></span>
+                <span
+                  class="col nav-link"
+                  [routerLink]="['/data-entry/editjobinfo']"
+                  [queryParams]="{
+                    datakirimanid: this.datakirimanid,
+                    curef: this.curef,
+                    statusPerkawinan: this.statusPerkawinan,
+                    app_no_de: this.app_no_de
+                  }"
+                  hidden
+                ></span>
+                <span
+                  class="col nav-link"
+                  [queryParams]="{
+                    curef: this.curef,
+                    statusPerkawinan: this.statusPerkawinan,
+                    app_no_de: this.app_no_de
+                  }"
+                  routerLink="data-entry/data-pasangan"
+                  hidden
+                ></span>
+                <span
+                  class="col nav-link"
+                  [queryParams]="{
+                    curef: this.curef,
+                    statusPerkawinan: this.statusPerkawinan,
+                    app_no_de: this.app_no_de
+                  }"
+                  routerLink="data-entry/pekerjaan-pasangan"
+                  hidden
+                ></span>
+                <span
+                  class="col nav-link"
+                  [queryParams]="{
+                    curef: this.curef,
+                    statusPerkawinan: this.statusPerkawinan,
+                    app_no_de: this.app_no_de
+                  }"
+                  routerLink="data-entry/collateral"
+                  hidden
+                ></span>
+                <span
+                  class="col nav-link"
+                  [queryParams]="{
+                    curef: this.curef,
+                    statusPerkawinan: this.statusPerkawinan,
+                    app_no_de: this.app_no_de,
+                    datakirimanid: this.datakirimanid
+                  }"
+                  routerLink="data-entry/editcollateral"
+                  hidden
+                ></span>
+                <span
+                  class="col nav-link"
+                  [queryParams]="{
+                    curef: this.curef,
+                    statusPerkawinan: this.statusPerkawinan,
+                    app_no_de: this.app_no_de
+                  }"
+                  routerLink="data-entry/struktur-pembiayaan"
+                  hidden
+                ></span>
+                <span
+                  class="col nav-link"
+                  [queryParams]="{
+                    curef: this.curef,
+                    statusPerkawinan: this.statusPerkawinan,
+                    app_no_de: this.app_no_de
+                  }"
+                  routerLink="data-entry/emergency-contact"
+                  hidden
+                ></span>
+                <span
+                  class="col nav-link"
+                  routerLink="data-entry/call-report"
+                  [queryParams]="{
+                    curef: this.curef,
+                    statusPerkawinan: this.statusPerkawinan,
+                    app_no_de: this.app_no_de
+                  }"
+                  hidden
                 >
                 </span>
                 <span
-                  routerLink="/hasilprescreening"
+                  class="col nav-link"
+                  routerLink="data-entry/call-report-non"
                   [queryParams]="{
-                    kategori: this.kategori,
-                    id: this.paramId
+                    curef: this.curef,
+                    statusPerkawinan: this.statusPerkawinan,
+                    app_no_de: this.app_no_de
                   }"
                   hidden
                 ></span>
-              </a>
-            </li>
-          </div>
-        </div>
-
-        <!-- ////////////////////////////// Verifikator \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-        <div *ngIf="untukSessionRole === 'VER_PRE_SPV'">
-          <li class="row nav-item">
-            <a
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="col nav-link"
-              routerLink="daftar-aplikasi-waiting-assigment"
-              style="text-align: center"
-            >
-              <fa-icon icon="user-check"></fa-icon>
-              <p>Verification</p>
-              <span class="col nav-link" routerLink="daftar-aplikasi-waiting-assigment" hidden></span>
-              <span class="col nav-link" routerLink="daftar-aplikasi-on-process" hidden></span>
-              <span class="col nav-link" routerLink="daftar-aplikasi-waiting-update-status" hidden></span>
-              <span routerLink="/analisa-keuangan" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
-              <span routerLink="/data-calon-nasabah" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
-              <span routerLink="/data-kantor" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
-              <span routerLink="/mutasi-rekening" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-              <span routerLink="/sturktur-pembiayaan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-              <span routerLink="/checklist-document" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-              <span routerLink="/syarat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-              <span routerLink="/kesimpulan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-              <span routerLink="/verification/memo" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-            </a>
-          </li>
-        </div>
-        <!-- ////////////////////////////// Verifikator \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-
-        <!-- ////////////////////////////// Appraisal \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-        <div *ngIf="untukSessionRole == 'APPRAISAL'">
-          <li class="row nav-item">
-            <a
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="col nav-link"
-              routerLink="daftar_input_mapis"
-              style="text-align: center"
-            >
-              <fa-icon icon="user-pen"></fa-icon>
-              <p>Appraisal</p>
-              <span routerLink="/mapis" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
-            </a>
-          </li>
-        </div>
-        <!-- ////////////////////////////// Appraisal \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-
-        <!-- ////////////////////////////// ANALIS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-        <div *ngIf="untukSessionRole == 'VER_PRESCR'">
-          <li class="row nav-item">
-            <a
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="col nav-link"
-              routerLink="daftar-aplikasi-verification"
-              style="text-align: center"
-            >
-              <fa-icon icon="user-check"></fa-icon>
-              <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
-              <p>Verification</p>
-              <span routerLink="/analisa-keuangan" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
-              <span routerLink="/data-calon-nasabah" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
-              <span routerLink="/data-kantor" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
-              <span routerLink="/mutasi-rekening" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-              <span routerLink="/sturktur-pembiayaan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-              <span routerLink="/checklist-document" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-              <span routerLink="/syarat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-              <span routerLink="/kesimpulan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-              <span routerLink="/verification/memo" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-            </a>
-          </li>
-        </div>
-        <!-- ////////////////////////////// Appraisal \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-
-        <!-- ////////////////////////////// Approval \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-        <div *ngIf="untukSessionRole == 'KOMITE'">
-          <li class="row nav-item">
-            <a
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="col nav-link"
-              routerLink="komite"
-              style="text-align: center"
-            >
-              <fa-icon icon="user-tie"></fa-icon>
-              <p>APPROVAL</p>
-              <span routerLink="/komite/detail-komite" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
-            </a>
-          </li>
-        </div>
-        <!-- ////////////////////////////// Approval \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-
-        <div *ngIf="untukSessionRole === 'BRANCHMANAGER' || untukSessionRole === 'AO'">
-          <li class="row nav-item">
-            <a
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="col nav-link"
-              style="text-align: center"
-              routerLink="data-entry"
-            >
-              <fa-icon icon="pencil-square"></fa-icon>
-              <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
-              <p>Data Entry</p>
-
-              <!-- tambahan -->
-              <span
-                class="col nav-link"
-                [routerLink]="['/data-entry/memo']"
-                [queryParams]="{
-                  curef: this.curef,
-                  statusPerkawinan: this.statusPerkawinan,
-                  app_no_de: this.app_no_de
-                }"
-                hidden
-              ></span>
-              <span
-                class="col nav-link"
-                [routerLink]="['/data-entry/personalinfo']"
-                [queryParams]="{
-                  curef: this.curef,
-                  statusPerkawinan: this.statusPerkawinan,
-                  app_no_de: this.app_no_de
-                }"
-                hidden
-              ></span>
-              <span
-                class="col nav-link"
-                [routerLink]="['/data-entry/job-info']"
-                [queryParams]="{
-                  curef: this.curef,
-                  statusPerkawinan: this.statusPerkawinan,
-                  app_no_de: this.app_no_de
-                }"
-                hidden
-              ></span>
-              <span
-                class="col nav-link"
-                [routerLink]="['/data-entry/editjobinfo']"
-                [queryParams]="{
-                  datakirimanid: this.datakirimanid,
-                  curef: this.curef,
-                  statusPerkawinan: this.statusPerkawinan,
-                  app_no_de: this.app_no_de
-                }"
-                hidden
-              ></span>
-              <span
-                class="col nav-link"
-                [queryParams]="{
-                  curef: this.curef,
-                  statusPerkawinan: this.statusPerkawinan,
-                  app_no_de: this.app_no_de
-                }"
-                routerLink="data-entry/data-pasangan"
-                hidden
-              ></span>
-              <span
-                class="col nav-link"
-                [queryParams]="{
-                  curef: this.curef,
-                  statusPerkawinan: this.statusPerkawinan,
-                  app_no_de: this.app_no_de
-                }"
-                routerLink="data-entry/pekerjaan-pasangan"
-                hidden
-              ></span>
-              <span
-                class="col nav-link"
-                [queryParams]="{
-                  curef: this.curef,
-                  statusPerkawinan: this.statusPerkawinan,
-                  app_no_de: this.app_no_de
-                }"
-                routerLink="data-entry/collateral"
-                hidden
-              ></span>
-              <span
-                class="col nav-link"
-                [queryParams]="{
-                  curef: this.curef,
-                  statusPerkawinan: this.statusPerkawinan,
-                  app_no_de: this.app_no_de,
-                  datakirimanid: this.datakirimanid
-                }"
-                routerLink="data-entry/editcollateral"
-                hidden
-              ></span>
-              <span
-                class="col nav-link"
-                [queryParams]="{
-                  curef: this.curef,
-                  statusPerkawinan: this.statusPerkawinan,
-                  app_no_de: this.app_no_de
-                }"
-                routerLink="data-entry/struktur-pembiayaan"
-                hidden
-              ></span>
-              <span
-                class="col nav-link"
-                [queryParams]="{
-                  curef: this.curef,
-                  statusPerkawinan: this.statusPerkawinan,
-                  app_no_de: this.app_no_de
-                }"
-                routerLink="data-entry/emergency-contact"
-                hidden
-              ></span>
-              <span
-                class="col nav-link"
-                routerLink="data-entry/call-report"
-                [queryParams]="{
-                  curef: this.curef,
-                  statusPerkawinan: this.statusPerkawinan,
-                  app_no_de: this.app_no_de
-                }"
-                hidden
-              >
-              </span>
-              <span
-                class="col nav-link"
-                routerLink="data-entry/call-report-non"
-                [queryParams]="{
-                  curef: this.curef,
-                  statusPerkawinan: this.statusPerkawinan,
-                  app_no_de: this.app_no_de
-                }"
-                hidden
-              ></span>
-              <div *ngIf="untukSessionRole == 'BRANCHMANAGER'">
+              </div>
+              <div *ngIf="navbar.menu_name === 'Upload Document'">
                 <span
                   class="col nav-link"
-                  routerLink="upload_document/upload_document_de"
-                  [queryParams]="{ curef: this.curef }"
+                  [routerLink]="['/upload_document/upload_document_de']"
+                  [queryParams]="{ curef: this.curef, app_no_de: this.app_no_de }"
                   hidden
                 ></span>
-                <span class="col nav-link" routerLink="upload_document/upload_document_agunan" hidden></span>
+                <span
+                  class="col nav-link"
+                  [routerLink]="['/upload_document/upload_document_agunan']"
+                  [queryParams]="{ curef: this.curef, app_no_de: this.app_no_de }"
+                  hidden
+                ></span>
               </div>
-              <span class="col nav-link" routerLink="data-entry/memo" hidden></span>
+              <div *ngIf="navbar.menu_name === 'Verification' && untukSessionRole === 'VER_PRE_SPV'">
+                <span class="col nav-link" routerLink="daftar-aplikasi-waiting-assigment" hidden></span>
+                <span class="col nav-link" routerLink="daftar-aplikasi-on-process" hidden></span>
+                <span class="col nav-link" routerLink="daftar-aplikasi-waiting-update-status" hidden></span>
+                <span routerLink="/analisa-keuangan" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+                <span routerLink="/data-calon-nasabah" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+                <span routerLink="/data-kantor" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+                <span routerLink="/mutasi-rekening" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+                <span routerLink="/sturktur-pembiayaan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+                <span routerLink="/checklist-document" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+                <span routerLink="/syarat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+                <span routerLink="/kesimpulan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+                <span routerLink="/verification/memo" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              </div>
+              <div *ngIf="navbar.menu_name === 'Appraisal'">
+                <span routerLink="/mapis" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
+              </div>
+              <div *ngIf="navbar.menu_name === 'Verification' && untukSessionRole === 'VER_PRESCR'">
+                <span routerLink="/analisa-keuangan" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+                <span routerLink="/data-calon-nasabah" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+                <span routerLink="/data-kantor" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+                <span routerLink="/mutasi-rekening" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+                <span routerLink="/sturktur-pembiayaan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+                <span routerLink="/checklist-document" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+                <span routerLink="/syarat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+                <span routerLink="/kesimpulan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+                <span routerLink="/verification/memo" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              </div>
+              <div *ngIf="navbar.menu_name === 'APPROVAL'">
+                <span routerLink="/komite/detail-komite" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+              </div>
             </a>
           </li>
         </div>
-        <div *ngIf="untukSessionRole === 'AO'">
-          <li class="row nav-item">
-            <a
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="col nav-link"
-              style="text-align: center"
-              routerLink="upload_document"
-            >
-              <fa-icon icon="upload"></fa-icon>
-              <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
-              <p>Upload Document</p>
-
-              <!-- tambahan -->
-              <span
-                class="col nav-link"
-                [routerLink]="['/upload_document/upload_document_de']"
-                [queryParams]="{ curef: this.curef, app_no_de: this.app_no_de }"
-                hidden
-              ></span>
-              <span
-                class="col nav-link"
-                [routerLink]="['/upload_document/upload_document_agunan']"
-                [queryParams]="{ curef: this.curef, app_no_de: this.app_no_de }"
-                hidden
-              ></span>
-            </a>
-          </li>
-        </div>
-        <div>
-          <li class="row nav-item">
-            <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="col nav-link" style="text-align: center">
-              <fa-icon icon="institution"></fa-icon>
-              <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
-              <p>FLPP</p>
-
-              <!-- tambahan -->
-              <!-- <span
-                class="col nav-link"
-                [routerLink]="['/upload_document/upload_document_de']"
-                [queryParams]="{ datakiriman: this.datakiriman }"
-                hidden
-              ></span>
-              <span
-                class="col nav-link"
-                [routerLink]="['/upload_document/upload_document_agunan']"
-                [queryParams]="{
-                  datakiriman: this.datakiriman,
-                  statusPerkawinan: this.statusPerkawinan,
-                  app_no_de: this.app_no_de,
-                  datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan
-                }"
-                hidden
-              ></span> -->
-            </a>
-          </li>
-        </div>
-        <div>
-          <li class="row nav-item">
-            <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="col nav-link" style="text-align: center">
-              <fa-icon icon="list-check"></fa-icon>
-              <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
-              <p>Inquiry</p>
-
-              <!-- tambahan -->
-              <!-- <span
-                class="col nav-link"
-                [routerLink]="['/upload_document/upload_document_de']"
-                [queryParams]="{ datakiriman: this.datakiriman }"
-                hidden
-              ></span>
-              <span
-                class="col nav-link"
-                [routerLink]="['/upload_document/upload_document_agunan']"
-                [queryParams]="{
-                  datakiriman: this.datakiriman,
-                  statusPerkawinan: this.statusPerkawinan,
-                  app_no_de: this.app_no_de,
-                  datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan
-                }"
-                hidden
-              ></span> -->
-            </a>
-          </li>
-        </div>
-        <div>
-          <li class="row nav-item">
-            <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="col nav-link" style="text-align: center">
-              <fa-icon icon="question-circle"></fa-icon>
-              <!-- <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon> -->
-              <p>Help</p>
-
-              <!-- tambahan -->
-              <!-- <span
-                class="col nav-link"
-                [routerLink]="['/upload_document/upload_document_de']"
-                [queryParams]="{ datakiriman: this.datakiriman }"
-                hidden
-              ></span>
-              <span
-                class="col nav-link"
-                [routerLink]="['/upload_document/upload_document_agunan']"
-                [queryParams]="{
-                  datakiriman: this.datakiriman,
-                  statusPerkawinan: this.statusPerkawinan,
-                  app_no_de: this.app_no_de,
-                  datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan
-                }"
-                hidden
-              ></span> -->
-            </a>
-          </li>
-        </div>
-        <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-        <!-- <li
-          *ngSwitchCase="true"
-          ngbDropdown
-          class="nav-item dropdown pointer"
-          display="dynamic"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
-            <span>
-              <fa-icon icon="th-list"></fa-icon>
-              <span jhiTranslate="global.menu.entities.main">Entities</span>
-            </span>
-          </a>
-          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="book"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.entities.book">Book</span>
-              </a>
-            </li>
-          </ul>
-        </li> -->
-        <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         <li
           *jhiHasAnyAuthority="'ROLE_ADMIN'"
           ngbDropdown
@@ -511,7 +262,6 @@
                 <span jhiTranslate="global.menu.admin.apidocs">API</span>
               </a>
             </li>
-            <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
           </ul>
         </li>
         <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1" hidden>
@@ -616,10 +366,6 @@
           <fa-icon icon="user"></fa-icon>
           <p>{{ untukSessionUserName }} / {{ untukSessionRole }}</p>
         </div>
-        <!-- <span>{{untukSessionRole}}</span>
-        <span>{{untukSessionUserName}}</span>
-        <span>{{untukSessionFullName}}</span>
-        <span>{{untukSessionKodeCabang}}</span> -->
       </div>
     </a>
   </div>

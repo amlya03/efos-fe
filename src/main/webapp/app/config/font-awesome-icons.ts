@@ -49,6 +49,9 @@ import {
   faTrashCan,
   faUserTie,
   faUserPen,
+  faMagnifyingGlass,
+  faCircleCheck,
+  faFileCircleCheck,
   // jhipster-needle-add-icon-import
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -104,5 +107,8 @@ export const fontAwesomeIcons = [
   faTrashCan,
   faUserTie,
   faUserPen,
+  faMagnifyingGlass,
+  faCircleCheck,
+  faFileCircleCheck,
   // jhipster-needle-add-icon-import
 ];

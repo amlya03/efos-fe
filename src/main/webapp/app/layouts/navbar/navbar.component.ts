@@ -13,6 +13,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
+import { navbarModel } from './navbarModel.model';
 
 @Component({
   selector: 'jhi-navbar',
@@ -47,6 +48,8 @@ export class NavbarComponent implements OnInit {
   datakirimanidcustomer: any;
   paramId: any;
   kategori: any;
+  navbarParameterize: navbarModel[] = [];
+  childNavbar: navbarModel[] = [];
 
   constructor(
     protected http: HttpClient,
@@ -89,7 +92,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.verificationServices.postNavbar(this.SessionStorageService.retrieve('sessionRole')).subscribe({
       next: data => {
-        console.warn(data);
+        this.navbarParameterize = data.result;
+        this.childNavbar = data.result.child;
       },
     });
 
