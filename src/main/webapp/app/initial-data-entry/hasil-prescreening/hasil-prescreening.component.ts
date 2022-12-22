@@ -79,7 +79,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   appidmanual: any;
   dataEntry: modelCustomer = new modelCustomer();
   downloadSlik: any;
-
+  simpanDhn = 0;
   untukSessionRole: any;
   untukSessionUserName: any;
   untukSessionFullName: any;
@@ -228,6 +228,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     this.initialDataEntry.getCustomer(this.paramId).subscribe({
       next: data => {
         this.dataEntry = data.result.customer;
+        // console.warn(data)
         // setTimeout(() => {
         //   this.cekdukcapil(this.dataEntry.tanggal_lahir, this.dataEntry.tanggal_lahir_pasangan);
         // }, 300);
@@ -372,6 +373,11 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
         this.getduplikatc(this.ktp, this.nama).subscribe({
           next: (res: EntityArrayResponseDaWa) => {
             this.duplikate = res.body?.result;
+            if (res.body?.result != '') {
+              this.simpanDhn = 1;
+            } else {
+              this.simpanDhn = 0;
+            }
             // console.warn('duplikat', this.dataslik);
             // console.warn('duplikat',res);
           },
@@ -1162,18 +1168,16 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     return this.http.get<ApiResponse>(this.resourceUrl + this.paramId, { params: options, observe: 'response' });
   }
 
-  gotopersonalinfo(app_no_ide: any, curef: any) {
-    const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
-
+  gotopersonalinfo() {
     this.http
       .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_app_de', {
-        headers: headers,
-        app_no_ide: app_no_ide,
-        curef: curef,
+        analis_verifikasi: '',
         app_no_de: '',
+        app_no_ide: this.dataEntry.app_no_ide,
         cabang: this.untukSessionKodeCabang,
-        created_by: '',
+        created_by: this.SessionStorageService.retrieve('sessionUserName'),
         created_date: '',
+        curef: this.dataEntry.curef,
         flag_tab: '',
         id: 0,
         status_aplikasi: '',
@@ -1181,9 +1185,8 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
       .subscribe({
         next: data => {
           this.contohdata = data.result.app_no_de;
-
           this.router.navigate(['/data-entry/personalinfo'], {
-            queryParams: { app_no_de: this.contohdata },
+            queryParams: { curef: this.dataEntry.curef, statusPerkawinan: this.dataEntry.status_perkawinan, app_no_de: this.contohdata },
           });
         },
       });
@@ -1309,9 +1312,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   }
 
   backtoide(): void {
-    this.router.navigate(['/daftaraplikasiide'], {
-      queryParams: {},
-    });
+    this.router.navigate(['/daftaraplikasiide']);
   }
   // contoh(): void {
   //   let options = this.inputScoring.map((option: any) => {

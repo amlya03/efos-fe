@@ -807,11 +807,7 @@
   <br />
   <div class="row form-material">
     <div class="col" style="text-align: center">
-      <button
-        (click)="gotopersonalinfo(dataEntry.app_no_ide, dataEntry.curef)"
-        name="submit_button"
-        class="fa fa-file-archive-o btn btn-warning"
-      >
+      <button (click)="gotopersonalinfo()" name="submit_button" class="fa fa-file-archive-o btn btn-warning" [hidden]="this.simpanDhn == 1">
         Proses Data
       </button>
 
