@@ -22,11 +22,11 @@
   </div>
   <div class="col" style="text-align: center">
     <fa-icon
-      [icon]="datadukcapil.namaLengkap.includes('Tidak') ? 'circle-xmark' : 'circle-check'"
-      [ngStyle]="{ color: datadukcapil.namaLengkap.includes('Tidak') ? 'red' : 'green' }"
+      [icon]="ifNamaLengkap != '' || ifNamaLengkap !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: ifNamaLengkap === 'Tidak Sesuai' ? 'red' : 'green' }"
     ></fa-icon>
     <br />
-    <h6 [ngStyle]="{ color: datadukcapil.namaLengkap.includes('Tidak') ? 'red' : 'green' }">{{ datadukcapil.namaLengkap }}</h6>
+    <h6 [ngStyle]="{ color: ifNamaLengkap === 'Tidak Sesuai' ? 'red' : 'green' }">{{ namaLengkapDukcapil }}</h6>
   </div>
 </div>
 <br />
@@ -43,12 +43,12 @@
   </div>
   <div class="col" style="text-align: center">
     <fa-icon
-      [icon]="datadukcapil.tglLahir != '' || datadukcapil.tglLahir !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
-      [ngStyle]="{ color: datadukcapil.tglLahir === 'Tidak Sesuai' || datadukcapil.tglLahir == '' ? 'red' : 'green' }"
+      [icon]="tglLahirDukcapil != '' || tglLahirDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: tglLahirDukcapil === 'Tidak Sesuai' || tglLahirDukcapil == '' ? 'red' : 'green' }"
     ></fa-icon>
     <br />
-    <h6 [ngStyle]="{ color: datadukcapil.tglLahir === 'Tidak Sesuai' || datadukcapil.tglLahir == '' ? 'red' : 'green' }">
-      {{ datadukcapil.tglLahir }}
+    <h6 [ngStyle]="{ color: tglLahirDukcapil === 'Tidak Sesuai' || tglLahirDukcapil == '' ? 'red' : 'green' }">
+      {{ tglLahirDukcapil }}
     </h6>
   </div>
 </div>
@@ -66,12 +66,12 @@
   </div>
   <div class="col" style="text-align: center">
     <fa-icon
-      [icon]="datadukcapil.statusPerkawinan != '' || datadukcapil.statusPerkawinan !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
-      [ngStyle]="{ color: datadukcapil.statusPerkawinan === 'Tidak Sesuai' || datadukcapil.statusPerkawinan == '' ? 'red' : 'green' }"
+      [icon]="statusPerkawinanDukcapil != '' || statusPerkawinanDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: statusPerkawinanDukcapil === 'Tidak Sesuai' || statusPerkawinanDukcapil == '' ? 'red' : 'green' }"
     ></fa-icon>
     <br />
-    <h6 [ngStyle]="{ color: datadukcapil.statusPerkawinan === 'Tidak Sesuai' || datadukcapil.statusPerkawinan == '' ? 'red' : 'green' }">
-      {{ datadukcapil.statusPerkawinan }}
+    <h6 [ngStyle]="{ color: statusPerkawinanDukcapil === 'Tidak Sesuai' || statusPerkawinanDukcapil == '' ? 'red' : 'green' }">
+      {{ statusPerkawinanDukcapil }}
     </h6>
   </div>
 </div>
@@ -94,11 +94,11 @@
   </div>
   <div class="col" style="text-align: center">
     <fa-icon
-      [icon]="datadukcapil.alamat.includes('Tidak') ? 'circle-xmark' : 'circle-check'"
-      [ngStyle]="{ color: datadukcapil.alamat.includes('Tidak') ? 'red' : 'green' }"
+      [icon]="ifAlamat !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: ifAlamat === 'Tidak Sesuai' ? 'red' : 'green' }"
     ></fa-icon>
     <br />
-    <h6 [ngStyle]="{ color: datadukcapil.alamat.includes('Tidak') ? 'red' : 'green' }">{{ datadukcapil.alamat }}</h6>
+    <h6 [ngStyle]="{ color: ifAlamat === 'Tidak Sesuai' ? 'red' : 'green' }">{{ alamatDukcapil }}</h6>
   </div>
 </div>
 <br />
@@ -115,12 +115,12 @@
   </div>
   <div class="col" style="text-align: center">
     <fa-icon
-      [icon]="datadukcapil.namaPropinsi != '' || datadukcapil.statusPerkawinan !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
-      [ngStyle]="{ color: datadukcapil.namaPropinsi === 'Tidak Sesuai' || datadukcapil.namaPropinsi == '' ? 'red' : 'green' }"
+      [icon]="namaPropinsiDukcapil != '' || statusPerkawinanDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: namaPropinsiDukcapil === 'Tidak Sesuai' || namaPropinsiDukcapil == '' ? 'red' : 'green' }"
     ></fa-icon>
     <br />
-    <h6 [ngStyle]="{ color: datadukcapil.namaPropinsi === 'Tidak Sesuai' || datadukcapil.namaPropinsi == '' ? 'red' : 'green' }">
-      {{ datadukcapil.namaPropinsi }}
+    <h6 [ngStyle]="{ color: namaPropinsiDukcapil === 'Tidak Sesuai' || namaPropinsiDukcapil == '' ? 'red' : 'green' }">
+      {{ namaPropinsiDukcapil }}
     </h6>
   </div>
 </div>
@@ -138,12 +138,12 @@
   </div>
   <div class="col" style="text-align: center">
     <fa-icon
-      [icon]="datadukcapil.namaKabupaten != '' || datadukcapil.namaKabupaten !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
-      [ngStyle]="{ color: datadukcapil.namaKabupaten === 'Tidak Sesuai' || datadukcapil.namaKabupaten == '' ? 'red' : 'green' }"
+      [icon]="namaKabupatenDukcapil != '' || namaKabupatenDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: namaKabupatenDukcapil === 'Tidak Sesuai' || namaKabupatenDukcapil == '' ? 'red' : 'green' }"
     ></fa-icon>
     <br />
-    <h6 [ngStyle]="{ color: datadukcapil.namaKabupaten === 'Tidak Sesuai' || datadukcapil.namaKabupaten == '' ? 'red' : 'green' }">
-      {{ datadukcapil.namaKabupaten }}
+    <h6 [ngStyle]="{ color: namaKabupatenDukcapil === 'Tidak Sesuai' || namaKabupatenDukcapil == '' ? 'red' : 'green' }">
+      {{ namaKabupatenDukcapil }}
     </h6>
   </div>
 </div>
@@ -161,12 +161,12 @@
   </div>
   <div class="col" style="text-align: center">
     <fa-icon
-      [icon]="datadukcapil.namaKecamatan != '' || datadukcapil.namaKecamatan !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
-      [ngStyle]="{ color: datadukcapil.namaKecamatan === 'Tidak Sesuai' || datadukcapil.namaKecamatan == '' ? 'red' : 'green' }"
+      [icon]="namaKecamatanDukcapil != '' || namaKecamatanDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: namaKecamatanDukcapil === 'Tidak Sesuai' || namaKecamatanDukcapil == '' ? 'red' : 'green' }"
     ></fa-icon>
     <br />
-    <h6 [ngStyle]="{ color: datadukcapil.namaKecamatan === 'Tidak Sesuai' || datadukcapil.namaKecamatan == '' ? 'red' : 'green' }">
-      {{ datadukcapil.namaKecamatan }}
+    <h6 [ngStyle]="{ color: namaKecamatanDukcapil === 'Tidak Sesuai' || namaKecamatanDukcapil == '' ? 'red' : 'green' }">
+      {{ namaKecamatanDukcapil }}
     </h6>
   </div>
 </div>
@@ -184,12 +184,12 @@
   </div>
   <div class="col" style="text-align: center">
     <fa-icon
-      [icon]="datadukcapil.namaKelurahan != '' || datadukcapil.namaKelurahan !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
-      [ngStyle]="{ color: datadukcapil.namaKelurahan === 'Tidak Sesuai' || datadukcapil.namaKelurahan == '' ? 'red' : 'green' }"
+      [icon]="namaKelurahanDukcapil != '' || namaKelurahanDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: namaKelurahanDukcapil === 'Tidak Sesuai' || namaKelurahanDukcapil == '' ? 'red' : 'green' }"
     ></fa-icon>
     <br />
-    <h6 [ngStyle]="{ color: datadukcapil.namaKelurahan === 'Tidak Sesuai' || datadukcapil.namaKelurahan == '' ? 'red' : 'green' }">
-      {{ datadukcapil.namaKelurahan }}
+    <h6 [ngStyle]="{ color: namaKelurahanDukcapil === 'Tidak Sesuai' || namaKelurahanDukcapil == '' ? 'red' : 'green' }">
+      {{ namaKelurahanDukcapil }}
     </h6>
   </div>
 </div>
@@ -212,22 +212,22 @@
     <div class="row">
       <div class="col" style="text-align: center">
         <fa-icon
-          [icon]="datadukcapil.noRT != '' || datadukcapil.noRT !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
-          [ngStyle]="{ color: datadukcapil.noRT === 'Tidak Sesuai' || datadukcapil.noRT == '' ? 'red' : 'green' }"
+          [icon]="noRTDukcapil != '' || noRTDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+          [ngStyle]="{ color: noRTDukcapil === 'Tidak Sesuai' || noRTDukcapil == '' ? 'red' : 'green' }"
         ></fa-icon>
         <br />
-        <h6 [ngStyle]="{ color: datadukcapil.noRT === 'Tidak Sesuai' || datadukcapil.noRT == '' ? 'red' : 'green' }">
-          {{ datadukcapil.noRT }}
+        <h6 [ngStyle]="{ color: noRTDukcapil === 'Tidak Sesuai' || noRTDukcapil == '' ? 'red' : 'green' }">
+          {{ noRTDukcapil }}
         </h6>
       </div>
       <div class="col" style="text-align: center">
         <fa-icon
-          [icon]="datadukcapil.noRW != '' || datadukcapil.noRW !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
-          [ngStyle]="{ color: datadukcapil.noRW === 'Tidak Sesuai' || datadukcapil.noRW == '' ? 'red' : 'green' }"
+          [icon]="noRWDukcapil != '' || noRWDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+          [ngStyle]="{ color: noRWDukcapil === 'Tidak Sesuai' || noRWDukcapil == '' ? 'red' : 'green' }"
         ></fa-icon>
         <br />
-        <h6 [ngStyle]="{ color: datadukcapil.noRW === 'Tidak Sesuai' || datadukcapil.noRW == '' ? 'red' : 'green' }">
-          {{ datadukcapil.noRW }}
+        <h6 [ngStyle]="{ color: noRWDukcapil === 'Tidak Sesuai' || noRWDukcapil == '' ? 'red' : 'green' }">
+          {{ noRWDukcapil }}
         </h6>
       </div>
     </div>
@@ -247,12 +247,12 @@
   </div>
   <div class="col" style="text-align: center">
     <fa-icon
-      [icon]="datadukcapil.jenisKelamin != '' || datadukcapil.jenisKelamin !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
-      [ngStyle]="{ color: datadukcapil.jenisKelamin === 'Tidak Sesuai' || datadukcapil.jenisKelamin == '' ? 'red' : 'green' }"
+      [icon]="jenisKelaminDukcapil != '' || jenisKelaminDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: jenisKelaminDukcapil === 'Tidak Sesuai' || jenisKelaminDukcapil == '' ? 'red' : 'green' }"
     ></fa-icon>
     <br />
-    <h6 [ngStyle]="{ color: datadukcapil.jenisKelamin === 'Tidak Sesuai' || datadukcapil.jenisKelamin == '' ? 'red' : 'green' }">
-      {{ datadukcapil.jenisKelamin }}
+    <h6 [ngStyle]="{ color: jenisKelaminDukcapil === 'Tidak Sesuai' || jenisKelaminDukcapil == '' ? 'red' : 'green' }">
+      {{ jenisKelaminDukcapil }}
     </h6>
   </div>
 </div>
@@ -292,12 +292,12 @@
       </div>
       <div class="col" style="text-align: center">
         <fa-icon
-          [icon]="datadukcapilpasangan.namaLengkap.includes('Tidak') ? 'circle-xmark' : 'circle-check'"
-          [ngStyle]="{ color: datadukcapilpasangan.namaLengkap.includes('Tidak') ? 'red' : 'green' }"
+          [icon]="PasangaNnamaLengkapDukcapil !== 'Tidak Sesuai' ? 'circle-xmark' : 'circle-check'"
+          [ngStyle]="{ color: PasangaNnamaLengkapDukcapil !== 'Tidak Sesuai' ? 'red' : 'green' }"
         ></fa-icon>
         <br />
-        <h6 [ngStyle]="{ color: datadukcapilpasangan.namaLengkap.includes('Tidak') ? 'red' : 'green' }">
-          {{ datadukcapilpasangan.namaLengkap }}
+        <h6 [ngStyle]="{ color: PasangaNnamaLengkapDukcapil !== 'Tidak Sesuai' ? 'red' : 'green' }">
+          {{ PasangaNnamaLengkapDukcapil }}
         </h6>
       </div>
     </div>
@@ -320,14 +320,12 @@
       </div>
       <div class="col" style="text-align: center">
         <fa-icon
-          [icon]="datadukcapilpasangan.tglLahir !== 'Tidak Sesuai' || datadukcapilpasangan.tglLahir != '' ? 'circle-xmark' : 'circle-check'"
-          [ngStyle]="{ color: datadukcapilpasangan.tglLahir === 'Tidak Sesuai' || datadukcapilpasangan.tglLahir == '' ? 'red' : 'green' }"
+          [icon]="PasangaNtglLahirDukcapil !== 'Tidak Sesuai' || PasangaNtglLahirDukcapil != '' ? 'circle-xmark' : 'circle-check'"
+          [ngStyle]="{ color: PasangaNtglLahirDukcapil === 'Tidak Sesuai' || PasangaNtglLahirDukcapil == '' ? 'red' : 'green' }"
         ></fa-icon>
         <br />
-        <h6
-          [ngStyle]="{ color: datadukcapilpasangan.tglLahir === 'Tidak Sesuai' || datadukcapilpasangan.tglLahir == '' ? 'red' : 'green' }"
-        >
-          {{ datadukcapilpasangan.tglLahir }}
+        <h6 [ngStyle]="{ color: PasangaNtglLahirDukcapil === 'Tidak Sesuai' || PasangaNtglLahirDukcapil == '' ? 'red' : 'green' }">
+          {{ PasangaNtglLahirDukcapil }}
         </h6>
       </div>
     </div>
@@ -352,21 +350,19 @@
       <div class="col" style="text-align: center">
         <fa-icon
           [icon]="
-            datadukcapilpasangan.statusPerkawinan !== 'Tidak Sesuai' || datadukcapilpasangan.statusPerkawinan != ''
-              ? 'circle-xmark'
-              : 'circle-check'
+            PasangaNstatusPerkawinanDukcapil !== 'Tidak Sesuai' || PasangaNstatusPerkawinanDukcapil != '' ? 'circle-xmark' : 'circle-check'
           "
           [ngStyle]="{
-            color: datadukcapilpasangan.statusPerkawinan === 'Tidak Sesuai' || datadukcapilpasangan.statusPerkawinan == '' ? 'red' : 'green'
+            color: PasangaNstatusPerkawinanDukcapil === 'Tidak Sesuai' || PasangaNstatusPerkawinanDukcapil == '' ? 'red' : 'green'
           }"
         ></fa-icon>
         <br />
         <h6
           [ngStyle]="{
-            color: datadukcapilpasangan.statusPerkawinan === 'Tidak Sesuai' || datadukcapilpasangan.statusPerkawinan == '' ? 'red' : 'green'
+            color: PasangaNstatusPerkawinanDukcapil === 'Tidak Sesuai' || PasangaNstatusPerkawinanDukcapil == '' ? 'red' : 'green'
           }"
         >
-          {{ datadukcapilpasangan.statusPerkawinan }}
+          {{ PasangaNstatusPerkawinanDukcapil }}
         </h6>
       </div>
     </div>
@@ -384,11 +380,11 @@
       </div>
       <div class="col" style="text-align: center">
         <fa-icon
-          [icon]="datadukcapilpasangan.alamat.includes('Tidak') ? 'circle-xmark' : 'circle-check'"
-          [ngStyle]="{ color: datadukcapilpasangan.alamat.includes('Tidak') ? 'red' : 'green' }"
+          [icon]="PasangaNalamatDukcapil !== 'Tidak Sesuai' ? 'circle-xmark' : 'circle-check'"
+          [ngStyle]="{ color: PasangaNalamatDukcapil !== 'Tidak Sesuai' ? 'red' : 'green' }"
         ></fa-icon>
         <br />
-        <h6 [ngStyle]="{ color: datadukcapilpasangan.alamat.includes('Tidak') ? 'red' : 'green' }">{{ datadukcapilpasangan.alamat }}</h6>
+        <h6 [ngStyle]="{ color: PasangaNalamatDukcapil !== 'Tidak Sesuai' ? 'red' : 'green' }">{{ PasangaNalamatDukcapil }}</h6>
       </div>
     </div>
     <br />
@@ -405,22 +401,18 @@
       </div>
       <div class="col" style="text-align: center">
         <fa-icon
-          [icon]="
-            datadukcapilpasangan.namaPropinsi !== 'Tidak Sesuai' || datadukcapilpasangan.namaPropinsi != ''
-              ? 'circle-check'
-              : 'circle-xmark'
-          "
+          [icon]="PasangaNnamaPropinsiDukcapil !== 'Tidak Sesuai' || PasangaNnamaPropinsiDukcapil != '' ? 'circle-check' : 'circle-xmark'"
           [ngStyle]="{
-            color: datadukcapilpasangan.namaPropinsi === 'Tidak Sesuai' || datadukcapilpasangan.namaPropinsi == '' ? 'red' : 'green'
+            color: PasangaNnamaPropinsiDukcapil === 'Tidak Sesuai' || PasangaNnamaPropinsiDukcapil == '' ? 'red' : 'green'
           }"
         ></fa-icon>
         <br />
         <h6
           [ngStyle]="{
-            color: datadukcapilpasangan.namaPropinsi === 'Tidak Sesuai' || datadukcapilpasangan.namaPropinsi == '' ? 'red' : 'green'
+            color: PasangaNnamaPropinsiDukcapil === 'Tidak Sesuai' || PasangaNnamaPropinsiDukcapil == '' ? 'red' : 'green'
           }"
         >
-          {{ datadukcapilpasangan.namaPropinsi }}
+          {{ PasangaNnamaPropinsiDukcapil }}
         </h6>
       </div>
     </div>
@@ -438,22 +430,18 @@
       </div>
       <div class="col" style="text-align: center">
         <fa-icon
-          [icon]="
-            datadukcapilpasangan.namaKabupaten !== 'Tidak Sesuai' || datadukcapilpasangan.namaKabupaten != ''
-              ? 'circle-check'
-              : 'circle-xmark'
-          "
+          [icon]="PasangaNnamaKabupatenDukcapil !== 'Tidak Sesuai' || PasangaNnamaKabupatenDukcapil != '' ? 'circle-check' : 'circle-xmark'"
           [ngStyle]="{
-            color: datadukcapilpasangan.namaKabupaten === 'Tidak Sesuai' || datadukcapilpasangan.namaKabupaten == '' ? 'red' : 'green'
+            color: PasangaNnamaKabupatenDukcapil === 'Tidak Sesuai' || PasangaNnamaKabupatenDukcapil == '' ? 'red' : 'green'
           }"
         ></fa-icon>
         <br />
         <h6
           [ngStyle]="{
-            color: datadukcapilpasangan.namaKabupaten === 'Tidak Sesuai' || datadukcapilpasangan.namaKabupaten == '' ? 'red' : 'green'
+            color: PasangaNnamaKabupatenDukcapil === 'Tidak Sesuai' || PasangaNnamaKabupatenDukcapil == '' ? 'red' : 'green'
           }"
         >
-          {{ datadukcapilpasangan.namaKabupaten }}
+          {{ PasangaNnamaKabupatenDukcapil }}
         </h6>
       </div>
     </div>
@@ -471,22 +459,18 @@
       </div>
       <div class="col" style="text-align: center">
         <fa-icon
-          [icon]="
-            datadukcapilpasangan.namaKecamatan !== 'Tidak Sesuai' || datadukcapilpasangan.namaKecamatan != ''
-              ? 'circle-check'
-              : 'circle-xmark'
-          "
+          [icon]="PasangaNnamaKecamatanDukcapil !== 'Tidak Sesuai' || PasangaNnamaKecamatanDukcapil != '' ? 'circle-check' : 'circle-xmark'"
           [ngStyle]="{
-            color: datadukcapilpasangan.namaKecamatan === 'Tidak Sesuai' || datadukcapilpasangan.namaKecamatan == '' ? 'red' : 'green'
+            color: PasangaNnamaKecamatanDukcapil === 'Tidak Sesuai' || PasangaNnamaKecamatanDukcapil == '' ? 'red' : 'green'
           }"
         ></fa-icon>
         <br />
         <h6
           [ngStyle]="{
-            color: datadukcapilpasangan.namaKecamatan === 'Tidak Sesuai' || datadukcapilpasangan.namaKecamatan == '' ? 'red' : 'green'
+            color: PasangaNnamaKecamatanDukcapil === 'Tidak Sesuai' || PasangaNnamaKecamatanDukcapil == '' ? 'red' : 'green'
           }"
         >
-          {{ datadukcapilpasangan.namaKecamatan }}
+          {{ PasangaNnamaKecamatanDukcapil }}
         </h6>
       </div>
     </div>
@@ -504,22 +488,18 @@
       </div>
       <div class="col" style="text-align: center">
         <fa-icon
-          [icon]="
-            datadukcapilpasangan.namaKelurahan !== 'Tidak Sesuai' || datadukcapilpasangan.namaKelurahan != ''
-              ? 'circle-check'
-              : 'circle-xmark'
-          "
+          [icon]="PasangaNnamaKelurahanDukcapil !== 'Tidak Sesuai' || PasangaNnamaKelurahanDukcapil != '' ? 'circle-check' : 'circle-xmark'"
           [ngStyle]="{
-            color: datadukcapilpasangan.namaKelurahan === 'Tidak Sesuai' || datadukcapilpasangan.namaKelurahan == '' ? 'red' : 'green'
+            color: PasangaNnamaKelurahanDukcapil === 'Tidak Sesuai' || PasangaNnamaKelurahanDukcapil == '' ? 'red' : 'green'
           }"
         ></fa-icon>
         <br />
         <h6
           [ngStyle]="{
-            color: datadukcapilpasangan.namaKelurahan === 'Tidak Sesuai' || datadukcapilpasangan.namaKelurahan == '' ? 'red' : 'green'
+            color: PasangaNnamaKelurahanDukcapil === 'Tidak Sesuai' || PasangaNnamaKelurahanDukcapil == '' ? 'red' : 'green'
           }"
         >
-          {{ datadukcapilpasangan.namaKelurahan }}
+          {{ PasangaNnamaKelurahanDukcapil }}
         </h6>
       </div>
     </div>
@@ -551,22 +531,22 @@
         <div class="row">
           <div class="col" style="text-align: center">
             <fa-icon
-              [icon]="datadukcapilpasangan.noRT !== 'Tidak Sesuai' || datadukcapilpasangan.noRT != '' ? 'circle-check' : 'circle-xmark'"
-              [ngStyle]="{ color: datadukcapilpasangan.noRT === 'Tidak Sesuai' || datadukcapilpasangan.noRT == '' ? 'red' : 'green' }"
+              [icon]="PasangaNnoRTDukcapil !== 'Tidak Sesuai' || PasangaNnoRTDukcapil != '' ? 'circle-check' : 'circle-xmark'"
+              [ngStyle]="{ color: PasangaNnoRTDukcapil === 'Tidak Sesuai' || PasangaNnoRTDukcapil == '' ? 'red' : 'green' }"
             ></fa-icon>
             <br />
-            <h6 [ngStyle]="{ color: datadukcapilpasangan.noRT === 'Tidak Sesuai' || datadukcapilpasangan.noRT == '' ? 'red' : 'green' }">
-              {{ datadukcapilpasangan.noRT }}
+            <h6 [ngStyle]="{ color: PasangaNnoRTDukcapil === 'Tidak Sesuai' || PasangaNnoRTDukcapil == '' ? 'red' : 'green' }">
+              {{ PasangaNnoRTDukcapil }}
             </h6>
           </div>
           <div class="col" style="text-align: center">
             <fa-icon
-              [icon]="datadukcapilpasangan.noRW !== 'Tidak Sesuai' || datadukcapilpasangan.noRW != '' ? 'circle-check' : 'circle-xmark'"
-              [ngStyle]="{ color: datadukcapilpasangan.noRW === 'Tidak Sesuai' || datadukcapilpasangan.noRW == '' ? 'red' : 'green' }"
+              [icon]="PasangaNnoRWDukcapil !== 'Tidak Sesuai' || PasangaNnoRWDukcapil != '' ? 'circle-check' : 'circle-xmark'"
+              [ngStyle]="{ color: PasangaNnoRWDukcapil === 'Tidak Sesuai' || PasangaNnoRWDukcapil == '' ? 'red' : 'green' }"
             ></fa-icon>
             <br />
-            <h6 [ngStyle]="{ color: datadukcapilpasangan.noRW === 'Tidak Sesuai' || datadukcapilpasangan.noRW == '' ? 'red' : 'green' }">
-              {{ datadukcapilpasangan.noRW }}
+            <h6 [ngStyle]="{ color: PasangaNnoRWDukcapil === 'Tidak Sesuai' || PasangaNnoRWDukcapil == '' ? 'red' : 'green' }">
+              {{ PasangaNnoRWDukcapil }}
             </h6>
           </div>
         </div>
@@ -586,22 +566,18 @@
       </div>
       <div class="col" style="text-align: center">
         <fa-icon
-          [icon]="
-            datadukcapilpasangan.jenisKelamin !== 'Tidak Sesuai' || datadukcapilpasangan.jenisKelamin != ''
-              ? 'circle-check'
-              : 'circle-xmark'
-          "
+          [icon]="PasangaNjenisKelaminDukcapil !== 'Tidak Sesuai' || PasangaNjenisKelaminDukcapil != '' ? 'circle-check' : 'circle-xmark'"
           [ngStyle]="{
-            color: datadukcapilpasangan.jenisKelamin === 'Tidak Sesuai' || datadukcapilpasangan.jenisKelamin == '' ? 'red' : 'green'
+            color: PasangaNjenisKelaminDukcapil === 'Tidak Sesuai' || PasangaNjenisKelaminDukcapil == '' ? 'red' : 'green'
           }"
         ></fa-icon>
         <br />
         <h6
           [ngStyle]="{
-            color: datadukcapilpasangan.jenisKelamin === 'Tidak Sesuai' || datadukcapilpasangan.jenisKelamin == '' ? 'red' : 'green'
+            color: PasangaNjenisKelaminDukcapil === 'Tidak Sesuai' || PasangaNjenisKelaminDukcapil == '' ? 'red' : 'green'
           }"
         >
-          {{ datadukcapilpasangan.jenisKelamin }}
+          {{ PasangaNjenisKelaminDukcapil }}
         </h6>
       </div>
     </div>
@@ -663,6 +639,7 @@
               <th scope="col" style="text-align: center">NIK</th>
               <th scope="col" style="text-align: center">Nama Bank</th>
               <th scope="col" style="text-align: center">Jenis Fasilitas</th>
+              <th scope="col" style="text-align: center">Sektor Ekonomi</th>
               <th scope="col" style="text-align: center">Kol</th>
               <th scope="col" style="text-align: center">Keterangan</th>
               <th scope="col" style="text-align: center">Outstanding</th>
@@ -691,6 +668,9 @@
                 }}
               </td>
               <td style="text-align: center">
+                {{ listLajangSlik.sektor_ekonomi_ket != '' ? listLajangSlik.sektor_ekonomi_ket : listLajangSlik.response_description }}
+              </td>
+              <td style="text-align: center">
                 {{ listLajangSlik.kualitas != '' ? listLajangSlik.kualitas : listLajangSlik.response_description }}
               </td>
               <td style="text-align: center">
@@ -715,7 +695,7 @@
           </tbody>
           <tfoot>
             <tr style="background-color: #ffd966">
-              <th style="text-align: center" colspan="6">Total</th>
+              <th style="text-align: center" colspan="7">Total</th>
               <th style="text-align: center">{{ this.totalOutNas | currency: 'Rp ' }}</th>
               <th style="text-align: center">{{ this.totalPlaNas | currency: 'Rp ' }}</th>
               <th style="text-align: center">{{ this.totalAngNas | currency: 'Rp ' }}</th>
@@ -732,7 +712,7 @@
     </button>
   </div> -->
   <br />
-  <!-- <div [ngSwitch]="dawastatuspernikaham">
+  <div [ngSwitch]="dawastatuspernikaham">
     <div *ngSwitchCase="'Menikah'">
       <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
         <h3 style="color: #fff; text-align: center">Hasil Pengecekan IDEB / SILK Checking Pasangan</h3>
@@ -794,7 +774,7 @@
         </table>
       </div>
     </div>
-  </div> -->
+  </div>
 
   <div style="color: #fff; text-align: center">
     <button (click)="untukSlik()" name="submit_button" class="fa fa-file-archive-o btn btn-dark" [hidden]="this.hideCekSlik == 1">
@@ -852,7 +832,7 @@
 
       <button name="submit_button"   (click)="backtoide()" class="fa fa-file-archive-o btn btn-dark">Tolak</button> -->
 
-      <!-- <input type="checkbox" id="check3" checked="checked" disabled/><p><label for="check3" style="font-size:100%">{{ datadukcapil.namaLengkap }} </label></p> -->
+      <!-- <input type="checkbox" id="check3" checked="checked" disabled/><p><label for="check3" style="font-size:100%">{{ namaLengkapDukcapil }} </label></p> -->
       <!-- </ng-template> -->
 
       <!-- <div [ngSwitch]= "'{{ dataif}}'">
