@@ -101,6 +101,36 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   totalPasAng: any;
   // //////////////////////// Table Slik ////////////////////////
 
+  // /////////// Dukcapil Verify ///////////////////////////////
+  namaLengkapDukcapil: any;
+  ifNamaLengkap: any;
+  tglLahirDukcapil: any;
+  statusPerkawinanDukcapil: any;
+  alamatDukcapil: any;
+  ifAlamat: any;
+  namaPropinsiDukcapil: any;
+  namaKabupatenDukcapil: any;
+  namaKecamatanDukcapil: any;
+  namaKelurahanDukcapil: any;
+  noRTDukcapil: any;
+  noRWDukcapil: any;
+  jenisKelaminDukcapil: any;
+
+  PasangaNnamaLengkapDukcapil: any;
+  ifPasangaNnamaLengkap: any;
+  PasangaNtglLahirDukcapil: any;
+  PasangaNstatusPerkawinanDukcapil: any;
+  PasangaNalamatDukcapil: any;
+  ifPasanganAlamat: any;
+  PasangaNnamaPropinsiDukcapil: any;
+  PasangaNnamaKabupatenDukcapil: any;
+  PasangaNnamaKecamatanDukcapil: any;
+  PasangaNnamaKelurahanDukcapil: any;
+  PasangaNnoRTDukcapil: any;
+  PasangaNnoRWDukcapil: any;
+  PasangaNjenisKelaminDukcapil: any;
+  // /////////// Dukcapil Verify ///////////////////////////////
+
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject();
@@ -885,21 +915,37 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
             // if (codeverifducapilapi != 200) {
             //   alert('gagal !200');
             // } else {
-            //   if (data.result.responseCode != '00') {
-            //     // alert('ini gagal');
-            //     // alert(data.result.responseDesc);
-            //     this.datadukcapil = null;
-            //     // console.warn('dukcapil' + this.datadukcapil);
-            //     this.datadukcapilusername = null;
-            //   } else {
-            //     this.datadukcapil = data.result;
-            //     // console.warn('dukcapil' + this.datadukcapil);
-            //     this.dataif = data.result.responseCode;
-            // alert('berhasil ');
-            //   }
-            // }
-            this.datadukcapil = data.result;
-            // console.warn('dukcapil' + this.datadukcapil);
+            if (data.result.responseCode != '00') {
+              alert(data.result.responseDesc);
+              this.namaLengkapDukcapil = 'Tidak Sesuai';
+              this.ifNamaLengkap = 'Tidak Sesuai';
+              this.tglLahirDukcapil = 'Tidak Sesuai';
+              this.statusPerkawinanDukcapil = 'Tidak Sesuai';
+              this.alamatDukcapil = 'Tidak Sesuai';
+              this.ifAlamat = 'Tidak Sesuai';
+              this.namaPropinsiDukcapil = 'Tidak Sesuai';
+              this.namaKabupatenDukcapil = 'Tidak Sesuai';
+              this.namaKecamatanDukcapil = 'Tidak Sesuai';
+              this.namaKelurahanDukcapil = 'Tidak Sesuai';
+              this.noRTDukcapil = 'Tidak Sesuai';
+              this.noRWDukcapil = 'Tidak Sesuai';
+              this.jenisKelaminDukcapil = 'Tidak Sesuai';
+            } else {
+              this.datadukcapil = data.result;
+              this.namaLengkapDukcapil = this.datadukcapil.namaLengkap;
+              this.ifNamaLengkap = this.datadukcapil.namaLengkap.includes('Tidak') ? 'Tidak Sesuai' : 'Sesuai';
+              this.tglLahirDukcapil = this.datadukcapil.tglLahir;
+              this.statusPerkawinanDukcapil = this.datadukcapil.statusPerkawinan;
+              this.alamatDukcapil = this.datadukcapil.alamat;
+              this.ifAlamat = this.datadukcapil.alamat.includes('Tidak') ? 'Tidak Sesuai' : 'Sesuai';
+              this.namaPropinsiDukcapil = this.datadukcapil.namaPropinsi;
+              this.namaKabupatenDukcapil = this.datadukcapil.namaKabupaten;
+              this.namaKecamatanDukcapil = this.datadukcapil.namaKecamatan;
+              this.namaKelurahanDukcapil = this.datadukcapil.namaKelurahan;
+              this.noRTDukcapil = this.datadukcapil.noRT;
+              this.noRWDukcapil = this.datadukcapil.noRW;
+              this.jenisKelaminDukcapil = this.datadukcapil.jenisKelamin;
+            }
           },
           error: err => {
             alert(err.result);
@@ -910,7 +956,6 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify', {
           no_id: this.daWa.app_no_ide,
           tanggal_lahir: this.daWa.tanggal_lahir,
-
           reffNumber: reffnumbernya,
           timestamp: timestamp,
           channelID: 'EFOS',
@@ -962,13 +1007,43 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
             //     // alert('berhasil ');
             //   }
             // }
+            if (data.result.responseCode != '00') {
+              alert(data.result.responseDesc);
+              this.PasangaNnamaLengkapDukcapil = 'Tidak Sesuai';
+              this.ifPasangaNnamaLengkap = 'Tidak Sesuai';
+              this.PasangaNtglLahirDukcapil = 'Tidak Sesuai';
+              this.PasangaNstatusPerkawinanDukcapil = 'Tidak Sesuai';
+              this.PasangaNalamatDukcapil = 'Tidak Sesuai';
+              this.ifPasanganAlamat = 'Tidak Sesuai';
+              this.PasangaNnamaPropinsiDukcapil = 'Tidak Sesuai';
+              this.PasangaNnamaKabupatenDukcapil = 'Tidak Sesuai';
+              this.PasangaNnamaKecamatanDukcapil = 'Tidak Sesuai';
+              this.PasangaNnamaKelurahanDukcapil = 'Tidak Sesuai';
+              this.PasangaNnoRTDukcapil = 'Tidak Sesuai';
+              this.PasangaNnoRWDukcapil = 'Tidak Sesuai';
+              this.PasangaNjenisKelaminDukcapil = 'Tidak Sesuai';
+            } else {
+              this.datadukcapilpasangan = data.result;
+              this.PasangaNnamaLengkapDukcapil = this.datadukcapilpasangan.namaLengkap;
+              this.ifPasangaNnamaLengkap = this.datadukcapilpasangan.namaLengkap.includes('Tidak') ? 'Tidak Sesuai' : 'Sesuai';
+              this.PasangaNtglLahirDukcapil = this.datadukcapilpasangan.tglLahir;
+              this.PasangaNstatusPerkawinanDukcapil = this.datadukcapilpasangan.statusPerkawinan;
+              this.PasangaNalamatDukcapil = this.datadukcapilpasangan.alamat;
+              this.ifPasanganAlamat = this.datadukcapilpasangan.alamat.includes('Tidak') ? 'Tidak Sesuai' : 'Sesuai';
+              this.PasangaNnamaPropinsiDukcapil = this.datadukcapilpasangan.namaPropinsi;
+              this.PasangaNnamaKabupatenDukcapil = this.datadukcapilpasangan.namaKabupaten;
+              this.PasangaNnamaKecamatanDukcapil = this.datadukcapilpasangan.namaKecamatan;
+              this.PasangaNnamaKelurahanDukcapil = this.datadukcapilpasangan.namaKelurahan;
+              this.PasangaNnoRTDukcapil = this.datadukcapilpasangan.noRT;
+              this.PasangaNnoRWDukcapil = this.datadukcapilpasangan.noRW;
+              this.PasangaNjenisKelaminDukcapil = this.datadukcapilpasangan.jenisKelamin;
+            }
           },
           error: err => {
             alert(err.result);
           },
         });
     } else {
-      alert('kdhf');
       this.http
         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify', {
           no_id: this.daWa.app_no_ide,
@@ -1012,22 +1087,71 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
             // if (codeverifducapilapi != 200) {
             //   // alert('gagal !200');
             // } else {
-            //   if (data.result.responseCode != '00') {
-            //     // alert('ini gagal');
-            //     // alert(data.result.responseDesc);
-            //     this.datadukcapil = null;
-            //     // console.warn('dukcapil' + this.datadukcapil);
-            //     this.datadukcapilusername = null;
-            //   } else {
-            this.datadukcapil = data.result;
-            // console.warn('dukcapil' + this.datadukcapil);
-            //     this.dataif = data.result.responseCode;
-            // alert('berhasil ');
-            //   }
-            // }
+            if (data.result.responseCode != '00') {
+              alert(data.result.responseDesc);
+              this.namaLengkapDukcapil = 'Tidak Sesuai';
+              this.ifNamaLengkap = 'Tidak Sesuai';
+              this.tglLahirDukcapil = 'Tidak Sesuai';
+              this.statusPerkawinanDukcapil = 'Tidak Sesuai';
+              this.alamatDukcapil = 'Tidak Sesuai';
+              this.ifAlamat = 'Tidak Sesuai';
+              this.namaPropinsiDukcapil = 'Tidak Sesuai';
+              this.namaKabupatenDukcapil = 'Tidak Sesuai';
+              this.namaKecamatanDukcapil = 'Tidak Sesuai';
+              this.namaKelurahanDukcapil = 'Tidak Sesuai';
+              this.noRTDukcapil = 'Tidak Sesuai';
+              this.noRWDukcapil = 'Tidak Sesuai';
+              this.jenisKelaminDukcapil = 'Tidak Sesuai';
+
+              // //////////////// Psangan /////////////////////////
+              this.PasangaNnamaLengkapDukcapil = 'Tidak Sesuai';
+              this.ifPasangaNnamaLengkap = 'Tidak Sesuai';
+              this.PasangaNtglLahirDukcapil = 'Tidak Sesuai';
+              this.PasangaNstatusPerkawinanDukcapil = 'Tidak Sesuai';
+              this.PasangaNalamatDukcapil = 'Tidak Sesuai';
+              this.ifPasanganAlamat = 'Tidak Sesuai';
+              this.PasangaNnamaPropinsiDukcapil = 'Tidak Sesuai';
+              this.PasangaNnamaKabupatenDukcapil = 'Tidak Sesuai';
+              this.PasangaNnamaKecamatanDukcapil = 'Tidak Sesuai';
+              this.PasangaNnamaKelurahanDukcapil = 'Tidak Sesuai';
+              this.PasangaNnoRTDukcapil = 'Tidak Sesuai';
+              this.PasangaNnoRWDukcapil = 'Tidak Sesuai';
+              this.PasangaNjenisKelaminDukcapil = 'Tidak Sesuai';
+            } else {
+              this.datadukcapil = data.result;
+              this.namaLengkapDukcapil = this.datadukcapil.namaLengkap;
+              this.ifNamaLengkap = this.datadukcapil.namaLengkap.includes('Tidak') ? 'Tidak Sesuai' : 'Sesuai';
+              this.tglLahirDukcapil = this.datadukcapil.tglLahir;
+              this.statusPerkawinanDukcapil = this.datadukcapil.statusPerkawinan;
+              this.alamatDukcapil = this.datadukcapil.alamat;
+              this.ifAlamat = this.datadukcapil.alamat.includes('Tidak') ? 'Tidak Sesuai' : 'Sesuai';
+              this.namaPropinsiDukcapil = this.datadukcapil.namaPropinsi;
+              this.namaKabupatenDukcapil = this.datadukcapil.namaKabupaten;
+              this.namaKecamatanDukcapil = this.datadukcapil.namaKecamatan;
+              this.namaKelurahanDukcapil = this.datadukcapil.namaKelurahan;
+              this.noRTDukcapil = this.datadukcapil.noRT;
+              this.noRWDukcapil = this.datadukcapil.noRW;
+              this.jenisKelaminDukcapil = this.datadukcapil.jenisKelamin;
+
+              // //////////////// Psangan /////////////////////////
+              this.PasangaNnamaLengkapDukcapil = 'Tidak Sesuai';
+              this.ifPasangaNnamaLengkap = 'Tidak Sesuai';
+              this.PasangaNtglLahirDukcapil = 'Tidak Sesuai';
+              this.PasangaNstatusPerkawinanDukcapil = 'Tidak Sesuai';
+              this.PasangaNalamatDukcapil = 'Tidak Sesuai';
+              this.ifPasanganAlamat = 'Tidak Sesuai';
+              this.PasangaNnamaPropinsiDukcapil = 'Tidak Sesuai';
+              this.PasangaNnamaKabupatenDukcapil = 'Tidak Sesuai';
+              this.PasangaNnamaKecamatanDukcapil = 'Tidak Sesuai';
+              this.PasangaNnamaKelurahanDukcapil = 'Tidak Sesuai';
+              this.PasangaNnoRTDukcapil = 'Tidak Sesuai';
+              this.PasangaNnoRWDukcapil = 'Tidak Sesuai';
+              this.PasangaNjenisKelaminDukcapil = 'Tidak Sesuai';
+            }
           },
           error: err => {
-            alert(err.result);
+            alert(err.status);
+            console.warn('dukcapil Lajang' + err);
           },
         });
     }

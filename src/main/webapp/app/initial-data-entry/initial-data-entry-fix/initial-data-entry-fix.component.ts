@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -27,6 +27,8 @@ import { refListJumlahKaryawan } from '../../data-entry/services/config/refListJ
   styleUrls: ['./initial-data-entry-fix.component.scss'],
 })
 export class InitialDataEntryFixComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   subscription?: Subscription;
   jumlahKaryawanModel: refListJumlahKaryawan[] = [];
   app_no_ide: any;
@@ -423,6 +425,7 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   load(): void {
+    this.getLoading(true);
     this.dataEntryService.getFetchListJumlahKaryawan().subscribe(data => {
       this.jumlahKaryawanModel = data.result;
     });
@@ -569,13 +572,16 @@ export class InitialDataEntryFixComponent implements OnInit {
       if (this.cekResultIde == 0) {
         this.ideFixServices.getIdeById().subscribe(data => {
           this.app_no_ide = data.result;
+          this.getLoading(false);
         });
         this.ideFixServices.getIdeByCuref().subscribe(data => {
           this.curef = data.result;
+          this.getLoading(false);
         });
       } else {
         this.app_no_ide = this.modelIde.app_no_ide;
         this.curef = this.modelIde.curef;
+        this.getLoading(false);
       }
     }, 100);
 
@@ -2388,5 +2394,10 @@ export class InitialDataEntryFixComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }
