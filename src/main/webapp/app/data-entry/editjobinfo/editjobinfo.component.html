@@ -56,6 +56,7 @@
                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               />Payroll</label
             >
+            &emsp;&emsp;&emsp;
             <label class="radio-inline mr-3">
               <input
                 type="radio"
@@ -366,7 +367,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Umur Pensiun</label>
+        <label class="col-sm-3 col-form-label">Usia Pensiun</label>
         <div class="col-sm-9">
           <input
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
@@ -374,7 +375,7 @@
             (keypress)="keyPressNumbers($event)"
             maxlength="2"
             class="form-control"
-            placeholder="Umur Pensiun"
+            placeholder="Usia Pensiun"
             id="umur_pensiun"
             formControlName="umur_pensiun"
           />
@@ -510,7 +511,7 @@
             formControlName="pendapatan"
             (keypress)="keyPressNumbers($event)"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
           />
           <span
             [hidden]="
@@ -535,7 +536,7 @@
             formControlName="pendapatan_lain"
             (keypress)="keyPressNumbers($event)"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
           />
           <span
             [hidden]="
@@ -562,7 +563,7 @@
             formControlName="tunjangan"
             (keypress)="keyPressNumbers($event)"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
           />
           <span
             [hidden]="
@@ -601,7 +602,7 @@
             value="{{
               +this.editJobForm.get('pendapatan')?.value +
                 +this.editJobForm.get('pendapatan_lain')?.value +
-                +this.editJobForm.get('tunjangan')?.value | currency: 'Rp '
+                +this.editJobForm.get('tunjangan')?.value | currency: 'Rp. ': 'symbol' : '1.0-0'
             }}"
           />
         </div>

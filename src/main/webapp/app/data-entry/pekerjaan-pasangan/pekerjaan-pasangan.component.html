@@ -481,7 +481,7 @@
               id="pendapatan"
               (keypress)="keyPressNumbers($event)"
               currencyMask
-              [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
             />
             <span
               [hidden]="
@@ -507,7 +507,7 @@
               id="tunjangan"
               (keypress)="keyPressNumbers($event)"
               currencyMask
-              [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
             />
             <span
               [hidden]="
@@ -533,7 +533,7 @@
               id="pendapatan_lain"
               (keypress)="keyPressNumbers($event)"
               currencyMask
-              [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
             />
           </div>
         </div>
@@ -563,7 +563,7 @@
               value="{{
                 +this.formPekerjaanPasangan.get('pendapatan')?.value +
                   +this.formPekerjaanPasangan.get('tunjangan')?.value +
-                  +this.formPekerjaanPasangan.get('pendapatan_lain')?.value | currency: 'Rp '
+                  +this.formPekerjaanPasangan.get('pendapatan_lain')?.value | currency: 'Rp. ': 'symbol' : '1.0-0'
               }}"
             />
           </div>
@@ -572,7 +572,7 @@
         <!--//////////// Profesional \\\\\\\\\\\\\\\\\-->
         <div *ngIf="this.formPekerjaanPasangan.get('tipe_pekerjaan')?.value == '4'">
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Umur Pensiun</label>
+            <label class="col-sm-3 col-form-label">Usia Pensiun</label>
             <div class="col-sm-9">
               <input
                 type="tel"

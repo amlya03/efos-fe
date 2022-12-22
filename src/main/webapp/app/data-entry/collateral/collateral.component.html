@@ -204,7 +204,7 @@
             class="form-group row"
             [hidden]="this.collateralForm.get('tipe_agunan')?.value == 'C01' || this.collateralForm.get('tipe_agunan')?.value == 'H01'"
           >
-            <label class="col-sm-4 col-form-label">Status</label>
+            <label class="col-sm-4 col-form-label">Status Agunan</label>
             <div class="col">
               <label>Baru</label>
               <input type="radio" formControlName="status_agunan" value="baru" />
@@ -772,7 +772,7 @@
             <div class="form-group row">
               <label class="col-sm-3 col-form-label">Alamat Agunan Sama Dengan Sertifikat?</label>
               <div class="col-sm-9">
-                <input type="radio" name="testtt" value="0" (change)="onItemChange($event.target)" />Tidak Sama
+                <input type="radio" name="testtt" value="0" (change)="onItemChange($event.target)" />Tidak Sama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="testtt" value="1" (change)="onItemChange($event.target)" />Sama
               </div>
             </div>
