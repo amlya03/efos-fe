@@ -1284,7 +1284,7 @@
         ideForm.invalid ||
         jobForm.invalid ||
         (this.ideForm.get('status_perkawinan')?.value === 'Lajang' && this.ideForm.get('usia')?.value < 21) ||
-          (this.ideForm.get('status_perkawinan')?.value === 'Menikah' && this.ideForm.get('usia')?.value < 18)
+        (this.ideForm.get('status_perkawinan')?.value === 'Menikah' && this.ideForm.get('usia')?.value < 18)
       "
     >
       Proses Data
@@ -1299,7 +1299,7 @@
         ideForm.invalid ||
         jobForm.invalid ||
         (this.ideForm.get('status_perkawinan')?.value === 'Lajang' && this.ideForm.get('usia')?.value < 21) ||
-          (this.ideForm.get('status_perkawinan')?.value === 'Menikah' && this.ideForm.get('usia')?.value < 18)
+        (this.ideForm.get('status_perkawinan')?.value === 'Menikah' && this.ideForm.get('usia')?.value < 18)
       "
       type="button"
     >
@@ -1307,3 +1307,4 @@
     </button>
   </div>
 </div>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>
