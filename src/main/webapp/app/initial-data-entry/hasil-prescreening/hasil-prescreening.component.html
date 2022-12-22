@@ -21,7 +21,7 @@
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <fa-icon [icon]="datadukcapil.namaLengkap.includes('nice') != 'Tidak' ? 'circle-check' : 'circle-xmark'"></fa-icon>
+    <fa-icon [icon]="datadukcapil.namaLengkap.includes('Tidak') != 'Tidak' ? 'circle-check' : 'circle-xmark'"></fa-icon>
     <br />
     <h6 [ngClass]="datadukcapil.namaLengkap != '' ? 'red' : 'green'">{{ datadukcapil.namaLengkap }}</h6>
     <!-- <h6 [ngClass]="datadukcapil.namaLengkap != '' ? 'red' : 'green'"></h6>
