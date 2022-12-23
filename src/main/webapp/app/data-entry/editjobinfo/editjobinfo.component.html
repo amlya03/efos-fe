@@ -597,7 +597,7 @@
           <input
             type="text"
             class="form-control"
-            readonly
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             currencyMask
             value="{{
               +this.editJobForm.get('pendapatan')?.value +

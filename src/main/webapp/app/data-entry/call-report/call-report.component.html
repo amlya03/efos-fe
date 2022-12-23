@@ -15,7 +15,7 @@
             class="form-control"
             placeholder="app_no_de"
             value="{{ daWa1.app_no_de }}"
-            readonly
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           />
         </div>
       </div>
@@ -23,7 +23,9 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Nasabah</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" placeholder="Nama Nasabah" name="nama" id="nama" value="{{ daWa1.nama }}" readonly />
+          <input
+          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+          type="text" class="form-control" placeholder="Nama Nasabah" name="nama" id="nama" value="{{ daWa1.nama }}" readonly />
         </div>
       </div>
       <br />
@@ -37,7 +39,7 @@
             id="fasilitas"
             name="fasilitas"
             value="{{ daWa1.kode_fasilitas_name }}"
-            readonly
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           />
         </div>
       </div>
@@ -52,7 +54,7 @@
             id="tenor"
             name="tenor"
             value="{{ daWa1.jangka_waktu }} Bulan"
-            readonly
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           />
         </div>
       </div>
@@ -67,7 +69,7 @@
             id="platform"
             name="platform"
             value="{{ daWa1.nilai_pembiayaan | currency: 'Rp ' }}"
-            readonly
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           />
         </div>
       </div>
@@ -83,7 +85,7 @@
             id="cabang"
             name="cabang"
             value="{{ this.untukSessionKodeCabang }}"
-            readonly
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           />
         </div>
       </div>
@@ -98,7 +100,7 @@
             id="nama_ao"
             name="nama_ao"
             value="{{ this.untukSessionFullName }}"
-            readonly
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           />
         </div>
       </div>
@@ -113,7 +115,7 @@
             id="tipe_nasabah"
             name="tipe_nasabah"
             value="{{ daWa1.kategori_pekerjaan }}"
-            readonly
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           />
         </div>
       </div>
@@ -852,7 +854,9 @@
         <label class="col-sm-4 col-form-label">No wawancara</label>
         <div class="col-md-8">
           <div class="form-group">
-            <input type="text" class="form-control" value="{{ this.nowawancara }}" readonly />
+            <input 
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            type="text" class="form-control" value="{{ this.nowawancara }}" readonly />
           </div>
         </div>
       </div>

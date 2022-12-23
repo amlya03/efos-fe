@@ -245,8 +245,8 @@ export class JobInfoComponent implements OnInit {
       ],
     });
     this.datajobsebelum = this.formBuilder.group({
-      kategori_pekerjaan_sebelum: '',
-      tipe_pekerjaan_sebelum: '',
+       kategori_pekerjaan_sebelum:  '',
+      tipe_pekerjaan_sebelum:  '',
       // pay_roll: '',
       posisi_sebelum: '',
       nama_perusahaan_sebelum: '',
@@ -420,7 +420,7 @@ export class JobInfoComponent implements OnInit {
           this.dataretrivesektorekosebelum = this.tampunganid.sektor_ekonomi_sebelum;
         }
 
-        if (this.untukSessionRole == 'VER_PRE_SPV') {
+        if (this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER') {
           // alert('ini if');
           this.datajobsebelum.disable();
         } else {
