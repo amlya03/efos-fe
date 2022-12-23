@@ -438,10 +438,12 @@ export class InitialDataEntryFixComponent implements OnInit {
     setTimeout(() => {
       if (this.kategori == 1) {
         this.kirimKatePeker = 'Fix Income';
+        this.getLoading(false);
       } else {
         this.kirimKatePeker = 'Non Fix Income';
+        this.getLoading(false);
       }
-    }, 1000);
+    }, 1200);
 
     if (this.paramId != null) {
       this.cekResultIde = 1;
@@ -512,7 +514,7 @@ export class InitialDataEntryFixComponent implements OnInit {
           this.cariPekerPost(this.modelJob.kode_pos);
           this.submitBday(this.modelIde.tanggal_lahir);
           this.submitBdayp(this.modelIde.tanggal_lahir_pasangan);
-        }, 300);
+        }, 1000);
 
         setTimeout(() => {
           if (this.modelJob == null) {
@@ -526,7 +528,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             this.retriveSektor = this.modelJob.sektor_ekonomi;
             this.retriveSektorSebelum = this.modelJob.sektor_ekonomi_sebelum;
           }
-        }, 400);
+        }, 800);
 
         this.ideFixServices.getJobByCurefIDE(this.modelIde.curef).subscribe(data => {
           this.modelJob = data.result;
@@ -581,7 +583,6 @@ export class InitialDataEntryFixComponent implements OnInit {
       } else {
         this.app_no_ide = this.modelIde.app_no_ide;
         this.curef = this.modelIde.curef;
-        this.getLoading(false);
       }
     }, 100);
 
