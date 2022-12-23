@@ -185,7 +185,7 @@ export class DataRumahComponent implements OnInit {
         total_angsuran_pasangan: this.slikTotal.total_angsuran_pasangan,
       };
       this.slikForm.setValue(retSlik);
-
+      // console.warn(data)
       // alert(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_angsuran_pasangan)))
       this.totalOutNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
         Number(this.slikTotal.total_outstanding_nasabah)
@@ -218,7 +218,7 @@ export class DataRumahComponent implements OnInit {
 
       this.listSlik?.forEach(element => {
         if (element.response_description === 'get SLIK Result Success') {
-          if (element.status_applicant === 'Debitur Utama Individu') {
+          if (element.status_applicant === 'Debitur Utama') {
             this.listLajangSlik.push(element);
           } else if (element.status_applicant === 'Pasangan Debitur') {
             this.listMenikahSlik.push(element);
