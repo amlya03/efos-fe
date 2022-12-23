@@ -1476,7 +1476,7 @@ export class InitialDataEntryFixComponent implements OnInit {
           .subscribe({
             next: data => {
               this.http
-                .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
+                .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide_temp', {
                   nama: this.ideForm.get('nama')?.value,
                   nama_pasangan: this.ideForm.get('nama_pasangan')?.value,
                   kategori_pekerjaan: this.kirimKatePeker,
@@ -1637,7 +1637,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             next: data => {
               if (this.ideForm.get('status_perkawinan')?.value === 'Menikah') {
                 this.http
-                  .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide', {
+                  .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide_temp', {
                     agama: this.ideForm.get('agama')?.value,
                     agama_pasangan: this.ideForm.get('agama_pasangan')?.value,
                     alamat_domisili: '',
@@ -1719,7 +1719,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                   });
               } else {
                 this.http
-                  .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide', {
+                  .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide_temp', {
                     agama: this.ideForm.get('agama')?.value,
                     agama_pasangan: '',
                     alamat_domisili: '',
@@ -1812,7 +1812,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     } else {
       if (this.cekResultIde == 0) {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide_temp', {
             nama: this.ideForm.get('nama')?.value,
             nama_pasangan: this.ideForm.get('nama_pasangan')?.value,
             kategori_pekerjaan: this.kirimKatePeker,
@@ -1895,7 +1895,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       } else {
         if (this.ideForm.get('status_perkawinan')?.value === 'Menikah') {
           this.http
-            .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide', {
+            .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide_temp', {
               agama: this.ideForm.get('agama')?.value,
               agama_pasangan: this.ideForm.get('agama_pasangan')?.value,
               alamat_domisili: '',
@@ -1977,7 +1977,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             });
         } else {
           this.http
-            .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide', {
+            .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide_temp', {
               agama: this.ideForm.get('agama')?.value,
               agama_pasangan: '',
               alamat_domisili: '',

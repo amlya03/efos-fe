@@ -226,7 +226,7 @@
                 value="pks"
                 [hidden]="this.collateralForm.get('status_agunan')?.value == 'second'"
               />
-              <label [hidden]="this.collateralForm.get('status_agunan')?.value == 'second'">PKS</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <label [hidden]="this.collateralForm.get('status_agunan')?.value == 'second'">PKS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
               <input type="radio" formControlName="status_developer" value="non pks" />
               <label>NON PKS</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <input type="radio" formControlName="status_developer" value="perorangan" />
@@ -772,8 +772,8 @@
             <div class="form-group row">
               <label class="col-sm-3 col-form-label">Alamat Agunan Sama Dengan Sertifikat?</label>
               <div class="col-sm-9">
-                <input type="radio" name="testtt" value="0" (change)="onItemChange($event.target)" />Tidak Sama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="testtt" value="1" (change)="onItemChange($event.target)" />Sama
+                <input type="radio" name="testtt" value="0" (change)="onItemChange($event.target)" />Tidak Sama
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="testtt" value="1" (change)="onItemChange($event.target)" />Sama
               </div>
             </div>
             <br />
