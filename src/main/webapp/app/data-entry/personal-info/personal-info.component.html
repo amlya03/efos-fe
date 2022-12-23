@@ -287,6 +287,7 @@
         <div class="col-sm-9">
           <input type="radio" id="ktp_seumur_hidup_ya" formControlName="status_ktp" value="1" />
           Ya
+          &emsp;&emsp;&emsp;
           <input type="radio" formControlName="status_ktp" value="0" />
           Tidak
 
@@ -416,7 +417,7 @@
       <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Lama Menetap</label>
-        <div class="col-sm-9">
+        <div class="col">
           <input
             type="tel"
             maxlength="2"
@@ -426,6 +427,7 @@
             formControlName="lama_menetap"
             (keypress)="keyPressNumbers($event)"
           />
+          
           <span
             [hidden]="
               personalInfoForm.controls.lama_menetap.valid ||
@@ -437,6 +439,7 @@
             Lama Menetap Harus Diisi
           </span>
         </div>
+        <div class="col">Tahun</div>
       </div>
       <br />
       <div class="form-group row">
@@ -658,6 +661,7 @@
             (change)="onItemChange($event.target)"
             [checked]="this.personalInfoForm.get('alamat_ktp')?.value != this.personalInfoForm.get('alamat_domisili')?.value"
           />Tidak Sama
+          &emsp;&emsp;&emsp;
           <input
             type="radio"
             name="testtt"

@@ -70,6 +70,7 @@
                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               />Payroll</label
             >
+            &emsp;&emsp;&emsp;
             <label class="radio-inline mr-3">
               <input
                 type="radio"
@@ -442,14 +443,14 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Umur Pensiun</label>
+        <label class="col-sm-3 col-form-label">Usia Pensiun</label>
         <div class="col-sm-9">
           <input
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             type="tel"
             (keypress)="keyPressNumbers($event)"
             class="form-control"
-            placeholder="Umur Pensiun"
+            placeholder="Usia Pensiun"
             (keypress)="keyPressNumbers($event)"
             maxlength="2"
             id="umur_pensiun"
@@ -592,9 +593,8 @@
             placeholder="Pendapatan"
             id="pendapatan"
             formControlName="pendapatan"
-            (keypress)="keyPressNumbers($event)"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           />
           <span
@@ -622,7 +622,7 @@
             formControlName="pendapatan_lain"
             (keypress)="keyPressNumbers($event)"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           />
         </div>
@@ -639,7 +639,7 @@
             formControlName="tunjangan"
             (keypress)="keyPressNumbers($event)"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',',precision:0 }"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           />
           <span
@@ -681,8 +681,9 @@
             value="{{
               +this.jobInfoForm.get('pendapatan')?.value +
                 +this.jobInfoForm.get('pendapatan_lain')?.value +
-                +this.jobInfoForm.get('tunjangan')?.value | currency: 'Rp '
+                +this.jobInfoForm.get('tunjangan')?.value | currency: 'Rp. ': 'symbol' : '1.0-0' 
             }}"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
             readonly
           />
         </div>
@@ -875,10 +876,11 @@
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             />Payroll</label
           >
+          &emsp;&emsp;&emsp;
           <label class="radio-inline mr-3">
             <input
               type="radio"
-              name="nonpayrollid"
+              name="payrollid"
               id="nonpayrollid"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             />Non Payroll</label
