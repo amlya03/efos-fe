@@ -89,6 +89,175 @@
 </div>
 <p></p>
 <br />
+
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">History Pengajuan</h3>
+</div>
+<br />
+<table class="table table-borderless">
+  <thead>
+    <tr>
+      <th scope="col" style="text-align: center">No</th>
+      <th scope="col" style="text-align: center">Approve By</th>
+      <th scope="col" style="text-align: center">Approve Date</th>
+      <th scope="col" style="text-align: center">Keputusan</th>
+      <th scope="col" style="text-align: center">Keterangan Alasan Penolakan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let persetujuanPembiayaan of persetujuanPembiayaan; index as i">
+      <th scope="row" style="text-align: center">{{ i + 1 }}</th>
+      <td style="text-align: center">{{ persetujuanPembiayaan.approved_by }}</td>
+      <td style="text-align: center">{{ persetujuanPembiayaan.approved_date }}</td>
+      <td style="text-align: center">{{ persetujuanPembiayaan.keputusan }}</td>
+      <td style="text-align: center">{{ persetujuanPembiayaan.alasan_penolakan }}</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Area of Concern</h3>
+</div>
+<br />
+<table class="table table-borderless">
+  <thead>
+    <tr>
+      <th scope="col" style="text-align: center">#</th>
+      <th scope="col" style="text-align: center">Jenis Persetujuan</th>
+      <th scope="col" style="text-align: center">Detail Persetujuan</th>
+      <th scope="col" style="text-align: center">Usulan</th>
+      <th scope="col" style="text-align: center">Ketentuan yang Berlaku</th>
+      <th scope="col" style="text-align: center">Mitigasi Resiko</th>
+      <th scope="col" style="text-align: center" colspan="2">Persetujuan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let refPersetujuanKhusus of refPersetujuanKhusus; index as i">
+      <th scope="row" style="text-align: center">{{ i + 1 }}</th>
+      <td>{{ refPersetujuanKhusus.deskripsi }}</td>
+      <td hidden><input type="text" id="id{{ i }}" value="{{ this.listPersetujuanKhusus[i].id }}" /></td>
+      <td hidden>
+        <input
+          type="text"
+          value="{{ this.listPersetujuanKhusus[i].id_jenis_persetujuan }}"
+          id="id_jenis_persetujuan{{ i }}"
+          class="form-control"
+        />
+      </td>
+      <td style="text-align: center">
+        <input
+          type="text"
+          value="{{ this.listPersetujuanKhusus[i].detail_persetujuan }}"
+          id="detail_persetujuan{{ i }}"
+          class="form-control"
+        />
+      </td>
+      <td style="text-align: center">
+        <input type="text" value="{{ this.listPersetujuanKhusus[i].usulan }}" id="usulan{{ i }}" class="form-control" />
+      </td>
+      <td style="text-align: center">
+        <input type="text" value="{{ this.listPersetujuanKhusus[i].ketentuan }}" id="ketentuan{{ i }}" class="form-control" />
+      </td>
+      <td style="text-align: center">
+        <input type="text" value="{{ this.listPersetujuanKhusus[i].mitigasi_resiko }}" id="mitigasi_resiko{{ i }}" class="form-control" />
+      </td>
+      <td style="text-align: center">
+        <input
+          type="radio"
+          name="persetujuan{{ i }}"
+          id="persetujuan_ya{{ i }}"
+          [checked]="this.listPersetujuanKhusus[i].persetujuan === '1'"
+          value="1"
+        />
+        <label for="persetujuan_ya">Ya</label>
+      </td>
+      <td style="text-align: center">
+        <input
+          type="radio"
+          name="persetujuan{{ i }}"
+          id="persetujuan_tidak{{ i }}"
+          [checked]="this.listPersetujuanKhusus[i].persetujuan === '0'"
+          value="0"
+        />
+        <label for="persetujuan_tidak">Tidak</label>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p></p>
+<br />
+
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Rekomendasi System</h3>
+</div>
+<p></p>
+<div class="row formm-material">
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Maximal Pembiayaan</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          currencyMask
+          value="{{ this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value | currency: 'Rp ' }}"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Jangka Waktu</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" value="{{ this.komiteFasilitasYangDimintaForm.get('tenor')?.value + ' Bulan' }}" />
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Down Payment</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          currencyMask
+          value="{{ this.komiteFasilitasYangDimintaForm.get('down_payment')?.value | currency: 'Rp ' }}"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Angsuran</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          value="{{ this.komiteFasilitasYangDimintaForm.get('angsuran')?.value }}"
+          data-toggle="tooltip"
+          data-placement="bottom"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Scoring</label>
+      <div class="col-sm-2">
+        <input type="text" readonly class="form-control" value="{{ this.hasilScoring }}" />
+      </div>
+      <div class="col-sm-2" *ngIf="this.hasilStatus === 'BAD'">
+        <h6 style="color: red">{{ this.hasilStatus }}</h6>
+      </div>
+      <div class="col-sm-2" [hidden]="this.hasilStatus === 'BAD'">
+        <h6 style="color: green">{{ this.hasilStatus }}</h6>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Fasilitas Yang Direkomendasikan</h3>
 </div>
@@ -223,75 +392,7 @@
   </div>
 </div>
 <br />
-<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Rekomendasi System</h3>
-</div>
-<p></p>
-<div class="row formm-material">
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Maximal Pembiayaan</label>
-      <div class="col-sm-8">
-        <input
-          type="text"
-          readonly
-          class="form-control"
-          currencyMask
-          value="{{ this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value | currency: 'Rp ' }}"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Jangka Waktu</label>
-      <div class="col-sm-8">
-        <input type="text" readonly class="form-control" value="{{ this.komiteFasilitasYangDimintaForm.get('tenor')?.value + ' Bulan' }}" />
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Down Payment</label>
-      <div class="col-sm-8">
-        <input
-          type="text"
-          readonly
-          class="form-control"
-          currencyMask
-          value="{{ this.komiteFasilitasYangDimintaForm.get('down_payment')?.value | currency: 'Rp ' }}"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Angsuran</label>
-      <div class="col-sm-8">
-        <input
-          type="text"
-          readonly
-          class="form-control"
-          value="{{ this.komiteFasilitasYangDimintaForm.get('angsuran')?.value }}"
-          data-toggle="tooltip"
-          data-placement="bottom"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Scoring</label>
-      <div class="col-sm-2">
-        <input type="text" readonly class="form-control" value="{{ this.hasilScoring }}" />
-      </div>
-      <div class="col-sm-2" *ngIf="this.hasilStatus === 'BAD'">
-        <h6 style="color: red">{{ this.hasilStatus }}</h6>
-      </div>
-      <div class="col-sm-2" [hidden]="this.hasilStatus === 'BAD'">
-        <h6 style="color: green">{{ this.hasilStatus }}</h6>
-      </div>
-    </div>
-  </div>
-</div>
-<br />
+
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Keputusan Pembiayaan</h3>
 </div>
@@ -382,102 +483,8 @@
   </div>
 </div>
 <br />
-<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Persetujuan Khusus</h3>
-</div>
-<br />
-<table class="table table-borderless">
-  <thead>
-    <tr>
-      <th scope="col" style="text-align: center">#</th>
-      <th scope="col" style="text-align: center">Jenis Persetujuan</th>
-      <th scope="col" style="text-align: center">Detail Persetujuan</th>
-      <th scope="col" style="text-align: center">Usulan</th>
-      <th scope="col" style="text-align: center">Ketentuan yang Berlaku</th>
-      <th scope="col" style="text-align: center">Mitigasi Resiko</th>
-      <th scope="col" style="text-align: center" colspan="2">Persetujuan</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let refPersetujuanKhusus of refPersetujuanKhusus; index as i">
-      <th scope="row" style="text-align: center">{{ i + 1 }}</th>
-      <td>{{ refPersetujuanKhusus.deskripsi }}</td>
-      <td hidden><input type="text" id="id{{ i }}" value="{{ this.listPersetujuanKhusus[i].id }}" /></td>
-      <td hidden>
-        <input
-          type="text"
-          value="{{ this.listPersetujuanKhusus[i].id_jenis_persetujuan }}"
-          id="id_jenis_persetujuan{{ i }}"
-          class="form-control"
-        />
-      </td>
-      <td style="text-align: center">
-        <input
-          type="text"
-          value="{{ this.listPersetujuanKhusus[i].detail_persetujuan }}"
-          id="detail_persetujuan{{ i }}"
-          class="form-control"
-        />
-      </td>
-      <td style="text-align: center">
-        <input type="text" value="{{ this.listPersetujuanKhusus[i].usulan }}" id="usulan{{ i }}" class="form-control" />
-      </td>
-      <td style="text-align: center">
-        <input type="text" value="{{ this.listPersetujuanKhusus[i].ketentuan }}" id="ketentuan{{ i }}" class="form-control" />
-      </td>
-      <td style="text-align: center">
-        <input type="text" value="{{ this.listPersetujuanKhusus[i].mitigasi_resiko }}" id="mitigasi_resiko{{ i }}" class="form-control" />
-      </td>
-      <td style="text-align: center">
-        <input
-          type="radio"
-          name="persetujuan{{ i }}"
-          id="persetujuan_ya{{ i }}"
-          [checked]="this.listPersetujuanKhusus[i].persetujuan === '1'"
-          value="1"
-        />
-        <label for="persetujuan_ya">Ya</label>
-      </td>
-      <td style="text-align: center">
-        <input
-          type="radio"
-          name="persetujuan{{ i }}"
-          id="persetujuan_tidak{{ i }}"
-          [checked]="this.listPersetujuanKhusus[i].persetujuan === '0'"
-          value="0"
-        />
-        <label for="persetujuan_tidak">Tidak</label>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<p></p>
-<br />
-<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">History Pengajuan</h3>
-</div>
-<br />
-<table class="table table-borderless">
-  <thead>
-    <tr>
-      <th scope="col" style="text-align: center">No</th>
-      <th scope="col" style="text-align: center">Approve By</th>
-      <th scope="col" style="text-align: center">Approve Date</th>
-      <th scope="col" style="text-align: center">Keputusan</th>
-      <th scope="col" style="text-align: center">Keterangan Alasan Penolakan</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let persetujuanPembiayaan of persetujuanPembiayaan; index as i">
-      <th scope="row" style="text-align: center">{{ i + 1 }}</th>
-      <td style="text-align: center">{{ persetujuanPembiayaan.approved_by }}</td>
-      <td style="text-align: center">{{ persetujuanPembiayaan.approved_date }}</td>
-      <td style="text-align: center">{{ persetujuanPembiayaan.keputusan }}</td>
-      <td style="text-align: center">{{ persetujuanPembiayaan.alasan_penolakan }}</td>
-    </tr>
-  </tbody>
-</table>
-<br />
+
+
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Persetujuan Pembiayaan</h3>
 </div>
