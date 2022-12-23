@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -23,6 +23,8 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./struktur-pembiayaan.component.scss'],
 })
 export class StrukturPembiayaanComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   strukturForm!: FormGroup;
   dataEntry: fetchAllDe = new fetchAllDe();
   tenor: refTenorFix[] = [];
@@ -54,6 +56,7 @@ export class StrukturPembiayaanComponent implements OnInit {
 
   // only show margin dan angsuran
   showAngsuran: any;
+  showMargin: any;
 
   constructor(
     protected dataEntryService: DataEntryService,
@@ -152,6 +155,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   }
 
   load() {
+    this.getLoading(true);
     // ambil semua data DE
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
@@ -162,17 +166,97 @@ export class StrukturPembiayaanComponent implements OnInit {
       }
     });
 
-    setTimeout(() => {
-      this.dataEntryService.getFetchStrukturDE(this.app_no_de, this.curef).subscribe(data => {
-        this.strukturModel = data.result;
-        this.kodeFasilitasRet = this.strukturModel.kode_fasilitas + '|' + this.strukturModel.kode_fasilitas_name;
-        this.kodeProgramRet = this.strukturModel.program + '|' + this.strukturModel.program_name;
-        this.kodeProdukRet = this.strukturModel.produk + '|' + this.strukturModel.produk_name;
-        this.skemaRet = this.strukturModel.skema + '|' + this.strukturModel.skema_master + '|' + this.strukturModel.skema_name;
-        this.jangkaWaktuRet = this.strukturModel.jangka_waktu + '|' + this.strukturModel.margin;
+    // setTimeout(() => {
+    this.dataEntryService.getFetchStrukturDE(this.app_no_de, this.curef).subscribe(data => {
+      this.strukturModel = data.result;
+      this.kodeFasilitasRet = this.strukturModel.kode_fasilitas + '|' + this.strukturModel.kode_fasilitas_name;
+      this.kodeProgramRet = this.strukturModel.program + '|' + this.strukturModel.program_name;
+      this.kodeProdukRet = this.strukturModel.produk + '|' + this.strukturModel.produk_name;
+      this.skemaRet = this.strukturModel.skema + '|' + this.strukturModel.skema_master + '|' + this.strukturModel.skema_name;
+      this.jangkaWaktuRet = this.strukturModel.jangka_waktu + '|' + this.strukturModel.margin;
 
-        // setTimeout(() => {
-        // }, 300);
+      setTimeout(() => {
+        this.dataEntryService.getFetchProgramByKode(this.strukturModel.kode_fasilitas).subscribe(data => {
+          this.kodeprogram = data.result;
+        });
+      }, 100);
+      setTimeout(() => {
+        this.dataEntryService.getFetchProdukByKode(this.strukturModel.program).subscribe(data => {
+          this.kodeproduk = data.result;
+        });
+      }, 200);
+      setTimeout(() => {
+        this.dataEntryService.getFetchSkemaByKode(this.strukturModel.produk).subscribe(data => {
+          this.kodeskema = data.result;
+        });
+      }, 300);
+      setTimeout(() => {
+        if (this.strukturModel.kode_fasilitas_name == 'PTA') {
+          this.dataEntryService.getTenorFix(this.strukturModel.skema).subscribe(data => {
+            this.tenor = data.result;
+          });
+        } else {
+          this.dataEntryService.getTenorNon(this.strukturModel.skema).subscribe(data => {
+            this.tenor = data.result;
+          });
+        }
+      }, 500);
+
+      setTimeout(() => {
+        if (this.strukturModel.skema_master == 1) {
+          this.showMargin = this.strukturModel.margin;
+        } else {
+          this.dataEntryService.getFetchMarginStepUp(this.strukturModel.skema).subscribe(data => {
+            let marginStep = data.result;
+            // for (let i = 0; i < data.result.length; i++) {
+            //   this.showMargin
+            // });
+            this.showMargin = 'Margin Tahun Ke 1 = ' + marginStep[0] + '; ' + 'Margin Tahun Ke 2 = ' + marginStep[1];
+          });
+        }
+      }, 700);
+
+      setTimeout(() => {
+        this.http
+          .post<any>('http://10.20.34.110:8805/api/v1/efos-de/hitung_angsuran', {
+            app_no_de: this.app_no_de,
+            curef: this.curef,
+            dp: this.strukturModel.uang_muka,
+            fasilitas: this.strukturModel.fasilitas_ke,
+            harga_objek: this.strukturModel.harga_objek_pembiayaan,
+            kode_fasilitas: this.strukturModel.kode_fasilitas,
+            kode_produk: this.strukturModel.produk,
+            skema_id: this.strukturModel.skema,
+            skema_master: this.strukturModel.skema_master,
+            tenor: this.strukturModel.jangka_waktu,
+          })
+          .subscribe({
+            next: data => {
+              let anguran1 = data.result.angsuran[0];
+              let anguran2 = data.result.angsuran[1];
+
+              if (anguran2 == null) {
+                this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ');
+                this.showAngsuran = 'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+              } else {
+                this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ' + anguran2);
+                this.showAngsuran =
+                  'Angsuran Tahun Ke 1 = ' +
+                  Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) +
+                  '; ' +
+                  'Angsuran Tahun Ke 2 = ' +
+                  Number(anguran2).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+              }
+            },
+            error: err => {
+              if (err.error.code == 400) {
+                alert(err.error.message);
+              }
+            },
+          });
+      }, 800);
+
+      setTimeout(() => {
         ///////////////////////////////////////////////////////////////////////////
         let retrivestrukturForm = {
           joint_income: this.joint_income,
@@ -193,88 +277,11 @@ export class StrukturPembiayaanComponent implements OnInit {
           nilai_pembiayaan: this.strukturModel.nilai_pembiayaan,
         };
         this.strukturForm.setValue(retrivestrukturForm);
+        this.getLoading(false);
         ///////////////////////////////////////////////////////////////////////////////
-        setTimeout(() => {
-          this.dataEntryService.getFetchProgramByKode(this.strukturModel.kode_fasilitas).subscribe(data => {
-            this.kodeprogram = data.result;
-          });
-        }, 300);
-        setTimeout(() => {
-          this.dataEntryService.getFetchProdukByKode(this.strukturModel.program).subscribe(data => {
-            this.kodeproduk = data.result;
-          });
-        }, 300);
-        setTimeout(() => {
-          this.dataEntryService.getFetchSkemaByKode(this.strukturModel.produk).subscribe(data => {
-            this.kodeskema = data.result;
-          });
-        }, 300);
-        setTimeout(() => {
-          if (this.strukturModel.kode_fasilitas_name == 'PTA') {
-            this.dataEntryService.getTenorFix(this.strukturModel.skema).subscribe(data => {
-              this.tenor = data.result;
-            });
-          } else {
-            this.dataEntryService.getTenorNon(this.strukturModel.skema).subscribe(data => {
-              this.tenor = data.result;
-            });
-          }
-        }, 300);
-
-        setTimeout(() => {
-          if (this.strukturModel.skema_master == 1) {
-            this.strukturForm.get('margin')?.setValue('Margin = ' + this.strukturModel.margin);
-          } else {
-            this.dataEntryService.getFetchMarginStepUp(this.strukturModel.skema).subscribe(data => {
-              let marginStep = data.result;
-              this.strukturForm
-                .get('margin')
-                ?.setValue('Margin Tahun Ke 1 = ' + marginStep[0] + '; ' + 'Margin Tahun Ke 2 = ' + marginStep[1]);
-            });
-          }
-        }, 1000);
-
-        setTimeout(() => {
-          this.http
-            .post<any>('http://10.20.34.110:8805/api/v1/efos-de/hitung_angsuran', {
-              app_no_de: this.app_no_de,
-              curef: this.curef,
-              dp: this.strukturForm.get('uang_muka')?.value,
-              fasilitas: this.strukturForm.get('fasilitas_ke')?.value,
-              harga_objek: this.strukturForm.get('harga_objek_pembiayaan')?.value,
-              kode_fasilitas: this.strukturModel.kode_fasilitas,
-              kode_produk: this.strukturModel.produk,
-              skema_id: this.strukturModel.skema,
-              skema_master: this.strukturModel.skema_master,
-              tenor: this.strukturModel.jangka_waktu,
-            })
-            .subscribe({
-              next: data => {
-                let anguran1 = data.result.angsuran[0];
-                let anguran2 = data.result.angsuran[1];
-
-                if (anguran2 == null) {
-                  this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ');
-                  this.showAngsuran = 'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-                } else {
-                  this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ' + anguran2);
-                  this.showAngsuran =
-                    'Angsuran Tahun Ke 1 = ' +
-                    Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) +
-                    '; ' +
-                    'Angsuran Tahun Ke 2 = ' +
-                    Number(anguran2).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-                }
-              },
-              error: err => {
-                if (err.error.code == 400) {
-                  alert(err.error.message);
-                }
-              },
-            });
-        }, 1000);
-      });
-    }, 300);
+      }, 1000);
+    });
+    // }, 100);
 
     this.dataEntryService.getFetchKodeFasilitas().subscribe(data => {
       this.Kodefasilitas = data.result;
@@ -346,11 +353,13 @@ export class StrukturPembiayaanComponent implements OnInit {
 
     if (pemisahskemamaster[1] == 1) {
       let margin = pemisahfixr[1];
-      this.strukturForm.get('margin')?.setValue('Margin = ' + margin);
+      this.showMargin = 'Margin = ' + margin;
+      this.strukturForm.get('margin')?.setValue(margin);
     } else {
       this.dataEntryService.getFetchMarginStepUp(pemisahskemamaster[0]).subscribe(data => {
         let marginStep = data.result;
-        this.strukturForm.get('margin')?.setValue('Margin Tahun Ke 1 = ' + marginStep[0] + '; ' + 'Margin Tahun Ke 2 = ' + marginStep[1]);
+        this.showMargin = 'Margin Tahun Ke 1 = ' + marginStep[0] + '; ' + 'Margin Tahun Ke 2 = ' + marginStep[1];
+        this.strukturForm.get('margin')?.setValue(marginStep[data.result.length - 1]);
       });
     }
   }
@@ -412,10 +421,10 @@ export class StrukturPembiayaanComponent implements OnInit {
     let kirimanpotongprogram = this.strukturForm.get('program')?.value.split('|');
     let kirimanpotongskema = this.strukturForm.get('skema')?.value.split('|');
     let kirimanjangwaktunya = this.strukturForm.get('jangka_waktu')?.value.split('|');
-    let marginfix = this.strukturForm.get('margin')?.value.replace('Margin = ', '');
-    let marginNon1 = marginfix.replace('Margin Tahun Ke 1 = ', '');
-    let marginNon2 = marginNon1.replace('Margin Tahun Ke 2 = ', '');
-    let marginnya = marginNon2.split('; ');
+    // let marginfix = this.strukturForm.get('margin')?.value.replace('Margin = ', '');
+    // let marginNon1 = marginfix.replace('Margin Tahun Ke 1 = ', '');
+    // let marginNon2 = marginNon1.replace('Margin Tahun Ke 2 = ', '');
+    // let marginnya = marginNon2.split('; ');
     let angsurannya = this.strukturForm.get('angsuran')?.value.split('; ');
 
     if (this.strukturModel == null) {
@@ -435,7 +444,7 @@ export class StrukturPembiayaanComponent implements OnInit {
           joint_income: this.strukturForm.get('joint_income')?.value,
           kode_fasilitas: kirimanpotongkodefasilitas[0],
           kode_fasilitas_name: kirimanpotongkodefasilitas[1],
-          margin: kirimanjangwaktunya[1],
+          margin: this.strukturForm.get('margin')?.value,
           nilai_pembiayaan: this.strukturForm.get('nilai_pembiayaan')?.value,
           produk: kirimanpotongproduk[0],
           produk_name: kirimanpotongproduk[1],
@@ -478,12 +487,12 @@ export class StrukturPembiayaanComponent implements OnInit {
           fasilitas_ke: this.strukturForm.get('fasilitas_ke')?.value,
           fee_based: this.strukturForm.get('fee_based')?.value,
           harga_objek_pembiayaan: this.strukturForm.get('harga_objek_pembiayaan')?.value,
-          id: '',
+          id: this.strukturModel.id,
           jangka_waktu: kirimanjangwaktunya[0],
           joint_income: this.strukturForm.get('joint_income')?.value,
           kode_fasilitas: kirimanpotongkodefasilitas[0],
           kode_fasilitas_name: kirimanpotongkodefasilitas[1],
-          margin: kirimanjangwaktunya[1],
+          margin: this.strukturForm.get('margin')?.value,
           nilai_pembiayaan: this.strukturForm.get('nilai_pembiayaan')?.value,
           produk: kirimanpotongproduk[0],
           produk_name: kirimanpotongproduk[1],
@@ -526,5 +535,10 @@ export class StrukturPembiayaanComponent implements OnInit {
       event.preventDefault();
       return;
     }
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

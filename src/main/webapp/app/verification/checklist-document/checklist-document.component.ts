@@ -145,7 +145,7 @@ export class ChecklistDocumentComponent implements OnInit {
           })
           .subscribe({
             next: sukses => {
-              this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+              this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
             },
           });
       }
@@ -193,7 +193,7 @@ export class ChecklistDocumentComponent implements OnInit {
                     validasi: this.radioValidasiAgunan,
                   })
                   .subscribe({});
-                this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+                this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
               }
             },
           });
@@ -202,7 +202,7 @@ export class ChecklistDocumentComponent implements OnInit {
   }
 
   updateStatus(): void {
-    this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+    this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }
 // update Status

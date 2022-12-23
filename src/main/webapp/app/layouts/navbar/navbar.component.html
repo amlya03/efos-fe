@@ -161,13 +161,21 @@
                 <span
                   class="col nav-link"
                   [routerLink]="['/upload_document/upload_document_de']"
-                  [queryParams]="{ curef: this.curef, app_no_de: this.app_no_de }"
+                  [queryParams]="{
+                    curef: this.curef,
+                    statusPerkawinan: this.statusPerkawinan,
+                    app_no_de: this.app_no_de
+                  }"
                   hidden
                 ></span>
                 <span
                   class="col nav-link"
                   [routerLink]="['/upload_document/upload_document_agunan']"
-                  [queryParams]="{ curef: this.curef, app_no_de: this.app_no_de }"
+                  [queryParams]="{
+                    curef: this.curef,
+                    statusPerkawinan: this.statusPerkawinan,
+                    app_no_de: this.app_no_de
+                  }"
                   hidden
                 ></span>
               </div>
@@ -430,13 +438,13 @@
   >
     <a
       class="nav-item nav-link"
-      routerLink="analisa-keuangan"
+      routerLink="checklist-document"
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
-      <h6>Analisa Keuangan</h6>
+      <h6>Checklist Document</h6>
     </a>
     <a
       class="nav-item nav-link"
@@ -470,6 +478,16 @@
     </a>
     <a
       class="nav-item nav-link"
+      routerLink="analisa-keuangan"
+      [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
+    >
+      <h6>Analisa Keuangan</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
       routerLink="sturktur-pembiayaan"
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
@@ -477,16 +495,6 @@
       *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Struktur Pembiayaan</h6>
-    </a>
-    <a
-      class="nav-item nav-link"
-      routerLink="checklist-document"
-      [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
-      [routerLinkActive]="'active'"
-      [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
-    >
-      <h6>Checklist Document</h6>
     </a>
     <a
       class="nav-item nav-link"
@@ -616,7 +624,23 @@
           '&datakirimanid=' +
           this.datakirimanid +
           '&statusPerkawinan=' +
-          this.statusPerkawinan
+          this.statusPerkawinan ||
+      (router.url ===
+        '/upload_document/upload_document_de?curef=' +
+          this.curef +
+          '&statusPerkawinan=' +
+          this.statusPerkawinan +
+          '&app_no_de=' +
+          this.app_no_de &&
+        untukSessionRole === 'BRANCHMANAGER') ||
+      (router.url ===
+        '/upload_document/upload_document_agunan?curef=' +
+          this.curef +
+          '&statusPerkawinan=' +
+          this.statusPerkawinan +
+          '&app_no_de=' +
+          this.app_no_de &&
+        untukSessionRole === 'BRANCHMANAGER')
     "
   >
     <!-- <div>
@@ -763,7 +787,11 @@
     <a
       class="nav-item nav-link"
       routerLink="upload_document/upload_document_de"
-      [queryParams]="{ app_no_de: this.app_no_de }"
+      [queryParams]="{
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de
+      }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'BRANCHMANAGER'"
@@ -775,6 +803,11 @@
       routerLink="upload_document/upload_document_agunan"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
+      [queryParams]="{
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de
+      }"
       *ngSwitchCase="'BRANCHMANAGER'"
     >
       <h6>Upload Document Agunan</h6>
@@ -797,15 +830,31 @@
   <div
     *ngIf="
       router.url === '/upload_document/upload_document_de' ||
-      router.url === '/upload_document/upload_document_de?curef=' + this.curef + '&app_no_de=' + this.app_no_de ||
-      router.url === '/upload_document/upload_document_agunan?curef=' + this.curef + '&app_no_de=' + this.app_no_de ||
+      router.url ===
+        '/upload_document/upload_document_de?curef=' +
+          this.curef +
+          '&statusPerkawinan=' +
+          this.statusPerkawinan +
+          '&app_no_de=' +
+          this.app_no_de ||
+      router.url ===
+        '/upload_document/upload_document_agunan?curef=' +
+          this.curef +
+          '&statusPerkawinan=' +
+          this.statusPerkawinan +
+          '&app_no_de=' +
+          this.app_no_de ||
       router.url === '/upload_document/upload_document_agunan'
     "
   >
     <a
       class="nav-item nav-link"
       routerLink="upload_document/upload_document_de"
-      [queryParams]="{ curef: this.curef, app_no_de: this.app_no_de }"
+      [queryParams]="{
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de
+      }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'AO'"
@@ -815,7 +864,11 @@
     <a
       class="nav-item nav-link"
       routerLink="upload_document/upload_document_agunan"
-      [queryParams]="{ curef: this.curef, app_no_de: this.app_no_de }"
+      [queryParams]="{
+        curef: this.curef,
+        statusPerkawinan: this.statusPerkawinan,
+        app_no_de: this.app_no_de
+      }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'AO'"

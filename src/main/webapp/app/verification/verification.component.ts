@@ -96,7 +96,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
     this.dataEntryService.getFetchSemuaDataDE(app_no_de).subscribe(data => {
       this.dataEntry = data.result;
       this.curef = this.dataEntry?.curef;
-      this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: app_no_de, curef: this.curef } });
+      this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: app_no_de, curef: this.curef } });
     });
   }
 }

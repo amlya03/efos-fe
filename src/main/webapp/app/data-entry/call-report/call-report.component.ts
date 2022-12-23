@@ -392,7 +392,7 @@ export class CallReportComponent implements OnInit {
   }
 
   goto() {
-    this.router.navigate(['/data-entry/memo'], {
+    this.router.navigate(['/upload_document/upload_document_de'], {
       queryParams: {
         curef: this.curef,
         statusPerkawinan: this.statusPerkawinan,

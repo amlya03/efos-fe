@@ -3,10 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { dataentrymodel } from '../data-entry/data-entry-model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServicesUploadDocumentService } from './services/services-upload-document.service';
 import { SessionStorageService } from 'ngx-webstorage';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { fetchAllDe } from './services/config/fetchAllDe.model';
+import { dataentrymodel } from 'app/data-entry/data-entry-model';
 
 @Component({
   selector: 'jhi-upload-document',
@@ -19,7 +21,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   title = 'EFOS';
   app_no_de!: string;
   tampungandataygdibawa: string | undefined;
-  dataEntry?: dataentrymodel[];
+  dataEntry: dataentrymodel[] = [];
+  semuaDE: fetchAllDe = new fetchAllDe();
   valueCariButton = '';
   kategori_pekerjaan = '';
   curef: string | undefined;
@@ -42,7 +45,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     private router: Router,
     protected http: HttpClient,
     protected modalService: NgbModal,
-    protected sessionStorageService: SessionStorageService
+    protected sessionStorageService: SessionStorageService,
+    protected dataEntryServices: DataEntryService
   ) {
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
@@ -88,13 +92,21 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   }
 
   viewUpload(curef: any, app_no_de: any, fasilitas: any, kategori: any, nama: any): void {
+    this.getLoading(true);
     this.curef = curef;
     this.namaNasabah = nama;
     this.appNoDe = app_no_de;
     this.fasilitas = fasilitas;
     this.kategoriPekerjaan = kategori;
-    // alert(this.appNoDe);
-    this.router.navigate(['/upload_document/upload_document_de'], { queryParams: { curef: this.curef, app_no_de: this.appNoDe } });
+    this.dataEntryServices.getFetchSemuaDataDE(app_no_de).subscribe({
+      next: data => {
+        this.semuaDE = data.result;
+        this.router.navigate(['/upload_document/upload_document_de'], {
+          queryParams: { curef: this.curef, statusPerkawinan: this.semuaDE.status_perkawinan, app_no_de: this.appNoDe },
+        });
+        this.getLoading(false);
+      },
+    });
   }
 
   public getLoading(loading: boolean) {
