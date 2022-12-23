@@ -1159,7 +1159,7 @@
 </div>
 <br />
 <br />
-<button id="tambahdata" (click)="tambahcollateral()" type="button" class="btn btn-info" [hidden]="this.untukSessionRole == 'VER_PRE_SPV'">
+<button id="tambahdata" (click)="tambahcollateral()" type="button" class="btn btn-info" [hidden]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'">
   Tambah data
 </button>
 <div class="table-responsive" [hidden]="tambahatautidak == 'benar'">

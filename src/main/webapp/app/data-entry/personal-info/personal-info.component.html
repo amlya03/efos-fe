@@ -594,6 +594,7 @@
             <input #kodepos type="tel" (keypress)="keyPressNumbers($event)" class="form-control" id="kode_pos" formControlName="kode_pos" />
             <div class="input-group-append">
               <button
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
                 onclick="buatisi()"
                 class="btn btn-outline-dark"
                 type="button"
@@ -780,6 +781,7 @@
             />
             <div class="input-group-append">
               <button
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
                 onclick="buatisidomisili()"
                 class="btn btn-outline-dark"
                 id="kode_pos_domisilihilang"
