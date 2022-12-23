@@ -639,7 +639,7 @@
             formControlName="tunjangan"
             (keypress)="keyPressNumbers($event)"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',',precision:0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           />
           <span

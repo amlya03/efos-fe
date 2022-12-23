@@ -181,7 +181,7 @@
             formControlName="harga_objek_pembiayaan"
             id="harga_objek_pembiayaan"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
           />
         </div>
       </div>
@@ -197,7 +197,7 @@
             id="fee_based"
             (keypress)="keyPressNumbers($event)"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
           />
         </div>
       </div>
@@ -213,7 +213,7 @@
               id="uang_muka"
               (keypress)="keyPressNumbers($event)"
               currencyMask
-              [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
             />
             <div class="input-group-append">
               <button
@@ -258,7 +258,7 @@
             formControlName="nilai_pembiayaan"
             id="hasil_pembiayaan"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
           />
         </div>
       </div>

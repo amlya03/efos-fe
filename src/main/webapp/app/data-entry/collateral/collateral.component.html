@@ -838,7 +838,7 @@
                   formControlName="harga_objek"
                   id="harga_objek"
                   currencyMask
-                  [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
+                  [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
                 />
                 <span
                   [hidden]="

@@ -121,7 +121,8 @@ export class MemoComponent implements OnInit {
       })
       .subscribe({
         next: bawaan => {
-          this.router.navigate(['/data-entry/memo'], {
+          alert("Data Telah Kembali Ke AO");
+          this.router.navigate(['/data-entry'], {
             queryParams: { app_no_de: this.app_no_de },
           });
         },
