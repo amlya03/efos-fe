@@ -92,7 +92,7 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
     this.dataEntryService.getFetchSemuaDataDE(app_noDe).subscribe(data => {
       this.dataEntry = data.result;
       this.curef = this.dataEntry?.curef;
-      this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: app_noDe, curef: this.curef } });
+      this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: app_noDe, curef: this.curef } });
     });
   }
 }

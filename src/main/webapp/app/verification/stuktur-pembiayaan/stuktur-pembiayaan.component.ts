@@ -348,7 +348,7 @@ export class StukturPembiayaanComponent implements OnInit {
           next: response => {
             //console.warn(response);
             alert('Berhasil Menyimpan Data');
-            this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+            this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
           },
           error: error => console.warn(error),
         });
@@ -377,7 +377,7 @@ export class StukturPembiayaanComponent implements OnInit {
           next: response => {
             //console.warn(response);
             // alert('Berhasil Menyimpan Data');
-            this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+            this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
           },
           error: error => console.warn(error),
         });
@@ -385,6 +385,6 @@ export class StukturPembiayaanComponent implements OnInit {
   }
 
   viewStruktur(): void {
-    this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+    this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

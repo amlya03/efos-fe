@@ -149,18 +149,23 @@
       <br />
     </div>
     <div class="col">
+      <div class="form-group row" hidden>
+        <label class="col-sm-4 col-form-label">Margin</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" readonly formControlName="margin" id="margin" />
+        </div>
+      </div>
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Margin</label>
         <div class="col-sm-8">
           <input
             type="text"
             class="form-control"
-            readonly
-            formControlName="margin"
-            id="margin"
+            disabled
+            value="{{ showMargin }}"
             data-toggle="tooltip"
             data-placement="bottom"
-            title="{{ this.strukturForm.get('margin')?.value }}"
+            title="{{ showMargin }}"
           />
         </div>
       </div>
@@ -211,9 +216,14 @@
               [options]="{ prefix: 'Rp ', thousands: '.', decimal: ',' }"
             />
             <div class="input-group-append">
-              <button 
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-              class="btn btn-outline-dark" type="button" id="rincihan" style="float: right" (click)="itungrincihan()">
+              <button
+                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+                class="btn btn-outline-dark"
+                type="button"
+                id="rincihan"
+                style="float: right"
+                (click)="itungrincihan()"
+              >
                 Rincian Pembayaran
               </button>
             </div>
@@ -226,7 +236,7 @@
         <div class="col-sm-8">
           <input type="text" class="form-control" readonly formControlName="angsuran" id="angsuran" hidden />
           <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             readonly
             type="text"
             class="form-control"
@@ -288,3 +298,4 @@
     </div>
   </div>
 </form>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

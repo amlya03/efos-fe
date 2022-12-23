@@ -84,7 +84,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
 
   viewUploadDEA(): void {
     this.router.navigate(['/upload_document/upload_document_agunan'], {
-      queryParams: { curef: this.curef, app_no_de: this.app_no_de },
+      queryParams: { curef: this.dataEntry.curef, statusPerkawinan: this.dataEntry.status_perkawinan, app_no_de: this.dataEntry.app_no_de },
     });
   }
 
