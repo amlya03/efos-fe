@@ -12,7 +12,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 export class ServiceVerificationService {
   baseUrl: string = environment.baseUrl;
   // /////////////////////////////////// NAVBAR /////////////////////////////////////////////////////////////////////////////////////
-  protected getNavbar = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos/users/menu');
+  protected getNavbar = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos/users/menu');
   // /////////////////////////////////// NAVBAR /////////////////////////////////////////////////////////////////////////////////////
 
   // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////getListAppAppraisal
@@ -24,7 +24,7 @@ export class ServiceVerificationService {
   // ///////////////////////////////// Daftar APlikasi Waiting Assigment ///////////////////////////////////////////////////////////
 
   // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
-  protected getMapis = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-verif/getDataAppraisal?sd=');
+  protected getMapis = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/getDataAppraisal?sd=');
   // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
 
   // //////////////////////service daftar aplikasi waiting assign\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -118,6 +118,12 @@ export class ServiceVerificationService {
   protected refTenorNon = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/list_tenor_stepup?ss=');
   // ////////////////////// Ref Tenor /////////////////////////////
 
+  // ///////////////////////////////////////////////////////////// Ref Jabatan Pemberi Keterangan  ///////////////////////////////////////////////////////////
+  // protected jabatanPemberiKeterangan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_jabatan_pemberi_ket');
+  protected jabatanPemberiKeterangan = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_jabatan_pemberi_ket'
+  );
+  // //////////////////////////////////////////////////////////// Ref Jabatan Pemberi Keterangan ////////////////////////////////////////////////////////////
   // ////////////////////// REFF \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
@@ -277,6 +283,12 @@ export class ServiceVerificationService {
     return this.http.get<ApiResponse>(this.refTenorNon + skema);
   }
   // ////////////////////// Ref Tenor \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ///////////////////////////////////////////////////////////// Ref Jabatan Pemberi Keterangan  ///////////////////////////////////////////////////////////
+  getJabatanPemberiKeterangan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.jabatanPemberiKeterangan);
+  }
+  // ///////////////////////////////////////////////////////////// Ref Jabatan Pemberi Keterangan  ///////////////////////////////////////////////////////////
   // ///////////////////// REF ////////////////////////////////////////////////
 
   // /////////////////////////////////// NAVBAR /////////////////////////////////////////////////////////////////////////////////////

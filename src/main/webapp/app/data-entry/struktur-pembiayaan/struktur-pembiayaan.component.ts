@@ -342,10 +342,10 @@ export class StrukturPembiayaanComponent implements OnInit {
     });
   }
 
-  onchangeskema(valueSkema: any, program: any) {
+  onchangeskema(valueSkema: any) {
     const pemisahskemamaster = valueSkema.split('|');
-    const programSkema = program.split('|');
-    if (programSkema[1] == 'PTA') {
+    const programSkema = valueSkema.split('|');
+    if (programSkema[1] === '1') {
       this.strukturForm.get('tipe_margin')?.setValue('FIX');
       this.dataEntryService.getTenorFix(pemisahskemamaster[0]).subscribe(data => {
         this.tenor = data.result;

@@ -186,7 +186,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       if (result.isConfirmed) {
         Swal.fire('Berhasil dihapus!', 'Data Sudah Tidak Ada pada Table Mutasi', 'success').then(result => {
           this.http
-            .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/delete_verif_mutasi_rekening', {
+            .post<any>(this.baseUrl + 'v1/efos-verif/delete_verif_mutasi_rekening', {
               id: id,
             })
             .subscribe({
