@@ -11,12 +11,14 @@ import { Subject } from 'rxjs';
 import { MemoModel } from '../service/config/memo.model';
 import Swal from 'sweetalert2';
 import { detailMemo } from 'app/data-entry/services/config/detailMemo.model';
+import { environment } from 'environments/environment';
 @Component({
   selector: 'jhi-memo-verification',
   templateUrl: './memo-verification.component.html',
   styleUrls: ['./memo-verification.component.scss'],
 })
 export class MemoVerificationComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   dataEntry: fetchAllDe = new fetchAllDe();
   listMemo?: MemoModel[];
   app_no_de: any;
@@ -92,7 +94,7 @@ export class MemoVerificationComponent implements OnInit {
   // Simpan
   simpanMemo(keterangan: any) {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_memo', {
+      .post<any>(this.baseUrl + 'v1/efos-de/create_memo', {
         id: 0,
         keterangan: keterangan,
         users: this.untukSessionFullName,
@@ -112,7 +114,7 @@ export class MemoVerificationComponent implements OnInit {
   // Update STatus
   updateStatus() {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+      .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
         app_no_de: this.app_no_de,
         created_by: this.untukSessionUserName,
         status_aplikasi: this.dataEntry.status_aplikasi,

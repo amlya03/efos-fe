@@ -7,6 +7,7 @@ import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { getMapis } from 'app/verification/service/config/getMapis.model';
 import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
+import { environment } from 'environments/environment';
 import { SessionStorageService } from 'ngx-webstorage';
 import Swal from 'sweetalert2';
 
@@ -16,6 +17,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./mapis.component.scss'],
 })
 export class MapisComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   mapisForm!: FormGroup;
   app_noDe: any;
   mapisModel: getMapis = new getMapis();
@@ -23,6 +25,11 @@ export class MapisComponent implements OnInit {
   listagunan: listAgunan[] = [];
   betaFTV: any;
   cekResuklt = 0;
+
+  // Ret ///
+  retTipePro: any;
+  retTipeAg: any;
+  retJenisObj: any;
 
   constructor(
     public router: Router,
@@ -45,6 +52,8 @@ export class MapisComponent implements OnInit {
         luas_tanah: '',
         nilai_imb: '',
         nilai_market: '',
+        note: '',
+        harga_transaksi: '',
       });
     }
     this.load();
@@ -59,7 +68,15 @@ export class MapisComponent implements OnInit {
       setTimeout(() => {
         this.dataEntryService.getfetchlistagunan(this.dataEntry.curef).subscribe(list => {
           this.listagunan = list.result;
-
+          if (list.result != null || list.result != '') {
+            this.retTipePro = list.result[0].tipe_properti;
+            this.retTipeAg = list.result[0].tipe_agunan;
+            this.retJenisObj = list.result[0].jenis_objek_deskripsi;
+          } else {
+            this.retTipePro = '';
+            this.retTipeAg = '';
+            this.retJenisObj = '';
+          }
           setTimeout(() => {
             this.dataEntryService.getFetchStrukturDE(this.app_noDe, this.dataEntry.curef).subscribe(struktur => {
               this.betaFTV = Number(this.dataEntry.nilai_pembiayaan) / Number(struktur.result.harga_objek_pembiayaan);
@@ -81,6 +98,8 @@ export class MapisComponent implements OnInit {
         luas_tanah: this.mapisModel.luas_tanah,
         nilai_imb: this.mapisModel.nilai_imb,
         nilai_market: this.mapisModel.nilai_market,
+        note: this.mapisModel.note,
+        harga_transaksi: this.mapisModel.harga_transaksi,
       };
       this.mapisForm.setValue(retriveForm);
     });
@@ -98,7 +117,7 @@ export class MapisComponent implements OnInit {
         Swal.fire('Data Berhasil diUpdate!', 'Data Sudah di Tim Analis', 'success').then((message: any) => {
           if (this.cekResuklt == 0) {
             this.http
-              .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_data_appraisal', {
+              .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_data_appraisal', {
                 id: '',
                 app_no_de: this.app_noDe,
                 created_by: this.sessionStorageService.retrieve('sessionUserName'),
@@ -111,13 +130,15 @@ export class MapisComponent implements OnInit {
                 nilai_market: this.mapisForm.get('nilai_market')?.value,
                 objek_pembiayaan: this.listagunan[0].tipe_properti,
                 tipe_agunan: this.listagunan[0].tipe_agunan,
+                note: this.mapisForm.get('note')?.value,
+                harga_transaksi: this.mapisForm.get('harga_transaksi')?.value,
                 // "updated_date": null,
                 // "updated_by": null
               })
               .subscribe({
                 next: bawaan => {
                   this.http
-                    .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+                    .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
                       app_no_de: this.app_noDe,
                       created_by: this.sessionStorageService.retrieve('sessionUserName'),
                       status_aplikasi: this.dataEntry.status_aplikasi,
@@ -133,11 +154,11 @@ export class MapisComponent implements OnInit {
               });
           } else {
             this.http
-              .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_data_appraisal', {
-                id: '',
+              .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_data_appraisal', {
+                id: this.mapisModel.id,
                 app_no_de: this.app_noDe,
-                created_by: this.sessionStorageService.retrieve('sessionUserName'),
-                created_date: '',
+                // created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                // created_date: '',
                 ftv: this.betaFTV,
                 jenis_objek: this.listagunan[0].jenis_objek_deskripsi,
                 luas_bangunan: this.mapisForm.get('luas_bangunan')?.value,
@@ -146,13 +167,15 @@ export class MapisComponent implements OnInit {
                 nilai_market: this.mapisForm.get('nilai_market')?.value,
                 objek_pembiayaan: this.listagunan[0].tipe_properti,
                 tipe_agunan: this.listagunan[0].tipe_agunan,
-                // "updated_date": null,
-                // "updated_by": null
+                note: this.mapisForm.get('note')?.value,
+                harga_transaksi: this.mapisForm.get('harga_transaksi')?.value,
+                updated_date: '',
+                updated_by: this.sessionStorageService.retrieve('sessionUserName'),
               })
               .subscribe({
                 next: bawaan => {
                   this.http
-                    .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+                    .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
                       app_no_de: this.app_noDe,
                       created_by: this.sessionStorageService.retrieve('sessionUserName'),
                       status_aplikasi: this.dataEntry.status_aplikasi,
@@ -172,7 +195,7 @@ export class MapisComponent implements OnInit {
         Swal.fire('Data Berhasil disimpan', 'Data disimpan', 'success').then((message: any) => {
           if (this.cekResuklt == 0) {
             this.http
-              .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_data_appraisal', {
+              .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_data_appraisal', {
                 id: '',
                 app_no_de: this.app_noDe,
                 created_by: this.sessionStorageService.retrieve('sessionUserName'),
@@ -185,6 +208,8 @@ export class MapisComponent implements OnInit {
                 nilai_market: this.mapisForm.get('nilai_market')?.value,
                 objek_pembiayaan: this.listagunan[0].tipe_properti,
                 tipe_agunan: this.listagunan[0].tipe_agunan,
+                note: this.mapisForm.get('note')?.value,
+                harga_transaksi: this.mapisForm.get('harga_transaksi')?.value,
                 // "updated_date": null,
                 // "updated_by": null
               })
@@ -197,11 +222,11 @@ export class MapisComponent implements OnInit {
               });
           } else {
             this.http
-              .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_data_appraisal', {
-                id: '',
+              .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_data_appraisal', {
+                id: this.mapisModel.id,
                 app_no_de: this.app_noDe,
-                created_by: this.sessionStorageService.retrieve('sessionUserName'),
-                created_date: '',
+                // created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                // created_date: '',
                 ftv: this.betaFTV,
                 jenis_objek: this.listagunan[0].jenis_objek_deskripsi,
                 luas_bangunan: this.mapisForm.get('luas_bangunan')?.value,
@@ -210,12 +235,14 @@ export class MapisComponent implements OnInit {
                 nilai_market: this.mapisForm.get('nilai_market')?.value,
                 objek_pembiayaan: this.listagunan[0].tipe_properti,
                 tipe_agunan: this.listagunan[0].tipe_agunan,
-                // "updated_date": null,
-                // "updated_by": null
+                note: this.mapisForm.get('note')?.value,
+                harga_transaksi: this.mapisForm.get('harga_transaksi')?.value,
+                updated_date: '',
+                updated_by: this.sessionStorageService.retrieve('sessionUserName'),
               })
               .subscribe({
                 next: bawaan => {
-                  window.location.reload();
+                  // window.location.reload();
                   // setTimeout(() => {
                   // }, 1000);
                 },

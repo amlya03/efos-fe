@@ -17,6 +17,7 @@ import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model
 import { refAnalisaCalonNasabah } from './refAnalisaCalonNasabah.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { SessionStorageService } from 'ngx-webstorage';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-data-calon-nasabah',
@@ -24,6 +25,7 @@ import { SessionStorageService } from 'ngx-webstorage';
   styleUrls: ['./data-calon-nasabah.component.scss'],
 })
 export class DataCalonNasabahComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   dataCalonNasabahForm!: FormGroup;
   submitted = false;
   editor!: Editor;

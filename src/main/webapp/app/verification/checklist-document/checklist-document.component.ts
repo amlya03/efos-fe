@@ -9,6 +9,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { SessionStorageService } from 'ngx-webstorage';
 import { ServicesUploadDocumentService } from 'app/upload-document/services/services-upload-document.service';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-checklist-document',
@@ -16,6 +17,7 @@ import { DataEntryService } from 'app/data-entry/services/data-entry.service';
   styleUrls: ['./checklist-document.component.scss'],
 })
 export class ChecklistDocumentComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
   public getLoading(loading: boolean) {
@@ -112,11 +114,11 @@ export class ChecklistDocumentComponent implements OnInit {
 
   // Kirim DE
   detailDataEntry(nama_dokumen: any): void {
-    window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dokumen);
+    window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + nama_dokumen);
   }
 
   detailAgunan(nama_dokumen: any): void {
-    window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dokumen);
+    window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + nama_dokumen);
   }
 
   postCeklis(): void {
@@ -137,7 +139,7 @@ export class ChecklistDocumentComponent implements OnInit {
 
         // Post Data Entry
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/checklist_dokumen', {
+          .post<any>(this.baseUrl + 'v1/efos-verif/checklist_dokumen', {
             created_by: this.untukSessionUserName,
             id: this.uploadDocument[i].id_upload,
             note_validasi: this.keteranganDE,
@@ -166,7 +168,7 @@ export class ChecklistDocumentComponent implements OnInit {
 
         // Post Data Entry
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/checklist_dokumen', {
+          .post<any>(this.baseUrl + 'v1/efos-verif/checklist_dokumen', {
             created_by: this.untukSessionUserName,
             id: this.uploadDocument[i].id_upload,
             note_validasi: this.keteranganDE,
@@ -186,7 +188,7 @@ export class ChecklistDocumentComponent implements OnInit {
                 // get input Keterangan
                 this.keteranganAgunan = (document.getElementById('keteranganAgunan' + (j + 1)) as HTMLInputElement).value;
                 this.http
-                  .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/checklist_dokumen', {
+                  .post<any>(this.baseUrl + 'v1/efos-verif/checklist_dokumen', {
                     created_by: this.untukSessionUserName,
                     id: this.uploadAgunan[j].id_upload,
                     note_validasi: this.keteranganAgunan,

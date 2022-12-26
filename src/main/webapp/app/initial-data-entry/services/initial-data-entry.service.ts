@@ -4,65 +4,59 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { Observable } from 'rxjs';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { SessionStorageService } from 'ngx-webstorage';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InitialDataEntryService {
   koderetirvt = '';
+  baseUrl: string = environment.baseUrl;
+  baseUrlDukcapil: string = environment.baseUrlDukcapil;
 
   // /////////////////////////// Get Job By Cuef IDE ////////////////////////////////////////////
-  protected getJobByCurefIDEUrl = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ide/getJobByCuref?sj='
-  );
+  protected getJobByCurefIDEUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/getJobByCuref?sj=');
   // /////////////////////////// Get Job By Cuef IDE ////////////////////////////////////////////
 
   // /////////////////////////// List Tipe Perusahaan ////////////////////////////////////////////
-  protected getListTipPerusahaanUrl = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_perusahaan'
-  );
+  protected getListTipPerusahaanUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_tipe_perusahaan');
   // /////////////////////////// List Tipe Perusahaan ////////////////////////////////////////////
 
   // /////////////////////////// Get Customer ////////////////////////////////////////////
-  protected getCustomerUrl = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ide/getCustomerByAppId?sc='
-  );
+  protected getCustomerUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/getCustomerByAppId?sc=');
   // /////////////////////////// Get Customer ////////////////////////////////////////////
 
   // /////////////////////////// Download Slik ////////////////////////////////////////////
+  // protected getDownloadSlikUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/fetchSlikPdf?sd=');
   protected getDownloadSlikUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/fetchSlikPdf?sd=');
   // /////////////////////////// Download Slik ////////////////////////////////////////////
 
   // /////////////////////////// DAFTAR APLIKASI INITIAL DATA ENTRY ////////////////////////////////////////////
-  protected daftarAplikasiInitialDataEntry = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ide/list_app_ide?sc='
-  );
+  protected daftarAplikasiInitialDataEntry = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/list_app_ide?sc=');
   // /////////////////////////// DAFTAR APLIKASI INITIAL DATA ENTRY ////////////////////////////////////////////
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
-  protected ideByCuref = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getCuref');
+  protected ideByCuref = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/getCuref');
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
-  protected ideByAppId = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getAppId');
+  protected ideByAppId = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/getAppId');
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
-  protected getProvinsi = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/wilayahSvc/getProvinsi/');
+  protected getProvinsi = this.applicationConfigService.getEndpointFor(this.baseUrlDukcapil + 'wilayahSvc/getProvinsi/');
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
 
   // /////////////////////////// Get Token Ducapil ////////////////////////////////////////////
-  protected getTokenDucpil = this.applicationConfigService.getEndpointFor('http://10.20.82.12:8083/token/generate-token');
+  protected getTokenDucpil = this.applicationConfigService.getEndpointFor(this.baseUrlDukcapil + 'token/generate-token');
   // /////////////////////////// Get Token Ducapil ////////////////////////////////////////////
 
   // /////////////////////////// Reff Jenis Bidang ////////////////////////////////////////////
-  protected getJenisBidang = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/list_jenis_bidang');
+  protected getJenisBidang = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/list_jenis_bidang');
   // /////////////////////////// Reff Jenis Bidang ////////////////////////////////////////////
 
   // /////////////////////////// Reff Sektor Ekonomi ////////////////////////////////////////////
-  protected getListSektor = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ide/list_sektor_ekonomi?se='
-  );
+  protected getListSektor = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/list_sektor_ekonomi?se=');
   // /////////////////////////// Reff Sektor Ekonomi ////////////////////////////////////////////
 
   constructor(

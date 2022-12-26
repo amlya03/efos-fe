@@ -155,6 +155,8 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getLoading(true);
+
     this.saveCabang = this.sessionServices.retrieve('sessionKdCabang');
     this.load();
     this.ideForm = this.formBuilder.group({
@@ -421,11 +423,10 @@ export class InitialDataEntryFixComponent implements OnInit {
       ValidasiNoSiup.updateValueAndValidity();
       ValidasiBarangJasa.updateValueAndValidity();
       ValidasiPosisi.updateValueAndValidity();
-    }, 300);
+    }, 100);
   }
 
   load(): void {
-    this.getLoading(true);
     this.dataEntryService.getFetchListJumlahKaryawan().subscribe(data => {
       this.jumlahKaryawanModel = data.result;
     });
@@ -435,15 +436,6 @@ export class InitialDataEntryFixComponent implements OnInit {
     this.dataEntryService.getFetchListJabatan().subscribe(data => {
       this.refJabatanModel = data.result;
     });
-    setTimeout(() => {
-      if (this.kategori == 1) {
-        this.kirimKatePeker = 'Fix Income';
-        this.getLoading(false);
-      } else {
-        this.kirimKatePeker = 'Non Fix Income';
-        this.getLoading(false);
-      }
-    }, 1200);
 
     if (this.paramId != null) {
       this.cekResultIde = 1;
@@ -508,28 +500,6 @@ export class InitialDataEntryFixComponent implements OnInit {
         };
         this.ideForm.setValue(retriveIde);
 
-        setTimeout(() => {
-          this.carimenggunakankodepost(this.modelIde.kode_pos);
-          this.carimenggunakankodepostp(this.modelIde.kode_pos_pasangan);
-          this.cariPekerPost(this.modelJob.kode_pos);
-          this.submitBday(this.modelIde.tanggal_lahir);
-          this.submitBdayp(this.modelIde.tanggal_lahir_pasangan);
-        }, 1000);
-
-        setTimeout(() => {
-          if (this.modelJob == null) {
-            this.retriveBidang = '';
-            this.retriveBidangSebelum = '';
-            this.retriveSektor = '';
-            this.retriveSektorSebelum = '';
-          } else {
-            this.retriveBidang = this.modelJob.jenis_bidang;
-            this.retriveBidangSebelum = this.modelJob.jenis_bidang_sebelum;
-            this.retriveSektor = this.modelJob.sektor_ekonomi;
-            this.retriveSektorSebelum = this.modelJob.sektor_ekonomi_sebelum;
-          }
-        }, 800);
-
         this.ideFixServices.getJobByCurefIDE(this.modelIde.curef).subscribe(data => {
           this.modelJob = data.result;
           const retriveJob = {
@@ -570,22 +540,6 @@ export class InitialDataEntryFixComponent implements OnInit {
         });
       },
     });
-    setTimeout(() => {
-      if (this.cekResultIde == 0) {
-        this.ideFixServices.getIdeById().subscribe(data => {
-          this.app_no_ide = data.result;
-          this.getLoading(false);
-        });
-        this.ideFixServices.getIdeByCuref().subscribe(data => {
-          this.curef = data.result;
-          this.getLoading(false);
-        });
-      } else {
-        this.app_no_ide = this.modelIde.app_no_ide;
-        this.curef = this.modelIde.curef;
-      }
-    }, 100);
-
     // setTimeout(() => {
     //   alert(this.modelJob.id);
     // }, 1000);
@@ -621,6 +575,52 @@ export class InitialDataEntryFixComponent implements OnInit {
         });
       },
     });
+
+    setTimeout(() => {
+      if (this.cekResultIde == 0) {
+        this.ideFixServices.getIdeById().subscribe(data => {
+          this.app_no_ide = data.result;
+        });
+        this.ideFixServices.getIdeByCuref().subscribe(data => {
+          this.curef = data.result;
+        });
+      } else {
+        this.app_no_ide = this.modelIde.app_no_ide;
+        this.curef = this.modelIde.curef;
+      }
+    }, 200);
+
+    setTimeout(() => {
+      if (this.modelJob == null) {
+        this.retriveBidang = '';
+        this.retriveBidangSebelum = '';
+        this.retriveSektor = '';
+        this.retriveSektorSebelum = '';
+      } else {
+        this.retriveBidang = this.modelJob.jenis_bidang;
+        this.retriveBidangSebelum = this.modelJob.jenis_bidang_sebelum;
+        this.retriveSektor = this.modelJob.sektor_ekonomi;
+        this.retriveSektorSebelum = this.modelJob.sektor_ekonomi_sebelum;
+      }
+    }, 500);
+
+    setTimeout(() => {
+      this.carimenggunakankodepost(this.modelIde.kode_pos);
+      this.carimenggunakankodepostp(this.modelIde.kode_pos_pasangan);
+      this.cariPekerPost(this.modelJob.kode_pos);
+      this.submitBday(this.modelIde.tanggal_lahir);
+      this.submitBdayp(this.modelIde.tanggal_lahir_pasangan);
+    }, 800);
+
+    setTimeout(() => {
+      if (this.kategori == 1) {
+        this.kirimKatePeker = 'Fix Income';
+        this.getLoading(false);
+      } else {
+        this.kirimKatePeker = 'Non Fix Income';
+        this.getLoading(false);
+      }
+    }, 1200);
   }
 
   gotoprescreaning(): void {

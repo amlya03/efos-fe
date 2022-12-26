@@ -16,6 +16,7 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { Subject } from 'rxjs';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { refAnalisaKeuangan } from './refAnalisaKeuangan.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-data-rumah',
@@ -23,6 +24,7 @@ import { refAnalisaKeuangan } from './refAnalisaKeuangan.model';
   styleUrls: ['./data-rumah.component.scss'],
 })
 export class DataRumahComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   analisaKeuanganForm!: FormGroup;
   slikForm!: FormGroup;
   submitted = false;
@@ -371,7 +373,7 @@ export class DataRumahComponent implements OnInit {
       return;
     } else if (this.cekResult === 0) {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_keuangan', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/create_analisa_keuangan', {
           nama_pemohon: this.dataEntry.nama,
           alamat_perusahaan: this.dataJob.alamat_perusahaan,
           nama_perusahaan: this.dataJob.nama_perusahaan,
@@ -436,7 +438,7 @@ export class DataRumahComponent implements OnInit {
       this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     } else {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_keuangan', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/update_analisa_keuangan', {
           nama_pemohon: this.dataEntry.nama,
           alamat_perusahaan: this.dataJob.alamat_perusahaan,
           nama_perusahaan: this.dataJob.nama_perusahaan,
@@ -503,11 +505,11 @@ export class DataRumahComponent implements OnInit {
   }
 
   printLajang(ktp: any): void {
-    window.open('http://10.20.34.110:8805/api/v1/efos-ide/downloadSlik/', ktp);
+    window.open(this.baseUrl + 'v1/efos-ide/downloadSlik/', ktp);
   }
 
   printMenikah(ktp: any): void {
-    window.open('http://10.20.34.110:8805/api/v1/efos-ide/downloadSlik/', ktp);
+    window.open(this.baseUrl + 'v1/efos-ide/downloadSlik/', ktp);
   }
 
   // Only Numbers

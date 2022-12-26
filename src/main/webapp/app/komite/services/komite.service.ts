@@ -3,11 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class KomiteService {
+  baseUrl: string = environment.baseUrl;
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
   // //////////////////////////////////////////////// Get Data Users ///////////////////////////////////////////////////////////////////////
   protected getDataUsersUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-verif/getDataUsers?sd=');
@@ -15,32 +17,26 @@ export class KomiteService {
 
   // //////////////////////////////////////////////// Get Persetujuan Pembiayaan ///////////////////////////////////////////////////////////////////////
   protected getPersetujuanPembiayaanUrl = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-approval/list_history_persetujuan?si='
+    this.baseUrl + 'v1/efos-approval/list_history_persetujuan?si='
   );
   // //////////////////////////////////////////////// Get Persetujuan Pembiayaan ///////////////////////////////////////////////////////////////////////
 
   // //////////////////////////////////////////////// List Approval ///////////////////////////////////////////////////////////////////////
-  protected getDetailApprovalByDE = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-approval/get_approval?si='
-  );
+  protected getDetailApprovalByDE = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-approval/get_approval?si=');
   // //////////////////////////////////////////////// List Approval ///////////////////////////////////////////////////////////////////////
 
   // //////////////////////////////////////////////// Get Detail Approval ///////////////////////////////////////////////////////////////////////
-  protected getListApproval = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-approval/list_app_approval'
-  );
+  protected getListApproval = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-approval/list_app_approval');
   // //////////////////////////////////////////////// Get Detail Approval ///////////////////////////////////////////////////////////////////////
 
   // //////////////////////////////////////////////// List Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
   protected ListPersetujuanKhusus = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-approval/list_persetujuan_khusus?si='
+    this.baseUrl + 'v1/efos-approval/list_persetujuan_khusus?si='
   );
   // //////////////////////////////////////////////// List Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
 
   // //////////////////////////////////////////////// Ref Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
-  protected refPersetujuanKhusus = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ref/list_persetujuan_khusus'
-  );
+  protected refPersetujuanKhusus = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_persetujuan_khusus');
   // //////////////////////////////////////////////// Ref Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
 
   // //////////////////////////////////////////////// List Approval ///////////////////////////////////////////////////////////////////////

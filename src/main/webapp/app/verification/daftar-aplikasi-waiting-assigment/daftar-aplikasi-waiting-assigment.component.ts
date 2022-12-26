@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { daWaModel } from './daWa.model';
 import { daWaModelAprisal } from './daWaAprisal.model';
+import { environment } from 'environments/environment';
 declare let $: any;
 
 @Component({
@@ -19,6 +20,7 @@ declare let $: any;
   styleUrls: ['./daftar-aplikasi-waiting-assigment.component.scss'],
 })
 export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestroy {
+  baseUrl: string = environment.baseUrl;
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
   public getLoading(loading: boolean) {
@@ -136,7 +138,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
       this.kirimDe;
       for (let i = 0; i < this.kirimDe.length; i++) {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/verif_assignment', {
+          .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
             analis_verifikasi: this.kirimAssign,
             app_no_de: this.kirimDe[i],
             status_aplikasi: this.kirimStatusAplikasi[i],
@@ -149,7 +151,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
     } else {
       for (let i = 0; i < this.checkLenghtResult.length; i++) {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/verif_assignment', {
+          .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
             analis_verifikasi: this.kirimAssign,
             app_no_de: this.checkLenghtResult[i].app_no_de,
             status_aplikasi: this.checkLenghtResult[i].status_aplikasi,

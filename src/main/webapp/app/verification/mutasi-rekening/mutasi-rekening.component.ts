@@ -13,6 +13,7 @@ import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { SessionStorageService } from 'ngx-webstorage';
 import Swal from 'sweetalert2';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-mutasi-rekening',
@@ -20,6 +21,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./mutasi-rekening.component.scss'],
 })
 export class MutasiRekeningComponent implements OnInit, OnDestroy {
+  baseUrl: string = environment.baseUrl;
   mutasiRekening?: mutasiRekening[];
   mutasiForm!: FormGroup;
   app_no_de: any;
@@ -103,7 +105,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     // alert(this.lihatTableMutasi)
     if (this.tambahTableMutasi == 0) {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_verif_mutasi', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/create_verif_mutasi', {
           id: this.idTableMutasi,
           app_no_de: this.app_no_de,
           bulan: this.mutasiForm.get('bulan')?.value,
@@ -125,7 +127,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     } else {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_verif_mutasi', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/update_verif_mutasi', {
           id: this.idTableMutasi,
           app_no_de: this.app_no_de,
           bulan: this.mutasiForm.get('bulan')?.value,

@@ -19,6 +19,7 @@ import { listPersetujuanKhususModel } from '../services/config/listPersetujuanKh
 import { getDetailApproval } from '../services/config/getDetailApproval.model';
 import { getPersetujuanPembiayaanModel } from '../services/config/getPersetujuanPembiayaanModel.model';
 import Swal from 'sweetalert2';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-detail-komite',
@@ -26,6 +27,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./detail-komite.component.scss'],
 })
 export class DetailKomiteComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   keputusanPembiayaanForm!: FormGroup;
   komiteFasilitasYangDimintaForm!: FormGroup;
   persetujuanPembiayaanForm!: FormGroup;
@@ -210,7 +212,7 @@ export class DetailKomiteComponent implements OnInit {
 
       setTimeout(() => {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-de/hitung_angsuran', {
+          .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
             app_no_de: this.dataEntry.app_no_de,
             curef: this.dataEntry.curef,
             dp: this.strukturAnalisa.down_payment,
@@ -237,7 +239,7 @@ export class DetailKomiteComponent implements OnInit {
 
               setTimeout(() => {
                 this.http
-                  .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/getHitungAnalisaPembiayaan', {
+                  .post<any>(this.baseUrl + 'v1/efos-verif/getHitungAnalisaPembiayaan', {
                     angsuran: data.result.angsuran[data.result.angsuran.length - 1],
                     app_no_de: this.dataEntry.app_no_de,
                   })
@@ -246,7 +248,7 @@ export class DetailKomiteComponent implements OnInit {
                       this.komiteFasilitasYangDimintaForm.get('dsr')?.setValue(data.result.dsr);
                       setTimeout(() => {
                         this.http
-                          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/getHitungScoring', {
+                          .post<any>(this.baseUrl + 'v1/efos-verif/getHitungScoring', {
                             dsr: this.komiteFasilitasYangDimintaForm.get('dsr')?.value,
                             app_no_de: this.dataEntry.app_no_de,
                           })
@@ -311,7 +313,7 @@ export class DetailKomiteComponent implements OnInit {
           });
         }
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-de/hitung_angsuran', {
+          .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
             app_no_de: this.dataEntry.app_no_de,
             curef: this.dataEntry.curef,
             dp: this.strukturAnalisa.down_payment,
@@ -355,7 +357,7 @@ export class DetailKomiteComponent implements OnInit {
   }
   hitungFasilitasYangDiminta() {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/hitung_angsuran', {
+      .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
         app_no_de: this.dataEntry.app_no_de,
         curef: this.dataEntry.curef,
         dp: this.komiteFasilitasYangDimintaForm.get('down_payment')?.value,
@@ -406,7 +408,7 @@ export class DetailKomiteComponent implements OnInit {
   hitungRekomendasiSystem() {
     const deskripsiSkema = this.keputusanPembiayaanForm.get('skema')?.value.split('|');
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/hitung_angsuran', {
+      .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
         app_no_de: this.dataEntry.app_no_de,
         curef: this.dataEntry.curef,
         dp: this.keputusanPembiayaanForm.get('down_payment')?.value,
@@ -456,7 +458,7 @@ export class DetailKomiteComponent implements OnInit {
     let angsurannya2 = angsuranNon22.split('; ');
     if (this.cekDetailKomite === 0) {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/create_approval', {
+        .post<any>(this.baseUrl + 'v1/efos-approval/create_approval', {
           app_no_de: this.app_no_de,
           angsuran: angsurannya[0],
           angsuran_keputusan: angsurannya2[0],
@@ -480,7 +482,7 @@ export class DetailKomiteComponent implements OnInit {
             console.warn(data);
             // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
             this.http
-              .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/create_history_persetujuan', {
+              .post<any>(this.baseUrl + 'v1/efos-approval/create_history_persetujuan', {
                 id: 1,
                 app_no_de: this.app_no_de,
                 limit_kewenangan_memutus: this.persetujuanPembiayaanForm.get('limit_kewenangan_memutus')?.value,
@@ -510,7 +512,7 @@ export class DetailKomiteComponent implements OnInit {
                     let usulanPost = $('#usulan' + i).val();
 
                     this.http
-                      .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/update_persetujuan_khusus', {
+                      .post<any>(this.baseUrl + 'v1/efos-approval/update_persetujuan_khusus', {
                         app_no_de: this.app_no_de,
                         updated_by: this.sessionStorageService.retrieve('sessionUserName'),
                         updated_date: '',
@@ -545,7 +547,7 @@ export class DetailKomiteComponent implements OnInit {
         });
     } else {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/update_data_approval', {
+        .post<any>(this.baseUrl + 'v1/efos-approval/update_data_approval', {
           app_no_de: this.app_no_de,
           angsuran: angsurannya[0],
           angsuran_keputusan: angsurannya2[0],
@@ -569,7 +571,7 @@ export class DetailKomiteComponent implements OnInit {
             console.warn(data);
             // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
             this.http
-              .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/create_history_persetujuan', {
+              .post<any>(this.baseUrl + 'v1/efos-approval/create_history_persetujuan', {
                 id: 1,
                 app_no_de: this.app_no_de,
                 limit_kewenangan_memutus: this.persetujuanPembiayaanForm.get('limit_kewenangan_memutus')?.value,
@@ -599,7 +601,7 @@ export class DetailKomiteComponent implements OnInit {
                     let usulanPost = $('#usulan' + i).val();
 
                     this.http
-                      .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/update_persetujuan_khusus', {
+                      .post<any>(this.baseUrl + 'v1/efos-approval/update_persetujuan_khusus', {
                         app_no_de: this.app_no_de,
                         updated_by: this.sessionStorageService.retrieve('sessionUserName'),
                         updated_date: '',
@@ -688,7 +690,7 @@ export class DetailKomiteComponent implements OnInit {
       if (result.value) {
         if (this.cekDetailKomite === 0) {
           this.http
-            .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/create_approval', {
+            .post<any>(this.baseUrl + 'v1/efos-approval/create_approval', {
               app_no_de: this.app_no_de,
               angsuran: angsurannya[0],
               angsuran_keputusan: angsurannya2[0],
@@ -712,7 +714,7 @@ export class DetailKomiteComponent implements OnInit {
                 console.warn(data);
                 // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
                 this.http
-                  .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/create_history_persetujuan', {
+                  .post<any>(this.baseUrl + 'v1/efos-approval/create_history_persetujuan', {
                     id: 1,
                     app_no_de: this.app_no_de,
                     limit_kewenangan_memutus: this.persetujuanPembiayaanForm.get('limit_kewenangan_memutus')?.value,
@@ -742,7 +744,7 @@ export class DetailKomiteComponent implements OnInit {
                         let usulanPost = $('#usulan' + i).val();
 
                         this.http
-                          .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/update_persetujuan_khusus', {
+                          .post<any>(this.baseUrl + 'v1/efos-approval/update_persetujuan_khusus', {
                             app_no_de: this.app_no_de,
                             updated_by: this.sessionStorageService.retrieve('sessionUserName'),
                             updated_date: '',
@@ -777,7 +779,7 @@ export class DetailKomiteComponent implements OnInit {
             });
         } else {
           this.http
-            .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/update_data_approval', {
+            .post<any>(this.baseUrl + 'v1/efos-approval/update_data_approval', {
               app_no_de: this.app_no_de,
               angsuran: angsurannya[0],
               angsuran_keputusan: angsurannya2[0],
@@ -801,7 +803,7 @@ export class DetailKomiteComponent implements OnInit {
                 console.warn(data);
                 // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
                 this.http
-                  .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/create_history_persetujuan', {
+                  .post<any>(this.baseUrl + 'v1/efos-approval/create_history_persetujuan', {
                     id: 1,
                     app_no_de: this.app_no_de,
                     limit_kewenangan_memutus: this.persetujuanPembiayaanForm.get('limit_kewenangan_memutus')?.value,
@@ -831,7 +833,7 @@ export class DetailKomiteComponent implements OnInit {
                         let usulanPost = $('#usulan' + i).val();
 
                         this.http
-                          .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/update_persetujuan_khusus', {
+                          .post<any>(this.baseUrl + 'v1/efos-approval/update_persetujuan_khusus', {
                             app_no_de: this.app_no_de,
                             updated_by: this.sessionStorageService.retrieve('sessionUserName'),
                             updated_date: '',

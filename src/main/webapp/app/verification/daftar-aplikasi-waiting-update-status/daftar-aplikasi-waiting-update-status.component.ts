@@ -11,6 +11,7 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { getListFasilitasModel } from 'app/data-entry/services/config/getListFasilitasModel.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-daftar-aplikasi-waiting-update-status',
@@ -18,6 +19,7 @@ import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model
   styleUrls: ['./daftar-aplikasi-waiting-update-status.component.scss'],
 })
 export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDestroy {
+  baseUrl: string = environment.baseUrl;
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
   public getLoading(loading: boolean) {
@@ -130,7 +132,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
         // alert(this.kirimDe[i]);
         // alert(this.kirimStatusAplikasi[i])
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+          .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
             app_no_de: this.kirimDe[i],
             status_aplikasi: this.kirimStatusAplikasi[i],
             created_by: this.sessionStorageService.retrieve('sessionUserName'),
@@ -144,7 +146,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
     } else {
       for (let i = 0; i < this.checkLenghtResult.length; i++) {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+          .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
             app_no_de: this.checkLenghtResult[i].app_no_de,
             status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
             created_by: this.sessionStorageService.retrieve('sessionUserName'),
@@ -175,7 +177,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
             // alert(this.kirimDe[i]);
             // alert(this.kirimStatusAplikasi[i])
             this.http
-              .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_back_de', {
+              .post<any>(this.baseUrl + 'v1/efos-de/update_status_back_de', {
                 app_no_de: this.kirimDe[i],
                 status_aplikasi: this.kirimStatusAplikasi[i],
                 created_by: this.sessionStorageService.retrieve('sessionUserName'),
@@ -189,7 +191,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
         } else {
           for (let i = 0; i < this.checkLenghtResult.length; i++) {
             this.http
-              .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_back_de', {
+              .post<any>(this.baseUrl + 'v1/efos-de/update_status_back_de', {
                 app_no_de: this.checkLenghtResult[i].app_no_de,
                 status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
                 created_by: this.sessionStorageService.retrieve('sessionUserName'),
@@ -212,7 +214,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
             this.kirimDe;
             for (let i = 0; i < this.kirimDe.length; i++) {
               this.http
-                .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_status_back_analis', {
+                .post<any>(this.baseUrl + 'v1/efos-verif/update_status_back_analis', {
                   app_no_de: this.kirimDe[i],
                   status_aplikasi: this.kirimStatusAplikasi[i],
                   created_by: this.sessionStorageService.retrieve('sessionUserName'),
@@ -226,7 +228,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
           } else {
             for (let i = 0; i < this.checkLenghtResult.length; i++) {
               this.http
-                .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_status_back_analis', {
+                .post<any>(this.baseUrl + 'v1/efos-verif/update_status_back_analis', {
                   app_no_de: this.checkLenghtResult[i].app_no_de,
                   status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
                   created_by: this.sessionStorageService.retrieve('sessionUserName'),
@@ -263,7 +265,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
             // alert(this.kirimDe[i]);
             // alert(this.kirimStatusAplikasi[i])
             this.http
-              .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+              .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
                 app_no_de: this.kirimDe[i],
                 status_aplikasi: this.kirimStatusAplikasi[i],
                 created_by: this.sessionStorageService.retrieve('sessionUserName'),
@@ -277,7 +279,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
         } else {
           for (let i = 0; i < this.checkLenghtResult.length; i++) {
             this.http
-              .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+              .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
                 app_no_de: this.checkLenghtResult[i].app_no_de,
                 status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
                 created_by: this.sessionStorageService.retrieve('sessionUserName'),

@@ -17,6 +17,7 @@ import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { getJob } from 'app/data-entry/services/config/getJob.model';
 import { SessionStorageService } from 'ngx-webstorage';
 import { getListTipePekerjaan } from 'app/data-entry/services/config/getListTipePekerjaan.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-data-kantor',
@@ -24,6 +25,7 @@ import { getListTipePekerjaan } from 'app/data-entry/services/config/getListTipe
   styleUrls: ['./data-kantor.component.scss'],
 })
 export class DataKantorComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   // model dukcapil
   provinsi_cabang: any;
   kabkota_cabang: any;
@@ -174,7 +176,7 @@ export class DataKantorComponent implements OnInit {
       return;
     } else if (this.cekResult === 0) {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_kantor', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/create_analisa_kantor', {
           // id: 0,
           app_no_de: this.app_no_de,
           aspek_syariah: this.dataKantorForm.get('aspek_syariah')?.value,
@@ -246,7 +248,7 @@ export class DataKantorComponent implements OnInit {
       this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     } else {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_data_kantor', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/update_analisa_data_kantor', {
           // id: 0,
           app_no_de: this.app_no_de,
           aspek_syariah: this.dataKantorForm.get('aspek_syariah')?.value,

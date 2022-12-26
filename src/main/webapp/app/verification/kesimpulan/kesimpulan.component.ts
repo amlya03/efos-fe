@@ -7,6 +7,7 @@ import { Editor } from 'ngx-editor';
 import { SessionStorageService } from 'ngx-webstorage';
 import { kesimpulanVerification } from '../service/config/kesimpulanVerification.model';
 import { ServiceVerificationService } from '../service/service-verification.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-kesimpulan',
@@ -14,6 +15,7 @@ import { ServiceVerificationService } from '../service/service-verification.serv
   styleUrls: ['./kesimpulan.component.scss'],
 })
 export class KesimpulanComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   kesimpulanForm!: FormGroup;
   submitted = false;
   editor!: Editor;
@@ -69,7 +71,7 @@ export class KesimpulanComponent implements OnInit {
     this.submitted = true;
     if (this.kesimpulanModel === null) {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_kesimpulan_verifikasi', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/create_kesimpulan_verifikasi', {
           id: 0,
           app_no_de: this.app_no_de,
           created_date: '',
@@ -85,7 +87,7 @@ export class KesimpulanComponent implements OnInit {
         });
     } else {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_kesimpulan_verifikasi', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/update_kesimpulan_verifikasi', {
           id: 0,
           app_no_de: this.app_no_de,
           created_date: '',
