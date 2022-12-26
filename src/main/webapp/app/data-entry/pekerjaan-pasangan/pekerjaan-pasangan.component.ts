@@ -45,6 +45,10 @@ export class PekerjaanPasanganComponent implements OnInit {
   kirimKatePeker: any;
   kirimUmurPensi: any;
   kirimJenisBidang: any;
+  kirimPro: any;
+  kirimKot: any;
+  kirimKec: any;
+  kirimKel: any;
   kirimansiup: any;
   jenispekerjaan: any;
   getjabatan: any;
@@ -378,11 +382,30 @@ export class PekerjaanPasanganComponent implements OnInit {
       this.kirimUmurPensi = 55;
     }
 
-    const kirimanpro = this.formPekerjaanPasangan.get('provinsi')?.value.split('|');
-    const kirimankabkota = this.formPekerjaanPasangan.get('kabkota')?.value.split('|');
-    const kirimankec = this.formPekerjaanPasangan.get('kecamatan')?.value.split('|');
-    const kirimankel = this.formPekerjaanPasangan.get('kelurahan')?.value.split('|');
-
+    if (this.formPekerjaanPasangan.get('provinsi')?.value != null) {
+      const kirimanpro = this.formPekerjaanPasangan.get('provinsi')?.value.split('|');
+      this.kirimPro = kirimanpro[1];
+    } else {
+      this.kirimPro = '';
+    }
+    if (this.formPekerjaanPasangan.get('kabkota')?.value != null) {
+      const kirimankabkota = this.formPekerjaanPasangan.get('kabkota')?.value.split('|');
+      this.kirimKot = kirimankabkota[1];
+    } else {
+      this.kirimKot = '';
+    }
+    if (this.formPekerjaanPasangan.get('kecamatan')?.value != null) {
+      const kirimankec = this.formPekerjaanPasangan.get('kecamatan')?.value.split('|');
+      this.kirimKec = kirimankec[1];
+    } else {
+      this.kirimKec = '';
+    }
+    if (this.formPekerjaanPasangan.get('kelurahan')?.value != null) {
+      const kirimankel = this.formPekerjaanPasangan.get('kelurahan')?.value.split('|');
+      this.kirimKel = kirimankel[1];
+    } else {
+      this.kirimKel = '';
+    }
     if (this.formPekerjaanPasangan.get('jenis_bidang')?.value != null) {
       const potonganjenisbidang = this.formPekerjaanPasangan.get('jenis_bidang')?.value.split('|');
       this.kirimJenisBidang = potonganjenisbidang[1];
@@ -400,10 +423,10 @@ export class PekerjaanPasanganComponent implements OnInit {
           posisi: this.formPekerjaanPasangan.get('posisi')?.value,
           nama_perusahaan: this.formPekerjaanPasangan.get('nama_perusahaan')?.value,
           alamat_perusahaan: this.formPekerjaanPasangan.get('alamat_perusahaan')?.value,
-          provinsi: kirimanpro[1],
-          kabkota: kirimankabkota[1],
-          kecamatan: kirimankec[1],
-          kelurahan: kirimankel[1],
+          provinsi: this.kirimPro,
+          kabkota: this.kirimKot,
+          kecamatan: this.kirimKec,
+          kelurahan: this.kirimKel,
           kode_pos: this.formPekerjaanPasangan.get('kode_pos')?.value,
           jenis_bidang: this.kirimJenisBidang,
           sektor_ekonomi: this.formPekerjaanPasangan.get('sektor_ekonomi')?.value,
@@ -447,10 +470,10 @@ export class PekerjaanPasanganComponent implements OnInit {
           posisi: this.formPekerjaanPasangan.get('posisi')?.value,
           nama_perusahaan: this.formPekerjaanPasangan.get('nama_perusahaan')?.value,
           alamat_perusahaan: this.formPekerjaanPasangan.get('alamat_perusahaan')?.value,
-          provinsi: kirimanpro[1],
-          kabkota: kirimankabkota[1],
-          kecamatan: kirimankec[1],
-          kelurahan: kirimankel[1],
+          provinsi: this.kirimPro,
+          kabkota: this.kirimKot,
+          kecamatan: this.kirimKec,
+          kelurahan: this.kirimKel,
           kode_pos: this.formPekerjaanPasangan.get('kode_pos')?.value,
           jenis_bidang: this.kirimJenisBidang,
           sektor_ekonomi: this.formPekerjaanPasangan.get('sektor_ekonomi')?.value,
