@@ -11,6 +11,7 @@ import { DataEntryService } from '../services/data-entry.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { detailMemo } from '../services/config/detailMemo.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-memo',
@@ -18,6 +19,7 @@ import { detailMemo } from '../services/config/detailMemo.model';
   styleUrls: ['./memo.component.scss'],
 })
 export class MemoComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   memoForm!: FormGroup;
   file?: File; // Variable to store file
   curef: string | undefined;
@@ -97,7 +99,7 @@ export class MemoComponent implements OnInit {
 
   simpanmemo(): void {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_memo', {
+      .post<any>(this.baseUrl + 'v1/efos-de/create_memo', {
         id: '',
         keterangan: this.memoForm.get('keterangan')?.value,
         users: this.untukSessionfullname,
@@ -114,14 +116,14 @@ export class MemoComponent implements OnInit {
 
   kembalikede(): void {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_back_de', {
+      .post<any>(this.baseUrl + 'v1/efos-de/update_status_back_de', {
         app_no_de: this.app_no_de,
         created_by: this.SessionStorageService.retrieve('sessionFullName'),
         status_aplikasi: this.dataEntryModel.status_aplikasi,
       })
       .subscribe({
         next: bawaan => {
-          alert("Data Telah Kembali Ke AO");
+          alert('Data Telah Kembali Ke AO');
           this.router.navigate(['/data-entry'], {
             queryParams: { app_no_de: this.app_no_de },
           });
@@ -139,7 +141,7 @@ export class MemoComponent implements OnInit {
 
   updatekeupload(): void {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_dataentry', {
+      .post<any>(this.baseUrl + 'v1/efos-de/update_status_dataentry', {
         app_no_de: this.app_no_de,
         created_by: this.SessionStorageService.retrieve('sessionFullName'),
         status_aplikasi: this.dataEntryModel.status_aplikasi,
@@ -181,9 +183,9 @@ export class MemoComponent implements OnInit {
   download() {
     const buatPdf = this.getMemoUpload.nama_dokumen?.split('.').pop();
     if (buatPdf == 'pdf') {
-      window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + this.getMemoUpload.nama_dokumen + '');
+      window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + this.getMemoUpload.nama_dokumen + '');
     } else {
-      const url = 'http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + this.getMemoUpload.nama_dokumen + '';
+      const url = this.baseUrl + 'v1/efos-de/downloadFile/' + this.getMemoUpload.nama_dokumen + '';
       const img = '<img src="' + url + '">';
       this.popup = window.open('');
       this.popup.document.write(img);

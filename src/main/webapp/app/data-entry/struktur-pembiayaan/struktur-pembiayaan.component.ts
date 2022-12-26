@@ -14,6 +14,7 @@ import { getStrukturPembiayaan } from '../services/config/getStrukturPembiayaan.
 import { getProgramModel } from '../services/config/getProgramModel.model';
 import { getProduk } from '../services/config/getProduk.model';
 import { getListFasilitasModel } from '../services/config/getListFasilitasModel.model';
+import { environment } from 'environments/environment';
 
 export type EntityResponseDaWa = HttpResponse<strukturpembiayaanmodel>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -23,6 +24,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./struktur-pembiayaan.component.scss'],
 })
 export class StrukturPembiayaanComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
   strukturForm!: FormGroup;
@@ -218,7 +220,7 @@ export class StrukturPembiayaanComponent implements OnInit {
 
       setTimeout(() => {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-de/hitung_angsuran', {
+          .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
             app_no_de: this.app_no_de,
             curef: this.curef,
             dp: this.strukturModel.uang_muka,
@@ -371,7 +373,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     var kirimanskema = this.strukturForm.get('skema')?.value.split('|');
     var kirimanjangkawaktu = this.strukturForm.get('jangka_waktu')?.value.split('|');
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/hitung_angsuran', {
+      .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
         // headers: headers,
 
         app_no_de: this.app_no_de,
@@ -429,7 +431,7 @@ export class StrukturPembiayaanComponent implements OnInit {
 
     if (this.strukturModel == null) {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_struktur_pembiayaan', {
+        .post<any>(this.baseUrl + 'v1/efos-de/create_struktur_pembiayaan', {
           angsuran: angsurannya[0],
           app_no_de: this.app_no_de,
           created_by: this.SessionStorageService.retrieve('sessionUserName'),
@@ -477,7 +479,7 @@ export class StrukturPembiayaanComponent implements OnInit {
         });
     } else {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_struktur_pembiayaan', {
+        .post<any>(this.baseUrl + 'v1/efos-de/update_struktur_pembiayaan', {
           angsuran: angsurannya[0],
           app_no_de: this.app_no_de,
           updated_by: this.SessionStorageService.retrieve('sessionUserName'),

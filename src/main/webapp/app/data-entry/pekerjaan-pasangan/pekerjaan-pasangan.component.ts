@@ -18,6 +18,7 @@ import { refTipePerusahaan } from '../services/config/refTipePerusahaan.model';
 import { InitialDataEntryService } from 'app/initial-data-entry/services/initial-data-entry.service';
 import { refSektor } from 'app/initial-data-entry/services/config/refSektor.model';
 import { refBidang } from 'app/initial-data-entry/services/config/refBidang.model';
+import { environment } from 'environments/environment';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 export type EntityArrayResponseDaWa1 = HttpResponse<ApiResponse>;
@@ -27,6 +28,7 @@ export type EntityArrayResponseDaWa1 = HttpResponse<ApiResponse>;
   styleUrls: ['./pekerjaan-pasangan.component.scss'],
 })
 export class PekerjaanPasanganComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   formPekerjaanPasangan!: FormGroup;
   listJobPasangan: getJobPasangan = new getJobPasangan();
   dataEntry: fetchAllDe = new fetchAllDe();
@@ -157,7 +159,7 @@ export class PekerjaanPasanganComponent implements OnInit {
         Validators.required,
       ],
       umur_pensiun: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '55' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
         Validators.required,
       ],
       kategori_pekerjaan: [
@@ -384,7 +386,7 @@ export class PekerjaanPasanganComponent implements OnInit {
 
     if (this.listJobPasangan == null) {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_job_info_pasangan', {
+        .post<any>(this.baseUrl + 'v1/efos-de/create_job_info_pasangan', {
           curef: this.curef,
           created_by: this.SessionStorageService.retrieve('sessionUserName'),
           kategori_pekerjaan: this.kirimKatePeker,
@@ -428,7 +430,7 @@ export class PekerjaanPasanganComponent implements OnInit {
         });
     } else {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_job_info_pasangan', {
+        .post<any>(this.baseUrl + 'v1/efos-de/update_job_info_pasangan', {
           curef: this.curef,
           updated_by: this.SessionStorageService.retrieve('sessionUserName'),
           kategori_pekerjaan: this.kirimKatePeker,

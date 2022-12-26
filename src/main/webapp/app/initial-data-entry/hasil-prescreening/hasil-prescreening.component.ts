@@ -15,6 +15,7 @@ import { InitialDataEntryService } from '../services/initial-data-entry.service'
 import { SessionStorageService } from 'ngx-webstorage';
 import { modelCustomer } from '../services/config/modelCustomer.model';
 import { dukcapilModel } from '../services/config/dukcapilModel.model';
+import { environment } from 'environments/environment';
 // import { count } from 'console';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -25,6 +26,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./hasil-prescreening.component.scss'],
 })
 export class HasilPrescreeningComponent implements OnInit, OnDestroy {
+  baseUrl: string = environment.baseUrl;
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
   daWa: any;
@@ -161,10 +163,10 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     this.untukSessionKodeCabang = this.SessionStorageService.retrieve('sessionKdCabang');
   }
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getCustomerByAppId?sc=');
-  protected getdhn = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/cekDhn');
-  protected apigetslit = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/fetchDataSlik?sd=');
-  protected apigetduplikat = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/getDuplicateCheck?sk=');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/getCustomerByAppId?sc=');
+  protected getdhn = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/cekDhn');
+  protected apigetslit = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/fetchDataSlik?sd=');
+  protected apigetduplikat = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/getDuplicateCheck?sk=');
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -453,7 +455,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
       var hasilmiripdongfinal = hasilmiripdong?.replace(/:/g, '');
 
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify_manual', {
+        .post<any>(this.baseUrl + 'v1/efos-ide/dukcapil_verify_manual', {
           alamat_ktp: this.personalInfoForm.get('radiobuttonalamat')?.value,
           id: this.id,
           jenis_kelamin: this.personalInfoForm.get('radiobuttonjenis')?.value,
@@ -497,7 +499,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
       const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify_manual', {
+        .post<any>(this.baseUrl + 'v1/efos-ide/dukcapil_verify_manual', {
           headers: headers,
           alamat_ktp: this.personalInfoForm.get('radiobuttonalamat')?.value,
           id: this.id,
@@ -518,7 +520,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
           this.contohdata = resposne.result.id;
           // console.log('responsesimpndataktp', resposne);
           this.http
-            .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify_manual', {
+            .post<any>(this.baseUrl + 'v1/efos-ide/dukcapil_verify_manual', {
               headers: headers,
               alamat_ktp: this.personalInfoFormpasangan.get('radiobuttonalamatpasangan')?.value,
               id: this.id,
@@ -649,7 +651,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
 
     // if (this.daWa.status_perkawinan === 'Menikah') {
     //   this.http
-    //     .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify', {
+    //     .post<any>(this.baseUrl + 'v1/efos-ide/slik_verify', {
     // channelID: 'EFOS',
     // idUSerCabang:'',
     // jenisKelamin: this.daWa.jenis_kelamin,
@@ -695,7 +697,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     //     });
 
     //   this.http
-    //     .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify', {
+    //     .post<any>(this.baseUrl + 'v1/efos-ide/slik_verify', {
     //       channelID: 'EFOS',
     //       idUSerCabang:'',
     //       jenisKelamin: this.daWa.jenis_kelamin,
@@ -875,7 +877,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     if (this.daWa.status_perkawinan === 'Menikah') {
       // alert(tglLahir)
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify', {
+        .post<any>(this.baseUrl + 'v1/efos-ide/dukcapil_verify', {
           no_id: this.daWa.app_no_ide,
           tanggal_lahir: this.daWa.tanggal_lahir,
           reffNumber: reffnumbernya,
@@ -959,7 +961,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
         });
 
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify', {
+        .post<any>(this.baseUrl + 'v1/efos-ide/dukcapil_verify', {
           no_id: this.daWa.app_no_ide,
           tanggal_lahir: this.daWa.tanggal_lahir,
           reffNumber: reffnumbernya,
@@ -1051,7 +1053,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
         });
     } else {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/dukcapil_verify', {
+        .post<any>(this.baseUrl + 'v1/efos-ide/dukcapil_verify', {
           no_id: this.daWa.app_no_ide,
           tanggal_lahir: this.daWa.tanggal_lahir,
 
@@ -1170,7 +1172,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
 
   gotopersonalinfo() {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_app_de', {
+      .post<any>(this.baseUrl + 'v1/efos-de/create_app_de', {
         analis_verifikasi: '',
         app_no_de: '',
         app_no_ide: this.dataEntry.app_no_ide,
@@ -1198,7 +1200,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
 
   postUpdateStatus(): void {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/cekDhn', {
+      .post<any>(this.baseUrl + 'v1/efos-ide/cekDhn', {
         no_id: this.dataEntry.app_no_ide,
         tanggal_lahir: this.dataEntry.tanggal_lahir,
         // password_dukcapil: '3foWeb@pp',
@@ -1218,7 +1220,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   checkstatusktpmanual(value: any) {
     if (this.dawastatuspernikaham == 'Lajang') {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/get_data_dukcapil_manual', {
+        .post<any>(this.baseUrl + 'v1/efos-ide/get_data_dukcapil_manual', {
           nik: value,
         })
         .subscribe({
@@ -1248,7 +1250,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     } else {
       // alert('fungsi else jalan');
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/get_data_dukcapil_manual', {
+        .post<any>(this.baseUrl + 'v1/efos-ide/get_data_dukcapil_manual', {
           nik: value,
         })
         .subscribe({
@@ -1282,7 +1284,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   checkstatusktpmanualpasangan() {
     // alert('fungsipasangam');
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/get_data_dukcapil_manual', {
+      .post<any>(this.baseUrl + 'v1/efos-ide/get_data_dukcapil_manual', {
         nik: this.ktp_pasangan,
       })
       .subscribe({
@@ -1400,7 +1402,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   //       return;
   //     } else {
   //       this.http
-  //         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify_manual', {
+  //         .post<any>(this.baseUrl + 'v1/efos-ide/slik_verify_manual', {
   //           id: '',
   //           no_aplikasi: this.dataEntry.app_no_ide,
   //           id_number: this.ktp,
@@ -1518,7 +1520,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   //       return;
   //     } else {
   //       this.http
-  //         .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify_manual', {
+  //         .post<any>(this.baseUrl + 'v1/efos-ide/slik_verify_manual', {
   //           id: '',
   //           no_aplikasi: this.dataEntry.app_no_ide,
   //           id_number: this.ktp,

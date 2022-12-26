@@ -8,6 +8,7 @@ import { InputScoringService } from './input-scoring.service';
 import { inputModel } from './inputModel.model';
 import Swal from 'sweetalert2';
 import { SessionStorageService } from 'ngx-webstorage';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-input-scoring',
@@ -15,6 +16,7 @@ import { SessionStorageService } from 'ngx-webstorage';
   styleUrls: ['./input-scoring.component.scss'],
 })
 export class InputScoringComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   scoringForm!: FormGroup;
   submitted = false;
   listScoring: listScoring[] = [];
@@ -65,7 +67,7 @@ export class InputScoringComponent implements OnInit {
   // onSubmit(): void {
   //   this.submitted = true;
   //   this.http
-  //     .post<any>('http://10.20.34.110:8805/api/v1/efos-ref/create_data_scoring', {
+  //     .post<any>(this.baseUrl + 'v1/efos-ref/create_data_scoring', {
   //       id: '',
   //       created_by: this.SessionStorageService.retrieve('sessionUserName'),
   //       created_date: '',
@@ -181,7 +183,7 @@ export class InputScoringComponent implements OnInit {
         return;
       } else {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-ref/create_data_scoring', {
+          .post<any>(this.baseUrl + 'v1/efos-ref/create_data_scoring', {
             id: '',
             created_by: this.SessionStorageService.retrieve('sessionUserName'),
             created_date: '',

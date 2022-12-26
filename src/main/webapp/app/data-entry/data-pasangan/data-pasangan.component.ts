@@ -9,6 +9,7 @@ import { DataEntryService } from '../services/data-entry.service';
 import { SessionStorageService } from 'ngx-webstorage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { environment } from 'environments/environment';
 
 export type EntityResponseDaWa = HttpResponse<datapasangamodel>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -18,6 +19,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./data-pasangan.component.scss'],
 })
 export class DataPasanganComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   dataPasanganForm!: FormGroup;
   dataEntry: fetchAllDe = new fetchAllDe();
   datakiriman: any;
@@ -309,7 +311,7 @@ export class DataPasanganComponent implements OnInit {
     const kirimankel = this.dataPasanganForm.get('kelurahan_pasangan')?.value.split('|');
 
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_pasangan', {
+      .post<any>(this.baseUrl + 'v1/efos-de/update_pasangan', {
         id: this.dataEntry.id_customer,
         app_no_ide: this.dataEntry.app_no_ide,
         kategori_pekerjaan: this.dataEntry.kategori_pekerjaan,

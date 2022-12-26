@@ -16,6 +16,7 @@ import { refListJumlahKaryawan } from '../services/config/refListJumlahKaryawan.
 import { refObjekAgunan } from '../services/config/refObjekAgunan.model';
 import { refStatusSertifikat } from '../services/config/refStatusSertifikat.model';
 import { refTipeAgunan } from '../services/config/refTipeAgunan.model';
+import { environment } from 'environments/environment';
 // import { colateralmodel } from './collateral-model';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -26,6 +27,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./collateral-edit.component.scss'],
 })
 export class CollateralEditComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   editCollateralForm!: FormGroup;
   pemegangHak: refListJumlahKaryawan[] = [];
   listTipeAgunan: refTipeAgunan[] = [];
@@ -479,7 +481,7 @@ export class CollateralEditComponent implements OnInit {
     }
 
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_collateral', {
+      .post<any>(this.baseUrl + 'v1/efos-de/update_collateral', {
         tipe_agunan: tipeAgunan,
         jenis_objek: this.editCollateralForm.get('jenis_objek')?.value,
         tipe_kendaraan: this.editCollateralForm.get('tipe_kendaraan')?.value,

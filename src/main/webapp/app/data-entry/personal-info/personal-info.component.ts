@@ -12,6 +12,7 @@ import { refStatusPerkawinan } from 'app/verification/service/config/refStatusPe
 import { refStatusRumah } from 'app/verification/service/config/refStatusRumah.model';
 import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
 import { refListTipeKendaraan } from '../services/config/refListTipeKendaraan.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-personal-info',
@@ -19,6 +20,7 @@ import { refListTipeKendaraan } from '../services/config/refListTipeKendaraan.mo
   styleUrls: ['./personal-info.component.scss'],
 })
 export class PersonalInfoComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   personalInfoForm!: FormGroup;
   submitted = false;
   numbers: number[] | undefined;
@@ -398,7 +400,7 @@ export class PersonalInfoComponent implements OnInit {
     const potongankelurahanD = this.personalInfoForm.get('kelurahan_domisili')?.value.split('|');
 
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_customer', {
+      .post<any>(this.baseUrl + 'v1/efos-de/update_customer', {
         // headers: headers,
 
         nama: this.personalInfoForm.get('nama')?.value,

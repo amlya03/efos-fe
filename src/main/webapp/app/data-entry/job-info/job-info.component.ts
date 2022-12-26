@@ -15,6 +15,7 @@ import { getJob } from '../services/config/getJob.model';
 import Swal from 'sweetalert2';
 import { refJenisPekerjaan } from '../services/config/refJenisPekerjaan.model';
 import { getListTipePekerjaan } from '../services/config/getListTipePekerjaan.model';
+import { environment } from 'environments/environment';
 
 export type EntityResponseDaWa = HttpResponse<jobinfolist>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -26,6 +27,7 @@ export type EntityArrayResponseDaWa1 = HttpResponse<ApiResponse>;
   styleUrls: ['./job-info.component.scss'],
 })
 export class JobInfoComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
   jobInfoForm!: FormGroup;
@@ -136,27 +138,21 @@ export class JobInfoComponent implements OnInit {
     });
   }
   // URL DE
-  protected fetchSemuaData = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd=');
+  protected fetchSemuaData = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getDataEntryByDe?sd=');
 
   // Get Job Sebelum
-  protected resourceUrl1 = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobByCurefDe?sj=');
+  protected resourceUrl1 = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getJobByCurefDe?sj=');
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/getJobByCurefDe?sj=');
-  protected apigetjenispekeraan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_pekerjaan?sc='
-  );
-  protected apilisttipeperusahaan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ref/list_tipe_perusahaan'
-  );
-  protected apilistjabatan = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ref/list_jabatan');
-  protected apijumlahkaryawan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-ref/list_jumlah_karyawan'
-  );
+  protected resourceUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getJobByCurefDe?sj=');
+  protected apigetjenispekeraan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_tipe_pekerjaan?sc=');
+  protected apilisttipeperusahaan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_tipe_perusahaan');
+  protected apilistjabatan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_jabatan');
+  protected apijumlahkaryawan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_jumlah_karyawan');
   protected apiuntukgetsemuadataebrdasarkande = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-de/getDataEntryByDe?sd='
+    this.baseUrl + 'v1/efos-de/getDataEntryByDe?sd='
   );
 
-  protected apilistjenisbidang = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/list_jenis_bidang');
+  protected apilistjenisbidang = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/list_jenis_bidang');
 
   ngOnInit(): void {
     this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
@@ -245,8 +241,8 @@ export class JobInfoComponent implements OnInit {
       ],
     });
     this.datajobsebelum = this.formBuilder.group({
-       kategori_pekerjaan_sebelum:  '',
-      tipe_pekerjaan_sebelum:  '',
+      kategori_pekerjaan_sebelum: '',
+      tipe_pekerjaan_sebelum: '',
       // pay_roll: '',
       posisi_sebelum: '',
       nama_perusahaan_sebelum: '',
@@ -588,7 +584,7 @@ export class JobInfoComponent implements OnInit {
     //   Authorization: `Bearer ${token}`,
     // };
     // const kodepotongan = kodekota.split('|');
-    return this.http.get<ApiResponse>('http://10.20.34.110:8805/api/v1/efos-ide/list_sektor_ekonomi?se=' + idsktor, {
+    return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos-ide/list_sektor_ekonomi?se=' + idsktor, {
       params: options,
       observe: 'response',
     });
@@ -908,7 +904,7 @@ export class JobInfoComponent implements OnInit {
       }
 
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_job_sebelum_de', {
+        .post<any>(this.baseUrl + 'v1/efos-de/update_job_sebelum_de', {
           // headers: headers,
 
           alamat_pekerjaan_sebelum: alamat_pekerjaan_sebelum.value,
@@ -1078,7 +1074,7 @@ export class JobInfoComponent implements OnInit {
       }
 
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_job_info', {
+        .post<any>(this.baseUrl + 'v1/efos-ide/create_job_info', {
           // headers: headers,
           alamat_perusahaan: this.jobInfoForm.get('alamat_perusahaan')?.value,
           curef: this.curef,
@@ -1232,7 +1228,7 @@ export class JobInfoComponent implements OnInit {
     }).then(result => {
       if (result.value) {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-de/delete_jobinfo', {
+          .post<any>(this.baseUrl + 'v1/efos-de/delete_jobinfo', {
             id: idJob,
           })
           .subscribe({});

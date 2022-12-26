@@ -13,6 +13,7 @@ import { refListTipeKendaraan } from '../services/config/refListTipeKendaraan.mo
 import { refStatusPerkawinan } from '../services/config/refStatusPerkawinan.model';
 import { refListJumlahKaryawan } from '../services/config/refListJumlahKaryawan.model';
 import { refStatusSertifikat } from '../services/config/refStatusSertifikat.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-call-report',
@@ -20,6 +21,7 @@ import { refStatusSertifikat } from '../services/config/refStatusSertifikat.mode
   styleUrls: ['./call-report.component.scss'],
 })
 export class CallReportComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   callReportForm!: FormGroup;
   datakirimiancure: any;
   curef: string | undefined;
@@ -433,7 +435,7 @@ export class CallReportComponent implements OnInit {
       }
     }
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_call_report', {
+      .post<any>(this.baseUrl + 'v1/efos-de/create_call_report', {
         alamat_perusahaan: this.callReportForm.get('alamat_perusahaan')?.value,
         alamat_perusahaan_pasangan: this.callReportForm.get('alamat_perusahaan_pasangan')?.value,
         alamat_tinggal: this.callReportForm.get('alamat_tinggal')?.value,

@@ -20,6 +20,7 @@ import { refJenisPekerjaan } from '../../data-entry/services/config/refJenisPeke
 import { refJabatan } from '../../verification/service/config/refJabatan.model';
 import { Subscription } from 'rxjs';
 import { refListJumlahKaryawan } from '../../data-entry/services/config/refListJumlahKaryawan.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-initial-data-entry-fix',
@@ -27,6 +28,7 @@ import { refListJumlahKaryawan } from '../../data-entry/services/config/refListJ
   styleUrls: ['./initial-data-entry-fix.component.scss'],
 })
 export class InitialDataEntryFixComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
   subscription?: Subscription;
@@ -661,7 +663,7 @@ export class InitialDataEntryFixComponent implements OnInit {
 
       if (this.cekResultIde == 0) {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_job_info', {
+          .post<any>(this.baseUrl + 'v1/efos-ide/create_job_info', {
             alamat_pekerjaan_sebelum: this.jobForm.get('alamat_pekerjaan_sebelum')?.value,
             alamat_perusahaan: this.jobForm.get('alamat_perusahaan')?.value,
             barang_jasa: this.jobForm.get('barang_jasa')?.value,
@@ -731,7 +733,7 @@ export class InitialDataEntryFixComponent implements OnInit {
           .subscribe({
             next: data => {
               this.http
-                .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
+                .post<any>(this.baseUrl + 'v1/efos-ide/create_app_ide', {
                   nama: this.ideForm.get('nama')?.value,
                   nama_pasangan: this.ideForm.get('nama_pasangan')?.value,
                   kategori_pekerjaan: this.kirimKatePeker,
@@ -830,7 +832,7 @@ export class InitialDataEntryFixComponent implements OnInit {
           });
       } else {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_job_info', {
+          .post<any>(this.baseUrl + 'v1/efos-ide/update_job_info', {
             alamat_pekerjaan_sebelum: this.jobForm.get('alamat_pekerjaan_sebelum')?.value,
             alamat_perusahaan: this.jobForm.get('alamat_perusahaan')?.value,
             barang_jasa: this.jobForm.get('barang_jasa')?.value,
@@ -901,7 +903,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             next: data => {
               if (this.ideForm.get('status_perkawinan')?.value === 'Menikah') {
                 this.http
-                  .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide', {
+                  .post<any>(this.baseUrl + 'v1/efos-ide/update_app_ide', {
                     agama: this.ideForm.get('agama')?.value,
                     agama_pasangan: this.ideForm.get('agama_pasangan')?.value,
                     alamat_domisili: '',
@@ -991,7 +993,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                   });
               } else {
                 this.http
-                  .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide', {
+                  .post<any>(this.baseUrl + 'v1/efos-ide/update_app_ide', {
                     agama: this.ideForm.get('agama')?.value,
                     agama_pasangan: '',
                     alamat_domisili: '',
@@ -1092,7 +1094,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     } else {
       if (this.cekResultIde == 0) {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide', {
+          .post<any>(this.baseUrl + 'v1/efos-ide/create_app_ide', {
             nama: this.ideForm.get('nama')?.value,
             nama_pasangan: this.ideForm.get('nama_pasangan')?.value,
             kategori_pekerjaan: this.kirimKatePeker,
@@ -1184,7 +1186,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       } else {
         if (this.ideForm.get('status_perkawinan')?.value === 'Menikah') {
           this.http
-            .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide', {
+            .post<any>(this.baseUrl + 'v1/efos-ide/update_app_ide', {
               agama: this.ideForm.get('agama')?.value,
               agama_pasangan: this.ideForm.get('agama_pasangan')?.value,
               alamat_domisili: '',
@@ -1275,7 +1277,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             });
         } else {
           this.http
-            .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide', {
+            .post<any>(this.baseUrl + 'v1/efos-ide/update_app_ide', {
               agama: this.ideForm.get('agama')?.value,
               agama_pasangan: '',
               alamat_domisili: '',
@@ -1407,7 +1409,7 @@ export class InitialDataEntryFixComponent implements OnInit {
 
       if (this.cekResultIde == 0) {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_job_info', {
+          .post<any>(this.baseUrl + 'v1/efos-ide/create_job_info', {
             alamat_pekerjaan_sebelum: this.jobForm.get('alamat_pekerjaan_sebelum')?.value,
             alamat_perusahaan: this.jobForm.get('alamat_perusahaan')?.value,
             barang_jasa: this.jobForm.get('barang_jasa')?.value,
@@ -1477,7 +1479,7 @@ export class InitialDataEntryFixComponent implements OnInit {
           .subscribe({
             next: data => {
               this.http
-                .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide_temp', {
+                .post<any>(this.baseUrl + 'v1/efos-ide/create_app_ide_temp', {
                   nama: this.ideForm.get('nama')?.value,
                   nama_pasangan: this.ideForm.get('nama_pasangan')?.value,
                   kategori_pekerjaan: this.kirimKatePeker,
@@ -1567,7 +1569,7 @@ export class InitialDataEntryFixComponent implements OnInit {
           });
       } else {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_job_info', {
+          .post<any>(this.baseUrl + 'v1/efos-ide/update_job_info', {
             alamat_pekerjaan_sebelum: this.jobForm.get('alamat_pekerjaan_sebelum')?.value,
             alamat_perusahaan: this.jobForm.get('alamat_perusahaan')?.value,
             barang_jasa: this.jobForm.get('barang_jasa')?.value,
@@ -1638,7 +1640,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             next: data => {
               if (this.ideForm.get('status_perkawinan')?.value === 'Menikah') {
                 this.http
-                  .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide_temp', {
+                  .post<any>(this.baseUrl + 'v1/efos-ide/update_app_ide_temp', {
                     agama: this.ideForm.get('agama')?.value,
                     agama_pasangan: this.ideForm.get('agama_pasangan')?.value,
                     alamat_domisili: '',
@@ -1720,7 +1722,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                   });
               } else {
                 this.http
-                  .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide_temp', {
+                  .post<any>(this.baseUrl + 'v1/efos-ide/update_app_ide_temp', {
                     agama: this.ideForm.get('agama')?.value,
                     agama_pasangan: '',
                     alamat_domisili: '',
@@ -1813,7 +1815,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     } else {
       if (this.cekResultIde == 0) {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/create_app_ide_temp', {
+          .post<any>(this.baseUrl + 'v1/efos-ide/create_app_ide_temp', {
             nama: this.ideForm.get('nama')?.value,
             nama_pasangan: this.ideForm.get('nama_pasangan')?.value,
             kategori_pekerjaan: this.kirimKatePeker,
@@ -1896,7 +1898,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       } else {
         if (this.ideForm.get('status_perkawinan')?.value === 'Menikah') {
           this.http
-            .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide_temp', {
+            .post<any>(this.baseUrl + 'v1/efos-ide/update_app_ide_temp', {
               agama: this.ideForm.get('agama')?.value,
               agama_pasangan: this.ideForm.get('agama_pasangan')?.value,
               alamat_domisili: '',
@@ -1978,7 +1980,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             });
         } else {
           this.http
-            .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/update_app_ide_temp', {
+            .post<any>(this.baseUrl + 'v1/efos-ide/update_app_ide_temp', {
               agama: this.ideForm.get('agama')?.value,
               agama_pasangan: '',
               alamat_domisili: '',

@@ -8,6 +8,7 @@ import { fetchAllDe } from '../services/config/fetchAllDe.model';
 import { uploadDocument } from '../services/config/uploadDocument.model';
 import { ServicesUploadDocumentService } from '../services/services-upload-document.service';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-upload-document-de',
@@ -15,6 +16,7 @@ import { DataEntryService } from 'app/data-entry/services/data-entry.service';
   styleUrls: ['./upload-document-de.component.scss'],
 })
 export class UploadDocumentDeComponent implements OnInit, OnDestroy {
+  baseUrl: string = environment.baseUrl;
   uploadDocument: Array<uploadDocument> = new Array<uploadDocument>();
   dataEntry: fetchAllDe = new fetchAllDe();
   curef: any;
@@ -139,7 +141,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     nama: string | null | undefined
   ) {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/deleteDocUpload', {
+      .post<any>(this.baseUrl + 'v1/efos-de/deleteDocUpload', {
         created_date: '',
         doc_description: doc,
         id: id,
@@ -154,9 +156,9 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   viewData(nama_dok: any) {
     const buatPdf = nama_dok.split('.').pop();
     if (buatPdf == 'pdf') {
-      window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dok + '');
+      window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + nama_dok + '');
     } else {
-      const url = 'http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dok + '';
+      const url = this.baseUrl + 'v1/efos-de/downloadFile/' + nama_dok + '';
       const img = '<img src="' + url + '">';
       this.popup = window.open('');
       this.popup.document.write(img);

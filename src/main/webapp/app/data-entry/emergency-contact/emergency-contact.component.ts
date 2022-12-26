@@ -9,6 +9,7 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fetchAllDe } from '../../upload-document/services/config/fetchAllDe.model';
 import { getEmergencyByCurefModel } from '../services/config/getEmergencyByCurefModel.model';
+import { environment } from 'environments/environment';
 
 // export type EntityResponseDaWa = HttpResponse<strukturpembiayaanmodel>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -19,6 +20,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./emergency-contact.component.scss'],
 })
 export class EmergencyContactComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   emergencyForm!: FormGroup;
   dataEntry: fetchAllDe = new fetchAllDe();
   curef: string | undefined;
@@ -337,7 +339,7 @@ export class EmergencyContactComponent implements OnInit {
       const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_emergency_contact', {
+        .post<any>(this.baseUrl + 'v1/efos-de/create_emergency_contact', {
           id: '',
           curef: this.curef,
           nama: this.emergencyForm.get('nama')?.value,
@@ -373,7 +375,7 @@ export class EmergencyContactComponent implements OnInit {
       const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_emergency_contact', {
+        .post<any>(this.baseUrl + 'v1/efos-de/update_emergency_contact', {
           id: this.daWa.id,
           curef: this.curef,
           nama: this.emergencyForm.get('nama')?.value,

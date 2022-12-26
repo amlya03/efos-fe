@@ -15,6 +15,7 @@ import { refListDeveloper } from '../services/config/refListDeveloper.model';
 import { refStatusSertifikat } from '../services/config/refStatusSertifikat.model';
 import { listAgunan } from '../services/config/listAgunan.model';
 import Swal from 'sweetalert2';
+import { environment } from 'environments/environment';
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 
 @Component({
@@ -23,6 +24,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./collateral.component.scss'],
 })
 export class CollateralComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   collateralForm!: FormGroup;
   pemegangHak: refListJumlahKaryawan[] = [];
   listTipeAgunan: refTipeAgunan[] = [];
@@ -468,7 +470,7 @@ export class CollateralComponent implements OnInit {
     }
 
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_collateral', {
+      .post<any>(this.baseUrl + 'v1/efos-de/create_collateral', {
         tipe_agunan: tipeAgunan,
         jenis_objek: this.collateralForm.get('jenis_objek')?.value,
         tipe_kendaraan: this.collateralForm.get('tipe_kendaraan')?.value,
@@ -647,7 +649,7 @@ export class CollateralComponent implements OnInit {
     }).then(result => {
       if (result.value) {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-de/delete_collateral', {
+          .post<any>(this.baseUrl + 'v1/efos-de/delete_collateral', {
             id: id,
           })
           .subscribe({});

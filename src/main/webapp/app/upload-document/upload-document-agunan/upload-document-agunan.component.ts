@@ -9,6 +9,7 @@ import { uploadDocument } from '../services/config/uploadDocument.model';
 import { ServicesUploadDocumentService } from '../services/services-upload-document.service';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { SessionStorageService } from 'ngx-webstorage';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-upload-document-agunan',
@@ -16,6 +17,7 @@ import { SessionStorageService } from 'ngx-webstorage';
   styleUrls: ['./upload-document-agunan.component.scss'],
 })
 export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
+  baseUrl: string = environment.baseUrl;
   uploadDocument?: uploadDocument[];
   curef: any;
   app_no_de: any;
@@ -130,7 +132,7 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
     nama: string | null | undefined
   ) {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/deleteDocUpload', {
+      .post<any>(this.baseUrl + 'v1/efos-de/deleteDocUpload', {
         created_date: '',
         doc_description: doc,
         id: id,
@@ -145,9 +147,9 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
   viewData(nama_dok: any) {
     const buatPdf = nama_dok.split('.').pop();
     if (buatPdf == 'pdf') {
-      window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dok + '');
+      window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + nama_dok + '');
     } else {
-      const url = 'http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dok + '';
+      const url = this.baseUrl + 'v1/efos-de/downloadFile/' + nama_dok + '';
       const img = '<img src="' + url + '">';
       this.popup = window.open('');
       this.popup.document.write(img);
@@ -157,7 +159,7 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
   // Update Status
   updateStatus() {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+      .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
         app_no_de: this.app_no_de,
         created_by: this.curef,
         status_aplikasi: this.fetchAllAgunan.status_aplikasi,

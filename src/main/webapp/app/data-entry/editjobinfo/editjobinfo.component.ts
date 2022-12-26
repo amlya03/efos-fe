@@ -16,6 +16,7 @@ import { refJabatan } from 'app/verification/service/config/refJabatan.model';
 import { refSektor } from 'app/initial-data-entry/services/config/refSektor.model';
 import { refBidang } from 'app/initial-data-entry/services/config/refBidang.model';
 import { InitialDataEntryService } from 'app/initial-data-entry/services/initial-data-entry.service';
+import { environment } from 'environments/environment';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 
@@ -25,6 +26,7 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./editjobinfo.component.scss'],
 })
 export class EditjobinfoComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   editJobForm!: FormGroup;
   listTipePekerjaan: getListTipePekerjaan[] = [];
   listJabatan: refJenisPekerjaan[] = [];
@@ -389,7 +391,7 @@ export class EditjobinfoComponent implements OnInit {
     } else {
       this.submitted = true;
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_job_info_de', {
+        .post<any>(this.baseUrl + 'v1/efos-de/update_job_info_de', {
           // headers: headers,
 
           // alamat_pekerjaan_sebelum: alamat_perusahaan.value,

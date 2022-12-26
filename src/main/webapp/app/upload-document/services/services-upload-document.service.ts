@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
+import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ServicesUploadDocumentService {
+  baseUrl: string = environment.baseUrl;
   datakiriman: any;
   app_no_de: any;
 
@@ -17,29 +19,23 @@ export class ServicesUploadDocumentService {
 
   // /////////////////////////////// Get List Daftar APlikasi Upload /////////////////////////////////
   protected FetchDaftarAplikasiUpload = this.applicationConfigService.getEndpointFor(
-    // 'http://10.20.34.110:8805/api/v1/efos-de/list_app_de_upload?sc=%20&sf=%20&si=%20&sk=%20&sn=%20&su=199183174'
-    'http://10.20.34.110:8805/api/v1/efos-de/list_app_de_upload?su='
+    // this.baseUrl + 'v1/efos-de/list_app_de_upload?sc=%20&sf=%20&si=%20&sk=%20&sn=%20&su=199183174'
+    this.baseUrl + 'v1/efos-de/list_app_de_upload?su='
   );
   // /////////////////////////////// Get List Daftar APlikasi Upload /////////////////////////////////
 
   // get Upload
-  protected FetchListUploadDocument = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-de/getDokumenUploadByCuref?sc='
-  );
+  protected FetchListUploadDocument = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getDokumenUploadByCuref?sc=');
   /////////////////////////////////// Memo //////////////////////////////////////////////
-  protected linkUploadMemo = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-de/memo_upload_doc?app_no_de='
-  );
+  protected linkUploadMemo = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/memo_upload_doc?app_no_de=');
   /////////////////////////////////// Memo /////////////////////////////////////////////
 
   /////////////////////////////////// Get Memo /////////////////////////////////////////////
-  protected getUploadMemo = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.110:8805/api/v1/efos-de/getMemoUploadByCuref?sc='
-  );
+  protected getUploadMemo = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getMemoUploadByCuref?sc=');
   /////////////////////////////////// Get Memo /////////////////////////////////////////////
 
   // // /////////////////////////// Upload  ////////////////////////////////////////////
-  protected uploadDataEntry = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-de/upload_doc?app_no_de=');
+  protected uploadDataEntry = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/upload_doc?app_no_de=');
   // // /////////////////////////// Upload  ////////////////////////////////////////////
 
   constructor(

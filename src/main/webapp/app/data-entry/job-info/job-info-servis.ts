@@ -7,6 +7,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { jobinfolist } from './job-info-modellist';
+import { environment } from 'environments/environment';
 
 export type EntityResponseDaWa = HttpResponse<jobinfolist>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -14,10 +15,11 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   providedIn: 'root',
 })
 export class DaftarAplikasiWaitingAssigmentService {
-  protected resourceUrlAprisal = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_appraisal');
-  // protected resourceUrlAprisal = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_appraisal_process');
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_app_verif');
-  // protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_app_verif');
+  baseUrl: string = environment.baseUrl;
+  protected resourceUrlAprisal = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/list_appraisal');
+  // protected resourceUrlAprisal = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/list_appraisal_process');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/list_app_verif');
+  // protected resourceUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/list_app_verif');
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   getDaWa(req?: any): Observable<EntityArrayResponseDaWa> {

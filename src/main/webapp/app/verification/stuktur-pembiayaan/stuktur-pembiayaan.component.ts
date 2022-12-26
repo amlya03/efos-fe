@@ -14,6 +14,7 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { refStrukturPembiayaan } from '../service/config/refStrukturPembiayaan.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { getMapis } from '../service/config/getMapis.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-stuktur-pembiayaan',
@@ -21,6 +22,7 @@ import { getMapis } from '../service/config/getMapis.model';
   styleUrls: ['./stuktur-pembiayaan.component.scss'],
 })
 export class StukturPembiayaanComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   strukturForm!: FormGroup;
   slikForm!: FormGroup;
   mapisForm!: FormGroup;
@@ -194,7 +196,7 @@ export class StukturPembiayaanComponent implements OnInit {
           this.analisaDsr = 0;
         } else {
           this.http
-            .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/getHitungScoring', {
+            .post<any>(this.baseUrl + 'v1/efos-verif/getHitungScoring', {
               dsr: this.strukturPembiayaan.dsr,
               app_no_de: this.app_no_de,
             })
@@ -255,7 +257,7 @@ export class StukturPembiayaanComponent implements OnInit {
   hitungAngsuran(skema_id: any): void {
     const skemaidName = skema_id.split('|');
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/hitung_angsuran', {
+      .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
         app_no_de: this.dataEntry.app_no_de,
         curef: this.dataEntry.curef,
         dp: this.strukturForm.get('down_payment')?.value,
@@ -279,7 +281,7 @@ export class StukturPembiayaanComponent implements OnInit {
 
           setTimeout(() => {
             this.http
-              .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/getHitungAnalisaPembiayaan', {
+              .post<any>(this.baseUrl + 'v1/efos-verif/getHitungAnalisaPembiayaan', {
                 angsuran: this.strukturForm.get('angsuran')?.value,
                 app_no_de: this.dataEntry.app_no_de,
               })
@@ -292,7 +294,7 @@ export class StukturPembiayaanComponent implements OnInit {
                   setTimeout(() => {
                     const dsrnya = this.analisaDsr.replace(' %', '');
                     this.http
-                      .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/getHitungScoring', {
+                      .post<any>(this.baseUrl + 'v1/efos-verif/getHitungScoring', {
                         dsr: dsrnya,
                         app_no_de: this.dataEntry.app_no_de,
                       })
@@ -325,7 +327,7 @@ export class StukturPembiayaanComponent implements OnInit {
 
     if (this.cekResult === 0) {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_analisa_struktur_pembiayaan', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/create_analisa_struktur_pembiayaan', {
           angsuran: this.strukturForm.get('angsuran')?.value,
           app_no_de: this.dataEntry.app_no_de,
           created_by: this.sessionUsername,
@@ -354,7 +356,7 @@ export class StukturPembiayaanComponent implements OnInit {
         });
     } else {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_analisa_struktur_pembiayaan', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/update_analisa_struktur_pembiayaan', {
           angsuran: this.strukturForm.get('angsuran')?.value,
           app_no_de: this.dataEntry.app_no_de,
           updated_by: this.sessionUsername,

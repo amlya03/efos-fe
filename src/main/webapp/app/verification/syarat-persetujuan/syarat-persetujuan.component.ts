@@ -13,6 +13,7 @@ import { cekUjiKepatuhan } from '../service/config/cekUjiKepatuhan.model';
 import { areaOfConcern } from '../service/config/areaOfConcern.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { ServiceVerificationService } from '../service/service-verification.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-syarat-persetujuan',
@@ -20,6 +21,7 @@ import { ServiceVerificationService } from '../service/service-verification.serv
   styleUrls: ['./syarat-persetujuan.component.scss'],
 })
 export class SyaratPersetujuanComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   dataEntry: fetchAllDe = new fetchAllDe();
   app_no_de: any;
   untukSessionUserName: any;
@@ -148,7 +150,7 @@ export class SyaratPersetujuanComponent implements OnInit {
     });
     if (email) {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_syarat_persetujuan', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/create_syarat_persetujuan', {
           app_no_de: this.app_no_de,
           created_by: this.untukSessionUserName,
           created_date: '',
@@ -176,7 +178,7 @@ export class SyaratPersetujuanComponent implements OnInit {
     });
     if (email) {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_syarat_persetujuan', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/create_syarat_persetujuan', {
           app_no_de: this.app_no_de,
           created_by: this.untukSessionUserName,
           created_date: '',
@@ -204,7 +206,7 @@ export class SyaratPersetujuanComponent implements OnInit {
     });
     if (email) {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_syarat_persetujuan', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/create_syarat_persetujuan', {
           app_no_de: this.app_no_de,
           created_by: this.untukSessionUserName,
           created_date: '',
@@ -259,7 +261,7 @@ export class SyaratPersetujuanComponent implements OnInit {
       // post Uji Kepatuhan Dan ASrea Of Concren
       if (this.cekUjiResult == 0) {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_cek_uji_kepatuhan', {
+          .post<any>(this.baseUrl + 'v1/efos-verif/create_cek_uji_kepatuhan', {
             app_no_de: this.app_no_de,
             created_by: this.untukSessionUserName,
             curef: this.dataEntry.curef,
@@ -270,7 +272,7 @@ export class SyaratPersetujuanComponent implements OnInit {
           .subscribe({});
       } else {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_cek_uji_kepatuhan', {
+          .post<any>(this.baseUrl + 'v1/efos-verif/update_cek_uji_kepatuhan', {
             app_no_de: this.app_no_de,
             created_by: this.untukSessionUserName,
             curef: this.dataEntry.curef,
@@ -285,7 +287,7 @@ export class SyaratPersetujuanComponent implements OnInit {
     // Area Of Concern
     if (this.cekResult === 0) {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_area_of_concern', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/create_area_of_concern', {
           app_no_de: this.app_no_de,
           created_by: this.untukSessionUserName,
           created_date: '',
