@@ -457,7 +457,8 @@ export class PekerjaanPasanganComponent implements OnInit {
             });
           },
           error(err) {
-            alert(err.error.messages);
+            console.warn(err);
+            alert(err.error.message);
           },
         });
     } else {
@@ -504,7 +505,7 @@ export class PekerjaanPasanganComponent implements OnInit {
             });
           },
           error(err) {
-            alert(err.error.messages);
+            alert(err.error.message);
           },
         });
     }
