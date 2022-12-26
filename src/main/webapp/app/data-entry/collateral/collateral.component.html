@@ -772,7 +772,7 @@
             <div class="form-group row">
               <label class="col-sm-3 col-form-label">Alamat Agunan Sama Dengan Sertifikat?</label>
               <div class="col-sm-9">
-                <input type="radio" name="testtt" value="0" (change)="onItemChange($event.target)" />Tidak Sama
+                <input type="radio" name="testtt" value="0" (change)="onItemChange($event.target)" checked />Tidak Sama
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="testtt" value="1" (change)="onItemChange($event.target)" />Sama
               </div>
             </div>
@@ -838,7 +838,7 @@
                   formControlName="harga_objek"
                   id="harga_objek"
                   currencyMask
-                  [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
+                  [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
                 />
                 <span
                   [hidden]="
@@ -1159,7 +1159,13 @@
 </div>
 <br />
 <br />
-<button id="tambahdata" (click)="tambahcollateral()" type="button" class="btn btn-info" [hidden]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'">
+<button
+  id="tambahdata"
+  (click)="tambahcollateral()"
+  type="button"
+  class="btn btn-info"
+  [hidden]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'"
+>
   Tambah data
 </button>
 <div class="table-responsive" [hidden]="tambahatautidak == 'benar'">
