@@ -92,6 +92,14 @@
                 {{ pemegangHak.deskripsi }}
               </option>
             </select>
+            <br />
+            <input
+            *ngIf="this.editCollateralForm.get('hubungan_pemegang_hak')?.value == 'Lainya'"
+            type="text"
+            class="form-control"
+            id="hubungan_pemegang_hak_input"
+            formControlName="hubungan_pemegang_hak_lainya"
+          />
           </div>
           <br />
         </div>

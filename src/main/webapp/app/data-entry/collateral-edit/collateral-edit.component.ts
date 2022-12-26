@@ -135,6 +135,8 @@ export class CollateralEditComponent implements OnInit {
   untukKodeKobkotaSertif: any;
   untukKodeKecamatanSertif: any;
   untukKodeKelurahanSertif: any;
+  kirimanhubungan1: any;
+  kirimanhubungan1lainya: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -238,6 +240,7 @@ export class CollateralEditComponent implements OnInit {
       nomor_rumah: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
       tanggal_terbit: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
       tanggal_expired: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      hubungan_pemegang_hak_lainya:{ value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
     });
   }
 
@@ -245,6 +248,11 @@ export class CollateralEditComponent implements OnInit {
     ///////////////// REF ////////////////////////////////////////
     this.datEntryService.getFetchListPemegangHak().subscribe(data => {
       this.pemegangHak = data.result;
+      // if(data.result.deskripsi !='Diri Sendiri'||data.result.deskripsi !='Orang Tua'||data.result.deskripsi !='Anak' || data.result.deskripsi !='Lainya'){
+      //   this.pemegangHak = 'Lainya';
+      // }else{
+      //   this.pemegangHak = data.result;
+      // }
     });
     this.datEntryService.getFetchListTipeAgunan().subscribe(agunan => {
       this.listTipeAgunan = agunan.result;
@@ -278,6 +286,19 @@ export class CollateralEditComponent implements OnInit {
       } else {
         var tipeAgunan = 'H03';
       }
+
+      if(table.result.hubungan_pemegang_hak =="Diri Sendiri" || table.result.hubungan_pemegang_hak =="Orang Tua" || table.result.hubungan_pemegang_hak =="Anak" || table.result.hubungan_pemegang_hak =="Lainya"){
+        // alert("ini if");
+        // alert(table.result.hubungan_pemegang_hak =='Anak');
+        this.kirimanhubungan1 =  table.result.hubungan_pemegang_hak;
+        this.kirimanhubungan1lainya='';
+
+      }else{
+        // alert("ini else");
+        this.kirimanhubungan1 = "Lainya";
+        this.kirimanhubungan1lainya= table.result.hubungan_pemegang_hak;
+      }
+
       this.datEntryService.getFetchListTipeProperti(tipeAgunan).subscribe(data => {
         this.tipeProperti = data.result;
       });
@@ -291,10 +312,11 @@ export class CollateralEditComponent implements OnInit {
         nomor_bpkb: this.tableAgunan.nomor_bpkb,
         no_plat: this.tableAgunan.no_plat,
         warna: this.tableAgunan.warna,
+        hubungan_pemegang_hak_lainya: this.kirimanhubungan1lainya,
         no_mesin: this.tableAgunan.no_mesin,
         no_rangka: this.tableAgunan.no_rangka,
         nama_bpkb: this.tableAgunan.nama_bpkb,
-        hubungan_pemegang_hak: this.tableAgunan.hubungan_pemegang_hak,
+        hubungan_pemegang_hak: this.kirimanhubungan1,
         tipe_properti: this.tableAgunan.tipe_properti,
         status_agunan: this.tableAgunan.status_agunan,
         status_developer: this.tableAgunan.status_developer,

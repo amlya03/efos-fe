@@ -146,6 +146,11 @@ export class CollateralComponent implements OnInit {
         { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
+      hubungan_pemegang_hak_input: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+
       tipe_properti: [
         { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
@@ -469,6 +474,12 @@ export class CollateralComponent implements OnInit {
       var tipeAgunan = 'Tanah dan Bangunan';
     }
 
+    if(this.collateralForm.get('hubungan_pemegang_hak')?.value == 'Lainya'){
+      var kirimhubunganpemeganghak = this.collateralForm.get('hubungan_pemegang_hak_input')?.value;
+    }else{
+      var kirimhubunganpemeganghak = this.collateralForm.get('hubungan_pemegang_hak')?.value;
+    }
+
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/create_collateral', {
         tipe_agunan: tipeAgunan,
@@ -483,7 +494,7 @@ export class CollateralComponent implements OnInit {
         no_mesin: this.collateralForm.get('no_mesin')?.value,
         no_rangka: this.collateralForm.get('no_rangka')?.value,
         nama_bpkb: this.collateralForm.get('nama_bpkb')?.value,
-        hubungan_pemegang_hak: this.collateralForm.get('hubungan_pemegang_hak')?.value,
+        hubungan_pemegang_hak: kirimhubunganpemeganghak,
         tipe_properti: this.collateralForm.get('tipe_properti')?.value,
         status_agunan: this.collateralForm.get('status_agunan')?.value,
         status_developer: this.collateralForm.get('status_developer')?.value,
