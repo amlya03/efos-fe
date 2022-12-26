@@ -817,7 +817,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                     this.router.navigate(['/hasilprescreening'], {
                       queryParams: {
                         kategori: this.kategori,
-                        id: this.paramId,
+                        id: data.result.id,
                       },
                     });
                   },
@@ -1178,7 +1178,7 @@ export class InitialDataEntryFixComponent implements OnInit {
               this.router.navigate(['/hasilprescreening'], {
                 queryParams: {
                   kategori: this.kategori,
-                  id: this.paramId,
+                  id: data.result.id,
                 },
               });
             },
