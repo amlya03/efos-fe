@@ -171,117 +171,126 @@ export class StrukturPembiayaanComponent implements OnInit {
     // setTimeout(() => {
     this.dataEntryService.getFetchStrukturDE(this.app_no_de, this.curef).subscribe(data => {
       this.strukturModel = data.result;
-      this.kodeFasilitasRet = this.strukturModel.kode_fasilitas + '|' + this.strukturModel.kode_fasilitas_name;
-      this.kodeProgramRet = this.strukturModel.program + '|' + this.strukturModel.program_name;
-      this.kodeProdukRet = this.strukturModel.produk + '|' + this.strukturModel.produk_name;
-      this.skemaRet = this.strukturModel.skema + '|' + this.strukturModel.skema_master + '|' + this.strukturModel.skema_name;
-      this.jangkaWaktuRet = this.strukturModel.jangka_waktu + '|' + this.strukturModel.margin;
-
-      setTimeout(() => {
-        this.dataEntryService.getFetchProgramByKode(this.strukturModel.kode_fasilitas).subscribe(data => {
-          this.kodeprogram = data.result;
-        });
-      }, 100);
-      setTimeout(() => {
-        this.dataEntryService.getFetchProdukByKode(this.strukturModel.program).subscribe(data => {
-          this.kodeproduk = data.result;
-        });
-      }, 200);
-      setTimeout(() => {
-        this.dataEntryService.getFetchSkemaByKode(this.strukturModel.produk).subscribe(data => {
-          this.kodeskema = data.result;
-        });
-      }, 300);
-      setTimeout(() => {
-        if (this.strukturModel.kode_fasilitas_name == 'PTA') {
-          this.dataEntryService.getTenorFix(this.strukturModel.skema).subscribe(data => {
-            this.tenor = data.result;
-          });
-        } else {
-          this.dataEntryService.getTenorNon(this.strukturModel.skema).subscribe(data => {
-            this.tenor = data.result;
-          });
-        }
-      }, 500);
-
-      setTimeout(() => {
-        if (this.strukturModel.skema_master == 1) {
-          this.showMargin = this.strukturModel.margin;
-        } else {
-          this.dataEntryService.getFetchMarginStepUp(this.strukturModel.skema).subscribe(data => {
-            let marginStep = data.result;
-            // for (let i = 0; i < data.result.length; i++) {
-            //   this.showMargin
-            // });
-            this.showMargin = 'Margin Tahun Ke 1 = ' + marginStep[0] + '; ' + 'Margin Tahun Ke 2 = ' + marginStep[1];
-          });
-        }
-      }, 700);
-
-      setTimeout(() => {
-        this.http
-          .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
-            app_no_de: this.app_no_de,
-            curef: this.curef,
-            dp: this.strukturModel.uang_muka,
-            fasilitas: this.strukturModel.fasilitas_ke,
-            harga_objek: this.strukturModel.harga_objek_pembiayaan,
-            kode_fasilitas: this.strukturModel.kode_fasilitas,
-            kode_produk: this.strukturModel.produk,
-            skema_id: this.strukturModel.skema,
-            skema_master: this.strukturModel.skema_master,
-            tenor: this.strukturModel.jangka_waktu,
-          })
-          .subscribe({
-            next: data => {
-              let anguran1 = data.result.angsuran[0];
-              let anguran2 = data.result.angsuran[1];
-
-              if (anguran2 == null) {
-                this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ');
-                this.showAngsuran = 'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-              } else {
-                this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ' + anguran2);
-                this.showAngsuran =
-                  'Angsuran Tahun Ke 1 = ' +
-                  Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) +
-                  '; ' +
-                  'Angsuran Tahun Ke 2 = ' +
-                  Number(anguran2).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-              }
-            },
-            error: err => {
-              if (err.error.code == 400) {
-                alert(err.error.message);
-              }
-            },
-          });
-      }, 800);
-
-      setTimeout(() => {
-        ///////////////////////////////////////////////////////////////////////////
-        let retrivestrukturForm = {
-          joint_income: this.joint_income,
-          kode_fasilitas: this.kodeFasilitasRet,
-          program: this.kodeProgramRet,
-          produk: this.kodeProdukRet,
-          skema: this.skemaRet,
-          jangka_waktu: this.jangkaWaktuRet,
-          tipe_margin: this.strukturModel.tipe_margin,
-          tujuan_pembiayaan: this.strukturModel.tujuan_pembiayaan,
-          fasilitas_ke: this.strukturModel.fasilitas_ke,
-          harga_objek_pembiayaan: this.strukturModel.harga_objek_pembiayaan,
-          fee_based: this.strukturModel.fee_based,
-          uang_muka: this.strukturModel.uang_muka,
-          detail_objek_pembiayaan: this.strukturModel.detail_objek_pembiayaan,
-          margin: this.strukturModel.margin,
-          angsuran: this.strukturModel.angsuran,
-          nilai_pembiayaan: this.strukturModel.nilai_pembiayaan,
-        };
-        this.strukturForm.setValue(retrivestrukturForm);
+      if (data.result == null || data.result == '') {
+        this.kodeFasilitasRet = '';
+        this.kodeProgramRet = '';
+        this.kodeProdukRet = '';
+        this.skemaRet = '';
+        this.jangkaWaktuRet = '';
         this.getLoading(false);
-        ///////////////////////////////////////////////////////////////////////////////
-      }, 1000);
+      } else {
+        this.kodeFasilitasRet = this.strukturModel.kode_fasilitas + '|' + this.strukturModel.kode_fasilitas_name;
+        this.kodeProgramRet = this.strukturModel.program + '|' + this.strukturModel.program_name;
+        this.kodeProdukRet = this.strukturModel.produk + '|' + this.strukturModel.produk_name;
+        this.skemaRet = this.strukturModel.skema + '|' + this.strukturModel.skema_master + '|' + this.strukturModel.skema_name;
+        this.jangkaWaktuRet = this.strukturModel.jangka_waktu + '|' + this.strukturModel.margin;
+
+        setTimeout(() => {
+          this.dataEntryService.getFetchProgramByKode(this.strukturModel.kode_fasilitas).subscribe(data => {
+            this.kodeprogram = data.result;
+          });
+        }, 100);
+        setTimeout(() => {
+          this.dataEntryService.getFetchProdukByKode(this.strukturModel.program).subscribe(data => {
+            this.kodeproduk = data.result;
+          });
+        }, 200);
+        setTimeout(() => {
+          this.dataEntryService.getFetchSkemaByKode(this.strukturModel.produk).subscribe(data => {
+            this.kodeskema = data.result;
+          });
+        }, 300);
+        setTimeout(() => {
+          if (this.strukturModel.kode_fasilitas_name == 'PTA') {
+            this.dataEntryService.getTenorFix(this.strukturModel.skema).subscribe(data => {
+              this.tenor = data.result;
+            });
+          } else {
+            this.dataEntryService.getTenorNon(this.strukturModel.skema).subscribe(data => {
+              this.tenor = data.result;
+            });
+          }
+        }, 500);
+
+        setTimeout(() => {
+          if (this.strukturModel.skema_master == 1) {
+            this.showMargin = this.strukturModel.margin;
+          } else {
+            this.dataEntryService.getFetchMarginStepUp(this.strukturModel.skema).subscribe(data => {
+              let marginStep = data.result;
+              // for (let i = 0; i < data.result.length; i++) {
+              //   this.showMargin
+              // });
+              this.showMargin = 'Margin Tahun Ke 1 = ' + marginStep[0] + '; ' + 'Margin Tahun Ke 2 = ' + marginStep[1];
+            });
+          }
+        }, 700);
+
+        setTimeout(() => {
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
+              app_no_de: this.app_no_de,
+              curef: this.curef,
+              dp: this.strukturModel.uang_muka,
+              fasilitas: this.strukturModel.fasilitas_ke,
+              harga_objek: this.strukturModel.harga_objek_pembiayaan,
+              kode_fasilitas: this.strukturModel.kode_fasilitas,
+              kode_produk: this.strukturModel.produk,
+              skema_id: this.strukturModel.skema,
+              skema_master: this.strukturModel.skema_master,
+              tenor: this.strukturModel.jangka_waktu,
+            })
+            .subscribe({
+              next: data => {
+                let anguran1 = data.result.angsuran[0];
+                let anguran2 = data.result.angsuran[1];
+
+                if (anguran2 == null) {
+                  this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ');
+                  this.showAngsuran = 'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                } else {
+                  this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ' + anguran2);
+                  this.showAngsuran =
+                    'Angsuran Tahun Ke 1 = ' +
+                    Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) +
+                    '; ' +
+                    'Angsuran Tahun Ke 2 = ' +
+                    Number(anguran2).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                }
+              },
+              error: err => {
+                if (err.error.code == 400) {
+                  alert(err.error.message);
+                }
+              },
+            });
+        }, 800);
+
+        setTimeout(() => {
+          ///////////////////////////////////////////////////////////////////////////
+          let retrivestrukturForm = {
+            joint_income: this.joint_income,
+            kode_fasilitas: this.kodeFasilitasRet,
+            program: this.kodeProgramRet,
+            produk: this.kodeProdukRet,
+            skema: this.skemaRet,
+            jangka_waktu: this.jangkaWaktuRet,
+            tipe_margin: this.strukturModel.tipe_margin,
+            tujuan_pembiayaan: this.strukturModel.tujuan_pembiayaan,
+            fasilitas_ke: this.strukturModel.fasilitas_ke,
+            harga_objek_pembiayaan: this.strukturModel.harga_objek_pembiayaan,
+            fee_based: this.strukturModel.fee_based,
+            uang_muka: this.strukturModel.uang_muka,
+            detail_objek_pembiayaan: this.strukturModel.detail_objek_pembiayaan,
+            margin: this.strukturModel.margin,
+            angsuran: this.strukturModel.angsuran,
+            nilai_pembiayaan: this.strukturModel.nilai_pembiayaan,
+          };
+          this.strukturForm.setValue(retrivestrukturForm);
+          this.getLoading(false);
+          ///////////////////////////////////////////////////////////////////////////////
+        }, 1000);
+      }
     });
     // }, 100);
 

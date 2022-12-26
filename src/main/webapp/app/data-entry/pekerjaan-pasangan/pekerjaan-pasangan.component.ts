@@ -44,7 +44,7 @@ export class PekerjaanPasanganComponent implements OnInit {
   tipePekerjaanChange: any;
   kirimKatePeker: any;
   kirimUmurPensi: any;
-
+  kirimJenisBidang: any;
   kirimansiup: any;
   jenispekerjaan: any;
   getjabatan: any;
@@ -382,7 +382,13 @@ export class PekerjaanPasanganComponent implements OnInit {
     const kirimankabkota = this.formPekerjaanPasangan.get('kabkota')?.value.split('|');
     const kirimankec = this.formPekerjaanPasangan.get('kecamatan')?.value.split('|');
     const kirimankel = this.formPekerjaanPasangan.get('kelurahan')?.value.split('|');
-    const potonganjenisbidang = this.formPekerjaanPasangan.get('jenis_bidang')?.value.split('|');
+
+    if (this.formPekerjaanPasangan.get('jenis_bidang')?.value != null) {
+      const potonganjenisbidang = this.formPekerjaanPasangan.get('jenis_bidang')?.value.split('|');
+      this.kirimJenisBidang = potonganjenisbidang[1];
+    } else {
+      this.kirimJenisBidang = '';
+    }
 
     if (this.listJobPasangan == null) {
       this.http
@@ -399,7 +405,7 @@ export class PekerjaanPasanganComponent implements OnInit {
           kecamatan: kirimankec[1],
           kelurahan: kirimankel[1],
           kode_pos: this.formPekerjaanPasangan.get('kode_pos')?.value,
-          jenis_bidang: potonganjenisbidang[1],
+          jenis_bidang: this.kirimJenisBidang,
           sektor_ekonomi: this.formPekerjaanPasangan.get('sektor_ekonomi')?.value,
           jumlah_karyawan: this.formPekerjaanPasangan.get('jumlah_karyawan')?.value,
           tipe_perusahaan: this.formPekerjaanPasangan.get('tipe_perusahaan')?.value,
@@ -427,6 +433,9 @@ export class PekerjaanPasanganComponent implements OnInit {
               },
             });
           },
+          error(err) {
+            alert(err.error.messages);
+          },
         });
     } else {
       this.http
@@ -443,7 +452,7 @@ export class PekerjaanPasanganComponent implements OnInit {
           kecamatan: kirimankec[1],
           kelurahan: kirimankel[1],
           kode_pos: this.formPekerjaanPasangan.get('kode_pos')?.value,
-          jenis_bidang: potonganjenisbidang[1],
+          jenis_bidang: this.kirimJenisBidang,
           sektor_ekonomi: this.formPekerjaanPasangan.get('sektor_ekonomi')?.value,
           jumlah_karyawan: this.formPekerjaanPasangan.get('jumlah_karyawan')?.value,
           tipe_perusahaan: this.formPekerjaanPasangan.get('tipe_perusahaan')?.value,
@@ -470,6 +479,9 @@ export class PekerjaanPasanganComponent implements OnInit {
                 app_no_de: this.app_no_de,
               },
             });
+          },
+          error(err) {
+            alert(err.error.messages);
           },
         });
     }
