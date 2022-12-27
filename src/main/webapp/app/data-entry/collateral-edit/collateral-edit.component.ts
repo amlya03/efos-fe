@@ -502,6 +502,13 @@ export class CollateralEditComponent implements OnInit {
       var tipeAgunan = 'Tanah dan Bangunan';
     }
 
+
+    if(this.editCollateralForm.get('hubungan_pemegang_hak')?.value == 'Lainya'){
+      var kirimhubunganpemeganghak = this.editCollateralForm.get('hubungan_pemegang_hak_input')?.value;
+    }else{
+      var kirimhubunganpemeganghak = this.editCollateralForm.get('hubungan_pemegang_hak')?.value;
+    }
+
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/update_collateral', {
         tipe_agunan: tipeAgunan,
@@ -516,7 +523,7 @@ export class CollateralEditComponent implements OnInit {
         no_mesin: this.editCollateralForm.get('no_mesin')?.value,
         no_rangka: this.editCollateralForm.get('no_rangka')?.value,
         nama_bpkb: this.editCollateralForm.get('nama_bpkb')?.value,
-        hubungan_pemegang_hak: this.editCollateralForm.get('hubungan_pemegang_hak')?.value,
+        hubungan_pemegang_hak: kirimhubunganpemeganghak,
         tipe_properti: this.editCollateralForm.get('tipe_properti')?.value,
         status_agunan: this.editCollateralForm.get('status_agunan')?.value,
         status_developer: this.editCollateralForm.get('status_developer')?.value,
