@@ -117,7 +117,7 @@ export class MapisComponent implements OnInit {
         Swal.fire('Data Berhasil diUpdate!', 'Data Sudah di Tim Analis', 'success').then((message: any) => {
           if (this.cekResuklt == 0) {
             this.http
-              .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_data_appraisal', {
+              .post<any>(this.baseUrl + 'v1/efos-verif/create_data_appraisal', {
                 id: '',
                 app_no_de: this.app_noDe,
                 created_by: this.sessionStorageService.retrieve('sessionUserName'),
@@ -154,7 +154,7 @@ export class MapisComponent implements OnInit {
               });
           } else {
             this.http
-              .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_data_appraisal', {
+              .post<any>(this.baseUrl + 'v1/efos-verif/update_data_appraisal', {
                 id: this.mapisModel.id,
                 app_no_de: this.app_noDe,
                 // created_by: this.sessionStorageService.retrieve('sessionUserName'),
@@ -195,7 +195,7 @@ export class MapisComponent implements OnInit {
         Swal.fire('Data Berhasil disimpan', 'Data disimpan', 'success').then((message: any) => {
           if (this.cekResuklt == 0) {
             this.http
-              .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/create_data_appraisal', {
+              .post<any>(this.baseUrl + 'v1/efos-verif/create_data_appraisal', {
                 id: '',
                 app_no_de: this.app_noDe,
                 created_by: this.sessionStorageService.retrieve('sessionUserName'),
@@ -222,7 +222,7 @@ export class MapisComponent implements OnInit {
               });
           } else {
             this.http
-              .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_data_appraisal', {
+              .post<any>(this.baseUrl + 'v1/efos-verif/update_data_appraisal', {
                 id: this.mapisModel.id,
                 app_no_de: this.app_noDe,
                 // created_by: this.sessionStorageService.retrieve('sessionUserName'),

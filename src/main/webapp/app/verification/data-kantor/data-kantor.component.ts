@@ -410,7 +410,7 @@ export class DataKantorComponent implements OnInit {
     });
 
     // ref hubungan agunan
-    this.dataKantor.getHubunganAgunan().subscribe(data => {
+    this.dataKantor.getJabatanPemberiKeterangan().subscribe(data => {
       // console.warn('ref hubungan Agunan', data);
       if (data.code === 200) {
         this.refHubunganAgunan = data.result;

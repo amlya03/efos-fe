@@ -76,12 +76,7 @@
         <label class="col-sm-4 col-form-label">Skema</label>
         <div class="col-sm-8">
           <div class="form-group">
-            <select
-              class="form-control"
-              (change)="onchangeskema(this.strukturForm.get('skema')?.value, this.strukturForm.get('kode_fasilitas')?.value)"
-              formControlName="skema"
-              id="skema"
-            >
+            <select class="form-control" (change)="onchangeskema(this.strukturForm.get('skema')?.value)" formControlName="skema" id="skema">
               <option
                 *ngFor="let kodeskema of kodeskema"
                 value="{{ kodeskema.skema }}|{{ kodeskema.skema_master }}|{{ kodeskema.skema_deskripsi }}"
@@ -181,7 +176,7 @@
             formControlName="harga_objek_pembiayaan"
             id="harga_objek_pembiayaan"
             currencyMask
-            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
         </div>
       </div>
@@ -197,7 +192,7 @@
             id="fee_based"
             (keypress)="keyPressNumbers($event)"
             currencyMask
-            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
         </div>
       </div>
@@ -213,7 +208,7 @@
               id="uang_muka"
               (keypress)="keyPressNumbers($event)"
               currencyMask
-              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
             />
             <div class="input-group-append">
               <button
@@ -258,7 +253,7 @@
             formControlName="nilai_pembiayaan"
             id="hasil_pembiayaan"
             currencyMask
-            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
         </div>
       </div>

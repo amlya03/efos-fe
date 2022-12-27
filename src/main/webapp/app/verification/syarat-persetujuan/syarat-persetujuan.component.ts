@@ -298,7 +298,7 @@ export class SyaratPersetujuanComponent implements OnInit {
         .subscribe({});
     } else {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_area_of_concern', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/update_area_of_concern', {
           app_no_de: this.app_no_de,
           created_by: this.untukSessionUserName,
           created_date: '',

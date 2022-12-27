@@ -47,6 +47,8 @@ export class ChecklistDocumentComponent implements OnInit {
   keteranganAgunan: any;
   // Role
   untukSessionRole: any;
+  untukSessionFullName: any;
+  untukSessionCabang: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -73,6 +75,8 @@ export class ChecklistDocumentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.untukSessionFullName = this.sessionStorageService.retrieve('sessionFullName');
+    this.untukSessionCabang = this.sessionStorageService.retrieve('sessionKdCabang');
     this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.dtOptions = {
       pagingType: 'full_numbers',
