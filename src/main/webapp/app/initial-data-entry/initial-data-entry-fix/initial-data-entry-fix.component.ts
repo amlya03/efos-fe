@@ -21,6 +21,7 @@ import { refJabatan } from '../../verification/service/config/refJabatan.model';
 import { Subscription } from 'rxjs';
 import { refListJumlahKaryawan } from '../../data-entry/services/config/refListJumlahKaryawan.model';
 import { environment } from 'environments/environment';
+import { ServicesUploadDocumentService } from 'app/upload-document/services/services-upload-document.service';
 
 @Component({
   selector: 'jhi-initial-data-entry-fix',
@@ -147,7 +148,8 @@ export class InitialDataEntryFixComponent implements OnInit {
     protected ideFixServices: InitialDataEntryService,
     private formBuilder: FormBuilder,
     protected dataEntryService: DataEntryService,
-    protected sessionServices: SessionStorageService
+    protected sessionServices: SessionStorageService,
+    protected uploadServices: ServicesUploadDocumentService
   ) {
     this.route.queryParams.subscribe(params => {
       this.paramCuref = params.curef;
@@ -2403,4 +2405,8 @@ export class InitialDataEntryFixComponent implements OnInit {
     this.isLoading = loading;
     this.isSpin = loading;
   }
+
+  // uploadDataUntukSlik(){
+  //   this.uploadServices.uploadDocument().subscribe({});
+  // }
 }
