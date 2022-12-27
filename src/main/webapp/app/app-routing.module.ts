@@ -76,7 +76,11 @@ import { DetailKomiteComponent } from './komite/detail-komite/detail-komite.comp
           component: DaftarAplikasiOnProcessComponent,
         },
         {
-          path: 'daftar-aplikasi-waiting-update-status',
+          path: 'daftar-review-spv1',
+          component: DaftarAplikasiWaitingUpdateStatusComponent,
+        },
+        {
+          path: 'daftar-review-spv2',
           component: DaftarAplikasiWaitingUpdateStatusComponent,
         },
         {

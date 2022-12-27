@@ -383,7 +383,8 @@
     *ngIf="
       router.url === '/daftar-aplikasi-waiting-assigment' ||
       router.url === '/daftar-aplikasi-on-process' ||
-      router.url === '/daftar-aplikasi-waiting-update-status'
+      router.url === '/daftar-review-spv1' ||
+      router.url === '/daftar-review-spv2'
     "
   >
     <a
@@ -406,13 +407,24 @@
     </a>
     <a
       class="nav-item nav-link"
-      routerLink="daftar-aplikasi-waiting-update-status"
+      routerLink="daftar-review-spv1"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'VER_PRE_SPV'"
+      *ngSwitchCase="'VER_PRE_SPV' || 'VER_PRE_SPV2'"
     >
-      <h6>Daftar Aplikasi Waiting Update Status</h6>
+      <h6>Daftar Review SPV1</h6>
     </a>
+
+
+    <a
+    class="nav-item nav-link"
+    routerLink="daftar-review-spv2"
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    *ngSwitchCase="'VER_PRE_SPV2'"
+  >
+    <h6>Daftar Review SPV2</h6>
+  </a>  
   </div>
   <div
     *ngIf="
