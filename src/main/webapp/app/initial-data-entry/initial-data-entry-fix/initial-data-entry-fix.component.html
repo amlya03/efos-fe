@@ -4,8 +4,8 @@
 <br />
 <div class="row" style="justify-content: center">
   <input class="form-control" type="file" (change)="pilihDoc($event)" [hidden]="this.resultUpload" multiple />
-  <button type="button" class="btn mb-1 btn-rounded btn-secondary" id="testButton" (click)="download()" *ngIf="this.resultUpload">
-    <span class="btn-icon-left"><i class="fa fa-download color-warning"></i></span>View
+  <button type="button" class="btn mb-1 btn-rounded btn-warning" id="testButton" (click)="download()" *ngIf="this.resultUpload">
+    <span class="btn-icon-left"><i class="fa fa-download color-warning"></i></span>Lihat File Upload
   </button>
   <!-- <h1 *ngIf="showProggres == 0">Dokumen Berhasil diupload</h1>
   <div id="proggresBar" class="progress" [hidden]="hideDocChange == 0 || showProggres == 0">
@@ -21,21 +21,21 @@
 <div class="row form-material" [formGroup]="ideForm">
   <div class="col">
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Nomor Aplikasi<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Nomor Aplikasi</label>
       <div class="col-sm-8">
         <input type="text" value="{{ this.app_no_ide }}" class="form-control" readonly />
       </div>
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Nama Lengkap<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Nama Lengkap</label>
       <div class="col-sm-8">
         <input type="name" id="nama" formControlName="nama" name="nama" class="form-control" placeholder="Nama Lengkap" />
       </div>
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select
@@ -54,7 +54,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
       <div class="col-sm-8">
         <input
           formControlName="tanggal_lahir"
@@ -64,12 +64,22 @@
           name="tanggal_lahir"
           (change)="submitBday(this.ideForm.get('tanggal_lahir')?.value)"
         />
-        <input formControlName="usia" class="form-control" type="text" id="umur" name="umur" readonly />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Usia</label>
+      <div class="col-sm-8">
+        <div class="input-group mb-3">
+          <input formControlName="usia" class="form-control" type="text" id="umur" name="umur" readonly />
+          <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon2">Tahun</span>
+          </div>
+        </div>
       </div>
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Tempat Lahir<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Tempat Lahir</label>
       <div class="col-sm-8">
         <input
           formControlName="tempat_lahir"
@@ -83,7 +93,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Status Perkawinan<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Status Perkawinan</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" id="status_perkawinan" formControlName="status_perkawinan" name="status_perkawinan">
@@ -97,7 +107,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Agama<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Agama</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" formControlName="agama" id="agama" name="agama">
@@ -114,7 +124,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Pendidikan<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Pendidikan</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" id="pendidikan" formControlName="pendidikan" name="pendidikan">
@@ -129,8 +139,8 @@
       </div>
     </div>
     <br />
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Kewarganegaraan<span class="text-danger">*</span></label>
+    <div class="form-group row" hidden>
+      <label class="col-sm-4 col-form-label">Kewarganegaraan</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" id="kewarganegaraan" formControlName="kewarganegaraan" name="kewarganegaraan">
@@ -140,10 +150,10 @@
           </select>
         </div>
       </div>
+      <br />
     </div>
-    <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Ibu Kandung<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Ibu Kandung</label>
       <div class="col-sm-8">
         <input
           formControlName="nama_ibu_kandung"
@@ -157,7 +167,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">NPWP<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">NPWP</label>
       <div class="col-sm-8">
         <input
           formControlName="npwp"
@@ -173,7 +183,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Alamat KTP</label>
       <div class="col-sm-8">
         <textarea formControlName="alamat_ktp" class="form-control h-150px" rows="6" id="alamat_ktp" name="alamat_ktp"></textarea>
       </div>
@@ -181,7 +191,7 @@
   </div>
   <div class="col">
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Provinsi</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select
@@ -201,7 +211,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Kota</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select
@@ -221,7 +231,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Kecamatan</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select
@@ -241,7 +251,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Kelurahan</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select
@@ -261,7 +271,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Kode Pos</label>
       <div class="col-sm-8">
         <div class="input-group mb-3">
           <input formControlName="kode_pos" type="tel" maxlength="8" class="form-control" id="kode_pos" name="kode_pos" />
@@ -276,7 +286,7 @@
     <br />
 
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">RT / RW</label>
       <div class="col">
         <input formControlName="rt" maxlength="3" type="tel" class="form-control" placeholder="RT" id="rt" name="rt" />
       </div>
@@ -297,7 +307,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">No KTP<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">No KTP</label>
       <div class="col-sm-8">
         <input
           formControlName="no_ktp"
@@ -313,14 +323,14 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Tanggal Terbit KTP</label>
       <div class="col-sm-8">
         <input class="form-control" formControlName="tanggal_terbit_ktp" type="date" id="tanggal_terbit_ktp" name="tanggal_terbit_ktp" />
       </div>
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label"> KTP Seumur Hidup</label>
       <div class="col-sm-8">
         <input type="radio" id="ktp_seumur_hidup_ya" formControlName="status_ktp" name="ktp_seumur_hidup" value="1" checked />
         Ya &emsp;&emsp;&emsp;
@@ -331,7 +341,7 @@
     <div *ngIf="this.ideForm.get('status_ktp')?.value === '0'">
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tanggal Exipred KTP<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">Tanggal Exipred KTP</label>
         <div class="col-sm-8">
           <input class="form-control" type="date" formControlName="tanggal_exp_ktp" id="tanggal_exp_ktp" name="tanggal_exp_ktp" />
         </div>
@@ -339,7 +349,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">No Handphone<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">No Handphone</label>
       <div class="col-sm-8">
         <input
           formControlName="no_handphone"
@@ -371,7 +381,7 @@
   <!--colom 1-->
   <div class="col">
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Nama Perusahaan<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Nama Perusahaan</label>
       <div class="col-sm-8">
         <input
           formControlName="nama_perusahaan"
@@ -385,7 +395,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Tipe Perusahaan<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Tipe Perusahaan</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" formControlName="tipe_perusahaan" id="tipe_perusahaan" name="tipe_perusahaan">
@@ -399,7 +409,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Tipe Pekerjaan<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Tipe Pekerjaan</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" formControlName="tipe_pekerjaan" id="ngetestNih" name="tipe_pekerjaan">
@@ -436,7 +446,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Kepemilikan Perusahaan<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Kepemilikan Perusahaan</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" formControlName="kepemilikan_perusahaan" id="kepemilikan_perusahaan" name="kepemilikan_perusahaan">
@@ -449,7 +459,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Pemilik Usaha<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Pemilik Usaha</label>
       <div class="col-sm-8">
         <input
           formControlName="pemilik_usaha"
@@ -463,7 +473,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Nomor Telephone<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Nomor Telephone</label>
       <div class="col-sm-8">
         <input
           formControlName="no_telepon"
@@ -480,7 +490,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Jenis Bidang<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Jenis Bidang</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select
@@ -503,7 +513,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Sektor Ekonomi<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Sektor Ekonomi</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" formControlName="sektor_ekonomi" id="jenis_sektor" name="sektor_ekonomi">
@@ -520,7 +530,7 @@
   <!--colom 2-->
   <div class="col">
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Alamat Perusahaan<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Alamat Perusahaan</label>
       <div class="col-sm-8">
         <textarea
           formControlName="alamat_perusahaan"
@@ -533,7 +543,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Provinsi</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select
@@ -553,7 +563,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Kota</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select
@@ -573,7 +583,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Kecamatan</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select
@@ -596,7 +606,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Kelurahan</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select
@@ -620,7 +630,7 @@
     <br />
 
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Kode Pos</label>
       <div class="col-sm-8">
         <div class="input-group mb-3">
           <input
@@ -642,7 +652,7 @@
     </div>
 
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">RT / RW</label>
       <div class="col-sm-3">
         <input
           formControlName="rt"
@@ -674,7 +684,7 @@
   <!--colom 3-->
   <div class="col">
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
       <div class="col-sm-8">
         <select class="form-control" id="jumlah_karyawan" formControlName="jumlah_karyawan">
           <option value="">Pilih Jumlah Karyawan</option>
@@ -702,7 +712,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Berdiri Sejak<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Berdiri Sejak</label>
       <div class="col">
         <input
           formControlName="lama_bekerja_bulan"
@@ -750,7 +760,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Barang / Jasa<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Barang / Jasa</label>
       <div class="col-sm-8">
         <textarea
           formControlName="barang_jasa"
@@ -774,7 +784,7 @@
   <h5>Pekerjaan Sebelumnya</h5>
   <div class="col">
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Nama Perusahaan<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Nama Perusahaan</label>
       <div class="col-sm-8">
         <input
           formControlName="nama_perusahaan_sebelum"
@@ -788,7 +798,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Tipe Perusahaan<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Tipe Perusahaan</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select
@@ -808,7 +818,7 @@
   </div>
   <div class="col">
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Tipe Pekerjaan<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Tipe Pekerjaan</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" formControlName="tipe_pekerjaan_sebelum" id="tipe_pekerjaan_sebelum" name="tipe_pekerjaan_sebelum">
@@ -839,7 +849,7 @@
   </div>
   <div class="col">
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Jenis Bidang<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Jenis Bidang</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select
@@ -862,7 +872,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Sektor Ekonomi<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Sektor Ekonomi</label>
       <div class="col-sm-8">
         <div class="form-group">
           <select class="form-control" formControlName="sektor_ekonomi_sebelum" id="jenis_sektor_sebelum" name="jenis_sektor_sebelum">
@@ -876,7 +886,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Berdiri Sejak<span class="text-danger">*</span></label>
+      <label class="col-sm-4 col-form-label">Berdiri Sejak</label>
       <div class="col">
         <input
           formControlName="lama_bekerja_bulan_sebelum"
@@ -916,7 +926,7 @@
   <div class="row form-material">
     <div class="col">
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nama Lengkap<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">Nama Lengkap</label>
         <div class="col-sm-8">
           <input
             type="text"
@@ -930,7 +940,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
         <div class="col-sm-8">
           <div class="form-group">
             <select class="form-control" id="jenis_kelamin_pasangan" formControlName="jenis_kelamin_pasangan" name="jenis_kelamin_pasangan">
@@ -943,7 +953,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
         <div class="col-sm-8">
           <input
             class="form-control"
@@ -953,12 +963,22 @@
             name="tanggal_lahir_pasangan"
             (change)="submitBdayp(this.ideForm.get('tanggal_lahir_pasangan')?.value)"
           />
-          <input class="form-control" type="text" formControlName="usia_pasangan" id="umurpasangan" name="umurpasangan" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Usia</label>
+        <div class="col-sm-8">
+          <div class="input-group mb-3">
+            <input class="form-control" type="text" formControlName="usia_pasangan" id="umurpasangan" name="umurpasangan" />
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">Tahun</span>
+            </div>
+          </div>
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tempat Lahir<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">Tempat Lahir</label>
         <div class="col-sm-8">
           <input
             type="text"
@@ -972,7 +992,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Agama<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">Agama</label>
         <div class="col-sm-8">
           <div class="form-group">
             <select class="form-control" formControlName="agama_pasangan" id="agama_pasangan" name="agama_pasangan">
@@ -1004,7 +1024,7 @@
         </div>
       </div>
       <br />
-      <div class="form-group row">
+      <div class="form-group row" hidden>
         <label class="col-sm-4 col-form-label">Kewarganegaraan</label>
         <div class="col-sm-8">
           <div class="form-group">
@@ -1020,10 +1040,10 @@
             </select>
           </div>
         </div>
+        <br />
       </div>
-      <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Ibu Kandung<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">Ibu Kandung</label>
         <div class="col-sm-8">
           <input
             type="text"
@@ -1061,7 +1081,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">Alamat KTP</label>
         <div class="col-sm-8">
           <textarea
             class="form-control h-150px"
@@ -1075,7 +1095,7 @@
     </div>
     <div class="col">
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">Provinsi</label>
         <div class="col-sm-8">
           <div class="form-group">
             <select
@@ -1095,7 +1115,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">Kota</label>
         <div class="col-sm-8">
           <div class="form-group">
             <select
@@ -1115,7 +1135,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">Kecamatan</label>
         <div class="col-sm-8">
           <div class="form-group">
             <select
@@ -1135,7 +1155,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">Kelurahan</label>
         <div class="col-sm-8">
           <div class="form-group">
             <select
@@ -1155,7 +1175,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">Kode Pos</label>
         <div class="col-sm-8">
           <div class="input-group mb-3">
             <input
@@ -1181,7 +1201,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">RT / RW</label>
         <div class="col">
           <input
             formControlName="rt_pasangan"
@@ -1211,7 +1231,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">No KTP<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">No KTP</label>
         <div class="col-sm-8">
           <input
             formControlName="no_ktp_pasangan"
@@ -1229,7 +1249,7 @@
       <br />
 
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">Tanggal Terbit KTP</label>
         <div class="col-sm-8">
           <input
             class="form-control"
@@ -1242,7 +1262,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label"> KTP Seumur Hidup</label>
         <div class="col-sm-8">
           <label for="chkYes2">
             <input type="radio" formControlName="status_ktp_pasangan" id="chkYes2" name="chkPinNo2" value="1" />
@@ -1269,7 +1289,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">No Handphone<span class="text-danger">*</span></label>
+        <label class="col-sm-4 col-form-label">No Handphone</label>
         <div class="col-sm-8">
           <input
             formControlName="no_handphone_pasangan"
@@ -1303,7 +1323,7 @@
         (this.ideForm.get('status_perkawinan')?.value === 'Lajang' && this.ideForm.get('usia')?.value < 21) ||
         (this.ideForm.get('status_perkawinan')?.value === 'Menikah' && this.ideForm.get('usia')?.value < 18)
       "
-      [hidden]="cekResultIde == 0"
+      *ngIf="cekResultIde == 1 && this.resultUpload"
     >
       Proses Data
     </button>

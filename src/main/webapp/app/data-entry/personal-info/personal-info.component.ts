@@ -136,70 +136,25 @@ export class PersonalInfoComponent implements OnInit {
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.personalInfoForm = this.formBuilder.group({
-      nama: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      jenis_kelamin: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      tanggal_lahir: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      tempat_lahir: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      usia: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      agama: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      pendidikan: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      kewarganegaraan: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      nama: [{ value: '' || null, disabled: true }, Validators.required],
+      jenis_kelamin: [{ value: '' || null, disabled: true }, Validators.required],
+      tanggal_lahir: [{ value: '' || null, disabled: true }, Validators.required],
+      tempat_lahir: [{ value: '' || null, disabled: true }, Validators.required],
+      usia: [{ value: '' || null, disabled: true }, Validators.required],
+      agama: [{ value: '' || null, disabled: true }, Validators.required],
+      pendidikan: [{ value: '' || null, disabled: true }, Validators.required],
+      kewarganegaraan: [{ value: '' || null, disabled: true }, Validators.required],
       email: [
         { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
-      no_handphone: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      no_ktp: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      tanggal_terbit_ktp: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      status_ktp: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      tanggal_exp_ktp: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      npwp: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      status_perkawinan: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      no_handphone: [{ value: '' || null, disabled: true }, Validators.required],
+      no_ktp: [{ value: '' || null, disabled: true }, Validators.required],
+      tanggal_terbit_ktp: [{ value: '' || null, disabled: true }, Validators.required],
+      status_ktp: [{ value: '' || null, disabled: true }, Validators.required],
+      tanggal_exp_ktp: [{ value: '' || null, disabled: true }, Validators.required],
+      npwp: [{ value: '' || null, disabled: true }, Validators.required],
+      status_perkawinan: [{ value: '' || null, disabled: true }, Validators.required],
       jumlah_anak: [
         { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
@@ -220,40 +175,16 @@ export class PersonalInfoComponent implements OnInit {
         { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
-      alamat_ktp: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      alamat_ktp: [{ value: '' || null, disabled: true }, Validators.required],
       // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      provinsi: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      kabkota: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      kecamatan: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      kelurahan: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      kode_pos: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      provinsi: [{ value: '' || null, disabled: true }, Validators.required],
+      kabkota: [{ value: '' || null, disabled: true }, Validators.required],
+      kecamatan: [{ value: '' || null, disabled: true }, Validators.required],
+      kelurahan: [{ value: '' || null, disabled: true }, Validators.required],
+      kode_pos: [{ value: '' || null, disabled: true }, Validators.required],
       // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      rt: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      rw: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      rt: [{ value: '' || null, disabled: true }, Validators.required],
+      rw: [{ value: '' || null, disabled: true }, Validators.required],
       alamat_domisili: [
         { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,

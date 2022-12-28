@@ -226,11 +226,6 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
         this.initialDataEntry.getDuplicateCheck(this.dataEntry.no_ktp, this.dataEntry.nama).subscribe({
           next: duplikat => {
             this.duplikate = duplikat.result;
-            if (duplikat.result != '') {
-              this.simpanDhn = 1;
-            } else {
-              this.simpanDhn = 0;
-            }
           },
         });
 
@@ -734,6 +729,9 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
             queryParams: { curef: this.dataEntry.curef, statusPerkawinan: this.dataEntry.status_perkawinan, app_no_de: this.contohdata },
           });
         },
+        error: err => {
+          alert(err.error.message);
+        },
       });
 
     // this.router.navigate(['/daftaraplikasiide'], {
@@ -753,6 +751,11 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
           this.initialDataEntry.getDataDhn(this.dataEntry.app_no_ide).subscribe({
             next: data => {
               this.tableGetDhn = data.result;
+              if (data.result != '') {
+                this.simpanDhn = 1;
+              } else {
+                this.simpanDhn = 0;
+              }
             },
           });
         },

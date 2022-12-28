@@ -94,12 +94,12 @@
             </select>
             <br />
             <input
-            *ngIf="this.editCollateralForm.get('hubungan_pemegang_hak')?.value == 'Lainya'"
-            type="text"
-            class="form-control"
-            id="hubungan_pemegang_hak_input"
-            formControlName="hubungan_pemegang_hak_lainya"
-          />
+              *ngIf="this.editCollateralForm.get('hubungan_pemegang_hak')?.value == 'Lainya'"
+              type="text"
+              class="form-control"
+              id="hubungan_pemegang_hak_input"
+              formControlName="hubungan_pemegang_hak_lainya"
+            />
           </div>
           <br />
         </div>
@@ -195,13 +195,19 @@
         <label class="col-sm-4 col-form-label">Sama Dengan Jaminan Sebelumnya</label>
         <div class="col">
           <label>Ya</label>
-          <input 
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-          type="radio" formControlName="status_jaminan_sebelumnya" value="1" />
+          <input
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            type="radio"
+            formControlName="status_jaminan_sebelumnya"
+            value="1"
+          />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-          type="radio" formControlName="status_jaminan_sebelumnya" value="0" />
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            type="radio"
+            formControlName="status_jaminan_sebelumnya"
+            value="0"
+          />
           <label>Tidak</label>
         </div>
         <br />
@@ -418,7 +424,7 @@
               <input type="tel" maxlength="8" class="form-control" id="kode_pos_agunan" formControlName="kode_pos_agunan" />
               <div class="input-group-append">
                 <button
-                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
                   class="btn btn-outline-dark"
                   (click)="carimenggunakankodeposagunan(this.editCollateralForm.get('kode_pos_agunan')?.value)"
                   type="button"
@@ -445,7 +451,7 @@
           <label class="col-sm-3 col-form-label">Alamat Agunan Sama Dengan Sertifikat?</label>
           <div class="col-sm-9">
             <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               type="radio"
               name="testtt"
               value="0"
@@ -455,7 +461,7 @@
               "
             />Tidak Sama
             <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               type="radio"
               name="testtt"
               value="1"
@@ -508,7 +514,7 @@
               formControlName="harga_objek"
               id="harga_objek"
               currencyMask
-           [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
             />
           </div>
         </div>
@@ -613,7 +619,7 @@
               />
               <div class="input-group-append">
                 <button
-                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
                   class="btn btn-outline-dark"
                   (click)="carimenggunakankodepossertifikat(this.editCollateralForm.get('kode_pos_sesuai_sertifikat')?.value)"
                   type="button"

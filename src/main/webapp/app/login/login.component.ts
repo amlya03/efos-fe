@@ -13,6 +13,8 @@ import { SessionStorageService } from 'ngx-webstorage';
 export class LoginComponent implements OnInit, AfterViewInit {
   @ViewChild('username', { static: false })
   username!: ElementRef;
+  loginCounter = 0;
+  counter = 3;
 
   authenticationError = false;
 
@@ -45,6 +47,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   login(): void {
+    // this.loginCounter += 1;
+    //   if (this.loginCounter == 3) {
+    //     alert('Sudah Salah Sebanyak 3 Kali')
+    //   }
     // this.loginService.login(this.loginForm.getRawValue()).subscribe({
     //   next: () => {
     //     this.authenticationError = false;

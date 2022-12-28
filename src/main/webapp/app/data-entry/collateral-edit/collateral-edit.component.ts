@@ -240,7 +240,10 @@ export class CollateralEditComponent implements OnInit {
       nomor_rumah: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
       tanggal_terbit: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
       tanggal_expired: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-      hubungan_pemegang_hak_lainya:{ value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      hubungan_pemegang_hak_lainya: {
+        value: '',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
     });
   }
 
@@ -287,16 +290,20 @@ export class CollateralEditComponent implements OnInit {
         var tipeAgunan = 'H03';
       }
 
-      if(table.result.hubungan_pemegang_hak =="Diri Sendiri" || table.result.hubungan_pemegang_hak =="Orang Tua" || table.result.hubungan_pemegang_hak =="Anak" || table.result.hubungan_pemegang_hak =="Lainya"){
+      if (
+        table.result.hubungan_pemegang_hak == 'Diri Sendiri' ||
+        table.result.hubungan_pemegang_hak == 'Orang Tua' ||
+        table.result.hubungan_pemegang_hak == 'Anak' ||
+        table.result.hubungan_pemegang_hak == 'Lainya'
+      ) {
         // alert("ini if");
         // alert(table.result.hubungan_pemegang_hak =='Anak');
-        this.kirimanhubungan1 =  table.result.hubungan_pemegang_hak;
-        this.kirimanhubungan1lainya='';
-
-      }else{
+        this.kirimanhubungan1 = table.result.hubungan_pemegang_hak;
+        this.kirimanhubungan1lainya = '';
+      } else {
         // alert("ini else");
-        this.kirimanhubungan1 = "Lainya";
-        this.kirimanhubungan1lainya= table.result.hubungan_pemegang_hak;
+        this.kirimanhubungan1 = 'Lainya';
+        this.kirimanhubungan1lainya = table.result.hubungan_pemegang_hak;
       }
 
       this.datEntryService.getFetchListTipeProperti(tipeAgunan).subscribe(data => {
@@ -502,10 +509,9 @@ export class CollateralEditComponent implements OnInit {
       var tipeAgunan = 'Tanah dan Bangunan';
     }
 
-
-    if(this.editCollateralForm.get('hubungan_pemegang_hak')?.value == 'Lainya'){
-      var kirimhubunganpemeganghak = this.editCollateralForm.get('hubungan_pemegang_hak_input')?.value;
-    }else{
+    if (this.editCollateralForm.get('hubungan_pemegang_hak')?.value == 'Lainya') {
+      var kirimhubunganpemeganghak = this.editCollateralForm.get('hubungan_pemegang_hak_lainya')?.value;
+    } else {
       var kirimhubunganpemeganghak = this.editCollateralForm.get('hubungan_pemegang_hak')?.value;
     }
 
