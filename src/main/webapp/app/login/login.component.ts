@@ -60,7 +60,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     // });
 
     this.http
-      .post<any>('http://10.20.81.186:8096/token/generate-token', {
+      // .post<any>('http://10.20.81.186:8096/token/generate-token', {
+      .post<any>('http://10.20.34.110:8096/token/generate-token', {
         username: this.loginForm.get('username')?.value,
         password: this.loginForm.get('password')?.value,
         app: 'efo',

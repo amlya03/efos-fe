@@ -1,4 +1,20 @@
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Form Pengajuan Pembiayaan</h3>
+</div>
+<br />
+<div class="row" style="justify-content: center">
+  <input class="form-control" type="file" (change)="pilihDoc($event)" [hidden]="this.resultUpload" multiple />
+  <button type="button" class="btn mb-1 btn-rounded btn-secondary" id="testButton" (click)="download()" *ngIf="this.resultUpload">
+    <span class="btn-icon-left"><i class="fa fa-download color-warning"></i></span>View
+  </button>
+  <!-- <h1 *ngIf="showProggres == 0">Dokumen Berhasil diupload</h1>
+  <div id="proggresBar" class="progress" [hidden]="hideDocChange == 0 || showProggres == 0">
+  <br />
+  <div class="progress-value"></div>
+  </div> -->
+</div>
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Informasi Pemohon Pembiayaan</h3>
 </div>
 <br />
@@ -307,8 +323,7 @@
       <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
       <div class="col-sm-8">
         <input type="radio" id="ktp_seumur_hidup_ya" formControlName="status_ktp" name="ktp_seumur_hidup" value="1" checked />
-        Ya
-        &emsp;&emsp;&emsp;
+        Ya &emsp;&emsp;&emsp;
         <input type="radio" id="ktp_seumur_hidup_tidak" formControlName="status_ktp" name="ktp_seumur_hidup" value="0" />
         Tidak
       </div>
@@ -1288,6 +1303,7 @@
         (this.ideForm.get('status_perkawinan')?.value === 'Lajang' && this.ideForm.get('usia')?.value < 21) ||
         (this.ideForm.get('status_perkawinan')?.value === 'Menikah' && this.ideForm.get('usia')?.value < 18)
       "
+      [hidden]="cekResultIde == 0"
     >
       Proses Data
     </button>
@@ -1303,6 +1319,7 @@
         (this.ideForm.get('status_perkawinan')?.value === 'Lajang' && this.ideForm.get('usia')?.value < 21) ||
         (this.ideForm.get('status_perkawinan')?.value === 'Menikah' && this.ideForm.get('usia')?.value < 18)
       "
+      *ngIf="showProggres == 0 || this.resultUpload"
       type="button"
     >
       Simpan data

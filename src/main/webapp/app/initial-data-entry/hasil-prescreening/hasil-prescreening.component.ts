@@ -715,7 +715,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
 
   gotopersonalinfo() {
     this.http
-      .post<any>(this.baseUrl + 'v1/efos-de/create_app_de', {
+      .post<any>('http://10.20.34.178:8805/api/v1/efos-de/create_app_de', {
         analis_verifikasi: '',
         app_no_de: '',
         app_no_ide: this.dataEntry.app_no_ide,
