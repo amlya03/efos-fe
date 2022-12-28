@@ -34,7 +34,7 @@ export class CollateralComponent implements OnInit {
   listSertif: refStatusSertifikat[] = [];
   listKendaraan: refListJumlahKaryawan[] = [];
   tableAgunan: listAgunan[] = [];
-
+  usiaBangunanHit: any;
   app_no_de: any;
   curef: any;
   statusPerkawinan: any;
@@ -474,9 +474,9 @@ export class CollateralComponent implements OnInit {
       var tipeAgunan = 'Tanah dan Bangunan';
     }
 
-    if(this.collateralForm.get('hubungan_pemegang_hak')?.value == 'Lainya'){
+    if (this.collateralForm.get('hubungan_pemegang_hak')?.value == 'Lainya') {
       var kirimhubunganpemeganghak = this.collateralForm.get('hubungan_pemegang_hak_input')?.value;
-    }else{
+    } else {
       var kirimhubunganpemeganghak = this.collateralForm.get('hubungan_pemegang_hak')?.value;
     }
 
@@ -682,5 +682,11 @@ export class CollateralComponent implements OnInit {
       event.preventDefault();
       return;
     }
+  }
+
+  hitungUsiaBangunan(tahun: any) {
+    const d = new Date();
+    let year = d.getFullYear();
+    this.usiaBangunanHit = Number(year) - Number(tahun);
   }
 }

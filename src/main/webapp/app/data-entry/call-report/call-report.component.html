@@ -24,8 +24,15 @@
         <label class="col-sm-4 col-form-label">Nama Nasabah</label>
         <div class="col-sm-8">
           <input
-          [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-          type="text" class="form-control" placeholder="Nama Nasabah" name="nama" id="nama" value="{{ daWa1.nama }}" readonly />
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            type="text"
+            class="form-control"
+            placeholder="Nama Nasabah"
+            name="nama"
+            id="nama"
+            value="{{ daWa1.nama }}"
+            readonly
+          />
         </div>
       </div>
       <br />
@@ -374,7 +381,6 @@
               type="tel"
               onkeypress="return onlyNumberKey(event)"
               class="form-control"
-              maxlength="10000"
               id="jumlah_karyawan"
               formControlName="jumlah_karyawan"
             />
@@ -511,7 +517,7 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" maxlength="100000" id="jumlah_karyawan" formControlName="jumlah_karyawan" />
+            <input type="tel" class="form-control" id="jumlah_karyawan" formControlName="jumlah_karyawan" />
           </div>
         </div>
         <br />
@@ -699,7 +705,7 @@
               id="laba_periode_1"
               formControlName="laba_periode_1"
               currencyMask
-               [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
             />
           </div>
         </div>
@@ -713,7 +719,7 @@
               id="laba_periode_2"
               formControlName="laba_periode_2"
               currencyMask
-              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
             />
           </div>
         </div>
@@ -727,7 +733,7 @@
               id="laba_periode_3"
               formControlName="laba_periode_3"
               currencyMask
-              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
             />
           </div>
         </div>
@@ -741,7 +747,7 @@
               id="laba_periode_4"
               formControlName="laba_periode_4"
               currencyMask
-              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
             />
           </div>
         </div>
@@ -755,7 +761,7 @@
               id="rata_rata_laba"
               formControlName="rata_rata_laba"
               currencyMask
-              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
             />
           </div>
         </div>
@@ -783,7 +789,7 @@
             id="estimasi_angsuran"
             formControlName="estimasi_angsuran"
             currencyMask
-            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
         </div>
       </div>
@@ -854,9 +860,13 @@
         <label class="col-sm-4 col-form-label">No wawancara</label>
         <div class="col-md-8">
           <div class="form-group">
-            <input 
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-            type="text" class="form-control" value="{{ this.nowawancara }}" readonly />
+            <input
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+              type="text"
+              class="form-control"
+              value="{{ this.nowawancara }}"
+              readonly
+            />
           </div>
         </div>
       </div>
