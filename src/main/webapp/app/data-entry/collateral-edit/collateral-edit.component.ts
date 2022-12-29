@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { createRequestOption } from 'app/core/request/request-util';
@@ -27,6 +27,8 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./collateral-edit.component.scss'],
 })
 export class CollateralEditComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   editCollateralForm!: FormGroup;
   pemegangHak: refListJumlahKaryawan[] = [];
@@ -160,6 +162,7 @@ export class CollateralEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getLoading(true);
     this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.load();
     //////////////////////////// validasi /////////////////////////////////////////
@@ -186,6 +189,7 @@ export class CollateralEditComponent implements OnInit {
         disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
       },
       tahun_dibuat: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      usia_bangunan: { value: '', disabled: true },
       status_sertifikat: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
       no_sertifikat: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
       nama_pemegang_hak: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
@@ -249,128 +253,146 @@ export class CollateralEditComponent implements OnInit {
 
   load() {
     ///////////////// REF ////////////////////////////////////////
-    this.datEntryService.getFetchListPemegangHak().subscribe(data => {
-      this.pemegangHak = data.result;
-      // if(data.result.deskripsi !='Diri Sendiri'||data.result.deskripsi !='Orang Tua'||data.result.deskripsi !='Anak' || data.result.deskripsi !='Lainya'){
-      //   this.pemegangHak = 'Lainya';
-      // }else{
-      //   this.pemegangHak = data.result;
-      // }
-    });
-    this.datEntryService.getFetchListTipeAgunan().subscribe(agunan => {
-      this.listTipeAgunan = agunan.result;
-    });
-    this.datEntryService.getFetchListObjekAgunan().subscribe(objek => {
-      this.objekAgunan = objek.result;
-    });
-    this.datEntryService.getFetchListDeveloper().subscribe(dev => {
-      this.listDeveloper = dev.result;
-    });
-    this.datEntryService.getFetchListSertifikat().subscribe(sertif => {
-      this.listSertif = sertif.result;
-    });
-    this.datEntryService.getFetchListKendaraan().subscribe(kendaraan => {
-      this.listKendaraan = kendaraan.result;
-    });
-    ///////////////// REF ////////////////////////////////////////
-    this.gettokendukcapil();
-
-    this.datEntryService.getFetchListAgunanById(this.datakirimanid).subscribe(table => {
-      this.tableAgunan = table.result;
-      // alert(this.tableAgunan.provinsi_agunan)
-      if (this.tableAgunan.tipe_agunan == 'Kendaraan') {
-        var tipeAgunan = 'C01';
-      } else if (this.tableAgunan.tipe_agunan == 'Emas') {
-        var tipeAgunan = 'E01';
-      } else if (this.tableAgunan.tipe_agunan == 'Tanah') {
-        var tipeAgunan = 'H01';
-      } else if (this.tableAgunan.tipe_agunan == 'Bangunan') {
-        var tipeAgunan = 'H02';
-      } else {
-        var tipeAgunan = 'H03';
-      }
-
-      if (
-        table.result.hubungan_pemegang_hak == 'Diri Sendiri' ||
-        table.result.hubungan_pemegang_hak == 'Orang Tua' ||
-        table.result.hubungan_pemegang_hak == 'Anak' ||
-        table.result.hubungan_pemegang_hak == 'Lainya'
-      ) {
-        // alert("ini if");
-        // alert(table.result.hubungan_pemegang_hak =='Anak');
-        this.kirimanhubungan1 = table.result.hubungan_pemegang_hak;
-        this.kirimanhubungan1lainya = '';
-      } else {
-        // alert("ini else");
-        this.kirimanhubungan1 = 'Lainya';
-        this.kirimanhubungan1lainya = table.result.hubungan_pemegang_hak;
-      }
-
-      this.datEntryService.getFetchListTipeProperti(tipeAgunan).subscribe(data => {
-        this.tipeProperti = data.result;
+    setTimeout(() => {
+      this.datEntryService.getFetchListPemegangHak().subscribe(data => {
+        this.pemegangHak = data.result;
+        // if(data.result.deskripsi !='Diri Sendiri'||data.result.deskripsi !='Orang Tua'||data.result.deskripsi !='Anak' || data.result.deskripsi !='Lainya'){
+        //   this.pemegangHak = 'Lainya';
+        // }else{
+        //   this.pemegangHak = data.result;
+        // }
       });
-      let retriveAgunan = {
-        tipe_agunan: tipeAgunan,
-        jenis_objek: this.tableAgunan.jenis_objek,
-        tipe_kendaraan: this.tableAgunan.tipe_kendaraan,
-        merk: this.tableAgunan.merk,
-        model: this.tableAgunan.model,
-        seri: this.tableAgunan.seri,
-        nomor_bpkb: this.tableAgunan.nomor_bpkb,
-        no_plat: this.tableAgunan.no_plat,
-        warna: this.tableAgunan.warna,
-        hubungan_pemegang_hak_lainya: this.kirimanhubungan1lainya,
-        no_mesin: this.tableAgunan.no_mesin,
-        no_rangka: this.tableAgunan.no_rangka,
-        nama_bpkb: this.tableAgunan.nama_bpkb,
-        hubungan_pemegang_hak: this.kirimanhubungan1,
-        tipe_properti: this.tableAgunan.tipe_properti,
-        status_agunan: this.tableAgunan.status_agunan,
-        status_developer: this.tableAgunan.status_developer,
-        developer: this.tableAgunan.developer,
-        status_jaminan_sebelumnya: this.tableAgunan.status_jaminan_sebelumnya,
-        tahun_dibuat: this.tableAgunan.tahun_dibuat,
-        status_sertifikat: this.tableAgunan.status_sertifikat,
-        no_sertifikat: this.tableAgunan.no_sertifikat,
-        nama_pemegang_hak: this.tableAgunan.nama_pemegang_hak,
-        no_handphone_cp: this.tableAgunan.no_handphone_cp,
-        no_id_pemegang_hak_sertifikat: this.tableAgunan.no_id_pemegang_hak_sertifikat,
-        alamat_agunan: this.tableAgunan.alamat_agunan,
-        //
-        provinsi_agunan: '',
-        kabkota_agunan: '',
-        kecamatan_agunan: '',
-        kelurahan_agunan: '',
-        //
-        kode_pos_agunan: this.tableAgunan.kode_pos_agunan,
-        rt: this.tableAgunan.rt,
-        rw: this.tableAgunan.rw,
-        luas_tanah: this.tableAgunan.luas_tanah,
-        luas_bangunan: this.tableAgunan.luas_bangunan,
-        harga_objek: this.tableAgunan.harga_objek,
-        alamat_sesuai_sertifikat: this.tableAgunan.alamat_sesuai_sertifikat,
-        //
-        provinsi_sesuai_sertifikat: '',
-        kabkota_sesuai_sertifikat: '',
-        kecamatan_sesuai_sertifikat: '',
-        kelurahan_sesuai_sertifikat: '',
-        //
-        kode_pos_sesuai_sertifikat: this.tableAgunan.kode_pos_sesuai_sertifikat,
-        rt_sertifikat: this.tableAgunan.rt_sertifikat,
-        rw_sertifikat: this.tableAgunan.rw_sertifikat,
-        id_rumah: this.tableAgunan.id_rumah,
-        blok_rumah: this.tableAgunan.blok_rumah,
-        nomor_rumah: this.tableAgunan.nomor_rumah,
-        tanggal_terbit: this.tableAgunan.tanggal_terbit,
-        tanggal_expired: this.tableAgunan.tanggal_expired,
-      };
-      this.editCollateralForm.setValue(retriveAgunan);
+    }, 10);
+    setTimeout(() => {
+      this.datEntryService.getFetchListTipeAgunan().subscribe(agunan => {
+        this.listTipeAgunan = agunan.result;
+      });
+    }, 20);
+    setTimeout(() => {
+      this.datEntryService.getFetchListObjekAgunan().subscribe(objek => {
+        this.objekAgunan = objek.result;
+      });
+    }, 30);
+    setTimeout(() => {
+      this.datEntryService.getFetchListDeveloper().subscribe(dev => {
+        this.listDeveloper = dev.result;
+      });
+    }, 40);
+    setTimeout(() => {
+      this.datEntryService.getFetchListSertifikat().subscribe(sertif => {
+        this.listSertif = sertif.result;
+      });
+    }, 50);
+    setTimeout(() => {
+      this.datEntryService.getFetchListKendaraan().subscribe(kendaraan => {
+        this.listKendaraan = kendaraan.result;
+      });
+    }, 60);
+    ///////////////// REF ////////////////////////////////////////
+    setTimeout(() => {
+      this.gettokendukcapil();
+    }, 70);
 
-      setTimeout(() => {
-        this.carimenggunakankodeposagunan(this.tableAgunan.kode_pos_agunan);
-        this.carimenggunakankodepossertifikat(this.tableAgunan.kode_pos_sesuai_sertifikat);
-      }, 300);
-    });
+    setTimeout(() => {
+      this.datEntryService.getFetchListAgunanById(this.datakirimanid).subscribe(table => {
+        this.tableAgunan = table.result;
+        // alert(this.tableAgunan.provinsi_agunan)
+        if (this.tableAgunan.tipe_agunan == 'Kendaraan') {
+          var tipeAgunan = 'C01';
+        } else if (this.tableAgunan.tipe_agunan == 'Emas') {
+          var tipeAgunan = 'E01';
+        } else if (this.tableAgunan.tipe_agunan == 'Tanah') {
+          var tipeAgunan = 'H01';
+        } else if (this.tableAgunan.tipe_agunan == 'Bangunan') {
+          var tipeAgunan = 'H02';
+        } else {
+          var tipeAgunan = 'H03';
+        }
+
+        if (
+          table.result.hubungan_pemegang_hak == 'Diri Sendiri' ||
+          table.result.hubungan_pemegang_hak == 'Orang Tua' ||
+          table.result.hubungan_pemegang_hak == 'Anak' ||
+          table.result.hubungan_pemegang_hak == 'Lainya'
+        ) {
+          // alert("ini if");
+          // alert(table.result.hubungan_pemegang_hak =='Anak');
+          this.kirimanhubungan1 = table.result.hubungan_pemegang_hak;
+          this.kirimanhubungan1lainya = '';
+        } else {
+          // alert("ini else");
+          this.kirimanhubungan1 = 'Lainya';
+          this.kirimanhubungan1lainya = table.result.hubungan_pemegang_hak;
+        }
+
+        this.datEntryService.getFetchListTipeProperti(tipeAgunan).subscribe(data => {
+          this.tipeProperti = data.result;
+        });
+        let retriveAgunan = {
+          tipe_agunan: tipeAgunan,
+          jenis_objek: this.tableAgunan.jenis_objek,
+          tipe_kendaraan: this.tableAgunan.tipe_kendaraan,
+          merk: this.tableAgunan.merk,
+          model: this.tableAgunan.model,
+          seri: this.tableAgunan.seri,
+          nomor_bpkb: this.tableAgunan.nomor_bpkb,
+          no_plat: this.tableAgunan.no_plat,
+          warna: this.tableAgunan.warna,
+          hubungan_pemegang_hak_lainya: this.kirimanhubungan1lainya,
+          no_mesin: this.tableAgunan.no_mesin,
+          no_rangka: this.tableAgunan.no_rangka,
+          nama_bpkb: this.tableAgunan.nama_bpkb,
+          hubungan_pemegang_hak: this.kirimanhubungan1,
+          tipe_properti: this.tableAgunan.tipe_properti,
+          status_agunan: this.tableAgunan.status_agunan,
+          status_developer: this.tableAgunan.status_developer,
+          developer: this.tableAgunan.developer,
+          status_jaminan_sebelumnya: this.tableAgunan.status_jaminan_sebelumnya,
+          tahun_dibuat: this.tableAgunan.tahun_dibuat,
+          usia_bangunan: '',
+          status_sertifikat: this.tableAgunan.status_sertifikat,
+          no_sertifikat: this.tableAgunan.no_sertifikat,
+          nama_pemegang_hak: this.tableAgunan.nama_pemegang_hak,
+          no_handphone_cp: this.tableAgunan.no_handphone_cp,
+          no_id_pemegang_hak_sertifikat: this.tableAgunan.no_id_pemegang_hak_sertifikat,
+          alamat_agunan: this.tableAgunan.alamat_agunan,
+          //
+          provinsi_agunan: '',
+          kabkota_agunan: '',
+          kecamatan_agunan: '',
+          kelurahan_agunan: '',
+          //
+          kode_pos_agunan: this.tableAgunan.kode_pos_agunan,
+          rt: this.tableAgunan.rt,
+          rw: this.tableAgunan.rw,
+          luas_tanah: this.tableAgunan.luas_tanah,
+          luas_bangunan: this.tableAgunan.luas_bangunan,
+          harga_objek: this.tableAgunan.harga_objek,
+          alamat_sesuai_sertifikat: this.tableAgunan.alamat_sesuai_sertifikat,
+          //
+          provinsi_sesuai_sertifikat: '',
+          kabkota_sesuai_sertifikat: '',
+          kecamatan_sesuai_sertifikat: '',
+          kelurahan_sesuai_sertifikat: '',
+          //
+          kode_pos_sesuai_sertifikat: this.tableAgunan.kode_pos_sesuai_sertifikat,
+          rt_sertifikat: this.tableAgunan.rt_sertifikat,
+          rw_sertifikat: this.tableAgunan.rw_sertifikat,
+          id_rumah: this.tableAgunan.id_rumah,
+          blok_rumah: this.tableAgunan.blok_rumah,
+          nomor_rumah: this.tableAgunan.nomor_rumah,
+          tanggal_terbit: this.tableAgunan.tanggal_terbit,
+          tanggal_expired: this.tableAgunan.tanggal_expired,
+        };
+        this.editCollateralForm.setValue(retriveAgunan);
+
+        setTimeout(() => {
+          this.getLoading(false);
+          this.carimenggunakankodeposagunan(this.tableAgunan.kode_pos_agunan);
+          this.carimenggunakankodepossertifikat(this.tableAgunan.kode_pos_sesuai_sertifikat);
+        }, 300);
+      });
+    }, 80);
   }
   agunanChange(code: any) {
     this.datEntryService.getFetchListTipeProperti(code).subscribe(data => {
@@ -536,6 +558,7 @@ export class CollateralEditComponent implements OnInit {
         developer: this.editCollateralForm.get('developer')?.value,
         status_jaminan_sebelumnya: this.editCollateralForm.get('status_jaminan_sebelumnya')?.value,
         tahun_dibuat: this.editCollateralForm.get('tahun_dibuat')?.value,
+        usia_bangunan: this.editCollateralForm.get('usia_bangunan')?.value,
         status_sertifikat: this.editCollateralForm.get('status_sertifikat')?.value,
         no_sertifikat: this.editCollateralForm.get('no_sertifikat')?.value,
         nama_pemegang_hak: this.editCollateralForm.get('nama_pemegang_hak')?.value,
@@ -688,5 +711,17 @@ export class CollateralEditComponent implements OnInit {
       this.editCollateralForm.get('rt_sertifikat')?.setValue('');
       this.editCollateralForm.get('rw_sertifikat')?.setValue('');
     }
+  }
+
+  hitungUsiaBangunan(tahun: any) {
+    const d = new Date();
+    let year = d.getFullYear();
+    let total = Number(year) - Number(tahun);
+    this.editCollateralForm.get('usia_bangunan')?.setValue(total);
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

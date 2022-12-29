@@ -34,7 +34,6 @@ export class CollateralComponent implements OnInit {
   listSertif: refStatusSertifikat[] = [];
   listKendaraan: refListJumlahKaryawan[] = [];
   tableAgunan: listAgunan[] = [];
-  usiaBangunanHit: any;
   app_no_de: any;
   curef: any;
   statusPerkawinan: any;
@@ -175,6 +174,7 @@ export class CollateralComponent implements OnInit {
         { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
+      usia_bangunan: { value: '', disabled: true },
       status_sertifikat: [
         { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
@@ -501,6 +501,7 @@ export class CollateralComponent implements OnInit {
         developer: this.collateralForm.get('developer')?.value,
         status_jaminan_sebelumnya: this.collateralForm.get('status_jaminan_sebelumnya')?.value,
         tahun_dibuat: this.collateralForm.get('tahun_dibuat')?.value,
+        usia_bangunan: this.collateralForm.get('usia_bangunan')?.value,
         status_sertifikat: this.collateralForm.get('status_sertifikat')?.value,
         no_sertifikat: this.collateralForm.get('no_sertifikat')?.value,
         nama_pemegang_hak: this.collateralForm.get('nama_pemegang_hak')?.value,
@@ -687,6 +688,7 @@ export class CollateralComponent implements OnInit {
   hitungUsiaBangunan(tahun: any) {
     const d = new Date();
     let year = d.getFullYear();
-    this.usiaBangunanHit = Number(year) - Number(tahun);
+    let total = Number(year) - Number(tahun);
+    this.collateralForm.get('usia_bangunan')?.setValue(total);
   }
 }

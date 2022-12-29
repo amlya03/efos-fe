@@ -109,7 +109,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
     $('#dataTables-example').DataTable().columns(5).search(listKategori).draw();
   }
   clearInput(): void {
-    $('#dataTables-example').DataTable().columns().search('').draw();
+    $('#dataTables-example').DataTable().search('').draw();
   }
   // get value table
   getProoduct(isSelected: any, appNoDe: any, statusAplikasi: any): void {

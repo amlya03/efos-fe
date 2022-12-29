@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { environment } from 'environments/environment';
-
+import { changePassword } from 'app/login/changePassword.model';
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+};
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
 @Injectable({
   providedIn: 'root',
@@ -298,4 +301,8 @@ export class ServiceVerificationService {
     });
   }
   // /////////////////////////////////// NAVBAR /////////////////////////////////////////////////////////////////////////////////////
+
+  login(loginPayload: changePassword): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>('http://10.20.34.110:8096/users/resetPassword', loginPayload, httpOptions);
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpResponse } from '@angular/common/http';
@@ -19,6 +19,8 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./data-pasangan.component.scss'],
 })
 export class DataPasanganComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   dataPasanganForm!: FormGroup;
   dataEntry: fetchAllDe = new fetchAllDe();
@@ -65,7 +67,7 @@ export class DataPasanganComponent implements OnInit {
   ngOnInit(): void {
     this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.load();
-
+    this.getLoading(true);
     this.dataPasanganForm = this.formBuilder.group({
       nama_pasangan: [
         { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
@@ -192,6 +194,7 @@ export class DataPasanganComponent implements OnInit {
       setTimeout(() => {
         this.hitungUsia();
         this.carimenggunakankodepos(this.dataEntry.kode_pos_pasangan);
+        this.getLoading(false);
       }, 300);
     });
   }
@@ -412,5 +415,10 @@ export class DataPasanganComponent implements OnInit {
       event.preventDefault();
       return;
     }
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

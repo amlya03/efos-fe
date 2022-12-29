@@ -13,6 +13,7 @@ import { refStatusRumah } from 'app/verification/service/config/refStatusRumah.m
 import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
 import { refListTipeKendaraan } from '../services/config/refListTipeKendaraan.model';
 import { environment } from 'environments/environment';
+import { refJenisPekerjaan } from '../services/config/refJenisPekerjaan.model';
 
 @Component({
   selector: 'jhi-personal-info',
@@ -33,7 +34,7 @@ export class PersonalInfoComponent implements OnInit {
   ref_status_perkawinan: refStatusPerkawinan[] = [];
   ref_status_rumah: refStatusRumah[] = [];
   ref_list_tipe_kendaraan: refListTipeKendaraan[] = [];
-
+  pendidikanModel: refJenisPekerjaan[] = [];
   // Retrive Radio BUtoon dan select Option Kondisi
   tipe_kendaraan: any;
 
@@ -228,72 +229,89 @@ export class PersonalInfoComponent implements OnInit {
 
   load(): void {
     this.gettokendukcapil();
-    this.datEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
-      this.personalInfoModel = data.result;
-      this.curefGetDE = this.personalInfoModel.curef;
-      this.statusKawin = this.personalInfoModel.status_perkawinan;
-      // alert(this.personalInfoModel.jenis_kelamin)
-      /////////////////////////////////////////////////////////////////////////////
-      let retrivePersonalInfo = {
-        nama: this.personalInfoModel.nama,
-        jenis_kelamin: this.personalInfoModel.jenis_kelamin,
-        tanggal_lahir: this.personalInfoModel.tanggal_lahir,
-        tempat_lahir: this.personalInfoModel.tempat_lahir,
-        usia: this.personalInfoModel.usia,
-        agama: this.personalInfoModel.agama,
-        pendidikan: this.personalInfoModel.pendidikan,
-        kewarganegaraan: this.personalInfoModel.kewarganegaraan,
-        email: this.personalInfoModel.email,
-        no_handphone: this.personalInfoModel.no_handphone,
-        no_telepon: this.personalInfoModel.no_telepon,
-        no_ktp: this.personalInfoModel.no_ktp,
-        tanggal_terbit_ktp: this.personalInfoModel.tanggal_terbit_ktp,
-        status_ktp: this.personalInfoModel.status_ktp,
-        tanggal_exp_ktp: this.personalInfoModel.tanggal_exp_ktp,
-        npwp: this.personalInfoModel.npwp,
-        status_perkawinan: this.personalInfoModel.status_perkawinan,
-        jumlah_anak: this.personalInfoModel.jumlah_anak,
-        status_rumah: this.personalInfoModel.status_rumah,
-        lama_menetap: this.personalInfoModel.lama_menetap,
-        status_kendaraan: this.personalInfoModel.status_kendaraan,
-        tipe_kendaraan: this.personalInfoModel.tipe_kendaraan,
-        alamat_ktp: this.personalInfoModel.alamat_ktp,
-        // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        provinsi: '',
-        kabkota: '',
-        kecamatan: '',
-        kelurahan: '',
-        kode_pos: this.personalInfoModel.kode_pos,
-        // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        rt: this.personalInfoModel.rt,
-        rw: this.personalInfoModel.rw,
-        alamat_domisili: this.personalInfoModel.alamat_domisili,
-        // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        provinsi_domisili: '',
-        kabkota_domisili: '',
-        kecamatan_domisili: '',
-        kelurahan_domisili: '',
-        kode_pos_domisili: this.personalInfoModel.kode_pos_domisili,
-        // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        rt_domisili: this.personalInfoModel.rt_domisili,
-        rw_domisili: this.personalInfoModel.rw_domisili,
-      };
-      this.personalInfoForm.setValue(retrivePersonalInfo);
-      setTimeout(() => {
-        this.kodePosApi(this.personalInfoModel.kode_pos);
-        this.kodePosApiDomisili(this.personalInfoModel.kode_pos_domisili);
-      }, 300);
-    });
     // /////////////////////////Ref////////////////////////////////////
-    this.datEntryService.getFetchStatusPerkawinan().subscribe(data => {
-      this.ref_status_perkawinan = data.result;
-    });
-    this.verificationServices.getStatusRumah().subscribe(data => {
-      this.ref_status_rumah = data.result;
-    });
-    this.datEntryService.getFetchListTipeKendaraaan().subscribe(data => {
-      this.ref_list_tipe_kendaraan = data.result;
-    });
+    setTimeout(() => {
+      this.datEntryService.getListPendidikan().subscribe({
+        next: data => {
+          this.pendidikanModel = data.result;
+        },
+      });
+    }, 10);
+
+    setTimeout(() => {
+      this.datEntryService.getFetchStatusPerkawinan().subscribe(data => {
+        this.ref_status_perkawinan = data.result;
+      });
+    }, 20);
+    setTimeout(() => {
+      this.verificationServices.getStatusRumah().subscribe(data => {
+        this.ref_status_rumah = data.result;
+      });
+    }, 30);
+    setTimeout(() => {
+      this.datEntryService.getFetchListTipeKendaraaan().subscribe(data => {
+        this.ref_list_tipe_kendaraan = data.result;
+      });
+    }, 40);
+
+    setTimeout(() => {
+      this.datEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
+        this.personalInfoModel = data.result;
+        this.curefGetDE = this.personalInfoModel.curef;
+        this.statusKawin = this.personalInfoModel.status_perkawinan;
+        // alert(this.personalInfoModel.jenis_kelamin)
+        /////////////////////////////////////////////////////////////////////////////
+        let retrivePersonalInfo = {
+          nama: this.personalInfoModel.nama,
+          jenis_kelamin: this.personalInfoModel.jenis_kelamin,
+          tanggal_lahir: this.personalInfoModel.tanggal_lahir,
+          tempat_lahir: this.personalInfoModel.tempat_lahir,
+          usia: this.personalInfoModel.usia,
+          agama: this.personalInfoModel.agama,
+          pendidikan: this.personalInfoModel.pendidikan,
+          kewarganegaraan: this.personalInfoModel.kewarganegaraan,
+          email: this.personalInfoModel.email,
+          no_handphone: this.personalInfoModel.no_handphone,
+          no_telepon: this.personalInfoModel.no_telepon,
+          no_ktp: this.personalInfoModel.no_ktp,
+          tanggal_terbit_ktp: this.personalInfoModel.tanggal_terbit_ktp,
+          status_ktp: this.personalInfoModel.status_ktp,
+          tanggal_exp_ktp: this.personalInfoModel.tanggal_exp_ktp,
+          npwp: this.personalInfoModel.npwp,
+          status_perkawinan: this.personalInfoModel.status_perkawinan,
+          jumlah_anak: this.personalInfoModel.jumlah_anak,
+          status_rumah: this.personalInfoModel.status_rumah,
+          lama_menetap: this.personalInfoModel.lama_menetap,
+          status_kendaraan: this.personalInfoModel.status_kendaraan,
+          tipe_kendaraan: this.personalInfoModel.tipe_kendaraan,
+          alamat_ktp: this.personalInfoModel.alamat_ktp,
+          // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          provinsi: '',
+          kabkota: '',
+          kecamatan: '',
+          kelurahan: '',
+          kode_pos: this.personalInfoModel.kode_pos,
+          // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          rt: this.personalInfoModel.rt,
+          rw: this.personalInfoModel.rw,
+          alamat_domisili: this.personalInfoModel.alamat_domisili,
+          // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          provinsi_domisili: '',
+          kabkota_domisili: '',
+          kecamatan_domisili: '',
+          kelurahan_domisili: '',
+          kode_pos_domisili: this.personalInfoModel.kode_pos_domisili,
+          // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          rt_domisili: this.personalInfoModel.rt_domisili,
+          rw_domisili: this.personalInfoModel.rw_domisili,
+        };
+        this.personalInfoForm.setValue(retrivePersonalInfo);
+        setTimeout(() => {
+          this.kodePosApi(this.personalInfoModel.kode_pos);
+          this.kodePosApiDomisili(this.personalInfoModel.kode_pos_domisili);
+        }, 300);
+      });
+    }, 60);
   }
 
   hitungUsia() {

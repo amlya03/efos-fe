@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpResponse } from '@angular/common/http';
@@ -26,6 +26,8 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./editjobinfo.component.scss'],
 })
 export class EditjobinfoComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   editJobForm!: FormGroup;
   listTipePekerjaan: getListTipePekerjaan[] = [];
@@ -99,6 +101,7 @@ export class EditjobinfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getLoading(true);
     this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.load();
 
@@ -183,81 +186,95 @@ export class EditjobinfoComponent implements OnInit {
     });
   }
   load() {
-    this.gettokendukcapil();
-    this.datEntryService.getEditJobById(this.datakirimanid).subscribe({
-      next: response => {
-        this.editJob = response.result;
-        this.retriveprovinsi = this.editJob.provinsi;
-        this.retrivekabkota = this.editJob.kabkota;
-        this.retrivekecamatan = this.editJob.kecamatan;
-        this.retrivekelurahan = this.editJob.kelurahan;
-        this.nampungdatakatagoripekerjaan = this.editJob.kategori_pekerjaan;
-        /////////////////////////////////////////////////////////////////////////////
-        let retriveEditJob = {
-          tipe_pekerjaan: this.editJob.tipe_pekerjaan,
-          payroll: this.editJob.payroll,
-          posisi: this.editJob.posisi,
-          nama_perusahaan: this.editJob.nama_perusahaan,
-          alamat_perusahaan: this.editJob.alamat_perusahaan,
-          // ///////////////////////////////////////
-          provinsi: '',
-          kabkota: '',
-          kecamatan: '',
-          kelurahan: '',
-          kode_pos: this.editJob.kode_pos,
-          // //////////////////////////////////////
-          rt: this.editJob.rt,
-          rw: this.editJob.rw,
-          no_siup: this.editJob.no_siup,
-          umur_pensiun: this.editJob.umur_pensiun,
-          lama_bekerja_tahun: this.editJob.lama_bekerja_tahun,
-          lama_bekerja_bulan: this.editJob.lama_bekerja_bulan,
-          jumlah_karyawan: this.editJob.jumlah_karyawan,
-          pendapatan: this.editJob.pendapatan,
-          pendapatan_lain: this.editJob.pendapatan_lain,
-          tunjangan: this.editJob.tunjangan,
-          total_pendapatan: this.editJob.total_pendapatan,
-          tipe_perusahaan: this.editJob.tipe_perusahaan,
-          tipe_kepegawaian: this.editJob.tipe_kepegawaian,
-        };
-        this.editJobForm.setValue(retriveEditJob);
+    setTimeout(() => {
+      this.datEntryService.getFetchListJenisPekerjaan().subscribe(data => {
+        this.listJabatan = data.result;
+      });
+    }, 10);
+    setTimeout(() => {
+      this.datEntryService.getFetchListJumlahKaryawan().subscribe(data => {
+        this.ListJumlahKaryawan = data.result;
+      });
+    }, 20);
+    setTimeout(() => {
+      this.datEntryService.getFetchListJabatan().subscribe(data => {
+        this.getjabatandariapi = data.result;
+      });
+    }, 30);
+    setTimeout(() => {
+      this.initialDataEntry.getBidang().subscribe(data => {
+        this.getjenisbidangdariapi = data.result;
+      });
+    }, 40);
+    setTimeout(() => {
+      this.datEntryService.getFetchTipePerusahaan().subscribe(data => {
+        this.gettipeperusahaandariapi = data.result;
+      });
+    }, 50);
+    setTimeout(() => {
+      this.gettokendukcapil();
+    }, 60);
 
-        setTimeout(() => {
-          this.carimenggunakankodepos(this.editJob.kode_pos);
-        }, 300);
+    setTimeout(() => {
+      this.datEntryService.getEditJobById(this.datakirimanid).subscribe({
+        next: response => {
+          this.editJob = response.result;
+          this.retriveprovinsi = this.editJob.provinsi;
+          this.retrivekabkota = this.editJob.kabkota;
+          this.retrivekecamatan = this.editJob.kecamatan;
+          this.retrivekelurahan = this.editJob.kelurahan;
+          this.nampungdatakatagoripekerjaan = this.editJob.kategori_pekerjaan;
+          /////////////////////////////////////////////////////////////////////////////
+          let retriveEditJob = {
+            tipe_pekerjaan: this.editJob.tipe_pekerjaan,
+            payroll: this.editJob.payroll,
+            posisi: this.editJob.posisi,
+            nama_perusahaan: this.editJob.nama_perusahaan,
+            alamat_perusahaan: this.editJob.alamat_perusahaan,
+            // ///////////////////////////////////////
+            provinsi: '',
+            kabkota: '',
+            kecamatan: '',
+            kelurahan: '',
+            kode_pos: this.editJob.kode_pos,
+            // //////////////////////////////////////
+            rt: this.editJob.rt,
+            rw: this.editJob.rw,
+            no_siup: this.editJob.no_siup,
+            umur_pensiun: this.editJob.umur_pensiun,
+            lama_bekerja_tahun: this.editJob.lama_bekerja_tahun,
+            lama_bekerja_bulan: this.editJob.lama_bekerja_bulan,
+            jumlah_karyawan: this.editJob.jumlah_karyawan,
+            pendapatan: this.editJob.pendapatan,
+            pendapatan_lain: this.editJob.pendapatan_lain,
+            tunjangan: this.editJob.tunjangan,
+            total_pendapatan: this.editJob.total_pendapatan,
+            tipe_perusahaan: this.editJob.tipe_perusahaan,
+            tipe_kepegawaian: this.editJob.tipe_kepegawaian,
+          };
+          this.editJobForm.setValue(retriveEditJob);
 
-        ////////////////////////////////////////////////////////////////////////////
-        if (this.editJob.kategori_pekerjaan == 'Fix Income') {
-          this.databawakategori = 1;
-        } else if (this.editJob.kategori_pekerjaan == 'Non Fix Income') {
-          this.databawakategori = 2;
-        }
-        this.datEntryService.getFetchListTipePekerjaan(this.databawakategori).subscribe(data => {
-          this.listTipePekerjaan = data.result;
-        });
-      },
-      error: error => console.warn(error),
-    });
+          ////////////////////////////////////////////////////////////////////////////
+          if (this.editJob.kategori_pekerjaan == 'Fix Income') {
+            this.databawakategori = 1;
+          } else if (this.editJob.kategori_pekerjaan == 'Non Fix Income') {
+            this.databawakategori = 2;
+          }
 
-    this.datEntryService.getFetchListJenisPekerjaan().subscribe(data => {
-      this.listJabatan = data.result;
-    });
+          setTimeout(() => {
+            this.carimenggunakankodepos(this.editJob.kode_pos);
+          }, 100);
 
-    this.datEntryService.getFetchListJumlahKaryawan().subscribe(data => {
-      this.ListJumlahKaryawan = data.result;
-    });
-
-    this.datEntryService.getFetchListJabatan().subscribe(data => {
-      this.getjabatandariapi = data.result;
-    });
-
-    this.initialDataEntry.getBidang().subscribe(data => {
-      this.getjenisbidangdariapi = data.result;
-    });
-
-    this.datEntryService.getFetchTipePerusahaan().subscribe(data => {
-      this.gettipeperusahaandariapi = data.result;
-    });
+          setTimeout(() => {
+            this.datEntryService.getFetchListTipePekerjaan(this.databawakategori).subscribe(data => {
+              this.listTipePekerjaan = data.result;
+              this.getLoading(false);
+            });
+          }, 200);
+        },
+        error: error => console.warn(error),
+      });
+    }, 100);
   }
 
   gettokendukcapil() {
@@ -534,5 +551,10 @@ export class EditjobinfoComponent implements OnInit {
       event.preventDefault();
       return;
     }
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

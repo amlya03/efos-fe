@@ -511,7 +511,7 @@
             formControlName="pendapatan"
             (keypress)="keyPressNumbers($event)"
             currencyMask
-            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
           <span
             [hidden]="
@@ -536,7 +536,7 @@
             formControlName="pendapatan_lain"
             (keypress)="keyPressNumbers($event)"
             currencyMask
-            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
           <span
             [hidden]="
@@ -563,7 +563,7 @@
             formControlName="tunjangan"
             (keypress)="keyPressNumbers($event)"
             currencyMask
-            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',',precision:0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
           <span
             [hidden]="
@@ -602,7 +602,7 @@
             value="{{
               +this.editJobForm.get('pendapatan')?.value +
                 +this.editJobForm.get('pendapatan_lain')?.value +
-                +this.editJobForm.get('tunjangan')?.value | currency: 'Rp. ': 'symbol' : '1.0-0'
+                +this.editJobForm.get('tunjangan')?.value | currency: 'Rp. ':'symbol':'1.0-0'
             }}"
           />
         </div>
@@ -673,3 +673,4 @@
     </div>
   </div>
 </form>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

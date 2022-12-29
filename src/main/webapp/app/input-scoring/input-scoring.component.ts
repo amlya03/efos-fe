@@ -97,7 +97,7 @@ export class InputScoringComponent implements OnInit {
   }
 
   clearInput(): void {
-    $('#dataTables-example').DataTable().columns().search('').draw();
+    $('#dataTables-example').DataTable().search('').draw();
   }
 
   // ////////////// Pop Up Input Scoring ////////////////////////

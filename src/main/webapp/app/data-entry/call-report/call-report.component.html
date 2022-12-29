@@ -15,7 +15,7 @@
             class="form-control"
             placeholder="app_no_de"
             value="{{ daWa1.app_no_de }}"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            disabled
           />
         </div>
       </div>
@@ -23,16 +23,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Nasabah</label>
         <div class="col-sm-8">
-          <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-            type="text"
-            class="form-control"
-            placeholder="Nama Nasabah"
-            name="nama"
-            id="nama"
-            value="{{ daWa1.nama }}"
-            readonly
-          />
+          <input disabled type="text" class="form-control" placeholder="Nama Nasabah" name="nama" id="nama" value="{{ daWa1.nama }}" />
         </div>
       </div>
       <br />
@@ -46,7 +37,7 @@
             id="fasilitas"
             name="fasilitas"
             value="{{ daWa1.kode_fasilitas_name }}"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            disabled
           />
         </div>
       </div>
@@ -61,7 +52,7 @@
             id="tenor"
             name="tenor"
             value="{{ daWa1.jangka_waktu }} Bulan"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            disabled
           />
         </div>
       </div>
@@ -76,7 +67,7 @@
             id="platform"
             name="platform"
             value="{{ daWa1.nilai_pembiayaan | currency: 'Rp ' }}"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            disabled
           />
         </div>
       </div>
@@ -92,7 +83,7 @@
             id="cabang"
             name="cabang"
             value="{{ this.untukSessionKodeCabang }}"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            disabled
           />
         </div>
       </div>
@@ -107,7 +98,7 @@
             id="nama_ao"
             name="nama_ao"
             value="{{ this.untukSessionFullName }}"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            disabled
           />
         </div>
       </div>
@@ -122,7 +113,7 @@
             id="tipe_nasabah"
             name="tipe_nasabah"
             value="{{ daWa1.kategori_pekerjaan }}"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            disabled
           />
         </div>
       </div>
@@ -170,11 +161,7 @@
           <div class="form-group">
             <select class="form-control" id="pendidikan" formControlName="pendidikan">
               <option value="">Pilih Pendidikan</option>
-              <option value="SMA">SMA</option>
-              <option value="D3">D3</option>
-              <option value="S1">S1</option>
-              <option value="S2">S2</option>
-              <option value="S3">S3</option>
+              <option *ngFor="let pendidikan of pendidikanModel" value="{{ pendidikan.deskripsi }}">{{ pendidikan.deskripsi }}</option>
             </select>
           </div>
         </div>
@@ -542,7 +529,7 @@
   </div>
   <br />
   <!-- untuk Perkerjaan Pasangan -->
-  <div *ngIf="this.callReportForm.get('status_kawin')?.value == 'Menikah'">
+  <div *ngIf="this.daWa1.joint_income == 1">
     <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
       <h3 style="color: #fff; text-align: center">Pekerjaan Pasangan</h3>
     </div>
@@ -902,3 +889,4 @@
     </div>
   </div>
 </form>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

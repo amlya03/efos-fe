@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient } from '@angular/common/http';
@@ -14,6 +14,7 @@ import { refStatusPerkawinan } from '../services/config/refStatusPerkawinan.mode
 import { refListJumlahKaryawan } from '../services/config/refListJumlahKaryawan.model';
 import { refStatusSertifikat } from '../services/config/refStatusSertifikat.model';
 import { environment } from 'environments/environment';
+import { refJenisPekerjaan } from '../services/config/refJenisPekerjaan.model';
 
 @Component({
   selector: 'jhi-call-report',
@@ -21,6 +22,8 @@ import { environment } from 'environments/environment';
   styleUrls: ['./call-report.component.scss'],
 })
 export class CallReportComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   callReportForm!: FormGroup;
   datakirimiancure: any;
@@ -34,6 +37,7 @@ export class CallReportComponent implements OnInit {
   ref_list_tipe_kendaraan: refListTipeKendaraan[] = [];
   pemegangHak: refListJumlahKaryawan[] = [];
   listSertif: refStatusSertifikat[] = [];
+  pendidikanModel: refJenisPekerjaan[] = [];
   nowawancara: any;
   contohtex: any;
   skalaprusahaan: any;
@@ -74,6 +78,7 @@ export class CallReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getLoading(true);
     this.untukSessionUserName = this.SessionStorageService.retrieve('sessionUserName');
     this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.untukSessionFullName = this.SessionStorageService.retrieve('sessionFullName');
@@ -174,223 +179,259 @@ export class CallReportComponent implements OnInit {
   }
 
   load() {
-    this.dataEntryService.getFetchCallReport(this.app_no_de).subscribe(call => {
-      this.daWa = call.result;
-      setTimeout(() => {
+    // /////////////////////////Ref////////////////////////////////////
+    setTimeout(() => {
+      this.dataEntryService.getFetchStatusPerkawinan().subscribe(data => {
+        this.ref_status_perkawinan = data.result;
+      });
+    }, 10);
+    setTimeout(() => {
+      this.verificationServices.getStatusRumah().subscribe(data => {
+        this.ref_status_rumah = data.result;
+      });
+    }, 20);
+    setTimeout(() => {
+      this.dataEntryService.getFetchListTipeKendaraaan().subscribe(data => {
+        this.ref_list_tipe_kendaraan = data.result;
+      });
+    }, 30);
+    setTimeout(() => {
+      this.dataEntryService.getFetchListPemegangHak().subscribe(data => {
+        this.pemegangHak = data.result;
+      });
+    }, 40);
+    setTimeout(() => {
+      this.dataEntryService.getFetchRefSkalaPerusahaan().subscribe(skala => {
+        this.skalaprusahaan = skala.result;
+      });
+    }, 50);
+    setTimeout(() => {
+      this.dataEntryService.getFetchListSertifikat().subscribe(sertif => {
+        this.listSertif = sertif.result;
+      });
+    }, 60);
+    setTimeout(() => {
+      this.dataEntryService.getListPendidikan().subscribe({
+        next: data => {
+          this.pendidikanModel = data.result;
+        },
+      });
+    }, 70);
+    // /////////////////////////Ref////////////////////////////////////
+
+    setTimeout(() => {
+      this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(de => {
+        this.daWa1 = de.result;
+
+        this.contohtex =
+          'Dengan ini saya menyatakan hasil wawancara yang diisi oleh saya ' +
+          this.untukSessionFullName +
+          ' dan pemberi Informasi yang disebut nasabah adalah benar adanya ' +
+          this.daWa1.nama;
+
+        const ValidasiAlamatTinggal = <FormControl>this.callReportForm.get('alamat_tinggal');
+        const ValidasiTanggalLahir = <FormControl>this.callReportForm.get('tanggal_lahir');
+        const ValidasiStatusKawin = <FormControl>this.callReportForm.get('status_kawin');
+        const ValidasiPendidikan = <FormControl>this.callReportForm.get('pendidikan');
+        const ValidasiKendaraan = <FormControl>this.callReportForm.get('kendaraan');
+        const ValidasiStatusAgunan = <FormControl>this.callReportForm.get('status_agunan');
+        const ValidasiDokumenAgunan = <FormControl>this.callReportForm.get('dokumen_agunan');
+        const ValidasiPosisiDokumen = <FormControl>this.callReportForm.get('posisi_dokumen');
+        const ValidasiTanggalWawancara = <FormControl>this.callReportForm.get('tanggal_wawancara');
+        const ValidasiTanggalAppraisal = <FormControl>this.callReportForm.get('tanggal_appraisal');
+        const ValidasiValidasiRekening = <FormControl>this.callReportForm.get('validasi_rekening');
+        const ValidasiEstimasiAngsuran = <FormControl>this.callReportForm.get('estimasi_angsuran');
+
+        const ValidasiTipePekerjaan = <FormControl>this.callReportForm.get('tipe_pekerjaan');
+        const ValidasiStatusPekerjaan = <FormControl>this.callReportForm.get('status_pekerjaan');
+        const ValidasiLamaBekerjaTahun = <FormControl>this.callReportForm.get('lama_bekerja_tahun');
+        const ValidasiLamaBekerjaBulan = <FormControl>this.callReportForm.get('lama_bekerja_bulan');
+        const ValidasiJabatanTerakhir = <FormControl>this.callReportForm.get('jabatan_terakhir');
+        const ValidasiNamaPerusahaan = <FormControl>this.callReportForm.get('nama_perusahaan');
+        const ValidasiBidangUsaha = <FormControl>this.callReportForm.get('bidang_usaha');
+        const ValidasiSkalaPerusahaan = <FormControl>this.callReportForm.get('skala_perusahaan');
+        const ValidasiJumlahKaryawan = <FormControl>this.callReportForm.get('jumlah_karyawan');
+        const ValidasiKondisiPandemi = <FormControl>this.callReportForm.get('kondisi_pandemi');
+        const ValidasiNoKontakHr = <FormControl>this.callReportForm.get('no_kontak_hr');
+        const ValidasiTakeHomePay = <FormControl>this.callReportForm.get('take_home_pay');
+
+        ValidasiAlamatTinggal.setValidators([Validators.required]);
+        ValidasiTanggalLahir.setValidators([Validators.required]);
+        ValidasiStatusKawin.setValidators([Validators.required]);
+        ValidasiPendidikan.setValidators([Validators.required]);
+        ValidasiKendaraan.setValidators([Validators.required]);
+        ValidasiTanggalWawancara.setValidators([Validators.required]);
+        ValidasiTanggalAppraisal.setValidators([Validators.required]);
+        ValidasiValidasiRekening.setValidators([Validators.required]);
+        ValidasiEstimasiAngsuran.setValidators([Validators.required]);
+
         if (this.daWa1.kode_fasilitas_name === 'PTA') {
-          this.checkboxCek = '';
+          ValidasiStatusAgunan.setValidators(null);
+          ValidasiDokumenAgunan.setValidators(null);
+          ValidasiPosisiDokumen.setValidators(null);
         } else {
-          if (this.daWa === null) {
+          ValidasiStatusAgunan.setValidators([Validators.required]);
+          ValidasiDokumenAgunan.setValidators([Validators.required]);
+          ValidasiPosisiDokumen.setValidators([Validators.required]);
+        }
+        if (this.daWa1.kategori_pekerjaan === 'Fix Income') {
+          ValidasiTipePekerjaan.setValidators([Validators.required]);
+          ValidasiStatusPekerjaan.setValidators([Validators.required]);
+          ValidasiLamaBekerjaTahun.setValidators([Validators.required]);
+          ValidasiLamaBekerjaBulan.setValidators([Validators.required]);
+          ValidasiJabatanTerakhir.setValidators([Validators.required]);
+          ValidasiNamaPerusahaan.setValidators([Validators.required]);
+          ValidasiBidangUsaha.setValidators([Validators.required]);
+          ValidasiSkalaPerusahaan.setValidators([Validators.required]);
+          ValidasiJumlahKaryawan.setValidators([Validators.required]);
+          ValidasiKondisiPandemi.setValidators([Validators.required]);
+          ValidasiNoKontakHr.setValidators([Validators.required]);
+          ValidasiTakeHomePay.setValidators([Validators.required]);
+        } else {
+          ValidasiTipePekerjaan.setValidators(null);
+          ValidasiStatusPekerjaan.setValidators(null);
+          ValidasiLamaBekerjaTahun.setValidators(null);
+          ValidasiLamaBekerjaBulan.setValidators(null);
+          ValidasiJabatanTerakhir.setValidators(null);
+          ValidasiNamaPerusahaan.setValidators(null);
+          ValidasiBidangUsaha.setValidators(null);
+          ValidasiSkalaPerusahaan.setValidators(null);
+          ValidasiJumlahKaryawan.setValidators(null);
+          ValidasiKondisiPandemi.setValidators(null);
+          ValidasiNoKontakHr.setValidators(null);
+          ValidasiTakeHomePay.setValidators(null);
+        }
+        setTimeout(() => {
+          ValidasiAlamatTinggal.updateValueAndValidity();
+          ValidasiTanggalLahir.updateValueAndValidity();
+          ValidasiStatusKawin.updateValueAndValidity();
+          ValidasiPendidikan.updateValueAndValidity();
+          ValidasiKendaraan.updateValueAndValidity();
+          ValidasiTanggalWawancara.updateValueAndValidity();
+          ValidasiTanggalAppraisal.updateValueAndValidity();
+          ValidasiValidasiRekening.updateValueAndValidity();
+          ValidasiEstimasiAngsuran.updateValueAndValidity();
+          ValidasiTipePekerjaan.updateValueAndValidity();
+          ValidasiStatusPekerjaan.updateValueAndValidity();
+          ValidasiLamaBekerjaTahun.updateValueAndValidity();
+          ValidasiLamaBekerjaBulan.updateValueAndValidity();
+          ValidasiJabatanTerakhir.updateValueAndValidity();
+          ValidasiNamaPerusahaan.updateValueAndValidity();
+          ValidasiBidangUsaha.updateValueAndValidity();
+          ValidasiSkalaPerusahaan.updateValueAndValidity();
+          ValidasiJumlahKaryawan.updateValueAndValidity();
+          ValidasiKondisiPandemi.updateValueAndValidity();
+          ValidasiNoKontakHr.updateValueAndValidity();
+          ValidasiTakeHomePay.updateValueAndValidity();
+        }, 100);
+      });
+    }, 80);
+
+    setTimeout(() => {
+      this.dataEntryService.getFetchCallReport(this.app_no_de).subscribe(call => {
+        this.daWa = call.result;
+        if (call.result == null) {
+          this.getLoading(false);
+        }
+        setTimeout(() => {
+          if (this.daWa1.kode_fasilitas_name === 'PTA') {
             this.checkboxCek = '';
           } else {
-            this.checkboxCek = this.daWa.legalitas_usaha.split(', ');
-            for (let i = 0; i < this.checkboxCek.length; i++) {
-              if (this.checkboxCek[i] === 'SIU') {
-                this.checkboxCeksiu = 'SIU';
-              } else if (this.checkboxCek[i] === 'SIUP') {
-                this.checkboxCeksiup = 'SIUP';
-              } else if (this.checkboxCek[i] === 'NIB') {
-                this.checkboxCeknib = 'NIB';
-              } else if (this.checkboxCek[i] === 'SKDU') {
-                this.checkboxCekskdu = 'SKDU';
-              } else if (this.checkboxCek[i] === 'SKDP') {
-                this.checkboxCekskdp = 'SKDP';
-              } else if (this.checkboxCek[i] === 'Akta Pendirian') {
-                this.checkboxCekaktapendirian = 'Akta Pendirian';
+            if (this.daWa === null) {
+              this.checkboxCek = '';
+            } else {
+              this.checkboxCek = this.daWa.legalitas_usaha.split(', ');
+              for (let i = 0; i < this.checkboxCek.length; i++) {
+                if (this.checkboxCek[i] === 'SIU') {
+                  this.checkboxCeksiu = 'SIU';
+                } else if (this.checkboxCek[i] === 'SIUP') {
+                  this.checkboxCeksiup = 'SIUP';
+                } else if (this.checkboxCek[i] === 'NIB') {
+                  this.checkboxCeknib = 'NIB';
+                } else if (this.checkboxCek[i] === 'SKDU') {
+                  this.checkboxCekskdu = 'SKDU';
+                } else if (this.checkboxCek[i] === 'SKDP') {
+                  this.checkboxCekskdp = 'SKDP';
+                } else if (this.checkboxCek[i] === 'Akta Pendirian') {
+                  this.checkboxCekaktapendirian = 'Akta Pendirian';
+                }
               }
             }
           }
-        }
-      }, 300);
-      let retriveCallReport = {
-        alamat_tinggal: this.daWa.alamat_tinggal,
-        tanggal_lahir: this.daWa.tanggal_lahir,
-        status_kawin: this.daWa.status_kawin,
-        pendidikan: this.daWa.pendidikan,
-        kendaraan: this.daWa.kendaraan,
-        status_agunan: this.daWa.status_agunan,
-        catatan_status_agunan: this.daWa.catatan_status_agunan,
-        dokumen_agunan: this.daWa.dokumen_agunan,
-        catatan_dokumen_agunan: this.daWa.catatan_dokumen_agunan,
-        posisi_dokumen: this.daWa.posisi_dokumen,
-        catatan_posisi_dokumen: this.daWa.catatan_posisi_dokumen,
-        jenis_usaha: this.daWa.jenis_usaha,
-        lama_usaha: this.daWa.lama_usaha,
-        tipe_pekerjaan: this.daWa.tipe_pekerjaan,
-        status_pekerjaan: this.daWa.status_pekerjaan,
-        lama_bekerja_tahun: this.daWa.lama_bekerja_tahun,
-        lama_bekerja_bulan: this.daWa.lama_bekerja_bulan,
-        jabatan_terakhir: this.daWa.jabatan_terakhir,
-        nama_perusahaan: this.daWa.nama_perusahaan,
-        bidang_usaha: this.daWa.bidang_usaha,
-        jenis_produk: this.daWa.jenis_produk,
-        skala_perusahaan: this.daWa.skala_perusahaan,
-        tahun_berdiri_perusahaan: this.daWa.tahun_berdiri_perusahaan,
-        alamat_perusahaan: this.daWa.alamat_perusahaan,
-        jumlah_karyawan: this.daWa.jumlah_karyawan,
-        kondisi_pandemi: this.daWa.kondisi_pandemi,
-        kepemilikan_usaha: this.daWa.kepemilikan_usaha,
-        no_kontak_hr: this.daWa.no_kontak_hr,
-        tipe_pekerjaan_pasangan: this.daWa.tipe_pekerjaan_pasangan,
-        status_pekerjaan_pasangan: this.daWa.status_pekerjaan_pasangan,
-        lama_bekerja_bulan_pasangan: this.daWa.lama_bekerja_bulan_pasangan,
-        lama_bekerja_tahun_pasangan: this.daWa.lama_bekerja_tahun_pasangan,
-        jabatan_terakhir_pasangan: this.daWa.jabatan_terakhir_pasangan,
-        nama_perusahaan_pasangan: this.daWa.nama_perusahaan_pasangan,
-        bidang_usaha_pasangan: this.daWa.bidang_usaha_pasangan,
-        skala_perusahaan_pasangan: this.daWa.skala_perusahaan_pasangan,
-        tahun_berdiri_perusahaan_pasangan: this.daWa.tahun_berdiri_perusahaan_pasangan,
-        alamat_perusahaan_pasangan: this.daWa.alamat_perusahaan_pasangan,
-        jumlah_karyawan_perusahaan_pasangan: this.daWa.jumlah_karyawan_perusahaan_pasangan,
-        kondisi_pandemi_perusahaan_pasangan: this.daWa.kondisi_pandemi_perusahaan_pasangan,
-        no_kontak_hr_pasangan: this.daWa.no_kontak_hr_pasangan,
-        laba_periode_1: this.daWa.laba_periode_1,
-        laba_periode_2: this.daWa.laba_periode_2,
-        laba_periode_3: this.daWa.laba_periode_3,
-        laba_periode_4: this.daWa.laba_periode_4,
-        rata_rata_laba: this.daWa.rata_rata_laba,
-        estimasi_angsuran: this.daWa.estimasi_angsuran,
-        validasi_rekening: this.daWa.validasi_rekening,
-        tanggal_wawancara: this.daWa.tanggal_wawancara,
-        take_home_pay: this.daWa.take_home_pay,
-        keterangan: this.daWa.keterangan,
-        tanggal_appraisal: this.daWa.tanggal_appraisal,
-      };
-      this.callReportForm.setValue(retriveCallReport);
-    });
-    setTimeout(() => {
-      if (this.daWa !== null) {
-        this.nowawancara = this.daWa.no_wawancara;
-      } else {
-        this.dataEntryService.getFetchGetWawancara().subscribe(wawancara => {
-          this.nowawancara = 'CR_' + this.app_no_de + '_' + wawancara.result;
-        });
-      }
-    }, 300);
-    this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(de => {
-      this.daWa1 = de.result;
+        }, 30);
 
-      this.contohtex =
-        'Dengan ini saya menyatakan hasil wawancara yang diisi oleh saya ' +
-        this.untukSessionFullName +
-        ' dan pemberi Informasi yang disebut nasabah adalah benar adanya ' +
-        this.daWa1.nama;
+        setTimeout(() => {
+          if (this.daWa !== null) {
+            this.nowawancara = this.daWa.no_wawancara;
+          } else {
+            this.dataEntryService.getFetchGetWawancara().subscribe(wawancara => {
+              this.nowawancara = 'CR_' + this.app_no_de + '_' + wawancara.result;
+            });
+          }
+        }, 80);
 
-      const ValidasiAlamatTinggal = <FormControl>this.callReportForm.get('alamat_tinggal');
-      const ValidasiTanggalLahir = <FormControl>this.callReportForm.get('tanggal_lahir');
-      const ValidasiStatusKawin = <FormControl>this.callReportForm.get('status_kawin');
-      const ValidasiPendidikan = <FormControl>this.callReportForm.get('pendidikan');
-      const ValidasiKendaraan = <FormControl>this.callReportForm.get('kendaraan');
-      const ValidasiStatusAgunan = <FormControl>this.callReportForm.get('status_agunan');
-      const ValidasiDokumenAgunan = <FormControl>this.callReportForm.get('dokumen_agunan');
-      const ValidasiPosisiDokumen = <FormControl>this.callReportForm.get('posisi_dokumen');
-      const ValidasiTanggalWawancara = <FormControl>this.callReportForm.get('tanggal_wawancara');
-      const ValidasiTanggalAppraisal = <FormControl>this.callReportForm.get('tanggal_appraisal');
-      const ValidasiValidasiRekening = <FormControl>this.callReportForm.get('validasi_rekening');
-      const ValidasiEstimasiAngsuran = <FormControl>this.callReportForm.get('estimasi_angsuran');
+        let retriveCallReport = {
+          alamat_tinggal: this.daWa.alamat_tinggal,
+          tanggal_lahir: this.daWa.tanggal_lahir,
+          status_kawin: this.daWa.status_kawin,
+          pendidikan: this.daWa.pendidikan,
+          kendaraan: this.daWa.kendaraan,
+          status_agunan: this.daWa.status_agunan,
+          catatan_status_agunan: this.daWa.catatan_status_agunan,
+          dokumen_agunan: this.daWa.dokumen_agunan,
+          catatan_dokumen_agunan: this.daWa.catatan_dokumen_agunan,
+          posisi_dokumen: this.daWa.posisi_dokumen,
+          catatan_posisi_dokumen: this.daWa.catatan_posisi_dokumen,
+          jenis_usaha: this.daWa.jenis_usaha,
+          lama_usaha: this.daWa.lama_usaha,
+          tipe_pekerjaan: this.daWa.tipe_pekerjaan,
+          status_pekerjaan: this.daWa.status_pekerjaan,
+          lama_bekerja_tahun: this.daWa.lama_bekerja_tahun,
+          lama_bekerja_bulan: this.daWa.lama_bekerja_bulan,
+          jabatan_terakhir: this.daWa.jabatan_terakhir,
+          nama_perusahaan: this.daWa.nama_perusahaan,
+          bidang_usaha: this.daWa.bidang_usaha,
+          jenis_produk: this.daWa.jenis_produk,
+          skala_perusahaan: this.daWa.skala_perusahaan,
+          tahun_berdiri_perusahaan: this.daWa.tahun_berdiri_perusahaan,
+          alamat_perusahaan: this.daWa.alamat_perusahaan,
+          jumlah_karyawan: this.daWa.jumlah_karyawan,
+          kondisi_pandemi: this.daWa.kondisi_pandemi,
+          kepemilikan_usaha: this.daWa.kepemilikan_usaha,
+          no_kontak_hr: this.daWa.no_kontak_hr,
+          tipe_pekerjaan_pasangan: this.daWa.tipe_pekerjaan_pasangan,
+          status_pekerjaan_pasangan: this.daWa.status_pekerjaan_pasangan,
+          lama_bekerja_bulan_pasangan: this.daWa.lama_bekerja_bulan_pasangan,
+          lama_bekerja_tahun_pasangan: this.daWa.lama_bekerja_tahun_pasangan,
+          jabatan_terakhir_pasangan: this.daWa.jabatan_terakhir_pasangan,
+          nama_perusahaan_pasangan: this.daWa.nama_perusahaan_pasangan,
+          bidang_usaha_pasangan: this.daWa.bidang_usaha_pasangan,
+          skala_perusahaan_pasangan: this.daWa.skala_perusahaan_pasangan,
+          tahun_berdiri_perusahaan_pasangan: this.daWa.tahun_berdiri_perusahaan_pasangan,
+          alamat_perusahaan_pasangan: this.daWa.alamat_perusahaan_pasangan,
+          jumlah_karyawan_perusahaan_pasangan: this.daWa.jumlah_karyawan_perusahaan_pasangan,
+          kondisi_pandemi_perusahaan_pasangan: this.daWa.kondisi_pandemi_perusahaan_pasangan,
+          no_kontak_hr_pasangan: this.daWa.no_kontak_hr_pasangan,
+          laba_periode_1: this.daWa.laba_periode_1,
+          laba_periode_2: this.daWa.laba_periode_2,
+          laba_periode_3: this.daWa.laba_periode_3,
+          laba_periode_4: this.daWa.laba_periode_4,
+          rata_rata_laba: this.daWa.rata_rata_laba,
+          estimasi_angsuran: this.daWa.estimasi_angsuran,
+          validasi_rekening: this.daWa.validasi_rekening,
+          tanggal_wawancara: this.daWa.tanggal_wawancara,
+          take_home_pay: this.daWa.take_home_pay,
+          keterangan: this.daWa.keterangan,
+          tanggal_appraisal: this.daWa.tanggal_appraisal,
+        };
+        this.callReportForm.setValue(retriveCallReport);
 
-      const ValidasiTipePekerjaan = <FormControl>this.callReportForm.get('tipe_pekerjaan');
-      const ValidasiStatusPekerjaan = <FormControl>this.callReportForm.get('status_pekerjaan');
-      const ValidasiLamaBekerjaTahun = <FormControl>this.callReportForm.get('lama_bekerja_tahun');
-      const ValidasiLamaBekerjaBulan = <FormControl>this.callReportForm.get('lama_bekerja_bulan');
-      const ValidasiJabatanTerakhir = <FormControl>this.callReportForm.get('jabatan_terakhir');
-      const ValidasiNamaPerusahaan = <FormControl>this.callReportForm.get('nama_perusahaan');
-      const ValidasiBidangUsaha = <FormControl>this.callReportForm.get('bidang_usaha');
-      const ValidasiSkalaPerusahaan = <FormControl>this.callReportForm.get('skala_perusahaan');
-      const ValidasiJumlahKaryawan = <FormControl>this.callReportForm.get('jumlah_karyawan');
-      const ValidasiKondisiPandemi = <FormControl>this.callReportForm.get('kondisi_pandemi');
-      const ValidasiNoKontakHr = <FormControl>this.callReportForm.get('no_kontak_hr');
-
-      ValidasiAlamatTinggal.setValidators([Validators.required]);
-      ValidasiTanggalLahir.setValidators([Validators.required]);
-      ValidasiStatusKawin.setValidators([Validators.required]);
-      ValidasiPendidikan.setValidators([Validators.required]);
-      ValidasiKendaraan.setValidators([Validators.required]);
-      ValidasiTanggalWawancara.setValidators([Validators.required]);
-      ValidasiTanggalAppraisal.setValidators([Validators.required]);
-      ValidasiValidasiRekening.setValidators([Validators.required]);
-      ValidasiEstimasiAngsuran.setValidators([Validators.required]);
-
-      if (this.daWa1.kode_fasilitas_name === 'PTA') {
-        ValidasiStatusAgunan.setValidators(null);
-        ValidasiDokumenAgunan.setValidators(null);
-        ValidasiPosisiDokumen.setValidators(null);
-      } else {
-        ValidasiStatusAgunan.setValidators([Validators.required]);
-        ValidasiDokumenAgunan.setValidators([Validators.required]);
-        ValidasiPosisiDokumen.setValidators([Validators.required]);
-      }
-      if (this.daWa1.kategori_pekerjaan === 'Fix Income') {
-        ValidasiTipePekerjaan.setValidators([Validators.required]);
-        ValidasiStatusPekerjaan.setValidators([Validators.required]);
-        ValidasiLamaBekerjaTahun.setValidators([Validators.required]);
-        ValidasiLamaBekerjaBulan.setValidators([Validators.required]);
-        ValidasiJabatanTerakhir.setValidators([Validators.required]);
-        ValidasiNamaPerusahaan.setValidators([Validators.required]);
-        ValidasiBidangUsaha.setValidators([Validators.required]);
-        ValidasiSkalaPerusahaan.setValidators([Validators.required]);
-        ValidasiJumlahKaryawan.setValidators([Validators.required]);
-        ValidasiKondisiPandemi.setValidators([Validators.required]);
-        ValidasiNoKontakHr.setValidators([Validators.required]);
-      } else {
-        ValidasiTipePekerjaan.setValidators(null);
-        ValidasiStatusPekerjaan.setValidators(null);
-        ValidasiLamaBekerjaTahun.setValidators(null);
-        ValidasiLamaBekerjaBulan.setValidators(null);
-        ValidasiJabatanTerakhir.setValidators(null);
-        ValidasiNamaPerusahaan.setValidators(null);
-        ValidasiBidangUsaha.setValidators(null);
-        ValidasiSkalaPerusahaan.setValidators(null);
-        ValidasiJumlahKaryawan.setValidators(null);
-        ValidasiKondisiPandemi.setValidators(null);
-        ValidasiNoKontakHr.setValidators(null);
-      }
-      setTimeout(() => {
-        ValidasiAlamatTinggal.updateValueAndValidity();
-        ValidasiTanggalLahir.updateValueAndValidity();
-        ValidasiStatusKawin.updateValueAndValidity();
-        ValidasiPendidikan.updateValueAndValidity();
-        ValidasiKendaraan.updateValueAndValidity();
-        ValidasiTanggalWawancara.updateValueAndValidity();
-        ValidasiTanggalAppraisal.updateValueAndValidity();
-        ValidasiValidasiRekening.updateValueAndValidity();
-        ValidasiEstimasiAngsuran.updateValueAndValidity();
-        ValidasiTipePekerjaan.updateValueAndValidity();
-        ValidasiStatusPekerjaan.updateValueAndValidity();
-        ValidasiLamaBekerjaTahun.updateValueAndValidity();
-        ValidasiLamaBekerjaBulan.updateValueAndValidity();
-        ValidasiJabatanTerakhir.updateValueAndValidity();
-        ValidasiNamaPerusahaan.updateValueAndValidity();
-        ValidasiBidangUsaha.updateValueAndValidity();
-        ValidasiSkalaPerusahaan.updateValueAndValidity();
-        ValidasiJumlahKaryawan.updateValueAndValidity();
-        ValidasiKondisiPandemi.updateValueAndValidity();
-        ValidasiNoKontakHr.updateValueAndValidity();
-      }, 100);
-    });
-
-    // /////////////////////////Ref////////////////////////////////////
-    this.dataEntryService.getFetchStatusPerkawinan().subscribe(data => {
-      this.ref_status_perkawinan = data.result;
-    });
-    this.verificationServices.getStatusRumah().subscribe(data => {
-      this.ref_status_rumah = data.result;
-    });
-    this.dataEntryService.getFetchListTipeKendaraaan().subscribe(data => {
-      this.ref_list_tipe_kendaraan = data.result;
-    });
-    this.dataEntryService.getFetchListPemegangHak().subscribe(data => {
-      this.pemegangHak = data.result;
-    });
-    this.dataEntryService.getFetchRefSkalaPerusahaan().subscribe(skala => {
-      this.skalaprusahaan = skala.result;
-    });
-    this.dataEntryService.getFetchListSertifikat().subscribe(sertif => {
-      this.listSertif = sertif.result;
-    });
-    setTimeout(() => {
-      this.datepicker();
-    }, 1000);
+        setTimeout(() => {
+          this.getLoading(false);
+          this.datepicker();
+        }, 100);
+      });
+    }, 200);
   }
 
   goto() {
@@ -522,5 +563,10 @@ export class CallReportComponent implements OnInit {
     } else if (this.tanggalWawancara < 0) {
       alert('Tanggal Wawancara Tidak Boleh Lebih Hari Ini');
     }
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

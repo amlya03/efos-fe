@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient } from '@angular/common/http';
@@ -19,6 +19,8 @@ import { environment } from 'environments/environment';
   styleUrls: ['./memo.component.scss'],
 })
 export class MemoComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   memoForm!: FormGroup;
   file?: File; // Variable to store file
@@ -58,6 +60,7 @@ export class MemoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getLoading(true);
     this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.untukSessionusername = this.SessionStorageService.retrieve('sessionUserName');
     this.untukSessionfullname = this.SessionStorageService.retrieve('sessionFullName');
@@ -75,8 +78,10 @@ export class MemoComponent implements OnInit {
       setTimeout(() => {
         if (data.result == null || data.result == '') {
           this.modelResultmemo = 1;
+          this.getLoading(false);
         } else {
           this.modelResultmemo = 0;
+          this.getLoading(false);
         }
         // alert(this.modelResultmemo)
       }, 300);
@@ -239,5 +244,10 @@ export class MemoComponent implements OnInit {
       // }
       // ////////////// Pop Up Input Scoring ////////////////////////
     });
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

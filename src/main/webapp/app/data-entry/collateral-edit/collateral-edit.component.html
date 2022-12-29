@@ -259,6 +259,21 @@
           <br />
         </div>
       </div>
+      <div
+        class="form-group row"
+        [hidden]="this.editCollateralForm.get('tipe_agunan')?.value == 'C01' || this.editCollateralForm.get('tipe_agunan')?.value == 'H01'"
+      >
+        <label class="col-sm-4 col-form-label">Usia Bangunan</label>
+        <div class="col-sm-8">
+          <div class="input-group mb-3">
+            <input readonly class="form-control" type="text" minlength="4" maxlength="4" formControlName="usia_bangunan" />
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">Tahun</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
       <div class="form-group row" [hidden]="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'">
         <label class="col-sm-4 col-form-label">Status Sertifikat</label>
         <div class="col-sm-8">
@@ -683,3 +698,4 @@
     </div>
   </div>
 </form>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

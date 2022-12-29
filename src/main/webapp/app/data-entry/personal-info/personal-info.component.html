@@ -52,7 +52,12 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Usia</label>
         <div class="col-sm-9">
-          <input type="tel" maxlength="2" class="form-control" placeholder="Usia" id="usia" formControlName="usia" readonly />
+          <div class="input-group mb-3">
+            <input type="tel" maxlength="2" class="form-control" placeholder="Usia" id="usia" formControlName="usia" readonly />
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">Tahun</span>
+            </div>
+          </div>
         </div>
       </div>
       <br />
@@ -77,11 +82,7 @@
         <div class="col-sm-9">
           <div class="form-group">
             <select class="form-control" id="pendidikan" formControlName="pendidikan">
-              <option value="SMA">SMA</option>
-              <option value="D3">D3</option>
-              <option value="S1">S1</option>
-              <option value="S2">S2</option>
-              <option value="S3">S3</option>
+              <option *ngFor="let pendidikan of pendidikanModel" value="{{ pendidikan.deskripsi }}">{{ pendidikan.deskripsi }}</option>
             </select>
           </div>
         </div>

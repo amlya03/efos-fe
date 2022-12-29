@@ -85,7 +85,7 @@ export class DataEntryComponent implements OnInit, OnDestroy {
   }
 
   clearInput(): void {
-    $('#dataTables-example').DataTable().columns().search('').draw();
+    $('#dataTables-example').DataTable().search('').draw();
     // alert("bbb")
   }
 

@@ -92,7 +92,7 @@ export class KomiteComponent implements OnInit {
   }
 
   clearInput(): void {
-    $('#dataTables-example').DataTable().columns().search('').draw();
+    $('#dataTables-example').DataTable().search('').draw();
   }
 
   view(app_no_de: string | undefined, curef: string | undefined): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
@@ -20,6 +20,8 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./emergency-contact.component.scss'],
 })
 export class EmergencyContactComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   emergencyForm!: FormGroup;
   dataEntry: fetchAllDe = new fetchAllDe();
@@ -76,7 +78,7 @@ export class EmergencyContactComponent implements OnInit {
   ngOnInit(): void {
     this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.load();
-
+    this.getLoading(true);
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.emergencyForm = this.formBuilder.group({
       nama: [
@@ -203,6 +205,7 @@ export class EmergencyContactComponent implements OnInit {
       };
       this.emergencyForm.setValue(retriveEmergency);
       setTimeout(() => {
+        this.getLoading(false);
         this.carimenggunakankodepos(this.daWa.kode_pos);
       }, 300);
     });
@@ -458,5 +461,10 @@ export class EmergencyContactComponent implements OnInit {
       event.preventDefault();
       return;
     }
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

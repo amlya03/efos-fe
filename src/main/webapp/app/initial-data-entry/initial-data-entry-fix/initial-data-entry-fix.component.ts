@@ -50,6 +50,7 @@ export class InitialDataEntryFixComponent implements OnInit {
   modelJob: modelJobIde = new modelJobIde();
   listJabatan: refJenisPekerjaan[] = [];
   refJabatanModel: refJabatan[] = [];
+  pendidikanModel: refJenisPekerjaan[] = [];
   // Upload /////////
   file?: File;
   hideDocChange = 0;
@@ -459,6 +460,14 @@ export class InitialDataEntryFixComponent implements OnInit {
         this.kirimKatePeker = 'Non Fix Income';
       }
     }, 150);
+
+    setTimeout(() => {
+      this.dataEntryService.getListPendidikan().subscribe({
+        next: data => {
+          this.pendidikanModel = data.result;
+        },
+      });
+    }, 170);
 
     setTimeout(() => {
       this.dataEntryService.getFetchListJumlahKaryawan().subscribe(data => {

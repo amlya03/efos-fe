@@ -106,7 +106,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
   }
 
   clearInput(): void {
-    $('#dataTables-example').DataTable().columns().search('').draw();
+    $('#dataTables-example').DataTable().search('').draw();
   }
 
   // ceklis semua

@@ -84,7 +84,7 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
     $('#dataTables-example').DataTable().columns(5).search(listKategori).draw();
   }
   clearInput(): void {
-    $('#dataTables-example').DataTable().columns().search('').draw();
+    $('#dataTables-example').DataTable().search('').draw();
   }
 
   // ReadOnly
