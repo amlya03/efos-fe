@@ -38,7 +38,7 @@ export class DataEntryService {
   }
 
   // //////////////////////////// GET lIST PENDIDIKAN //////////////////////////////////////////////////
-  protected listPendidikan = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_pendidikan');
+  protected listPendidikan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_pendidikan');
   // //////////////////////////// GET lIST PENDIDIKAN //////////////////////////////////////////////////
 
   // //////////////////////////// GET List Memo //////////////////////////////////////////////////

@@ -123,9 +123,7 @@ export class ServiceVerificationService {
 
   // ///////////////////////////////////////////////////////////// Ref Jabatan Pemberi Keterangan  ///////////////////////////////////////////////////////////
   // protected jabatanPemberiKeterangan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_jabatan_pemberi_ket');
-  protected jabatanPemberiKeterangan = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-ref/list_jabatan_pemberi_ket'
-  );
+  protected jabatanPemberiKeterangan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_jabatan_pemberi_ket');
   // //////////////////////////////////////////////////////////// Ref Jabatan Pemberi Keterangan ////////////////////////////////////////////////////////////
   // ////////////////////// REFF \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 

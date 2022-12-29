@@ -15,7 +15,7 @@ export class InitialDataEntryService {
   baseUrlDukcapil: string = environment.baseUrlDukcapil;
 
   // ///////////////////////////////////////////////// get Upload SLik ///////////////////////////////////////////////////
-  protected uploadSlik = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/getDokumenUploadByType?sd=');
+  protected uploadSlik = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getDokumenUploadByType?sd=');
   // /////////////////////////////////////////////////////// get Upload SLik ////////////////////////////////////////////
 
   // ///////////////////////////////////////////////// get Cek Data Dhn ///////////////////////////////////////////////////
