@@ -302,7 +302,7 @@ export class DataEntryService {
   ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
 
   ////////////////////////////////////// REF List Tipe Pekerjaan //////////////////////////////////////////////
-  getFetchListTipePekerjaan(id: number | null): Observable<ApiResponse> {
+  getFetchListTipePekerjaan(id: number | null | string | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.refListTipePekerjaan + id);
   }
   ////////////////////////////////////// REF List Tipe Pekerjaan //////////////////////////////////////////////

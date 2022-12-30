@@ -164,7 +164,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
     }
     setTimeout(() => {
       // alert(this.kirimDe.length == 0)
-      if (this.kirimDe.length == 0) {
+      if (this.kirimDe.length == 0 || this.kirimAssign === '') {
         alert('Harap Pilih Data Terlebih Dahulu');
       } else {
         window.location.reload();
