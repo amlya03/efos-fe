@@ -10,10 +10,11 @@ import { LoginService } from 'app/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
 import { navbarModel } from './navbarModel.model';
+import { createRequestOption } from 'app/core/request/request-util';
 
 @Component({
   selector: 'jhi-navbar',
@@ -122,6 +123,24 @@ export class NavbarComponent implements OnInit {
     this.translateService.use(languageKey);
   }
 
+  
+
+  myFunction(targetID:any){
+
+    alert('jalan gk ');
+    // input.type = input.type === 'password' ?  'text' : 'password';
+    const x = document.getElementById('targetID')as HTMLInputElement | any;
+
+    if (x.type === "password") {
+      x.type = "text";
+      alert('ganti type');
+    } else {
+      x.type = "password";
+      alert('ganti type else');
+    }
+
+  }
+
   collapseNavbar(): void {
     this.isNavbarCollapsed = true;
   }
@@ -138,7 +157,7 @@ export class NavbarComponent implements OnInit {
         this.untukSessionUserName +
         ' <p>Nama : ' +
         this.untukSessionFullName +
-        '</p><p>Saya adalah ' +
+        '</p><p>Saya adalah   ' +
         this.untukSessionRole +
         '</p>',
       imageUrl: '../../../content/images/bank-mega-syariah.png',
@@ -146,7 +165,9 @@ export class NavbarComponent implements OnInit {
       imageHeight: 70,
       imageAlt: 'Eagle Image',
       showCancelButton: true,
+      showDenyButton: true,
       confirmButtonText: 'Logout',
+      denyButtonText: ' Ganti password',
       cancelButtonText: 'Tidak',
       confirmButtonColor: '#8567d3',
       cancelButtonColor: '#999999',
@@ -159,7 +180,204 @@ export class NavbarComponent implements OnInit {
           this.router.navigate(['/login']);
           window.location.reload();
         });
+      }else if (result.isDenied) {
+
+        // function showPassword(targetID:any) {
+        //   var x = document.getElementById(targetID)as HTMLInputElement | any;
+        
+        //   if (x.type === "password") {
+        //     x.type = "text";
+        //   } else {
+        //     x.type = "password";
+        //   }
+        
+        // }
+
+        $(document).ready(function() {
+
+
+
+          $('#togglePassword').click(function () {
+            var paswd= $('#password_lama');
+            if(paswd.attr("type")== "password"){
+              document.getElementById('password_lama')?.setAttribute('type', 'text')
+              $("#togglePassword").attr('src', 'https://media.geeksforgeeks.org/wp-content/uploads/20210917145551/eye.png');
+          }
+          else{
+            document.getElementById('password_lama')?.setAttribute('type', 'password')
+            $("#togglePassword").attr('src', 'https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash.png');
+          }
+          });
+
+          $('#togglePassword2').click(function () {
+           
+
+            var paswd= $('#passwor_baru');
+            if(paswd.attr("type")== "password"){
+
+    
+              document.getElementById('passwor_baru')?.setAttribute('type', 'text')
+              $("#togglePassword2").attr('src', 'https://media.geeksforgeeks.org/wp-content/uploads/20210917145551/eye.png');
+              
+          }
+          else{
+            document.getElementById('passwor_baru')?.setAttribute('type', 'password')
+            $("#togglePassword2").attr('src', 'https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash.png');
+
+          }
+       
+          });
+
+
+          $('#togglePassword3').click(function () {
+            // alert('adit');
+
+            var paswd= $('#Confirm_password');
+            if(paswd.attr("type")== "password"){
+              document.getElementById('Confirm_password')?.setAttribute('type', 'text')
+              $("#togglePassword3").attr('src', 'https://media.geeksforgeeks.org/wp-content/uploads/20210917145551/eye.png');
+          }
+          else{
+            document.getElementById('Confirm_password')?.setAttribute('type', 'password')
+            $("#togglePassword3").attr('src', 'https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash.png');
+          }
+          });
+
+        });
+        Swal.fire({
+          title: 'Change Password',
+          html:
+          '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">Password lama</label>' +
+          '<div class="col-sm-9"><input  type="password" class="form-control2" id="password_lama"/> <img src="https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash-300x240.png" width="20px" height="20px" style="margin-left: -11%;display:inline;vertical-align: middle" id="togglePassword">' +
+          // <input type="checkbox" onclick="showPassword(password_lama)" id="togglePassword">  <label for="show-password">Show Password
+          
+          '</div></div>' +
+          '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Password baru</label>' +
+          '<div class="col-sm-9"><input type="password" class="form-control2" id="passwor_baru"/> <img src="https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash-300x240.png" width="20px" height="20px" style="margin-left: -11%;display:inline;vertical-align: middle" id="togglePassword2">' +
+          // <input type="checkbox" onclick="showPassword(password_lama)" id="togglePassword2">  <label for="show-password">Show Password 
+
+          '</div></div>' +
+          '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Confirm password</label>' +
+          '<div class="col-sm-9"><input type="password" class="form-control2" id="Confirm_password"/>  <img src="https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash-300x240.png" width="20px" height="20px" style="margin-left: -11%;display:inline;vertical-align: middle" id="togglePassword3">' +
+          // <input type="checkbox" onclick="showPassword(password_lama)" id="togglePassword3">  <label for="show-password">Show Password
+          '</div></div>' 
+         ,
+       
+          focusConfirm: false,
+        }).then(result =>{
+          
+          let passwordlama = $('#password_lama').val();
+          let passwordbaru = $('#passwor_baru').val();
+          let confrimpassword = $('#Confirm_password').val();
+    
+          if (passwordlama === '') {
+            // alert('Gagal Menyimpan password lama belum di isi');
+            Swal.fire('Gagal Menyimpan password lama belum di isi')
+            return;
+          } else if (passwordbaru === '') {
+            // alert('Gagal Menyimpan password baru belum di isi');
+            Swal.fire('Gagal Menyimpan password baru belum di isi')
+            return;
+          } else if (confrimpassword === '') {
+            // alert('Gagal Menyimpan confirm  password belum di isi');
+            Swal.fire('Gagal Menyimpan confirm  password belum di isi')
+            return;
+          }  else if (confrimpassword != passwordbaru ) {
+            // alert('confirm atau password baru tidak sama');
+            Swal.fire('confirm atau password baru tidak sama')
+            return;
+          }  
+          else if (passwordlama != this.SessionStorageService.retrieve('sessionPS') ) {
+            // alert('confirm atau password baru tidak sama');
+            Swal.fire('Password lama salah')
+            return;
+          } 
+          else if (passwordlama == passwordbaru ) {
+            // alert('confirm atau password baru tidak sama');
+            Swal.fire('Password baru sama dengan Password lama ')
+            return;
+          } 
+          else {
+            const options = createRequestOption();
+            const tkn=this.SessionStorageService.retrieve('sessionToken');
+
+            const body = {
+              'username': this.SessionStorageService.retrieve('sessionUserName'),
+             old_password: passwordlama,
+             'new_password': passwordbaru,
+            };
+
+       
+            let headers = new HttpHeaders({
+              "Content-Type": "application/json; charset=utf-8",
+              Authorization: `Bearer ${this.SessionStorageService.retrieve('sessionToken')}`
+            });
+            console.log(headers.get('Content-Type'));
+
+
+            // this.http
+            //   .post<any>('http://10.20.34.110:8096/users/resetPassword', {
+            //      header: headers,
+            //     // params: options,
+            //     username: this.SessionStorageService.retrieve('sessionUserName'),
+            //    old_password: passwordlama,
+            //     new_password: passwordbaru,
+              
+            //   })
+
+            this.http.post<any>('http://10.20.34.110:8096/users/resetPassword', body, { headers })
+              .subscribe({
+                next: response => {
+                  //console.warn(response);
+                  this.sessionStorageService.store('sessionPS', passwordbaru);
+                  const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer)
+                      toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                  })
+                  
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'Change Password Berhasil'
+                    
+                  })
+
+                  // alert('password berhasil di simpan ');
+                
+                },
+                error: error =>{
+                  const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer)
+                      toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                  })
+                  
+                  Toast.fire({
+                    icon: 'error',
+                    title: 'Change Password Gagal'
+                  })
+                }
+                //  console.warn(error),
+              });
+          }
+
+         });
+        
+    
       }
+
     });
   }
 
