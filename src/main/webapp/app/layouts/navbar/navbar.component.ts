@@ -201,11 +201,11 @@ export class NavbarComponent implements OnInit {
             var paswd= $('#password_lama');
             if(paswd.attr("type")== "password"){
               document.getElementById('password_lama')?.setAttribute('type', 'text')
-              $("#togglePassword").attr('src', 'https://media.geeksforgeeks.org/wp-content/uploads/20210917145551/eye.png');
+              $("#togglePassword").attr('src', '../../../content/images/show.png');
           }
           else{
             document.getElementById('password_lama')?.setAttribute('type', 'password')
-            $("#togglePassword").attr('src', 'https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash.png');
+            $("#togglePassword").attr('src', '../../../content/images/hide.png');
           }
           });
 
@@ -217,12 +217,12 @@ export class NavbarComponent implements OnInit {
 
     
               document.getElementById('passwor_baru')?.setAttribute('type', 'text')
-              $("#togglePassword2").attr('src', 'https://media.geeksforgeeks.org/wp-content/uploads/20210917145551/eye.png');
+              $("#togglePassword2").attr('src', '../../../content/images/show.png');
               
           }
           else{
             document.getElementById('passwor_baru')?.setAttribute('type', 'password')
-            $("#togglePassword2").attr('src', 'https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash.png');
+            $("#togglePassword2").attr('src', '../../../content/images/hide.png');
 
           }
        
@@ -235,11 +235,11 @@ export class NavbarComponent implements OnInit {
             var paswd= $('#Confirm_password');
             if(paswd.attr("type")== "password"){
               document.getElementById('Confirm_password')?.setAttribute('type', 'text')
-              $("#togglePassword3").attr('src', 'https://media.geeksforgeeks.org/wp-content/uploads/20210917145551/eye.png');
+              $("#togglePassword3").attr('src', '../../../content/images/show.png');
           }
           else{
             document.getElementById('Confirm_password')?.setAttribute('type', 'password')
-            $("#togglePassword3").attr('src', 'https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash.png');
+            $("#togglePassword3").attr('src', '../../../content/images/hide.png');
           }
           });
 
@@ -248,25 +248,29 @@ export class NavbarComponent implements OnInit {
           title: 'Change Password',
           html:
           '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">Password lama</label>' +
-          '<div class="col-sm-9"><input  type="password" class="form-control2" id="password_lama"/> <img src="https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash-300x240.png" width="20px" height="20px" style="margin-left: -11%;display:inline;vertical-align: middle" id="togglePassword">' +
+          '<div class="col-sm-9"><input  type="password" class="form-control2" id="password_lama"/> <img src="../../../content/images/hide.png" width="20px" height="20px" style="margin-left: -11%;display:inline;vertical-align: middle" id="togglePassword">' +
           // <input type="checkbox" onclick="showPassword(password_lama)" id="togglePassword">  <label for="show-password">Show Password
           
           '</div></div>' +
           '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Password baru</label>' +
-          '<div class="col-sm-9"><input type="password" class="form-control2" id="passwor_baru"/> <img src="https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash-300x240.png" width="20px" height="20px" style="margin-left: -11%;display:inline;vertical-align: middle" id="togglePassword2">' +
+          '<div class="col-sm-9"><input type="password" class="form-control2" id="passwor_baru"/> <img src="../../../content/images/hide.png" width="20px" height="20px" style="margin-left: -11%;display:inline;vertical-align: middle" id="togglePassword2">' +
           // <input type="checkbox" onclick="showPassword(password_lama)" id="togglePassword2">  <label for="show-password">Show Password 
 
           '</div></div>' +
           '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Confirm password</label>' +
-          '<div class="col-sm-9"><input type="password" class="form-control2" id="Confirm_password"/>  <img src="https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash-300x240.png" width="20px" height="20px" style="margin-left: -11%;display:inline;vertical-align: middle" id="togglePassword3">' +
+          '<div class="col-sm-9"><input type="password" class="form-control2" id="Confirm_password"/>  <img src="../../../content/images/hide.png" width="20px" height="20px" style="margin-left: -11%;display:inline;vertical-align: middle" id="togglePassword3">' +
           // <input type="checkbox" onclick="showPassword(password_lama)" id="togglePassword3">  <label for="show-password">Show Password
           '</div></div>' 
          ,
-       
+         allowOutsideClick: false,
+         showDenyButton: true,
           focusConfirm: false,
         }).then(result =>{
           
-          let passwordlama = $('#password_lama').val();
+          if (result.isConfirmed) {
+
+
+            let passwordlama = $('#password_lama').val();
           let passwordbaru = $('#passwor_baru').val();
           let confrimpassword = $('#Confirm_password').val();
     
@@ -372,6 +376,12 @@ export class NavbarComponent implements OnInit {
                 //  console.warn(error),
               });
           }
+
+          }else if (result.isDenied) {
+            
+          }
+
+          
 
          });
         
