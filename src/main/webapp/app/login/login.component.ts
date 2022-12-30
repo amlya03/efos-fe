@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     //   if (this.loginCounter == 3) {
     //     alert('Sudah Salah Sebanyak 3 Kali')
     //   }
+    this.sessionStorageService.store('sessionPs', this.loginForm.get('password')?.value);
     this.loginService.login(this.loginForm.getRawValue()).subscribe({
       next: () => {
         this.authenticationError = false;
