@@ -135,8 +135,83 @@ export class EmergencyContactComponent implements OnInit {
   }
 
   load() {
-    this.gettokendukcapil();
+    setTimeout(() => {
+      this.gettokendukcapil();
+    }, 10);
+    setTimeout(() => {
+      this.datEntryService.getFetchListEmergency().subscribe(emer => {
+        this.gethubunganemergency1 = emer.result;
+      });
+    }, 10);
+    setTimeout(() => {
+      this.datEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(de => {
+        this.dataEntry = de.result;
+      });
+    }, 10);
+    setTimeout(() => {
+      this.datEntryService.getFetchEmergencyByCuref(this.curef).subscribe({
+        next: de => {
+          this.daWa = de.result;
+          if (de.result == null) {
+            this.getLoading(false);
+            this.untukprovinsi = '';
+            this.untukkobkota = '';
+            this.untukkecamatan = '';
+            this.untukkelurahan = '';
+            this.keteranganstatusnikah = '';
+            const retriveEmergency = {
+              nama: '',
+              alamat: '',
+              // ///////////////////////////////////////
+              provinsi: '',
+              kabkota: '',
+              kecamatan: '',
+              kelurahan: '',
+              // //////////////////////////////////////
+              kode_pos: '',
+              rt: '',
+              rw: '',
+              no_telepon: '',
+              hubungan: '',
+              email: '',
+            };
+            this.emergencyForm.setValue(retriveEmergency);
+          } else {
+            this.untukprovinsi = de.result.provinsi;
+            this.untukkobkota = de.result.kabkota;
+            this.untukkecamatan = de.result.kecamatan;
+            this.untukkelurahan = de.result.kelurahan;
+            this.keteranganstatusnikah = de.result.kategori_pekerjaan;
 
+            const retriveEmergency = {
+              nama: this.daWa.nama,
+              alamat: this.daWa.alamat,
+              // ///////////////////////////////////////
+              provinsi: '',
+              kabkota: '',
+              kecamatan: '',
+              kelurahan: '',
+              // //////////////////////////////////////
+              kode_pos: this.daWa.kode_pos,
+              rt: this.daWa.rt,
+              rw: this.daWa.rw,
+              no_telepon: this.daWa.no_telepon,
+              hubungan: this.daWa.hubungan,
+              email: this.daWa.email,
+            };
+            this.emergencyForm.setValue(retriveEmergency);
+            setTimeout(() => {
+              this.getLoading(false);
+              this.carimenggunakankodepos(this.daWa.kode_pos);
+            }, 300);
+          }
+        },
+        // error: err => {
+        //   console.warn('fff', err)
+        //   this.getLoading(false);
+        // }
+      });
+    }, 50);
     // const ValidasiNama = <FormControl>this.emergencyForm.get('nama');
     // const ValidasiAlamat = <FormControl>this.emergencyForm.get('alamat');
     // const ValidasiProvinsi = <FormControl>this.emergencyForm.get('provinsi');
@@ -178,44 +253,6 @@ export class EmergencyContactComponent implements OnInit {
     //     ValidasiEmail.updateValueAndValidity();
     //   }, 100);
     // }, 100);
-
-    this.datEntryService.getFetchEmergencyByCuref(this.curef).subscribe(de => {
-      this.daWa = de.result;
-
-      this.untukprovinsi = de.result.provinsi;
-      this.untukkobkota = de.result.kabkota;
-      this.untukkecamatan = de.result.kecamatan;
-      this.untukkelurahan = de.result.kelurahan;
-      this.keteranganstatusnikah = de.result.kategori_pekerjaan;
-      const retriveEmergency = {
-        nama: this.daWa.nama,
-        alamat: this.daWa.alamat,
-        // ///////////////////////////////////////
-        provinsi: '',
-        kabkota: '',
-        kecamatan: '',
-        kelurahan: '',
-        // //////////////////////////////////////
-        kode_pos: this.daWa.kode_pos,
-        rt: this.daWa.rt,
-        rw: this.daWa.rw,
-        no_telepon: this.daWa.no_telepon,
-        hubungan: this.daWa.hubungan,
-        email: this.daWa.email,
-      };
-      this.emergencyForm.setValue(retriveEmergency);
-      setTimeout(() => {
-        this.getLoading(false);
-        this.carimenggunakankodepos(this.daWa.kode_pos);
-      }, 300);
-    });
-
-    this.datEntryService.getFetchListEmergency().subscribe(emer => {
-      this.gethubunganemergency1 = emer.result;
-    });
-    this.datEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(de => {
-      this.dataEntry = de.result;
-    });
   }
 
   gettokendukcapil(): void {

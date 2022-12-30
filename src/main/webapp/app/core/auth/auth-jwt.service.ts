@@ -45,22 +45,16 @@ export class AuthServerProvider {
 
   logout(): Observable<void> {
     return new Observable(observer => {
-      this.localStorageService.clear('authenticationToken');
       this.sessionStorageService.clear('authenticationToken');
       // //////role//////////////
-      this.localStorageService.clear('sessionRole');
       this.sessionStorageService.clear('sessionRole');
       // /////username///////////
-      this.localStorageService.clear('sessionUserName');
       this.sessionStorageService.clear('sessionUserName');
       // //////fullname/////////
-      this.localStorageService.clear('sessionFullName');
       this.sessionStorageService.clear('sessionFullName');
       // /////kodebarang//////////
-      this.localStorageService.clear('sessionKdCabang');
       this.sessionStorageService.clear('sessionKdCabang');
       // //////Sudah Logout////////
-      this.localStorageService.clear('SudahLogin');
       this.sessionStorageService.clear('SudahLogin');
 
       observer.complete();
@@ -73,35 +67,11 @@ export class AuthServerProvider {
     const sessionUserName = response.result?.username;
     const sessionFullName = response.result?.fullname;
     const sessionKdCabang = response.result?.kd_cabang;
-    // console.warn('ttttoookkkkeeeennnn',response)
-    // console.warn('ttttoookkkkeeeennnn22',response.result?.groupname)
-    //console.warn('token ', jwt);
-    //console.warn('role ', sessionRole);
-    //console.warn('username ', sessionUserName);
-    //console.warn('full name ', sessionFullName);
-    //console.warn('kode cabang ', sessionKdCabang);
-    // if (rememberMe) {
-    // this.localStorageService.store('sessionRole', sessionRole);
-    // this.localStorageService.store('sessionUserName', sessionUserName);
-    // this.localStorageService.store('sessionFullName', sessionFullName);
-    // this.localStorageService.store('sessionKdCabang', sessionKdCabang);
-    // this.localStorageService.store('authenticationToken', jwt);
-    // Store Login
     this.sessionStorageService.store('SudahLogin', 1);
     this.sessionStorageService.store('sessionKdCabang', sessionKdCabang);
     this.sessionStorageService.store('sessionFullName', sessionFullName);
     this.sessionStorageService.store('sessionUserName', sessionUserName);
     this.sessionStorageService.store('sessionRole', sessionRole);
     this.sessionStorageService.store('authenticationToken', jwt);
-
-    // this.sessionStorageService.clear('sessionRole');
-    // this.sessionStorageService.clear('sessionUserName');
-    // this.sessionStorageService.clear('sessionFullName');
-    // this.sessionStorageService.clear('sessionKdCabang');
-    // this.sessionStorageService.clear('SudahLogin');
-    // } else {
-    //   this.sessionStorageService.store('authenticationToken', jwt);
-    //   this.localStorageService.clear('authenticationToken');
-    // }
   }
 }

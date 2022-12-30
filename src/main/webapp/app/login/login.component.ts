@@ -51,46 +51,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
     //   if (this.loginCounter == 3) {
     //     alert('Sudah Salah Sebanyak 3 Kali')
     //   }
-    // this.loginService.login(this.loginForm.getRawValue()).subscribe({
-    //   next: () => {
-    //     this.authenticationError = false;
-    //     if (!this.router.getCurrentNavigation()) {
-    //       // There were no routing during login (eg from navigationToStoredUrl)
-    //       this.router.navigate(['/']);
-    //     }
-    //     setTimeout(() => {
-    //       window.location.reload();
-    //     }, 300);
-    //   },
-    //   error: () => (this.authenticationError = true),
-    // });
-
-    this.http
-      // .post<any>('http://10.20.81.186:8096/token/generate-token', {
-      .post<any>('http://10.20.34.110:8096/token/generate-token', {
-        username: this.loginForm.get('username')?.value,
-        password: this.loginForm.get('password')?.value,
-        app: 'efo',
-      })
-      .subscribe({
-        next: response => {
-          const sessionRole = response.result?.groupname;
-          const sessionUserName = response.result?.username;
-          const sessionFullName = response.result?.fullname;
-          const sessionKdCabang = response.result?.kd_cabang;
-          this.sessionStorageService.store('SudahLogin', 1);
-          this.sessionStorageService.store('sessionKdCabang', sessionKdCabang);
-          this.sessionStorageService.store('sessionFullName', sessionFullName);
-          this.sessionStorageService.store('sessionUserName', sessionUserName);
-          this.sessionStorageService.store('sessionRole', sessionRole);
+    this.loginService.login(this.loginForm.getRawValue()).subscribe({
+      next: () => {
+        this.authenticationError = false;
+        if (!this.router.getCurrentNavigation()) {
+          // There were no routing during login (eg from navigationToStoredUrl)
           this.router.navigate(['/']);
-          setTimeout(() => {
-            window.location.reload();
-          }, 100);
-        },
-        error: err => {
-          alert('Userid dan Password Tidak Ada');
-        },
-      });
+        }
+        setTimeout(() => {
+          window.location.reload();
+        }, 300);
+      },
+      error: () => (this.authenticationError = true),
+    });
   }
 }
