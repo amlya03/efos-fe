@@ -1,11 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
-import { jobinfolist } from './job-info-modellist';
 import { DataEntryService } from '../services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { SessionStorageService } from 'ngx-webstorage';
@@ -39,15 +37,11 @@ export class JobInfoComponent implements OnInit {
   ideJob: getJob[] = [];
   listJabatan: refJenisPekerjaan[] = [];
   listTipePekerjaan: getListTipePekerjaan[] = [];
-  datakiriman!: string;
   statusPerkawinan!: string;
   app_no_de!: string;
-  datakirimanakategoripekerjaan!: string;
   nampungsebelum: any;
   tampunganid: modelJobIde = new modelJobIde();
-  bawaidjob: any;
   nampungdatakatagoripekerjaan: any;
-  getjenispekerjaandariapi: refJenisPekerjaan[] = [];
   gettipeperusahaandariapi: refTipePerusahaan[] = [];
   getjenisbidangdariapi: refBidang[] = [];
   getdatasektorekonomi: refSektor[] = [];
@@ -66,15 +60,9 @@ export class JobInfoComponent implements OnInit {
   getjabatandariapi: refJabatan[] = [];
   getjabatansebelum: refJabatan[] = [];
   jumlahKaryawanSebelum: refJumlahKaryawan[] = [];
-  keteranganstatusnikah: any;
   curef: any;
-  tampungantipepekerjaan: any;
-  tampungantipeagunan: any;
-  contohkirimanpayrol: any;
-  contohkirimpyrol: any;
   untukSessionRole: any;
   datajobsebelum!: FormGroup;
-  dataretrivejobsebelumMap: any;
   kodeProvSeb: any;
   kodeKotaSeb: any;
   kodeKelSeb: any;
@@ -83,16 +71,11 @@ export class JobInfoComponent implements OnInit {
   dataretrivekabkotasebelum: any;
   dataretrivekecamatansebelum: any;
   dataretrivekelurahansebelum: any;
-  dataretrivetipepegawaiansebelum: any;
-  dataretrivetikategoripekerjaansebelum: any;
-  dataretrivetipepekerjaansebelum: any;
   dataretrivejenisbidangsebelum: any;
   dataretrivesektorekosebelum: any;
   pendapatan!: number;
-  pendapatanlain!: number;
   tunjangan!: number;
   formattedAmount: any;
-  amount: any;
   retriveprovinsi: any;
   retrivekabkota: any;
   retrivekecamatan: any;
@@ -101,13 +84,8 @@ export class JobInfoComponent implements OnInit {
   retriveKodeKota: any;
   retriveKodeKecamatan: any;
   retriveKodeKelurahan: any;
-  retriveprovinsisebelum: any;
-  retrivekabkotasebelum: any;
-  retrivekecamatansebelum: any;
-  retrivekelurahansebelum: any;
   //////////////////////////////
   untukListJob: any;
-  tipePekerjaanChange: any;
 
   constructor(
     protected datEntryService: DataEntryService,
