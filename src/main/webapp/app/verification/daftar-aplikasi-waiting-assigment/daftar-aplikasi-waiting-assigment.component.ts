@@ -134,42 +134,49 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
 
   // post assign
   postAssign(): void {
-    if (this.isChecked === false) {
-      this.kirimDe;
-      for (let i = 0; i < this.kirimDe.length; i++) {
-        this.http
-          .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
-            analis_verifikasi: this.kirimAssign,
-            app_no_de: this.kirimDe[i],
-            status_aplikasi: this.kirimStatusAplikasi[i],
-            created_by: this.sessionStorageService.retrieve('sessionUserName'),
-          })
-          .subscribe({
-            next: data => {},
-          });
+    // setTimeout(() => {
+    if (this.kirimDe.length != 0 && this.kirimAssign != null) {
+      if (this.isChecked === false) {
+        this.kirimDe;
+        for (let i = 0; i < this.kirimDe.length; i++) {
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
+              analis_verifikasi: this.kirimAssign,
+              app_no_de: this.kirimDe[i],
+              status_aplikasi: this.kirimStatusAplikasi[i],
+              created_by: this.sessionStorageService.retrieve('sessionUserName'),
+            })
+            .subscribe({
+              next: data => {},
+            });
+          if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
+            alert('Data di Assign kepada ' + this.kirimAssign);
+            window.location.reload();
+          }
+        }
+      } else {
+        for (let i = 0; i < this.checkLenghtResult.length; i++) {
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
+              analis_verifikasi: this.kirimAssign,
+              app_no_de: this.checkLenghtResult[i].app_no_de,
+              status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+              created_by: this.sessionStorageService.retrieve('sessionUserName'),
+            })
+            .subscribe({
+              next: data => {},
+            });
+
+          if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
+            alert('Data di Assign kepada ' + this.kirimAssign);
+            window.location.reload();
+          }
+        }
       }
     } else {
-      for (let i = 0; i < this.checkLenghtResult.length; i++) {
-        this.http
-          .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
-            analis_verifikasi: this.kirimAssign,
-            app_no_de: this.checkLenghtResult[i].app_no_de,
-            status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
-            created_by: this.sessionStorageService.retrieve('sessionUserName'),
-          })
-          .subscribe({
-            next: data => {},
-          });
-      }
+      alert('Harap Pilih Data Terlebih Dahulu');
     }
-    setTimeout(() => {
-      // alert(this.kirimDe.length == 0)
-      if (this.kirimDe.length == 0 || this.kirimAssign === '') {
-        alert('Harap Pilih Data Terlebih Dahulu');
-      } else {
-        window.location.reload();
-      }
-    }, 1000);
+    // }, 1000);
 
     this.dtElement.dtInstance.then((dtIntance: DataTables.Api) => {
       dtIntance.destroy();

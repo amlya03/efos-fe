@@ -457,7 +457,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       this.ideFixServices.getInformasiSlik().subscribe(term => {
         this.termAndCondition = term.result;
       });
-    }, 120);
+    }, 10);
     setTimeout(() => {
       if (this.kategori == 1) {
         this.kirimKatePeker = 'Fix Income';

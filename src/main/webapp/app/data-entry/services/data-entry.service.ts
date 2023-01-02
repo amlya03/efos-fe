@@ -37,6 +37,10 @@ export class DataEntryService {
     this.untukSessionKodeCabang = this.SessionStorageService.retrieve('sessionKdCabang');
   }
 
+  // //////////////////////////// GET lIST Kepemilikan Agunan //////////////////////////////////////////////////
+  protected listKepemilikanAgunan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_hub_kepemilikan_agunan');
+  // //////////////////////////// GET lIST Kepemilikan Agunan //////////////////////////////////////////////////
+
   // //////////////////////////// GET lIST PENDIDIKAN //////////////////////////////////////////////////
   protected listPendidikan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_pendidikan');
   // //////////////////////////// GET lIST PENDIDIKAN //////////////////////////////////////////////////
@@ -465,6 +469,12 @@ export class DataEntryService {
     return this.http.get<ApiResponse>(this.listPendidikan);
   }
   // //////////////////////////// GET List Memo //////////////////////////////////////////////////
+
+  // //////////////////////////// GET lIST Kepemilikan Agunan //////////////////////////////////////////////////
+  getListKepemilikanAgunan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.listKepemilikanAgunan);
+  }
+  // //////////////////////////// GET lIST Kepemilikan Agunan //////////////////////////////////////////////////
 
   getprovinsi(token: string | null | undefined, req?: number | null): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);

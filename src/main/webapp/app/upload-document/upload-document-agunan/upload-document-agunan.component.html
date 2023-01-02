@@ -99,7 +99,12 @@
   </div>
 </div>
 <br />
-<button class="btn btn-warning" (click)="next()" [hidden]="this.untukSessionRole == 'AO'" style="float: right">Selanjutnya</button>
-<button class="btn btn-warning" (click)="updateStatus()" [hidden]="this.untukSessionRole == 'BRANCHMANAGER'" style="float: right">
+<button class="btn btn-warning" (click)="next()" [hidden]="this.untukSessionRole === 'AO'" style="float: right">Selanjutnya</button>
+<button
+  class="btn btn-warning"
+  (click)="updateStatus()"
+  [hidden]="this.untukSessionRole === 'BRANCHMANAGER' || this.untukSessionRole === 'VER_PRE_SPV'"
+  style="float: right"
+>
   Update Status
 </button>
