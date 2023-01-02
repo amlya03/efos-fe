@@ -111,26 +111,17 @@ export class JobInfoComponent implements OnInit {
     // localStorage.setItem('daftar_aplikasi_de', job_info_retrive)
     ////////////////////////////// Validasi ////////////////////////////////////////////////////////
     this.jobInfoForm = this.formBuilder.group({
-      tipe_pekerjaan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      tipe_pekerjaan: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
       payroll: [
         { value: '1' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
         Validators.required,
       ],
-      posisi: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      nama_perusahaan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      alamat_perusahaan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      posisi: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      nama_perusahaan: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      alamat_perusahaan: {
+        value: '' || null,
+        disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER',
+      },
       // ///////////////////////////////////////
       provinsi: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
       kabkota: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
@@ -138,66 +129,27 @@ export class JobInfoComponent implements OnInit {
       kelurahan: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
       kode_pos: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
       // //////////////////////////////////////
-      rt: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      rw: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      no_siup: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      umur_pensiun: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      lama_bekerja_tahun: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      lama_bekerja_bulan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      jumlah_karyawan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      pendapatan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      pendapatan_lain: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      tunjangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      total_pendapatan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      tipe_perusahaan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      tipe_kepegawaian: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      jenis_bidang: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      sektor_ekonomi: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      rt: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      rw: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      no_siup: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      umur_pensiun: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      lama_bekerja_tahun: {
+        value: '' || null,
+        disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER',
+      },
+      lama_bekerja_bulan: {
+        value: '' || null,
+        disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER',
+      },
+      jumlah_karyawan: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      pendapatan: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      pendapatan_lain: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      tunjangan: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      total_pendapatan: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      tipe_perusahaan: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      tipe_kepegawaian: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      jenis_bidang: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      sektor_ekonomi: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
     });
     this.datajobsebelum = this.formBuilder.group({
       kategori_pekerjaan_sebelum: '',
@@ -264,7 +216,7 @@ export class JobInfoComponent implements OnInit {
       //console.log(this.jobInfo);
       // alert(this.jobInfo[0] == null)
       const validasiTipePek = <FormControl>this.jobInfoForm.get('tipe_pekerjaan');
-      const validasiPosisi = <FormControl>this.jobInfoForm.get('posisi');
+      // const validasiPosisi = <FormControl>this.jobInfoForm.get('posisi');
       const validasiNamaPer = <FormControl>this.jobInfoForm.get('nama_perusahaan');
       const validasiAlamatPer = <FormControl>this.jobInfoForm.get('alamat_perusahaan');
       const validasiPro = <FormControl>this.jobInfoForm.get('provinsi');
@@ -280,7 +232,7 @@ export class JobInfoComponent implements OnInit {
       const validasiUmurPen = <FormControl>this.jobInfoForm.get('umur_pensiun');
       const validasiBekTahun = <FormControl>this.jobInfoForm.get('lama_bekerja_tahun');
       const validasiBekBulan = <FormControl>this.jobInfoForm.get('lama_bekerja_bulan');
-      const validasiJumKar = <FormControl>this.jobInfoForm.get('jumlah_karyawan');
+      // const validasiJumKar = <FormControl>this.jobInfoForm.get('jumlah_karyawan');
       const validasiPendapatan = <FormControl>this.jobInfoForm.get('pendapatan');
       const validasiPendapatanLain = <FormControl>this.jobInfoForm.get('pendapatan_lain');
       const validasiTunjangan = <FormControl>this.jobInfoForm.get('tunjangan');
@@ -288,7 +240,7 @@ export class JobInfoComponent implements OnInit {
       const validasiTipeKepegawaian = <FormControl>this.jobInfoForm.get('tipe_kepegawaian');
       if (this.jobInfo[0] == null) {
         validasiTipePek.setValidators([Validators.required]);
-        validasiPosisi.setValidators([Validators.required]);
+        // validasiPosisi.setValidators([Validators.required]);
         validasiNamaPer.setValidators([Validators.required]);
         validasiAlamatPer.setValidators([Validators.required]);
         validasiPro.setValidators([Validators.required]);
@@ -303,7 +255,7 @@ export class JobInfoComponent implements OnInit {
         validasiUmurPen.setValidators([Validators.required]);
         validasiBekTahun.setValidators([Validators.required]);
         validasiBekBulan.setValidators([Validators.required]);
-        validasiJumKar.setValidators([Validators.required]);
+        // validasiJumKar.setValidators([Validators.required]);
         validasiPendapatan.setValidators([Validators.required]);
         validasiPendapatanLain.setValidators([Validators.required]);
         validasiTunjangan.setValidators([Validators.required]);
@@ -311,7 +263,7 @@ export class JobInfoComponent implements OnInit {
         validasiTipeKepegawaian.setValidators([Validators.required]);
       } else {
         validasiTipePek.setValidators(null);
-        validasiPosisi.setValidators(null);
+        // validasiPosisi.setValidators(null);
         validasiNamaPer.setValidators(null);
         validasiAlamatPer.setValidators(null);
         validasiPro.setValidators(null);
@@ -326,7 +278,7 @@ export class JobInfoComponent implements OnInit {
         validasiUmurPen.setValidators(null);
         validasiBekTahun.setValidators(null);
         validasiBekBulan.setValidators(null);
-        validasiJumKar.setValidators(null);
+        // validasiJumKar.setValidators(null);
         validasiPendapatan.setValidators(null);
         validasiPendapatanLain.setValidators(null);
         validasiTunjangan.setValidators(null);
@@ -334,7 +286,7 @@ export class JobInfoComponent implements OnInit {
         validasiTipeKepegawaian.setValidators(null);
       }
       validasiTipePek.updateValueAndValidity();
-      validasiPosisi.updateValueAndValidity();
+      // validasiPosisi.updateValueAndValidity();
       validasiNamaPer.updateValueAndValidity();
       validasiAlamatPer.updateValueAndValidity();
       validasiPro.updateValueAndValidity();
@@ -349,7 +301,7 @@ export class JobInfoComponent implements OnInit {
       validasiUmurPen.updateValueAndValidity();
       validasiBekTahun.updateValueAndValidity();
       validasiBekBulan.updateValueAndValidity();
-      validasiJumKar.updateValueAndValidity();
+      // validasiJumKar.updateValueAndValidity();
       validasiPendapatan.updateValueAndValidity();
       validasiPendapatanLain.updateValueAndValidity();
       validasiTunjangan.updateValueAndValidity();
