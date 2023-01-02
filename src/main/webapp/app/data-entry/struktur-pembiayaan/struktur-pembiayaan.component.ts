@@ -149,7 +149,7 @@ export class StrukturPembiayaanComponent implements OnInit {
         Validators.required,
       ],
       nilai_pembiayaan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '0' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
         Validators.required,
       ],
     });
