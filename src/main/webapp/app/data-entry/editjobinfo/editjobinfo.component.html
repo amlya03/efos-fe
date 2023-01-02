@@ -298,7 +298,7 @@
       </div>
       <br />
       <div>
-        <div class="form-group row">
+        <div class="form-group row" *ngIf="editJob.kategori_pekerjaan === 'Non Fix Income'">
           <label class="col-sm-3 col-form-label" [hidden]="tipePekerjaanChange == '4'">Nomor SIUP</label>
           <label class="col-sm-3 col-form-label" *ngIf="tipePekerjaanChange == '4'">Nomor SIP</label>
           <div class="col-sm-9">
@@ -311,14 +311,6 @@
               formControlName="no_siup"
               class="form-control"
             />
-            <span
-              [hidden]="
-                editJobForm.controls.no_siup.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
-              "
-              class="text-danger"
-            >
-              No SIUP Harus Diisi
-            </span>
           </div>
         </div>
       </div>

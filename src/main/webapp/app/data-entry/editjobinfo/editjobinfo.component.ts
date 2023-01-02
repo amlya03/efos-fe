@@ -107,85 +107,41 @@ export class EditjobinfoComponent implements OnInit {
 
     ////////////////////////////// Validasi ////////////////////////////////////////////////////////
     this.editJobForm = this.formBuilder.group({
-      tipe_pekerjaan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      payroll: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      posisi: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      nama_perusahaan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      alamat_perusahaan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      tipe_pekerjaan: ['', Validators.required],
+      payroll: ['', Validators.required],
+      posisi: ['', Validators.required],
+      nama_perusahaan: ['', Validators.required],
+      alamat_perusahaan: ['', Validators.required],
       // ///////////////////////////////////////
-      provinsi: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-      kabkota: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-      kecamatan: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-      kelurahan: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-      kode_pos: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      provinsi: '',
+      kabkota: '',
+      kecamatan: '',
+      kelurahan: '',
+      kode_pos: '',
       // //////////////////////////////////////
-      rt: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      rw: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      no_siup: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      umur_pensiun: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      lama_bekerja_tahun: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      lama_bekerja_bulan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      jumlah_karyawan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      pendapatan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      pendapatan_lain: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      tunjangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      total_pendapatan: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-      tipe_perusahaan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      tipe_kepegawaian: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      rt: ['', Validators.required],
+      rw: ['', Validators.required],
+      no_siup: '',
+      umur_pensiun: ['', Validators.required],
+      lama_bekerja_tahun: ['', Validators.required],
+      lama_bekerja_bulan: ['', Validators.required],
+      jumlah_karyawan: ['', Validators.required],
+      pendapatan: ['', Validators.required],
+      pendapatan_lain: ['', Validators.required],
+      tunjangan: ['', Validators.required],
+      total_pendapatan: '',
+      tipe_perusahaan: ['', Validators.required],
+      tipe_kepegawaian: ['', Validators.required],
     });
   }
   load() {
+    setTimeout(() => {
+      if (this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER') {
+        this.editJobForm.disable();
+      } else {
+        this.editJobForm.enable();
+      }
+    }, 5);
     setTimeout(() => {
       this.datEntryService.getFetchListJenisPekerjaan().subscribe(data => {
         this.listJabatan = data.result;
