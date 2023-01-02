@@ -7,7 +7,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { DataEntryService } from '../services/data-entry.service';
 import { SessionStorageService } from 'ngx-webstorage';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { refListTipeProperti } from 'app/verification/service/config/refListTipeProperti.model';
 import Swal from 'sweetalert2';
 import { listAgunan } from '../services/config/listAgunan.model';
@@ -325,6 +325,109 @@ export class CollateralEditComponent implements OnInit {
           this.kirimanhubungan1lainya = table.result.hubungan_pemegang_hak;
         }
 
+
+
+        const ValidasiTipeAgunan = <FormControl>this.editCollateralForm.get('tipe_agunan');
+        const ValidasiJenisObjek = <FormControl>this.editCollateralForm.get('jenis_objek');
+        const ValidasiTipeKendaraan = <FormControl>this.editCollateralForm.get('tipe_kendaraan');
+        const ValidasiMerk = <FormControl>this.editCollateralForm.get('merk');
+        const ValidasiModel = <FormControl>this.editCollateralForm.get('model');
+        const ValidasiSeri = <FormControl>this.editCollateralForm.get('seri');
+        const ValidasiNomorBpkb = <FormControl>this.editCollateralForm.get('nomor_bpkb');
+        const ValidasiNoplat = <FormControl>this.editCollateralForm.get('no_plat');
+        const ValidasiWarna = <FormControl>this.editCollateralForm.get('warna');
+        const ValidasiNomesin = <FormControl>this.editCollateralForm.get('no_mesin');
+        const ValidasiNorangka = <FormControl>this.editCollateralForm.get('no_rangka');
+        const ValidasiNamaBpkb = <FormControl>this.editCollateralForm.get('nama_bpkb');
+
+        const ValidasiHubunganPemilikHak = <FormControl>this.editCollateralForm.get('hubungan_pemegang_hak');
+        const ValidasiTipeProperti = <FormControl>this.editCollateralForm.get('tipe_properti');
+        const ValidasiStatusAgunan= <FormControl>this.editCollateralForm.get('status_agunan');
+        const ValidasiStatusDevloper = <FormControl>this.editCollateralForm.get('status_developer');
+        const ValidasiDevloper = <FormControl>this.editCollateralForm.get('developer');
+        const ValidasiStatusJaminanSebelum = <FormControl>this.editCollateralForm.get('status_jaminan_sebelumnya');
+        const ValidasiTahunDibuat = <FormControl>this.editCollateralForm.get('tahun_dibuat');
+        const ValidasiUsiaBangunan = <FormControl>this.editCollateralForm.get('usia_bangunan');
+        const ValidasiStatusSertifikat = <FormControl>this.editCollateralForm.get('status_sertifikat');
+        const ValidasiNoSertifikat = <FormControl>this.editCollateralForm.get('no_sertifikat');
+        const ValidasiNoKontakHr = <FormControl>this.editCollateralForm.get('nama_pemegang_hak');
+        const ValidasiNoHandphoneCp= <FormControl>this.editCollateralForm.get('no_handphone_cp');
+        const ValidasiNoIdPemegangHakSertifikat = <FormControl>this.editCollateralForm.get('no_id_pemegang_hak_sertifikat');
+        const ValidasiAlamatAgunan = <FormControl>this.editCollateralForm.get('alamat_agunan');
+        const ValidasiProvinsiAgunan = <FormControl>this.editCollateralForm.get('provinsi_agunan');
+        const ValidasiKabkotaAgunan = <FormControl>this.editCollateralForm.get('kabkota_agunan');
+        const ValidasiKecamatanAgunan = <FormControl>this.editCollateralForm.get('kecamatan_agunan');
+        const ValidasiKelurahanAgunan = <FormControl>this.editCollateralForm.get('kelurahan_agunan');
+        const ValidasiKodePosAgunan= <FormControl>this.editCollateralForm.get('kode_pos_agunan');
+        const Validasirt = <FormControl>this.editCollateralForm.get('rt');
+        const Validasirw = <FormControl>this.editCollateralForm.get('rw');
+        const ValidasiLuasTanah = <FormControl>this.editCollateralForm.get('luas_tanah');
+        const ValidasiLuasBangunan = <FormControl>this.editCollateralForm.get('luas_bangunan');
+        const ValidasiHargaObjek = <FormControl>this.editCollateralForm.get('harga_objek');
+        const ValidasiAlamatSesuaiSertifikat = <FormControl>this.editCollateralForm.get('alamat_sesuai_sertifikat');
+        const ValidasiProvinsiSesuaiSertifikat = <FormControl>this.editCollateralForm.get('provinsi_sesuai_sertifikat');
+        const ValidasiKabkotaSesuaiSertifikat = <FormControl>this.editCollateralForm.get('kabkota_sesuai_sertifikat');
+        const ValidasiKecamatanSesuaiSertifikat = <FormControl>this.editCollateralForm.get('kecamatan_sesuai_sertifikat');
+        const ValidasiKelurahanSesuaiSertifikat = <FormControl>this.editCollateralForm.get('kelurahan_sesuai_sertifikat');
+        const ValidasiKodePosSesuaiSertifikat = <FormControl>this.editCollateralForm.get('kode_pos_sesuai_sertifikat');
+        const ValidasiRtSertifikat = <FormControl>this.editCollateralForm.get('rt_sertifikat');
+        const ValidasiRwSertifikat = <FormControl>this.editCollateralForm.get('rw_sertifikat');
+        const ValidasiIdRumah = <FormControl>this.editCollateralForm.get('id_rumah');
+        const ValidasiBlokRumah = <FormControl>this.editCollateralForm.get('blok_rumah');
+        const ValidasiNomorRumah = <FormControl>this.editCollateralForm.get('nomor_rumah');
+        const ValidasiTanggalTerbit = <FormControl>this.editCollateralForm.get('tanggal_terbit');
+        const ValidasiTanggalExpired = <FormControl>this.editCollateralForm.get('tanggal_expired');
+        const ValidasiHubunganPemegangHakLainya = <FormControl>this.editCollateralForm.get('hubungan_pemegang_hak_lainya');
+        ValidasiIdRumah.setValidators([Validators.required]);
+        ValidasiBlokRumah.setValidators([Validators.required]);
+        ValidasiNomorRumah.setValidators([Validators.required]);
+        ValidasiTipeAgunan.setValidators([Validators.required]);
+        ValidasiJenisObjek.setValidators([Validators.required]);
+        ValidasiTipeKendaraan.setValidators([Validators.required]);
+        ValidasiMerk.setValidators([Validators.required]);
+        ValidasiModel.setValidators([Validators.required]);
+        ValidasiSeri.setValidators([Validators.required]);
+        ValidasiNomorBpkb.setValidators([Validators.required]);
+        ValidasiNoplat.setValidators([Validators.required]);
+        ValidasiWarna.setValidators([Validators.required]);
+        ValidasiNomesin.setValidators([Validators.required]);
+        ValidasiNorangka.setValidators([Validators.required]);
+        ValidasiNamaBpkb.setValidators([Validators.required]);
+        ValidasiHubunganPemilikHak.setValidators([Validators.required]);
+        ValidasiTipeProperti.setValidators([Validators.required]);
+        ValidasiStatusAgunan.setValidators([Validators.required]);
+        ValidasiStatusDevloper.setValidators([Validators.required]);
+        ValidasiDevloper.setValidators([Validators.required]);
+        ValidasiStatusJaminanSebelum.setValidators([Validators.required]);
+        ValidasiTahunDibuat.setValidators([Validators.required]);
+        ValidasiUsiaBangunan.setValidators([Validators.required]);
+        ValidasiStatusSertifikat.setValidators([Validators.required]);
+        ValidasiNoSertifikat.setValidators([Validators.required]);
+        ValidasiNoKontakHr.setValidators([Validators.required]);
+        ValidasiNoHandphoneCp.setValidators([Validators.required]);
+        ValidasiNoIdPemegangHakSertifikat.setValidators([Validators.required]);
+        ValidasiAlamatAgunan.setValidators([Validators.required]);
+        ValidasiProvinsiAgunan.setValidators([Validators.required]);
+        ValidasiKabkotaAgunan.setValidators([Validators.required]);
+        ValidasiKecamatanAgunan.setValidators([Validators.required]);
+        ValidasiKelurahanAgunan.setValidators([Validators.required]);
+        ValidasiKodePosAgunan.setValidators([Validators.required]);
+        Validasirt.setValidators([Validators.required]);
+        Validasirw.setValidators([Validators.required]);
+        ValidasiLuasTanah.setValidators([Validators.required]);
+        ValidasiLuasBangunan.setValidators([Validators.required]);
+        ValidasiHargaObjek.setValidators([Validators.required]);
+        ValidasiAlamatSesuaiSertifikat.setValidators([Validators.required]);
+        ValidasiProvinsiSesuaiSertifikat.setValidators([Validators.required]);
+        ValidasiKabkotaSesuaiSertifikat.setValidators([Validators.required]);
+        ValidasiKecamatanSesuaiSertifikat.setValidators([Validators.required]);
+        ValidasiKelurahanSesuaiSertifikat.setValidators([Validators.required]);
+        ValidasiRtSertifikat.setValidators([Validators.required]);
+        ValidasiRwSertifikat.setValidators([Validators.required]);
+        ValidasiTanggalTerbit.setValidators([Validators.required]);
+        ValidasiTanggalExpired.setValidators([Validators.required]);
+        ValidasiHubunganPemegangHakLainya.setValidators([Validators.required]);
+       
         this.datEntryService.getFetchListTipeProperti(tipeAgunan).subscribe(data => {
           this.tipeProperti = data.result;
         });
@@ -349,7 +452,7 @@ export class CollateralEditComponent implements OnInit {
           developer: this.tableAgunan.developer,
           status_jaminan_sebelumnya: this.tableAgunan.status_jaminan_sebelumnya,
           tahun_dibuat: this.tableAgunan.tahun_dibuat,
-          usia_bangunan: '',
+          usia_bangunan: this.tableAgunan.usia_bangunan,
           status_sertifikat: this.tableAgunan.status_sertifikat,
           no_sertifikat: this.tableAgunan.no_sertifikat,
           nama_pemegang_hak: this.tableAgunan.nama_pemegang_hak,
@@ -394,6 +497,8 @@ export class CollateralEditComponent implements OnInit {
       });
     }, 80);
   }
+ 
+
   agunanChange(code: any) {
     this.datEntryService.getFetchListTipeProperti(code).subscribe(data => {
       this.tipeProperti = data.result;
@@ -482,6 +587,8 @@ export class CollateralEditComponent implements OnInit {
 
     this.tampungantipeagunan = pilihantipeagunan.value;
   }
+   
+  
 
   tambahcollateral() {
     this.tambahatautidak = 'benar';
