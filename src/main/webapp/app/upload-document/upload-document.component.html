@@ -18,22 +18,22 @@
     <p></p>
     <label class="m-t-5">Fasilitas</label>
     <div class="form-group">
-      <select #fasilitas class="form-control">
-        <option selected value="">Pilih Pencarian Berdasarkan Fasilitas</option>
-        <option value="PPR">PPR</option>
-        <option value="PTA">PTA</option>
-        <option value="KTM">KTM</option>
+      <select #fasilitas1 class="form-control">
+        <option value="">Pilih Pencarian Berdasarkan Fasilitas</option>
+        <option *ngFor="let list of fasilitas" value="{{ list.fasilitas }}">
+          {{ list.fasilitas }}
+        </option>
       </select>
     </div>
   </div>
   <div class="col" style="text-align: center">
     <br />
-    <button (click)="cariButton(fasilitas.value, kategori.value, namaNasabah.value, noAplikasi.value)" class="btn btn-dark">
+    <button (click)="cariButton(fasilitas1.value, kategori.value, namaNasabah.value, noAplikasi.value)" class="btn btn-dark">
       Cari Data
     </button>
     <button
       class="btn btn-info"
-      (click)="fasilitas.value = ''; noAplikasi.value = ''; namaNasabah.value = ''; kategori.value = ''; clearInput()"
+      (click)="fasilitas1.value = ''; noAplikasi.value = ''; namaNasabah.value = ''; kategori.value = ''; clearInput()"
     >
       Clear Data
     </button>
@@ -66,11 +66,7 @@
         <td style="text-align: center">{{ dataEntry.produk_pembiayaan }}</td>
         <td hidden>{{ dataEntry.kategori_pekerjaan === 'Fix Income' }}</td>
         <td style="text-align: center">
-          <a
-            (click)="
-              viewUpload(dataEntry.curef, dataEntry.app_no_de, dataEntry.program_pembiayaan, dataEntry.kategori_pekerjaan, dataEntry.nama)
-            "
-          >
+          <a (click)="viewUpload(dataEntry.curef, dataEntry.app_no_de, dataEntry.kategori_pekerjaan, dataEntry.nama)">
             <fa-icon icon="ellipsis"></fa-icon><br />Detail
           </a>
         </td>

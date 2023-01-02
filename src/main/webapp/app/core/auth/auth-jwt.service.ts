@@ -37,8 +37,8 @@ export class AuthServerProvider {
     return (
       this.http
         // .post<JwtToken>(this.applicationConfigService.getEndpointFor('api/authenticate'), credentials)
-        // .post<any>(this.applicationConfigService.getEndpointFor('http://10.20.81.186:8096/token/generate-token'), credentials)
-        .post<any>(this.applicationConfigService.getEndpointFor('http://10.20.34.110:8096/token/generate-token'), credentials)
+        .post<any>(this.applicationConfigService.getEndpointFor('http://10.20.81.186:8096/token/generate-token'), credentials)
+        // .post<any>(this.applicationConfigService.getEndpointFor('http://10.20.34.110:8096/token/generate-token'), credentials)
         // .pipe(map(response => this.authenticateSuccess(response, credentials.rememberMe)));
         .pipe(map(response => this.authenticateSuccess(response)))
     );

@@ -161,7 +161,7 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
         app_no_de: this.app_no_de,
-        created_by: this.curef,
+        created_by: this.SessionStorageService.retrieve('sessionUserName'),
         status_aplikasi: this.fetchAllAgunan.status_aplikasi,
       })
       .subscribe({
