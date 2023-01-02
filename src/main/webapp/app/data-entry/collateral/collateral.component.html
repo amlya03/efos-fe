@@ -25,16 +25,7 @@
                   </option>
                 </select>
               </div>
-              <span
-                [hidden]="
-                  collateralForm.controls.tipe_agunan.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Tipe Agunan Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.tipe_agunan.valid" class="text-danger"> Field Wajib Diisi </span>
             </div>
           </div>
           <br />
@@ -49,16 +40,7 @@
                   </option>
                 </select>
               </div>
-              <span
-                [hidden]="
-                  collateralForm.controls.jenis_objek.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Jenis Objek Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.jenis_objek.valid" class="text-danger"> Field Wajib Diisi </span>
             </div>
           </div>
           <br />
@@ -73,16 +55,7 @@
                   </option>
                 </select>
               </div>
-              <span
-                [hidden]="
-                  collateralForm.controls.tipe_kendaraan.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Tipe Kendaraan Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.tipe_kendaraan.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -90,14 +63,7 @@
             <label class="col-sm-4 col-form-label">Merek</label>
             <div class="col-sm-8">
               <input type="text" class="form-control" placeholder="Merek" formControlName="merk" id="merk2" />
-              <span
-                [hidden]="
-                  collateralForm.controls.merk.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Merk Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.merk.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -105,14 +71,7 @@
             <label class="col-sm-4 col-form-label">Model</label>
             <div class="col-sm-8">
               <input type="text" class="form-control" placeholder="Model" formControlName="model" id="model2" />
-              <span
-                [hidden]="
-                  collateralForm.controls.model.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Model Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.model.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -120,14 +79,7 @@
             <label class="col-sm-4 col-form-label">Seri</label>
             <div class="col-sm-8">
               <input type="text" class="form-control" placeholder="Seri" formControlName="seri" id="seri2" />
-              <span
-                [hidden]="
-                  collateralForm.controls.model.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Seri Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.seri.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -135,16 +87,7 @@
             <label class="col-sm-4 col-form-label">No BPKB</label>
             <div class="col-sm-8">
               <input type="tel" class="form-control" placeholder="No BPKB" formControlName="nomor_bpkb" id="nomor_bpkb2" />
-              <span
-                [hidden]="
-                  collateralForm.controls.nomor_bpkb.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                No BPKB Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.nomor_bpkb.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -167,16 +110,7 @@
                   formControlName="hubungan_pemegang_hak_input"
                 />
               </div>
-              <span
-                [hidden]="
-                  collateralForm.controls.hubungan_pemegang_hak.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.hubungan_pemegang_hak.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -194,16 +128,7 @@
                   </option>
                 </select>
               </div>
-              <span
-                [hidden]="
-                  collateralForm.controls.tipe_properti.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Tipe Property Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.tipe_properti.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -271,16 +196,7 @@
                   formControlName="developer"
                 />
               </div>
-              <span
-                [hidden]="
-                  collateralForm.controls.developer.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Developer Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.developer.valid" class="text-danger"> Field Wajib Diisi </span>
             </div>
             <br />
           </div>
@@ -305,16 +221,7 @@
             <label class="col-sm-4 col-form-label">No Plat</label>
             <div class="col-sm-8">
               <input type="tel" class="form-control" placeholder="No Plat" formControlName="no_plat" id="no_plat" maxlength="12" />
-              <span
-                [hidden]="
-                  collateralForm.controls.no_plat.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                No Plat Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.no_plat.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -322,14 +229,7 @@
             <label class="col-sm-4 col-form-label">Warna</label>
             <div class="col-sm-8">
               <input type="text" class="form-control" placeholder="Warna" formControlName="warna" id="warna" />
-              <span
-                [hidden]="
-                  collateralForm.controls.warna.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Warna Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.warna.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -337,16 +237,7 @@
             <label class="col-sm-4 col-form-label">No Mesin</label>
             <div class="col-sm-8">
               <input type="tel" class="form-control" placeholder="No Mesin" formControlName="no_mesin" id="no_mesin" />
-              <span
-                [hidden]="
-                  collateralForm.controls.no_mesin.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                No Mesin Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.no_mesin.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -354,16 +245,7 @@
             <label class="col-sm-4 col-form-label">No Rangka</label>
             <div class="col-sm-8">
               <input type="tel" class="form-control" placeholder="No Rangka" formControlName="no_rangka" id="no_rangka" />
-              <span
-                [hidden]="
-                  collateralForm.controls.no_rangka.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                No Rangka Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.no_rangka.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -371,16 +253,7 @@
             <label class="col-sm-4 col-form-label">Nama BPKB</label>
             <div class="col-sm-8">
               <input type="text" class="form-control" placeholder="Nama BPKB" formControlName="nama_bpkb" id="nama_bpkb" />
-              <span
-                [hidden]="
-                  collateralForm.controls.nama_bpkb.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Nama BPKB Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.nama_bpkb.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -399,16 +272,7 @@
                 (keypress)="keyPressNumbers($event)"
                 (input)="hitungUsiaBangunan(this.collateralForm.get('tahun_dibuat')?.value)"
               />
-              <span
-                [hidden]="
-                  collateralForm.controls.tahun_dibuat.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Tahun Buat Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.tahun_dibuat.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -432,6 +296,7 @@
                   <span class="input-group-text" id="basic-addon2">Tahun</span>
                 </div>
               </div>
+              <span [hidden]="collateralForm.controls.usia_bangunan.valid" class="text-danger"> Field Wajib Diisi </span>
             </div>
           </div>
           <div class="form-group row" [hidden]="this.collateralForm.get('tipe_agunan')?.value == 'C01'">
@@ -445,35 +310,19 @@
                   </option>
                 </select>
               </div>
-              <span
-                [hidden]="
-                  collateralForm.controls.status_sertifikat.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Status Sertifikat Harus Diisi
-              </span>
-              <br />
+               <span [hidden]="collateralForm.controls.status_sertifikat.valid" class="text-danger"> Field Wajib Diisi </span>
+               <br />
             </div>
-          </div>
+              
+            </div>
+          
           <div class="form-group row" [hidden]="this.collateralForm.get('tipe_agunan')?.value == 'C01'">
             <label class="col-sm-4 col-form-label">No Sertifikat</label>
             <div class="col-sm-8">
               <div class="form-group">
                 <input type="text" class="form-control" formControlName="no_sertifikat" (keypress)="keyPressNumbers($event)" />
               </div>
-              <span
-                [hidden]="
-                  collateralForm.controls.no_sertifikat.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                No Sertifikat Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.no_sertifikat.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -483,16 +332,7 @@
               <div class="form-group">
                 <input type="text" class="form-control" formControlName="nama_pemegang_hak" />
               </div>
-              <span
-                [hidden]="
-                  collateralForm.controls.nama_pemegang_hak.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Nama Pemegang Hak Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.nama_pemegang_hak.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -508,16 +348,7 @@
                   (keypress)="keyPressNumbers($event)"
                 />
               </div>
-              <span
-                [hidden]="
-                  collateralForm.controls.no_handphone_cp.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                No Handphone Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.no_handphone_cp.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -527,16 +358,7 @@
               <div class="form-group">
                 <input type="text" class="form-control" formControlName="no_id_pemegang_hak_sertifikat" />
               </div>
-              <span
-                [hidden]="
-                  collateralForm.controls.no_id_pemegang_hak_sertifikat.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                id Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.no_id_pemegang_hak_sertifikat.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -544,16 +366,7 @@
             <label class="col-sm-4 col-form-label">Tanggal Terbit</label>
             <div class="col-sm-8">
               <input class="form-control" type="date" id="tanggal_terbit" formControlName="tanggal_terbit" />
-              <span
-                [hidden]="
-                  collateralForm.controls.tanggal_terbit.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Tanggal Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.tanggal_terbit.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -563,16 +376,7 @@
               <div class="form-group">
                 <input type="date" class="form-control" formControlName="tanggal_expired" />
               </div>
-              <span
-                [hidden]="
-                  collateralForm.controls.tanggal_expired.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Tanggal Harus Diisi
-              </span>
+              <span [hidden]="collateralForm.controls.tanggal_expired.valid" class="text-danger"> Field Wajib Diisi </span>
               <br />
             </div>
           </div>
@@ -593,16 +397,7 @@
               <label class="col-sm-3 col-form-label">Alamat</label>
               <div class="col-sm-9">
                 <textarea class="form-control h-150px" rows="6" id="alamat_agunan" formControlName="alamat_agunan"></textarea>
-                <span
-                  [hidden]="
-                    collateralForm.controls.alamat_agunan.valid ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  Alamat Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.alamat_agunan.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
             </div>
             <br />
@@ -622,16 +417,7 @@
                     </option>
                   </select>
                 </div>
-                <span
-                  [hidden]="
-                    this.collateralForm.get('provinsi_agunan')?.value != '' ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  Provinsi Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.provinsi_agunan.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
             </div>
             <br />
@@ -651,16 +437,7 @@
                     </option>
                   </select>
                 </div>
-                <span
-                  [hidden]="
-                    this.collateralForm.get('kabkota_agunan')?.value != '' ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  Kota Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.kabkota_agunan.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
             </div>
             <br />
@@ -680,16 +457,7 @@
                     </option>
                   </select>
                 </div>
-                <span
-                  [hidden]="
-                    this.collateralForm.get('kecamatan_agunan')?.value != '' ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  Kecamatan Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.kecamatan_agunan.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
             </div>
             <br />
@@ -709,16 +477,7 @@
                     </option>
                   </select>
                 </div>
-                <span
-                  [hidden]="
-                    this.collateralForm.get('kelurahan_agunan')?.value != '' ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  Kelurahan Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.kelurahan_agunan.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
             </div>
             <br />
@@ -744,16 +503,7 @@
                     </button>
                   </div>
                 </div>
-                <span
-                  [hidden]="
-                    collateralForm.controls.kode_pos_agunan.valid ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  Kode Pos Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.kode_pos_agunan.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
             </div>
             <div class="form-group row">
@@ -768,14 +518,7 @@
                   id="rt"
                   formControlName="rt"
                 />
-                <span
-                  [hidden]="
-                    collateralForm.controls.rt.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  RT Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.rt.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
               <div class="col">RT</div>
               <div class="col">
@@ -788,14 +531,7 @@
                   id="rw"
                   formControlName="rw"
                 />
-                <span
-                  [hidden]="
-                    collateralForm.controls.rw.valid || this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  RW Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.rw.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
               <div class="col">RW</div>
             </div>
@@ -819,16 +555,7 @@
                   formControlName="luas_tanah"
                   id="luas_tanah_anggunan"
                 />
-                <span
-                  [hidden]="
-                    collateralForm.controls.luas_tanah.valid ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  Luas Tanah Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.luas_tanah.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
               <div class="col">M2</div>
             </div>
@@ -844,16 +571,7 @@
                   formControlName="luas_bangunan"
                   id="luas_bangunan_anggunan"
                 />
-                <span
-                  [hidden]="
-                    collateralForm.controls.luas_bangunan.valid ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  Luas Bangunan Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.luas_bangunan.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
               <div class="col">M2</div>
             </div>
@@ -871,16 +589,7 @@
                   currencyMask
                   [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
                 />
-                <span
-                  [hidden]="
-                    collateralForm.controls.harga_objek.valid ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  Harga Objek Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.harga_objek.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
             </div>
           </div>
@@ -896,16 +605,7 @@
                   id="alamat_sesuai_sertifikat"
                   formControlName="alamat_sesuai_sertifikat"
                 ></textarea>
-                <span
-                  [hidden]="
-                    collateralForm.controls.alamat_sesuai_sertifikat.valid ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  Alamat Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.alamat_sesuai_sertifikat.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
             </div>
             <br />
@@ -925,16 +625,7 @@
                     </option>
                   </select>
                 </div>
-                <span
-                  [hidden]="
-                    this.collateralForm.get('provinsi_sesuai_sertifikat')?.value != '' ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  Provinsi Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.provinsi_sesuai_sertifikat.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
             </div>
             <br />
@@ -954,16 +645,7 @@
                     </option>
                   </select>
                 </div>
-                <span
-                  [hidden]="
-                    this.collateralForm.get('kabkota_sesuai_sertifikat')?.value != '' ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  Kota Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.kabkota_sesuai_sertifikat.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
             </div>
             <br />
@@ -983,16 +665,7 @@
                     </option>
                   </select>
                 </div>
-                <span
-                  [hidden]="
-                    this.collateralForm.get('kecamatan_sesuai_sertifikat')?.value != '' ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  Kecamatan Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.kecamatan_sesuai_sertifikat.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
             </div>
             <br />
@@ -1012,16 +685,7 @@
                     </option>
                   </select>
                 </div>
-                <span
-                  [hidden]="
-                    this.collateralForm.get('kelurahan_sesuai_sertifikat')?.value != '' ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  Kecamatan Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.kelurahan_sesuai_sertifikat.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
             </div>
             <br />
@@ -1047,16 +711,7 @@
                     </button>
                   </div>
                 </div>
-                <span
-                  [hidden]="
-                    collateralForm.controls.kode_pos_sesuai_sertifikat.valid ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  Kode pos Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.kode_pos_sesuai_sertifikat.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
             </div>
             <br />
@@ -1072,16 +727,7 @@
                   formControlName="rt_sertifikat"
                   maxlength="3"
                 />
-                <span
-                  [hidden]="
-                    collateralForm.controls.rt_sertifikat.valid ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  RT pos Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.rt_sertifikat.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
               <div class="col">RT</div>
               <div class="col">
@@ -1094,16 +740,7 @@
                   id="rw_sertifikat"
                   formControlName="rw_sertifikat"
                 />
-                <span
-                  [hidden]="
-                    collateralForm.controls.rw_sertifikat.valid ||
-                    this.untukSessionRole == 'VER_PRE_SPV' ||
-                    this.untukSessionRole == 'BRANCHMANAGER'
-                  "
-                  class="text-danger"
-                >
-                  RW pos Harus Diisi
-                </span>
+                <span [hidden]="collateralForm.controls.rw_sertifikat.valid" class="text-danger"> Field Wajib Diisi </span>
               </div>
               <div class="col">RW</div>
             </div>
@@ -1113,16 +750,7 @@
                 <label class="col-sm-3 col-form-label">ID Rumah</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control" formControlName="id_rumah" id="id_rumah" />
-                  <span
-                    [hidden]="
-                      collateralForm.controls.id_rumah.valid ||
-                      this.untukSessionRole == 'VER_PRE_SPV' ||
-                      this.untukSessionRole == 'BRANCHMANAGER'
-                    "
-                    class="text-danger"
-                  >
-                    ID pos Harus Diisi
-                  </span>
+                  <span [hidden]="collateralForm.controls.id_rumah.valid" class="text-danger"> Field Wajib Diisi </span>
                 </div>
               </div>
               <br />
@@ -1130,16 +758,7 @@
                 <label class="col-md-3 col-form-label">Blok Rumah</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control" formControlName="blok_rumah" id="blok_rumah" />
-                  <span
-                    [hidden]="
-                      collateralForm.controls.blok_rumah.valid ||
-                      this.untukSessionRole == 'VER_PRE_SPV' ||
-                      this.untukSessionRole == 'BRANCHMANAGER'
-                    "
-                    class="text-danger"
-                  >
-                    Blok Rumah pos Harus Diisi
-                  </span>
+                  <span [hidden]="collateralForm.controls.blok_rumah.valid" class="text-danger"> Field Wajib Diisi </span>
                 </div>
               </div>
               <br />
@@ -1153,16 +772,7 @@
                     id="no_rumah"
                     (keypress)="keyPressNumbers($event)"
                   />
-                  <span
-                    [hidden]="
-                      collateralForm.controls.nomor_rumah.valid ||
-                      this.untukSessionRole == 'VER_PRE_SPV' ||
-                      this.untukSessionRole == 'BRANCHMANAGER'
-                    "
-                    class="text-danger"
-                  >
-                    No Rumah pos Harus Diisi
-                  </span>
+                  <span [hidden]="collateralForm.controls.nomor_rumah.valid" class="text-danger"> Field Wajib Diisi </span>
                 </div>
               </div>
             </div>

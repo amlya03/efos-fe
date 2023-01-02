@@ -10,6 +10,7 @@
         <label class="col-sm-4 col-form-label">Nama<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <input type="text" class="form-control" placeholder="Nama" formControlName="nama" id="nama" />
+          <span [hidden]="emergencyForm.controls.nama.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>
       </div>
       <br />
@@ -17,6 +18,7 @@
         <label class="col-sm-4 col-form-label">Alamat<span class="text-danger">*</span></label>
         <div class="col-sm-8">
           <textarea class="form-control h-150px" rows="6" formControlName="alamat" id="alamat"></textarea>
+          <span [hidden]="emergencyForm.controls.alamat.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>
       </div>
       <br />
@@ -36,6 +38,7 @@
               </option>
             </select>
           </div>
+          <span [hidden]="emergencyForm.controls.provinsi.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>
       </div>
       <br />
@@ -45,7 +48,7 @@
           <div class="form-group">
             <select
               class="form-control"
-              (change)="onChangekota(0)"
+              (change)="onChangekota(this.emergencyForm.get('kabkota')?.value)"
               id="kabkota_cabang"
               formControlName="kabkota"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
@@ -55,6 +58,7 @@
               </option>
             </select>
           </div>
+          <span [hidden]="emergencyForm.controls.kabkota.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>
       </div>
       <br />
@@ -74,6 +78,7 @@
               </option>
             </select>
           </div>
+          <span [hidden]="emergencyForm.controls.kecamatan.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>
       </div>
       <br />
@@ -93,6 +98,7 @@
               </option>
             </select>
           </div>
+          <span [hidden]="emergencyForm.controls.kelurahan.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>
       </div>
       <br />
@@ -120,6 +126,7 @@
               </button>
             </div>
           </div>
+          <span [hidden]="emergencyForm.controls.kode_pos.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>
       </div>
     </div>
@@ -137,6 +144,7 @@
             id="rt"
             formControlName="rt"
           />
+          <span [hidden]="emergencyForm.controls.rt.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>
         <div class="col">RT</div>
         <div class="col">
@@ -150,6 +158,7 @@
             id="rw"
             formControlName="rw"
           />
+          <span [hidden]="emergencyForm.controls.rw.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>
         <div class="col">RW</div>
       </div>
@@ -168,6 +177,7 @@
             formControlName="no_telepon"
             maxlength="12"
           />
+          <span [hidden]="emergencyForm.controls.no_telepon.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>
       </div>
       <br />
@@ -186,6 +196,7 @@
               </option>
             </select>
           </div>
+          <span [hidden]="emergencyForm.controls.hubungan.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>
       </div>
       <br />
@@ -200,6 +211,7 @@
             formControlName="email"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           />
+          <span [hidden]="emergencyForm.controls.email.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>
       </div>
     </div>
