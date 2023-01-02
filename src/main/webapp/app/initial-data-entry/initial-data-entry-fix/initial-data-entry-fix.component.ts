@@ -738,6 +738,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire('Berhasil!', 'Data Berhasil diproses Ke Pre Screening.', 'success').then(data => {
+          this.getLoading(true);
           if (this.kategori == 2) {
             this.sendProJob = this.jobForm.get('provinsi')?.value.split('|');
             this.sendKotaJob = this.jobForm.get('kabkota')?.value.split('|');
@@ -1076,6 +1077,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                       })
                       .subscribe({
                         next: data => {
+                          this.getLoading(false);
                           this.contohdata = data.result.id;
                           this.app_no_ide = data.result.app_no_ide;
                           this.paramtanggal_lahir = data.result.tanggal_lahir;
@@ -1166,6 +1168,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                       })
                       .subscribe({
                         next: data => {
+                          this.getLoading(false);
                           this.contohdata = data.result.id;
                           this.app_no_ide = data.result.app_no_ide;
                           this.paramtanggal_lahir = data.result.tanggal_lahir;
@@ -1180,6 +1183,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                   }
                 },
                 error: error => {
+                  this.getLoading(false);
                   if (error.error.code == 400) {
                     alert('Gagal Menyimpan Data');
                     alert(error.error.message);
@@ -1359,6 +1363,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                 })
                 .subscribe({
                   next: data => {
+                    this.getLoading(false);
                     this.contohdata = data.result.id;
                     this.app_no_ide = data.result.app_no_ide;
                     this.paramtanggal_lahir = data.result.tanggal_lahir;
@@ -1450,6 +1455,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                 })
                 .subscribe({
                   next: data => {
+                    this.getLoading(false);
                     this.contohdata = data.result.id;
                     this.app_no_ide = data.result.app_no_ide;
                     this.paramtanggal_lahir = data.result.tanggal_lahir;
