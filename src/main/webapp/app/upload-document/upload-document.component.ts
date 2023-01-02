@@ -9,6 +9,7 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { fetchAllDe } from './services/config/fetchAllDe.model';
 import { dataentrymodel } from 'app/data-entry/data-entry-model';
+import { getListFasilitasModel } from 'app/data-entry/services/config/getListFasilitasModel.model';
 
 @Component({
   selector: 'jhi-upload-document',
@@ -27,7 +28,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   kategori_pekerjaan = '';
   curef: string | undefined;
   appNoDe: string | undefined;
-  fasilitas: string | undefined;
+  fasilitas: getListFasilitasModel[] = [];
   kategoriPekerjaan: string | undefined;
   namaNasabah: string | undefined;
   userName: string | undefined;
@@ -73,6 +74,9 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
         this.getLoading(false);
       },
     });
+    this.dataEntryServices.getFetchKodeFasilitas().subscribe(list => {
+      this.fasilitas = list.result;
+    });
   }
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
@@ -80,6 +84,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   }
 
   cariButton(listFasilitas: string, listKategori: string, inputNamaNasabah: string, inputNoAplikasi: string): void {
+    alert(listFasilitas);
     $('#dataTables-example').DataTable().columns(1).search(inputNoAplikasi).draw();
     $('#dataTables-example').DataTable().columns(3).search(inputNamaNasabah).draw();
     $('#dataTables-example').DataTable().columns(8).search(listKategori).draw();
@@ -91,12 +96,11 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     // alert("bbb")
   }
 
-  viewUpload(curef: any, app_no_de: any, fasilitas: any, kategori: any, nama: any): void {
+  viewUpload(curef: any, app_no_de: any, kategori: any, nama: any): void {
     this.getLoading(true);
     this.curef = curef;
     this.namaNasabah = nama;
     this.appNoDe = app_no_de;
-    this.fasilitas = fasilitas;
     this.kategoriPekerjaan = kategori;
     this.dataEntryServices.getFetchSemuaDataDE(app_no_de).subscribe({
       next: data => {

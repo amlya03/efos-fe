@@ -109,7 +109,7 @@ export class MemoComponent implements OnInit {
         keterangan: this.memoForm.get('keterangan')?.value,
         users: this.untukSessionfullname,
         role: this.untukSessionRole,
-        created_by: this.untukSessionusername,
+        created_by: this.SessionStorageService.retrieve('sessionUserName'),
         app_no_de: this.app_no_de,
       })
       .subscribe({
@@ -123,7 +123,7 @@ export class MemoComponent implements OnInit {
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/update_status_back_de', {
         app_no_de: this.app_no_de,
-        created_by: this.SessionStorageService.retrieve('sessionFullName'),
+        created_by: this.SessionStorageService.retrieve('sessionUserName'),
         status_aplikasi: this.dataEntryModel.status_aplikasi,
       })
       .subscribe({
@@ -148,7 +148,7 @@ export class MemoComponent implements OnInit {
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/update_status_dataentry', {
         app_no_de: this.app_no_de,
-        created_by: this.SessionStorageService.retrieve('sessionFullName'),
+        created_by: this.SessionStorageService.retrieve('sessionUserName'),
         status_aplikasi: this.dataEntryModel.status_aplikasi,
       })
       .subscribe({
