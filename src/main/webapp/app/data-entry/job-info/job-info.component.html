@@ -904,7 +904,7 @@
               formControlName="jenis_bidang_sebelum"
               name="jenis_bidang_sebelum"
             >
-              <option value="{{ dataretrivejenisbidangsebelum }}">{{ dataretrivejenisbidangsebelum }}</option>
+              <option>{{ dataretrivejenisbidangsebelum }}</option>
               <option
                 *ngFor="let getjenisbidangdariapi of getjenisbidangdariapi"
                 value="{{ getjenisbidangdariapi.group_sektor }}|{{ getjenisbidangdariapi.nama_group_sektor }}"
@@ -927,7 +927,7 @@
               formControlName="sektor_ekonomi_sebelum"
               name="sektor_ekonomi_sebelum"
             >
-              <option value="{{ dataretrivesektorekosebelum }}">{{ dataretrivesektorekosebelum }}</option>
+              <option>{{ dataretrivesektorekosebelum }}</option>
               <option *ngFor="let getdatasektorekonomi of getdatasektorekonomi" value="{{ getdatasektorekonomi.nama_sub_sektor }}">
                 {{ getdatasektorekonomi.nama_sub_sektor }}
               </option>
@@ -1045,13 +1045,15 @@
   <div class="row">
     <div class="col" style="text-align: center">
       <button
+        type="button"
         (click)="updatejobsebelum()"
         class="btn btn-dark"
-        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV' || jobInfoForm.invalid"
       >
         Simpan Data
       </button>
       <button
+        type="button"
         id="selanjutnya"
         name="selanjutnya"
         (click)="goto()"

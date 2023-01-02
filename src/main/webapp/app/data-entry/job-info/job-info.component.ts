@@ -143,7 +143,7 @@ export class JobInfoComponent implements OnInit {
     this.datajobsebelum = this.formBuilder.group({
       kategori_pekerjaan_sebelum: '',
       tipe_pekerjaan_sebelum: '',
-      payroll_sebelum: '1',
+      payroll_sebelum: '',
       posisi_sebelum: '',
       nama_perusahaan_sebelum: '',
       id: '',
@@ -350,18 +350,20 @@ export class JobInfoComponent implements OnInit {
           this.getLoading(false);
         } else {
           this.getLoading(false);
+
+          setTimeout(() => {
+            // untuk list job
+            if (this.tampunganid.kategori_pekerjaan_sebelum === 'Fix Income') {
+              this.nampungsebelum = 1;
+            } else if (this.tampunganid.kategori_pekerjaan_sebelum === 'Non Fix Income') {
+              this.nampungsebelum = 2;
+            } else {
+              this.nampungsebelum = 3;
+            }
+          }, 10);
         }
         this.ideJob = job.result;
         this.tampunganid = job.result;
-
-        setTimeout(() => {
-          // untuk list job
-          if (this.tampunganid.kategori_pekerjaan == 'Fix Income') {
-            this.nampungsebelum = 1;
-          } else if (this.tampunganid.kategori_pekerjaan == 'Non Fix Income') {
-            this.nampungsebelum = 2;
-          }
-        }, 10);
 
         setTimeout(() => {
           if (job.result == null) {
@@ -369,7 +371,7 @@ export class JobInfoComponent implements OnInit {
             let retrivejobsebelum = {
               kategori_pekerjaan_sebelum: '',
               tipe_pekerjaan_sebelum: '',
-              payroll_sebelum: '',
+              payroll_sebelum: '1',
               posisi_sebelum: '',
               nama_perusahaan_sebelum: '',
               id: '',
@@ -420,10 +422,16 @@ export class JobInfoComponent implements OnInit {
             };
             this.datajobsebelum.setValue(retrivejobsebelum);
             setTimeout(() => {
-              this.dataretrivesektorekosebelum = this.tampunganid.sektor_ekonomi_sebelum;
-              this.dataretrivejenisbidangsebelum = this.tampunganid.jenis_bidang_sebelum;
-              this.carimenggunakankodepostsebelum(this.tampunganid.kode_pos_sebelum);
-              this.katagoripekerjaanselect(this.nampungsebelum + '|' + this.tampunganid.kategori_pekerjaan_sebelum);
+              setTimeout(() => {
+                this.dataretrivesektorekosebelum = this.tampunganid.sektor_ekonomi_sebelum;
+                this.dataretrivejenisbidangsebelum = this.tampunganid.jenis_bidang_sebelum;
+              }, 5);
+              setTimeout(() => {
+                this.carimenggunakankodepostsebelum(this.tampunganid.kode_pos_sebelum);
+              }, 10);
+              setTimeout(() => {
+                this.katagoripekerjaanselect(this.nampungsebelum + '|' + this.tampunganid.kategori_pekerjaan_sebelum);
+              }, 20);
             }, 20);
           }
         }, 25);
@@ -685,16 +693,21 @@ export class JobInfoComponent implements OnInit {
       }
 
       const potonganjenisbidang = this.datajobsebelum.get('jenis_bidang_sebelum')?.value.split('|');
-      if (this.datajobsebelum.get('jenis_bidang_sebelum')?.value.indexOf('|') !== -1) {
-        var kirimanjenisbidang = potonganjenisbidang[1];
+      if (this.dataretrivejenisbidangsebelum != '') {
+        var kirimanjenisbidang = this.dataretrivejenisbidangsebelum;
       } else {
-        var kirimanjenisbidang = this.datajobsebelum.get('jenis_bidang_sebelum')?.value;
+        var kirimanjenisbidang = potonganjenisbidang[1];
       }
-      setTimeout(() => {
-        alert(this.datajobsebelum.get('jenis_bidang_sebelum')?.value);
-        alert(this.datajobsebelum.get('sektor_ekonomi_sebelum')?.value);
-      }, 100);
-      return;
+      if (this.dataretrivejenisbidangsebelum != '') {
+        this.datajobsebelum.get('sektor_ekonomi_sebelum')?.setValue(this.dataretrivejenisbidangsebelum);
+      } else {
+        this.datajobsebelum.get('sektor_ekonomi_sebelum')?.value;
+      }
+      // setTimeout(() => {
+      //   alert(this.dataretrivesektorekosebelum);
+      //   alert(this.datajobsebelum.get('sektor_ekonomi_sebelum')?.value);
+      // }, 100);
+      // return;
       this.http
         .post<any>(this.baseUrl + 'v1/efos-de/update_job_sebelum_de', {
           alamat_pekerjaan_sebelum: this.datajobsebelum.get('alamat_pekerjaan_sebelum')?.value,

@@ -51,6 +51,7 @@ export class InitialDataEntryFixComponent implements OnInit {
   listJabatan: refJenisPekerjaan[] = [];
   refJabatanModel: refJabatan[] = [];
   pendidikanModel: refJenisPekerjaan[] = [];
+  termAndCondition: any;
   // Upload /////////
   file?: File;
   hideDocChange = 0;
@@ -452,7 +453,11 @@ export class InitialDataEntryFixComponent implements OnInit {
         this.curef = data.result;
       });
     }
-
+    setTimeout(() => {
+      this.ideFixServices.getInformasiSlik().subscribe(term => {
+        this.termAndCondition = term.result;
+      });
+    }, 120);
     setTimeout(() => {
       if (this.kategori == 1) {
         this.kirimKatePeker = 'Fix Income';
@@ -724,7 +729,7 @@ export class InitialDataEntryFixComponent implements OnInit {
 
     Swal.fire({
       title: 'Apakah yakin ingin Memproses Data ini?',
-      text: 'Mohon diperhatikan, Data yang diinput Harus Valid dan Tidak Boleh Memproses Data jika data masih kurang!',
+      text: this.termAndCondition.value,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

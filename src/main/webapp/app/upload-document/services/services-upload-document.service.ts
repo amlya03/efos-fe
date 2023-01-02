@@ -25,9 +25,7 @@ export class ServicesUploadDocumentService {
   // /////////////////////////////// Get List Daftar APlikasi Upload /////////////////////////////////
 
   // get Upload
-  protected FetchListUploadDocument = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-de/getDokumenUploadByCuref?sc='
-  );
+  protected FetchListUploadDocument = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getDokumenUploadByCuref?sc=');
   /////////////////////////////////// Memo //////////////////////////////////////////////
   protected linkUploadMemo = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/memo_upload_doc?app_no_de=');
   /////////////////////////////////// Memo /////////////////////////////////////////////
