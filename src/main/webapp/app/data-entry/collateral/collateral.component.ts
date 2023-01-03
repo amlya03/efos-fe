@@ -163,7 +163,7 @@ export class CollateralComponent implements OnInit {
         Validators.required,
       ],
       status_jaminan_sebelumnya: [
-        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        { value: '0', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       tahun_dibuat: [
