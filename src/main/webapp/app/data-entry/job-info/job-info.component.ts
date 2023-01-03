@@ -37,7 +37,6 @@ export class JobInfoComponent implements OnInit {
   ideJob: getJob[] = [];
   listJabatan: refJenisPekerjaan[] = [];
   listTipePekerjaan: getListTipePekerjaan[] = [];
-  statusPerkawinan!: string;
   app_no_de!: string;
   nampungsebelum: any;
   tampunganid: modelJobIde = new modelJobIde();
@@ -100,7 +99,6 @@ export class JobInfoComponent implements OnInit {
   ) {
     this.route.queryParams.subscribe(params => {
       this.curef = params['curef'];
-      this.statusPerkawinan = params['statusPerkawinan'];
       this.app_no_de = params['app_no_de'];
     });
   }
@@ -547,12 +545,10 @@ export class JobInfoComponent implements OnInit {
 
   goto() {
     // this.onResponseSuccess(res);
-    // alert(this.statusPerkawinan);
-    if (this.statusPerkawinan === 'Menikah') {
+    if (this.dataEntry.status_perkawinan === 'Menikah') {
       this.router.navigate(['/data-entry/data-pasangan'], {
         queryParams: {
           curef: this.curef,
-          statusPerkawinan: this.statusPerkawinan,
           app_no_de: this.app_no_de,
         },
       });
@@ -562,7 +558,6 @@ export class JobInfoComponent implements OnInit {
       this.router.navigate(['/data-entry/collateral'], {
         queryParams: {
           curef: this.curef,
-          statusPerkawinan: this.statusPerkawinan,
           app_no_de: this.app_no_de,
         },
       });
@@ -579,7 +574,6 @@ export class JobInfoComponent implements OnInit {
         // datakirimanakategoripekerjaan: this.curefakategoripekerjaan,
         curef: this.curef,
         datakirimanid: id,
-        statusPerkawinan: this.statusPerkawinan,
       },
     });
   }
@@ -748,7 +742,6 @@ export class JobInfoComponent implements OnInit {
               this.router.navigate(['/data-entry/data-pasangan'], {
                 queryParams: {
                   curef: this.curef,
-                  statusPerkawinan: this.statusPerkawinan,
                   app_no_de: this.app_no_de,
                 },
               });
@@ -757,7 +750,6 @@ export class JobInfoComponent implements OnInit {
               this.router.navigate(['/data-entry/collateral'], {
                 queryParams: {
                   curef: this.curef,
-                  statusPerkawinan: this.statusPerkawinan,
                   app_no_de: this.app_no_de,
                 },
               });

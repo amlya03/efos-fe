@@ -93,6 +93,9 @@ export class KomiteComponent implements OnInit {
 
   clearInput(): void {
     $('#dataTables-example').DataTable().search('').draw();
+    setTimeout(() => {
+      $('#dataTables-example').DataTable().columns().search('').draw();
+    }, 50);
   }
 
   view(app_no_de: string | undefined, curef: string | undefined): void {

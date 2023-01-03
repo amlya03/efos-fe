@@ -86,14 +86,21 @@ export class DataEntryComponent implements OnInit, OnDestroy {
 
   clearInput(): void {
     $('#dataTables-example').DataTable().search('').draw();
+    setTimeout(() => {
+      $('#dataTables-example').DataTable().columns().search('').draw();
+    }, 50);
     // alert("bbb")
   }
 
-  viewdataentry(getAppNoDe: any, getStatus: any, getCuref: any): void {
-    // alert(getAppNoDe);curef=curef_20220819_342&statusPerkawinan=Menikah&app_no_de=de220820000156
-    this.router.navigate(['/data-entry/personalinfo'], {
-      queryParams: { curef: getCuref, statusPerkawinan: getStatus, app_no_de: getAppNoDe },
-    });
+  viewdataentry(getAppNoDe: any, getCuref: any): void {
+    this.getLoading(true);
+    this.router
+      .navigate(['/data-entry/personalinfo'], {
+        queryParams: { curef: getCuref, app_no_de: getAppNoDe },
+      })
+      .then(() => {
+        window.location.reload();
+      });
   }
 
   public getLoading(loading: boolean) {

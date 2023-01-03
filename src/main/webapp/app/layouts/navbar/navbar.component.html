@@ -38,7 +38,7 @@
                   [routerLink]="['/data-entry/memo']"
                   [queryParams]="{
                     curef: this.curef,
-                    statusPerkawinan: this.statusPerkawinan,
+
                     app_no_de: this.app_no_de
                   }"
                   hidden
@@ -48,7 +48,7 @@
                   [routerLink]="['/data-entry/personalinfo']"
                   [queryParams]="{
                     curef: this.curef,
-                    statusPerkawinan: this.statusPerkawinan,
+
                     app_no_de: this.app_no_de
                   }"
                   hidden
@@ -58,7 +58,7 @@
                   [routerLink]="['/data-entry/job-info']"
                   [queryParams]="{
                     curef: this.curef,
-                    statusPerkawinan: this.statusPerkawinan,
+
                     app_no_de: this.app_no_de
                   }"
                   hidden
@@ -69,7 +69,7 @@
                   [queryParams]="{
                     datakirimanid: this.datakirimanid,
                     curef: this.curef,
-                    statusPerkawinan: this.statusPerkawinan,
+
                     app_no_de: this.app_no_de
                   }"
                   hidden
@@ -78,7 +78,7 @@
                   class="col nav-link"
                   [queryParams]="{
                     curef: this.curef,
-                    statusPerkawinan: this.statusPerkawinan,
+
                     app_no_de: this.app_no_de
                   }"
                   routerLink="data-entry/data-pasangan"
@@ -88,7 +88,7 @@
                   class="col nav-link"
                   [queryParams]="{
                     curef: this.curef,
-                    statusPerkawinan: this.statusPerkawinan,
+
                     app_no_de: this.app_no_de
                   }"
                   routerLink="data-entry/pekerjaan-pasangan"
@@ -98,7 +98,7 @@
                   class="col nav-link"
                   [queryParams]="{
                     curef: this.curef,
-                    statusPerkawinan: this.statusPerkawinan,
+
                     app_no_de: this.app_no_de
                   }"
                   routerLink="data-entry/collateral"
@@ -108,7 +108,7 @@
                   class="col nav-link"
                   [queryParams]="{
                     curef: this.curef,
-                    statusPerkawinan: this.statusPerkawinan,
+
                     app_no_de: this.app_no_de,
                     datakirimanid: this.datakirimanid
                   }"
@@ -119,7 +119,7 @@
                   class="col nav-link"
                   [queryParams]="{
                     curef: this.curef,
-                    statusPerkawinan: this.statusPerkawinan,
+
                     app_no_de: this.app_no_de
                   }"
                   routerLink="data-entry/struktur-pembiayaan"
@@ -129,7 +129,7 @@
                   class="col nav-link"
                   [queryParams]="{
                     curef: this.curef,
-                    statusPerkawinan: this.statusPerkawinan,
+
                     app_no_de: this.app_no_de
                   }"
                   routerLink="data-entry/emergency-contact"
@@ -140,7 +140,7 @@
                   routerLink="data-entry/call-report"
                   [queryParams]="{
                     curef: this.curef,
-                    statusPerkawinan: this.statusPerkawinan,
+
                     app_no_de: this.app_no_de
                   }"
                   hidden
@@ -151,7 +151,7 @@
                   routerLink="data-entry/call-report-non"
                   [queryParams]="{
                     curef: this.curef,
-                    statusPerkawinan: this.statusPerkawinan,
+
                     app_no_de: this.app_no_de
                   }"
                   hidden
@@ -163,7 +163,7 @@
                   [routerLink]="['/upload_document/upload_document_de']"
                   [queryParams]="{
                     curef: this.curef,
-                    statusPerkawinan: this.statusPerkawinan,
+
                     app_no_de: this.app_no_de
                   }"
                   hidden
@@ -173,7 +173,7 @@
                   [routerLink]="['/upload_document/upload_document_agunan']"
                   [queryParams]="{
                     curef: this.curef,
-                    statusPerkawinan: this.statusPerkawinan,
+
                     app_no_de: this.app_no_de
                   }"
                   hidden
@@ -586,72 +586,22 @@
       router.url === '/data-entry/emergency-contact' ||
       router.url === '/data-entry/call-report' ||
       router.url === '/data-entry/memo' ||
+      router.url === '/data-entry/memo?curef=' + this.curef + '&app_no_de=' + this.app_no_de ||
+      router.url === '/data-entry/personalinfo?curef=' + this.curef + '&app_no_de=' + this.app_no_de ||
+      router.url === '/data-entry/job-info?curef=' + this.curef + '&app_no_de=' + this.app_no_de ||
+      router.url === '/data-entry/data-pasangan?curef=' + this.curef + '&app_no_de=' + this.app_no_de ||
+      router.url === '/data-entry/pekerjaan-pasangan?curef=' + this.curef + '&app_no_de=' + this.app_no_de ||
+      router.url === '/data-entry/collateral?curef=' + this.curef + '&app_no_de=' + this.app_no_de ||
       router.url ===
-        '/data-entry/memo?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
+        '/data-entry/editcollateral?curef=' + this.curef + '&app_no_de=' + this.app_no_de + '&datakirimanid=' + this.datakirimanid ||
+      router.url === '/data-entry/struktur-pembiayaan?curef=' + this.curef + '&app_no_de=' + this.app_no_de ||
+      router.url === '/data-entry/emergency-contact?curef=' + this.curef + '&app_no_de=' + this.app_no_de ||
+      router.url === '/data-entry/call-report?curef=' + this.curef + '&app_no_de=' + this.app_no_de ||
       router.url ===
-        '/data-entry/personalinfo?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
-      router.url ===
-        '/data-entry/job-info?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
-      router.url ===
-        '/data-entry/data-pasangan?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
-      router.url ===
-        '/data-entry/pekerjaan-pasangan?curef=' +
-          this.curef +
-          '&statusPerkawinan=' +
-          this.statusPerkawinan +
-          '&app_no_de=' +
-          this.app_no_de ||
-      router.url ===
-        '/data-entry/collateral?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
-      router.url ===
-        '/data-entry/editcollateral?curef=' +
-          this.curef +
-          '&statusPerkawinan=' +
-          this.statusPerkawinan +
-          '&app_no_de=' +
-          this.app_no_de +
-          '&datakirimanid=' +
-          this.datakirimanid ||
-      router.url ===
-        '/data-entry/struktur-pembiayaan?curef=' +
-          this.curef +
-          '&statusPerkawinan=' +
-          this.statusPerkawinan +
-          '&app_no_de=' +
-          this.app_no_de ||
-      router.url ===
-        '/data-entry/emergency-contact?curef=' +
-          this.curef +
-          '&statusPerkawinan=' +
-          this.statusPerkawinan +
-          '&app_no_de=' +
-          this.app_no_de ||
-      router.url ===
-        '/data-entry/call-report?curef=' + this.curef + '&statusPerkawinan=' + this.statusPerkawinan + '&app_no_de=' + this.app_no_de ||
-      router.url ===
-        '/data-entry/editjobinfo?app_no_de=' +
-          this.app_no_de +
-          '&curef=' +
-          this.curef +
-          '&datakirimanid=' +
-          this.datakirimanid +
-          '&statusPerkawinan=' +
-          this.statusPerkawinan ||
-      (router.url ===
-        '/upload_document/upload_document_de?curef=' +
-          this.curef +
-          '&statusPerkawinan=' +
-          this.statusPerkawinan +
-          '&app_no_de=' +
-          this.app_no_de &&
+        '/data-entry/editjobinfo?app_no_de=' + this.app_no_de + '&curef=' + this.curef + '&datakirimanid=' + this.datakirimanid ||
+      (router.url === '/upload_document/upload_document_de?curef=' + this.curef + '&app_no_de=' + this.app_no_de &&
         untukSessionRole === 'BRANCHMANAGER') ||
-      (router.url ===
-        '/upload_document/upload_document_agunan?curef=' +
-          this.curef +
-          '&statusPerkawinan=' +
-          this.statusPerkawinan +
-          '&app_no_de=' +
-          this.app_no_de &&
+      (router.url === '/upload_document/upload_document_agunan?curef=' + this.curef + '&app_no_de=' + this.app_no_de &&
         untukSessionRole === 'BRANCHMANAGER')
     "
   >
@@ -664,7 +614,7 @@
       [routerLink]="['/data-entry/personalinfo']"
       [queryParams]="{
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
+
         app_no_de: this.app_no_de
       }"
       [routerLinkActive]="'active'"
@@ -678,7 +628,7 @@
       [routerLink]="['/data-entry/job-info']"
       [queryParams]="{
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
+
         app_no_de: this.app_no_de
       }"
       routerLink="data-entry/job-info"
@@ -692,7 +642,7 @@
         [queryParams]="{
           datakirimanid: this.datakirimanid,
           curef: this.curef,
-          statusPerkawinan: this.statusPerkawinan,
+
           app_no_de: this.app_no_de
         }"
         hidden
@@ -700,11 +650,11 @@
       <h6>Job Info</h6>
     </a>
     <a
-      [hidden]="this.statusPerkawinan == 'Lajang'"
+      [hidden]="statusPerkawinan === 'Lajang' || statusPerkawinan === 'Cerai Mati' || statusPerkawinan === 'Cerai Hidup'"
       class="nav-item nav-link"
       [queryParams]="{
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
+
         app_no_de: this.app_no_de
       }"
       routerLink="data-entry/data-pasangan"
@@ -715,11 +665,11 @@
       <h6>Data Pasangan</h6>
     </a>
     <a
-      [hidden]="this.statusPerkawinan == 'Lajang'"
+      [hidden]="statusPerkawinan === 'Lajang' || statusPerkawinan === 'Cerai Mati' || statusPerkawinan === 'Cerai Hidup'"
       class="nav-item nav-link"
       [queryParams]="{
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
+
         app_no_de: this.app_no_de
       }"
       routerLink="data-entry/pekerjaan-pasangan"
@@ -733,7 +683,7 @@
       class="nav-item nav-link"
       [queryParams]="{
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
+
         app_no_de: this.app_no_de
       }"
       routerLink="data-entry/collateral"
@@ -745,7 +695,7 @@
         class="col nav-link"
         [queryParams]="{
           curef: this.curef,
-          statusPerkawinan: this.statusPerkawinan,
+
           app_no_de: this.app_no_de,
           datakirimanid: this.datakirimanid
         }"
@@ -758,7 +708,7 @@
       class="nav-item nav-link"
       [queryParams]="{
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
+
         app_no_de: this.app_no_de
       }"
       routerLink="data-entry/struktur-pembiayaan"
@@ -772,7 +722,7 @@
       class="nav-item nav-link"
       [queryParams]="{
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
+
         app_no_de: this.app_no_de
       }"
       routerLink="data-entry/emergency-contact"
@@ -787,7 +737,7 @@
       routerLink="data-entry/call-report"
       [queryParams]="{
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
+
         app_no_de: this.app_no_de
       }"
       [routerLinkActive]="'active'"
@@ -801,7 +751,7 @@
       routerLink="upload_document/upload_document_de"
       [queryParams]="{
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
+
         app_no_de: this.app_no_de
       }"
       [routerLinkActive]="'active'"
@@ -817,7 +767,7 @@
       [routerLinkActiveOptions]="{ exact: true }"
       [queryParams]="{
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
+
         app_no_de: this.app_no_de
       }"
       *ngSwitchCase="'BRANCHMANAGER'"
@@ -831,7 +781,7 @@
       [routerLinkActiveOptions]="{ exact: true }"
       [queryParams]="{
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
+
         app_no_de: this.app_no_de
       }"
       *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
@@ -842,20 +792,8 @@
   <div
     *ngIf="
       router.url === '/upload_document/upload_document_de' ||
-      router.url ===
-        '/upload_document/upload_document_de?curef=' +
-          this.curef +
-          '&statusPerkawinan=' +
-          this.statusPerkawinan +
-          '&app_no_de=' +
-          this.app_no_de ||
-      router.url ===
-        '/upload_document/upload_document_agunan?curef=' +
-          this.curef +
-          '&statusPerkawinan=' +
-          this.statusPerkawinan +
-          '&app_no_de=' +
-          this.app_no_de ||
+      router.url === '/upload_document/upload_document_de?curef=' + this.curef + '&app_no_de=' + this.app_no_de ||
+      router.url === '/upload_document/upload_document_agunan?curef=' + this.curef + '&app_no_de=' + this.app_no_de ||
       router.url === '/upload_document/upload_document_agunan'
     "
   >
@@ -864,7 +802,7 @@
       routerLink="upload_document/upload_document_de"
       [queryParams]="{
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
+
         app_no_de: this.app_no_de
       }"
       [routerLinkActive]="'active'"
@@ -878,7 +816,7 @@
       routerLink="upload_document/upload_document_agunan"
       [queryParams]="{
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
+
         app_no_de: this.app_no_de
       }"
       [routerLinkActive]="'active'"
@@ -901,3 +839,4 @@
     </a>
   </div>
 </nav>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

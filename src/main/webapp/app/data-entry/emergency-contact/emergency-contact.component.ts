@@ -26,7 +26,6 @@ export class EmergencyContactComponent implements OnInit {
   emergencyForm!: FormGroup;
   dataEntry: fetchAllDe = new fetchAllDe();
   curef: string | undefined;
-  statusPerkawinan: string | undefined;
   app_no_de: string | undefined;
   datakirimanakategoripekerjaan: any;
   daWa: getEmergencyByCurefModel = new getEmergencyByCurefModel();
@@ -68,10 +67,6 @@ export class EmergencyContactComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
-    });
-
-    this.route.queryParams.subscribe(params => {
-      this.statusPerkawinan = params['statusPerkawinan'];
     });
   }
 
@@ -320,7 +315,6 @@ export class EmergencyContactComponent implements OnInit {
     this.router.navigate(['/data-entry/call-report'], {
       queryParams: {
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de,
       },
     });
@@ -404,7 +398,6 @@ export class EmergencyContactComponent implements OnInit {
             this.router.navigate(['/data-entry/call-report'], {
               queryParams: {
                 curef: this.curef,
-                statusPerkawinan: this.statusPerkawinan,
                 app_no_de: this.app_no_de,
               },
             });
@@ -439,7 +432,6 @@ export class EmergencyContactComponent implements OnInit {
             this.router.navigate(['/data-entry/call-report'], {
               queryParams: {
                 curef: this.curef,
-                statusPerkawinan: this.statusPerkawinan,
                 app_no_de: this.app_no_de,
               },
             });

@@ -35,7 +35,6 @@ export class DataPasanganComponent implements OnInit {
   kecamatan: any;
   kelurahan: any;
   daWakodepos: any;
-  statusPerkawinan: any;
   kirimanstatusktp: any;
   untukktp: any;
   untukSessionRole: any;
@@ -58,7 +57,6 @@ export class DataPasanganComponent implements OnInit {
     private SessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.statusPerkawinan = params.statusPerkawinan;
       this.app_no_de = params['app_no_de'];
       this.curef = params['curef'];
     });
@@ -286,19 +284,9 @@ export class DataPasanganComponent implements OnInit {
     this.router.navigate(['/data-entry/pekerjaan-pasangan'], {
       queryParams: {
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de,
       },
     });
-    // if(this.statusPerkawinan === 'Menikah'){
-    //   this.router.navigate(['/data-pasangan'], { queryParams: { datakiriman:this.app_no_de } });
-    //   alert(' ini NIKAH');
-    //   console.warn(this.datakiriman);
-    // }
-    // else{
-    //   alert('ini jomblo');
-    //   this.router.navigate(['/collateral'], { queryParams: { datakiriman:this.app_no_de } });
-    // }
   }
 
   updatedatapasngan() {
@@ -348,7 +336,6 @@ export class DataPasanganComponent implements OnInit {
           this.router.navigate(['/data-entry/pekerjaan-pasangan'], {
             queryParams: {
               curef: this.curef,
-              statusPerkawinan: this.statusPerkawinan,
               app_no_de: this.app_no_de,
             },
           });

@@ -47,14 +47,14 @@
         </div>
       </div>
       <br />
-      <div class="form-group row">
+      <div class="form-group row" [hidden]="dataEntry.kode_fasilitas_name === 'PPK'">
         <label class="col-sm-4 col-form-label">Luas Tanah</label>
         <div class="col-sm-8">
           <input type="text" class="form-control" id="luas_tanah" formControlName="luas_tanah" />
         </div>
       </div>
       <br />
-      <div class="form-group row">
+      <div class="form-group row" [hidden]="dataEntry.kode_fasilitas_name === 'PPK'">
         <label class="col-sm-4 col-form-label">Luas Bangunan</label>
         <div class="col-sm-8">
           <input type="text" class="form-control" id="luas_bangunan" formControlName="luas_bangunan" />
@@ -66,7 +66,14 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Objek Pembiayaan</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="objek_pembiayaan" name="objek_pembiayaan" value="{{ this.retTipePro }}" />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="objek_pembiayaan"
+            name="objek_pembiayaan"
+            value="{{ this.retTipePro == '' ? this.retTipeKen : this.retTipePro }}"
+          />
         </div>
       </div>
       <br />

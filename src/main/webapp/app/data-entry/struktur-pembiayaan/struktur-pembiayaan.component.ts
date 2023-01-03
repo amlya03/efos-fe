@@ -37,8 +37,6 @@ export class StrukturPembiayaanComponent implements OnInit {
   kodeProdukRet: any;
   skemaRet: any;
   jangkaWaktuRet: any;
-
-  statusPerkawinan: any;
   datakirimiancure: any;
   curef: any;
   datakirimanakategoripekerjaan: any;
@@ -74,10 +72,6 @@ export class StrukturPembiayaanComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       this.datakirimiancure = params['datakirimiancure'];
-    });
-
-    this.route.queryParams.subscribe(params => {
-      this.statusPerkawinan = params['statusPerkawinan'];
     });
     this.route.queryParams.subscribe(params => {
       this.datakirimanakategoripekerjaan = params['datakirimanakategoripekerjaan'];
@@ -311,7 +305,6 @@ export class StrukturPembiayaanComponent implements OnInit {
     this.router.navigate(['/data-entry/emergency-contact'], {
       queryParams: {
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de,
       },
     });
@@ -477,7 +470,6 @@ export class StrukturPembiayaanComponent implements OnInit {
             this.router.navigate(['/data-entry/emergency-contact'], {
               queryParams: {
                 curef: this.curef,
-                statusPerkawinan: this.statusPerkawinan,
                 app_no_de: this.app_no_de,
               },
             });
@@ -526,7 +518,6 @@ export class StrukturPembiayaanComponent implements OnInit {
             this.router.navigate(['/data-entry/emergency-contact'], {
               queryParams: {
                 curef: this.curef,
-                statusPerkawinan: this.statusPerkawinan,
                 app_no_de: this.app_no_de,
               },
             });

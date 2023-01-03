@@ -27,6 +27,7 @@ export class MapisComponent implements OnInit {
   cekResuklt = 0;
 
   // Ret ///
+  retTipeKen: any;
   retTipePro: any;
   retTipeAg: any;
   retJenisObj: any;
@@ -68,14 +69,17 @@ export class MapisComponent implements OnInit {
       setTimeout(() => {
         this.dataEntryService.getfetchlistagunan(this.dataEntry.curef).subscribe(list => {
           this.listagunan = list.result;
+          console.warn('test', list);
           if (list.result != null || list.result != '') {
             this.retTipePro = list.result[0].tipe_properti;
             this.retTipeAg = list.result[0].tipe_agunan;
             this.retJenisObj = list.result[0].jenis_objek_deskripsi;
+            this.retTipeKen = list.result[0].tipe_kendaraan;
           } else {
             this.retTipePro = '';
             this.retTipeAg = '';
             this.retJenisObj = '';
+            this.retTipeKen = '';
           }
           setTimeout(() => {
             this.dataEntryService.getFetchStrukturDE(this.app_noDe, this.dataEntry.curef).subscribe(struktur => {

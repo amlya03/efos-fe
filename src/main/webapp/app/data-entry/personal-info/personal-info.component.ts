@@ -91,7 +91,6 @@ export class PersonalInfoComponent implements OnInit {
   daWakodeposD: any;
   contohcontoh: any;
   kirimanstatusktp: any;
-  statusPerkawinan: any;
   untukSessionRole: any;
   curefGetDE: any;
   statusKawin: any;
@@ -127,7 +126,6 @@ export class PersonalInfoComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.curef = params['curef'];
       this.app_no_de = params['app_no_de'];
-      this.statusPerkawinan = params.statusPerkawinan;
     });
   }
 
@@ -325,7 +323,6 @@ export class PersonalInfoComponent implements OnInit {
     this.router.navigate(['/data-entry/job-info'], {
       queryParams: {
         curef: contohtampungancuref,
-        statusPerkawinan: contohtampungstatuskawain,
         app_no_de: contohtampunganappde,
       },
     });
@@ -407,7 +404,6 @@ export class PersonalInfoComponent implements OnInit {
           this.router.navigate(['/data-entry/job-info'], {
             queryParams: {
               curef: this.curefGetDE,
-              statusPerkawinan: this.statusKawin,
               app_no_de: this.app_no_de,
             },
           });

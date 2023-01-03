@@ -21,7 +21,6 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
   uploadDocument?: uploadDocument[];
   curef: any;
   app_no_de: any;
-  statusPerkawinan: any;
   fetchAllAgunan: fetchAllDe = new fetchAllDe();
   inputUpload: any;
   hapusUpload: any;
@@ -48,7 +47,6 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(params => {
       this.curef = params.curef;
       this.app_no_de = params.app_no_de;
-      this.statusPerkawinan = params.statusPerkawinan;
     });
   }
 
@@ -178,7 +176,6 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
     this.router.navigate(['/data-entry/memo'], {
       queryParams: {
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de,
       },
     });

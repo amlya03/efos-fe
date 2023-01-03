@@ -90,6 +90,9 @@ export class VerificationComponent implements OnInit, OnDestroy {
 
   clearInput(): void {
     $('#dataTables-example').DataTable().search('').draw();
+    setTimeout(() => {
+      $('#dataTables-example').DataTable().columns().search('').draw();
+    }, 50);
   }
 
   viewVerification(app_no_de: any): void {

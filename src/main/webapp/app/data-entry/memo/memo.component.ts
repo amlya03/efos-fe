@@ -26,7 +26,6 @@ export class MemoComponent implements OnInit {
   file?: File; // Variable to store file
   curef: string | undefined;
   app_no_de: string | undefined;
-  statusPerkawinan: string | undefined;
   getMemoUpload: getMemoUploadModel = new getMemoUploadModel();
   resultGetMemoUpload = 0;
   memoModel: memomodel[] = [];
@@ -55,7 +54,6 @@ export class MemoComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
-      this.statusPerkawinan = params['statusPerkawinan'];
     });
   }
 

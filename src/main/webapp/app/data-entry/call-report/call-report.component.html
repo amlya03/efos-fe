@@ -17,7 +17,6 @@
             value="{{ daWa1.app_no_de }}"
             disabled
           />
-        
         </div>
       </div>
       <br />
@@ -200,14 +199,12 @@
         <div class="form-group col-md-4">
           <select class="form-control" id="status_agunan" formControlName="status_agunan">
             <option value="">Pilih Kepemilikan Agunan</option>
-            <option value="Penjual">Penjual</option>
-            <option value="Milik Orang tua">Milik Orang tua</option>
-            <option value="Milik sendiri">Milik sendiri</option>
-            <option value="Lain nya">Lain nya</option>
+            <option *ngFor="let listKepegawaian of kepemilikanAgunan" value="{{ listKepegawaian.deskripsi }}">
+              {{ listKepegawaian.deskripsi }}
+            </option>
           </select>
-         
         </div>
-        <div class="form-group col-md-4" *ngIf="this.callReportForm.get('status_agunan')?.value == 'Lain nya'">
+        <div class="form-group col-md-4" *ngIf="this.callReportForm.get('status_agunan')?.value == 'Lainnya'">
           <input
             data-toggle="tooltip"
             data-placement="bottom"
@@ -217,12 +214,11 @@
             formControlName="catatan_status_agunan"
             class="form-control"
           />
-        <span [hidden]="callReportForm.controls.catatan_status_agunan.valid" class="text-danger"> Field Wajib Diisi </span>
-
+          <span [hidden]="callReportForm.controls.catatan_status_agunan.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>
         <span [hidden]="callReportForm.controls.status_agunan.valid" class="text-danger"> Field Wajib Diisi </span>
       </div>
-     
+
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Dokumen Kepemilikan</label>
@@ -233,10 +229,9 @@
               {{ listSertif.sertifikat_deskripsi }}
             </option>
           </select>
-          
         </div>
         <span [hidden]="callReportForm.controls.dokumen_agunan.valid" class="text-danger"> Field Wajib Diisi </span>
-        <div class="form-group col-md-4" *ngIf="this.callReportForm.get('dokumen_agunan')?.value == 'Lain nya'">
+        <div class="form-group col-md-4" *ngIf="this.callReportForm.get('dokumen_agunan')?.value == 'Lainnya'">
           <input
             data-toggle="tooltip"
             data-placement="bottom"
@@ -257,13 +252,13 @@
             <option value="">Posisi dokumen</option>
             <option value="On Hand">On Hand</option>
             <option value="Di Bank Lain">Di Bank Lain</option>
-            <option value="Lain nya">Lainnya</option>
+            <option value="Lainnya">Lainnya</option>
           </select>
         </div>
         <div
           id="catatanLainnyaPosisi_dokumen"
           class="form-group col-md-4"
-          *ngIf="this.callReportForm.get('posisi_dokumen')?.value == 'Lain nya'"
+          *ngIf="this.callReportForm.get('posisi_dokumen')?.value == 'Lainnya'"
         >
           <input
             data-toggle="tooltip"
@@ -298,7 +293,6 @@
             </select>
             <span [hidden]="callReportForm.controls.tipe_pekerjaan.valid" class="text-danger"> Field Wajib Diisi </span>
           </div>
-        
         </div>
         <br />
         <div class="form-group row">
@@ -310,7 +304,6 @@
             </select>
             <span [hidden]="callReportForm.controls.status_pekerjaan.valid" class="text-danger"> Field Wajib Diisi </span>
           </div>
-       
         </div>
         <br />
         <div class="form-group row">
@@ -697,7 +690,9 @@
               id="jumlah_karyawan_perusahaan_pasangan"
               formControlName="jumlah_karyawan_perusahaan_pasangan"
             />
-            <span [hidden]="callReportForm.controls.jumlah_karyawan_perusahaan_pasangan.valid" class="text-danger"> Field Wajib Diisi </span>
+            <span [hidden]="callReportForm.controls.jumlah_karyawan_perusahaan_pasangan.valid" class="text-danger">
+              Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -708,7 +703,9 @@
               <option value="Cukup Berdampak">Cukup Berdampak</option>
               <option value="Tidak Berdampak">Tidak Berdampak</option>
             </select>
-            <span [hidden]="callReportForm.controls.kondisi_pandemi_perusahaan_pasangan.valid" class="text-danger"> Field Wajib Diisi </span>
+            <span [hidden]="callReportForm.controls.kondisi_pandemi_perusahaan_pasangan.valid" class="text-danger">
+              Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -822,7 +819,7 @@
             id="takeHomepay"
             formControlName="take_home_pay"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
           />
           <span [hidden]="callReportForm.controls.take_home_pay.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>

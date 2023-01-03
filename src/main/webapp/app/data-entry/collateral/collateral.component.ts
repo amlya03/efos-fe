@@ -36,7 +36,6 @@ export class CollateralComponent implements OnInit {
   tableAgunan: listAgunan[] = [];
   app_no_de: any;
   curef: any;
-  statusPerkawinan: any;
   daWa: any;
   tampungantipeagunan: any;
   tambahatautidak: any;
@@ -82,9 +81,6 @@ export class CollateralComponent implements OnInit {
     });
     this.route.queryParams.subscribe(params => {
       this.curef = params['curef'];
-    });
-    this.route.queryParams.subscribe(params => {
-      this.statusPerkawinan = params['statusPerkawinan'];
     });
   }
 
@@ -411,7 +407,6 @@ export class CollateralComponent implements OnInit {
         this.router.navigate(['/data-entry/struktur-pembiayaan'], {
           queryParams: {
             curef: this.curef,
-            statusPerkawinan: this.statusPerkawinan,
             app_no_de: this.app_no_de,
           },
         });
@@ -425,7 +420,6 @@ export class CollateralComponent implements OnInit {
     this.router.navigate(['/data-entry/struktur-pembiayaan'], {
       queryParams: {
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de,
       },
     });
@@ -435,7 +429,6 @@ export class CollateralComponent implements OnInit {
     this.router.navigate(['/data-entry/editcollateral'], {
       queryParams: {
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de,
         datakirimanid: idcollateral,
       },

@@ -28,7 +28,6 @@ export class CallReportComponent implements OnInit {
   callReportForm!: FormGroup;
   datakirimiancure: any;
   curef: string | undefined;
-  statusPerkawinan: string | undefined;
   app_no_de: string | undefined;
   daWa: getCallReportModel = new getCallReportModel();
   daWa1: fetchAllDe = new fetchAllDe();
@@ -38,6 +37,7 @@ export class CallReportComponent implements OnInit {
   pemegangHak: refListJumlahKaryawan[] = [];
   listSertif: refStatusSertifikat[] = [];
   pendidikanModel: refJenisPekerjaan[] = [];
+  kepemilikanAgunan: refJenisPekerjaan[] = [];
   nowawancara: any;
   contohtex: any;
   skalaprusahaan: any;
@@ -73,7 +73,6 @@ export class CallReportComponent implements OnInit {
     });
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
-      this.statusPerkawinan = params['statusPerkawinan'];
     });
   }
 
@@ -181,6 +180,11 @@ export class CallReportComponent implements OnInit {
   load() {
     // /////////////////////////Ref////////////////////////////////////
     setTimeout(() => {
+      setTimeout(() => {
+        this.dataEntryService.getListKepemilikanAgunan().subscribe(kep => {
+          this.kepemilikanAgunan = kep.result;
+        });
+      }, 5);
       this.dataEntryService.getFetchStatusPerkawinan().subscribe(data => {
         this.ref_status_perkawinan = data.result;
       });
@@ -438,7 +442,6 @@ export class CallReportComponent implements OnInit {
     this.router.navigate(['/upload_document/upload_document_de'], {
       queryParams: {
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de,
       },
     });
@@ -545,7 +548,6 @@ export class CallReportComponent implements OnInit {
           this.router.navigate(['/data-entry/memo'], {
             queryParams: {
               curef: this.curef,
-              statusPerkawinan: this.statusPerkawinan,
               app_no_de: this.app_no_de,
             },
           });

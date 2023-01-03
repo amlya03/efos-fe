@@ -41,7 +41,6 @@ export class PekerjaanPasanganComponent implements OnInit {
   listTipePerusahaan: refTipePerusahaan[] = [];
   app_no_de: any;
   curef: any;
-  statusPerkawinan: any;
   kategoriPekerjaan: any;
   tipePekerjaanChange: any;
   kirimKatePeker: any;
@@ -96,7 +95,6 @@ export class PekerjaanPasanganComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
       this.curef = params['curef'];
-      this.statusPerkawinan = params.statusPerkawinan;
     });
   }
 
@@ -367,7 +365,6 @@ export class PekerjaanPasanganComponent implements OnInit {
     this.router.navigate(['/data-entry/collateral'], {
       queryParams: {
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de,
         // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
       },
@@ -462,7 +459,6 @@ export class PekerjaanPasanganComponent implements OnInit {
             this.router.navigate(['/data-entry/collateral'], {
               queryParams: {
                 curef: this.curef,
-                statusPerkawinan: this.statusPerkawinan,
                 app_no_de: this.app_no_de,
               },
             });
@@ -510,7 +506,6 @@ export class PekerjaanPasanganComponent implements OnInit {
             this.router.navigate(['/data-entry/collateral'], {
               queryParams: {
                 curef: this.curef,
-                statusPerkawinan: this.statusPerkawinan,
                 app_no_de: this.app_no_de,
               },
             });

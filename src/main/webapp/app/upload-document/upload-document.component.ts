@@ -84,7 +84,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   }
 
   cariButton(listFasilitas: string, listKategori: string, inputNamaNasabah: string, inputNoAplikasi: string): void {
-    alert(listFasilitas);
+    // alert(listFasilitas);
     $('#dataTables-example').DataTable().columns(1).search(inputNoAplikasi).draw();
     $('#dataTables-example').DataTable().columns(3).search(inputNamaNasabah).draw();
     $('#dataTables-example').DataTable().columns(8).search(listKategori).draw();
@@ -93,6 +93,12 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
 
   clearInput(): void {
     $('#dataTables-example').DataTable().search('').draw();
+    setTimeout(() => {
+      $('#dataTables-example').DataTable().columns().search('').draw();
+    }, 50);
+    setTimeout(() => {
+      $('#dataTables-example').DataTable().columns().search('').draw();
+    }, 50);
     // alert("bbb")
   }
 
@@ -106,7 +112,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
       next: data => {
         this.semuaDE = data.result;
         this.router.navigate(['/upload_document/upload_document_de'], {
-          queryParams: { curef: this.curef, statusPerkawinan: this.semuaDE.status_perkawinan, app_no_de: this.appNoDe },
+          queryParams: { curef: this.curef, app_no_de: this.appNoDe },
         });
         this.getLoading(false);
       },

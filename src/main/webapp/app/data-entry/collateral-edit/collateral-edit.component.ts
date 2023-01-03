@@ -42,7 +42,6 @@ export class CollateralEditComponent implements OnInit {
 
   app_no_de: any;
   curef: any;
-  statusPerkawinan: any;
   datakirimanid: any;
 
   daWa: any;
@@ -156,7 +155,6 @@ export class CollateralEditComponent implements OnInit {
       this.curef = params['curef'];
     });
     this.route.queryParams.subscribe(params => {
-      this.statusPerkawinan = params['statusPerkawinan'];
       this.datakirimanid = params['datakirimanid'];
     });
   }
@@ -325,8 +323,6 @@ export class CollateralEditComponent implements OnInit {
           this.kirimanhubungan1lainya = table.result.hubungan_pemegang_hak;
         }
 
-
-
         const ValidasiTipeAgunan = <FormControl>this.editCollateralForm.get('tipe_agunan');
         const ValidasiJenisObjek = <FormControl>this.editCollateralForm.get('jenis_objek');
         const ValidasiTipeKendaraan = <FormControl>this.editCollateralForm.get('tipe_kendaraan');
@@ -342,7 +338,7 @@ export class CollateralEditComponent implements OnInit {
 
         const ValidasiHubunganPemilikHak = <FormControl>this.editCollateralForm.get('hubungan_pemegang_hak');
         const ValidasiTipeProperti = <FormControl>this.editCollateralForm.get('tipe_properti');
-        const ValidasiStatusAgunan= <FormControl>this.editCollateralForm.get('status_agunan');
+        const ValidasiStatusAgunan = <FormControl>this.editCollateralForm.get('status_agunan');
         const ValidasiStatusDevloper = <FormControl>this.editCollateralForm.get('status_developer');
         const ValidasiDevloper = <FormControl>this.editCollateralForm.get('developer');
         const ValidasiStatusJaminanSebelum = <FormControl>this.editCollateralForm.get('status_jaminan_sebelumnya');
@@ -351,14 +347,14 @@ export class CollateralEditComponent implements OnInit {
         const ValidasiStatusSertifikat = <FormControl>this.editCollateralForm.get('status_sertifikat');
         const ValidasiNoSertifikat = <FormControl>this.editCollateralForm.get('no_sertifikat');
         const ValidasiNoKontakHr = <FormControl>this.editCollateralForm.get('nama_pemegang_hak');
-        const ValidasiNoHandphoneCp= <FormControl>this.editCollateralForm.get('no_handphone_cp');
+        const ValidasiNoHandphoneCp = <FormControl>this.editCollateralForm.get('no_handphone_cp');
         const ValidasiNoIdPemegangHakSertifikat = <FormControl>this.editCollateralForm.get('no_id_pemegang_hak_sertifikat');
         const ValidasiAlamatAgunan = <FormControl>this.editCollateralForm.get('alamat_agunan');
         const ValidasiProvinsiAgunan = <FormControl>this.editCollateralForm.get('provinsi_agunan');
         const ValidasiKabkotaAgunan = <FormControl>this.editCollateralForm.get('kabkota_agunan');
         const ValidasiKecamatanAgunan = <FormControl>this.editCollateralForm.get('kecamatan_agunan');
         const ValidasiKelurahanAgunan = <FormControl>this.editCollateralForm.get('kelurahan_agunan');
-        const ValidasiKodePosAgunan= <FormControl>this.editCollateralForm.get('kode_pos_agunan');
+        const ValidasiKodePosAgunan = <FormControl>this.editCollateralForm.get('kode_pos_agunan');
         const Validasirt = <FormControl>this.editCollateralForm.get('rt');
         const Validasirw = <FormControl>this.editCollateralForm.get('rw');
         const ValidasiLuasTanah = <FormControl>this.editCollateralForm.get('luas_tanah');
@@ -427,7 +423,7 @@ export class CollateralEditComponent implements OnInit {
         ValidasiTanggalTerbit.setValidators([Validators.required]);
         ValidasiTanggalExpired.setValidators([Validators.required]);
         ValidasiHubunganPemegangHakLainya.setValidators([Validators.required]);
-       
+
         this.datEntryService.getFetchListTipeProperti(tipeAgunan).subscribe(data => {
           this.tipeProperti = data.result;
         });
@@ -497,7 +493,6 @@ export class CollateralEditComponent implements OnInit {
       });
     }, 80);
   }
- 
 
   agunanChange(code: any) {
     this.datEntryService.getFetchListTipeProperti(code).subscribe(data => {
@@ -587,8 +582,6 @@ export class CollateralEditComponent implements OnInit {
 
     this.tampungantipeagunan = pilihantipeagunan.value;
   }
-   
-  
 
   tambahcollateral() {
     this.tambahatautidak = 'benar';
@@ -599,7 +592,6 @@ export class CollateralEditComponent implements OnInit {
     this.router.navigate(['/data-entry/struktur-pembiayaan'], {
       queryParams: {
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de,
       },
     });
@@ -609,7 +601,6 @@ export class CollateralEditComponent implements OnInit {
     this.router.navigate(['/data-entry/editcollateral'], {
       queryParams: {
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de,
         datakirimanid: idcollateral,
       },
@@ -713,7 +704,6 @@ export class CollateralEditComponent implements OnInit {
           this.router.navigate(['/data-entry/collateral'], {
             queryParams: {
               curef: this.curef,
-              statusPerkawinan: this.statusPerkawinan,
               app_no_de: this.app_no_de,
             },
           });

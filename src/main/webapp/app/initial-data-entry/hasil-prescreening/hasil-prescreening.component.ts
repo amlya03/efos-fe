@@ -448,9 +448,14 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
 
     if (this.dataEntry.status_perkawinan === 'Menikah') {
       this.statusnikah = 'KAWIN';
-    } else {
+    } else if (this.dataEntry.status_perkawinan === 'Lajang') {
       this.statusnikah = 'BELUM KAWIN';
+    } else if (this.dataEntry.status_perkawinan === 'Cerai Hidup') {
+      this.statusnikah = 'CERAI HIDUP';
+    } else if (this.dataEntry.status_perkawinan === 'Cerai Mati') {
+      this.statusnikah = 'CERAI MATI';
     }
+
     if (this.dataEntry.status_perkawinan === 'Menikah') {
       setTimeout(() => {
         this.http

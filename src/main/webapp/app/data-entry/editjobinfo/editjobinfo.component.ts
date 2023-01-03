@@ -39,7 +39,6 @@ export class EditjobinfoComponent implements OnInit {
   datakirimanakategoripekerjaan: any;
   datakiriman: any;
   datakirimanid: any;
-  statusPerkawinan: any;
   daWa: any;
   contohkirimpyrol: any;
   edittipepekerjaan: any;
@@ -91,9 +90,6 @@ export class EditjobinfoComponent implements OnInit {
     });
     this.route.queryParams.subscribe(params => {
       this.datakirimanid = params['datakirimanid'];
-    });
-    this.route.queryParams.subscribe(params => {
-      this.statusPerkawinan = params['statusPerkawinan'];
     });
     this.route.queryParams.subscribe(params => {
       this.curef = params['curef'];
@@ -419,7 +415,6 @@ export class EditjobinfoComponent implements OnInit {
             this.router.navigate(['/data-entry/job-info'], {
               queryParams: {
                 curef: this.curef,
-                statusPerkawinan: this.statusPerkawinan,
                 app_no_de: this.app_no_de,
                 //   datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
               },
@@ -431,7 +426,6 @@ export class EditjobinfoComponent implements OnInit {
     // this.router.navigate(['/data-entry/job-info'], {
     //   queryParams: {
     //     datakiriman: contohtampungancuref,
-    //     statusPerkawinan: contohtampungstatuskawain,
     //     app_no_de: contohtampunganappde,
     //     datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
     //   },
@@ -439,7 +433,6 @@ export class EditjobinfoComponent implements OnInit {
     // this.router.navigate(['/data-entry/job-info'], {
     //   queryParams: {
     //     datakiriman: this.datakiriman,
-    //     statusPerkawinan: this.statusPerkawinan,
     //     app_no_de: this.app_no_de,
     //     // datakirimanakategoripekerjaan: this.datakirimanakategoripekerjaan,
     //   },
@@ -450,9 +443,7 @@ export class EditjobinfoComponent implements OnInit {
     this.router.navigate(['/data-entry/job-info'], {
       queryParams: {
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de,
-        //   datakirimanakategoripekerjaan: contohtampungankategoripekerjaan,
       },
     });
   }

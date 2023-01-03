@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SessionStorageService } from 'ngx-webstorage';
@@ -15,6 +15,8 @@ import Swal from 'sweetalert2';
 import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
 import { navbarModel } from './navbarModel.model';
 import { createRequestOption } from 'app/core/request/request-util';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 
 @Component({
   selector: 'jhi-navbar',
@@ -22,6 +24,8 @@ import { createRequestOption } from 'app/core/request/request-util';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   // private loggedIn = new BehaviorSubject<boolean>(false); // {1}
   sudahLogin = true;
   inProduction?: boolean;
@@ -38,9 +42,8 @@ export class NavbarComponent implements OnInit {
   role: string | undefined;
   navbarPersonalInfo: string | undefined;
   app_no_de: string | undefined;
-  daWa: any;
+  dataEntry: fetchAllDe = new fetchAllDe();
   curef: string | undefined;
-  statusPerkawinan: string | undefined;
   datakirimanakategoripekerjaan: any;
   datakirimanakategoripekerjaanNav: any;
   datakirimanid: any;
@@ -51,6 +54,7 @@ export class NavbarComponent implements OnInit {
   kategori: any;
   navbarParameterize: navbarModel[] = [];
   childNavbar: navbarModel[] = [];
+  statusPerkawinan: any;
 
   constructor(
     protected http: HttpClient,
@@ -63,7 +67,8 @@ export class NavbarComponent implements OnInit {
     public router: Router,
     private route: ActivatedRoute,
     protected applicationConfigService: ApplicationConfigService,
-    protected verificationServices: ServiceVerificationService
+    protected verificationServices: ServiceVerificationService,
+    protected dataEntryServices: DataEntryService
   ) {
     if (VERSION) {
       this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`;
@@ -80,7 +85,6 @@ export class NavbarComponent implements OnInit {
       // ///////////////// Data Entry //////////////////////////////////
       this.curef = params['curef'];
       this.app_no_de = params['app_no_de'];
-      this.statusPerkawinan = params.statusPerkawinan;
       this.datakirimanakategoripekerjaan = params.datakirimanakategoripekerjaan;
       this.datakirimanakategoripekerjaanNav = params.datakirimanakategoripekerjaan;
       this.datakirimanid = params.datakirimanid;
@@ -91,12 +95,25 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getLoading(true);
     this.verificationServices.postNavbar(this.SessionStorageService.retrieve('sessionRole')).subscribe({
       next: data => {
         this.navbarParameterize = data.result;
         this.childNavbar = data.result.child;
       },
     });
+    // setTimeout(() => {
+    this.dataEntryServices.getFetchSemuaDataDE(this.app_no_de).subscribe(de => {
+      this.dataEntry = de.result;
+      if (de.result == null) {
+        this.statusPerkawinan = 'Lajang';
+        this.getLoading(false);
+      } else {
+        this.statusPerkawinan = this.dataEntry.status_perkawinan;
+        this.getLoading(false);
+      }
+    });
+    // }, 5);
 
     this.entitiesNavbarItems = EntityNavbarItems;
     this.profileService.getProfileInfo().subscribe(profileInfo => {
@@ -298,5 +315,10 @@ export class NavbarComponent implements OnInit {
 
   toggleNavbar(): void {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }
