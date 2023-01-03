@@ -686,16 +686,16 @@ export class JobInfoComponent implements OnInit {
         var kirimankelurahan = this.datajobsebelum.get('kelurahan_sebelum')?.value;
       }
 
-      const potonganjenisbidang = this.datajobsebelum.get('jenis_bidang_sebelum')?.value.split('|');
-      if (this.dataretrivejenisbidangsebelum != '') {
-        var kirimanjenisbidang = this.dataretrivejenisbidangsebelum;
-      } else {
+      if (this.datajobsebelum.get('jenis_bidang_sebelum')?.value.indexOf('|') !== -1) {
+        const potonganjenisbidang = this.datajobsebelum.get('jenis_bidang_sebelum')?.value.split('|');
         var kirimanjenisbidang = potonganjenisbidang[1];
-      }
-      if (this.dataretrivejenisbidangsebelum != '') {
-        this.datajobsebelum.get('sektor_ekonomi_sebelum')?.setValue(this.dataretrivejenisbidangsebelum);
       } else {
+        var kirimanjenisbidang = this.dataretrivejenisbidangsebelum;
+      }
+      if (this.datajobsebelum.get('jenis_bidang_sebelum')?.value.indexOf('|') !== -1) {
         this.datajobsebelum.get('sektor_ekonomi_sebelum')?.value;
+      } else {
+        this.datajobsebelum.get('sektor_ekonomi_sebelum')?.setValue(this.dataretrivesektorekosebelum);
       }
       // setTimeout(() => {
       //   alert(this.dataretrivesektorekosebelum);
