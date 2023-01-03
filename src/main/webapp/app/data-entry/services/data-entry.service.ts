@@ -220,6 +220,7 @@ export class DataEntryService {
   // /////////////////////////// Ref Semua Data DE ////////////////////////////////////////////
   getFetchSemuaDataDE(app_no_de: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.fetchSemuaDataDE + app_no_de);
+   
   }
   // /////////////////////////// Ref Semua Data DE ////////////////////////////////////////////
 

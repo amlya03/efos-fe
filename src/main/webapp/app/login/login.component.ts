@@ -5,6 +5,7 @@ import { LoginService } from 'app/login/login.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { HttpClient } from '@angular/common/http';
 import { SessionStorageService } from 'ngx-webstorage';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'jhi-login',
@@ -56,6 +57,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
       next: () => {
         this.authenticationError = false;
         if (!this.router.getCurrentNavigation()) {
+          Swal.fire({
+            title: 'Berhasil Login!',
+            imageAlt: 'Custom image',
+            showConfirmButton:false,
+            allowEscapeKey:false,
+            allowOutsideClick:false,
+          })
           // There were no routing during login (eg from navigationToStoredUrl)
           this.router.navigate(['/']);
         }
@@ -63,7 +71,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
           window.location.reload();
         }, 300);
       },
-      error: () => (this.authenticationError = true),
+      error: () => {
+        
+        Swal.fire({
+          icon: 'error',
+          title: 'Perhatikan !',
+          text: 'User name atau Password salah',
+        
+        })
+
+
+        this.authenticationError = true
+      },
     });
   }
 }
