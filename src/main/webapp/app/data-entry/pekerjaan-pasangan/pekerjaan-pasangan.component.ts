@@ -221,6 +221,9 @@ export class PekerjaanPasanganComponent implements OnInit {
 
     setTimeout(() => {
       this.datEntryService.getSemuaDataJobPasangan(this.curef).subscribe(data => {
+        if (data.result == null) {
+          this.getLoading(false);
+        }
         this.listJobPasangan = data.result;
         ////////////////////////////////////////////////////////////////////////////
         if (this.listJobPasangan.kategori_pekerjaan == 'Fix Income') {
