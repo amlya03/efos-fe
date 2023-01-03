@@ -10,6 +10,7 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { environment } from 'environments/environment';
+import { refJenisPekerjaan } from '../services/config/refJenisPekerjaan.model';
 
 export type EntityResponseDaWa = HttpResponse<datapasangamodel>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -46,6 +47,7 @@ export class DataPasanganComponent implements OnInit {
   retriveKodeKota: any;
   retriveKodeKecamatan: any;
   retriveKodeKelurahan: any;
+  pendidikanModel: refJenisPekerjaan[] = [];
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -68,50 +70,50 @@ export class DataPasanganComponent implements OnInit {
     this.getLoading(true);
     this.dataPasanganForm = this.formBuilder.group({
       nama_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: true },
         Validators.required,
       ],
       jenis_kelamin_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: true },
         Validators.required,
       ],
       alamat_ktp_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: true },
         Validators.required,
       ],
       // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       provinsi_pasangan: {
         value: '' || null,
-        disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER',
+        disabled: true,
       },
-      kabkota_pasangan: { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+      kabkota_pasangan: { value: '' || null, disabled: true},
       kecamatan_pasangan: {
         value: '' || null,
-        disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER',
+        disabled: true,
       },
       kelurahan_pasangan: {
         value: '' || null,
-        disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER',
+        disabled:true,
       },
       kode_pos_pasangan: {
         value: '' || null,
-        disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER',
+        disabled: true,
       },
       // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       rt_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled:true},
         Validators.required,
       ],
       rw_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: true },
         Validators.required,
       ],
       kewarganegaraan_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: true },
         Validators.required,
       ],
       pendidikan_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: true },
         Validators.required,
       ],
       email_pasangan: [
@@ -119,41 +121,49 @@ export class DataPasanganComponent implements OnInit {
         Validators.required,
       ],
       no_handphone_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: true },
         Validators.required,
       ],
       no_ktp_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: true },
         Validators.required,
       ],
       tanggal_terbit_ktp_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: true },
         Validators.required,
       ],
       status_ktp_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: true },
         Validators.required,
       ],
       tanggal_exp_ktp_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: true },
         Validators.required,
       ],
       npwp_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: true },
         Validators.required,
       ],
       tanggal_lahir_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: true },
         Validators.required,
       ],
       usia_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: true },
         Validators.required,
       ],
     });
   }
 
   load() {
+    setTimeout(() => {
+      this.datEntryService.getListPendidikan().subscribe({
+        next: data => {
+          this.pendidikanModel = data.result;
+        },
+      });
+    }, 10);
+
     this.gettokendukcapil();
     this.datEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
