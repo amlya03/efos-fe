@@ -69,7 +69,6 @@ export class MapisComponent implements OnInit {
       setTimeout(() => {
         this.dataEntryService.getfetchlistagunan(this.dataEntry.curef).subscribe(list => {
           this.listagunan = list.result;
-          console.warn('test', list);
           if (list.result != null || list.result != '') {
             this.retTipePro = list.result[0].tipe_properti;
             this.retTipeAg = list.result[0].tipe_agunan;
