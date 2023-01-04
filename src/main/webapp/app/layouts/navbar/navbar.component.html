@@ -841,12 +841,12 @@
       routerLink="upload_document/upload_document_agunan"
       [queryParams]="{
         curef: this.curef,
-
         app_no_de: this.app_no_de
       }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'AO'"
+      [hidden]="dataEntry.kode_fasilitas_name === 'PTA'"
     >
       <h6>Upload Document Agunan</h6>
     </a>

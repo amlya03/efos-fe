@@ -37,6 +37,7 @@ export class MemoComponent implements OnInit {
   untukSessionusername: any;
   untukSessionfullname: any;
   popup: any;
+  valBM: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -71,20 +72,6 @@ export class MemoComponent implements OnInit {
   }
 
   load() {
-    this.dataEntryService.getfetchMemo(this.app_no_de).subscribe(data => {
-      this.memoModel = data.result;
-      setTimeout(() => {
-        if (data.result == null || data.result == '') {
-          this.modelResultmemo = 1;
-          this.getLoading(false);
-        } else {
-          this.modelResultmemo = 0;
-          this.getLoading(false);
-        }
-        // alert(this.modelResultmemo)
-      }, 300);
-    });
-
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntryModel = data.result;
       this.tampilanfixornon = data.result.kategori_pekerjaan;
@@ -92,11 +79,43 @@ export class MemoComponent implements OnInit {
 
     this.fileUploadService.getMemoUpload(this.curef, this.app_no_de).subscribe(data => {
       this.getMemoUpload = data.result;
-      if (this.getMemoUpload.nama_dokumen == null) {
+      if (data.result == null) {
         this.resultGetMemoUpload = 0;
-      } else {
+        this.getLoading(false);
+      }
+      // if (this.getMemoUpload.nama_dokumen == null) {
+      //   this.resultGetMemoUpload = 0;
+      // }
+      else {
         this.resultGetMemoUpload = 1;
       }
+    });
+
+    this.dataEntryService.getfetchMemo(this.app_no_de).subscribe(data => {
+      this.memoModel = data.result;
+      this.valBM = 0;
+      setTimeout(() => {
+        for (let i = 0; i < this.memoModel.length; i++) {
+          setTimeout(() => {
+            if (this.memoModel[i].role === 'BRANCHMANAGER') {
+              this.valBM = 0;
+            } else {
+              this.valBM = 1;
+              // alert(this.valBM)
+            }
+          }, 10);
+          setTimeout(() => {
+            if (this.memoModel[i].role === 'AO') {
+              this.modelResultmemo = 0;
+              // alert(this.modelResultmemo)
+              this.getLoading(false);
+            } else {
+              this.modelResultmemo = 1;
+              this.getLoading(false);
+            }
+          }, 30);
+        }
+      }, 10);
     });
   }
 
@@ -156,9 +175,13 @@ export class MemoComponent implements OnInit {
             this.router.navigate(['/data-entry']);
           } else {
             alert('Berhasil Menyimpan Data');
-            this.router.navigate(['/upload_document/upload_document_de'], {
-              queryParams: { curef: this.curef, app_no_de: this.app_no_de },
-            });
+            this.router
+              .navigate(['/upload_document/upload_document_de'], {
+                queryParams: { curef: this.curef, app_no_de: this.app_no_de },
+              })
+              .then(() => {
+                window.location.reload();
+              });
           }
         },
       });

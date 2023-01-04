@@ -844,9 +844,13 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
       .subscribe({
         next: data => {
           this.contohdata = data.result.app_no_de;
-          this.router.navigate(['/data-entry/personalinfo'], {
-            queryParams: { curef: this.dataEntry.curef, statusPerkawinan: this.dataEntry.status_perkawinan, app_no_de: this.contohdata },
-          });
+          this.router
+            .navigate(['/data-entry/personalinfo'], {
+              queryParams: { curef: this.dataEntry.curef, app_no_de: this.contohdata },
+            })
+            .then(() => {
+              window.location.reload();
+            });
         },
         error: err => {
           alert(err.error.message);

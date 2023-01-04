@@ -99,21 +99,9 @@
   </div>
 </div>
 <br />
-<div class="text-center">
-  <!-- <input class="form-control" type="file" (change)="onChange($event)" /> -->
-
-  <!-- <button (click)="onUpload()" class="btn btn-success">Upload</button> -->
-</div>
-
-<!-- Shareable short link of  uploaded file -->
-<div class="container text-center jumbotron" *ngIf="shortLink">
-  <h2>Visit Here</h2>
-  <a href="{{ shortLink }}">{{ shortLink }}</a>
-</div>
-
-<!--Flag variable is used here-->
-<div class="container" *ngIf="loading">
-  <h3>Loading ...</h3>
-</div>
-<br />
-<button (click)="viewUploadDEA()" class="btn btn-warning" style="float: left">Selanjutnya Ke Document Agunan</button>
+<button class="btn btn-warning" (click)="updateStatus()" *ngIf="dataEntry.kode_fasilitas_name === 'PTA'" style="float: right">
+  Update Status
+</button>
+<button (click)="viewUploadDEA()" class="btn btn-warning" style="float: left" [hidden]="dataEntry.kode_fasilitas_name === 'PTA'">
+  Selanjutnya Ke Document Agunan
+</button>

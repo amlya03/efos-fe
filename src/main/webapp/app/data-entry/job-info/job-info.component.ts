@@ -34,7 +34,7 @@ export class JobInfoComponent implements OnInit {
   jobInfoForm!: FormGroup;
   dataEntry: fetchAllDe = new fetchAllDe();
   jobInfo: getJob[] = [];
-  ideJob: getJob[] = [];
+  ideJob: modelJobIde = new modelJobIde();
   listJabatan: refJenisPekerjaan[] = [];
   listTipePekerjaan: getListTipePekerjaan[] = [];
   app_no_de!: string;
@@ -364,7 +364,7 @@ export class JobInfoComponent implements OnInit {
         this.tampunganid = job.result;
 
         setTimeout(() => {
-          if (job.result == null) {
+          if (job.result.kategori_pekerjaan_sebelum == null) {
             // alert('inijalan');
             let retrivejobsebelum = {
               kategori_pekerjaan_sebelum: '',

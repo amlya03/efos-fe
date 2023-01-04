@@ -25,7 +25,7 @@
           <div class="form-group">
             <select
               class="form-control"
-              (change)="onchangefasilitas(this.strukturForm.get('kode_fasilitas')?.value)"
+              (change)="onchangefasilitas(this.strukturForm.get('kode_fasilitas')?.value.split('|')[0])"
               formControlName="kode_fasilitas"
               id="kode_fasilitas"
             >
@@ -188,7 +188,6 @@
           />
           <span [hidden]="strukturForm.controls.harga_objek_pembiayaan.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>
-      
       </div>
       <br />
       <div class="form-group row">
@@ -266,9 +265,7 @@
             currencyMask
             [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
-        
         </div>
-        
       </div>
       <br />
       <div class="form-group row">
@@ -277,7 +274,6 @@
           <textarea class="form-control h-150px" rows="6" formControlName="detail_objek_pembiayaan" id="detail_objek_pembiayaan"></textarea>
           <span [hidden]="strukturForm.controls.detail_objek_pembiayaan.valid" class="text-danger"> Field Wajib Diisi </span>
         </div>
-       
       </div>
     </div>
   </div>
