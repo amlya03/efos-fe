@@ -121,7 +121,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
         })
         .subscribe({
           next: response => {
-            // console.warn(response)
+            window.location.reload();
           },
           error: error => console.warn(error),
         });
@@ -200,10 +200,10 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     });
   }
   goto(): void {
-    this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+    this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
   next() {
-    this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+    this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
   // Only Numbers
   keyPressNumbers(event?: any): void {

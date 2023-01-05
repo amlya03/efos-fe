@@ -417,6 +417,7 @@ export class CollateralComponent implements OnInit {
   }
 
   goto(): void {
+    this.SessionStorageService.store('collateral', 1);
     this.router.navigate(['/data-entry/struktur-pembiayaan'], {
       queryParams: {
         curef: this.curef,

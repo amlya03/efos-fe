@@ -440,6 +440,7 @@ export class EditjobinfoComponent implements OnInit {
   }
 
   gotojobinfo() {
+    this.SessionStorageService.store('jobInfo', 1);
     this.router.navigate(['/data-entry/job-info'], {
       queryParams: {
         curef: this.curef,

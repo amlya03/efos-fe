@@ -119,7 +119,7 @@
     type="button"
     [hidden]="
       (this.untukSessionRole == 'AO' && this.resultGetMemoUpload == 1) ||
-      (this.untukSessionRole == 'BRANCHMANAGER' && this.valBM == 1) ||
+      (this.untukSessionRole == 'BRANCHMANAGER' && this.valBM == 1 && this.checkBM == 1) ||
       this.untukSessionRole == 'VER_PRE_SPV'
     "
     (click)="updatekeupload()"
@@ -133,8 +133,8 @@
   <button
     (click)="kembalikede()"
     [hidden]="
-      this.untukSessionRole == 'AO' ||
-      (this.untukSessionRole == 'BRANCHMANAGER' && this.valBM == 1) ||
+      (this.untukSessionRole == 'AO' && this.resultGetMemoUpload == 1) ||
+      (this.untukSessionRole == 'BRANCHMANAGER' && this.valBM == 1 && this.checkBM == 1) ||
       this.untukSessionRole == 'VER_PRE_SPV'
     "
     type="button"

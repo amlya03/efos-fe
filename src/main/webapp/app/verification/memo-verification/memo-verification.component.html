@@ -1,21 +1,21 @@
 <div class="row form-material">
   <div class="col">
     <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Nomor Aplikasi</label>
+      <label class="col-sm-4 col-form-label">Nomor Aplikasi</label>
       <div class="col-sm-8">
         <input #noAplikasi readonly type="text" class="form-control" value="{{ dataEntry.app_no_de }}" />
       </div>
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Program</label>
+      <label class="col-sm-4 col-form-label">Program</label>
       <div class="col-sm-8">
         <input #kategori readonly type="text" class="form-control" value="{{ dataEntry.program_pembiayaan }}" />
       </div>
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Track / Aktifitas</label>
+      <label class="col-sm-4 col-form-label">Track / Aktifitas</label>
       <div class="col-sm-8">
         <input #namaNasabah readonly type="text" class="form-control" value="{{ dataEntry.status_aplikasi_desc }}" />
       </div>
@@ -23,14 +23,14 @@
   </div>
   <div class="col">
     <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Nama Nasabah</label>
+      <label class="col-sm-4 col-form-label">Nama Nasabah</label>
       <div class="col-sm-8">
         <input #namaNasabah readonly type="text" class="form-control" value="{{ dataEntry.nama }}" />
       </div>
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-3 col-form-label">Product</label>
+      <label class="col-sm-4 col-form-label">Product</label>
       <div class="col-sm-8">
         <input #Fasilitas readonly type="text" class="form-control" value="{{ dataEntry.produk_pembiayaan }}" />
       </div>
@@ -49,7 +49,14 @@
 <div class="row" style="text-align: center">
   <div class="col">
     <button type="button" class="btn btn-info" (click)="simpanMemo(keterangan.value)">Simpan Data</button>
-    <button type="button" class="btn btn-warning" (click)="updateStatus()">Update Status</button>
+    <button
+      type="button"
+      class="btn btn-warning"
+      (click)="updateStatus()"
+      [hidden]="(untukSessionRole === 'VER_PRE_SPV' && valVER_PRE_SPV == 1) || (untukSessionRole === 'VER_PRESCR' && valVER_PRESCR == 1)"
+    >
+      Update Status
+    </button>
     <button type="button" class="btn btn-secondary" (click)="printData()">Cetak Memo</button>
   </div>
 </div>

@@ -544,6 +544,7 @@ export class JobInfoComponent implements OnInit {
   }
 
   goto() {
+    this.SessionStorageService.store('jobInfo', 1);
     // this.onResponseSuccess(res);
     if (this.dataEntry.status_perkawinan === 'Menikah') {
       this.router.navigate(['/data-entry/data-pasangan'], {

@@ -439,6 +439,7 @@ export class CallReportComponent implements OnInit {
   }
 
   goto() {
+    this.SessionStorageService.store('callReport', 1);
     this.router.navigate(['/upload_document/upload_document_de'], {
       queryParams: {
         curef: this.curef,

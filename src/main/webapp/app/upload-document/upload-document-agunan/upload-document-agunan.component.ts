@@ -203,6 +203,7 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
   }
   // Selanjutnya BM
   next() {
+    this.SessionStorageService.store('uploadDEA', 1);
     this.router.navigate(['/data-entry/memo'], {
       queryParams: {
         curef: this.curef,

@@ -435,7 +435,7 @@ export class DataRumahComponent implements OnInit {
           total_plafon: this.totalPlafonSlik,
         })
         .subscribe({});
-      this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+      this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     } else {
       this.http
         .post<any>(this.baseUrl + 'v1/efos-verif/update_analisa_keuangan', {
@@ -500,7 +500,7 @@ export class DataRumahComponent implements OnInit {
           total_plafon: this.totalPlafonSlik,
         })
         .subscribe({});
-      this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+      this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     }
   }
 
@@ -529,6 +529,6 @@ export class DataRumahComponent implements OnInit {
 
   // Selanjutnya
   Next(): void {
-    this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+    this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

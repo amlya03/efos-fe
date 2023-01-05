@@ -302,6 +302,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   }
 
   goto() {
+    this.SessionStorageService.store('strukturPemb', 1);
     this.router.navigate(['/data-entry/emergency-contact'], {
       queryParams: {
         curef: this.curef,

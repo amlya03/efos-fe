@@ -20,9 +20,11 @@ import { environment } from 'environments/environment';
 export class MemoVerificationComponent implements OnInit {
   baseUrl: string = environment.baseUrl;
   dataEntry: fetchAllDe = new fetchAllDe();
-  listMemo?: MemoModel[];
+  listMemo: MemoModel[] = [];
   app_no_de: any;
   detailMemoModel: detailMemo = new detailMemo();
+  valVER_PRESCR: any;
+  valVER_PRE_SPV: any;
 
   // /////////////Session//////////////////
   untukSessionRole: any;
@@ -78,9 +80,25 @@ export class MemoVerificationComponent implements OnInit {
     this.dataEntryService.getfetchMemo(this.app_no_de).subscribe(data => {
       this.listMemo = data.result;
       this.dtTrigger.next(this.listMemo);
-      if (data.code === 200) {
-        //console.log('MEMo ' + data.result.keterangan);
-      }
+      setTimeout(() => {
+        for (let i = 0; i < data.result.length; i++) {
+          setTimeout(() => {
+            if (this.listMemo[i].role === 'VER_PRESCR') {
+              this.valVER_PRESCR = 0;
+            } else {
+              this.valVER_PRESCR = 1;
+            }
+          }, 10);
+
+          setTimeout(() => {
+            if (this.listMemo[i].role === 'VER_PRE_SPV') {
+              this.valVER_PRE_SPV = 0;
+            } else {
+              this.valVER_PRE_SPV = 1;
+            }
+          }, 20);
+        }
+      }, 10);
     });
   }
 

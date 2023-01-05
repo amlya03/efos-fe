@@ -320,6 +320,7 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   gotojobinfo(contohtampungancuref: any, contohtampungstatuskawain: any, contohtampunganappde: any): void {
+    this.SessionStorageService.store('personalInfo', 1);
     this.router.navigate(['/data-entry/job-info'], {
       queryParams: {
         curef: contohtampungancuref,

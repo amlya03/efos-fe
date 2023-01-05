@@ -323,7 +323,6 @@ export class StukturPembiayaanComponent implements OnInit {
     const analisaDsr = this.strukturForm.get('dsr')?.value.replace(' %', '');
     const maxDsr = max_dsr.replace(' %', '');
     const persentace = persentase_pembiayaan_existing.replace('%', '');
-    const totPendapat = total_angsuran.replace(/,/g, '').replace('Rp ', '');
 
     if (this.cekResult === 0) {
       this.http
@@ -342,7 +341,7 @@ export class StukturPembiayaanComponent implements OnInit {
           persentase_pembiayaan_existing: persentace,
           skema: Skemanya[2],
           tenor: tenorKirim,
-          total_angsuran: totPendapat,
+          total_angsuran: this.strukturForm.get('total_angsuran')?.value,
           skema_code: Skemanya[0],
           skema_master: Skemanya[1],
         })
@@ -371,7 +370,7 @@ export class StukturPembiayaanComponent implements OnInit {
           persentase_pembiayaan_existing: persentace,
           skema: Skemanya[2],
           tenor: tenorKirim,
-          total_angsuran: totPendapat,
+          total_angsuran: this.strukturForm.get('total_angsuran')?.value,
           skema_code: Skemanya[0],
           skema_master: Skemanya[1],
         })

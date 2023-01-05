@@ -92,6 +92,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   }
 
   viewUploadDEA(): void {
+    this.SessionStorageService.store('uploadDE', 1);
     this.router.navigate(['/upload_document/upload_document_agunan'], {
       queryParams: { curef: this.dataEntry.curef, app_no_de: this.dataEntry.app_no_de },
     });

@@ -25,7 +25,7 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Fasilitas</label>
       <div class="col-sm-8">
-        <input #Fasilitas readonly type="text" class="form-control" value="{{ dataEntry.kode_fasilitas }}" />
+        <input #Fasilitas readonly type="text" class="form-control" value="{{ dataEntry.kode_fasilitas_name }}" />
       </div>
     </div>
   </div>
@@ -51,12 +51,13 @@
   <tbody>
     <tr *ngFor="let syaratAkad of syaratAkad; index as i">
       <th style="text-align: center" scope="row">{{ i + 1 }}</th>
-      <td>{{ syaratAkad.syarat }}</td>
-      <td>
-        <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRE_SPV'">
-          <option>Disyaratkan</option>
-          <option>Tidak Disyaratkan</option>
-        </select>
+      <td style="text-align: center">{{ syaratAkad.syarat }}</td>
+      <td style="text-align: center">
+        {{ syaratAkad.keterangan }}
+        <!-- <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRE_SPV'">
+          <option value="Disyaratkan">Disyaratkan</option>
+          <option value="Tidak Disyaratkan">Tidak Disyaratkan</option>
+        </select> -->
       </td>
     </tr>
   </tbody>
@@ -83,13 +84,8 @@
   <tbody>
     <tr *ngFor="let syaratCair of syaratCair; index as i">
       <th style="text-align: center" scope="row">{{ i + 1 }}</th>
-      <td>{{ syaratCair.syarat }}</td>
-      <td>
-        <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRE_SPV'">
-          <option>Disyaratkan</option>
-          <option>Tidak Disyaratkan</option>
-        </select>
-      </td>
+      <td style="text-align: center">{{ syaratCair.syarat }}</td>
+      <td style="text-align: center">{{ syaratCair.keterangan }}</td>
     </tr>
   </tbody>
 </table>
@@ -115,13 +111,8 @@
   <tbody>
     <tr *ngFor="let syaratLainLain of syaratLainLain; index as i">
       <th style="text-align: center" scope="row">{{ i + 1 }}</th>
-      <td>{{ syaratLainLain.syarat }}</td>
-      <td>
-        <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRE_SPV'">
-          <option>Disyaratkan</option>
-          <option>Tidak Disyaratkan</option>
-        </select>
-      </td>
+      <td style="text-align: center">{{ syaratLainLain.syarat }}</td>
+      <td style="text-align: center">{{ syaratLainLain.keterangan }}</td>
     </tr>
   </tbody>
 </table>
