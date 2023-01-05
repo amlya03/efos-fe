@@ -23,6 +23,7 @@ import { environment } from 'environments/environment';
 export class MutasiRekeningComponent implements OnInit, OnDestroy {
   baseUrl: string = environment.baseUrl;
   mutasiRekening?: mutasiRekening[];
+  resultMutasi: any;
   mutasiForm!: FormGroup;
   app_no_de: any;
   dataEntry: fetchAllDe = new fetchAllDe();
@@ -90,7 +91,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
 
     // list Table
     this.mutasiRekeningService.fetchListMutasiRekening(this.app_no_de).subscribe(data => {
-      //console.warn(data);
+      this.resultMutasi = data.result;
       if (data.code === 200) {
         this.mutasiRekening = data.result;
         this.dtTrigger.next(data.result);
@@ -124,7 +125,6 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           },
           error: error => console.warn(error),
         });
-      this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     } else {
       this.http
         .post<any>(this.baseUrl + 'v1/efos-verif/update_verif_mutasi', {
@@ -142,11 +142,10 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
         })
         .subscribe({
           next: response => {
-            // console.warn(response)
+            window.location.reload();
           },
           error: error => console.warn(error),
         });
-      this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     }
   }
 
@@ -202,5 +201,18 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   }
   goto(): void {
     this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+  }
+  next() {
+    this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+  }
+  // Only Numbers
+  keyPressNumbers(event?: any): void {
+    const charCode = event.which ? event.which : event.keyCode;
+    // charCode.toLocaleString('id-ID',{style: 'currency', currency:'IDR'})
+    // Only Numbers 0-9
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+      return;
+    }
   }
 }

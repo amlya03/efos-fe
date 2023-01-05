@@ -33,7 +33,13 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Plafond</label>
       <div class="col-sm-8">
-        <input #namaNasabah readonly type="text" class="form-control" value="{{ dataEntry.nilai_pembiayaan }}" />
+        <input
+          #namaNasabah
+          readonly
+          type="text"
+          class="form-control"
+          value="{{ dataEntry.nilai_pembiayaan | currency: 'Rp. ':'symbol':'1.0-0' }}"
+        />
       </div>
     </div>
     <br />

@@ -65,7 +65,12 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
       <div class="col-sm-8">
-        <input type="text" readonly class="form-control" value="{{ this.dataEntry.nilai_pembiayaan | currency: 'Rp ' }}" />
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          value="{{ this.dataEntry.nilai_pembiayaan | currency: 'Rp. ':'symbol':'1.0-0' }}"
+        />
       </div>
     </div>
   </div>
@@ -188,49 +193,14 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">No Rekening</label>
         <div class="col-sm-8">
-          <input type="text" formControlName="no_rekening" class="form-control" />
+          <input type="text" formControlName="no_rekening" class="form-control" (keypress)="keyPressNumbers($event)" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tahun</label>
         <div class="col-sm-8">
-          <select formControlName="tahun" id="view_data_tahun" class="form-control">
-            <option value="2000">2000</option>
-            <option value="2001">2001</option>
-            <option value="2002">2002</option>
-            <option value="2003">2003</option>
-            <option value="2004">2004</option>
-            <option value="2005">2005</option>
-            <option value="2006">2006</option>
-            <option value="2007">2007</option>
-            <option value="2008">2008</option>
-            <option value="2009">2009</option>
-            <option value="2010">2010</option>
-            <option value="2011">2011</option>
-            <option value="2012">2012</option>
-            <option value="2013">2013</option>
-            <option value="2014">2014</option>
-            <option value="2015">2015</option>
-            <option value="2016">2016</option>
-            <option value="2017">2017</option>
-            <option value="2018">2018</option>
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-            <option value="2027">2027</option>
-            <option value="2028">2028</option>
-            <option value="2029">2029</option>
-            <option value="2030">2030</option>
-            <option value="2031">2031</option>
-            <option value="2032">2032</option>
-            <option value="2033">2033</option>
-          </select>
+          <input formControlName="tahun" type="tel" maxlength="4" minlength="4" class="form-control" (keypress)="keyPressNumbers($event)" />
         </div>
       </div>
     </div>
@@ -240,6 +210,7 @@
         <label class="col-sm-4 col-form-label">Bulan</label>
         <div class="col-sm-8">
           <select formControlName="bulan" id="view_data_bulan" class="form-control">
+            <option value="">Pilih Bulan</option>
             <option value="Januari">Januari</option>
             <option value="Febuari">Febuari</option>
             <option value="Maret">Maret</option>
@@ -265,7 +236,7 @@
             id="debet"
             formControlName="debet"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
         </div>
       </div>
@@ -279,7 +250,7 @@
             id="kredit"
             formControlName="kredit"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
         </div>
       </div>
@@ -293,18 +264,39 @@
             id="saldo"
             formControlName="saldo"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
         </div>
       </div>
+    </div>
+  </div>
+  <br />
+  <br />
+  <div class="row">
+    <div class="col" style="text-align: center">
+      <button
+        type="submit"
+        [hidden]="this.untukSessionRole === 'VER_PRE_SPV'"
+        class="btn btn-info"
+        (click)="submitForm()"
+        [disabled]="mutasiForm.invalid"
+      >
+        Simpan Data
+      </button>
     </div>
   </div>
 </div>
 <p></p>
 <div class="row">
   <div class="col" style="text-align: center">
-    <button type="submit" [hidden]="this.untukSessionRole === 'VER_PRE_SPV'" class="btn btn-info" (click)="submitForm()">
-      Simpan Data
+    <button
+      type="submit"
+      [hidden]="this.untukSessionRole === 'VER_PRE_SPV' || (this.untukSessionRole === 'VER_PRESCR' && this.resultMutasi == '')"
+      *ngIf="this.tambahTableMutasi == 1"
+      class="btn btn-info"
+      (click)="next()"
+    >
+      Selanjutnya
     </button>
     <button type="button" class="btn btn-info" (click)="goto()" [hidden]="this.untukSessionRole == 'VER_PRESCR'">Selanjutnya</button>
   </div>
