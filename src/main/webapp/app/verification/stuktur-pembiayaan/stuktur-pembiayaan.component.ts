@@ -240,9 +240,9 @@ export class StukturPembiayaanComponent implements OnInit {
     });
   }
 
-  tenorSkema(skemaName: any, skemaMaster: any): void {
+  tenorSkema(skemaName: any): void {
     const skemaidName = skemaName.split('|');
-    if (skemaMaster === 'PTA') {
+    if (skemaidName[1] === '1') {
       this.verifikasiServices.getTenorFix(skemaidName[0]).subscribe(fix => {
         this.tenor = fix.result;
       });

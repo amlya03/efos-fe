@@ -272,12 +272,7 @@
     <div class="form-group row" [formGroup]="strukturForm">
       <label class="col-sm-4 col-form-label">Skema</label>
       <div class="col-sm-8">
-        <select
-          formControlName="skema"
-          #analisa_skema
-          class="form-control"
-          (change)="tenorSkema(analisa_skema.value, this.dataEntry.kode_fasilitas_name)"
-        >
+        <select formControlName="skema" #analisa_skema class="form-control" (change)="tenorSkema(analisa_skema.value)">
           <option value="">Pilih Skema</option>
           <option *ngFor="let Skema of Skema" value="{{ Skema.skema }}|{{ Skema.skema_master }}|{{ Skema.skema_deskripsi }}">
             {{ Skema.skema_deskripsi }}
