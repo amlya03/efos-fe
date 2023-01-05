@@ -79,15 +79,12 @@ export class MemoComponent implements OnInit {
 
     this.fileUploadService.getMemoUpload(this.curef, this.app_no_de).subscribe(data => {
       this.getMemoUpload = data.result;
-      if (data.result == null) {
-        this.resultGetMemoUpload = 0;
-        this.getLoading(false);
-      }
-      // if (this.getMemoUpload.nama_dokumen == null) {
-      //   this.resultGetMemoUpload = 0;
-      // }
-      else {
+      // alert(data.result == '')
+      if (data.result == '') {
         this.resultGetMemoUpload = 1;
+        this.getLoading(false);
+      } else {
+        this.resultGetMemoUpload = 0;
       }
     });
 

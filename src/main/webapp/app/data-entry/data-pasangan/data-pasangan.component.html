@@ -208,7 +208,15 @@
         <label class="col-sm-3 col-form-label">Email</label>
         <div class="col-sm-9">
           <input type="email" class="form-control" placeholder="Email" formControlName="email_pasangan" id="email_pasangan" />
-          <span [hidden]="dataPasanganForm.controls.email_pasangan.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              dataPasanganForm.controls.email_pasangan.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -225,7 +233,6 @@
             id="no_handphone_pasangan"
             (keypress)="keyPressNumbers($event)"
           />
-         
         </div>
       </div>
       <br />
@@ -241,7 +248,6 @@
             id="no_ktp_pasangan"
             (keypress)="keyPressNumbers($event)"
           />
-      
         </div>
       </div>
       <br />

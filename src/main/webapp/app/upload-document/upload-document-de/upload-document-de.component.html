@@ -78,7 +78,9 @@
                 <div class="progress-value"></div>
               </div>
               <button
-                [hidden]="uploadDocument.status == null"
+                [hidden]="
+                  uploadDocument.status == null || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+                "
                 id="hapusData{{ uploadDocument.id }}"
                 [value]="uploadDocument.id"
                 class="btn btn-warning"

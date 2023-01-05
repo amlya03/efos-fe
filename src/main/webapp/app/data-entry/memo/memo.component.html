@@ -114,10 +114,11 @@
   >
     Cetak Memo<span class="btn-icon-right"><i class="fa fa-print"></i></span>
   </button>
+  <!-- (this.untukSessionRole == 'AO' && this.modelResultmemo == 1) || -->
   <button
     type="button"
     [hidden]="
-      (this.untukSessionRole == 'AO' && this.modelResultmemo == 1) ||
+      (this.untukSessionRole == 'AO' && this.resultGetMemoUpload == 1) ||
       (this.untukSessionRole == 'BRANCHMANAGER' && this.valBM == 1) ||
       this.untukSessionRole == 'VER_PRE_SPV'
     "

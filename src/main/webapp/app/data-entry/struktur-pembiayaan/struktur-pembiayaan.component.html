@@ -15,7 +15,13 @@
               <option value="0">Tidak</option>
             </select>
           </div>
-          <span [hidden]="strukturForm.controls.joint_income.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              strukturForm.controls.joint_income.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -34,7 +40,15 @@
               </option>
             </select>
           </div>
-          <span [hidden]="strukturForm.controls.kode_fasilitas.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              strukturForm.controls.kode_fasilitas.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -53,7 +67,13 @@
               </option>
             </select>
           </div>
-          <span [hidden]="strukturForm.controls.program.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              strukturForm.controls.program.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -72,7 +92,13 @@
               </option>
             </select>
           </div>
-          <span [hidden]="strukturForm.controls.produk.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              strukturForm.controls.produk.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -89,7 +115,13 @@
               </option>
             </select>
           </div>
-          <span [hidden]="strukturForm.controls.skema.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              strukturForm.controls.skema.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -106,7 +138,13 @@
               <option *ngFor="let tenor of tenor" value="{{ tenor.tn_code }}|{{ tenor.margin }}">{{ tenor.tn_code }} Bulan</option>
             </select>
           </div>
-          <span [hidden]="strukturForm.controls.jangka_waktu.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              strukturForm.controls.jangka_waktu.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -132,7 +170,15 @@
               </option>
             </select>
           </div>
-          <span [hidden]="strukturForm.controls.tujuan_pembiayaan.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              strukturForm.controls.tujuan_pembiayaan.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -146,7 +192,13 @@
               <option value="3">3</option>
             </select>
           </div>
-          <span [hidden]="strukturForm.controls.fasilitas_ke.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              strukturForm.controls.fasilitas_ke.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -186,7 +238,15 @@
             currencyMask
             [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
-          <span [hidden]="strukturForm.controls.harga_objek_pembiayaan.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              strukturForm.controls.harga_objek_pembiayaan.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -232,7 +292,13 @@
               </button>
             </div>
           </div>
-          <span [hidden]="strukturForm.controls.uang_muka.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              strukturForm.controls.uang_muka.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -272,7 +338,15 @@
         <label class="col-sm-4 col-form-label">Detail Objek Pembiayaan</label>
         <div class="col-sm-8">
           <textarea class="form-control h-150px" rows="6" formControlName="detail_objek_pembiayaan" id="detail_objek_pembiayaan"></textarea>
-          <span [hidden]="strukturForm.controls.detail_objek_pembiayaan.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              strukturForm.controls.detail_objek_pembiayaan.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
     </div>
