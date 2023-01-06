@@ -14,6 +14,7 @@ import { areaOfConcern } from '../service/config/areaOfConcern.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { environment } from 'environments/environment';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'jhi-syarat-persetujuan',
@@ -27,6 +28,7 @@ export class SyaratPersetujuanComponent implements OnInit {
   dataEntry: fetchAllDe = new fetchAllDe();
   app_no_de: any;
   untukSessionUserName: any;
+  areaOfConForm!: FormGroup;
 
   // Syarat Persetujuan
   syaratPersetujuan?: syaratPersetujuanModel[];
@@ -42,7 +44,6 @@ export class SyaratPersetujuanComponent implements OnInit {
 
   // Area Of Concern
   areaOfConcernModel: areaOfConcern = new areaOfConcern();
-  bodyAreaOfconcern: any;
   bodyDeskripsiAreaOfconcern: any;
   areaOfConRadio: any;
   areaOfConInput: any;
@@ -73,7 +74,8 @@ export class SyaratPersetujuanComponent implements OnInit {
     protected applicationConfigService: ApplicationConfigService,
     protected sessionStorageService: SessionStorageService,
     protected dataEntryService: DataEntryService,
-    protected serviceVerificationService: ServiceVerificationService
+    protected serviceVerificationService: ServiceVerificationService,
+    private formBuilder: FormBuilder
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -99,6 +101,10 @@ export class SyaratPersetujuanComponent implements OnInit {
     };
     this.untukSessionUserName = this.sessionStorageService.retrieve('sessionUserName');
     this.load();
+
+    this.areaOfConForm = this.formBuilder.group({
+      area_of_concern: '',
+    });
   }
 
   load(): void {
@@ -139,12 +145,15 @@ export class SyaratPersetujuanComponent implements OnInit {
       // Area Of Concern
       this.areaOfConcernModel = data.result.area_of_concern;
 
+      const retriveForm = {
+        area_of_concern: data.result.area_of_concern.status_area,
+      };
+      this.areaOfConForm.setValue(retriveForm);
+
       if (data.result.area_of_concern === null) {
-        this.bodyAreaOfconcern = 0;
         this.bodyDeskripsiAreaOfconcern = '';
         this.cekResult = 0;
       } else {
-        this.bodyAreaOfconcern = data.result.area_of_concern.status_area;
         this.bodyDeskripsiAreaOfconcern = data.result.area_of_concern.deskripsi_area;
         this.cekResult = 1;
       }
@@ -350,7 +359,7 @@ export class SyaratPersetujuanComponent implements OnInit {
           created_date: '',
           curef: this.dataEntry.curef,
           deskripsi_area: this.areaOfConInput,
-          status_area: this.areaOfConRadio,
+          status_area: this.areaOfConForm.get('area_of_concern')?.value,
         })
         .subscribe({});
     } else {
@@ -361,7 +370,7 @@ export class SyaratPersetujuanComponent implements OnInit {
           updated_date: '',
           curef: this.dataEntry.curef,
           deskripsi_area: this.areaOfConInput,
-          status_area: this.areaOfConRadio,
+          status_area: this.areaOfConForm.get('area_of_concern')?.value,
         })
         .subscribe({});
     }
