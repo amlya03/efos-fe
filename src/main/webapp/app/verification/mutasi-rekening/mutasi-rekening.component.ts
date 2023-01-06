@@ -24,7 +24,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
-  mutasiRekening?: mutasiRekening[];
+  mutasiRekening: mutasiRekening[] = [];
   resultMutasi: any;
   mutasiForm!: FormGroup;
   app_no_de: any;
@@ -34,6 +34,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   tambahTableMutasi = 1;
   idTableMutasi: any;
   getTableMutasi: listMutasi = new listMutasi();
+  lihatMutasi = 0;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -116,7 +117,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     // alert(this.lihatTableMutasi)
     if (this.tambahTableMutasi == 0) {
       this.http
-        .post<any>(this.baseUrl + 'v1/efos-verif/create_verif_mutasi', {
+        .post<mutasiRekening>(this.baseUrl + 'v1/efos-verif/create_verif_mutasi', {
           id: 0,
           app_no_de: this.app_no_de,
           bulan: this.mutasiForm.get('bulan')?.value,
@@ -137,7 +138,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
         });
     } else {
       this.http
-        .post<any>(this.baseUrl + 'v1/efos-verif/update_verif_mutasi', {
+        .post<mutasiRekening>(this.baseUrl + 'v1/efos-verif/update_verif_mutasi', {
           id: this.idTableMutasi,
           app_no_de: this.app_no_de,
           bulan: this.mutasiForm.get('bulan')?.value,
@@ -162,6 +163,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   // edit mutasi
   editMutasi(id: any): void {
     this.idTableMutasi = id;
+    this.lihatMutasi = 1;
     // data
     this.mutasiRekeningService
       .getMutasiRekening(id) // by id dari table atas

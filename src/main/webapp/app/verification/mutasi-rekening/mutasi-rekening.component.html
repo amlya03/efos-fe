@@ -236,7 +236,7 @@
             id="debet"
             formControlName="debet"
             currencyMask
-            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
         </div>
       </div>
@@ -250,7 +250,7 @@
             id="kredit"
             formControlName="kredit"
             currencyMask
-            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
         </div>
       </div>
@@ -264,7 +264,7 @@
             id="saldo"
             formControlName="saldo"
             currencyMask
-            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
         </div>
       </div>
@@ -292,7 +292,7 @@
     <button
       type="submit"
       [hidden]="this.untukSessionRole === 'VER_PRE_SPV' || (this.untukSessionRole === 'VER_PRESCR' && this.resultMutasi == '')"
-      *ngIf="this.tambahTableMutasi == 1"
+      *ngIf="(this.tambahTableMutasi == 1 && lihatMutasi == 0) || (this.tambahTableMutasi == 0 && lihatMutasi == 1)"
       class="btn btn-info"
       (click)="next()"
     >

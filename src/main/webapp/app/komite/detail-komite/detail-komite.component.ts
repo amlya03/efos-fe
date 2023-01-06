@@ -225,7 +225,7 @@ export class DetailKomiteComponent implements OnInit {
       this.dataEntryService.getFetchStrukturDE(this.app_no_de, this.curef).subscribe(strukturDe => {
         this.strukturByDe = strukturDe.result;
 
-        if (this.strukturByDe.kode_fasilitas_name === 'PTA') {
+        if (this.strukturByDe.skema_master == 1) {
           this.verifikasiServices.getTenorFix(this.strukturByDe.skema).subscribe(fix => {
             this.tenor = fix.result;
           });

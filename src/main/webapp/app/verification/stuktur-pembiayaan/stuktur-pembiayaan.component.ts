@@ -155,6 +155,12 @@ export class StukturPembiayaanComponent implements OnInit {
 
     setTimeout(() => {
       this.verifikasiServices.fetchMapis(this.app_no_de).subscribe(data => {
+        if (data.result == null) {
+          this.getLoading(false);
+        } else {
+          this.getLoading(false);
+        }
+
         this.mapisModel = data.result;
         // console.warn(data)
         const retriveForm = {

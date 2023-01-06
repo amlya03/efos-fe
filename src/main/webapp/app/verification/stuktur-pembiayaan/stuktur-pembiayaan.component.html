@@ -57,7 +57,7 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Joint Income</label>
       <div class="col-sm-8">
-        <fa-icon [icon]="this.dataEntry.joint_income == 0 ? 'circle-check' : 'circle-xmark'"></fa-icon>
+        <fa-icon [icon]="this.dataEntry.joint_income == 1 ? 'circle-check' : 'circle-xmark'"></fa-icon>
       </div>
     </div>
   </div>
@@ -498,7 +498,7 @@
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">FTV</label>
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <input
           type="text"
           readonly
@@ -508,7 +508,9 @@
           [value]="this.mapisForm.get('ftv')?.value | currency: 'Rp. ':'symbol':'1.0-0'"
         />
       </div>
-      <div class="col-sm-2">{{ this.betaFTV }} %</div>
+      <div class="col-sm-4">
+        <h6>{{ this.betaFTV }} %</h6>
+      </div>
     </div>
   </div>
 </div>
