@@ -174,9 +174,11 @@ export class StukturPembiayaanComponent implements OnInit {
     // get struktur pembiayaan
     this.verifikasiServices.getFetchStrukturPembiayaan(this.app_no_de).subscribe(struktur => {
       if (struktur.result == null) {
+        this.getLoading(false);
         this.cekResult = 0;
       } else {
         this.cekResult = 1;
+        this.getLoading(false);
       }
       setTimeout(() => {
         // retrive Tenor
@@ -205,10 +207,8 @@ export class StukturPembiayaanComponent implements OnInit {
       // ////////////////////////////////////////////////////////////////////////////////////////////////////
       setTimeout(() => {
         if (this.cekResult === 0) {
-          this.getLoading(false);
           this.analisaDsr = 0;
         } else {
-          this.getLoading(false);
           this.http
             .post<any>(this.baseUrl + 'v1/efos-verif/getHitungScoring', {
               dsr: this.strukturPembiayaan.dsr,
