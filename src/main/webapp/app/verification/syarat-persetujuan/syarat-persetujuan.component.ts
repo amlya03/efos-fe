@@ -265,7 +265,7 @@ export class SyaratPersetujuanComponent implements OnInit {
             curef: this.dataEntry.curef,
             id: 0,
             keterangan: keterangan,
-            kode_syarat: 2,
+            kode_syarat: 3,
             syarat: syarat,
           })
           .subscribe({
