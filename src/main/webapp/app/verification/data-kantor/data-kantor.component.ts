@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Editor } from 'ngx-editor';
@@ -25,6 +25,8 @@ import { environment } from 'environments/environment';
   styleUrls: ['./data-kantor.component.scss'],
 })
 export class DataKantorComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   // model dukcapil
   provinsi_cabang: any;
@@ -87,7 +89,13 @@ export class DataKantorComponent implements OnInit {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
 
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
+
   ngOnInit(): void {
+    this.getLoading(true);
     this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.verifikatorMelihat = this.untukSessionRole === 'VER_PRESCR';
     this.untukSessionUserName = this.sessionStorageService.retrieve('sessionUserName');
@@ -324,98 +332,104 @@ export class DataKantorComponent implements OnInit {
   }
 
   load(): void {
-    // ref status pekerjaan
-
-    // ambil semua data DE
-    this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
-      this.dataEntry = data.result;
-    });
-
-    // ambil Semua Data Job
-    this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(job => {
-      this.dataJob = job.result[0];
-      if (this.dataJob.kategori_pekerjaan === 'Fix Income') {
-        this.changeUntukTipe = 1;
-      } else if (this.dataJob.kategori_pekerjaan === 'Non Fix Income') {
-        this.changeUntukTipe = 2;
-      } else {
-        this.changeUntukTipe = 3;
-      }
-      this.dataEntryService.getFetchListTipePekerjaan(this.changeUntukTipe).subscribe(data => {
-        this.listTipePekerjaan = data.result;
+    setTimeout(() => {
+      // ambil semua data DE
+      this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
+        this.dataEntry = data.result;
       });
-      // alert(this.changeUntukTipe)
-      const retriveForm = {
-        tipe_kepegawaian: this.dataJob.tipe_kepegawaian,
-        tipe_pekerjaan: this.dataJob.tipe_pekerjaan,
-      };
-      this.formRetrive.setValue(retriveForm);
-    });
+    }, 2);
+    setTimeout(() => {
+      // ref hubungan agunan
+      this.dataKantor.getJabatanPemberiKeterangan().subscribe(data => {
+        // console.warn('ref hubungan Agunan', data);
+        if (data.code === 200) {
+          this.refHubunganAgunan = data.result;
+        }
+      });
+    }, 4);
+    setTimeout(() => {
+      // ambil Semua Data Job
+      this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(job => {
+        this.dataJob = job.result[0];
+        if (this.dataJob.kategori_pekerjaan === 'Fix Income') {
+          this.changeUntukTipe = 1;
+        } else if (this.dataJob.kategori_pekerjaan === 'Non Fix Income') {
+          this.changeUntukTipe = 2;
+        } else {
+          this.changeUntukTipe = 3;
+        }
+        this.dataEntryService.getFetchListTipePekerjaan(this.changeUntukTipe).subscribe(data => {
+          this.listTipePekerjaan = data.result;
+        });
+        // alert(this.changeUntukTipe)
+        const retriveForm = {
+          tipe_kepegawaian: this.dataJob.tipe_kepegawaian,
+          tipe_pekerjaan: this.dataJob.tipe_pekerjaan,
+        };
+        this.formRetrive.setValue(retriveForm);
+      });
+    }, 6);
 
     // ambil data Kantor
-    this.dataKantor.fetchDataKantor(this.app_no_de).subscribe(data => {
-      if (data.result === null) {
-        this.cekResult = 0;
-      } else {
-        this.cekResult = 1;
-      }
-      this.dataKantorMap = data.result;
-      // alert(this.dataKantorMap.note_verif_alamat_perusahaan)
-      const retriveDataKantor = {
-        tanggal_verifikasi: this.dataKantorMap.tanggal_verifikasi,
-        pemberi_keterangan: this.dataKantorMap.pemberi_keterangan,
-        hubungan_pemberi_keterangan: this.dataKantorMap.hubungan_pemberi_keterangan,
-        verif_fax: this.dataKantorMap.verif_fax,
-        note_verif_fax: this.dataKantorMap.note_verif_fax,
-        verif_no_telepon: this.dataKantorMap.verif_no_telepon,
-        note_verif_no_telepon: this.dataKantorMap.note_verif_no_telepon,
-        verif_alamat_perusahaan: this.dataKantorMap.verif_alamat_perusahaan,
-        note_verif_alamat_perusahaan: this.dataKantorMap.note_verif_alamat_perusahaan,
-        verif_nama_perusahaan: this.dataKantorMap.verif_nama_perusahaan,
-        note_verif_nama_perusahaan: this.dataKantorMap.note_verif_nama_perusahaan,
-        verif_provinsi: this.dataKantorMap.verif_provinsi,
-        note_verif_provinsi: this.dataKantorMap.note_verif_provinsi,
-        verif_kabkota: this.dataKantorMap.verif_kabkota,
-        note_verif_kabkota: this.dataKantorMap.note_verif_kabkota,
-        verif_kecamatan: this.dataKantorMap.verif_kecamatan,
-        note_verif_kecamatan: this.dataKantorMap.note_verif_kecamatan,
-        verif_kelurahan: this.dataKantorMap.verif_kelurahan,
-        note_verif_kelurahan: this.dataKantorMap.note_verif_kelurahan,
-        verif_kode_pos: this.dataKantorMap.verif_kode_pos,
-        note_verif_kode_pos: this.dataKantorMap.note_verif_kode_pos,
-        verif_lama_bekerja: this.dataKantorMap.verif_lama_bekerja,
-        note_verif_lama_bekerja: this.dataKantorMap.note_verif_lama_bekerja,
-        verif_bidang_usaha: this.dataKantorMap.verif_bidang_usaha,
-        note_verif_bidang_usaha: this.dataKantorMap.note_verif_bidang_usaha,
-        verif_sektor_ekonomi: this.dataKantorMap.verif_sektor_ekonomi,
-        note_verif_sektor_ekonomi: this.dataKantorMap.note_verif_sektor_ekonomi,
-        verif_tipe_pekerjaan: this.dataKantorMap.verif_tipe_pekerjaan,
-        note_verif_tipe_pekerjaan: this.dataKantorMap.note_verif_tipe_pekerjaan,
-        verif_status_kepegawaian: this.dataKantorMap.verif_status_kepegawaian,
-        note_verif_status_kepegawaian: this.dataKantorMap.note_verif_status_kepegawaian,
-        verif_jabatan: this.dataKantorMap.verif_jabatan,
-        note_verif_jabatan: this.dataKantorMap.note_verif_jabatan,
-        verif_usia_pensiun: this.dataKantorMap.verif_usia_pensiun,
-        note_verif_usia_pensiun: this.dataKantorMap.note_verif_usia_pensiun,
-        divisi: this.dataKantorMap.divisi,
-        aspek_syariah: this.dataKantorMap.aspek_syariah,
-        waktu_verifikasi: this.dataKantorMap.waktu_verifikasi,
+    setTimeout(() => {
+      this.dataKantor.fetchDataKantor(this.app_no_de).subscribe(data => {
+        if (data.result === null) {
+          this.cekResult = 0;
+          this.getLoading(false);
+        } else {
+          this.getLoading(false);
+          this.cekResult = 1;
+        }
+        this.dataKantorMap = data.result;
+        // alert(this.dataKantorMap.note_verif_alamat_perusahaan)
+        const retriveDataKantor = {
+          tanggal_verifikasi: this.dataKantorMap.tanggal_verifikasi,
+          pemberi_keterangan: this.dataKantorMap.pemberi_keterangan,
+          hubungan_pemberi_keterangan: this.dataKantorMap.hubungan_pemberi_keterangan,
+          verif_fax: this.dataKantorMap.verif_fax,
+          note_verif_fax: this.dataKantorMap.note_verif_fax,
+          verif_no_telepon: this.dataKantorMap.verif_no_telepon,
+          note_verif_no_telepon: this.dataKantorMap.note_verif_no_telepon,
+          verif_alamat_perusahaan: this.dataKantorMap.verif_alamat_perusahaan,
+          note_verif_alamat_perusahaan: this.dataKantorMap.note_verif_alamat_perusahaan,
+          verif_nama_perusahaan: this.dataKantorMap.verif_nama_perusahaan,
+          note_verif_nama_perusahaan: this.dataKantorMap.note_verif_nama_perusahaan,
+          verif_provinsi: this.dataKantorMap.verif_provinsi,
+          note_verif_provinsi: this.dataKantorMap.note_verif_provinsi,
+          verif_kabkota: this.dataKantorMap.verif_kabkota,
+          note_verif_kabkota: this.dataKantorMap.note_verif_kabkota,
+          verif_kecamatan: this.dataKantorMap.verif_kecamatan,
+          note_verif_kecamatan: this.dataKantorMap.note_verif_kecamatan,
+          verif_kelurahan: this.dataKantorMap.verif_kelurahan,
+          note_verif_kelurahan: this.dataKantorMap.note_verif_kelurahan,
+          verif_kode_pos: this.dataKantorMap.verif_kode_pos,
+          note_verif_kode_pos: this.dataKantorMap.note_verif_kode_pos,
+          verif_lama_bekerja: this.dataKantorMap.verif_lama_bekerja,
+          note_verif_lama_bekerja: this.dataKantorMap.note_verif_lama_bekerja,
+          verif_bidang_usaha: this.dataKantorMap.verif_bidang_usaha,
+          note_verif_bidang_usaha: this.dataKantorMap.note_verif_bidang_usaha,
+          verif_sektor_ekonomi: this.dataKantorMap.verif_sektor_ekonomi,
+          note_verif_sektor_ekonomi: this.dataKantorMap.note_verif_sektor_ekonomi,
+          verif_tipe_pekerjaan: this.dataKantorMap.verif_tipe_pekerjaan,
+          note_verif_tipe_pekerjaan: this.dataKantorMap.note_verif_tipe_pekerjaan,
+          verif_status_kepegawaian: this.dataKantorMap.verif_status_kepegawaian,
+          note_verif_status_kepegawaian: this.dataKantorMap.note_verif_status_kepegawaian,
+          verif_jabatan: this.dataKantorMap.verif_jabatan,
+          note_verif_jabatan: this.dataKantorMap.note_verif_jabatan,
+          verif_usia_pensiun: this.dataKantorMap.verif_usia_pensiun,
+          note_verif_usia_pensiun: this.dataKantorMap.note_verif_usia_pensiun,
+          divisi: this.dataKantorMap.divisi,
+          aspek_syariah: this.dataKantorMap.aspek_syariah,
+          waktu_verifikasi: this.dataKantorMap.waktu_verifikasi,
 
-        // created_date: this.dataKantorMap.created_date,
-        // updated_date: this.dataKantorMap.updated_date,
-        // created_by: this.dataKantorMap.created_by,
-        // updated_by: this.dataKantorMap.updated_by,
-      };
-      this.dataKantorForm.setValue(retriveDataKantor);
-    });
-
-    // ref hubungan agunan
-    this.dataKantor.getJabatanPemberiKeterangan().subscribe(data => {
-      // console.warn('ref hubungan Agunan', data);
-      if (data.code === 200) {
-        this.refHubunganAgunan = data.result;
-      }
-    });
+          // created_date: this.dataKantorMap.created_date,
+          // updated_date: this.dataKantorMap.updated_date,
+          // created_by: this.dataKantorMap.created_by,
+          // updated_by: this.dataKantorMap.updated_by,
+        };
+        this.dataKantorForm.setValue(retriveDataKantor);
+      });
+    }, 10);
 
     // // ref jabatan
     // this.dataKantor.getJabatan().subscribe(data => {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
@@ -22,6 +22,8 @@ import { environment } from 'environments/environment';
   styleUrls: ['./stuktur-pembiayaan.component.scss'],
 })
 export class StukturPembiayaanComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   strukturForm!: FormGroup;
   slikForm!: FormGroup;
@@ -81,8 +83,13 @@ export class StukturPembiayaanComponent implements OnInit {
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
 
   ngOnInit(): void {
+    this.getLoading(true);
     this.sessionUsername = this.sessionStorageService.retrieve('sessionUserName');
     this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.load();
@@ -118,6 +125,34 @@ export class StukturPembiayaanComponent implements OnInit {
   }
 
   load(): void {
+    // ambil semua data DE
+    this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
+      this.dataEntry = data.result;
+      setTimeout(() => {
+        this.loadSkema(this.dataEntry.produk);
+      }, 5);
+    });
+
+    // Analisa Pembiayaan
+    setTimeout(() => {
+      this.verifikasiServices.fetchAnalisaPembiayaan(this.app_no_de).subscribe(analisa => {
+        this.analisaPembiayaan = analisa.result;
+        const retSLik = {
+          total_kewajiban_bank_pemohon: this.analisaPembiayaan.kewajiban_bank_total,
+          total_outstanding: this.analisaPembiayaan.total_outstanding,
+          total_plafon: this.analisaPembiayaan.total_plafon,
+        };
+        this.slikForm.setValue(retSLik);
+      });
+    }, 10);
+
+    // ambil semua data Job by Curef
+    setTimeout(() => {
+      this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(Job => {
+        this.fetchJob = Job.result[0];
+      });
+    }, 15);
+
     setTimeout(() => {
       this.verifikasiServices.fetchMapis(this.app_no_de).subscribe(data => {
         this.mapisModel = data.result;
@@ -134,41 +169,7 @@ export class StukturPembiayaanComponent implements OnInit {
         };
         this.mapisForm.setValue(retriveForm);
       });
-    }, 300);
-
-    // Analisa Pembiayaan
-    this.verifikasiServices.fetchAnalisaPembiayaan(this.app_no_de).subscribe(analisa => {
-      this.analisaPembiayaan = analisa.result;
-      const retSLik = {
-        total_kewajiban_bank_pemohon: this.analisaPembiayaan.kewajiban_bank_total,
-        total_outstanding: this.analisaPembiayaan.total_outstanding,
-        total_plafon: this.analisaPembiayaan.total_plafon,
-      };
-      this.slikForm.setValue(retSLik);
-    });
-
-    // ambil semua data Job by Curef
-    this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(Job => {
-      this.fetchJob = Job.result[0];
-    });
-
-    // ambil semua data DE
-    this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
-      this.dataEntry = data.result;
-      setTimeout(() => {
-        this.loadSkema(this.dataEntry.produk);
-        // retrive Tenor
-        if (this.dataEntry.kode_fasilitas_name === 'PTA') {
-          this.verifikasiServices.getTenorFix(this.strukturPembiayaan.skema_code).subscribe(fix => {
-            this.tenor = fix.result;
-          });
-        } else {
-          this.verifikasiServices.getTenorNon(this.strukturPembiayaan.skema_code).subscribe(Non => {
-            this.tenor = Non.result;
-          });
-        }
-      }, 300);
-    });
+    }, 20);
 
     // get struktur pembiayaan
     this.verifikasiServices.getFetchStrukturPembiayaan(this.app_no_de).subscribe(struktur => {
@@ -177,24 +178,37 @@ export class StukturPembiayaanComponent implements OnInit {
       } else {
         this.cekResult = 1;
       }
+      setTimeout(() => {
+        // retrive Tenor
+        if (struktur.result.skema_master === '1') {
+          this.verifikasiServices.getTenorFix(this.strukturPembiayaan.skema_code).subscribe(fix => {
+            this.tenor = fix.result;
+          });
+        } else {
+          this.verifikasiServices.getTenorNon(this.strukturPembiayaan.skema_code).subscribe(Non => {
+            this.tenor = Non.result;
+          });
+        }
+      }, 10);
 
       this.strukturPembiayaan = struktur.result;
-
       // this.comboSkema = this.strukturPembiayaan.skema_code + '|' + this.strukturPembiayaan.skema_master + '|' + this.strukturPembiayaan.skema;
+      this.comboSkema = struktur.result.skema_code;
+      this.comboSkema += '|';
+      this.comboSkema += struktur.result.skema_master;
+      this.comboSkema += '|';
+      this.comboSkema += struktur.result.skema;
       // setTimeout(() => {
-      this.comboSkema = this.strukturPembiayaan.skema_code;
-      this.comboSkema += '|';
-      this.comboSkema += this.strukturPembiayaan.skema_master;
-      this.comboSkema += '|';
-      this.comboSkema += this.strukturPembiayaan.skema;
-      // }, 300);
       // alert(this.comboSkema)
+      // }, 300);
 
       // ////////////////////////////////////////////////////////////////////////////////////////////////////
       setTimeout(() => {
         if (this.cekResult === 0) {
+          this.getLoading(false);
           this.analisaDsr = 0;
         } else {
+          this.getLoading(false);
           this.http
             .post<any>(this.baseUrl + 'v1/efos-verif/getHitungScoring', {
               dsr: this.strukturPembiayaan.dsr,
@@ -208,20 +222,22 @@ export class StukturPembiayaanComponent implements OnInit {
               },
             });
         }
-      }, 300);
+      }, 50);
       // ////////////////////////////////////////////////////////////////////////////////////////////////////
-      const retrivestrukturForm = {
-        harga_permintaan: this.strukturPembiayaan.harga_permintaan,
-        down_payment: this.strukturPembiayaan.down_payment,
-        skema: this.comboSkema,
-        tenor: this.strukturPembiayaan.tenor,
-        nilai_pembiayaan: this.strukturPembiayaan.nilai_pembiayaan,
-        angsuran: this.strukturPembiayaan.angsuran,
-        total_angsuran: this.strukturPembiayaan.total_angsuran,
-        max_angsuran: this.strukturPembiayaan.max_angsuran,
-        dsr: this.strukturPembiayaan.dsr,
-      };
-      this.strukturForm.setValue(retrivestrukturForm);
+      setTimeout(() => {
+        const retrivestrukturForm = {
+          harga_permintaan: this.strukturPembiayaan.harga_permintaan,
+          down_payment: this.strukturPembiayaan.down_payment,
+          skema: this.comboSkema,
+          tenor: this.strukturPembiayaan.tenor,
+          nilai_pembiayaan: this.strukturPembiayaan.nilai_pembiayaan,
+          angsuran: this.strukturPembiayaan.angsuran,
+          total_angsuran: this.strukturPembiayaan.total_angsuran,
+          max_angsuran: this.strukturPembiayaan.max_angsuran,
+          dsr: this.strukturPembiayaan.dsr,
+        };
+        this.strukturForm.setValue(retrivestrukturForm);
+      }, 100);
     });
   }
 

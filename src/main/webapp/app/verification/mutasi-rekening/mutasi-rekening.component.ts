@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
@@ -21,6 +21,8 @@ import { environment } from 'environments/environment';
   styleUrls: ['./mutasi-rekening.component.scss'],
 })
 export class MutasiRekeningComponent implements OnInit, OnDestroy {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   mutasiRekening?: mutasiRekening[];
   resultMutasi: any;
@@ -62,7 +64,12 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     // alert(this.app_no_de)
   }
 
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
   ngOnInit(): void {
+    this.getLoading(true);
     this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -95,6 +102,9 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       if (data.code === 200) {
         this.mutasiRekening = data.result;
         this.dtTrigger.next(data.result);
+        this.getLoading(false);
+      } else {
+        this.getLoading(false);
       }
     });
   }

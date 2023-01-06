@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
@@ -21,6 +21,8 @@ import { environment } from 'environments/environment';
   styleUrls: ['./syarat-persetujuan.component.scss'],
 })
 export class SyaratPersetujuanComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   dataEntry: fetchAllDe = new fetchAllDe();
   app_no_de: any;
@@ -81,7 +83,13 @@ export class SyaratPersetujuanComponent implements OnInit {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
 
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
+
   ngOnInit(): void {
+    this.getLoading(true);
     this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -97,6 +105,11 @@ export class SyaratPersetujuanComponent implements OnInit {
     // ambil semua data DE
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
+      if (data.result == null || data.result == '') {
+        this.getLoading(false);
+      } else {
+        this.getLoading(false);
+      }
       // alert('DE '+ this.dataEntry?.status_perkawinan)
     });
 

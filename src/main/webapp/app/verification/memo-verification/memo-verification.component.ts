@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
@@ -18,6 +18,8 @@ import { environment } from 'environments/environment';
   styleUrls: ['./memo-verification.component.scss'],
 })
 export class MemoVerificationComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   dataEntry: fetchAllDe = new fetchAllDe();
   listMemo: MemoModel[] = [];
@@ -70,7 +72,13 @@ export class MemoVerificationComponent implements OnInit {
     this.load();
   }
 
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
+
   load(): void {
+    this.getLoading(true);
     // ambil semua data DE
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
@@ -85,7 +93,9 @@ export class MemoVerificationComponent implements OnInit {
           setTimeout(() => {
             if (this.listMemo[i].role === 'VER_PRESCR') {
               this.valVER_PRESCR = 0;
+              this.getLoading(false);
             } else {
+              this.getLoading(false);
               this.valVER_PRESCR = 1;
             }
           }, 10);
@@ -93,8 +103,10 @@ export class MemoVerificationComponent implements OnInit {
           setTimeout(() => {
             if (this.listMemo[i].role === 'VER_PRE_SPV') {
               this.valVER_PRE_SPV = 0;
+              this.getLoading(false);
             } else {
               this.valVER_PRE_SPV = 1;
+              this.getLoading(false);
             }
           }, 20);
         }
