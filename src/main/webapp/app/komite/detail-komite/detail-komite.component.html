@@ -299,7 +299,7 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Joint Income</label>
       <div class="col-sm-8">
-        <input style="width: 20px; height: 20px" type="checkbox" disabled [checked]="dataEntry.joint_income === 1" />
+        <fa-icon [icon]="this.dataEntry.joint_income == 1 ? 'circle-check' : 'circle-xmark'"></fa-icon>
       </div>
     </div>
   </div>
