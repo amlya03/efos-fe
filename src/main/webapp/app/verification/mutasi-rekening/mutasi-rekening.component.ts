@@ -117,7 +117,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     if (this.tambahTableMutasi == 0) {
       this.http
         .post<any>(this.baseUrl + 'v1/efos-verif/create_verif_mutasi', {
-          id: this.idTableMutasi,
+          id: 0,
           app_no_de: this.app_no_de,
           bulan: this.mutasiForm.get('bulan')?.value,
           created_by: this.sessionStorageService.retrieve('sessionUserName'),
