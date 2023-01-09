@@ -114,9 +114,14 @@
   >
     Cetak Memo<span class="btn-icon-right"><i class="fa fa-print"></i></span>
   </button>
+  <!-- (this.untukSessionRole == 'AO' && this.modelResultmemo == 1) || -->
   <button
     type="button"
-    [hidden]="this.modelResultmemo == 1 || this.untukSessionRole == 'VER_PRE_SPV'"
+    [hidden]="
+      (this.untukSessionRole == 'AO' && this.resultGetMemoUpload == 1) ||
+      (this.untukSessionRole == 'BRANCHMANAGER' && this.valBM == 1 && this.checkBM == 1) ||
+      this.untukSessionRole == 'VER_PRE_SPV'
+    "
     (click)="updatekeupload()"
     id="simpan_memo"
     name="simpan_memo"
@@ -127,7 +132,11 @@
   </button>
   <button
     (click)="kembalikede()"
-    [hidden]="this.untukSessionRole == 'AO' || this.untukSessionRole == 'VER_PRE_SPV'"
+    [hidden]="
+      (this.untukSessionRole == 'AO' && this.resultGetMemoUpload == 1) ||
+      (this.untukSessionRole == 'BRANCHMANAGER' && this.valBM == 1 && this.checkBM == 1) ||
+      this.untukSessionRole == 'VER_PRE_SPV'
+    "
     type="button"
     id="kembalide"
     name="kembalide"

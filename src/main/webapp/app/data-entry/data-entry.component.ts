@@ -7,6 +7,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { DataEntryService } from './services/data-entry.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SessionStorageService } from 'ngx-webstorage';
 declare let $: any;
 
 @Component({
@@ -38,7 +39,8 @@ export class DataEntryComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    private SessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
@@ -57,14 +59,27 @@ export class DataEntryComponent implements OnInit, OnDestroy {
 
   load(): void {
     this.getLoading(true);
-    this.datEntryService.getDaftarAplikasiDataEntry().subscribe(data => {
-      // console.warn(data);
-      if (data.code === 200) {
-        this.dataEntry = (data as any).result;
-        this.dtTrigger.next(data.result);
-        this.getLoading(false);
-      }
-    });
+    setTimeout(() => {
+      this.SessionStorageService.store('personalInfo', 0);
+      this.SessionStorageService.store('jobInfo', 0);
+      this.SessionStorageService.store('dataPas', 0);
+      this.SessionStorageService.store('pekerPas', 0);
+      this.SessionStorageService.store('collateral', 0);
+      this.SessionStorageService.store('strukturPemb', 0);
+      this.SessionStorageService.store('callReport', 0);
+      this.SessionStorageService.store('uploadDE', 0);
+      this.SessionStorageService.store('uploadDEA', 0);
+    }, 10);
+    setTimeout(() => {
+      this.datEntryService.getDaftarAplikasiDataEntry().subscribe(data => {
+        // console.warn(data);
+        if (data.code === 200) {
+          this.dataEntry = (data as any).result;
+          this.dtTrigger.next(data.result);
+          this.getLoading(false);
+        }
+      });
+    }, 20);
   }
 
   ngOnDestroy(): void {

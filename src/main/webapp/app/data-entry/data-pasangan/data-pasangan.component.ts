@@ -69,89 +69,44 @@ export class DataPasanganComponent implements OnInit {
     this.load();
     this.getLoading(true);
     this.dataPasanganForm = this.formBuilder.group({
-      nama_pasangan: [
-        { value: '' || null, disabled: true },
-        Validators.required,
-      ],
-      jenis_kelamin_pasangan: [
-        { value: '' || null, disabled: true },
-        Validators.required,
-      ],
-      alamat_ktp_pasangan: [
-        { value: '' || null, disabled: true },
-        Validators.required,
-      ],
+      nama_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      jenis_kelamin_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      alamat_ktp_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
       // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       provinsi_pasangan: {
         value: '' || null,
         disabled: true,
       },
-      kabkota_pasangan: { value: '' || null, disabled: true},
+      kabkota_pasangan: { value: '' || null, disabled: true },
       kecamatan_pasangan: {
         value: '' || null,
         disabled: true,
       },
       kelurahan_pasangan: {
         value: '' || null,
-        disabled:true,
+        disabled: true,
       },
       kode_pos_pasangan: {
         value: '' || null,
         disabled: true,
       },
       // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      rt_pasangan: [
-        { value: '' || null, disabled:true},
-        Validators.required,
-      ],
-      rw_pasangan: [
-        { value: '' || null, disabled: true },
-        Validators.required,
-      ],
-      kewarganegaraan_pasangan: [
-        { value: '' || null, disabled: true },
-        Validators.required,
-      ],
-      pendidikan_pasangan: [
-        { value: '' || null, disabled: true },
-        Validators.required,
-      ],
+      rt_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      rw_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      kewarganegaraan_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      pendidikan_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
       email_pasangan: [
         { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
         Validators.required,
       ],
-      no_handphone_pasangan: [
-        { value: '' || null, disabled: true },
-        Validators.required,
-      ],
-      no_ktp_pasangan: [
-        { value: '' || null, disabled: true },
-        Validators.required,
-      ],
-      tanggal_terbit_ktp_pasangan: [
-        { value: '' || null, disabled: true },
-        Validators.required,
-      ],
-      status_ktp_pasangan: [
-        { value: '' || null, disabled: true },
-        Validators.required,
-      ],
-      tanggal_exp_ktp_pasangan: [
-        { value: '' || null, disabled: true },
-        Validators.required,
-      ],
-      npwp_pasangan: [
-        { value: '' || null, disabled: true },
-        Validators.required,
-      ],
-      tanggal_lahir_pasangan: [
-        { value: '' || null, disabled: true },
-        Validators.required,
-      ],
-      usia_pasangan: [
-        { value: '' || null, disabled: true },
-        Validators.required,
-      ],
+      no_handphone_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      no_ktp_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      tanggal_terbit_ktp_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      status_ktp_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      tanggal_exp_ktp_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      npwp_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      tanggal_lahir_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      usia_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
     });
   }
 
@@ -287,6 +242,7 @@ export class DataPasanganComponent implements OnInit {
   }
 
   goto(contohtampungancuref: any) {
+    this.SessionStorageService.store('dataPas', 1);
     // this.onResponseSuccess(res);
     // alert(contohtampungancuref);
     // alert(this.app_no_de);

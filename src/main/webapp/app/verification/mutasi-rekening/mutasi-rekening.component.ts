@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
@@ -21,8 +21,11 @@ import { environment } from 'environments/environment';
   styleUrls: ['./mutasi-rekening.component.scss'],
 })
 export class MutasiRekeningComponent implements OnInit, OnDestroy {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
-  mutasiRekening?: mutasiRekening[];
+  mutasiRekening: mutasiRekening[] = [];
+  resultMutasi: any;
   mutasiForm!: FormGroup;
   app_no_de: any;
   dataEntry: fetchAllDe = new fetchAllDe();
@@ -31,6 +34,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   tambahTableMutasi = 1;
   idTableMutasi: any;
   getTableMutasi: listMutasi = new listMutasi();
+  lihatMutasi = 0;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -61,7 +65,12 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     // alert(this.app_no_de)
   }
 
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
   ngOnInit(): void {
+    this.getLoading(true);
     this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -90,10 +99,13 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
 
     // list Table
     this.mutasiRekeningService.fetchListMutasiRekening(this.app_no_de).subscribe(data => {
-      //console.warn(data);
+      this.resultMutasi = data.result;
       if (data.code === 200) {
         this.mutasiRekening = data.result;
         this.dtTrigger.next(data.result);
+        this.getLoading(false);
+      } else {
+        this.getLoading(false);
       }
     });
   }
@@ -105,8 +117,8 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     // alert(this.lihatTableMutasi)
     if (this.tambahTableMutasi == 0) {
       this.http
-        .post<any>(this.baseUrl + 'v1/efos-verif/create_verif_mutasi', {
-          id: this.idTableMutasi,
+        .post<mutasiRekening>(this.baseUrl + 'v1/efos-verif/create_verif_mutasi', {
+          id: 0,
           app_no_de: this.app_no_de,
           bulan: this.mutasiForm.get('bulan')?.value,
           created_by: this.sessionStorageService.retrieve('sessionUserName'),
@@ -120,14 +132,13 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
         })
         .subscribe({
           next: response => {
-            // console.warn(response)
+            window.location.reload();
           },
           error: error => console.warn(error),
         });
-      this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     } else {
       this.http
-        .post<any>(this.baseUrl + 'v1/efos-verif/update_verif_mutasi', {
+        .post<mutasiRekening>(this.baseUrl + 'v1/efos-verif/update_verif_mutasi', {
           id: this.idTableMutasi,
           app_no_de: this.app_no_de,
           bulan: this.mutasiForm.get('bulan')?.value,
@@ -142,17 +153,17 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
         })
         .subscribe({
           next: response => {
-            // console.warn(response)
+            window.location.reload();
           },
           error: error => console.warn(error),
         });
-      this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
     }
   }
 
   // edit mutasi
   editMutasi(id: any): void {
     this.idTableMutasi = id;
+    this.lihatMutasi = 1;
     // data
     this.mutasiRekeningService
       .getMutasiRekening(id) // by id dari table atas
@@ -201,6 +212,19 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     });
   }
   goto(): void {
-    this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+    this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+  }
+  next() {
+    this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+  }
+  // Only Numbers
+  keyPressNumbers(event?: any): void {
+    const charCode = event.which ? event.which : event.keyCode;
+    // charCode.toLocaleString('id-ID',{style: 'currency', currency:'IDR'})
+    // Only Numbers 0-9
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+      return;
+    }
   }
 }

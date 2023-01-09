@@ -42,7 +42,15 @@
               </option>
             </select>
           </div>
-          <span [hidden]="jobInfoForm.controls.tipe_pekerjaan.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.tipe_pekerjaan.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -101,7 +109,13 @@
               <option *ngFor="let listJabatan of listJabatan" value="{{ listJabatan.deskripsi }}">{{ listJabatan.deskripsi }}</option>
             </select>
           </div>
-          <span [hidden]="jobInfoForm.controls.posisi.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.posisi.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -116,7 +130,15 @@
             placeholder="Nama Perusahaan"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           />
-          <span [hidden]="jobInfoForm.controls.nama_perusahaan.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.nama_perusahaan.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -130,7 +152,15 @@
             formControlName="alamat_perusahaan"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           ></textarea>
-          <span [hidden]="jobInfoForm.controls.alamat_perusahaan.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.alamat_perusahaan.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -151,7 +181,13 @@
               </option>
             </select>
           </div>
-          <span [hidden]="jobInfoForm.controls.provinsi.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.provinsi.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -172,7 +208,13 @@
               </option>
             </select>
           </div>
-          <span [hidden]="jobInfoForm.controls.kabkota.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.kabkota.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -193,7 +235,13 @@
               </option>
             </select>
           </div>
-          <span [hidden]="jobInfoForm.controls.kecamatan.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.kecamatan.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -214,7 +262,13 @@
               </option>
             </select>
           </div>
-          <span [hidden]="jobInfoForm.controls.kelurahan.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.kelurahan.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -243,7 +297,13 @@
               </button>
             </div>
           </div>
-          <span [hidden]="jobInfoForm.controls.kode_pos.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.kode_pos.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -261,7 +321,11 @@
             id="rt"
             formControlName="rt"
           />
-          <span [hidden]="jobInfoForm.controls.rt.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="jobInfoForm.controls.rt.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
         <div class="col">RT</div>
         <div class="col">
@@ -276,7 +340,11 @@
             value=""
             formControlName="rw"
           />
-          <span [hidden]="jobInfoForm.controls.rw.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="jobInfoForm.controls.rw.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
         <div class="col">RW</div>
       </div>
@@ -294,7 +362,13 @@
             class="form-control"
             maxlength="16"
           />
-          <span [hidden]="jobInfoForm.controls.no_siup.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.no_siup.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
     </div>
@@ -319,7 +393,13 @@
               </option>
             </select>
           </div>
-          <span [hidden]="jobInfoForm.controls.jenis_bidang.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.jenis_bidang.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -340,7 +420,15 @@
               </option>
             </select>
           </div>
-          <span [hidden]="jobInfoForm.controls.sektor_ekonomi.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.sektor_ekonomi.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -358,7 +446,13 @@
             id="umur_pensiun"
             formControlName="umur_pensiun"
           />
-          <span [hidden]="jobInfoForm.controls.umur_pensiun.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.umur_pensiun.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -374,7 +468,15 @@
             formControlName="lama_bekerja_tahun"
             maxlength="2"
           />
-          <span [hidden]="jobInfoForm.controls.lama_bekerja_tahun.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.lama_bekerja_tahun.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
         <div class="col">Tahun</div>
         <div class="col">
@@ -387,7 +489,15 @@
             formControlName="lama_bekerja_bulan"
             maxlength="2"
           />
-          <span [hidden]="jobInfoForm.controls.lama_bekerja_bulan.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.lama_bekerja_bulan.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
         <div class="col">Bulan</div>
       </div>
@@ -452,7 +562,13 @@
             [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           />
-          <span [hidden]="jobInfoForm.controls.pendapatan.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.pendapatan.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -487,7 +603,13 @@
             [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           />
-          <span [hidden]="jobInfoForm.controls.tunjangan.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.tunjangan.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -540,7 +662,15 @@
               </option>
             </select>
           </div>
-          <span [hidden]="jobInfoForm.controls.tipe_perusahaan.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.tipe_perusahaan.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -559,7 +689,15 @@
               <option value="2">Pegawai kontrak</option>
             </select>
           </div>
-          <span [hidden]="jobInfoForm.controls.tipe_kepegawaian.valid" class="text-danger"> Field Wajib Diisi </span>
+          <span
+            [hidden]="
+              jobInfoForm.controls.tipe_kepegawaian.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
     </div>

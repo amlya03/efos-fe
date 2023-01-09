@@ -9,6 +9,7 @@ import { uploadDocument } from '../services/config/uploadDocument.model';
 import { ServicesUploadDocumentService } from '../services/services-upload-document.service';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { environment } from 'environments/environment';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-upload-document-de',
@@ -31,9 +32,13 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   inputUpload: any;
   hapusUpload: any;
   popup: any;
+  untukSessionRole: any;
 
   // Progress bar
   proggresBar: any;
+
+  // validasi
+  totalVal: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -47,7 +52,8 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     protected fileUploadService: ServicesUploadDocumentService,
-    protected dataEntryService: DataEntryService
+    protected dataEntryService: DataEntryService,
+    private SessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.curef = params.curef;
@@ -62,6 +68,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
       processing: true,
       responsive: true,
     };
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.load();
   }
 
@@ -74,7 +81,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
 
     // get List DE
     this.fileUploadService.getListUploadDocument(this.curef, 'DE').subscribe(dE => {
-      this.uploadDocument = (dE as any).result;
+      this.uploadDocument = dE.result;
       this.dtTrigger.next(dE.result);
     });
   }
@@ -85,6 +92,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   }
 
   viewUploadDEA(): void {
+    this.SessionStorageService.store('uploadDE', 1);
     this.router.navigate(['/upload_document/upload_document_agunan'], {
       queryParams: { curef: this.dataEntry.curef, app_no_de: this.dataEntry.app_no_de },
     });
@@ -150,6 +158,36 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
       })
       .subscribe({});
     window.location.reload();
+  }
+
+  // Update Status
+  updateStatus() {
+    this.totalVal = this.uploadDocument.length;
+    for (let i = 0; i < this.uploadDocument.length; i++) {
+      if (this.uploadDocument[i].status == null) {
+        this.totalVal += 1;
+        alert('Gagal, Mohon Upload ' + this.uploadDocument[i].doc_description);
+      } else {
+        this.totalVal -= 1;
+        if (this.totalVal == 0) {
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+              app_no_de: this.app_no_de,
+              created_by: this.SessionStorageService.retrieve('sessionUserName'),
+              status_aplikasi: this.dataEntry.status_aplikasi,
+            })
+            .subscribe({
+              next: response => {
+                alert('Data Berhasil Di Updated');
+                this.router.navigate(['/data-entry']);
+              },
+              error: error => {
+                alert(error.error.messages);
+              },
+            });
+        }
+      }
+    }
   }
 
   // View Upload

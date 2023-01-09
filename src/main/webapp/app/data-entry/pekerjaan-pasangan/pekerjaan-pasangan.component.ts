@@ -179,11 +179,26 @@ export class PekerjaanPasanganComponent implements OnInit {
         Validators.required,
       ],
       // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      provinsi:[{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },Validators.required,],
-      kabkota: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },Validators.required,],
-      kecamatan: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },Validators.required,],
-      kelurahan: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },Validators.required,],
-      kode_pos: [{ value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },Validators.required,],
+      provinsi: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      kabkota: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      kecamatan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      kelurahan: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      kode_pos: [
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        Validators.required,
+      ],
       // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     });
     this.load();
@@ -362,6 +377,7 @@ export class PekerjaanPasanganComponent implements OnInit {
   }
 
   goto(): void {
+    this.SessionStorageService.store('pekerPas', 1);
     // this.onResponseSuccess(res);
     // alert('otw collateral1 ');
     // console.warn('colalteral', this.app_no_de, this.curef, this.datakirimanakategoripekerjaan);

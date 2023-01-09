@@ -302,6 +302,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   }
 
   goto() {
+    this.SessionStorageService.store('strukturPemb', 1);
     this.router.navigate(['/data-entry/emergency-contact'], {
       queryParams: {
         curef: this.curef,
@@ -311,15 +312,14 @@ export class StrukturPembiayaanComponent implements OnInit {
   }
 
   onchangefasilitas(kodefasilitasnya: any) {
-    var potongankodefasilitas = kodefasilitasnya.split('|');
-    if (potongankodefasilitas[0] == 'U') {
+    if (kodefasilitasnya == 'U') {
       $('#uang_muka').attr('hidden', 'hidden');
       $('#siapsiap').attr('hidden', 'hidden');
     } else {
       $('#siapsiap').removeAttr('hidden');
       $('#uang_muka').removeAttr('hidden');
     }
-    this.dataEntryService.getFetchProgramByKode(potongankodefasilitas[0]).subscribe(data => {
+    this.dataEntryService.getFetchProgramByKode(kodefasilitasnya).subscribe(data => {
       this.kodeprogram = data.result;
     });
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DataEntryService } from '../../data-entry/services/data-entry.service';
 import { fetchAllDe } from '../../upload-document/services/config/fetchAllDe.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,6 +20,7 @@ import { getDetailApproval } from '../services/config/getDetailApproval.model';
 import { getPersetujuanPembiayaanModel } from '../services/config/getPersetujuanPembiayaanModel.model';
 import Swal from 'sweetalert2';
 import { environment } from 'environments/environment';
+import { userModel } from '../services/config/userModel.model';
 
 @Component({
   selector: 'jhi-detail-komite',
@@ -27,6 +28,8 @@ import { environment } from 'environments/environment';
   styleUrls: ['./detail-komite.component.scss'],
 })
 export class DetailKomiteComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   keputusanPembiayaanForm!: FormGroup;
   komiteFasilitasYangDimintaForm!: FormGroup;
@@ -39,14 +42,23 @@ export class DetailKomiteComponent implements OnInit {
   strukturByDe: getStrukturPembiayaan = new getStrukturPembiayaan();
   strukturAnalisa: refStrukturPembiayaan = new refStrukturPembiayaan();
   refPersetujuanKhusus: refPersetujuanKhususModel[] = [];
+  // ////////////// Persetujuan Khusus ////////////////////////////////
   listPersetujuanKhusus: listPersetujuanKhususModel[] = [];
+  id_listPersetujuanTablel: any;
+  id_listPersetujuanKhusus: any;
+  detail_listPersetujuanKhusus: any;
+  usulan_listPersetujuanKhusus: any;
+  ketentuan_listPersetujuanKhusus: any;
+  mitigasi_resiko_listPersetujuanKhusus: any;
+  persetujuan_listPersetujuanKhusus: any;
+  // ////////////// Persetujuan Khusus ////////////////////////////////
   app_no_de: any;
   curef: string | undefined;
   cabang: string | undefined;
   tenor: refTenorFix[] = [];
   tenorRekomendasi: refTenorFix[] = [];
   persetujuanPembiayaan: getPersetujuanPembiayaanModel[] = [];
-  userNya: any;
+  userNya: userModel = new userModel();
 
   // Hasil Scoring
   hasilScoring: any;
@@ -60,6 +72,7 @@ export class DetailKomiteComponent implements OnInit {
 
   // cek result get detail komite
   cekDetailKomite = 0;
+  idPost: any;
 
   constructor(
     public router: Router,
@@ -80,6 +93,7 @@ export class DetailKomiteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getLoading(true);
     this.cabang = this.sessionStorageService.retrieve('sessionKdCabang');
     this.load();
     // //////////////////// Fasilitas Yang Diminta //////////////////////
@@ -103,8 +117,8 @@ export class DetailKomiteComponent implements OnInit {
 
     // //////////////////// Persetujuan Pembiayaan //////////////////////
     this.persetujuanPembiayaanForm = this.formBuilder.group({
-      limit_kewenangan_memutus: '',
-      plafon_pembiayaan: '',
+      limit_kewenangan_memutus: '0',
+      plafon_pembiayaan: '0',
       keputusan: '',
       alasan_penolakan: '',
       keterangan: '',
@@ -112,248 +126,286 @@ export class DetailKomiteComponent implements OnInit {
   }
   load() {
     // //////////////////////////////////////////////// Get Data Users ///////////////////////////////////////////////////////////////////////
-    this.komiteServices.getDataUsers(this.app_no_de).subscribe(data => {
-      this.userNya = data.result;
-    });
+    setTimeout(() => {
+      this.komiteServices.getDataUsers(this.app_no_de).subscribe(data => {
+        this.userNya = data.result;
+      });
+    }, 5);
     // //////////////////////////////////////////////// Get Data Users ///////////////////////////////////////////////////////////////////////
 
-    // ////////////////// Get Persetujuan Pembiayaan ////////////////////////////////
-    this.komiteServices.getPersetujuanPembiayaan(this.app_no_de).subscribe(data => {
-      this.persetujuanPembiayaan = data.result;
+    // //////////////////////////////////////////////// Ref Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
+    setTimeout(() => {
+      this.komiteServices.getRefPersetujuanKhusus().subscribe(data => {
+        this.refPersetujuanKhusus = data.result;
+      });
+    }, 10);
+    // //////////////////////////////////////////////// Ref Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
 
-      // const retrivepersetujuanPembiayaanForm = {
-      //   limit_kewenangan_memutus: this.persetujuanPembiayaan[0].limit_kewenangan_memutus,
-      //   plafon_pembiayaan: this.persetujuanPembiayaan[0].plafon_pembiayaan,
-      //   keputusan: this.persetujuanPembiayaan[0].keputusan,
-      //   alasan_penolakan: this.persetujuanPembiayaan[0].alasan_penolakan,
-      //   keterangan: this.persetujuanPembiayaan[0].keterangan,
-      // };
-      // this.persetujuanPembiayaanForm.setValue(retrivepersetujuanPembiayaanForm);
-    });
-    // ////////////////// Get Persetujuan Pembiayaan ////////////////////////////////
-
-    // //////////////////// Get Approval ////////////////////////////////////////////////
-    this.komiteServices.getDetailApproval(this.app_no_de).subscribe(data => {
-      this.detailApproval = data.result;
-      console.warn(this.detailApproval);
-      if (data.result == null) {
-        this.cekDetailKomite = 0;
-      } else {
-        this.cekDetailKomite = 1;
-      }
-    });
-    // //////////////////// Get Approval ////////////////////////////////////////////////
-
-    // ambil job BY curef
-    this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(jobByCuref => {
-      this.jobByCurefDE = jobByCuref.result[0];
-    });
-    // ambil semua data DE
-    this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
-      this.dataEntry = data.result;
-
-      // ////////////////////////////////////////////////////////////////////////////////////////
-      // Ref Skema
-      this.verifikasiServices.getSkema(this.dataEntry.produk).subscribe(data => {
-        if (data.code === 200) {
-          this.Skema = data.result;
+    // //////////////////////////////////////////////// List Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
+    setTimeout(() => {
+      this.komiteServices.getListPersetujuanKhusus(this.app_no_de).subscribe(data => {
+        this.listPersetujuanKhusus = data.result;
+        for (let i = 0; i < this.listPersetujuanKhusus.length; i++) {
+          this.id_listPersetujuanKhusus = this.listPersetujuanKhusus[i].id_jenis_persetujuan;
+          this.id_listPersetujuanTablel = this.listPersetujuanKhusus[i].id;
+          this.detail_listPersetujuanKhusus = this.listPersetujuanKhusus[i].detail_persetujuan;
+          this.usulan_listPersetujuanKhusus = this.listPersetujuanKhusus[i].usulan;
+          this.ketentuan_listPersetujuanKhusus = this.listPersetujuanKhusus[i].ketentuan;
+          this.persetujuan_listPersetujuanKhusus = this.listPersetujuanKhusus[i].persetujuan;
+          this.mitigasi_resiko_listPersetujuanKhusus = this.listPersetujuanKhusus[i].mitigasi_resiko;
         }
       });
-      // ////////////////////////////////////////////////////////////////////////////////////////
-    });
-    // ambil semua data view Job by Curef
-    this.dataEntryService.getGetViewDataJob(this.curef).subscribe(Job => {
-      this.fetchJob = Job.result[0];
-    });
-    // ambil agunan by curef
-    this.dataEntryService.getfetchlistagunan(this.curef).subscribe(agunan => {
-      this.agunanModel = agunan.result[0];
-    });
-    // ambil struktur pembiayaan DE
-    this.dataEntryService.getFetchStrukturDE(this.app_no_de, this.curef).subscribe(strukturDe => {
-      this.strukturByDe = strukturDe.result;
-
-      if (this.strukturByDe.kode_fasilitas_name === 'PTA') {
-        this.verifikasiServices.getTenorFix(this.strukturByDe.skema).subscribe(fix => {
-          this.tenor = fix.result;
-        });
-      } else {
-        this.verifikasiServices.getTenorNon(this.strukturByDe.skema).subscribe(Non => {
-          this.tenor = Non.result;
-        });
-      }
-    });
-
-    // ambil darin struktur pembiayaan Analisa
-    this.verifikasiServices.getFetchStrukturPembiayaan(this.app_no_de).subscribe(strukturAnalisa => {
-      this.strukturAnalisa = strukturAnalisa.result;
-      // //////////////////////// Fasilitas Yang DIminta ////////////////////////////////////////
-      setTimeout(() => {
-        if (this.cekDetailKomite === 0) {
-          const retrivestrukturForm = {
-            harga_permintaan: this.strukturAnalisa.harga_permintaan,
-            down_payment: this.strukturAnalisa.down_payment,
-            tenor: this.strukturAnalisa.tenor,
-            angsuran: this.strukturAnalisa.angsuran,
-            dsr: this.strukturAnalisa.dsr,
-          };
-          this.komiteFasilitasYangDimintaForm.setValue(retrivestrukturForm);
-        } else {
-          const retrivestrukturForm = {
-            harga_permintaan: this.detailApproval.max_pembiayaan,
-            down_payment: this.detailApproval.dp,
-            tenor: this.detailApproval.jangka_waktu,
-            angsuran: this.detailApproval.angsuran,
-            dsr: this.detailApproval.dsr,
-          };
-          this.komiteFasilitasYangDimintaForm.setValue(retrivestrukturForm);
-        }
-      }, 100);
-
-      setTimeout(() => {
-        this.http
-          .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
-            app_no_de: this.dataEntry.app_no_de,
-            curef: this.dataEntry.curef,
-            dp: this.strukturAnalisa.down_payment,
-            fasilitas: this.dataEntry.fasilitas_ke,
-            harga_objek: this.strukturAnalisa.harga_permintaan,
-            kode_fasilitas: this.dataEntry.kode_fasilitas,
-            kode_produk: this.dataEntry.produk,
-            skema_id: this.strukturByDe.skema,
-            skema_master: this.strukturByDe.skema_master,
-            tenor: this.strukturAnalisa.tenor,
-          })
-          .subscribe({
-            next: data => {
-              let anguran1 = data.result.angsuran[0];
-              let anguran2 = data.result.angsuran[1];
-
-              if (anguran2 == null) {
-                this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue('Angsuran = ' + anguran1);
-              } else {
-                this.komiteFasilitasYangDimintaForm
-                  .get('angsuran')
-                  ?.setValue('Angsuran Tahun Ke 1 = ' + anguran1 + '; ' + 'Angsuran Tahun Ke 2 = ' + anguran2);
-              }
-
-              setTimeout(() => {
-                this.http
-                  .post<any>(this.baseUrl + 'v1/efos-verif/getHitungAnalisaPembiayaan', {
-                    angsuran: data.result.angsuran[data.result.angsuran.length - 1],
-                    app_no_de: this.dataEntry.app_no_de,
-                  })
-                  .subscribe({
-                    next: data => {
-                      this.komiteFasilitasYangDimintaForm.get('dsr')?.setValue(data.result.dsr);
-                      setTimeout(() => {
-                        this.http
-                          .post<any>(this.baseUrl + 'v1/efos-verif/getHitungScoring', {
-                            dsr: this.komiteFasilitasYangDimintaForm.get('dsr')?.value,
-                            app_no_de: this.dataEntry.app_no_de,
-                          })
-                          .subscribe({
-                            next: data => {
-                              console.warn(data);
-                              this.hasilScoring = data.result.score_value;
-                              this.hasilStatus = data.result.score_desc;
-                            },
-                          });
-                      }, 100);
-                    },
-                  });
-              }, 100);
-            },
-            error: err => {
-              if (err.error.code === '400') {
-                alert(err.error.message);
-              }
-            },
-          });
-      }, 100);
-      // ///////////////////////////////////////////////////////////////////////////////
-      // /////////////////////// Fasilitas Yang DIminta //////////////////////////////////////////
-
-      // //////////////////////// Rekomendasi System ////////////////////////////////////////
-      setTimeout(() => {
-        if (this.cekDetailKomite === 0) {
-          const retriveRekomendasiSystem = {
-            skema: this.strukturAnalisa.skema_code + '|' + this.strukturAnalisa.skema_master + '|' + this.strukturAnalisa.skema,
-            tipe_margin: this.strukturByDe.tipe_margin,
-            jangka_waktu: this.strukturAnalisa.tenor,
-            harga_permintaan: this.strukturAnalisa.harga_permintaan,
-            down_payment: this.strukturAnalisa.down_payment,
-            angsuran: this.strukturAnalisa.angsuran,
-          };
-          this.keputusanPembiayaanForm.setValue(retriveRekomendasiSystem);
-        } else {
-          const retriveRekomendasiSystem = {
-            skema:
-              this.detailApproval.skema_keputusan +
-              '|' +
-              this.detailApproval.skema_master_keputusan +
-              '|' +
-              this.detailApproval.skema_name_keputusan,
-            tipe_margin: this.detailApproval.tipe_margin_keputusan,
-            jangka_waktu: this.detailApproval.jangka_waktu,
-            harga_permintaan: this.detailApproval.max_pembiayaan_keputusan,
-            down_payment: this.detailApproval.dp_keputusan,
-            angsuran: this.detailApproval.angsuran,
-          };
-          this.keputusanPembiayaanForm.setValue(retriveRekomendasiSystem);
-        }
-        // /////////////////////////////////////////////////////////////////////
-        if (this.strukturAnalisa.skema_master === '1') {
-          this.verifikasiServices.getTenorFix(this.strukturAnalisa.skema_code).subscribe(fix => {
-            this.tenorRekomendasi = fix.result;
-          });
-        } else {
-          this.verifikasiServices.getTenorNon(this.strukturAnalisa.skema_code).subscribe(Non => {
-            this.tenorRekomendasi = Non.result;
-          });
-        }
-        this.http
-          .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
-            app_no_de: this.dataEntry.app_no_de,
-            curef: this.dataEntry.curef,
-            dp: this.strukturAnalisa.down_payment,
-            fasilitas: this.dataEntry.fasilitas_ke,
-            harga_objek: this.strukturAnalisa.harga_permintaan,
-            kode_fasilitas: this.dataEntry.kode_fasilitas,
-            kode_produk: this.dataEntry.produk,
-            skema_id: this.strukturByDe.skema,
-            skema_master: this.strukturByDe.skema_master,
-            tenor: this.strukturAnalisa.tenor,
-          })
-          .subscribe({
-            next: data => {
-              let anguran1 = data.result.angsuran[0];
-              let anguran2 = data.result.angsuran[1];
-
-              if (anguran2 == null) {
-                this.keputusanPembiayaanForm.get('angsuran')?.setValue('Angsuran = ' + anguran1);
-              } else {
-                this.keputusanPembiayaanForm
-                  .get('angsuran')
-                  ?.setValue('Angsuran Tahun Ke 1 = ' + anguran1 + '; ' + 'Angsuran Tahun Ke 2 = ' + anguran2);
-              }
-            },
-          });
-      }, 300);
-      // /////////////////////// Rekomendasi SYstem //////////////////////////////////////////
-    });
-
-    // //////////////////////////////////////////////// Ref Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
-    this.komiteServices.getRefPersetujuanKhusus().subscribe(data => {
-      this.refPersetujuanKhusus = data.result;
-    });
-    // //////////////////////////////////////////////// Ref Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
-
+    }, 15);
     // //////////////////////////////////////////////// List Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
-    this.komiteServices.getListPersetujuanKhusus(this.app_no_de).subscribe(data => {
-      this.listPersetujuanKhusus = data.result;
-    });
-    // //////////////////////////////////////////////// List Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
+
+    // ////////////////// Get Persetujuan Pembiayaan ////////////////////////////////
+    setTimeout(() => {
+      this.komiteServices.getPersetujuanPembiayaan(this.app_no_de).subscribe(data => {
+        this.persetujuanPembiayaan = data.result;
+
+        // const retrivepersetujuanPembiayaanForm = {
+        //   limit_kewenangan_memutus: this.persetujuanPembiayaan[0].limit_kewenangan_memutus,
+        //   plafon_pembiayaan: this.persetujuanPembiayaan[0].plafon_pembiayaan,
+        //   keputusan: this.persetujuanPembiayaan[0].keputusan,
+        //   alasan_penolakan: this.persetujuanPembiayaan[0].alasan_penolakan,
+        //   keterangan: this.persetujuanPembiayaan[0].keterangan,
+        // };
+        // this.persetujuanPembiayaanForm.setValue(retrivepersetujuanPembiayaanForm);
+      });
+    }, 20);
+    // ////////////////// Get Persetujuan Pembiayaan ////////////////////////////////
+
+    // //////////////////// Get Approval ////////////////////////////////////////////////
+    setTimeout(() => {
+      this.komiteServices.getDetailApproval(this.app_no_de).subscribe(data => {
+        this.detailApproval = data.result;
+        if (data.result == null) {
+          this.cekDetailKomite = 0;
+        } else {
+          this.cekDetailKomite = 1;
+        }
+      });
+    }, 25);
+    // //////////////////// Get Approval ////////////////////////////////////////////////
+    setTimeout(() => {
+      // ambil job BY curef
+      this.dataEntryService.getFetchSemuaDataJob(this.curef).subscribe(jobByCuref => {
+        this.jobByCurefDE = jobByCuref.result[0];
+      });
+    }, 30);
+    setTimeout(() => {
+      // ambil semua data DE
+      this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
+        this.dataEntry = data.result;
+
+        // ////////////////////////////////////////////////////////////////////////////////////////
+        // Ref Skema
+        this.verifikasiServices.getSkema(this.dataEntry.produk).subscribe(data => {
+          if (data.code === 200) {
+            this.Skema = data.result;
+          }
+        });
+        // ////////////////////////////////////////////////////////////////////////////////////////
+      });
+    }, 35);
+    setTimeout(() => {
+      // ambil semua data view Job by Curef
+      this.dataEntryService.getGetViewDataJob(this.curef).subscribe(Job => {
+        this.fetchJob = Job.result[0];
+      });
+    }, 40);
+    setTimeout(() => {
+      // ambil agunan by curef
+      this.dataEntryService.getfetchlistagunan(this.curef).subscribe(agunan => {
+        this.agunanModel = agunan.result[0];
+      });
+    }, 45);
+    setTimeout(() => {
+      // ambil struktur pembiayaan DE
+      this.dataEntryService.getFetchStrukturDE(this.app_no_de, this.curef).subscribe(strukturDe => {
+        this.strukturByDe = strukturDe.result;
+
+        if (this.strukturByDe.skema_master == 1) {
+          this.verifikasiServices.getTenorFix(this.strukturByDe.skema).subscribe(fix => {
+            this.tenor = fix.result;
+          });
+        } else {
+          this.verifikasiServices.getTenorNon(this.strukturByDe.skema).subscribe(Non => {
+            this.tenor = Non.result;
+          });
+        }
+      });
+    }, 50);
+
+    setTimeout(() => {
+      // ambil darin struktur pembiayaan Analisa
+      this.verifikasiServices.getFetchStrukturPembiayaan(this.app_no_de).subscribe(strukturAnalisa => {
+        this.strukturAnalisa = strukturAnalisa.result;
+        // //////////////////////// Fasilitas Yang DIminta ////////////////////////////////////////
+        setTimeout(() => {
+          if (this.cekDetailKomite === 0) {
+            const retrivestrukturForm = {
+              harga_permintaan: this.strukturAnalisa.harga_permintaan,
+              down_payment: this.strukturAnalisa.down_payment,
+              tenor: this.strukturAnalisa.tenor,
+              angsuran: this.strukturAnalisa.angsuran,
+              dsr: this.strukturAnalisa.dsr,
+            };
+            this.komiteFasilitasYangDimintaForm.setValue(retrivestrukturForm);
+          } else {
+            const retrivestrukturForm = {
+              harga_permintaan: this.detailApproval.max_pembiayaan,
+              down_payment: this.detailApproval.dp,
+              tenor: this.detailApproval.jangka_waktu,
+              angsuran: this.detailApproval.angsuran,
+              dsr: this.detailApproval.dsr,
+            };
+            this.komiteFasilitasYangDimintaForm.setValue(retrivestrukturForm);
+          }
+        }, 10);
+
+        setTimeout(() => {
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
+              app_no_de: this.dataEntry.app_no_de,
+              curef: this.dataEntry.curef,
+              dp: this.strukturAnalisa.down_payment,
+              fasilitas: this.dataEntry.fasilitas_ke,
+              harga_objek: this.strukturAnalisa.harga_permintaan,
+              kode_fasilitas: this.dataEntry.kode_fasilitas,
+              kode_produk: this.dataEntry.produk,
+              skema_id: this.strukturByDe.skema,
+              skema_master: this.strukturByDe.skema_master,
+              tenor: this.strukturAnalisa.tenor,
+            })
+            .subscribe({
+              next: data => {
+                let anguran1 = data.result.angsuran[0];
+                let anguran2 = data.result.angsuran[1];
+
+                if (anguran2 == null) {
+                  this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue('Angsuran = ' + anguran1);
+                } else {
+                  this.komiteFasilitasYangDimintaForm
+                    .get('angsuran')
+                    ?.setValue('Angsuran Tahun Ke 1 = ' + anguran1 + '; ' + 'Angsuran Tahun Ke 2 = ' + anguran2);
+                }
+
+                setTimeout(() => {
+                  this.http
+                    .post<any>(this.baseUrl + 'v1/efos-verif/getHitungAnalisaPembiayaan', {
+                      angsuran: data.result.angsuran[data.result.angsuran.length - 1],
+                      app_no_de: this.dataEntry.app_no_de,
+                    })
+                    .subscribe({
+                      next: data => {
+                        this.komiteFasilitasYangDimintaForm.get('dsr')?.setValue(data.result.dsr);
+                        setTimeout(() => {
+                          this.http
+                            .post<any>(this.baseUrl + 'v1/efos-verif/getHitungScoring', {
+                              dsr: this.komiteFasilitasYangDimintaForm.get('dsr')?.value,
+                              app_no_de: this.dataEntry.app_no_de,
+                            })
+                            .subscribe({
+                              next: data => {
+                                //console.warn(data);
+                                this.hasilScoring = data.result.score_value;
+                                this.hasilStatus = data.result.score_desc;
+                              },
+                            });
+                        }, 10);
+                      },
+                    });
+                }, 10);
+              },
+              error: err => {
+                if (err.error.code === '400') {
+                  alert(err.error.message);
+                  this.getLoading(false);
+                }
+              },
+            });
+        }, 10);
+        // ///////////////////////////////////////////////////////////////////////////////
+        // /////////////////////// Fasilitas Yang DIminta //////////////////////////////////////////
+
+        // //////////////////////// Rekomendasi System ////////////////////////////////////////
+        setTimeout(() => {
+          if (this.cekDetailKomite === 0) {
+            const retriveRekomendasiSystem = {
+              skema: this.strukturAnalisa.skema_code + '|' + this.strukturAnalisa.skema_master + '|' + this.strukturAnalisa.skema,
+              tipe_margin: this.strukturByDe.tipe_margin,
+              jangka_waktu: this.strukturAnalisa.tenor,
+              harga_permintaan: this.strukturAnalisa.harga_permintaan,
+              down_payment: this.strukturAnalisa.down_payment,
+              angsuran: this.strukturAnalisa.angsuran,
+            };
+            this.keputusanPembiayaanForm.setValue(retriveRekomendasiSystem);
+            this.getLoading(false);
+          } else {
+            const retriveRekomendasiSystem = {
+              skema:
+                this.detailApproval.skema_keputusan +
+                '|' +
+                this.detailApproval.skema_master_keputusan +
+                '|' +
+                this.detailApproval.skema_name_keputusan,
+              tipe_margin: this.detailApproval.tipe_margin_keputusan,
+              jangka_waktu: this.detailApproval.jangka_waktu,
+              harga_permintaan: this.detailApproval.max_pembiayaan_keputusan,
+              down_payment: this.detailApproval.dp_keputusan,
+              angsuran: this.detailApproval.angsuran,
+            };
+            this.keputusanPembiayaanForm.setValue(retriveRekomendasiSystem);
+          }
+          // /////////////////////////////////////////////////////////////////////
+          if (this.strukturAnalisa.skema_master === '1') {
+            this.verifikasiServices.getTenorFix(this.strukturAnalisa.skema_code).subscribe(fix => {
+              this.tenorRekomendasi = fix.result;
+            });
+          } else {
+            this.verifikasiServices.getTenorNon(this.strukturAnalisa.skema_code).subscribe(Non => {
+              this.tenorRekomendasi = Non.result;
+            });
+          }
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
+              app_no_de: this.dataEntry.app_no_de,
+              curef: this.dataEntry.curef,
+              dp: this.strukturAnalisa.down_payment,
+              fasilitas: this.dataEntry.fasilitas_ke,
+              harga_objek: this.strukturAnalisa.harga_permintaan,
+              kode_fasilitas: this.dataEntry.kode_fasilitas,
+              kode_produk: this.dataEntry.produk,
+              skema_id: this.strukturByDe.skema,
+              skema_master: this.strukturByDe.skema_master,
+              tenor: this.strukturAnalisa.tenor,
+            })
+            .subscribe({
+              next: data => {
+                let anguran1 = data.result.angsuran[0];
+                let anguran2 = data.result.angsuran[1];
+
+                if (anguran2 == null) {
+                  this.keputusanPembiayaanForm.get('angsuran')?.setValue('Angsuran = ' + anguran1);
+                } else {
+                  this.keputusanPembiayaanForm
+                    .get('angsuran')
+                    ?.setValue('Angsuran Tahun Ke 1 = ' + anguran1 + '; ' + 'Angsuran Tahun Ke 2 = ' + anguran2);
+                }
+                this.getLoading(false);
+              },
+              error: err => {
+                if (err.error.code == 400) {
+                  alert(err.error.message);
+                  this.getLoading(false);
+                }
+              },
+            });
+        }, 60);
+        // /////////////////////// Rekomendasi SYstem //////////////////////////////////////////
+      });
+    }, 60);
   }
   hitungFasilitasYangDiminta() {
     this.http
@@ -422,7 +474,7 @@ export class DetailKomiteComponent implements OnInit {
       })
       .subscribe({
         next: data => {
-          console.warn('rekon', data);
+          //console.warn('rekon', data);
           let anguran1 = data.result.angsuran[0];
           let anguran2 = data.result.angsuran[1];
 
@@ -479,7 +531,7 @@ export class DetailKomiteComponent implements OnInit {
         })
         .subscribe({
           next: data => {
-            console.warn(data);
+            //console.warn(data);
             // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
             this.http
               .post<any>(this.baseUrl + 'v1/efos-approval/create_history_persetujuan', {
@@ -495,7 +547,7 @@ export class DetailKomiteComponent implements OnInit {
               })
               .subscribe({
                 next: data => {
-                  console.warn(data);
+                  //console.warn(data);
                   // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                   for (let i = 0; i < this.refPersetujuanKhusus.length; i++) {
                     if ($('#persetujuan_ya' + i).is(':checked')) {
@@ -505,7 +557,7 @@ export class DetailKomiteComponent implements OnInit {
                     } else {
                       this.persetujuanPost = 0;
                     }
-                    let idPost = $('#id' + i).val();
+                    this.idPost = $('#id' + i).val();
                     let detail_persetujuanPost = $('#detail_persetujuan' + i).val();
                     let ketentuanPost = $('#ketentuan' + i).val();
                     let mitigasi_resikoPost = $('#mitigasi_resiko' + i).val();
@@ -517,8 +569,8 @@ export class DetailKomiteComponent implements OnInit {
                         updated_by: this.sessionStorageService.retrieve('sessionUserName'),
                         updated_date: '',
                         detail_persetujuan: detail_persetujuanPost,
-                        id: idPost,
-                        id_jenis_persetujuan: idPost,
+                        id: this.idPost,
+                        id_jenis_persetujuan: this.idPost,
                         ketentuan: ketentuanPost,
                         mitigasi_resiko: mitigasi_resikoPost,
                         persetujuan: this.persetujuanPost,
@@ -526,23 +578,27 @@ export class DetailKomiteComponent implements OnInit {
                       })
                       .subscribe({
                         next: data => {
-                          console.warn(data);
+                          //console.warn(data);
+                          if (this.idPost[this.refPersetujuanKhusus.length - 1] == this.idPost[i]) {
+                            alert('Data Berhasil disimpan');
+                            window.location.reload();
+                          }
                         },
                         error: err => {
-                          console.error(err);
+                          //console.error(err);
                         },
                       });
                   }
                   // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                 },
                 error: err => {
-                  console.error(err);
+                  //console.error(err);
                 },
               });
             // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
           },
           error: err => {
-            console.error(err);
+            //console.error(err);
           },
         });
     } else {
@@ -568,7 +624,7 @@ export class DetailKomiteComponent implements OnInit {
         })
         .subscribe({
           next: data => {
-            console.warn(data);
+            //console.warn(data);
             // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
             this.http
               .post<any>(this.baseUrl + 'v1/efos-approval/create_history_persetujuan', {
@@ -584,7 +640,7 @@ export class DetailKomiteComponent implements OnInit {
               })
               .subscribe({
                 next: data => {
-                  console.warn(data);
+                  //console.warn(data);
                   // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                   for (let i = 0; i < this.refPersetujuanKhusus.length; i++) {
                     if ($('#persetujuan_ya' + i).is(':checked')) {
@@ -594,7 +650,7 @@ export class DetailKomiteComponent implements OnInit {
                     } else {
                       this.persetujuanPost = 0;
                     }
-                    let idPost = $('#id' + i).val();
+                    this.idPost = $('#id' + i).val();
                     let detail_persetujuanPost = $('#detail_persetujuan' + i).val();
                     let ketentuanPost = $('#ketentuan' + i).val();
                     let mitigasi_resikoPost = $('#mitigasi_resiko' + i).val();
@@ -606,8 +662,8 @@ export class DetailKomiteComponent implements OnInit {
                         updated_by: this.sessionStorageService.retrieve('sessionUserName'),
                         updated_date: '',
                         detail_persetujuan: detail_persetujuanPost,
-                        id: idPost,
-                        id_jenis_persetujuan: idPost,
+                        id: this.idPost,
+                        id_jenis_persetujuan: this.idPost,
                         ketentuan: ketentuanPost,
                         mitigasi_resiko: mitigasi_resikoPost,
                         persetujuan: this.persetujuanPost,
@@ -615,27 +671,31 @@ export class DetailKomiteComponent implements OnInit {
                       })
                       .subscribe({
                         next: data => {
-                          console.warn(data);
+                          //console.warn(data);
+                          if (this.idPost[this.refPersetujuanKhusus.length - 1] == this.idPost[i]) {
+                            alert('Data Berhasil disimpan');
+                            window.location.reload();
+                          }
                         },
                         error: err => {
-                          console.error(err);
+                          //console.error(err);
                         },
                       });
                   }
-                  setTimeout(() => {
-                    alert('Data Berhasil Disimpan');
-                    window.location.reload();
-                  }, 300);
+                  // setTimeout(() => {
+                  //   alert('Data Berhasil Disimpan');
+                  //   window.location.reload();
+                  // }, 300);
                   // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                 },
                 error: err => {
-                  console.error(err);
+                  //console.error(err);
                 },
               });
             // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
           },
           error: err => {
-            console.error(err);
+            //console.error(err);
           },
         });
     }
@@ -711,7 +771,7 @@ export class DetailKomiteComponent implements OnInit {
             })
             .subscribe({
               next: data => {
-                console.warn(data);
+                //console.warn(data);
                 // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
                 this.http
                   .post<any>(this.baseUrl + 'v1/efos-approval/create_history_persetujuan', {
@@ -727,7 +787,7 @@ export class DetailKomiteComponent implements OnInit {
                   })
                   .subscribe({
                     next: data => {
-                      console.warn(data);
+                      //console.warn(data);
                       // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                       for (let i = 0; i < this.refPersetujuanKhusus.length; i++) {
                         if ($('#persetujuan_ya' + i).is(':checked')) {
@@ -737,7 +797,7 @@ export class DetailKomiteComponent implements OnInit {
                         } else {
                           this.persetujuanPost = 0;
                         }
-                        let idPost = $('#id' + i).val();
+                        this.idPost = $('#id' + i).val();
                         let detail_persetujuanPost = $('#detail_persetujuan' + i).val();
                         let ketentuanPost = $('#ketentuan' + i).val();
                         let mitigasi_resikoPost = $('#mitigasi_resiko' + i).val();
@@ -749,8 +809,8 @@ export class DetailKomiteComponent implements OnInit {
                             updated_by: this.sessionStorageService.retrieve('sessionUserName'),
                             updated_date: '',
                             detail_persetujuan: detail_persetujuanPost,
-                            id: idPost,
-                            id_jenis_persetujuan: idPost,
+                            id: this.idPost,
+                            id_jenis_persetujuan: this.idPost,
                             ketentuan: ketentuanPost,
                             mitigasi_resiko: mitigasi_resikoPost,
                             persetujuan: this.persetujuanPost,
@@ -758,23 +818,25 @@ export class DetailKomiteComponent implements OnInit {
                           })
                           .subscribe({
                             next: data => {
-                              console.warn(data);
+                              if (this.idPost[this.refPersetujuanKhusus.length - 1] == this.idPost[i]) {
+                                window.location.reload();
+                              }
                             },
                             error: err => {
-                              console.error(err);
+                              //console.error(err);
                             },
                           });
                       }
                       // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                     },
                     error: err => {
-                      console.error(err);
+                      //console.error(err);
                     },
                   });
                 // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
               },
               error: err => {
-                console.error(err);
+                //console.error(err);
               },
             });
         } else {
@@ -800,7 +862,7 @@ export class DetailKomiteComponent implements OnInit {
             })
             .subscribe({
               next: data => {
-                console.warn(data);
+                //console.warn(data);
                 // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
                 this.http
                   .post<any>(this.baseUrl + 'v1/efos-approval/create_history_persetujuan', {
@@ -816,7 +878,7 @@ export class DetailKomiteComponent implements OnInit {
                   })
                   .subscribe({
                     next: data => {
-                      console.warn(data);
+                      //console.warn(data);
                       // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                       for (let i = 0; i < this.refPersetujuanKhusus.length; i++) {
                         if ($('#persetujuan_ya' + i).is(':checked')) {
@@ -826,7 +888,7 @@ export class DetailKomiteComponent implements OnInit {
                         } else {
                           this.persetujuanPost = 0;
                         }
-                        let idPost = $('#id' + i).val();
+                        this.idPost = $('#id' + i).val();
                         let detail_persetujuanPost = $('#detail_persetujuan' + i).val();
                         let ketentuanPost = $('#ketentuan' + i).val();
                         let mitigasi_resikoPost = $('#mitigasi_resiko' + i).val();
@@ -838,8 +900,8 @@ export class DetailKomiteComponent implements OnInit {
                             updated_by: this.sessionStorageService.retrieve('sessionUserName'),
                             updated_date: '',
                             detail_persetujuan: detail_persetujuanPost,
-                            id: idPost,
-                            id_jenis_persetujuan: idPost,
+                            id: this.idPost,
+                            id_jenis_persetujuan: this.idPost,
                             ketentuan: ketentuanPost,
                             mitigasi_resiko: mitigasi_resikoPost,
                             persetujuan: this.persetujuanPost,
@@ -847,27 +909,30 @@ export class DetailKomiteComponent implements OnInit {
                           })
                           .subscribe({
                             next: data => {
-                              console.warn(data);
+                              //console.warn(data);
+                              if (this.idPost[this.refPersetujuanKhusus.length - 1] == this.idPost[i]) {
+                                window.location.reload();
+                              }
                             },
                             error: err => {
-                              console.error(err);
+                              //console.error(err);
                             },
                           });
                       }
-                      setTimeout(() => {
-                        alert('Data Berhasil Disimpan');
-                        window.location.reload();
-                      }, 300);
+                      // setTimeout(() => {
+                      //   alert('Data Berhasil Disimpan');
+                      //   window.location.reload();
+                      // }, 300);
                       // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                     },
                     error: err => {
-                      console.error(err);
+                      //console.error(err);
                     },
                   });
                 // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
               },
               error: err => {
-                console.error(err);
+                //console.error(err);
               },
             });
         }
@@ -894,7 +959,7 @@ export class DetailKomiteComponent implements OnInit {
 
   formatCurrency(value: any) {
     value = value.replace(/Rp/, '').replace(/\,/g, '');
-    //console.log('value ', value);
+    ////console.log('value ', value);
     if (value && !isNaN(value)) {
       let num: number = value;
       // let temp = new Intl.NumberFormat("en-IN").format(num); //inplace of en-IN you can mention your country's code
@@ -907,5 +972,10 @@ export class DetailKomiteComponent implements OnInit {
 
       this.komiteFasilitasYangDimintaForm.patchValue({ harga_permintaan: result });
     }
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

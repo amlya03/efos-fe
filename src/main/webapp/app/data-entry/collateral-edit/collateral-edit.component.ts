@@ -589,20 +589,11 @@ export class CollateralEditComponent implements OnInit {
   }
 
   goto() {
+    this.SessionStorageService.store('collateral', 1);
     this.router.navigate(['/data-entry/struktur-pembiayaan'], {
       queryParams: {
         curef: this.curef,
         app_no_de: this.app_no_de,
-      },
-    });
-  }
-
-  gotoeditcollateral(idcollateral: any) {
-    this.router.navigate(['/data-entry/editcollateral'], {
-      queryParams: {
-        curef: this.curef,
-        app_no_de: this.app_no_de,
-        datakirimanid: idcollateral,
       },
     });
   }

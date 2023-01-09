@@ -25,7 +25,7 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Fasilitas</label>
       <div class="col-sm-8">
-        <input #Fasilitas readonly type="text" class="form-control" value="{{ dataEntry.kode_fasilitas }}" />
+        <input #Fasilitas readonly type="text" class="form-control" value="{{ dataEntry.kode_fasilitas_name }}" />
       </div>
     </div>
   </div>
@@ -51,12 +51,13 @@
   <tbody>
     <tr *ngFor="let syaratAkad of syaratAkad; index as i">
       <th style="text-align: center" scope="row">{{ i + 1 }}</th>
-      <td>{{ syaratAkad.syarat }}</td>
-      <td>
-        <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRE_SPV'">
-          <option>Disyaratkan</option>
-          <option>Tidak Disyaratkan</option>
-        </select>
+      <td style="text-align: center">{{ syaratAkad.syarat }}</td>
+      <td style="text-align: center">
+        {{ syaratAkad.keterangan }}
+        <!-- <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRE_SPV'">
+          <option value="Disyaratkan">Disyaratkan</option>
+          <option value="Tidak Disyaratkan">Tidak Disyaratkan</option>
+        </select> -->
       </td>
     </tr>
   </tbody>
@@ -83,13 +84,8 @@
   <tbody>
     <tr *ngFor="let syaratCair of syaratCair; index as i">
       <th style="text-align: center" scope="row">{{ i + 1 }}</th>
-      <td>{{ syaratCair.syarat }}</td>
-      <td>
-        <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRE_SPV'">
-          <option>Disyaratkan</option>
-          <option>Tidak Disyaratkan</option>
-        </select>
-      </td>
+      <td style="text-align: center">{{ syaratCair.syarat }}</td>
+      <td style="text-align: center">{{ syaratCair.keterangan }}</td>
     </tr>
   </tbody>
 </table>
@@ -115,13 +111,8 @@
   <tbody>
     <tr *ngFor="let syaratLainLain of syaratLainLain; index as i">
       <th style="text-align: center" scope="row">{{ i + 1 }}</th>
-      <td>{{ syaratLainLain.syarat }}</td>
-      <td>
-        <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRE_SPV'">
-          <option>Disyaratkan</option>
-          <option>Tidak Disyaratkan</option>
-        </select>
-      </td>
+      <td style="text-align: center">{{ syaratLainLain.syarat }}</td>
+      <td style="text-align: center">{{ syaratLainLain.keterangan }}</td>
     </tr>
   </tbody>
 </table>
@@ -170,13 +161,13 @@
   <h3 style="color: #fff; text-align: center">Area of Concern</h3>
 </div>
 <br />
-<div class="row form-material">
+<div class="row form-material" [formGroup]="areaOfConForm">
   <label class="col-sm-2 col-form-label">Terdapat Area Concern</label>
   <div class="col-sm-10">
     <label>ada</label>
-    <input [checked]="this.bodyAreaOfconcern == 1" type="radio" name="area-concern" id="area-concern" value="1" />
+    <input type="radio" formControlName="area_of_concern" id="area-concern" value="1" />
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <input [checked]="this.bodyAreaOfconcern == 0" type="radio" name="area-concern" id="area-concern" value="0" />
+    <input type="radio" formControlName="area_of_concern" id="area-concern" value="0" />
     <label>Tidak ada</label>
   </div>
 </div>
@@ -200,3 +191,4 @@
   <button (click)="goto()" [hidden]="this.untukSessionRole == 'VER_PRESCR'" type="button" class="btn btn-info">Selanjutnya</button>
 </div>
 <br />
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

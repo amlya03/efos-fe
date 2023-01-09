@@ -111,10 +111,14 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     this.dataEntryServices.getFetchSemuaDataDE(app_no_de).subscribe({
       next: data => {
         this.semuaDE = data.result;
-        this.router.navigate(['/upload_document/upload_document_de'], {
-          queryParams: { curef: this.curef, app_no_de: this.appNoDe },
-        });
-        this.getLoading(false);
+        this.router
+          .navigate(['/upload_document/upload_document_de'], {
+            queryParams: { curef: this.curef, app_no_de: this.appNoDe },
+          })
+          .then(() => {
+            window.location.reload();
+            this.getLoading(false);
+          });
       },
     });
   }

@@ -18,7 +18,8 @@ import { environment } from 'environments/environment';
 })
 export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
   baseUrl: string = environment.baseUrl;
-  uploadDocument?: uploadDocument[];
+  uploadDocument: Array<uploadDocument> = new Array<uploadDocument>();
+  valDE: Array<uploadDocument> = new Array<uploadDocument>();
   curef: any;
   app_no_de: any;
   fetchAllAgunan: fetchAllDe = new fetchAllDe();
@@ -29,6 +30,9 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
   file: any;
   idUpload: any;
   untukSessionRole: any;
+  // validasi
+  totalValDE: any;
+  totalValDEA: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -68,10 +72,13 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
       // alert(this.fetchAllAgunan.status_aplikasi);
     });
 
-    // get List DE
+    // get List Agunan
     this.fileUploadService.getListUploadDocument(this.curef, 'DEA').subscribe(dE => {
-      this.uploadDocument = (dE as any).result;
+      this.uploadDocument = dE.result;
       this.dtTrigger.next(dE.result);
+    });
+    this.fileUploadService.getListUploadDocument(this.curef, 'DE').subscribe(dE => {
+      this.valDE = dE.result;
     });
   }
 
@@ -156,23 +163,47 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
 
   // Update Status
   updateStatus() {
-    this.http
-      .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
-        app_no_de: this.app_no_de,
-        created_by: this.SessionStorageService.retrieve('sessionUserName'),
-        status_aplikasi: this.fetchAllAgunan.status_aplikasi,
-      })
-      .subscribe({
-        next: response => {
-          // console.warn(response)
-        },
-        error: error => console.warn(error),
-      });
-    // this.router.navigate(['/data-entry'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
-    this.router.navigate(['/data-entry']);
+    this.totalValDEA = this.uploadDocument.length;
+    this.totalValDE = this.valDE.length;
+    for (let i = 0; i < this.valDE.length; i++) {
+      if (this.valDE[i].status == null) {
+        this.totalValDE += 1;
+        alert('Gagal, Mohon Upload Document Data Entry ' + this.valDE[i].doc_description);
+      } else {
+        this.totalValDE -= 1;
+        if (this.totalValDE == 0) {
+          for (let i = 0; i < this.uploadDocument.length; i++) {
+            if (this.uploadDocument[i].status == null) {
+              this.totalValDEA += 1;
+              alert('Gagal, Mohon Upload ' + this.uploadDocument[i].doc_description);
+            } else {
+              this.totalValDEA -= 1;
+              if (this.totalValDEA == 0) {
+                this.http
+                  .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+                    app_no_de: this.app_no_de,
+                    created_by: this.SessionStorageService.retrieve('sessionUserName'),
+                    status_aplikasi: this.fetchAllAgunan.status_aplikasi,
+                  })
+                  .subscribe({
+                    next: response => {
+                      alert('Data Berhasil Di Updated');
+                      this.router.navigate(['/data-entry']);
+                    },
+                    error: error => {
+                      alert(error.error.messages);
+                    },
+                  });
+              }
+            }
+          }
+        }
+      }
+    }
   }
   // Selanjutnya BM
   next() {
+    this.SessionStorageService.store('uploadDEA', 1);
     this.router.navigate(['/data-entry/memo'], {
       queryParams: {
         curef: this.curef,

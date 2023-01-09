@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -15,6 +15,8 @@ import { environment } from 'environments/environment';
   styleUrls: ['./kesimpulan.component.scss'],
 })
 export class KesimpulanComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   kesimpulanForm!: FormGroup;
   submitted = false;
@@ -43,7 +45,13 @@ export class KesimpulanComponent implements OnInit {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
 
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
+
   ngOnInit(): void {
+    this.getLoading(true);
     this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.untukSessionUserName = this.SessionStorageService.retrieve('sessionUserName');
     this.editor = new Editor();
@@ -58,6 +66,11 @@ export class KesimpulanComponent implements OnInit {
   load(): void {
     // ambil semua data Kesimpulan
     this.serviceVerificationService.fetchKesimpulan(this.app_no_de).subscribe(data => {
+      if (data.result == null || data.result == '') {
+        this.getLoading(false);
+      } else {
+        this.getLoading(false);
+      }
       this.kesimpulanModel = data.result;
       const retriveKesimpulan = {
         kesimpulan: this.kesimpulanModel.kesimpulan,
