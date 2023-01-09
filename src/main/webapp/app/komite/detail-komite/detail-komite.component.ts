@@ -58,6 +58,7 @@ export class DetailKomiteComponent implements OnInit {
   tenor: refTenorFix[] = [];
   tenorRekomendasi: refTenorFix[] = [];
   persetujuanPembiayaan: getPersetujuanPembiayaanModel[] = [];
+  retriveFinal: getPersetujuanPembiayaanModel[] = [];
   userNya: userModel = new userModel();
 
   // Hasil Scoring
@@ -162,15 +163,15 @@ export class DetailKomiteComponent implements OnInit {
     setTimeout(() => {
       this.komiteServices.getPersetujuanPembiayaan(this.app_no_de).subscribe(data => {
         this.persetujuanPembiayaan = data.result;
-
-        // const retrivepersetujuanPembiayaanForm = {
-        //   limit_kewenangan_memutus: this.persetujuanPembiayaan[0].limit_kewenangan_memutus,
-        //   plafon_pembiayaan: this.persetujuanPembiayaan[0].plafon_pembiayaan,
-        //   keputusan: this.persetujuanPembiayaan[0].keputusan,
-        //   alasan_penolakan: this.persetujuanPembiayaan[0].alasan_penolakan,
-        //   keterangan: this.persetujuanPembiayaan[0].keterangan,
-        // };
-        // this.persetujuanPembiayaanForm.setValue(retrivepersetujuanPembiayaanForm);
+        this.retriveFinal = data.result;
+        let retrivepersetujuanPembiayaanForm = {
+          limit_kewenangan_memutus: this.retriveFinal[this.retriveFinal.length - 1].limit_kewenangan_memutus,
+          plafon_pembiayaan: this.retriveFinal[this.retriveFinal.length - 1].plafon_pembiayaan,
+          keputusan: this.retriveFinal[this.retriveFinal.length - 1].keputusan,
+          alasan_penolakan: this.retriveFinal[this.retriveFinal.length - 1].alasan_penolakan,
+          keterangan: this.retriveFinal[this.retriveFinal.length - 1].keterangan,
+        };
+        this.persetujuanPembiayaanForm.setValue(retrivepersetujuanPembiayaanForm);
       });
     }, 20);
     // ////////////////// Get Persetujuan Pembiayaan ////////////////////////////////
