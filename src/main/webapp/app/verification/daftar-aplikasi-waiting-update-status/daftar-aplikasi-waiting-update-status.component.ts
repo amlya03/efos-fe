@@ -129,37 +129,51 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
   }
   // update status
   postUpdateStatus(): void {
-    if (this.isChecked === false) {
-      this.kirimDe;
-      for (let i = 0; i < this.kirimDe.length; i++) {
-        // alert(this.kirimDe[i]);
-        // alert(this.kirimStatusAplikasi[i])
-        this.http
-          .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
-            app_no_de: this.kirimDe[i],
-            status_aplikasi: this.kirimStatusAplikasi[i],
-            created_by: this.sessionStorageService.retrieve('sessionUserName'),
-          })
-          .subscribe({
-            next: data => {
+    if (this.kirimDe.length != 0) {
+      if (this.isChecked === false) {
+        this.kirimDe;
+        for (let i = 0; i < this.kirimDe.length; i++) {
+          // alert(this.kirimDe[i]);
+          // alert(this.kirimStatusAplikasi[i])
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+              app_no_de: this.kirimDe[i],
+              status_aplikasi: this.kirimStatusAplikasi[i],
+              created_by: this.sessionStorageService.retrieve('sessionUserName'),
+            })
+            .subscribe({
+              next: data => {
+                // window.location.reload();
+              },
+            });
+          if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
+            Swal.fire('Data Berhasil di Updated', '', 'success').then(() => {
               window.location.reload();
-            },
-          });
+            });
+          }
+        }
+      } else {
+        for (let i = 0; i < this.checkLenghtResult.length; i++) {
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+              app_no_de: this.checkLenghtResult[i].app_no_de,
+              status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+              created_by: this.sessionStorageService.retrieve('sessionUserName'),
+            })
+            .subscribe({
+              next: data => {
+                // window.location.reload();
+              },
+            });
+          if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
+            Swal.fire('Data Berhasil di Updated', '', 'success').then(() => {
+              window.location.reload();
+            });
+          }
+        }
       }
     } else {
-      for (let i = 0; i < this.checkLenghtResult.length; i++) {
-        this.http
-          .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
-            app_no_de: this.checkLenghtResult[i].app_no_de,
-            status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
-            created_by: this.sessionStorageService.retrieve('sessionUserName'),
-          })
-          .subscribe({
-            next: data => {
-              window.location.reload();
-            },
-          });
-      }
+      alert('Harap Pilih Data Terlebih Dahulu');
     }
   }
 
@@ -174,45 +188,54 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
       cancelButtonText: 'Forward Ke Analys Staff!',
     }).then(result => {
       if (result.value) {
-        if (this.isChecked === false) {
-          this.kirimDe;
-          for (let i = 0; i < this.kirimDe.length; i++) {
-            // alert(this.kirimDe[i]);
-            // alert(this.kirimStatusAplikasi[i])
-            this.http
-              .post<any>(this.baseUrl + 'v1/efos-de/update_status_back_de', {
-                app_no_de: this.kirimDe[i],
-                status_aplikasi: this.kirimStatusAplikasi[i],
-                created_by: this.sessionStorageService.retrieve('sessionUserName'),
-              })
-              .subscribe({
-                next: data => {
-                  // window.location.reload();
-                },
-              });
+        if (this.kirimDe.length != 0) {
+          if (this.isChecked === false) {
+            this.kirimDe;
+            for (let i = 0; i < this.kirimDe.length; i++) {
+              // alert(this.kirimDe[i]);
+              // alert(this.kirimStatusAplikasi[i])
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-de/update_status_back_de', {
+                  app_no_de: this.kirimDe[i],
+                  status_aplikasi: this.kirimStatusAplikasi[i],
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({
+                  next: data => {
+                    // window.location.reload();
+                  },
+                });
+              if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
+                Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Data Entry', 'success').then(() => {
+                  window.location.reload();
+                });
+              }
+            }
+          } else {
+            for (let i = 0; i < this.checkLenghtResult.length; i++) {
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-de/update_status_back_de', {
+                  app_no_de: this.checkLenghtResult[i].app_no_de,
+                  status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({
+                  next: data => {
+                    // window.location.reload();
+                  },
+                });
+              if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
+                Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Data Entry', 'success').then(() => {
+                  window.location.reload();
+                });
+              }
+            }
           }
         } else {
-          for (let i = 0; i < this.checkLenghtResult.length; i++) {
-            this.http
-              .post<any>(this.baseUrl + 'v1/efos-de/update_status_back_de', {
-                app_no_de: this.checkLenghtResult[i].app_no_de,
-                status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
-                created_by: this.sessionStorageService.retrieve('sessionUserName'),
-              })
-              .subscribe({
-                next: data => {
-                  // window.location.reload();
-                },
-              });
-          }
+          alert('Harap Pilih Data Terlebih Dahulu');
         }
-        setTimeout(() => {
-          Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Data Entry', 'success').then(() => {
-            window.location.reload();
-          });
-        }, 1000);
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        setTimeout(() => {
+        if (this.kirimDe.length != 0) {
           if (this.isChecked === false) {
             this.kirimDe;
             for (let i = 0; i < this.kirimDe.length; i++) {
@@ -227,6 +250,11 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
                     // window.location.reload();
                   },
                 });
+              if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
+                Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Analys Staff', 'success').then(() => {
+                  window.location.reload();
+                });
+              }
             }
           } else {
             for (let i = 0; i < this.checkLenghtResult.length; i++) {
@@ -241,12 +269,16 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
                     // window.location.reload();
                   },
                 });
+              if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
+                Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Analys Staff', 'success').then(() => {
+                  window.location.reload();
+                });
+              }
             }
           }
-          Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Analys Staff', 'success').then(() => {
-            window.location.reload();
-          });
-        }, 1000);
+        } else {
+          alert('Harap Pilih Data Terlebih Dahulu');
+        }
       }
     });
   }
@@ -262,40 +294,52 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
       cancelButtonText: 'Tidak, Simpan ini',
     }).then(result => {
       if (result.value) {
-        if (this.isChecked === false) {
-          this.kirimDe;
-          for (let i = 0; i < this.kirimDe.length; i++) {
-            // alert(this.kirimDe[i]);
-            // alert(this.kirimStatusAplikasi[i])
-            this.http
-              .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
-                app_no_de: this.kirimDe[i],
-                status_aplikasi: this.kirimStatusAplikasi[i],
-                created_by: this.sessionStorageService.retrieve('sessionUserName'),
-              })
-              .subscribe({
-                next: data => {
+        if (this.kirimDe.length != 0) {
+          if (this.isChecked === false) {
+            this.kirimDe;
+            for (let i = 0; i < this.kirimDe.length; i++) {
+              // alert(this.kirimDe[i]);
+              // alert(this.kirimStatusAplikasi[i])
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+                  app_no_de: this.kirimDe[i],
+                  status_aplikasi: this.kirimStatusAplikasi[i],
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({
+                  next: data => {
+                    // window.location.reload();
+                  },
+                });
+              if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
+                Swal.fire('Data di Reject!', 'File Sudah Tidak Ada', 'success').then(() => {
                   window.location.reload();
-                },
-              });
+                });
+              }
+            }
+          } else {
+            for (let i = 0; i < this.checkLenghtResult.length; i++) {
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+                  app_no_de: this.checkLenghtResult[i].app_no_de,
+                  status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({
+                  next: data => {
+                    // window.location.reload();
+                  },
+                });
+              if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
+                Swal.fire('Data di Reject!', 'File Sudah Tidak Ada', 'success').then(() => {
+                  window.location.reload();
+                });
+              }
+            }
           }
         } else {
-          for (let i = 0; i < this.checkLenghtResult.length; i++) {
-            this.http
-              .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
-                app_no_de: this.checkLenghtResult[i].app_no_de,
-                status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
-                created_by: this.sessionStorageService.retrieve('sessionUserName'),
-              })
-              .subscribe({
-                next: data => {
-                  window.location.reload();
-                },
-              });
-          }
+          alert('Harap Pilih Data Terlebih Dahulu');
         }
-        Swal.fire('Data di Reject!', 'File Sudah Tidak Ada', 'success');
-        window.location.reload();
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire('Cancelled', 'File disimpan', 'error');
       }

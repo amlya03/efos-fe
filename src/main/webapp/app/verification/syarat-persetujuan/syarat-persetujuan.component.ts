@@ -179,9 +179,15 @@ export class SyaratPersetujuanComponent implements OnInit {
       focusConfirm: false,
       // allowOutsideClick: false,
     }).then(result => {
-      if (result.isConfirmed == true) {
-        let syarat = $('#syarat').val();
-        let keterangan = $('#keterangan').val();
+      let syarat = $('#syarat').val();
+      let keterangan = $('#keterangan').val();
+      if (syarat == '') {
+        alert('Mohon Isi Syarat');
+        return;
+      } else if (keterangan == '') {
+        alert('Mohon Isi Keterangan');
+        return;
+      } else {
         this.http
           .post<any>(this.baseUrl + 'v1/efos-verif/create_syarat_persetujuan', {
             app_no_de: this.app_no_de,
@@ -198,8 +204,6 @@ export class SyaratPersetujuanComponent implements OnInit {
               window.location.reload();
             },
           });
-      } else {
-        return;
       }
     });
   }
@@ -221,9 +225,15 @@ export class SyaratPersetujuanComponent implements OnInit {
       focusConfirm: false,
       // allowOutsideClick: false,
     }).then(result => {
-      if (result.isConfirmed == true) {
-        let syarat = $('#syarat').val();
-        let keterangan = $('#keterangan').val();
+      let syarat = $('#syarat').val();
+      let keterangan = $('#keterangan').val();
+      if (syarat == '') {
+        alert('Mohon Isi Syarat');
+        return;
+      } else if (keterangan == '') {
+        alert('Mohon Isi Keterangan');
+        return;
+      } else {
         this.http
           .post<any>(this.baseUrl + 'v1/efos-verif/create_syarat_persetujuan', {
             app_no_de: this.app_no_de,
@@ -240,8 +250,6 @@ export class SyaratPersetujuanComponent implements OnInit {
               window.location.reload();
             },
           });
-      } else {
-        return;
       }
     });
   }
@@ -263,9 +271,15 @@ export class SyaratPersetujuanComponent implements OnInit {
       focusConfirm: false,
       // allowOutsideClick: false,
     }).then(result => {
-      if (result.isConfirmed == true) {
-        let syarat = $('#syarat').val();
-        let keterangan = $('#keterangan').val();
+      let syarat = $('#syarat').val();
+      let keterangan = $('#keterangan').val();
+      if (syarat == '') {
+        alert('Mohon Isi Syarat');
+        return;
+      } else if (keterangan == '') {
+        alert('Mohon Isi Keterangan');
+        return;
+      } else {
         this.http
           .post<any>(this.baseUrl + 'v1/efos-verif/create_syarat_persetujuan', {
             app_no_de: this.app_no_de,
@@ -282,8 +296,6 @@ export class SyaratPersetujuanComponent implements OnInit {
               window.location.reload();
             },
           });
-      } else {
-        return;
       }
     });
   }

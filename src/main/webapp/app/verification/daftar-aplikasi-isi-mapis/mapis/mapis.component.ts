@@ -69,7 +69,8 @@ export class MapisComponent implements OnInit {
       setTimeout(() => {
         this.dataEntryService.getfetchlistagunan(this.dataEntry.curef).subscribe(list => {
           this.listagunan = list.result;
-          if (list.result != null || list.result != '') {
+          // console.warn('listagunan ', list)
+          if (list.result != '') {
             this.retTipePro = list.result[0].tipe_properti;
             this.retTipeAg = list.result[0].tipe_agunan;
             this.retJenisObj = list.result[0].jenis_objek_deskripsi;
@@ -93,18 +94,27 @@ export class MapisComponent implements OnInit {
       this.mapisModel = data.result;
       if (data.result === null) {
         this.cekResuklt = 0;
+        const retriveForm = {
+          luas_bangunan: '',
+          luas_tanah: '',
+          nilai_imb: '',
+          nilai_market: '',
+          note: '',
+          harga_transaksi: '',
+        };
+        this.mapisForm.setValue(retriveForm);
       } else {
         this.cekResuklt = 1;
+        const retriveForm = {
+          luas_bangunan: this.mapisModel.luas_bangunan,
+          luas_tanah: this.mapisModel.luas_tanah,
+          nilai_imb: this.mapisModel.nilai_imb,
+          nilai_market: this.mapisModel.nilai_market,
+          note: this.mapisModel.note,
+          harga_transaksi: this.mapisModel.harga_transaksi,
+        };
+        this.mapisForm.setValue(retriveForm);
       }
-      const retriveForm = {
-        luas_bangunan: this.mapisModel.luas_bangunan,
-        luas_tanah: this.mapisModel.luas_tanah,
-        nilai_imb: this.mapisModel.nilai_imb,
-        nilai_market: this.mapisModel.nilai_market,
-        note: this.mapisModel.note,
-        harga_transaksi: this.mapisModel.harga_transaksi,
-      };
-      this.mapisForm.setValue(retriveForm);
     });
   }
   submitForm(): void {
@@ -126,13 +136,13 @@ export class MapisComponent implements OnInit {
                 created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 created_date: '',
                 ftv: this.betaFTV,
-                jenis_objek: this.listagunan[0].jenis_objek_deskripsi,
+                jenis_objek: this.retJenisObj,
                 luas_bangunan: this.mapisForm.get('luas_bangunan')?.value,
                 luas_tanah: this.mapisForm.get('luas_tanah')?.value,
                 nilai_imb: this.mapisForm.get('nilai_imb')?.value,
                 nilai_market: this.mapisForm.get('nilai_market')?.value,
-                objek_pembiayaan: this.listagunan[0].tipe_properti,
-                tipe_agunan: this.listagunan[0].tipe_agunan,
+                objek_pembiayaan: this.retTipePro,
+                tipe_agunan: this.retTipeAg,
                 note: this.mapisForm.get('note')?.value,
                 harga_transaksi: this.mapisForm.get('harga_transaksi')?.value,
                 // "updated_date": null,
@@ -163,13 +173,13 @@ export class MapisComponent implements OnInit {
                 // created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 // created_date: '',
                 ftv: this.betaFTV,
-                jenis_objek: this.listagunan[0].jenis_objek_deskripsi,
+                jenis_objek: this.retJenisObj,
                 luas_bangunan: this.mapisForm.get('luas_bangunan')?.value,
                 luas_tanah: this.mapisForm.get('luas_tanah')?.value,
                 nilai_imb: this.mapisForm.get('nilai_imb')?.value,
                 nilai_market: this.mapisForm.get('nilai_market')?.value,
-                objek_pembiayaan: this.listagunan[0].tipe_properti,
-                tipe_agunan: this.listagunan[0].tipe_agunan,
+                objek_pembiayaan: this.retTipePro,
+                tipe_agunan: this.retTipeAg,
                 note: this.mapisForm.get('note')?.value,
                 harga_transaksi: this.mapisForm.get('harga_transaksi')?.value,
                 updated_date: '',
@@ -204,13 +214,13 @@ export class MapisComponent implements OnInit {
                 created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 created_date: '',
                 ftv: this.betaFTV,
-                jenis_objek: this.listagunan[0].jenis_objek_deskripsi,
+                jenis_objek: this.retJenisObj,
                 luas_bangunan: this.mapisForm.get('luas_bangunan')?.value,
                 luas_tanah: this.mapisForm.get('luas_tanah')?.value,
                 nilai_imb: this.mapisForm.get('nilai_imb')?.value,
                 nilai_market: this.mapisForm.get('nilai_market')?.value,
-                objek_pembiayaan: this.listagunan[0].tipe_properti,
-                tipe_agunan: this.listagunan[0].tipe_agunan,
+                objek_pembiayaan: this.retTipePro,
+                tipe_agunan: this.retTipeAg,
                 note: this.mapisForm.get('note')?.value,
                 harga_transaksi: this.mapisForm.get('harga_transaksi')?.value,
                 // "updated_date": null,
@@ -231,13 +241,13 @@ export class MapisComponent implements OnInit {
                 // created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 // created_date: '',
                 ftv: this.betaFTV,
-                jenis_objek: this.listagunan[0].jenis_objek_deskripsi,
+                jenis_objek: this.retJenisObj,
                 luas_bangunan: this.mapisForm.get('luas_bangunan')?.value,
                 luas_tanah: this.mapisForm.get('luas_tanah')?.value,
                 nilai_imb: this.mapisForm.get('nilai_imb')?.value,
                 nilai_market: this.mapisForm.get('nilai_market')?.value,
-                objek_pembiayaan: this.listagunan[0].tipe_properti,
-                tipe_agunan: this.listagunan[0].tipe_agunan,
+                objek_pembiayaan: this.retTipePro,
+                tipe_agunan: this.retTipeAg,
                 note: this.mapisForm.get('note')?.value,
                 harga_transaksi: this.mapisForm.get('harga_transaksi')?.value,
                 updated_date: '',
@@ -245,7 +255,7 @@ export class MapisComponent implements OnInit {
               })
               .subscribe({
                 next: bawaan => {
-                  // window.location.reload();
+                  window.location.reload();
                   // setTimeout(() => {
                   // }, 1000);
                 },

@@ -130,7 +130,7 @@ export class InputScoringComponent implements OnInit {
       title: 'Input Scoring',
       html:
         '<br />' +
-        '<div class="row form-material"><div class="form-group row">' +
+        '<div class="row form-material" style="width:100%"><div class="form-group row">' +
         '<label class="col-sm-3 col-form-label">Produk</label>' +
         '<div class="col-sm-9"><select id="produk" class="form-control"><option value="">Pilih Produk</option><option value="PPR">PPR</option><option value="PPR FLPP">PPR FLPP</option><option value="PTA">PTA</option><option value="PKM">PKM</option><option value="MULTIGUNA">MULTIGUNA</option></select>' +
         '</div></div>' +

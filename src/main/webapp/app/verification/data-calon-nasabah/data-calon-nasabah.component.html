@@ -666,7 +666,9 @@
                 class="form-control"
                 id="pekerjaan_pasangan"
                 name="pekerjaan_pasangan"
-                value="{{ this.dataEntry.jenis_pekerjaan_pasangan_desc }}"
+                value="{{
+                  this.dataEntry.jenis_pekerjaan_pasangan_desc == null ? 'TIDAK BEKERJA' : this.dataEntry.jenis_pekerjaan_pasangan_desc
+                }}"
                 readonly
               />
             </div>
@@ -756,6 +758,7 @@
               {{ refStatusRumah.description }}
             </option>
           </select>
+          <span *ngIf="dataCalonNasabahForm.controls.status_rumah.invalid" class="text-danger">Field Wajib Diisi </span>
         </div>
       </div>
       <br />
@@ -828,10 +831,12 @@
             maxlength="2"
           />
         </div>
+        <span *ngIf="dataCalonNasabahForm.controls.lama_menetap_tahun.invalid" class="text-danger">Field Wajib Diisi </span>
         <div class="col">Tahun</div>
         <div class="col">
           <input type="text" class="form-control" id="lama_menetap_bulan" name="lama_menetap_bulan" formControlName="lama_menetap_bulan" />
         </div>
+        <span *ngIf="dataCalonNasabahForm.controls.lama_menetap_bulan.invalid" class="text-danger">Field Wajib Diisi </span>
         <div class="col">Bulan</div>
       </div>
       <br />
@@ -989,6 +994,7 @@
             placeholder=""
             formControlName="jumlah_kendaraan"
           />
+          <span *ngIf="dataCalonNasabahForm.controls.jumlah_kendaraan.invalid" class="text-danger">Field Wajib Diisi </span>
         </div>
       </div>
       <br />
@@ -1009,7 +1015,7 @@
   <p></p>
   <div class="row">
     <div class="col" style="text-align: center" [hidden]="this.untukSessionRole === 'VER_PRE_SPV'">
-      <button class="btn btn-info">Simpan Data</button>
+      <button class="btn btn-info" [disabled]="dataCalonNasabahForm.invalid">Simpan Data</button>
     </div>
     <div class="col" style="text-align: center" [hidden]="this.untukSessionRole == 'VER_PRESCR'">
       <button type="button" (click)="Next()" class="btn btn-info">Selanjutnya</button>

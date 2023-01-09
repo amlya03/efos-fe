@@ -38,6 +38,10 @@ export class ChecklistDocumentComponent implements OnInit {
   rec: any;
   app_no_de: any;
   untukSessionUserName: any;
+  file?: File; // Variable to store file
+  buttonUpload: any; // Flag variable to store button uploadDocument
+  inputUpload: any;
+  hapusUpload: any;
 
   // Radio Validasi Agunan
   radioValidasiDE: any;
@@ -209,6 +213,130 @@ export class ChecklistDocumentComponent implements OnInit {
 
   updateStatus(): void {
     this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+  }
+
+  // On file Select
+  onChange(event: any, id: number | null | undefined) {
+    this.file = event.target.files[0];
+    this.idUpload = id;
+    this.buttonUpload = (<HTMLInputElement>document.getElementById('uploadData' + id)).value;
+    this.inputUpload = <HTMLInputElement>document.getElementById('inputDocument' + id);
+    this.hapusUpload = (<HTMLInputElement>document.getElementById('hapusData' + id)).value;
+
+    (<HTMLInputElement>document.getElementById('uploadData' + id)).style.display = 'block';
+  }
+
+  // Upload
+  uploadData(
+    deUpload: string | undefined,
+    curefUpload: string | null | undefined,
+    doc_type: number | null | undefined,
+    file: File | undefined
+  ) {
+    this.uploadService.uploadDocument(file, deUpload, curefUpload, doc_type).subscribe({
+      // if (typeof event === 'object') {
+      //   // Short link via api response
+      //   this.shortLink = event.link;
+      //   this.loading = false; // Flag variable
+      // }
+    });
+    (<HTMLInputElement>document.getElementById('uploadData' + doc_type)).style.display = 'none';
+    (<HTMLInputElement>document.getElementById('proggresBar' + doc_type)).style.display = 'block';
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
+
+    // this.loading = !this.loading;
+    // alert(this.idUpload);
+    // this.upload(this.file, this.idUpload).subscribe((event: any) => {
+    //   if (typeof event === 'object') {
+    //     // Short link via api response
+    //     this.shortLink = event.link;
+
+    //     this.loading = false; // Flag variable
+    //   }
+    // });
+  }
+
+  // Delete
+  deleteDataUpload(
+    doc: string | null | undefined,
+    id: number | null | undefined,
+    id_upload: number | null | undefined,
+    nama: string | null | undefined
+  ) {
+    this.http
+      .post<any>(this.baseUrl + 'v1/efos-de/deleteDocUpload', {
+        created_date: '',
+        doc_description: doc,
+        id: id,
+        id_upload: id_upload,
+        nama_dokumen: nama,
+      })
+      .subscribe({});
+    window.location.reload();
+  }
+
+  // On file Select
+  onChangeAgunan(event: any, id: number | null | undefined) {
+    this.file = event.target.files[0];
+    this.idUpload = id;
+    this.buttonUpload = (<HTMLInputElement>document.getElementById('uploadData' + id)).value;
+    this.inputUpload = <HTMLInputElement>document.getElementById('inputDocument' + id);
+    this.hapusUpload = (<HTMLInputElement>document.getElementById('hapusData' + id)).value;
+
+    (<HTMLInputElement>document.getElementById('uploadData' + id)).style.display = 'block';
+  }
+
+  // Upload
+  uploadDataAgunan(
+    deUpload: string | undefined,
+    curefUpload: string | null | undefined,
+    doc_type: number | null | undefined,
+    file: File | undefined
+  ) {
+    this.uploadService.uploadDocument(file, deUpload, curefUpload, doc_type).subscribe({
+      // if (typeof event === 'object') {
+      //   // Short link via api response
+      //   this.shortLink = event.link;
+      //   this.loading = false; // Flag variable
+      // }
+    });
+    (<HTMLInputElement>document.getElementById('uploadData' + doc_type)).style.display = 'none';
+    (<HTMLInputElement>document.getElementById('proggresBar' + doc_type)).style.display = 'block';
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
+
+    // this.loading = !this.loading;
+    // alert(this.idUpload);
+    // this.upload(this.file, this.idUpload).subscribe((event: any) => {
+    //   if (typeof event === 'object') {
+    //     // Short link via api response
+    //     this.shortLink = event.link;
+
+    //     this.loading = false; // Flag variable
+    //   }
+    // });
+  }
+
+  // Delete
+  deleteDataUploadAgunan(
+    doc: string | null | undefined,
+    id: number | null | undefined,
+    id_upload: number | null | undefined,
+    nama: string | null | undefined
+  ) {
+    this.http
+      .post<any>(this.baseUrl + 'v1/efos-de/deleteDocUpload', {
+        created_date: '',
+        doc_description: doc,
+        id: id,
+        id_upload: id_upload,
+        nama_dokumen: nama,
+      })
+      .subscribe({});
+    window.location.reload();
   }
 }
 // update Status

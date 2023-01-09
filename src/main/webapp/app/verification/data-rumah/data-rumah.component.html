@@ -844,7 +844,6 @@
           name="total_penghasilan_kotor_pasangan"
           (keypress)="keyPressNumbers($event)"
           formControlName="total_penghasilan_kotor_pasangan"
-          #total_penghasilan_kotor_pasangan1
           currencyMask
           [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
           value="{{
@@ -1038,7 +1037,6 @@
           name="total_penghasilan_bersih"
           formControlName="total_penghasilan_bersih"
           (keypress)="keyPressNumbers($event)"
-          #total_penghasilan_bersih1
           currencyMask
           value="{{
             +this.analisaKeuanganForm.get('gaji_kotor')?.value +
