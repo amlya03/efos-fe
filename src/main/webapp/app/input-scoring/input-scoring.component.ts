@@ -9,6 +9,7 @@ import { inputModel } from './inputModel.model';
 import Swal from 'sweetalert2';
 import { SessionStorageService } from 'ngx-webstorage';
 import { environment } from 'environments/environment';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 
 @Component({
   selector: 'jhi-input-scoring',
@@ -26,11 +27,13 @@ export class InputScoringComponent implements OnInit {
   dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
+  listdatafasilitas: any;
 
   constructor(
     protected http: HttpClient,
     private formBuilder: FormBuilder,
     protected scoringServices: InputScoringService,
+    protected datEntryService: DataEntryService,
     private SessionStorageService: SessionStorageService
   ) {}
 
@@ -56,6 +59,11 @@ export class InputScoringComponent implements OnInit {
     this.scoringServices.getScoring().subscribe(data => {
       this.inputScoring = data.result;
     });
+    this.datEntryService.getFetchKodeFasilitas().subscribe(data => {
+      this.listdatafasilitas= data.result;
+    });
+
+
     this.scoringServices.listDataScoring().subscribe(data => {
       this.listScoring = data.result;
       this.dtTrigger.next(data.result);
@@ -113,6 +121,16 @@ export class InputScoringComponent implements OnInit {
         </option>
       `;
     });
+
+    let optionsfasilitas = this.listdatafasilitas.map((optionsfasilitas: any) => {
+      return `
+        <option key="${optionsfasilitas}" value="${optionsfasilitas.fasilitas}">
+            ${optionsfasilitas.fasilitas}
+        </option>
+      `;
+    });
+
+
     $(document).ready(function () {
       $('#parameter').change(function () {
         let parameterValue = $(this).val();
@@ -132,14 +150,15 @@ export class InputScoringComponent implements OnInit {
         '<br />' +
         '<div class="row form-material"><div class="form-group row">' +
         '<label class="col-sm-3 col-form-label">Produk</label>' +
-        '<div class="col-sm-9"><select id="produk" class="form-control"><option value="">Pilih Produk</option><option value="PPR">PPR</option><option value="PPR FLPP">PPR FLPP</option><option value="PTA">PTA</option><option value="PKM">PKM</option><option value="MULTIGUNA">MULTIGUNA</option></select>' +
+        // '<div class="col-sm-9"><select id="produk" class="form-control"><option value="">Pilih Produk</option><option value="PPR">PPR</option><option value="PPR FLPP">PPR FLPP</option><option value="PTA">PTA</option><option value="PKM">PKM</option><option value="MULTIGUNA">MULTIGUNA</option></select>' +
+        '<div class="col-sm-9"><select class="form-control" id="produk"><option value="">Pilih Parameter</option>'+`${optionsfasilitas}`+'</select>' +
         '</div></div>' +
         '<div class="form-group row"><label class="col-sm-3 col-form-label">Joint Income?</label>' +
         '<div class="col-sm-9"><select id="joint_income" class="form-control"><option value="">Pilih Joint Income</option><option value="1">Ya</option><option value="2">Tidak</option></select>' +
         '</div></div>' +
         '<div class="form-group row"><label class="col-sm-3 col-form-label">Parameter</label>' +
-        // '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="">Pilih Parameter</option>`${options}`</select>' +
-        '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="">Pilih Parameter</option><option value="1">1</option><option value="0">0</option></select>' +
+        '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="">Pilih Parameter</option>'+`${options}`+'</select>' +
+        // '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="">Pilih Parameter</option><option value="1">1</option><option value="0">0</option></select>' +
         '</div></div>' +
         '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Data Value</label>' +
         '<div class="col-sm-9"><input type="text" class="form-control" id="data_value"/>' +

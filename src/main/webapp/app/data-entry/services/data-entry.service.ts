@@ -205,6 +205,27 @@ export class DataEntryService {
   // ///////////////////////////// Get ai List Agunan BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected getListAgunanById = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getCollateralById?si=');
   // ///////////////////////////// Get api List Agunan BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+   // ///////////////////////////// Get ai List data scoring BY  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+   protected getListdatascoring = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_data_scoring');
+   // ///////////////////////////// Get ai List data scoring BY  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // //////////////////////////// Ref List Jabatan Pemberi Ket //////////////////////////////////////////////////
+  protected refListJabatanPemberiKet = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_jabatan_pemberi_ket');
+  // //////////////////////////// Ref List Jabatan Pemberi Ket //////////////////////////////////////////////////
+  
+   // //////////////////////////// Ref List produk //////////////////////////////////////////////////
+   protected refListproduk = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_produk');
+   // //////////////////////////// Ref List produk //////////////////////////////////////////////////
+
+      // //////////////////////////// Ref List program //////////////////////////////////////////////////
+      protected refListprogram = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_program');
+      // //////////////////////////// Ref List program //////////////////////////////////////////////////
+
+
+      // //////////////////////////// Ref List skema //////////////////////////////////////////////////
+      protected refListskema = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_skema');
+      // //////////////////////////// Ref List skema //////////////////////////////////////////////////
+
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
@@ -476,6 +497,37 @@ export class DataEntryService {
     return this.http.get<ApiResponse>(this.listKepemilikanAgunan);
   }
   // //////////////////////////// GET lIST Kepemilikan Agunan //////////////////////////////////////////////////
+
+  // //////////////////////////// GET lIST datascoringtable//////////////////////////////////////////////////
+  getListdatascoringtable(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getListdatascoring);
+  }
+  // //////////////////////////// GET lIST datascoringtable //////////////////////////////////////////////////
+
+   // //////////////////////////// GET lIST Jabatan Pemberi ket //////////////////////////////////////////////////
+   getListJabatanPemberiKet(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListJabatanPemberiKet);
+  }
+  // //////////////////////////// GET lIST Jabatan Pemberi ket  //////////////////////////////////////////////////
+
+ // //////////////////////////// GET lIST produk //////////////////////////////////////////////////
+ getListproduk(): Observable<ApiResponse> {
+  return this.http.get<ApiResponse>(this.refListproduk);
+}
+// //////////////////////////// GET lIST produk //////////////////////////////////////////////////
+
+ // //////////////////////////// GET lIST program //////////////////////////////////////////////////
+ getListprogram(): Observable<ApiResponse> {
+  return this.http.get<ApiResponse>(this.refListprogram);
+}
+// //////////////////////////// GET lIST program //////////////////////////////////////////////////
+
+// //////////////////////////// GET lIST skema //////////////////////////////////////////////////
+getListskema(): Observable<ApiResponse> {
+  return this.http.get<ApiResponse>(this.refListskema);
+}
+// //////////////////////////// GET lIST skema //////////////////////////////////////////////////
+
 
   getprovinsi(token: string | null | undefined, req?: number | null): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
