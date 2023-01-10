@@ -38,6 +38,7 @@ export class ParameterizedComponent implements OnInit {
   kirimanskema: any;
   kirimanskemadeskripsi: any;
   kirimantenortier: any;
+  tablelistskemanew: any;
   constructor(
     private formBuilder: FormBuilder,
     protected datEntryService: DataEntryService,
@@ -107,6 +108,10 @@ export class ParameterizedComponent implements OnInit {
     });
     this.datEntryService.getListskema().subscribe(table => {
       this.tablelistskema = table.result;
+      // console.log(this.tablelistskema);
+    });
+    this.datEntryService.getListskemanew().subscribe(table => {
+      this.tablelistskemanew = table.result;
       console.log(this.tablelistskema);
     });
 
@@ -128,22 +133,48 @@ export class ParameterizedComponent implements OnInit {
     .then(result => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: 'Create akses rumah ',
+          title: 'Create akses rumah dddd',
           html:
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '</div></div>' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Deskripsi</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="akses_rumah"/> ' +
-            '</div></div>',
+          '<br />' +
+          '<div class="row form-material" style="width:100%"><div class="form-group row">' +
+          '<label class="col-sm-4 col-form-label">status Aktif</label>' +
+          '<div class="col-sm-8"><select class="form-control" id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '</div></div>' +
+          '<br />' +
+          '<div class="form-group row"><label class="col-sm-4 col-form-label">Deskripsi</label>' +
+           '<div class="col-sm-8"><input type="text" class="form-control" id="akses_rumah"/> ' +
+          '</div></div>' ,
+          
+          // '<div class="row form-meterial" style="widht=100%">'+
+          //   '<div class="form-label row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
+          //   '<div class="col-sm-8">  <select class="form-control" id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          //   '</div></div>' +
+          //   '<div class="form-label row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Deskripsi</label>' +
+          //   '<div class="col-sm-8"><input type="text" class="form-control" id="akses_rumah"/> ' +
+          //   '</div></div>'+
+          //   '</div>',
+        color:'#000',
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
         }).then(result => {
+
           if (result.isConfirmed) {
+
             let active = $('#status_active').val();
             let akses_rumah = $('#akses_rumah').val();
+
+            if(active ==""){
+             alert('Status Harus di pilih');
+               return;
+            }
+            else if(akses_rumah ==''){
+              alert('Akses Rumah Harus  di Pilih');
+              return;
+            }else{
+
             
+
            if(active=='0'){
               this.kirimactive=0;
            }else{
@@ -158,7 +189,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_akses_rumah', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_akses_rumah++++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -196,7 +227,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+            }
           } else if (result.isDenied) {
           }
         });
@@ -224,18 +255,40 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create Developer',
           html:
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '</div></div>' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Jenis Developer</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="Jenis_developer"/> ' +
-            '</div></div>'+
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Kantor Cabang</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="Kantor_Cabang"/> ' +
-            '</div></div>'+
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Nama Developer</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="Nama_developer"/> ' +
-            '</div></div>',
+
+          '<br />' +
+          '<div class="row form-material" style="width:100%"><div class="form-group row">' +
+          '<label class="col-sm-4 col-form-label">status Aktif</label>' +
+          '<div class="col-sm-8"><select class="form-control" id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '</div></div>' +
+          '<br />' +
+          '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Jenis Developer</label>' +
+          '<div class="col-sm-8"><input type="text" class="form-control" id="Jenis_developer"/> ' +
+          '</div></div>'+
+          '<br />' +
+          '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Kantor Cabang</label>' +
+          '<div class="col-sm-8"><input type="text" class="form-control" id="Kantor_Cabang"/> ' +
+          '</div></div>'+
+          '<br />' +
+          '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Nama Developer</label>' +
+          '<div class="col-sm-8"><input type="text" class="form-control" id="Nama_developer"/> ' +
+          '</div></div>',
+          
+
+            // '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
+            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            // '</div></div>' +
+            // '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Jenis Developer</label>' +
+            // '<div class="col-sm-8"><input type="text" class="form-control2" id="Jenis_developer"/> ' +
+            // '</div></div>'+
+            // '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Kantor Cabang</label>' +
+            // '<div class="col-sm-8"><input type="text" class="form-control2" id="Kantor_Cabang"/> ' +
+            // '</div></div>'+
+            // '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Nama Developer</label>' +
+            // '<div class="col-sm-8"><input type="text" class="form-control2" id="Nama_developer"/> ' +
+            // '</div></div>',
+
+
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
@@ -245,7 +298,25 @@ export class ParameterizedComponent implements OnInit {
             let jenis_developer = $('#Jenis_developer').val();
             let kantor_Cabang = $('#Kantor_Cabang').val();
             let nama_developer = $('#Nama_developer').val();
-            
+
+            if(active ==""){
+              alert('Status Harus di pilih');
+                return;
+             }
+             else if(jenis_developer ==''){
+               alert('Jenis Developer harus di isi');
+               return;
+             }
+             else if(kantor_Cabang ==''){
+              alert('Kantor Cabang harus di isi');
+              return;
+            }
+            else if(nama_developer ==''){
+              alert('Nama Developer harus di isi');
+              return;
+            }
+            else{
+
            if(active=='0'){
               this.kirimactive=0;
            }else{
@@ -262,7 +333,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_developer', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_developer++++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -300,7 +371,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+            }
           } else if (result.isDenied) {
           }
         });
@@ -327,14 +398,17 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create fasilitas',
           html:
-          '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Deskripsi</label>' +
-          '<div class="col-sm-9"><input type="text" class="form-control2" id="deskripsi"/> ' +
+          '<br />' +
+          '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Deskripsi</label>' +
+          '<div class="col-sm-8"><input type="text" class="form-control" id="deskripsi"/> ' +
           '</div></div>' +
-          '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Fasilitas</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="fasilitas"/> ' +
+          '<br />' +
+          '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Fasilitas</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="fasilitas"/> ' +
             '</div></div>'+
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Kode Fasilitas</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="kode_fasilitas"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Kode Fasilitas</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="kode_fasilitas"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -344,6 +418,23 @@ export class ParameterizedComponent implements OnInit {
             let deskripsi = $('#deskripsi').val();
             let fasilitas = $('#fasilitas').val();
             let kode_fasilitas = $('#kode_fasilitas').val();
+
+            if(deskripsi ==""){
+              alert('Deskripsi harus di isi');
+                return;
+             }
+             else if(fasilitas ==''){
+               alert('Fasilitas harus di isi');
+               return;
+             }
+             else if(kode_fasilitas ==''){
+              alert('Kode Fasilitas harus di isi');
+              return;
+            }
+            else{
+
+            
+
         
 
               const body = {
@@ -355,7 +446,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_fasilitas***', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_fasilitas+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -393,7 +484,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+            }
           } else if (result.isDenied) {
           }
         });
@@ -420,11 +511,13 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create Fasilitas Listrik ',
           html:
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '<br />' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
+            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Fasilitas Listrik</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="fasilitas_listrik"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Fasilitas Listrik</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="fasilitas_listrik"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -434,6 +527,19 @@ export class ParameterizedComponent implements OnInit {
             let active = $('#status_active').val();
             let fasilitas_listrik = $('#fasilitas_listrik').val();
             
+            if(active ==""){
+              alert('Status Aktif Harus Di isi');
+                return;
+             }
+             else if(fasilitas_listrik ==''){
+               alert('Fasilitas Listrik harus di isi');
+               return;
+             }
+             else{
+
+             
+
+
            if(active=='0'){
               this.kirimactive=0;
            }else{
@@ -448,7 +554,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_fasilitas_listrik', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_fasilitas_listrik+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -486,7 +592,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+             }
           } else if (result.isDenied) {
           }
         });
@@ -513,11 +619,13 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create FTP DP',
           html:
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '<br />' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
+            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Fasilitas Listrik</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="fasilitas_listrik"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Fasilitas Listrik</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="fasilitas_listrik"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -526,6 +634,16 @@ export class ParameterizedComponent implements OnInit {
           if (result.isConfirmed) {
             let active = $('#status_active').val();
             let fasilitas_listrik = $('#fasilitas_listrik').val();
+
+            if(active ==""){
+              alert('Status Aktif Harus Di isi');
+                return;
+             }
+             else if(fasilitas_listrik ==''){
+               alert('Fasilitas Listrik harus di isi');
+               return;
+             }
+
             
            if(active=='0'){
               this.kirimactive=0;
@@ -606,11 +724,13 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create FTP Detail ',
           html:
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '<br />' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
+            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Fasilitas Listrik</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="fasilitas_listrik"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Fasilitas Listrik</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="fasilitas_listrik"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -619,6 +739,15 @@ export class ParameterizedComponent implements OnInit {
           if (result.isConfirmed) {
             let active = $('#status_active').val();
             let fasilitas_listrik = $('#fasilitas_listrik').val();
+
+            if(active ==""){
+              alert('Status Aktif Harus Di isi');
+                return;
+             }
+             else if(fasilitas_listrik ==''){
+               alert('Fasilitas Listrik harus di isi');
+               return;
+             }
             
            if(active=='0'){
               this.kirimactive=0;
@@ -699,11 +828,13 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create Hubungan Kepemilikan Agunan ',
           html:
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '<br />' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
+            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Deskripsi</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="deskripsi"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Deskripsi</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="deskripsi"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -712,7 +843,17 @@ export class ParameterizedComponent implements OnInit {
           if (result.isConfirmed) {
             let active = $('#status_active').val();
             let deskripsi = $('#deskripsi').val();
-            
+
+            if(active ==""){
+              alert('Status Aktif Harus Di isi');
+                return;
+             }
+             else if(deskripsi ==''){
+               alert('Deskripsi harus di isi');
+               return;
+             }
+             else{
+
            if(active=='0'){
               this.kirimactive=0;
            }else{
@@ -727,7 +868,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_hub_kepemilikan_agunan', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_hub_kepemilikan_agunan+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -765,7 +906,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+             }
           } else if (result.isDenied) {
           }
         });
@@ -792,11 +933,13 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create Hubungan Emergency',
           html:
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '<br />' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
+            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Deskripsi</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="deskripsi"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Deskripsi</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="deskripsi"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -805,6 +948,17 @@ export class ParameterizedComponent implements OnInit {
           if (result.isConfirmed) {
             let active = $('#status_active').val();
             let deskripsi = $('#deskripsi').val();
+
+            if(active ==""){
+              alert('Status Aktif Harus Di isi');
+                return;
+             }
+             else if(deskripsi ==''){
+               alert('Deskripsi harus di isi');
+               return;
+             }else{
+
+             
             
            if(active=='0'){
               this.kirimactive=0;
@@ -820,7 +974,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_hubungan_emergency', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_hubungan_emergency+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -858,7 +1012,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+             }
           } else if (result.isDenied) {
           }
         });
@@ -885,11 +1039,13 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create Jabatan ',
           html:
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '<br />' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
+            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Deskripsi</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="jabatan_deskripsi"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Deskripsi</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="jabatan_deskripsi"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -898,7 +1054,18 @@ export class ParameterizedComponent implements OnInit {
           if (result.isConfirmed) {
             let active = $('#status_active').val();
             let jabatan_deskripsi = $('#jabatan_deskripsi').val();
+
             
+            if(active ==""){
+              alert('Status Aktif Harus Di isi');
+                return;
+             }
+             else if(jabatan_deskripsi ==''){
+               alert('Jabatan Deskripsi harus di isi');
+               return;
+             }
+             else{
+
            if(active=='0'){
               this.kirimactive=0;
            }else{
@@ -913,7 +1080,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_jabatan', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_jabatan+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -951,7 +1118,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+             }
           } else if (result.isDenied) {
           }
         });
@@ -978,11 +1145,13 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create Jabatan Pemberi Keterangan ',
           html:
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '<br />' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
+            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Jabatan Pemberi keterangan</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="deskripsi"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Jabatan Pemberi keterangan</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="deskripsi"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -991,7 +1160,16 @@ export class ParameterizedComponent implements OnInit {
           if (result.isConfirmed) {
             let active = $('#status_active').val();
             let deskripsi = $('#deskripsi').val();
-            
+
+            if(active ==""){
+              alert('Status Aktif Harus Di isi');
+                return;
+             }
+             else if(deskripsi ==''){
+               alert('Deskripsi harus di isi');
+               return;
+             }
+             else{ 
            if(active=='0'){
               this.kirimactive=0;
            }else{
@@ -1006,7 +1184,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_jabatan_pemberi_ket', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_jabatan_pemberi_ket+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -1044,7 +1222,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+             }
           } else if (result.isDenied) {
           }
         });
@@ -1071,14 +1249,17 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create Jenis Objek Agunan ',
           html:
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '<br />' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
+            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Objek agunan</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="jenis_objek_deskripsi"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Objek agunan</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="jenis_objek_deskripsi"/> ' +
             '</div></div>'+
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Kode Objek agunan</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="jenis_objek_code"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Kode Objek agunan</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="jenis_objek_code"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -1088,6 +1269,21 @@ export class ParameterizedComponent implements OnInit {
             let active = $('#status_active').val();
             let jenis_objek_deskripsi = $('#jenis_objek_deskripsi').val();
             let jenis_objek_code = $('#jenis_objek_code').val();
+
+
+            if(active ==""){
+              alert('Status Aktif Harus Di isi');
+                return;
+             }
+             else if(jenis_objek_deskripsi ==''){
+               alert('Jenis Objek Deskripsi harus di isi');
+               return;
+             }
+             else if(jenis_objek_code ==''){
+              alert('Jenis Objek code harus di isi');
+              return;
+            }
+            else{
 
            if(active=='0'){
               this.kirimactive=0;
@@ -1104,7 +1300,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_jenis_objek_agunan', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_jenis_objek_agunan+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -1142,7 +1338,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+            }
           } else if (result.isDenied) {
           }
         });
@@ -1169,11 +1365,13 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create Jenis Pekerjaan',
           html:
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '<br />' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
+            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Pekerjaan</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="deskripsi"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Pekerjaan</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="deskripsi"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -1182,6 +1380,18 @@ export class ParameterizedComponent implements OnInit {
           if (result.isConfirmed) {
             let active = $('#status_active').val();
             let deskripsi = $('#deskripsi').val();
+
+            if(active ==""){
+              alert('Status Aktif Harus Di isi');
+                return;
+             }
+             else if(deskripsi ==''){
+               alert('Deskripsi harus di isi');
+               return;
+             }
+             else{
+
+            
             
            if(active=='0'){
               this.kirimactive=0;
@@ -1235,7 +1445,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+             }
           } else if (result.isDenied) {
           }
         });
@@ -1274,12 +1484,14 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create Produk ',
           html:
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">Kode program</label>' +
-            // '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-9"><select class="form-control" id="kode_program"><option value="">Pilih program</option>'+`${options}`+'</select>'+
+          '<br />' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode program</label>' +
+            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '<div class="col-sm-8"><select class="form-control" id="kode_program"><option value="">Pilih program</option>'+`${options}`+'</select>'+
             '</div></div>' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Produk Deskripsi</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="produk_deskripsi"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Produk Deskripsi</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="produk_deskripsi"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -1294,7 +1506,15 @@ export class ParameterizedComponent implements OnInit {
           //  }else{
           //   this.kirimactive=1;
           //  }
-
+          if(kode_program ==""){
+            alert('Kode Program Harus Di isi');
+              return;
+           }
+           else if(produk_deskripsi ==''){
+             alert('Produk Deskripsi harus di isi');
+             return;
+           }
+           else{
               const body = {
                 kode_program:  kode_program,
                 kode_produk:'',
@@ -1304,7 +1524,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_produk', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_produk+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -1342,7 +1562,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+           }
           } else if (result.isDenied) {
           }
         });
@@ -1403,35 +1623,44 @@ export class ParameterizedComponent implements OnInit {
             Swal.fire({
               title: 'Create Skema',
               html:
-                '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">Kode produk</label>' +
-                // '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-                '<div class="col-sm-9"><select class="form-control" id="kode_produk"><option value="">Pilih produk</option>'+`${options}`+'</select>'+
+              '<br />' +
+                '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode produk</label>' +
+                // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+                '<div class="col-sm-8"><select class="form-control" id="kode_produk"><option value="">Pilih produk</option>'+`${options}`+'</select>'+
                 '</div></div>' +
-                '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">Kode produk</label>' +
-                // '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-                '<div class="col-sm-9"><select class="form-control" id="kode_produk1"><option value="">Pilih skema</option>'+`${optionsskema}`+'<option value="lainya">Lainya</option></select>'+
+                '<br />' +
+                '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode produk</label>' +
+                // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+                '<div class="col-sm-8"><select class="form-control" id="kode_produk1"><option value="">Pilih skema</option>'+`${optionsskema}`+'<option value="lainya">Lainya</option></select>'+
                 '</div></div>' +
-                '<div class="form-lable row " id="lainya1" hidden><label class="col-sm-3 col-form-label hidden">Deskripsi skema</label>' +
-                // '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-                '<div class="col-sm-9"><input type="text" class="form-control2" id="skema_deskripsi"/>'+
+                '<br />' +
+                '<div class="form-lable row " id="lainya1" hidden><label class="col-sm-4 col-form-label hidden">Deskripsi skema</label>' +
+                // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+                '<div class="col-sm-8"><input type="text" class="form-control" id="skema_deskripsi"/>'+
                 '</div></div>' +
-                '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">dp</label>' +
-                '<div class="col-sm-9"><input type="text" class="form-control2" id="dp_min"/> ' +
+                '<br />' +
+                '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">dp</label>' +
+                '<div class="col-sm-8"><input type="text" class="form-control" id="dp_min"/> ' +
                 '</div></div>'+
-                '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Max Platfon</label>' +
-                '<div class="col-sm-9"><input type="text" class="form-control2" id="max_platfon"/> ' +
+                '<br />' +
+                '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Max Platfon</label>' +
+                '<div class="col-sm-8"><input type="text" class="form-control" id="max_platfon"/> ' +
                 '</div></div>'+
-                '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Min Platfon</label>' +
-                '<div class="col-sm-9"><input type="text" class="form-control2" id="min_platfon"/> ' +
+                '<br />' +
+                '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Min Platfon</label>' +
+                '<div class="col-sm-8"><input type="text" class="form-control" id="min_platfon"/> ' +
                 '</div></div>'+
-                '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Max tenor</label>' +
-                '<div class="col-sm-9"><input type="text" class="form-control2" id="max_tenor"/> ' +
+                '<br />' +
+                '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Max tenor</label>' +
+                '<div class="col-sm-8"><input type="text" class="form-control" id="max_tenor"/> ' +
                 '</div></div>'+
-                '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">SKEMA MASTER</label>' +
-                '<div class="col-sm-9"><select class="form-control" id="skema_master"><option value="">Pilih produk</option> <option value="1">FIX income</option> <option value="2">NonFix</option></select>' +
+                '<br />' +
+                '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">SKEMA MASTER</label>' +
+                '<div class="col-sm-8"><select class="form-control" id="skema_master"><option value="">Pilih produk</option> <option value="1">FIX income</option> <option value="2">NonFix</option></select>' +
                 '</div></div>'+
-                '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">---</label>' +
-                '<div class="col-sm-9"><select class="form-control" id="skema_master"><option value="">Pilih produk</option> <option value="1">FIX income</option> <option value="2">NonFix</option></select>' +
+                '<br />' +
+                '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">---</label>' +
+                '<div class="col-sm-8"><select class="form-control" id="skema_master"><option value="">Pilih produk</option> <option value="1">FIX income</option> <option value="2">NonFix</option></select>' +
                 '</div></div>',
               allowOutsideClick: false,
               showDenyButton: true,
@@ -1451,6 +1680,37 @@ export class ParameterizedComponent implements OnInit {
               //  }else{
               //   this.kirimactive=1;
               //  }
+              if(kode_produk ==""){
+                alert('Kode Produk Harus Di isi');
+                  return;
+               }
+               else if(min_platfon ==''){
+                 alert('Min Platfron harus di isi');
+                 return;
+               }
+               else if(max_platfon ==''){
+                alert('Max Platfon harus di isi');
+                return;
+              }
+              else if(max_tenor ==''){
+                alert('Max Tenor harus di isi');
+                return;
+              }
+              else if(skema_master ==''){
+                alert('Skema Master harus di isi');
+                return;
+              }
+              else if(skema ==''){
+                alert('Skema harus di isi');
+                return;
+              }
+              else{
+
+              
+
+
+
+
 
               if(skema == "lainya"){
                 alert($('#skema_deskripsi').val());
@@ -1481,7 +1741,7 @@ export class ParameterizedComponent implements OnInit {
                     'Content-Type': 'application/json; charset=utf-8',
                     // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
                   });
-                  this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_skema', body, { headers }).subscribe({
+                  this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_skema+++', body, { headers }).subscribe({
                     next: response => {
                       //console.warn(response);
                       // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -1519,7 +1779,7 @@ export class ParameterizedComponent implements OnInit {
                       });
                     },
                   });
-                
+               }
               } else if (result.isDenied) {
               }
             });
@@ -1556,21 +1816,26 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create Program',
           html:
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">Kode Fasilitas</label>' +
-            // '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-9"><select class="form-control" id="kode_fasilitas"><option value="">Pilih Parameter</option>'+`${options}`+'</select>'+
+          '<br />' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode Fasilitas</label>' +
+            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '<div class="col-sm-8"><select class="form-control" id="kode_fasilitas"><option value="">Pilih Parameter</option>'+`${options}`+'</select>'+
             '</div></div>' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Program</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="program"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Program</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="program"/> ' +
             '</div></div>'+
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Min Plafond</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="min_plafond"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Min Plafond</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="min_plafond"/> ' +
             '</div></div>'+
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Max Plafond</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="max_plafond"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Max Plafond</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="max_plafond"/> ' +
             '</div></div>'+
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Expired Date</label>' +
-            '<div class="col-sm-9"><input type="date" class="form-control2" id="expired_date"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Expired Date</label>' +
+            '<div class="col-sm-8"><input type="date" class="form-control" id="expired_date"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -1583,6 +1848,31 @@ export class ParameterizedComponent implements OnInit {
             let max_plafond = $('#max_plafond').val();
             let expired_date = $('#expired_date').val();
             
+
+            if(kode_fasilitas ==""){
+              alert('Kode Fasilitas Harus Di isi');
+                return;
+             }
+             else if(program ==''){
+               alert('Profram harus di isi');
+               return;
+             }
+             else if(min_plafond ==''){
+              alert('Min Platfron harus di isi');
+              return;
+            }
+            else if(max_plafond ==''){
+              alert('Max Plafond harus di isi');
+              return;
+            }
+            else if(expired_date ==''){
+              alert('Expired date harus di isi');
+              return;
+            }
+            else{
+
+            
+
           //  if(active=='0'){
           //     this.kirimactive=0;
           //  }else{
@@ -1600,7 +1890,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_program', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_program+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -1638,7 +1928,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+            }
           } else if (result.isDenied) {
           }
         });
@@ -1652,7 +1942,7 @@ export class ParameterizedComponent implements OnInit {
   createskemafasilitas(): void {
 
 
-    let options = this.tablelistskema.map((option: any) => {
+    let options = this.tablelistskemanew.map((option: any) => {
       return `
         <option key="${option}" value="${option.skema}|${option.skema_master}">
             ${option.skema_deskripsi}
@@ -1719,24 +2009,29 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create Skema Fasilitas',
           html:
-          '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">status Aktif</label>' +
-          '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '<br />' +
+          '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
+          '<div class="col-sm-8">  <select  id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
           '</div></div>' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">Skema</label>' +
-            // '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-9"><select class="form-control" id="kode_skema"><option value="">Pilih Skema</option>'+`${options}`+'</select>'+
+          '<br />' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Skema</label>' +
+            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '<div class="col-sm-8"><select class="form-control" id="kode_skema"><option value="">Pilih Skema</option>'+`${options}`+'</select>'+
             '</div></div>' +
-            '<div class="form-lable row" id="id_tear"  hidden><label class="col-sm-3 col-form-label">tier</label>' +
-            '<div class="col-sm-9"> <select id="tear_select"><option value="">Pilih tier</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>' +
+            '<div class="form-lable row" id="id_tear"  hidden><label class="col-sm-4 col-form-label">tier</label>' +
+            '<div class="col-sm-8"> <select id="tear_select" class="form-control"><option value="">Pilih tier</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>' +
             '</div></div>'+
-            '<div class="form-lable row" id="id_tenortear1" hidden><label class="col-sm-3 col-form-label">tenor_tier</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="tenor_tier1"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="id_tenortear1" hidden><label class="col-sm-4 col-form-label">tenor_tier</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="tenor_tier1"/> ' +
             '</div></div>'+
-            '<div class="form-lable row" id="id_tenortear2" hidden><label class="col-sm-3 col-form-label">tenor_tier2</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="tenor_tier2"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="id_tenortear2" hidden><label class="col-sm-4 col-form-label">tenor_tier2</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="tenor_tier2"/> ' +
             '</div></div>'+
-            '<div class="form-lable row" id="id_tenortear3" hidden><label class="col-sm-3 col-form-label">tenor_tier3</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="tenor_tier3"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="id_tenortear3" hidden><label class="col-sm-4 col-form-label">tenor_tier3</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="tenor_tier3"/> ' +
             '</div></div>',
 
           allowOutsideClick: false,
@@ -1750,6 +2045,17 @@ export class ParameterizedComponent implements OnInit {
             let tenor_tier1 = $('#tenor_tier1').val();
             let tenor_tier2 = $('#tenor_tier2').val();
             let tenor_tier3 = $('#tenor_tier3').val();
+
+            if(active ==""){
+              alert('Kode Fasilitas Harus Di isi');
+                return;
+             }
+             else if(tear_select ==''){
+               alert('Profram harus di isi');
+               return;
+             }
+             else{
+
            if(active=='0'){
               this.kirimactive=0;
            }else{
@@ -1757,10 +2063,36 @@ export class ParameterizedComponent implements OnInit {
            }
 
           if(tear_select=='1'){
+            
+            if(tenor_tier1 ==""){
+              alert('tenor tier 1 Harus Di isi');
+                return;
+             }
               this.kirimantenortier=tenor_tier1;
+
            }else if(tear_select=='2'){
+            if(tenor_tier1 ==""){
+              alert('tenor tier 1 Harus Di isi');
+                return;
+             }
+            else if(tenor_tier2 ==""){
+              alert('tenor tier 2 Harus Di isi');
+                return;
+             }
             this.kirimantenortier=tenor_tier1+'-'+tenor_tier2;
            }else{
+            if(tenor_tier1 ==""){
+              alert('tenor tier 1 Harus Di isi');
+                return;
+             }
+             if(tenor_tier2 ==""){
+              alert('tenor tier 2 Harus Di isi');
+                return;
+             }
+             if(tenor_tier3 ==""){
+              alert('tenor tier 3 Harus Di isi');
+                return;
+             }
             this.kirimantenortier=tenor_tier1+'-'+tenor_tier2+'-'+tenor_tier3;
            }
 
@@ -1776,7 +2108,7 @@ export class ParameterizedComponent implements OnInit {
                 skema_id:  this.kirimanskema,
                 tier:tear_select,
                 tenor_tier:this.kirimantenortier,
-                fasilitas:'',
+                fasilitas:'0',
                 // max_plafond:max_plafond,
                 // expired_date:expired_date,
               };
@@ -1784,7 +2116,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_skema_fasilitas', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_skema_fasilitas++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -1822,7 +2154,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+             }
           } else if (result.isDenied) {
           }
         });
@@ -1859,32 +2191,42 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create Tenor Margin Fix',
           html:
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">Kode Fasilitas</label>' +
-            // '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-9"><select class="form-control" id="kode_fasilitas"><option value="">Pilih Parameter</option>'+`${options}`+'</select>'+
+          '<br />' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Skema fasilitas</label>' +
+            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '<div class="col-sm-8"><select class="form-control" id="skema_fasilitas"><option value="">Pilih skema Fasilitas</option>'+`${options}`+'</select>'+
             '</div></div>' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Program</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="program"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Margin</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="margin"/> ' +
             '</div></div>'+
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Min Plafond</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="min_plafond"/> ' +
-            '</div></div>'+
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Max Plafond</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="max_plafond"/> ' +
-            '</div></div>'+
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Expired Date</label>' +
-            '<div class="col-sm-9"><input type="date" class="form-control2" id="expired_date"/> ' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">tn code</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="tn_code"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let kode_fasilitas = $('#kode_fasilitas').val();
-            let program = $('#program').val();
-            let min_plafond = $('#min_plafond').val();
-            let max_plafond = $('#max_plafond').val();
-            let expired_date = $('#expired_date').val();
+            let skema_fasilitas = $('#skema_fasilitas').val();
+            let margin = $('#margin').val();
+            let tn_code = $('#tn_code').val();
+            // let max_plafond = $('#max_plafond').val();
+            // let expired_date = $('#expired_date').val();
+
+            if(skema_fasilitas=''){
+              alert('Skema Fasilitas Harus Di isi ');
+              return;
+            }else if (margin=''){
+              alert('Margin Harus Di isi');
+              return;
+            }else if (tn_code=''){
+              alert('Tn Code Harus Di isi');
+              return;
+            }else{
+
+            
             
           //  if(active=='0'){
           //     this.kirimactive=0;
@@ -1893,17 +2235,16 @@ export class ParameterizedComponent implements OnInit {
           //  }
 
               const body = {
-                kode_fasilitas:  kode_fasilitas,
-                program: program,
-                min_plafond:min_plafond,
-                max_plafond:max_plafond,
-                expired_date:expired_date,
+                skema_fasilitas:  skema_fasilitas,
+                margin: margin,
+                tn_code:tn_code,
+               
               };
               let headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_program', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_program+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -1941,7 +2282,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+            }
           } else if (result.isDenied) {
           }
         });
@@ -1978,32 +2319,41 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create Tenor Margin Step Up',
           html:
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">Kode Fasilitas</label>' +
-            // '<div class="col-sm-9">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-9"><select class="form-control" id="kode_fasilitas"><option value="">Pilih Parameter</option>'+`${options}`+'</select>'+
-            '</div></div>' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Program</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="program"/> ' +
-            '</div></div>'+
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Min Plafond</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="min_plafond"/> ' +
-            '</div></div>'+
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Max Plafond</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control2" id="max_plafond"/> ' +
-            '</div></div>'+
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Expired Date</label>' +
-            '<div class="col-sm-9"><input type="date" class="form-control2" id="expired_date"/> ' +
-            '</div></div>',
+          '<br />' +
+          '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Skema fasilitas</label>' +
+          // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '<div class="col-sm-8"><select class="form-control" id="skema_fasilitas"><option value="">Pilih skema Fasilitas</option>'+`${options}`+'</select>'+
+          '</div></div>' +
+          '<br />' +
+          '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Margin</label>' +
+          '<div class="col-sm-8"><input type="text" class="form-control" id="margin"/> ' +
+          '</div></div>'+
+          '<br />' +
+          '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">tn code</label>' +
+          '<div class="col-sm-8"><input type="text" class="form-control" id="tn_code"/> ' +
+          '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let kode_fasilitas = $('#kode_fasilitas').val();
-            let program = $('#program').val();
-            let min_plafond = $('#min_plafond').val();
-            let max_plafond = $('#max_plafond').val();
-            let expired_date = $('#expired_date').val();
+            let skema_fasilitas = $('#skema_fasilitas').val();
+            let margin = $('#margin').val();
+            let tn_code = $('#tn_code').val();
+           
+
+            if(skema_fasilitas=''){
+              alert('Skema Fasilitas harus di isi');
+              return;
+            }else if(margin=''){
+              alert('Margin harus di isi');
+              return;
+            }else if(tn_code=''){
+              alert('Tn code harus di isi');
+              return;
+            }else{
+
+            
             
           //  if(active=='0'){
           //     this.kirimactive=0;
@@ -2012,17 +2362,15 @@ export class ParameterizedComponent implements OnInit {
           //  }
 
               const body = {
-                kode_fasilitas:  kode_fasilitas,
-                program: program,
-                min_plafond:min_plafond,
-                max_plafond:max_plafond,
-                expired_date:expired_date,
+                skema_fasilitas:  skema_fasilitas,
+                margin: margin,
+                tn_code:tn_code,
               };
               let headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_program', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_program+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -2060,7 +2408,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+            }
           } else if (result.isDenied) {
           }
         });
