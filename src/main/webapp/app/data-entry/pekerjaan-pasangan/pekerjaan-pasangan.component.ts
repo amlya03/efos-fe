@@ -545,7 +545,11 @@ export class PekerjaanPasanganComponent implements OnInit {
       this.retrivekabkota = data.body?.result.provKec.nm_kota;
       this.retrivekecamatan = data.body?.result.provKec.nm_kec;
 
-      if (data.body?.result.provKec.kd_kel == null) {
+      if (data.body?.result.kels == null) {
+        this.retriveKodeKelurahan = kodepost;
+        this.retrivekelurahan = '';
+        this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
+      } else if (data.body?.result.provKec.kd_kel == null) {
         this.retriveKodeKelurahan = kodepost;
         this.retrivekelurahan = data.body?.result.kels[0].namaWilayah;
         this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);

@@ -555,7 +555,11 @@ export class CollateralComponent implements OnInit {
         this.untukkobkotaagunan = sukses.body?.result.provKec.nm_kota;
         this.untukkecamatanagunan = sukses.body?.result.provKec.nm_kec;
         // console.warn(sukses);
-        if (sukses.body?.result.provKec.kd_kel == null) {
+        if (sukses.body?.result.kels == null) {
+          this.untukKodeKelurahanAgunan = kodepost;
+          this.untukkelurahanagunan = '';
+          this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
+        } else if (sukses.body?.result.provKec.kd_kel == null) {
           this.untukKodeKelurahanAgunan = kodepost;
           this.untukkelurahanagunan = sukses.body?.result.kels[0].namaWilayah;
           this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);

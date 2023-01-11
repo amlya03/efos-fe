@@ -720,6 +720,15 @@
           class="form-control"
           id="pendapatan_usaha_total"
           name="pendapatan_usaha_total"
+          hidden
+          currencyMask
+          value="{{
+            +this.analisaKeuanganForm.get('pendapatan_usaha')?.value + +this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value
+          }}"
+        />
+        <input
+          type="text"
+          class="form-control"
           readonly
           currencyMask
           value="{{
@@ -774,6 +783,16 @@
           name="pendapatan_profesional_total"
           (keypress)="keyPressNumbers($event)"
           formControlName="pendapatan_profesional_total"
+          hidden
+          currencyMask
+          value="{{
+            +this.analisaKeuanganForm.get('pendapatan_profesional')?.value +
+              +this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value
+          }}"
+        />
+        <input
+          type="text"
+          class="form-control"
           readonly
           currencyMask
           value="{{
@@ -863,9 +882,9 @@
             +this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value +
               +this.analisaKeuanganForm.get('tunjangan_pasangan')?.value +
               +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value -
-              +this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value +
-              (+this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value +
-                +this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value) | currency: 'Rp. ':'symbol':'1.0-0'
+              (+this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value +
+                (+this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value +
+                  +this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value)) | currency: 'Rp. ':'symbol':'1.0-0'
           }}"
           readonly
         />
@@ -924,7 +943,7 @@
       </div>
     </div>
   </div>
-  <div class="col" [hidden]="this.dataEntry.joint_income == 0">
+  <div class="col" *ngIf="this.dataEntry.joint_income == 1">
     <div class="form-group row">
       <div class="col">
         <input
@@ -951,7 +970,8 @@
         name="kewajiban_bank_total"
         currencyMask
         value="{{
-          +this.slikForm.get('total_angsuran_nasabah')?.value + +this.slikForm.get('total_angsuran_pasangan')?.value
+          +this.slikForm.get('total_angsuran_nasabah')?.value +
+            (this.dataEntry.joint_income == 0 ? 0 : +this.slikForm.get('total_angsuran_pasangan')?.value)
             | currency: 'Rp. ':'symbol':'1.0-0'
         }}"
       />
@@ -1088,7 +1108,7 @@
               (+this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value +
                 +this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value) -
               +this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value -
-              +this.slikForm.get('total_angsuran_pasangan')?.value
+              (this.dataEntry.joint_income == 0 ? 0 : +this.slikForm.get('total_angsuran_pasangan')?.value)
           }}"
         />
         <input
@@ -1103,7 +1123,8 @@
               (+this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value +
                 +this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value) -
               +this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value -
-              +this.slikForm.get('total_angsuran_pasangan')?.value | currency: 'Rp. ':'symbol':'1.0-0'
+              (this.dataEntry.joint_income == 0 ? 0 : +this.slikForm.get('total_angsuran_pasangan')?.value)
+              | currency: 'Rp. ':'symbol':'1.0-0'
           }}"
           readonly
         />
@@ -1136,7 +1157,8 @@
               (+this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value +
                 +this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value) -
               +this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value -
-              +this.slikForm.get('total_angsuran_pasangan')?.value) | currency: 'Rp. ':'symbol':'1.0-0'
+              (this.dataEntry.joint_income == 0 ? 0 : +this.slikForm.get('total_angsuran_pasangan')?.value))
+            | currency: 'Rp. ':'symbol':'1.0-0'
         }}"
       />
     </div>

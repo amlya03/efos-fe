@@ -551,7 +551,11 @@ export class PersonalInfoComponent implements OnInit {
         this.untukkobkota = sukses.body?.result.provKec.nm_kota;
         this.untukkecamatan = sukses.body?.result.provKec.nm_kec;
         // console.warn(sukses);
-        if (sukses.body?.result.provKec.kd_kel == null) {
+        if (sukses.body?.result.kels == null) {
+          this.untukKodeKelurahan = kodepost;
+          this.untukkelurahan = '';
+          this.onChangekelurahan(this.untukKodeKelurahan + '|' + this.untukkelurahan);
+        } else if (sukses.body?.result.provKec.kd_kel == null) {
           this.untukKodeKelurahan = kodepost;
           this.untukkelurahan = sukses.body?.result.kels[0].namaWilayah;
           this.onChangekelurahan(this.untukKodeKelurahan + '|' + this.untukkelurahan);
@@ -596,7 +600,11 @@ export class PersonalInfoComponent implements OnInit {
         this.untukkobkotaD = sukses.body?.result.provKec.nm_kota;
         this.untukkecamatanD = sukses.body?.result.provKec.nm_kec;
         // console.warn(sukses);
-        if (sukses.body?.result.provKec.kd_kel == null) {
+        if (sukses.body?.result.kels == null) {
+          this.untukKodeKelurahanD = kodepost;
+          this.untukkelurahanD = '';
+          this.onChangekelurahanD(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
+        } else if (sukses.body?.result.provKec.kd_kel == null) {
           this.untukKodeKelurahanD = kodepost;
           this.untukkelurahanD = sukses.body?.result.kels[0].namaWilayah;
           this.onChangekelurahanD(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);

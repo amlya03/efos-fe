@@ -775,7 +775,11 @@ export class JobInfoComponent implements OnInit {
       this.retrivekabkota = data.body?.result.provKec.nm_kota;
       this.retrivekecamatan = data.body?.result.provKec.nm_kec;
 
-      if (data.body?.result.provKec.kd_kel == null) {
+      if (data.body?.result.kels == null) {
+        this.retriveKodeKelurahan = kodepost;
+        this.retrivekelurahan = '';
+        this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
+      } else if (data.body?.result.provKec.kd_kel == null) {
         this.retriveKodeKelurahan = kodepost;
         this.retrivekelurahan = data.body?.result.kels[0].namaWilayah;
         this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
@@ -806,7 +810,11 @@ export class JobInfoComponent implements OnInit {
         // this.kodeKelSeb = data.body?.result.provKec.kd_kel;
         // alert(this.dataretriveprovinsisebelum + this.dataretrivekabkotasebelum + this.dataretrivekecamatansebelum)
 
-        if (data.body?.result.provKec.kd_kel == null) {
+        if (data.body?.result.kels == null) {
+          this.kodeKelSeb = kodepost;
+          this.dataretrivekelurahansebelum = '';
+          this.onChangekelurahanD(this.kodeKelSeb + '|' + this.dataretrivekelurahansebelum);
+        } else if (data.body?.result.provKec.kd_kel == null) {
           this.kodeKelSeb = kodepost;
           this.dataretrivekelurahansebelum = data.body?.result.kels[0].namaWilayah;
           this.onChangekelurahanD(this.kodeKelSeb + '|' + this.dataretrivekelurahansebelum);
