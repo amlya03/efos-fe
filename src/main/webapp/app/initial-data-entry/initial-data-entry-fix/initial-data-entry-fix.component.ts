@@ -619,61 +619,98 @@ export class InitialDataEntryFixComponent implements OnInit {
           setTimeout(() => {
             this.ideFixServices.getJobByCurefIDE(this.modelIde.curef).subscribe(data => {
               this.modelJob = data.result;
-              if (data.code == 200) {
-                this.getLoading(false);
-              }
-              const retriveJob = {
-                nama_perusahaan: this.modelJob.nama_perusahaan,
-                tipe_perusahaan: this.modelJob.tipe_perusahaan,
-                tipe_pekerjaan: this.modelJob.tipe_pekerjaan,
-                kepemilikan_perusahaan: this.modelJob.kepemilikan_perusahaan,
-                pemilik_usaha: this.modelJob.pemilik_usaha,
-                no_telepon: this.modelJob.no_telepon,
-                jenis_bidang: this.modelJob.jenis_bidang,
-                sektor_ekonomi: this.modelJob.sektor_ekonomi,
-                alamat_perusahaan: this.modelJob.alamat_perusahaan,
-                provinsi: this.modelJob.provinsi,
-                kabkota: this.modelJob.kabkota,
-                kecamatan: this.modelJob.kecamatan,
-                kelurahan: this.modelJob.kelurahan,
-                kode_pos: this.modelJob.kode_pos,
-                rt: this.modelJob.rt,
-                rw: this.modelJob.rw,
-                jumlah_karyawan: this.modelJob.jumlah_karyawan,
-                npwp: this.modelJob.npwp,
-                lama_bekerja_bulan: this.modelJob.lama_bekerja_bulan,
-                lama_bekerja_tahun: this.modelJob.lama_bekerja_tahun,
-                no_siup: this.modelJob.no_siup,
-                barang_jasa: this.modelJob.barang_jasa,
-                posisi: this.modelJob.posisi,
-                /////////////////////////////////////
-                nama_perusahaan_sebelum: this.modelJob.nama_perusahaan_sebelum,
-                tipe_perusahaan_sebelum: this.modelJob.tipe_perusahaan_sebelum,
-                tipe_pekerjaan_sebelum: this.modelJob.tipe_pekerjaan_sebelum,
-                alamat_pekerjaan_sebelum: this.modelJob.alamat_pekerjaan_sebelum,
-                jenis_bidang_sebelum: this.modelJob.jenis_bidang_sebelum,
-                sektor_ekonomi_sebelum: this.modelJob.sektor_ekonomi_sebelum,
-                lama_bekerja_bulan_sebelum: this.modelJob.lama_bekerja_bulan_sebelum,
-                lama_bekerja_tahun_sebelum: this.modelJob.lama_bekerja_tahun_sebelum,
-              };
-              this.jobForm.setValue(retriveJob);
+              // console.warn(data)
 
-              setTimeout(() => {
-                if (this.modelJob == null) {
-                  this.retriveBidang = '';
-                  this.retriveBidangSebelum = '';
-                  this.retriveSektor = '';
-                  this.retriveSektorSebelum = '';
-                } else {
-                  this.retriveBidang = this.modelJob.jenis_bidang;
-                  this.retriveBidangSebelum = this.modelJob.jenis_bidang_sebelum;
-                  this.retriveSektor = this.modelJob.sektor_ekonomi;
-                  this.retriveSektorSebelum = this.modelJob.sektor_ekonomi_sebelum;
-                }
+              // setTimeout(() => {
+              if (data.result == null) {
+                const retriveJob = {
+                  nama_perusahaan: '',
+                  tipe_perusahaan: '',
+                  tipe_pekerjaan: '',
+                  kepemilikan_perusahaan: '',
+                  pemilik_usaha: '',
+                  no_telepon: '',
+                  jenis_bidang: '',
+                  sektor_ekonomi: '',
+                  alamat_perusahaan: '',
+                  provinsi: '',
+                  kabkota: '',
+                  kecamatan: '',
+                  kelurahan: '',
+                  kode_pos: '',
+                  rt: '',
+                  rw: '',
+                  jumlah_karyawan: '',
+                  npwp: '',
+                  lama_bekerja_bulan: '',
+                  lama_bekerja_tahun: '',
+                  no_siup: '',
+                  barang_jasa: '',
+                  posisi: '',
+                  /////////////////////////////////////
+                  nama_perusahaan_sebelum: '',
+                  tipe_perusahaan_sebelum: '',
+                  tipe_pekerjaan_sebelum: '',
+                  alamat_pekerjaan_sebelum: '',
+                  jenis_bidang_sebelum: '',
+                  sektor_ekonomi_sebelum: '',
+                  lama_bekerja_bulan_sebelum: '',
+                  lama_bekerja_tahun_sebelum: '',
+                };
+                this.jobForm.setValue(retriveJob);
+                this.getLoading(false);
+
+                this.retriveBidang = '';
+                this.retriveBidangSebelum = '';
+                this.retriveSektor = '';
+                this.retriveSektorSebelum = '';
+              } else {
+                const retriveJob = {
+                  nama_perusahaan: this.modelJob.nama_perusahaan,
+                  tipe_perusahaan: this.modelJob.tipe_perusahaan,
+                  tipe_pekerjaan: this.modelJob.tipe_pekerjaan,
+                  kepemilikan_perusahaan: this.modelJob.kepemilikan_perusahaan,
+                  pemilik_usaha: this.modelJob.pemilik_usaha,
+                  no_telepon: this.modelJob.no_telepon,
+                  jenis_bidang: this.modelJob.jenis_bidang,
+                  sektor_ekonomi: this.modelJob.sektor_ekonomi,
+                  alamat_perusahaan: this.modelJob.alamat_perusahaan,
+                  provinsi: this.modelJob.provinsi,
+                  kabkota: this.modelJob.kabkota,
+                  kecamatan: this.modelJob.kecamatan,
+                  kelurahan: this.modelJob.kelurahan,
+                  kode_pos: this.modelJob.kode_pos,
+                  rt: this.modelJob.rt,
+                  rw: this.modelJob.rw,
+                  jumlah_karyawan: this.modelJob.jumlah_karyawan,
+                  npwp: this.modelJob.npwp,
+                  lama_bekerja_bulan: this.modelJob.lama_bekerja_bulan,
+                  lama_bekerja_tahun: this.modelJob.lama_bekerja_tahun,
+                  no_siup: this.modelJob.no_siup,
+                  barang_jasa: this.modelJob.barang_jasa,
+                  posisi: this.modelJob.posisi,
+                  /////////////////////////////////////
+                  nama_perusahaan_sebelum: this.modelJob.nama_perusahaan_sebelum,
+                  tipe_perusahaan_sebelum: this.modelJob.tipe_perusahaan_sebelum,
+                  tipe_pekerjaan_sebelum: this.modelJob.tipe_pekerjaan_sebelum,
+                  alamat_pekerjaan_sebelum: this.modelJob.alamat_pekerjaan_sebelum,
+                  jenis_bidang_sebelum: this.modelJob.jenis_bidang_sebelum,
+                  sektor_ekonomi_sebelum: this.modelJob.sektor_ekonomi_sebelum,
+                  lama_bekerja_bulan_sebelum: this.modelJob.lama_bekerja_bulan_sebelum,
+                  lama_bekerja_tahun_sebelum: this.modelJob.lama_bekerja_tahun_sebelum,
+                };
+                this.jobForm.setValue(retriveJob);
+                this.getLoading(false);
+
+                this.retriveBidang = this.modelJob.jenis_bidang;
+                this.retriveBidangSebelum = this.modelJob.jenis_bidang_sebelum;
+                this.retriveSektor = this.modelJob.sektor_ekonomi;
+                this.retriveSektorSebelum = this.modelJob.sektor_ekonomi_sebelum;
                 setTimeout(() => {
                   this.cariPekerPost(this.modelJob.kode_pos);
                 }, 100);
-              }, 200);
+              }
+              // }, 200);
 
               setTimeout(() => {
                 if (this.cekResultIde == 0) {
