@@ -44,7 +44,7 @@ export class InitialDataEntryService {
 
   // /////////////////////////// Download Slik ////////////////////////////////////////////
   // protected getDownloadSlikUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/fetchSlikPdf?sd=');
-  protected getDownloadSlikUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ide/fetchSlikPdf?sd=');
+  protected getDownloadSlikUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-ide/fetchSlikPdf?sd=');
   // /////////////////////////// Download Slik ////////////////////////////////////////////
 
   // /////////////////////////// DAFTAR APLIKASI INITIAL DATA ENTRY ////////////////////////////////////////////

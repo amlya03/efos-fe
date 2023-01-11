@@ -248,7 +248,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   untukSlik() {
     this.getLoading(true);
     this.http
-      .post<any>('http://10.20.34.178:8805/api/v1/efos-ide/slik_inquiry', {
+      .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_inquiry', {
         noAplikasi: this.dataEntry.app_no_ide,
       })
       .subscribe({
@@ -763,7 +763,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
               //         // alert(this.dataEntry.tempat_lahir)
               //         if (data.result.dataSlikResult == '') {
               //           this.http
-              //             .post<any>('http://10.20.34.178:8805/api/v1/efos-ide/slik_verify', {
+              //             .post<any>('http://10.20.34.110:8805/api/v1/efos-ide/slik_verify', {
               //               channelID: 'EFOS',
               //               createdBy: this.SessionStorageService.retrieve('sessionUserName'),
               //               idUserCabang: this.SessionStorageService.retrieve('sessionUserName'),
@@ -792,7 +792,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
               //                 //   destroy: true,
               //                 // });
               //                 this.dtTrigger.next(data.result.dataSlikResult);
-              this.getLoading(false);
+              // this.getLoading(false);
               //               },
               //             });
               //         } else {
@@ -890,7 +890,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   }
 
   joinRoom(jenis: any) {
-    window.open('http://10.20.34.178:8805/api/v1/efos-ide/downloadSlik/' + jenis);
+    window.open('http://10.20.34.110:8805/api/v1/efos-ide/downloadSlik/' + jenis);
   }
 
   public getLoading(loading: boolean) {

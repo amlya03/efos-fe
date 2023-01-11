@@ -138,8 +138,10 @@ export class InputScoringComponent implements OnInit {
         '<div class="col-sm-9"><select id="joint_income" class="form-control"><option value="">Pilih Joint Income</option><option value="1">Ya</option><option value="2">Tidak</option></select>' +
         '</div></div>' +
         '<div class="form-group row"><label class="col-sm-3 col-form-label">Parameter</label>' +
-        // '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="">Pilih Parameter</option>`${options}`</select>' +
-        '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="">Pilih Parameter</option><option value="1">1</option><option value="0">0</option></select>' +
+        '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="">Pilih Parameter</option>' +
+        `${options}` +
+        '</select>' +
+        // '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="">Pilih Parameter</option><option value="1">1</option><option value="0">0</option></select>' +
         '</div></div>' +
         '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Data Value</label>' +
         '<div class="col-sm-9"><input type="text" class="form-control" id="data_value"/>' +

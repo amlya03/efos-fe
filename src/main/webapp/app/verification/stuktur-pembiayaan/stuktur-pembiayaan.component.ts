@@ -277,6 +277,7 @@ export class StukturPembiayaanComponent implements OnInit {
 
   // Hitung Angsuran
   hitungAngsuran(skema_id: any): void {
+    this.getLoading(true);
     const skemaidName = skema_id.split('|');
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
@@ -309,6 +310,7 @@ export class StukturPembiayaanComponent implements OnInit {
               })
               .subscribe({
                 next: angsuran => {
+                  this.getLoading(false);
                   this.analisaDsr = angsuran.result.dsr;
                   this.strukturForm.get('dsr')?.setValue((this.analisaDsr += ' %'));
                   // this.analisaMaxAngsuran = data.result.max_angsuran;
@@ -409,5 +411,8 @@ export class StukturPembiayaanComponent implements OnInit {
 
   viewStruktur(): void {
     this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+  }
+  hhh() {
+    alert('kkj');
   }
 }
