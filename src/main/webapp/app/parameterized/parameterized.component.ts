@@ -39,6 +39,11 @@ export class ParameterizedComponent implements OnInit {
   kirimanskemadeskripsi: any;
   kirimantenortier: any;
   tablelistskemanew: any;
+  hasiltembakapi: any;
+  tablelistftvdp: any;
+  tampunganidviewdetail: any;
+  tableftvdpdetail: any;
+  tableAgunanlisttipeagunan: any;
   constructor(
     private formBuilder: FormBuilder,
     protected datEntryService: DataEntryService,
@@ -110,10 +115,21 @@ export class ParameterizedComponent implements OnInit {
       this.tablelistskema = table.result;
       // console.log(this.tablelistskema);
     });
+    this.datEntryService.getFetchListTipeAgunan().subscribe(table => {
+      this.tableAgunanlisttipeagunan = table.result;
+      // console.log(this.tablelistskema);
+    });
+
     this.datEntryService.getListskemanew().subscribe(table => {
       this.tablelistskemanew = table.result;
-      console.log(this.tablelistskema);
+      // console.log(this.tablelistskema);
     });
+
+       this.datEntryService.getListftvdp().subscribe(table => {
+      this.tablelistftvdp = table.result;
+      // console.log(this.tablelistftvdp);
+    });
+    
 
     
   }
@@ -383,6 +399,7 @@ export class ParameterizedComponent implements OnInit {
   }
 //4
   createfasilitas(): void {
+
     Swal.fire({
       title: 'Mohon Perhatikan',
       text: 'Inputan yang sudah Terinput tidak bisa di edit ',
@@ -604,6 +621,7 @@ export class ParameterizedComponent implements OnInit {
   }
 //6
   createftpdp(): void {
+
     Swal.fire({
       title: 'Mohon Perhatikan',
       text: 'Inputan yang sudah Terinput tidak bisa di edit ',
@@ -614,52 +632,101 @@ export class ParameterizedComponent implements OnInit {
       confirmButtonText: 'tambah',
       cancelButtonText: 'tidak',
     })
+
+
     .then(result => {
       if (result.isConfirmed) {
+
+        let options = this.tablelistproduk.map((option: any) => {
+          return `
+            <option key="${option}" value="${option.kode_produk}| ${option.produk_deskripsi}">
+                ${option.produk_deskripsi}
+            </option>
+          `;
+        });
+        let hahaha
+        $(document).ready(function () {
+          $('#jangankodeproduk').change(function () {
+            alert('jalan');
+            //  this.tampungpemecah= $('#jangankodeproduk').val();
+            // const pemecahbenar=this.tampungpemecah.split('|');
+            let parameterValue = $(this).val() as HTMLElement | any;
+            hahaha = parameterValue.split('|');
+            console.warn(hahaha);
+            console.warn(parameterValue);
+            fetch(`http://10.20.34.178:8805/api/v1/efos-ref/list_skema_ftv?ss=`+hahaha[0]).then(function (response) {
+            return response.json()
+          
+          }).then(
+          data => {
+            let kabkota
+            $('#kodeskema').empty();
+            data.result.forEach((i: any) => {
+                  kabkota = '<option value="' + i['skema']  + '">' + i['skema_deskripsi'] + '</option>';
+                  kabkota = kabkota + '';
+                  $('#kodeskema').append(kabkota);
+            })
+          });
+           
+          });
+        });
+
+
+
+
+
         Swal.fire({
           title: 'Create FTP DP',
           html:
           '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Fasilitas Listrik</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="fasilitas_listrik"/> ' +
-            '</div></div>',
+          '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode produk</label>' +
+          // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '<div class="col-sm-8"><select class="form-control" id="jangankodeproduk"><option value="">Pilih produk</option>'+`${options}`+'</select>'+
+          '</div></div>' +
+          '<br />' +
+          '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode produk</label>' +
+          // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '<div class="col-sm-8"><select class="form-control" id="kodeskema"><option value="">Pilih produk</option></select>'+
+          '</div></div>' +
+          '<br />' ,
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let active = $('#status_active').val();
-            let fasilitas_listrik = $('#fasilitas_listrik').val();
+            let jangankodeproduk = $('#jangankodeproduk').val();
+            let kodeskema = $('#kodeskema').val();
+         
 
-            if(active ==""){
+
+            this.tampungpemecah= $('#jangankodeproduk').val();
+            const pemecahbenar=this.tampungpemecah.split('|');
+
+
+
+            if(jangankodeproduk ==""){
               alert('Status Aktif Harus Di isi');
                 return;
              }
-             else if(fasilitas_listrik ==''){
+             else if(kodeskema ==''){
                alert('Fasilitas Listrik harus di isi');
                return;
              }
 
             
-           if(active=='0'){
-              this.kirimactive=0;
-           }else{
-            this.kirimactive=1;
-           }
+         
 
               const body = {
-                active:  this.kirimactive,
-                fasilitas_listrik: fasilitas_listrik,
+                nama_produk:  pemecahbenar[1],
+                kode_produk: pemecahbenar[0],
+                id:  '',
+                skema_id: kodeskema,
               };
               let headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_ftv_dp', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -707,8 +774,61 @@ export class ParameterizedComponent implements OnInit {
    
     });
   }
+
+
+
+  viewftvdetail(id:any): void {
+
+    this.createform.get('contoh')?.setValue('7');
+    this.tampunganidviewdetail=id;
+
+    this.datEntryService.getlistftvdpdetail(id).subscribe({
+      next: de => {
+        this.tableftvdpdetail = de.result;
+       console.warn(this.tableftvdpdetail);
+      },
+      // error: err => {
+      //   console.warn('fff', err)
+      //   this.getLoading(false);
+      // }
+    });
+
+
+    // this.getLoading(true);
+    // this.router
+    //   .navigate(['/data-entry/personalinfo'], {
+    //     queryParams: { curef: getCuref, app_no_de: getAppNoDe },
+    //   })
+    //   .then(() => {
+    //     window.location.reload();
+    //   });
+  }
+
+
+
+
+
+
 //7
   createftpdpdetail(): void {
+
+    let options = this.tablelistfasilitas.map((option: any) => {
+      return `
+        <option key="${option}" value="${option.id}">
+            ${option.fasilitas}
+        </option>
+      `;
+    });
+
+    let optionsagunan = this.tableAgunanlisttipeagunan.map((option: any) => {
+      return `
+        <option key="${option}" value="${option.type_collateral_code}">
+            ${option.collateral_deskripsi}
+        </option>
+      `;
+    });
+
+
     Swal.fire({
       title: 'Mohon Perhatikan',
       text: 'Inputan yang sudah Terinput tidak bisa di edit ',
@@ -721,49 +841,137 @@ export class ParameterizedComponent implements OnInit {
     })
     .then(result => {
       if (result.isConfirmed) {
+
+
+        let hahaha
+        $(document).ready(function () {
+          $('#kode_agunan').change(function () {
+            let parameterValue = $(this).val();
+            hahaha = parameterValue;
+            console.warn(hahaha);
+            console.warn(parameterValue);
+            fetch(`http://10.20.34.110:8805/api/v1/efos-de/list_tipe_properti?sp=`+hahaha).then(function (response) {
+            return response.json()
+          
+          }).then(
+          data => {
+            let kabkota
+            $('#tipe_properti').empty();
+            data.result.forEach((i: any) => {
+                  kabkota = '<option value="' + i['type_collateral']  +'|'+ i['properti_deskripsi']+ '">' + i['properti_deskripsi'] + '</option>';
+                  kabkota = kabkota + '';
+                  $('#tipe_properti').append(kabkota);
+            })
+          });
+           
+          });
+        });
+
+
+
+
         Swal.fire({
           title: 'Create FTP Detail ',
           html:
           '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '</div></div>' +
+          '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label"> Fasilitas</label>' +
+          // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '<div class="col-sm-8"><select class="form-control" id="kode_fasilitas"><option value="">Pilih Parameter</option>'+`${options}`+'</select>'+
+          '</div></div>' +
+          '<br />' +
+          '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label"> Agunan</label>' +
+          // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+          '<div class="col-sm-8"><select class="form-control" id="kode_agunan"><option value="">Pilih Parameter</option>'+`${optionsagunan}`+'</select>'+
+          '</div></div>' +
+          '<br />' +
+          '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Properti</label>' +
+          '<div class="col-sm-8">  <select id="tipe_properti" class="form-control"><option value="">Pilih status</option></select>' +
+          '</div></div>' +
+          '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Min Listrik</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="Min"/> ' +
+            '</div></div>'+
             '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Fasilitas Listrik</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="fasilitas_listrik"/> ' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Max</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="Max"/> ' +
+            '</div></div>'+
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">FTV</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="ftv"/> ' +
+            '</div></div>'+
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">dp</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="dp"/> ' +
             '</div></div>',
+
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let active = $('#status_active').val();
-            let fasilitas_listrik = $('#fasilitas_listrik').val();
+            let kode_fasilitas = $('#kode_fasilitas').val();
+            let kode_agunan = $('#kode_agunan').val();
+            let tipe_properti = $('#tipe_properti').val();
+            let Min = $('#Min').val();
+            let Max = $('#Max').val();
+            let ftv = $('#ftv').val();
+            let dp = $('#dp').val();
 
-            if(active ==""){
+            this.tampungpemecah= $('#tipe_properti').val();
+
+            const pemecahbenar=this.tampungpemecah.split('|');
+
+
+            if(kode_fasilitas ==""){
               alert('Status Aktif Harus Di isi');
                 return;
              }
-             else if(fasilitas_listrik ==''){
+             else if(kode_agunan ==''){
                alert('Fasilitas Listrik harus di isi');
                return;
              }
+             else if(tipe_properti ==''){
+              alert('Fasilitas Listrik harus di isi');
+              return;
+            }
+            else if(Min ==''){
+              alert('Fasilitas Listrik harus di isi');
+              return;
+            }
+            else if(Max ==''){
+              alert('Fasilitas Listrik harus di isi');
+              return;
+            }
+             else if(ftv ==''){
+               alert('Fasilitas Listrik harus di isi');
+               return;
+             }
+             else if(dp ==''){
+              alert('Fasilitas Listrik harus di isi');
+              return;
+            }else{
+
+    
             
-           if(active=='0'){
-              this.kirimactive=0;
-           }else{
-            this.kirimactive=1;
-           }
+         
 
               const body = {
-                active:  this.kirimactive,
-                fasilitas_listrik: fasilitas_listrik,
+                dp:  dp,
+                fasilitas: kode_fasilitas,
+                ftv: ftv ,
+                id:'',
+                id_ftv_dp:  this.tampunganidviewdetail,
+                min:Min ,
+                max:Max  ,
+                tipe_properti:pemecahbenar[0] ,
+                tipe_properti_deskripsi:pemecahbenar[1],
               };
+
               let headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_ftv_dp_detail', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -801,7 +1009,7 @@ export class ParameterizedComponent implements OnInit {
                   });
                 },
               });
-            
+            }
           } else if (result.isDenied) {
           }
         });

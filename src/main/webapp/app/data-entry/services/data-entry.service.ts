@@ -230,7 +230,14 @@ export class DataEntryService {
  protected refListskemanew = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_skema_new');
  // //////////////////////////// Ref List skemanew //////////////////////////////////////////////////
 
-      
+       // //////////////////////////// Ref List FTVDP //////////////////////////////////////////////////
+ protected refListftvdp= this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_ftv_dp');
+ // //////////////////////////// Ref List FTVDP //////////////////////////////////////////////////
+
+   // /////////////////////////////  Ref List FTVDP detail \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+   protected fetchlistftvdpdetail = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_ftv_dp_detail?ss=');
+   // /////////////////////////////  Ref List FTVDP detail \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
@@ -538,6 +545,21 @@ getListskemanew(): Observable<ApiResponse> {
   return this.http.get<ApiResponse>(this.refListskemanew);
 }
 // //////////////////////////// GET lIST skema //////////////////////////////////////////////////
+
+
+// //////////////////////////// GET lIST ftvdp //////////////////////////////////////////////////
+getListftvdp(): Observable<ApiResponse> {
+  return this.http.get<ApiResponse>(this.refListftvdp);
+}
+// //////////////////////////// GET lIST ftvdp //////////////////////////////////////////////////
+
+
+// /////////////////////////// Ref Semua Struktur Pembiayaan Data DE ////////////////////////////////////////////
+getlistftvdpdetail(id: string | null | undefined): Observable<ApiResponse> {
+  return this.http.get<ApiResponse>(this.fetchlistftvdpdetail + id );
+}
+// /////////////////////////// Ref Semua Struktur Pembiayaan Data DE ////////////////////////////////////////////
+
 
 
   getprovinsi(token: string | null | undefined, req?: number | null): Observable<EntityArrayResponseDaWa> {

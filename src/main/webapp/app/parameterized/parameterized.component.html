@@ -337,10 +337,10 @@
                               <span>No</span>
                             </th>
                             <th scope="col" style="text-align: center; color: #fff">
-                              <span>Akses status</span>
+                              <span>kode produk</span>
                             </th>
                             <th scope="col" style="text-align: center; color: #fff">
-                              <span>Status</span>
+                              <span>nama produk</span>
                             </th>
                             <th scope="col" style="text-align: center; color: #fff">
                               <span>Detail</span>
@@ -348,11 +348,16 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let tableAgunan of tableAgunan; index as i">
+                          <tr *ngFor="let tablelistftvdp of tablelistftvdp; index as i">
                             <td style="text-align: center" scope="col">{{ i + 1 }}</td>
-                            <td style="text-align: center" scope="col">{{ tableAgunan.akses_rumah }}</td>
-                            <td style="text-align: center" scope="col">{{ tableAgunan.active }}</td>
-                            <td><button class="editbtn">edit</button></td>
+                            <td style="text-align: center" scope="col">{{ tablelistftvdp.kode_produk }}</td>
+                            <td style="text-align: center" scope="col">{{ tablelistftvdp.nama_produk }}</td>
+                            <td style="text-align: center">
+                              <a type="button" (click)="viewftvdetail(tablelistftvdp.id )">
+                                <fa-icon icon="eye"></fa-icon>
+                                <br />Detail
+                              </a>
+                            </td>
                           </tr>
                         </tbody>
                       </table>
@@ -381,18 +386,18 @@
                                   <span>No</span>
                                 </th>
                                 <th scope="col" style="text-align: center; color: #fff">
-                                  <span>Akses status</span>
+                                  <span>FAsilitas</span>
                                 </th>
                                 <th scope="col" style="text-align: center; color: #fff">
-                                  <span>Status</span>
+                                  <span>Deskripsi</span>
                                 </th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let tableAgunan of tableAgunan; index as i">
+                              <tr *ngFor="let tableftvdpdetail of tableftvdpdetail; index as i">
                                 <td style="text-align: center" scope="col">{{ i + 1 }}</td>
-                                <td style="text-align: center" scope="col">{{ tableAgunan.akses_rumah }}</td>
-                                <td style="text-align: center" scope="col">{{ tableAgunan.active }}</td>
+                                <td style="text-align: center" scope="col">{{ tableftvdpdetail.id_ftv_dp }}</td>
+                                <td style="text-align: center" scope="col">{{ tableftvdpdetail.tipe_properti_deskripsi }}</td>
                               </tr>
                             </tbody>
                           </table>
@@ -1037,4 +1042,6 @@
                                                             </tbody>
                                                           </table>
                                                       </div>
+
+                                
   
