@@ -1010,11 +1010,7 @@
           <div class="form-group">
             <select class="form-control" formControlName="pendidikan_pasangan" id="pendidikan_pasangan" name="pendidikan_pasangan">
               <option value="">Pilih Pendidikan</option>
-              <option value="SMA">SMA</option>
-              <option value="D3">D3</option>
-              <option value="S1">S1</option>
-              <option value="S2">S2</option>
-              <option value="S3">S3</option>
+              <option *ngFor="let pendidikan of pendidikanModel" value="{{ pendidikan.deskripsi }}">{{ pendidikan.deskripsi }}</option>
             </select>
           </div>
         </div>
