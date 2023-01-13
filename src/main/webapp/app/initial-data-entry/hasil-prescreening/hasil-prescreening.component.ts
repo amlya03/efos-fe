@@ -39,7 +39,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   datadukcapilusername: any;
   datadukcapilpasangan: dukcapilModel = new dukcapilModel();
   dataslik: slik[] = [];
-  dataslikp: any;
+  resultDataSlik: any;
   duplikate: any;
   tampunganradiobuttonnama: any;
   tampunganradiobuttontanggal: any;
@@ -456,6 +456,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                       //     }
                       //   }
                       // });
+                      this.resultDataSlik = data.result.dataSlikResult;
                       this.dataslik = data.result.dataSlikResult;
                       this.dataslik.forEach(element => {
                         if (element.response_description == 'get Slik Result Success') {
@@ -467,7 +468,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                         }
                       });
 
-                      if (data.result.dataSlikResult == '') {
+                      if (this.resultDataSlik == '') {
                         this.hideCekSlik = 0;
                       } else {
                         this.hideCekSlik = 1;
@@ -555,7 +556,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
 
                                 // setTimeout(() => {
                                 //   // alert(this.dataEntry.tempat_lahir)
-                                //   if (data.result.dataSlikResult == '') {
+                                //   if (this.resultDataSlik == '') {
                                 //     this.http
                                 //       .post<any>(this.baseUrl + 'v1/efos-ide/slik_verify', {
                                 //         channelID: 'EFOS',
@@ -732,10 +733,10 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                     //     }
                     //   }
                     // });
-
+                    this.resultDataSlik = data.result.dataSlikResult;
                     this.listLajangSlik = data.result.dataSlikResult;
 
-                    if (data.result.dataSlikResult == '') {
+                    if (this.resultDataSlik == '') {
                       this.hideCekSlik = 0;
                     } else {
                       this.hideCekSlik = 1;
@@ -752,7 +753,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                     }, 20);
 
                     setTimeout(() => {
-                      if (data.result.dataSlikResult == '') {
+                      if (this.resultDataSlik == '') {
                         this.http
                           .post<any>(this.baseUrl + 'v1/efos-ide/slik_verify', {
                             channelID: 'EFOS',
