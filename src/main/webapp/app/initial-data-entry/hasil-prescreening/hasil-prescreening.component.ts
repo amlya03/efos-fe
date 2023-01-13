@@ -320,7 +320,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     var dateepasangan = this.dataEntry.tanggal_lahir_pasangan;
 
     const str4 = new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta' });
-    var timestamp = pipe.transform(Date.now(), 'yyyy-mm-dd HH:mm:ss');
+    var timestamp = pipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss');
     var tgllahirkirim = pipe.transform(datee, 'dd-MM-yyyy');
     var tgllahirkirimpasangan = pipe.transform(dateepasangan, 'dd-MM-yyyy');
     var hasilmiripdongbanyak = pipe.transform(datee, 'yyyy:MM:dd ');
