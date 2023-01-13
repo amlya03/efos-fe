@@ -717,88 +717,88 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
               this.PasangaNnoRWDukcapil = 'Tidak Sesuai';
               this.PasangaNjenisKelaminDukcapil = 'Tidak Sesuai';
 
-              // setTimeout(() => {
-              //   this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe({
-              //     next: data => {
-              //       // this.dataslik = data.result.dataSlikResult;
-              //       // this.dataslik?.forEach(element => {
-              //       //   if (element.response_description == 'get Slik Result Success') {
-              //       //     if (element.status_applicant === 'Debitur Utama') {
-              //       //       // this.listLajangSlik.push(element);
-              //       //       //console.warn('lajang', this.listLajangSlik);
-              //       //     } else {
-              //       //       // this.listMenikahSlik.push(element);
-              //       //       //console.warn('menikah', this.listMenikahSlik);
-              //       //     }
-              //       //   }
-              //       // });
+              setTimeout(() => {
+                this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe({
+                  next: data => {
+                    // this.dataslik = data.result.dataSlikResult;
+                    // this.dataslik?.forEach(element => {
+                    //   if (element.response_description == 'get Slik Result Success') {
+                    //     if (element.status_applicant === 'Debitur Utama') {
+                    //       // this.listLajangSlik.push(element);
+                    //       //console.warn('lajang', this.listLajangSlik);
+                    //     } else {
+                    //       // this.listMenikahSlik.push(element);
+                    //       //console.warn('menikah', this.listMenikahSlik);
+                    //     }
+                    //   }
+                    // });
 
-              //       this.listLajangSlik = data.result.dataSlikResult;
+                    this.listLajangSlik = data.result.dataSlikResult;
 
-              //       if(data.result.dataSlikResult == ''){
-              //         this.hideCekSlik = 0;
-              //       }else{
-              //         this.hideCekSlik = 1;
-              //       }
+                    if (data.result.dataSlikResult == '') {
+                      this.hideCekSlik = 0;
+                    } else {
+                      this.hideCekSlik = 1;
+                    }
 
-              //       setTimeout(() => {
-              //         this.totalOutNas = data.result.total_outstanding_nasabah
-              //         this.totalPlaNas = data.result.total_plafon_nasabah
-              //         this.totalAngNas = data.result.total_angsuran_nasabah
-              //         this.totalPasOut = data.result.total_outstanding_pasangan
-              //         this.totalPasPla = data.result.total_plafon_pasangan
-              //         this.totalPasAng = data.result.total_angsuran_pasangan
-              //         this.getLoading(false);
-              //       }, 20);
+                    setTimeout(() => {
+                      this.totalOutNas = data.result.total_outstanding_nasabah;
+                      this.totalPlaNas = data.result.total_plafon_nasabah;
+                      this.totalAngNas = data.result.total_angsuran_nasabah;
+                      this.totalPasOut = data.result.total_outstanding_pasangan;
+                      this.totalPasPla = data.result.total_plafon_pasangan;
+                      this.totalPasAng = data.result.total_angsuran_pasangan;
+                      this.getLoading(false);
+                    }, 20);
 
-              //       setTimeout(() => {
-              //         if (data.result.dataSlikResult == '') {
-              //           this.http
-              //             .post<any>(this.baseUrl + 'v1/efos-ide/slik_verify', {
-              //               channelID: 'EFOS',
-              //               createdBy: this.SessionStorageService.retrieve('sessionUserName'),
-              //               idUserCabang: this.SessionStorageService.retrieve('sessionUserName'),
-              //               jenisKelamin: this.jenisKelaminHps,
-              //               jenisKelaminPasangan: this.jenisKelaminPasHps,
-              //               jenisProduct: 'PTA',
-              //               kodeCabang: this.SessionStorageService.retrieve('sessionKdCabang'),
-              //               namaNasabah: this.dataEntry.nama,
-              //               namaPasangan: this.dataEntry.nama_pasangan,
-              //               noAplikasi: this.dataEntry.app_no_ide,
-              //               noKtp: this.dataEntry.no_ktp,
-              //               noKtpPasangan: this.dataEntry.no_ktp_pasangan,
-              //               npwp: this.dataEntry.npwp,
-              //               reffNumber: reffnumbernya,
-              //               statusMenikah: this.statusMenikahHps,
-              //               tempatLahir: this.dataEntry.tempat_lahir,
-              //               tempatLahirPasangan: this.dataEntry.tempat_lahir_pasangan,
-              //               tglLahir: this.dataEntry.tanggal_lahir,
-              //               tglLahirPasangan: this.dataEntry.tanggal_lahir_pasangan,
-              //               timestamp: timestamp,
-              //               tujuanSlikChecking: '1',
-              //             })
-              //             .subscribe({
-              //               next: data => {
-              //                 $('#example').DataTable({
-              //                   destroy: true,
-              //                 });
-              //                 this.dtTrigger.unsubscribe();
-              //                 if(data.code == 200){
-              //                   this.dtTrigger.next(data.result.dataSlikResult);
-              //                   this.getLoading(false);
-              //                 }else{
-              //                   this.dtTrigger.next(data.result.dataSlikResult);
-              this.getLoading(false);
-              //                 }
-              //               },
-              //             });
-              //         } else {
-              //           this.dtTrigger.next(data.result.dataSlikResult);
-              //         }
-              //       }, 30);
-              //     },
-              //   });
-              // }, 50);
+                    setTimeout(() => {
+                      if (data.result.dataSlikResult == '') {
+                        this.http
+                          .post<any>(this.baseUrl + 'v1/efos-ide/slik_verify', {
+                            channelID: 'EFOS',
+                            createdBy: this.SessionStorageService.retrieve('sessionUserName'),
+                            idUserCabang: this.SessionStorageService.retrieve('sessionUserName'),
+                            jenisKelamin: this.jenisKelaminHps,
+                            jenisKelaminPasangan: this.jenisKelaminPasHps,
+                            jenisProduct: 'PTA',
+                            kodeCabang: this.SessionStorageService.retrieve('sessionKdCabang'),
+                            namaNasabah: this.dataEntry.nama,
+                            namaPasangan: this.dataEntry.nama_pasangan,
+                            noAplikasi: this.dataEntry.app_no_ide,
+                            noKtp: this.dataEntry.no_ktp,
+                            noKtpPasangan: this.dataEntry.no_ktp_pasangan,
+                            npwp: this.dataEntry.npwp,
+                            reffNumber: reffnumbernya,
+                            statusMenikah: this.statusMenikahHps,
+                            tempatLahir: this.dataEntry.tempat_lahir,
+                            tempatLahirPasangan: this.dataEntry.tempat_lahir_pasangan,
+                            tglLahir: this.dataEntry.tanggal_lahir,
+                            tglLahirPasangan: this.dataEntry.tanggal_lahir_pasangan,
+                            timestamp: timestamp,
+                            tujuanSlikChecking: '1',
+                          })
+                          .subscribe({
+                            next: data => {
+                              $('#example').DataTable({
+                                destroy: true,
+                              });
+                              this.dtTrigger.unsubscribe();
+                              if (data.code == 200) {
+                                this.dtTrigger.next(data.result.dataSlikResult);
+                                this.getLoading(false);
+                              } else {
+                                this.dtTrigger.next(data.result.dataSlikResult);
+                                this.getLoading(false);
+                              }
+                            },
+                          });
+                      } else {
+                        this.dtTrigger.next(data.result.dataSlikResult);
+                      }
+                    }, 30);
+                  },
+                });
+              }, 50);
             }
           },
           error: err => {
