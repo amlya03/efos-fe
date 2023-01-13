@@ -874,7 +874,7 @@
   <button (click)="untukSlik()" name="submit_button" class="fa fa-file-archive-o btn btn-dark">Cek Hasil Slik</button>
 </div>
 
-<table id="downloadSlikOJK" *ngIf="this.hideCekSlik == 1 && this.totalOutNas != 0">
+<table id="downloadSlikOJK" *ngIf="this.hideCekSlik == 1 && this.listLajangSlik[0].response_description === 'get SLIK Result Success'">
   <tr>
     <th></th>
   </tr>
