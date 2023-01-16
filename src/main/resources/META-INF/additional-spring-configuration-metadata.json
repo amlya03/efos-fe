@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "server.session.cookie.http-only",
+      "type": "java.lang.String",
+      "description": "A description for 'server.session.cookie.http-only'"
+    }
+  ]
+}
