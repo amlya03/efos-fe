@@ -39,6 +39,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   datadukcapilusername: any;
   datadukcapilpasangan: dukcapilModel = new dukcapilModel();
   dataslik: slik[] = [];
+  responseSlikMenikah = 0;
   resultDataSlik: any;
   duplikate: any;
   tampunganradiobuttonnama: any;
@@ -279,24 +280,6 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
         },
       });
   }
-  cekkembalislik() {
-    this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe(data => {
-      this.dataslik = data.result.dataSlikResult;
-      // console.warn('ttesttt', this.dataslik);
-      this.dataslik?.forEach(element => {
-        // console.warn('element', element.response_description == 'get SLIK Result Success');
-        if (element.response_description == 'get Slik Result Success') {
-          if (element.status_applicant === 'Debitur Utama') {
-            this.listLajangSlik.push(element);
-            console.warn('lajang', this.listLajangSlik);
-          } else {
-            this.listMenikahSlik.push(element);
-            console.warn('menikah', this.listMenikahSlik);
-          }
-        }
-      });
-    });
-  }
 
   cekdukcapil() {
     // alert(tglLahir)
@@ -514,20 +497,18 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                           setTimeout(() => {
                             this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe({
                               next: data => {
+                                // $('#example').DataTable({
+                                //   destroy: true,
+                                // });
+                                // $('#slikMenikah').DataTable({
+                                //   destroy: true,
+                                // });
+                                // this.dtTrigger.unsubscribe();
+
                                 if (data.result == '') {
                                   this.getLoading(false);
                                 }
                                 this.resultDataSlik = data.result.dataSlikResult;
-                                this.dataslik = data.result.dataSlikResult;
-                                this.dataslik.forEach(element => {
-                                  if (element.response_description == 'get Slik Result Success') {
-                                    if (element.status_applicant === 'Debitur Utama') {
-                                      this.listLajangSlik.push(element);
-                                    } else {
-                                      this.listMenikahSlik.push(element);
-                                    }
-                                  }
-                                });
 
                                 if (data.result.dataSlikResult == '') {
                                   this.hideCekSlik = 0;
@@ -545,7 +526,6 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                                 }, 10);
 
                                 setTimeout(() => {
-                                  // alert(this.dataEntry.tempat_lahir)
                                   if (this.resultDataSlik == '') {
                                     this.http
                                       .post<any>(this.baseUrl + 'v1/efos-ide/slik_verify', {
@@ -573,24 +553,44 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                                       })
                                       .subscribe({
                                         next: data => {
-                                          $('#example').DataTable({
-                                            destroy: true,
-                                          });
-                                          $('#slikMenikah').DataTable({
-                                            destroy: true,
-                                          });
-                                          this.dtTrigger.unsubscribe();
-                                          if (data.code == 200) {
-                                            this.dtTrigger.next(this.resultDataSlik);
-                                            this.getLoading(false);
-                                          } else {
-                                            this.dtTrigger.next(this.resultDataSlik);
-                                            this.getLoading(false);
-                                          }
+                                          setTimeout(() => {
+                                            if (data.code == 200) {
+                                              const responseSlikMenikah = data.result.responseDesc;
+                                              if (responseSlikMenikah === 'request slik checking success') {
+                                                this.responseSlikMenikah = 1;
+                                              } else {
+                                                this.responseSlikMenikah = 0;
+                                              }
+                                              this.dataslik = data.result.responseObject;
+                                              this.dataslik.forEach(element => {
+                                                if (element.statusApplicant === 'Debitur Utama') {
+                                                  this.listLajangSlik.push(element);
+                                                } else {
+                                                  this.listMenikahSlik.push(element);
+                                                }
+                                                this.getLoading(false);
+                                              });
+                                              this.dtTrigger.next(responseSlikMenikah);
+                                            } else {
+                                              this.dtTrigger.next(this.resultDataSlik);
+                                              this.getLoading(false);
+                                            }
+                                          }, 50);
                                         },
                                       });
                                   } else {
-                                    this.dtTrigger.next(this.resultDataSlik);
+                                    this.dataslik = data.result.dataSlikResult;
+                                    setTimeout(() => {
+                                      this.dataslik.forEach(response => {
+                                        if (response.status_applicant === 'Debitur Utama') {
+                                          this.listLajangSlik.push(response);
+                                        } else {
+                                          this.listMenikahSlik.push(response);
+                                        }
+                                      });
+                                      this.dtTrigger.next(this.dataslik);
+                                      this.getLoading(false);
+                                    }, 50);
                                   }
                                 }, 30);
                               },
@@ -860,5 +860,18 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   public getLoading(loading: boolean) {
     this.isLoading = loading;
     this.isSpin = loading;
+  }
+
+  refreshDatatables(data: any) {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtOptions = {
+        pagingType: 'full_numbers',
+        pageLength: 10,
+        processing: true,
+        responsive: true,
+      };
+      this.dtTrigger.next(data);
+    });
   }
 }

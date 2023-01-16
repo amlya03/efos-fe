@@ -684,59 +684,95 @@
           <tr *ngFor="let listLajangSlik of listLajangSlik; index as i">
             <th scope="row" style="text-align: center">{{ i + 1 }}</th>
             <td style="text-align: center">
-              {{ listLajangSlik.id_number != '' ? listLajangSlik.id_number : listLajangSlik.response_description }}
-            </td>
-            <td style="text-align: center">
-              {{ listLajangSlik.ljk_ket != '' ? listLajangSlik.ljk_ket : listLajangSlik.response_description }}
-            </td>
-            <td style="text-align: center">
               {{
-                listLajangSlik.jenis_kredit_pembiayaan_ket != ''
-                  ? listLajangSlik.jenis_kredit_pembiayaan_ket
-                  : listLajangSlik.response_description
+                listLajangSlik.id_number != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.id_number
+                  : 'checking slik on process'
               }}
             </td>
             <td style="text-align: center">
-              {{ listLajangSlik.sektor_ekonomi_ket != '' ? listLajangSlik.sektor_ekonomi_ket : listLajangSlik.response_description }}
-            </td>
-            <td style="text-align: center">
-              {{ listLajangSlik.kualitas != '' ? listLajangSlik.kualitas : listLajangSlik.response_description }}
-            </td>
-            <td style="text-align: center">
-              {{ listLajangSlik.jenis_penggunaan_ket != '' ? listLajangSlik.jenis_penggunaan_ket : listLajangSlik.response_description }}
+              {{
+                listLajangSlik.ljk_ket != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.ljk_ket
+                  : 'checking slik on process'
+              }}
             </td>
             <td style="text-align: center">
               {{
-                listLajangSlik.baki_debet == ''
-                  ? listLajangSlik.response_description
+                listLajangSlik.jenis_kredit_pembiayaan_ket != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.jenis_kredit_pembiayaan_ket
+                  : 'checking slik on process'
+              }}
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.sektor_ekonomi_ket != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.sektor_ekonomi_ket
+                  : 'checking slik on process'
+              }}
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.kualitas != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.kualitas
+                  : 'checking slik on process'
+              }}
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.jenis_penggunaan_ket != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.jenis_penggunaan_ket
+                  : 'checking slik on process'
+              }}
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.baki_debet == '' || listLajangSlik.responseDesc === 'request slik checking success'
+                  ? 'checking slik on process'
                   : (listLajangSlik.baki_debet | currency: 'Rp. ':'symbol':'1.0-0')
               }}
             </td>
             <td style="text-align: center">
               {{
-                listLajangSlik.plafon == null
-                  ? listLajangSlik.response_description
+                listLajangSlik.plafon == null || listLajangSlik.responseDesc === 'request slik checking success'
+                  ? 'checking slik on process'
                   : (listLajangSlik.plafon | currency: 'Rp. ':'symbol':'1.0-0')
               }}
             </td>
             <td style="text-align: center">
               {{
-                listLajangSlik.angsuran == 0
-                  ? listLajangSlik.response_description
+                listLajangSlik.angsuran == 0 || listLajangSlik.responseDesc === 'request slik checking success'
+                  ? 'checking slik on process'
                   : (listLajangSlik.angsuran | currency: 'Rp. ':'symbol':'1.0-0')
               }}
             </td>
             <td style="text-align: center">
-              {{ listLajangSlik.suku_bunga_imbalan != '' ? listLajangSlik.suku_bunga_imbalan : listLajangSlik.response_description }}%
+              {{
+                listLajangSlik.suku_bunga_imbalan != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.suku_bunga_imbalan
+                  : 'checking slik on process'
+              }}%
             </td>
             <td style="text-align: center">
-              {{ listLajangSlik.tanggal_mulai != '' ? listLajangSlik.tanggal_mulai : listLajangSlik.response_description }}
+              {{
+                listLajangSlik.tanggal_mulai != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.tanggal_mulai
+                  : 'checking slik on process'
+              }}
             </td>
             <td style="text-align: center">
-              {{ listLajangSlik.tanggal_jatuh_tempo != '' ? listLajangSlik.tanggal_jatuh_tempo : listLajangSlik.response_description }}
+              {{
+                listLajangSlik.tanggal_jatuh_tempo != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.tanggal_jatuh_tempo
+                  : 'checking slik on process'
+              }}
             </td>
             <td style="text-align: center">
-              {{ listLajangSlik.kondisi_ket != '' ? listLajangSlik.kondisi_ket : listLajangSlik.response_description }}
+              {{
+                listLajangSlik.kondisi_ket != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.kondisi_ket
+                  : 'checking slik on process'
+              }}
             </td>
           </tr>
         </tbody>
@@ -794,68 +830,104 @@
         <tr *ngFor="let listMenikahSlik of listMenikahSlik; index as i">
           <th scope="row" style="text-align: center">{{ i + 1 }}</th>
           <td style="text-align: center">
-            {{ listMenikahSlik.id_number != '' ? listMenikahSlik.id_number : listMenikahSlik.response_description }}
-          </td>
-          <td style="text-align: center">
-            {{ listMenikahSlik.ljk_ket != '' ? listMenikahSlik.ljk_ket : listMenikahSlik.response_description }}
-          </td>
-          <td style="text-align: center">
             {{
-              listMenikahSlik.jenis_kredit_pembiayaan_ket != ''
-                ? listMenikahSlik.jenis_kredit_pembiayaan_ket
-                : listMenikahSlik.response_description
+              listMenikahSlik.id_number != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.id_number
+                : 'checking slik on process'
             }}
           </td>
           <td style="text-align: center">
-            {{ listMenikahSlik.sektor_ekonomi_ket != '' ? listMenikahSlik.sektor_ekonomi_ket : listMenikahSlik.response_description }}
-          </td>
-          <td style="text-align: center">
-            {{ listMenikahSlik.kualitas != '' ? listMenikahSlik.kualitas : listMenikahSlik.response_description }}
-          </td>
-          <td style="text-align: center">
-            {{ listMenikahSlik.jenis_penggunaan_ket != '' ? listMenikahSlik.jenis_penggunaan_ket : listMenikahSlik.response_description }}
+            {{
+              listMenikahSlik.ljk_ket != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.ljk_ket
+                : 'checking slik on process'
+            }}
           </td>
           <td style="text-align: center">
             {{
-              listMenikahSlik.baki_debet == ''
-                ? listMenikahSlik.response_description
+              listMenikahSlik.jenis_kredit_pembiayaan_ket != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.jenis_kredit_pembiayaan_ket
+                : 'checking slik on process'
+            }}
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.sektor_ekonomi_ket != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.sektor_ekonomi_ket
+                : 'checking slik on process'
+            }}
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.kualitas != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.kualitas
+                : 'checking slik on process'
+            }}
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.jenis_penggunaan_ket != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.jenis_penggunaan_ket
+                : 'checking slik on process'
+            }}
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.baki_debet == '' || listMenikahSlik.responseDesc === 'request slik checking success'
+                ? 'checking slik on process'
                 : (listMenikahSlik.baki_debet | currency: 'Rp. ':'symbol':'1.0-0')
             }}
           </td>
           <td style="text-align: center">
             {{
-              listMenikahSlik.plafon == null
-                ? listMenikahSlik.response_description
+              listMenikahSlik.plafon == null || listMenikahSlik.responseDesc === 'request slik checking success'
+                ? 'checking slik on process'
                 : (listMenikahSlik.plafon | currency: 'Rp. ':'symbol':'1.0-0')
             }}
           </td>
           <td style="text-align: center">
             {{
-              listMenikahSlik.angsuran == 0
-                ? listMenikahSlik.response_description
+              listMenikahSlik.angsuran == 0 || listMenikahSlik.responseDesc === 'request slik checking success'
+                ? 'checking slik on process'
                 : (listMenikahSlik.angsuran | currency: 'Rp. ':'symbol':'1.0-0')
             }}
           </td>
           <td style="text-align: center">
-            {{ listMenikahSlik.suku_bunga_imbalan != '' ? listMenikahSlik.suku_bunga_imbalan : listMenikahSlik.response_description }}%
+            {{
+              listMenikahSlik.suku_bunga_imbalan != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.suku_bunga_imbalan
+                : 'checking slik on process'
+            }}%
           </td>
           <td style="text-align: center">
-            {{ listMenikahSlik.tanggal_mulai != '' ? listMenikahSlik.tanggal_mulai : listMenikahSlik.response_description }}
+            {{
+              listMenikahSlik.tanggal_mulai != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.tanggal_mulai
+                : 'checking slik on process'
+            }}
           </td>
           <td style="text-align: center">
-            {{ listMenikahSlik.tanggal_jatuh_tempo != '' ? listMenikahSlik.tanggal_jatuh_tempo : listMenikahSlik.response_description }}
+            {{
+              listMenikahSlik.tanggal_jatuh_tempo != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.tanggal_jatuh_tempo
+                : 'checking slik on process'
+            }}
           </td>
           <td style="text-align: center">
-            {{ listMenikahSlik.kondisi_ket != '' ? listMenikahSlik.kondisi_ket : listMenikahSlik.response_description }}
+            {{
+              listMenikahSlik.kondisi_ket != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.kondisi_ket
+                : 'checking slik on process'
+            }}
           </td>
         </tr>
       </tbody>
       <tfoot>
         <tr style="background-color: #ffd966">
           <th style="text-align: center" colspan="7">Total</th>
-          <th style="text-align: center">{{ this.totalOutNas | currency: 'Rp. ':'symbol':'1.0-0' }}</th>
-          <th style="text-align: center">{{ this.totalPlaNas | currency: 'Rp. ':'symbol':'1.0-0' }}</th>
-          <th style="text-align: center">{{ this.totalAngNas | currency: 'Rp. ':'symbol':'1.0-0' }}</th>
+          <th style="text-align: center">{{ this.totalPasOut | currency: 'Rp. ':'symbol':'1.0-0' }}</th>
+          <th style="text-align: center">{{ this.totalPasPla | currency: 'Rp. ':'symbol':'1.0-0' }}</th>
+          <th style="text-align: center">{{ this.totalPasAng | currency: 'Rp. ':'symbol':'1.0-0' }}</th>
           <th colspan="4"></th>
         </tr>
       </tfoot>
@@ -868,7 +940,8 @@
   style="color: #fff; text-align: center"
   *ngIf="
     (this.hideCekSlik == 1 && listLajangSlik[0].response_description === 'checking slik on process') ||
-    (this.hideCekSlik == 1 && listLajangSlik[0].response_description === 'Process Extract')
+    (this.hideCekSlik == 1 && listLajangSlik[0].response_description === 'Process Extract') ||
+    (this.hideCekSlik == 0 && responseSlikMenikah == 1)
   "
 >
   <button (click)="untukSlik()" name="submit_button" class="fa fa-file-archive-o btn btn-dark">Cek Hasil Slik</button>

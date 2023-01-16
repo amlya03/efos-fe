@@ -31,4 +31,12 @@ export class slik {
   angsuran: number | string | undefined | null;
   created_date: number | string | undefined | null;
   created_by: number | string | undefined | null;
+  reffNumber: number | string | undefined | null;
+  responseCode: number | string | undefined | null;
+  responseData: number | string | undefined | null;
+  responseDesc: number | string | undefined | null;
+  responseObject: number | string | undefined | null;
+  appId: number | string | undefined | null;
+  idNumber: number | string | undefined | null;
+  statusApplicant: number | string | undefined | null;
 }
