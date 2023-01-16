@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  // baseUrl: 'https://efos-be.megasyariah.co.id:8803/api/',
+  // baseUrl: 'http://efos-be.megasyariah.co.id:8805/api/',
   baseUrl: 'http://10.20.81.135:8803/api/',
   baseUrlDukcapil: 'http://10.20.82.12:8083/',
 };
