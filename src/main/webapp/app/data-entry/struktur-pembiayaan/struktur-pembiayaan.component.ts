@@ -373,6 +373,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   }
 
   itungrincihan() {
+    this.getLoading(true);
     var kirimanpotonganprovinsi = this.strukturForm.get('kode_fasilitas')?.value.split('|');
     var kirimanprogram = this.strukturForm.get('program')?.value.split('|');
     var kirimanproduk = this.strukturForm.get('produk')?.value.split('|');
@@ -381,7 +382,6 @@ export class StrukturPembiayaanComponent implements OnInit {
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
         // headers: headers,
-
         app_no_de: this.app_no_de,
         curef: this.curef,
         dp: this.strukturForm.get('uang_muka')?.value,
@@ -404,6 +404,7 @@ export class StrukturPembiayaanComponent implements OnInit {
           if (anguran2 == null) {
             this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ');
             this.showAngsuran = 'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+            this.getLoading(false);
           } else {
             this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ' + anguran2);
             this.showAngsuran =
@@ -412,10 +413,12 @@ export class StrukturPembiayaanComponent implements OnInit {
               '; ' +
               'Angsuran Tahun Ke 2 = ' +
               Number(anguran2).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+            this.getLoading(false);
           }
           this.strukturForm.get('nilai_pembiayaan')?.setValue(nilai);
         },
         error: err => {
+          this.getLoading(false);
           if (err.error.code == 400) {
             alert(err.error.message);
           }

@@ -1,6 +1,6 @@
 @import 'bootstrap-variables';
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
 @import 'node_modules/bootstrap/scss/bootstrap';
 
 /* ==============================================================
@@ -108,16 +108,15 @@ Generic styles
   height: 30px;
 }
 .form-lable {
-font-size: 15px;
-margin-right: 50px;
+  font-size: 15px;
+  margin-right: 50px;
 }
 
 .sweetalert {
- width: 50%;
- height: 50%;
- background-color: aqua;
+  width: 50%;
+  height: 50%;
+  background-color: aqua;
 }
-
 
 .readonly {
   background-color: #eee;
