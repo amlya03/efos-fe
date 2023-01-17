@@ -267,7 +267,7 @@ export class NavbarComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.110:8096/users/resetPassword', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos/users/resetPassword', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   this.sessionStorageService.store('sessionPs', passwordbaru);
