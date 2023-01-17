@@ -268,7 +268,7 @@ export class DataRumahComponent implements OnInit {
 
     // ambil semua data Slik
     setTimeout(() => {
-      this.dataRumah.fetchSlik('app_20221017_667').subscribe(data => {
+      this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe(data => {
         this.getLoading(false);
         this.slikTotal = data.result;
         let retSlik = {

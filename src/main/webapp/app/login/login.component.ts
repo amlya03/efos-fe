@@ -60,27 +60,24 @@ export class LoginComponent implements OnInit, AfterViewInit {
           Swal.fire({
             title: 'Berhasil Login!',
             imageAlt: 'Custom image',
-            showConfirmButton:false,
-            allowEscapeKey:false,
-            allowOutsideClick:false,
-          })
+            showConfirmButton: false,
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+          });
           // There were no routing during login (eg from navigationToStoredUrl)
-          this.router.navigate(['/']).then(() => {
+          this.router.navigate(['/home']).then(() => {
             window.location.reload();
           });
         }
       },
       error: () => {
-        
         Swal.fire({
           icon: 'error',
           title: 'Perhatikan !',
           text: 'User name atau Password salah',
-        
-        })
+        });
 
-
-        this.authenticationError = true
+        this.authenticationError = true;
       },
     });
   }

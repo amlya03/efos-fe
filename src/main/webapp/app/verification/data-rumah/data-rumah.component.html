@@ -145,20 +145,32 @@
     <tbody>
       <tr *ngFor="let listLajangSlik of listLajangSlik; index as i">
         <th scope="row" style="text-align: center">{{ i + 1 }}</th>
-        <td style="text-align: center">{{ listLajangSlik.id_number }}</td>
-        <td style="text-align: center">{{ listLajangSlik.ljk_ket }}</td>
-        <td style="text-align: center">{{ listLajangSlik.jenis_kredit_pembiayaan_ket }}</td>
-        <td style="text-align: center">{{ listLajangSlik.kualitas_ket }}</td>
-        <td style="text-align: center">{{ listLajangSlik.jenis_penggunaan_ket }}</td>
+        <td style="text-align: center">{{ listLajangSlik.id_number === 'undefined' ? '' : listLajangSlik.id_number }}</td>
+        <td style="text-align: center">{{ listLajangSlik.ljk_ket === 'undefined' ? '' : listLajangSlik.ljk_ket }}</td>
         <td style="text-align: center">
-          {{ listLajangSlik.baki_debet?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}
+          {{ listLajangSlik.jenis_kredit_pembiayaan_ket === 'undefined' ? '' : listLajangSlik.jenis_kredit_pembiayaan_ket }}
         </td>
-        <td style="text-align: center">{{ listLajangSlik.plafon?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
-        <td style="text-align: center">{{ listLajangSlik.angsuran?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}</td>
-        <td style="text-align: center">{{ listLajangSlik.suku_bunga_imbalan }}%</td>
-        <td style="text-align: center">{{ listLajangSlik.tanggal_mulai }}</td>
-        <td style="text-align: center">{{ listLajangSlik.tanggal_jatuh_tempo }}</td>
-        <td style="text-align: center">{{ listLajangSlik.kondisi_ket }}</td>
+        <td style="text-align: center">{{ listLajangSlik.kualitas_ket === 'undefined' ? '' : listLajangSlik.kualitas_ket }}</td>
+        <td style="text-align: center">
+          {{ listLajangSlik.jenis_penggunaan_ket === 'undefined' ? '' : listLajangSlik.jenis_penggunaan_ket }}
+        </td>
+        <td style="text-align: center">
+          {{ listLajangSlik.baki_debet === 'undefined' ? '' : (listLajangSlik.baki_debet | currency: 'Rp. ':'symbol':'1.0-0') }}
+        </td>
+        <td style="text-align: center">
+          {{ listLajangSlik.plafon === 'undefined' ? '' : (listLajangSlik.plafon | currency: 'Rp. ':'symbol':'1.0-0') }}
+        </td>
+        <td style="text-align: center">
+          {{ listLajangSlik.angsuran === 'undefined' ? '' : (listLajangSlik.angsuran | currency: 'Rp. ':'symbol':'1.0-0') }}
+        </td>
+        <td style="text-align: center">
+          {{ listLajangSlik.suku_bunga_imbalan === 'undefined' ? '' : listLajangSlik.suku_bunga_imbalan }}%
+        </td>
+        <td style="text-align: center">{{ listLajangSlik.tanggal_mulai === 'undefined' ? '' : listLajangSlik.tanggal_mulai }}</td>
+        <td style="text-align: center">
+          {{ listLajangSlik.tanggal_jatuh_tempo === 'undefined' ? '' : listLajangSlik.tanggal_jatuh_tempo }}
+        </td>
+        <td style="text-align: center">{{ listLajangSlik.kondisi_ket === 'undefined' ? '' : listLajangSlik.kondisi_ket }}</td>
       </tr>
     </tbody>
     <tfoot>
@@ -209,23 +221,32 @@
       <tbody>
         <tr *ngFor="let listMenikahSlik of listMenikahSlik; index as i">
           <th scope="row" style="text-align: center">{{ i + 1 }}</th>
-          <td style="text-align: center">{{ listMenikahSlik.id_number }}</td>
-          <td style="text-align: center">{{ listMenikahSlik.ljk_ket }}</td>
-          <td style="text-align: center">{{ listMenikahSlik.jenis_kredit_pembiayaan_ket }}</td>
-          <td style="text-align: center">{{ listMenikahSlik.kualitas_ket }}</td>
-          <td style="text-align: center">{{ listMenikahSlik.jenis_penggunaan_ket }}</td>
+          <td style="text-align: center">{{ listMenikahSlik.id_number === 'undefined' ? '' : listMenikahSlik.id_number }}</td>
+          <td style="text-align: center">{{ listMenikahSlik.ljk_ket === 'undefined' ? '' : listMenikahSlik.ljk_ket }}</td>
           <td style="text-align: center">
-            {{ listMenikahSlik.baki_debet?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}
+            {{ listMenikahSlik.jenis_kredit_pembiayaan_ket === 'undefined' ? '' : listMenikahSlik.jenis_kredit_pembiayaan_ket }}
+          </td>
+          <td style="text-align: center">{{ listMenikahSlik.kualitas_ket === 'undefined' ? '' : listMenikahSlik.kualitas_ket }}</td>
+          <td style="text-align: center">
+            {{ listMenikahSlik.jenis_penggunaan_ket === 'undefined' ? '' : listMenikahSlik.jenis_penggunaan_ket }}
           </td>
           <td style="text-align: center">
-            {{ listMenikahSlik.plafon?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}
+            {{ listMenikahSlik.baki_debet === 'undefined' ? '' : (listMenikahSlik.baki_debet | currency: 'Rp. ':'symbol':'1.0-0') }}
           </td>
           <td style="text-align: center">
-            {{ listMenikahSlik.angsuran?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}
+            {{ listMenikahSlik.plafon === 'undefined' ? '' : (listMenikahSlik.plafon | currency: 'Rp. ':'symbol':'1.0-0') }}
           </td>
-          <td style="text-align: center">{{ listMenikahSlik.tanggal_mulai }}</td>
-          <td style="text-align: center">{{ listMenikahSlik.tanggal_jatuh_tempo }}</td>
-          <td style="text-align: center">{{ listMenikahSlik.kondisi_ket }}</td>
+          <td style="text-align: center">
+            {{ listMenikahSlik.angsuran === 'undefined' ? '' : (listMenikahSlik.angsuran | currency: 'Rp. ':'symbol':'1.0-0') }}
+          </td>
+          <td style="text-align: center">
+            {{ listMenikahSlik.suku_bunga_imbalan === 'undefined' ? '' : listMenikahSlik.suku_bunga_imbalan }}%
+          </td>
+          <td style="text-align: center">{{ listMenikahSlik.tanggal_mulai === 'undefined' ? '' : listMenikahSlik.tanggal_mulai }}</td>
+          <td style="text-align: center">
+            {{ listMenikahSlik.tanggal_jatuh_tempo === 'undefined' ? '' : listMenikahSlik.tanggal_jatuh_tempo }}
+          </td>
+          <td style="text-align: center">{{ listMenikahSlik.kondisi_ket === 'undefined' ? '' : listMenikahSlik.kondisi_ket }}</td>
         </tr>
       </tbody>
       <tfoot>
