@@ -112,7 +112,6 @@ export class InitialDataEntryFixComponent implements OnInit {
   // //////////////////////////////////////////////////////////////
   // //////////////////////////////////////////////////////////////
   daWaprof: any;
-  postId: any;
   daWakota: any;
   ideForm!: FormGroup;
   jobForm!: FormGroup;
@@ -521,14 +520,9 @@ export class InitialDataEntryFixComponent implements OnInit {
     }, 280);
 
     setTimeout(() => {
-      this.ideFixServices.getTokenDukcapil().subscribe({
+      this.dataEntryService.getprovinsi().subscribe({
         next: data => {
-          this.postId = data.result.token;
-          this.dataEntryService.getprovinsi(this.postId).subscribe({
-            next: data => {
-              this.daWaprof = data.body?.result;
-            },
-          });
+          this.daWaprof = data.result;
         },
       });
     }, 290);
@@ -2227,9 +2221,9 @@ export class InitialDataEntryFixComponent implements OnInit {
 
   onChangeD(value: any) {
     const valueProv = value.split('|');
-    this.dataEntryService.getkabkota(this.postId, valueProv[0]).subscribe({
+    this.dataEntryService.getkabkota(valueProv[0]).subscribe({
       next: data => {
-        this.daWakotaD = data.body?.result;
+        this.daWakotaD = data.result;
         this.ideForm.get('kabkota_pasangan')?.setValue(this.untukKodeKobkotaD + '|' + this.untukkobkotaD);
       },
     });
@@ -2237,9 +2231,9 @@ export class InitialDataEntryFixComponent implements OnInit {
 
   onChangekotaD(value: any) {
     const valueKota = value.split('|');
-    this.dataEntryService.getkecamatan(this.postId, valueKota[0]).subscribe({
+    this.dataEntryService.getkecamatan(valueKota[0]).subscribe({
       next: data => {
-        this.kecamatanD = data.body?.result;
+        this.kecamatanD = data.result;
         this.ideForm.get('kecamatan_pasangan')?.setValue(this.untukKodeKecamatanD + '|' + this.untukkecamatanD);
       },
     });
@@ -2247,9 +2241,9 @@ export class InitialDataEntryFixComponent implements OnInit {
 
   onChangekecamatanD(value: any) {
     const valueKecamatan = value.split('|');
-    this.dataEntryService.getkelurahan(this.postId, valueKecamatan[0]).subscribe({
+    this.dataEntryService.getkelurahan(valueKecamatan[0]).subscribe({
       next: data => {
-        this.kelurahanD = data.body?.result;
+        this.kelurahanD = data.result;
         this.ideForm.get('kelurahan_pasangan')?.setValue(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
       },
     });
@@ -2262,9 +2256,9 @@ export class InitialDataEntryFixComponent implements OnInit {
 
   onChange(value: any) {
     const valueProv = value.split('|');
-    this.dataEntryService.getkabkota(this.postId, valueProv[0]).subscribe({
+    this.dataEntryService.getkabkota(valueProv[0]).subscribe({
       next: data => {
-        this.daWakota = data.body?.result;
+        this.daWakota = data.result;
         this.ideForm.get('kabkota')?.setValue(this.untukKodeKobkota + '|' + this.untukkobkota);
       },
     });
@@ -2272,9 +2266,9 @@ export class InitialDataEntryFixComponent implements OnInit {
 
   onChangekota(value: any) {
     const valueKota = value.split('|');
-    this.dataEntryService.getkecamatan(this.postId, valueKota[0]).subscribe({
+    this.dataEntryService.getkecamatan(valueKota[0]).subscribe({
       next: data => {
-        this.kecamatan = data.body?.result;
+        this.kecamatan = data.result;
         this.ideForm.get('kecamatan')?.setValue(this.untukKodeKecamatan + '|' + this.untukkecamatan);
       },
     });
@@ -2282,9 +2276,9 @@ export class InitialDataEntryFixComponent implements OnInit {
 
   onChangekecamatan(value: any) {
     const valueKecamatan = value.split('|');
-    this.dataEntryService.getkelurahan(this.postId, valueKecamatan[0]).subscribe({
+    this.dataEntryService.getkelurahan(valueKecamatan[0]).subscribe({
       next: data => {
-        this.kelurahan = data.body?.result;
+        this.kelurahan = data.result;
         this.ideForm.get('kelurahan')?.setValue(this.untukKodeKelurahan + '|' + this.untukkelurahan);
       },
     });
@@ -2296,26 +2290,26 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   carimenggunakankodepost(kodepost: any) {
-    this.getkodepostnya(kodepost, 0).subscribe({
+    this.dataEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
-        this.untukKodeProvinsi = sukses.body?.result.provKec.kd_prov;
-        this.untukKodeKobkota = sukses.body?.result.provKec.kd_kota;
-        this.untukKodeKecamatan = sukses.body?.result.provKec.kd_kec;
-        this.untukprovinsi = sukses.body?.result.provKec.nm_prov;
-        this.untukkobkota = sukses.body?.result.provKec.nm_kota;
-        this.untukkecamatan = sukses.body?.result.provKec.nm_kec;
+        this.untukKodeProvinsi = sukses.result.provKec.kd_prov;
+        this.untukKodeKobkota = sukses.result.provKec.kd_kota;
+        this.untukKodeKecamatan = sukses.result.provKec.kd_kec;
+        this.untukprovinsi = sukses.result.provKec.nm_prov;
+        this.untukkobkota = sukses.result.provKec.nm_kota;
+        this.untukkecamatan = sukses.result.provKec.nm_kec;
         // console.warn(sukses);
-        if (sukses.body?.result.kels == null) {
+        if (sukses.result.kels == null) {
           this.untukKodeKelurahan = kodepost;
           this.untukkelurahan = '';
           this.onChangekelurahan(this.untukKodeKelurahan + '|' + this.untukkelurahan);
-        } else if (sukses.body?.result.provKec.kd_kel == null) {
+        } else if (sukses.result.provKec.kd_kel == null) {
           this.untukKodeKelurahan = kodepost;
-          this.untukkelurahan = sukses.body?.result.kels[0].namaWilayah;
+          this.untukkelurahan = sukses.result.kels[0].namaWilayah;
           this.onChangekelurahan(this.untukKodeKelurahan + '|' + this.untukkelurahan);
         } else {
           this.untukKodeKelurahan = kodepost;
-          this.untukkelurahan = sukses.body?.result.provKec.nm_kel;
+          this.untukkelurahan = sukses.result.provKec.nm_kel;
           this.onChangekelurahan(this.untukKodeKelurahan + '|' + this.untukkelurahan);
         }
         this.ideForm.get('provinsi')?.setValue(this.untukKodeProvinsi + '|' + this.untukprovinsi);
@@ -2326,45 +2320,27 @@ export class InitialDataEntryFixComponent implements OnInit {
     });
   }
 
-  getkodepostnya(kodepst: any, req: any) {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      // 'Authorization': token,
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.postId}`,
-    };
-    // const kodepotongan = kodekota.split('|');
-
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvKecByKdPos/' + kodepst, {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-    // alert('CONTOHkota');
-    // alert(kodepotongan[0]);
-  }
-
   carimenggunakankodepostp(kodepost: any) {
-    this.getkodepostnya(kodepost, 0).subscribe({
+    this.dataEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
-        this.untukKodeProvinsiD = sukses.body?.result.provKec.kd_prov;
-        this.untukKodeKobkotaD = sukses.body?.result.provKec.kd_kota;
-        this.untukKodeKecamatanD = sukses.body?.result.provKec.kd_kec;
-        this.untukprovinsiD = sukses.body?.result.provKec.nm_prov;
-        this.untukkobkotaD = sukses.body?.result.provKec.nm_kota;
-        this.untukkecamatanD = sukses.body?.result.provKec.nm_kec;
+        this.untukKodeProvinsiD = sukses.result.provKec.kd_prov;
+        this.untukKodeKobkotaD = sukses.result.provKec.kd_kota;
+        this.untukKodeKecamatanD = sukses.result.provKec.kd_kec;
+        this.untukprovinsiD = sukses.result.provKec.nm_prov;
+        this.untukkobkotaD = sukses.result.provKec.nm_kota;
+        this.untukkecamatanD = sukses.result.provKec.nm_kec;
         // console.warn(sukses);
-        if (sukses.body?.result.kels == null) {
+        if (sukses.result.kels == null) {
           this.untukKodeKelurahanD = kodepost;
           this.untukkelurahanD = '';
           this.onChangekelurahanD(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
-        } else if (sukses.body?.result.provKec.kd_kel == null) {
+        } else if (sukses.result.provKec.kd_kel == null) {
           this.untukKodeKelurahanD = kodepost;
-          this.untukkelurahanD = sukses.body?.result.kels[0].namaWilayah;
+          this.untukkelurahanD = sukses.result.kels[0].namaWilayah;
           this.onChangekelurahanD(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
         } else {
           this.untukKodeKelurahanD = kodepost;
-          this.untukkelurahanD = sukses.body?.result.provKec.nm_kel;
+          this.untukkelurahanD = sukses.result.provKec.nm_kel;
           this.onChangekelurahanD(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
         }
         this.ideForm.get('provinsi_pasangan')?.setValue(this.untukKodeProvinsiD + '|' + this.untukprovinsiD);
@@ -2373,24 +2349,6 @@ export class InitialDataEntryFixComponent implements OnInit {
         this.onChangekecamatanD(this.untukKodeKecamatanD + '|' + this.untukkecamatanD);
       },
     });
-  }
-
-  getkodepostnyap(kodepst: any, req: any) {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      // 'Authorization': token,
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.postId}`,
-    };
-    // const kodepotongan = kodekota.split('|');
-
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvKecByKdPos/' + kodepst, {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-    // alert('CONTOHkota');
-    // alert(kodepotongan[0]);
   }
 
   submitBday(tanggal: any) {
@@ -2434,27 +2392,27 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
   provPeker(value: any) {
     const valueProv = value.split('|');
-    this.dataEntryService.getkabkota(this.postId, valueProv[0]).subscribe({
+    this.dataEntryService.getkabkota(valueProv[0]).subscribe({
       next: data => {
-        this.kotaChangeJob = data.body?.result;
+        this.kotaChangeJob = data.result;
         this.jobForm.get('kabkota')?.setValue(this.kdKotaJob + '|' + this.kotaJob);
       },
     });
   }
   kotaPeker(value: any) {
     const valueKota = value.split('|');
-    this.dataEntryService.getkecamatan(this.postId, valueKota[0]).subscribe({
+    this.dataEntryService.getkecamatan(valueKota[0]).subscribe({
       next: data => {
-        this.kecChangeJob = data.body?.result;
+        this.kecChangeJob = data.result;
         this.jobForm.get('kecamatan')?.setValue(this.kdKecJob + '|' + this.kecJob);
       },
     });
   }
   kecPeker(value: any) {
     const valueKecamatan = value.split('|');
-    this.dataEntryService.getkelurahan(this.postId, valueKecamatan[0]).subscribe({
+    this.dataEntryService.getkelurahan(valueKecamatan[0]).subscribe({
       next: data => {
-        this.kelChangeJob = data.body?.result;
+        this.kelChangeJob = data.result;
         this.jobForm.get('kelurahan')?.setValue(this.kdKelJob + '|' + this.kelJob);
       },
     });
@@ -2464,26 +2422,26 @@ export class InitialDataEntryFixComponent implements OnInit {
     this.jobForm.get('kode_pos')?.setValue(datakodepos[0]);
   }
   cariPekerPost(kodepost: any) {
-    this.getkodepostnya(kodepost, 0).subscribe({
+    this.dataEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
-        this.kdProJob = sukses.body?.result.provKec.kd_prov;
-        this.kdKotaJob = sukses.body?.result.provKec.kd_kota;
-        this.kdKecJob = sukses.body?.result.provKec.kd_kec;
-        this.proJob = sukses.body?.result.provKec.nm_prov;
-        this.kotaJob = sukses.body?.result.provKec.nm_kota;
-        this.kecJob = sukses.body?.result.provKec.nm_kec;
+        this.kdProJob = sukses.result.provKec.kd_prov;
+        this.kdKotaJob = sukses.result.provKec.kd_kota;
+        this.kdKecJob = sukses.result.provKec.kd_kec;
+        this.proJob = sukses.result.provKec.nm_prov;
+        this.kotaJob = sukses.result.provKec.nm_kota;
+        this.kecJob = sukses.result.provKec.nm_kec;
         // console.warn(sukses);
-        if (sukses.body?.result.kels == null) {
+        if (sukses.result.kels == null) {
           this.kdKelJob = kodepost;
           this.kelJob = '';
           this.kelPeker(this.kdKelJob + '|' + this.kelJob);
-        } else if (sukses.body?.result.provKec.kd_kel == null) {
+        } else if (sukses.result.provKec.kd_kel == null) {
           this.kdKelJob = kodepost;
-          this.kelJob = sukses.body?.result.kels[0].namaWilayah;
+          this.kelJob = sukses.result.kels[0].namaWilayah;
           this.kelPeker(this.kdKelJob + '|' + this.kelJob);
         } else {
           this.kdKelJob = kodepost;
-          this.kelJob = sukses.body?.result.provKec.nm_kel;
+          this.kelJob = sukses.result.provKec.nm_kel;
           this.kelPeker(this.kdKelJob + '|' + this.kelJob);
         }
         this.jobForm.get('provinsi')?.setValue(this.kdProJob + '|' + this.proJob);

@@ -39,7 +39,6 @@ export class CollateralComponent implements OnInit {
   daWa: any;
   tampungantipeagunan: any;
   tambahatautidak: any;
-  postId: any;
   daWaprof: any;
   daWakota: any;
   daWakotas: any;
@@ -297,7 +296,9 @@ export class CollateralComponent implements OnInit {
       this.listKendaraan = kendaraan.result;
     });
     // /////////////// REF ////////////////////////////////////////
-    this.gettokendukcapil();
+    this.datEntryService.getprovinsi().subscribe(res => {
+      this.daWaprof = res.result;
+    });
 
     this.datEntryService.getfetchlistagunan(this.curef).subscribe(table => {
       this.tableAgunan = table.result;
@@ -309,67 +310,49 @@ export class CollateralComponent implements OnInit {
     });
   }
 
-  gettokendukcapil(): void {
-    this.http
-      .post<any>('http://10.20.82.12:8083/token/generate-token', {
-        password: '3foWeb@pp',
-        username: 'efo',
-        // password_dukcapil: '3foWeb@pp',
-      })
-      .subscribe({
-        next: data => {
-          this.postId = data.result.token;
-          this.datEntryService.getprovinsi(this.postId).subscribe({
-            next: (res: EntityArrayResponseDaWa) => {
-              this.daWaprof = res.body?.result;
-            },
-          });
-        },
-      });
-  }
   provinsiChange(value: any): void {
     const valueProvinsi = value.split('|');
-    this.datEntryService.getkabkota(this.postId, valueProvinsi[0]).subscribe(data => {
+    this.datEntryService.getkabkota(valueProvinsi[0]).subscribe(data => {
       //console.warn(data);
-      this.daWakota = data.body?.result;
+      this.daWakota = data.result;
       this.collateralForm.get('kabkota_agunan')?.setValue(this.untukKodeKobkotAagunan + '|' + this.untukkobkotaagunan);
     });
   }
 
   provinsiSertifChange(value: any): void {
     const valueKota = value.split('|');
-    this.datEntryService.getkabkota(this.postId, valueKota[0]).subscribe(data => {
-      this.daWakotas = data.body?.result;
+    this.datEntryService.getkabkota(valueKota[0]).subscribe(data => {
+      this.daWakotas = data.result;
       this.collateralForm.get('kabkota_sesuai_sertifikat')?.setValue(this.untukKodeKobkotaSertif + '|' + this.untukKobkotaSertif);
       // this.collateralForm.get('kabkota_sesuai_sertifikat')?.setValue(this.collateralForm.get('kabkota_agunan')?.value);
     });
   }
   kotaChange(value: any): void {
     const valueKota = value.split('|');
-    this.datEntryService.getkecamatan(this.postId, valueKota[0]).subscribe(data => {
-      this.kecamatan = data.body?.result;
+    this.datEntryService.getkecamatan(valueKota[0]).subscribe(data => {
+      this.kecamatan = data.result;
       this.collateralForm.get('kecamatan_agunan')?.setValue(this.untukKodeKecamatanAgunan + '|' + this.untukkecamatanagunan);
     });
   }
   kotasSertifChange(value: any): void {
     const proValue = value.split('|');
-    this.datEntryService.getkecamatan(this.postId, proValue[0]).subscribe(data => {
-      this.kecamatans = data.body?.result;
+    this.datEntryService.getkecamatan(proValue[0]).subscribe(data => {
+      this.kecamatans = data.result;
       this.collateralForm.get('kecamatan_sesuai_sertifikat')?.setValue(this.untukKodeKecamatanSertif + '|' + this.untukKecamatanSertif);
       // this.collateralForm.get('kecamatan_sesuai_sertifikat')?.setValue(this.collateralForm.get('kecamatan_agunan')?.value);
     });
   }
   kecamatanChange(value: any): void {
     const valueKecamatan = value.split('|');
-    this.datEntryService.getkelurahan(this.postId, valueKecamatan[0]).subscribe(data => {
-      this.kelurahan = data.body?.result;
+    this.datEntryService.getkelurahan(valueKecamatan[0]).subscribe(data => {
+      this.kelurahan = data.result;
       this.collateralForm.get('kelurahan_agunan')?.setValue(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
     });
   }
   kecamatanSertifChange(value: any): void {
     const valueKecamatan = value.split('|');
-    this.datEntryService.getkelurahan(this.postId, valueKecamatan[0]).subscribe(data => {
-      this.kelurahans = data.body?.result;
+    this.datEntryService.getkelurahan(valueKecamatan[0]).subscribe(data => {
+      this.kelurahans = data.result;
       this.collateralForm.get('kelurahan_sesuai_sertifikat')?.setValue(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
       // this.collateralForm.get('kelurahan_sesuai_sertifikat')?.setValue(this.collateralForm.get('kelurahan_agunan')?.value);
     });
@@ -548,25 +531,25 @@ export class CollateralComponent implements OnInit {
   carimenggunakankodeposagunan(kodepost: any) {
     this.getkodepostnya(kodepost, 0).subscribe({
       next: sukses => {
-        this.untukKodeProvinsiAgunan = sukses.body?.result.provKec.kd_prov;
-        this.untukKodeKobkotAagunan = sukses.body?.result.provKec.kd_kota;
-        this.untukKodeKecamatanAgunan = sukses.body?.result.provKec.kd_kec;
-        this.untukprovinsiagunan = sukses.body?.result.provKec.nm_prov;
-        this.untukkobkotaagunan = sukses.body?.result.provKec.nm_kota;
-        this.untukkecamatanagunan = sukses.body?.result.provKec.nm_kec;
+        this.untukKodeProvinsiAgunan = sukses.result.provKec.kd_prov;
+        this.untukKodeKobkotAagunan = sukses.result.provKec.kd_kota;
+        this.untukKodeKecamatanAgunan = sukses.result.provKec.kd_kec;
+        this.untukprovinsiagunan = sukses.result.provKec.nm_prov;
+        this.untukkobkotaagunan = sukses.result.provKec.nm_kota;
+        this.untukkecamatanagunan = sukses.result.provKec.nm_kec;
         // console.warn(sukses);
-        if (sukses.body?.result.kels == null) {
+        if (sukses.result.kels == null) {
           this.untukKodeKelurahanAgunan = kodepost;
           this.untukkelurahanagunan = '';
           this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
-        } else if (sukses.body?.result.provKec.kd_kel == null) {
+        } else if (sukses.result.provKec.kd_kel == null) {
           this.untukKodeKelurahanAgunan = kodepost;
-          this.untukkelurahanagunan = sukses.body?.result.kels[0].namaWilayah;
+          this.untukkelurahanagunan = sukses.result.kels[0].namaWilayah;
           this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
           // alert(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan)
         } else {
           this.untukKodeKelurahanAgunan = kodepost;
-          this.untukkelurahanagunan = sukses.body?.result.provKec.nm_kel;
+          this.untukkelurahanagunan = sukses.result.provKec.nm_kel;
           this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
           // alert(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan)
         }
@@ -581,25 +564,25 @@ export class CollateralComponent implements OnInit {
   ///sertifikat
 
   carimenggunakankodepossertifikat(kodepost: any) {
-    this.getkodepostnya(kodepost, 0).subscribe({
+    this.datEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
-        this.untukProvinsiSertif = sukses.body?.result.provKec.nm_prov;
-        this.untukKobkotaSertif = sukses.body?.result.provKec.nm_kota;
-        this.untukKecamatanSertif = sukses.body?.result.provKec.nm_kec;
-        this.untukKodeProvinsiSertif = sukses.body?.result.provKec.kd_prov;
-        this.untukKodeKobkotaSertif = sukses.body?.result.provKec.kd_kota;
-        this.untukKodeKecamatanSertif = sukses.body?.result.provKec.kd_kec;
-        const setNull = sukses.body?.result.provKec.kd_kel;
+        this.untukProvinsiSertif = sukses.result.provKec.nm_prov;
+        this.untukKobkotaSertif = sukses.result.provKec.nm_kota;
+        this.untukKecamatanSertif = sukses.result.provKec.nm_kec;
+        this.untukKodeProvinsiSertif = sukses.result.provKec.kd_prov;
+        this.untukKodeKobkotaSertif = sukses.result.provKec.kd_kota;
+        this.untukKodeKecamatanSertif = sukses.result.provKec.kd_kec;
+        const setNull = sukses.result.provKec.kd_kel;
         //console.warn(sukses);
         // alert(this.untukKodeKobkotaSertif + '|' + this.untukKobkotaSertif)
         if (setNull == null) {
           this.untukKodeKelurahanSertif = kodepost;
-          this.untukKelurahanSertif = sukses.body?.result.kels[0].namaWilayah;
+          this.untukKelurahanSertif = sukses.result.kels[0].namaWilayah;
           this.kelurahanSertifChange(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
           // alert(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif)
         } else {
           this.untukKodeKelurahanSertif = kodepost;
-          this.untukKelurahanSertif = sukses.body?.result.provKec.nm_kel;
+          this.untukKelurahanSertif = sukses.result.provKec.nm_kel;
           this.kelurahanSertifChange(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
           // alert(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif)
         }
@@ -614,19 +597,7 @@ export class CollateralComponent implements OnInit {
   ///serifikat
 
   getkodepostnya(kodepst: any, req: any) {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      // 'Authorization': token,
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.postId}`,
-    };
-    // const kodepotongan = kodekota.split('|');
-
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvKecByKdPos/' + kodepst, {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
+    return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getWilByKdPos/' + kodepst);
   }
 
   onItemChange(event: any) {

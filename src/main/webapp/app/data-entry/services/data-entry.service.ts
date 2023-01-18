@@ -4,7 +4,6 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { Observable } from 'rxjs';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { SessionStorageService } from 'ngx-webstorage';
-import { EntityArrayResponseDaWa } from '../data-entry-component.servis';
 import { createRequestOption } from 'app/core/request/request-util';
 import { environment } from 'environments/environment';
 
@@ -36,6 +35,9 @@ export class DataEntryService {
     this.untukSessionFullName = this.SessionStorageService.retrieve('sessionFullName');
     this.untukSessionKodeCabang = this.SessionStorageService.retrieve('sessionKdCabang');
   }
+  // //////////////////////////// GET lIST Kodepost //////////////////////////////////////////////////
+  protected getKodePost = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos/getWilByKdPos/');
+  // //////////////////////////// GET lIST Kodepost //////////////////////////////////////////////////
 
   // //////////////////////////// GET lIST Kepemilikan Agunan //////////////////////////////////////////////////
   protected listKepemilikanAgunan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_hub_kepemilikan_agunan');
@@ -555,67 +557,23 @@ export class DataEntryService {
   }
   // /////////////////////////// Ref Semua Struktur Pembiayaan Data DE ////////////////////////////////////////////
 
-  getprovinsi(token: string | null | undefined, req?: number | null): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      // 'Authorization': token,
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-
-    // return this.http.get<ApiResponse>(this.baseUrlDukcapil + 'wilayahSvc/getProvinsi/', {
-    return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getPropinsi/', {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
+  getprovinsi(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getPropinsi/');
   }
 
-  getkabkota(token: string | null | undefined, kodekota: any, req?: number | null): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      // 'Authorization': token,
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-    const kodepotongan = kodekota.split('|');
-
-    // return this.http.get<ApiResponse>(this.baseUrlDukcapil + 'wilayahSvc/getKota/' + kodepotongan[0], {
-    return this.http.get<ApiResponse>(' http://10.20.34.178:8805/api/v1/efos/getKota/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
+  getkabkota(req?: number | null): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getKota/' + req);
   }
 
-  getkecamatan(token: string | null | undefined, kodekecamatan: any, req?: number | null): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-
-    const kodepotongan = kodekecamatan.split('|');
-    // return this.http.get<ApiResponse>(this.baseUrlDukcapil + 'wilayahSvc/getKec/' + kodepotongan[0], {
-    return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getKec/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
+  getkecamatan(req?: number | null): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getKec/' + req);
   }
 
-  getkelurahan(token: string | null | undefined, kodekecamatan: any, req?: number | null): Observable<EntityArrayResponseDaWa> {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-    const kodepotongan = kodekecamatan.split('|');
-    // return this.http.get<ApiResponse>(this.baseUrlDukcapil + 'wilayahSvc/getKel/' + kodepotongan[0], {
-    return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getKel/' + kodepotongan[0], {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
+  getkelurahan(req?: number | null): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getKel/' + req);
+  }
+
+  getKdpost(req?: number | null): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getWilByKdPos/' + req);
   }
 }
