@@ -189,7 +189,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_akses_rumah++++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_akses_rumah++++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -321,7 +321,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_developer++++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_developer++++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -422,7 +422,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_fasilitas+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_fasilitas+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -520,7 +520,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_fasilitas_listrik+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_fasilitas_listrik+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -576,8 +576,7 @@ export class ParameterizedComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'tambah',
       cancelButtonText: 'tidak',
-    })
-    .then(result => {
+    }).then(result => {
       if (result.isConfirmed) {
         let options = this.tablelistproduk.map((option: any) => {
           return `
@@ -657,7 +656,7 @@ export class ParameterizedComponent implements OnInit {
               'Content-Type': 'application/json; charset=utf-8',
               // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
             });
-            this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_ftv_dp', body, { headers }).subscribe({
+            this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_ftv_dp', body, { headers }).subscribe({
               next: response => {
                 //console.warn(response);
                 // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -873,7 +872,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_ftv_dp_detail', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_ftv_dp_detail', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -971,46 +970,44 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http
-                .post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_hub_kepemilikan_agunan+++', body, { headers })
-                .subscribe({
-                  next: response => {
-                    //console.warn(response);
-                    // this.sessionStorageService.store('sessionPs', passwordbaru);
-                    const Toast = Swal.mixin({
-                      toast: true,
-                      position: 'top-end',
-                      showConfirmButton: false,
-                      timer: 3000,
-                      timerProgressBar: true,
-                      didOpen: toast => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer);
-                        toast.addEventListener('mouseleave', Swal.resumeTimer);
-                      },
-                    });
-                    Toast.fire({
-                      icon: 'success',
-                      title: 'Data berhasil di simpan',
-                    });
-                  },
-                  error: error => {
-                    const Toast = Swal.mixin({
-                      toast: true,
-                      position: 'top-end',
-                      showConfirmButton: false,
-                      timer: 3000,
-                      timerProgressBar: true,
-                      didOpen: toast => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer);
-                        toast.addEventListener('mouseleave', Swal.resumeTimer);
-                      },
-                    });
-                    Toast.fire({
-                      icon: 'error',
-                      title: 'Data gagal di simpan',
-                    });
-                  },
-                });
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_hub_kepemilikan_agunan+++', body, { headers }).subscribe({
+                next: response => {
+                  //console.warn(response);
+                  // this.sessionStorageService.store('sessionPs', passwordbaru);
+                  const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: toast => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer);
+                      toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    },
+                  });
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'Data berhasil di simpan',
+                  });
+                },
+                error: error => {
+                  const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: toast => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer);
+                      toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    },
+                  });
+                  Toast.fire({
+                    icon: 'error',
+                    title: 'Data gagal di simpan',
+                  });
+                },
+              });
             }
           } else if (result.isDenied) {
           }
@@ -1071,7 +1068,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_hubungan_emergency+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_hubungan_emergency+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -1169,7 +1166,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_jabatan+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_jabatan+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -1267,7 +1264,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_jabatan_pemberi_ket+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_jabatan_pemberi_ket+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -1374,7 +1371,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_jenis_objek_agunan+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_jenis_objek_agunan+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -1472,7 +1469,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -1583,7 +1580,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_produk+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_produk+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -1781,7 +1778,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_skema+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_skema+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -1917,7 +1914,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_program+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_program+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -2122,7 +2119,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_skema_fasilitas++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_skema_fasilitas++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -2242,7 +2239,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_program+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_program+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -2360,7 +2357,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_program+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_program+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -2424,7 +2421,7 @@ export class ParameterizedComponent implements OnInit {
       // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
     });
 
-    this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_akses_rumah', body, { headers }).subscribe({
+    this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_akses_rumah', body, { headers }).subscribe({
       next: response => {
         //console.warn(response);
         // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -2499,7 +2496,7 @@ export class ParameterizedComponent implements OnInit {
       // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
     });
 
-    this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_jabatan_pemberi_ket', body, { headers }).subscribe({
+    this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_jabatan_pemberi_ket', body, { headers }).subscribe({
       next: response => {
         //console.warn(response);
         // this.sessionStorageService.store('sessionPs', passwordbaru);

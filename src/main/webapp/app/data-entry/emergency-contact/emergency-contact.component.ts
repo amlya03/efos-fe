@@ -478,7 +478,7 @@ export class EmergencyContactComponent implements OnInit {
     };
     // const kodepotongan = kodekota.split('|');
 
-    return this.http.get<ApiResponse>('http://10.20.34.178:8805/api/v1/efos/getWilByKdPos/' + kodepst, {
+    return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getWilByKdPos/' + kodepst, {
       headers: httpOptions,
       params: options,
       observe: 'response',

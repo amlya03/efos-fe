@@ -14,9 +14,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
 import { navbarModel } from './navbarModel.model';
-import { createRequestOption } from 'app/core/request/request-util';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-navbar',
@@ -24,6 +24,7 @@ import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
   // private loggedIn = new BehaviorSubject<boolean>(false); // {1}
@@ -267,7 +268,7 @@ export class NavbarComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos/users/resetPassword', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos/users/resetPassword', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   this.sessionStorageService.store('sessionPs', passwordbaru);

@@ -214,29 +214,27 @@ export class DataEntryService {
   // //////////////////////////// Ref List Jabatan Pemberi Ket //////////////////////////////////////////////////
 
   // //////////////////////////// Ref List produk //////////////////////////////////////////////////
-  protected refListproduk = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_produk');
+  protected refListproduk = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_produk');
   // //////////////////////////// Ref List produk //////////////////////////////////////////////////
 
   // //////////////////////////// Ref List program //////////////////////////////////////////////////
-  protected refListprogram = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_program');
+  protected refListprogram = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_program');
   // //////////////////////////// Ref List program //////////////////////////////////////////////////
 
   // //////////////////////////// Ref List skema //////////////////////////////////////////////////
-  protected refListskema = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_skema');
+  protected refListskema = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_skema');
   // //////////////////////////// Ref List skema //////////////////////////////////////////////////
 
   // //////////////////////////// Ref List skemanew //////////////////////////////////////////////////
-  protected refListskemanew = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_skema_new');
+  protected refListskemanew = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_skema_new');
   // //////////////////////////// Ref List skemanew //////////////////////////////////////////////////
 
   // //////////////////////////// Ref List FTVDP //////////////////////////////////////////////////
-  protected refListftvdp = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_ftv_dp');
+  protected refListftvdp = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_ftv_dp');
   // //////////////////////////// Ref List FTVDP //////////////////////////////////////////////////
 
   // /////////////////////////////  Ref List FTVDP detail \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  protected fetchlistftvdpdetail = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-ref/list_ftv_dp_detail?ss='
-  );
+  protected fetchlistftvdpdetail = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_ftv_dp_detail?ss=');
   // /////////////////////////////  Ref List FTVDP detail \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
@@ -566,7 +564,7 @@ export class DataEntryService {
     };
 
     // return this.http.get<ApiResponse>(this.baseUrlDukcapil + 'wilayahSvc/getProvinsi/', {
-    return this.http.get<ApiResponse>('http://10.20.34.178:8805/api/v1/efos/getPropinsi/', {
+    return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getPropinsi/', {
       headers: httpOptions,
       params: options,
       observe: 'response',
@@ -599,7 +597,7 @@ export class DataEntryService {
 
     const kodepotongan = kodekecamatan.split('|');
     // return this.http.get<ApiResponse>(this.baseUrlDukcapil + 'wilayahSvc/getKec/' + kodepotongan[0], {
-    return this.http.get<ApiResponse>('http://10.20.34.178:8805/api/v1/efos/getKec/' + kodepotongan[0], {
+    return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getKec/' + kodepotongan[0], {
       headers: httpOptions,
       params: options,
       observe: 'response',
@@ -614,7 +612,7 @@ export class DataEntryService {
     };
     const kodepotongan = kodekecamatan.split('|');
     // return this.http.get<ApiResponse>(this.baseUrlDukcapil + 'wilayahSvc/getKel/' + kodepotongan[0], {
-    return this.http.get<ApiResponse>('http://10.20.34.178:8805/api/v1/efos/getKel/' + kodepotongan[0], {
+    return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getKel/' + kodepotongan[0], {
       headers: httpOptions,
       params: options,
       observe: 'response',
