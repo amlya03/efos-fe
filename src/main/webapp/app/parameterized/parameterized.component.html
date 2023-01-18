@@ -1,0 +1,860 @@
+<div class="form-group row" [formGroup]="createform">
+  <label class="col-sm-4 col-form-label">Contoh data kiriman </label>
+  <div class="col-sm-8">
+    <div class="form-group">
+      <select class="form-control2" id="status_perkawinan" formControlName="contoh" name="contoh">
+        <option value="">Pilih Status Perkawinan</option>
+        <option value="1">Create akses rumah</option>
+        <option value="2">Create data scoring</option>
+        <option value="3">Create developer</option>
+        <option value="4">Create fasilitas</option>
+        <option value="5">Create fasilitas listrik</option>
+        <option value="6">Create ftv dp</option>
+        <option value="7">Create ftv dp detail</option>
+        <option value="8">Create hub kepemilikan agunan</option>
+        <option value="9">Create hubungan emergency</option>
+        <option value="10">Create jabatan</option>
+        <option value="11">Create jabatan pemberi ket</option>
+        <option value="12">Create jenis objek agunan</option>
+        <option value="13">Create jenis pekerjaan</option>
+        <option value="14">Create produk</option>
+        <option value="15">Create program</option>
+        <option value="16">Create skema</option>
+        <option value="17">Create skema fasilitas</option>
+        <option value="18">Create margin tenor fix</option>
+        <option value="19">Create margin tenor stepup</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<br />
+<br />
+
+<div *ngIf="this.createform.get('contoh')?.value === '1'" [formGroup]="createform">
+  <button id="tambahdata" (click)="createaksesrumah()" type="button" class="btn btn-info">Tambah data</button>
+
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table data Akses rumah</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Akses status</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Status</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tableAgunan of tableAgunan; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tableAgunan.akses_rumah }}</td>
+        <td style="text-align: center" scope="col">{{ tableAgunan.active }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create data scoring -->
+<div *ngIf="this.createform.get('contoh')?.value === '2'">
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Create Data Scoring</h3>
+  </div>
+  <br />
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">Data Value</label>
+    <div class="col-sm-8">
+      <div class="form-group">
+        <input type="text" class="form-control2" placeholder="Data Value" id="merk2" />
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">Join Income</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control2" placeholder="Join Income" id="model2" />
+      <br />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">Max value</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control2" placeholder="Max value" id="model2" />
+      <br />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">Min_value</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control2" placeholder="Min value" id="model2" />
+      <br />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">Parameter</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control2" placeholder="Parameter" id="model2" />
+      <br />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">Produk</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control2" placeholder="Produk" id="model2" />
+      <br />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">Scoring</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control2" placeholder="Scoring" id="model2" />
+      <br />
+    </div>
+  </div>
+  <br />
+  <br />
+  <div class="col" style="text-align: center">
+    <button class="fa fa-file-archive-o btn btn-dark" id="prosesData" name="proses" value="proses" type="button">Proses Data</button>
+  </div>
+
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table data scoring</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Data Value</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Join income</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Parameter</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Produk</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Score</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tabledatascoring of tabledatascoring; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tabledatascoring.data_value }}</td>
+        <td style="text-align: center" scope="col">{{ tabledatascoring.joint_income }}</td>
+        <td style="text-align: center" scope="col">{{ tabledatascoring.parameter }}</td>
+        <td style="text-align: center" scope="col">{{ tabledatascoring.produk }}</td>
+        <td style="text-align: center" scope="col">{{ tabledatascoring.score }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create developer  -->
+<div *ngIf="this.createform.get('contoh')?.value === '3'">
+  <button id="tambahdata" (click)="createdeveloper()" type="button" class="btn btn-info">Tambah data</button>
+
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table Developer</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>jenis_developer</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>kantor_cabang</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>nama_developer</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Status aktif</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tablelistdeveloper of tablelistdeveloper; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistdeveloper.jenis_developer }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistdeveloper.kantor_cabang }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistdeveloper.nama_developer }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistdeveloper.active }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create fasilitas -->
+<div *ngIf="this.createform.get('contoh')?.value === '4'">
+  <button id="tambahdata" (click)="createfasilitas()" type="button" class="btn btn-info">Tambah data</button>
+
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table Fasilitas</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>kode_fasilitas</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>fasilitas</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>deskripsi</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tablelistfasilitas of tablelistfasilitas; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistfasilitas.kode_fasilitas }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistfasilitas.fasilitas }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistfasilitas.deskripsi }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create fasilitas listrik -->
+<div *ngIf="this.createform.get('contoh')?.value === '5'">
+  <button id="tambahdata" (click)="createfasilitaslistrik()" type="button" class="btn btn-info">Tambah data</button>
+
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table Fasilitas Listrik</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>fasilitas listrik</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Status</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tablelistfasilitaslistrik of tablelistfasilitaslistrik; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistfasilitaslistrik.fasilitas_listrik }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistfasilitaslistrik.active }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!--create ftv dp  -->
+<div *ngIf="this.createform.get('contoh')?.value === '6'">
+  <button id="tambahdata" (click)="createftpdp()" type="button" class="btn btn-info">Tambah data</button>
+
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table FTP DP</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>kode produk</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>nama produk</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Detail</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tablelistftvdp of tablelistftvdp; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistftvdp.kode_produk }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistftvdp.nama_produk }}</td>
+        <td style="text-align: center">
+          <a type="button" (click)="viewftvdetail(tablelistftvdp.id)">
+            <fa-icon icon="eye"></fa-icon>
+            <br />Detail
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create ftv dp detail -->
+<div *ngIf="this.createform.get('contoh')?.value === '7'">
+  <button id="tambahdata" (click)="createftpdpdetail()" type="button" class="btn btn-info">Tambah data</button>
+
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table FTP DP Detail</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>FAsilitas</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Deskripsi</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tableftvdpdetail of tableftvdpdetail; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tableftvdpdetail.id_ftv_dp }}</td>
+        <td style="text-align: center" scope="col">{{ tableftvdpdetail.tipe_properti_deskripsi }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create hub kepemilikan agunan -->
+<div *ngIf="this.createform.get('contoh')?.value === '8'">
+  <button id="tambahdata" (click)="createhubkepemilikanagunan()" type="button" class="btn btn-info">Tambah data</button>
+
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table Hub Kepemilikan Agunan</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>deskripsi</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Status</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tablelisthubunganagunan of tablelisthubunganagunan; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelisthubunganagunan.deskripsi }}</td>
+        <td style="text-align: center" scope="col">{{ tablelisthubunganagunan.active }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create hubungan emergency -->
+<div *ngIf="this.createform.get('contoh')?.value === '9'">
+  <button id="tambahdata" (click)="createhubunganemergency()" type="button" class="btn btn-info">Tambah data</button>
+
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table Hubungan Emergency</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Akses status</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Status</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tablelisthubunganemergency of tablelisthubunganemergency; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelisthubunganemergency.deskripsi }}</td>
+        <td style="text-align: center" scope="col">{{ tablelisthubunganemergency.active }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create jabatan -->
+<div *ngIf="this.createform.get('contoh')?.value === '10'">
+  <button id="tambahdata" (click)="createjabatan()" type="button" class="btn btn-info">Tambah data</button>
+
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table Jabatan</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>jabatan deskripsi</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Status</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tablelistjabatan of tablelistjabatan; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistjabatan.jabatan_deskripsi }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistjabatan.active }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create jabatan pemberi ket -->
+<div *ngIf="this.createform.get('contoh')?.value === '11'" [formGroup]="createform">
+  <button id="tambahdata" (click)="createjabatanpemberiket()" type="button" class="btn btn-info">Tambah data</button>
+
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table Jabatan pemberi ket</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>deskripsi</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Status</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tablelistjabatanpemberiket of tablelistjabatanpemberiket; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistjabatanpemberiket.deskripsi }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistjabatanpemberiket.active }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create jenis objek agunan -->
+<div *ngIf="this.createform.get('contoh')?.value === '12'">
+  <button id="tambahdata" (click)="createjenisobjekagunan()" type="button" class="btn btn-info">Tambah data</button>
+
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table jenis objek agunan</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>jenis_objek_code</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>jenis_objek_deskripsi</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>active</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tablelistobjekagunan of tablelistobjekagunan; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistobjekagunan.jenis_objek_code }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistobjekagunan.jenis_objek_deskripsi }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistobjekagunan.active }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create jenis pekerjaan -->
+<div *ngIf="this.createform.get('contoh')?.value === '13'">
+  <button id="tambahdata" (click)="createjenispekerjaan()" type="button" class="btn btn-info">Tambah data</button>
+
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table jenis Pekerjaan</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>deskripsi</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Status</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tablelistjenispekerjaan of tablelistjenispekerjaan; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistjenispekerjaan.deskripsi }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistjenispekerjaan.active }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create produk -->
+<div *ngIf="this.createform.get('contoh')?.value === '14'">
+  <button id="tambahdata" (click)="createproduk()" type="button" class="btn btn-info">Tambah data</button>
+
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table produk</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Kode Program</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Produk</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tablelistproduk of tablelistproduk; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistproduk.kode_program }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistproduk.produk_deskripsi }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create program -->
+<div *ngIf="this.createform.get('contoh')?.value === '15'">
+  <button id="tambahdata" (click)="createprogram()" type="button" class="btn btn-info">Tambah data</button>
+
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table program</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Kode Fasilitas</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Program</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Min Platfond</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Max Platfond</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Expired Date</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tablelistprogram of tablelistprogram; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistprogram.kode_fasilitas }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistprogram.program }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistprogram.max_plafond }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistprogram.min_plafond }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistprogram.expired_date }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create skema -->
+<div *ngIf="this.createform.get('contoh')?.value === '16'">
+  <button id="tambahdata" (click)="createskema()" type="button" class="btn btn-info">Tambah data</button>
+
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table skema</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>skema_deskripsi</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>fasilitas</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>min_plafond</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>max_plafond</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>max_tenor</span>
+        </th>
+
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>dp_min</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tablelistskema of tablelistskema; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistskema.skema_deskripsi }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistskema.fasilitas }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistskema.min_plafond }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistskema.max_plafond }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistskema.max_tenor }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistskema.dp_min }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create skema fasilitas -->
+<div *ngIf="this.createform.get('contoh')?.value === '17'">
+  <button id="tambahdata" (click)="createskemafasilitas()" type="button" class="btn btn-info">Tambah data</button>
+
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Create skema fasilitas</h3>
+  </div>
+  <br />
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label"> status active</label>
+    <div class="col-sm-8">
+      <div class="form-group">
+        <select>
+          <option value="">Pilih status</option>
+          <option value="1">Aktif</option>
+          <option value="0">Tidak Aktif</option>
+        </select>
+      </div>
+      <br />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">fasilitas</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control2" placeholder="fasilitas" id="model2" />
+      <br />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">skema_fas_id</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control2" placeholder="skema fas id" id="model2" />
+      <br />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">skema_id</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control2" placeholder="skema id" id="model2" />
+      <br />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">tenor_tier</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control2" placeholder="tenor tier" id="model2" />
+      <br />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">tier</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control2" placeholder="tier" id="model2" />
+      <br />
+    </div>
+  </div>
+  <br />
+  <br />
+  <div class="col" style="text-align: center">
+    <button class="fa fa-file-archive-o btn btn-dark" id="prosesData" name="proses" value="proses" type="button">Proses Data</button>
+  </div>
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table fasilitas</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Akses status</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Status</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tableAgunan of tableAgunan; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tableAgunan.akses_rumah }}</td>
+        <td style="text-align: center" scope="col">{{ tableAgunan.active }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create tenor margin fix -->
+<div *ngIf="this.createform.get('contoh')?.value === '18'">
+  <button id="tambahdata" (click)="createstenormarginfix()" type="button" class="btn btn-info">Tambah data</button>
+
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Create tenor margin fix</h3>
+  </div>
+  <br />
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">margin</label>
+    <div class="col-sm-8">
+      <div class="form-group">
+        <input type="text" class="form-control2" placeholder="margin" id="merk2" />
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">skema_fas_id</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control2" placeholder="skema fas id" id="model2" />
+      <br />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">tn_code</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control2" placeholder="tn code" id="model2" />
+      <br />
+    </div>
+  </div>
+  <br />
+  <br />
+  <div class="col" style="text-align: center">
+    <button class="fa fa-file-archive-o btn btn-dark" id="prosesData" name="proses" value="proses" type="button">Proses Data</button>
+  </div>
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table tenor margin fix</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Akses status</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Status</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tableAgunan of tableAgunan; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tableAgunan.akses_rumah }}</td>
+        <td style="text-align: center" scope="col">{{ tableAgunan.active }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create tenor margin stepup -->
+<div *ngIf="this.createform.get('contoh')?.value === '19'">
+  <button id="tambahdata" (click)="createstenormarginstepup()" type="button" class="btn btn-info">Tambah data</button>
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Create tenor margin step up</h3>
+  </div>
+  <br />
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">margin</label>
+    <div class="col-sm-8">
+      <div class="form-group">
+        <input type="text" class="form-control2" placeholder="margin" id="merk2" />
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">skema_fas_id</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control2" placeholder="skema fas id" id="model2" />
+      <br />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">tn_code</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control2" placeholder="tn code" id="model2" />
+      <br />
+    </div>
+  </div>
+  <br />
+  <br />
+  <div class="col" style="text-align: center">
+    <button class="fa fa-file-archive-o btn btn-dark" id="prosesData" name="proses" value="proses" type="button">Proses Data</button>
+  </div>
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table tenor margin step up</h3>
+  </div>
+  <table class="table table-striped">
+    <thead style="background-color: grey">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Akses status</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Status</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tableAgunan of tableAgunan; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tableAgunan.akses_rumah }}</td>
+        <td style="text-align: center" scope="col">{{ tableAgunan.active }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

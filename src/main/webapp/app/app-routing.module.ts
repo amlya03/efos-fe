@@ -43,6 +43,7 @@ import { InputScoringComponent } from './input-scoring/input-scoring.component';
 import { KomiteComponent } from './komite/komite.component';
 import { DetailKomiteComponent } from './komite/detail-komite/detail-komite.component';
 import { HomeComponent } from './home/home.component';
+import { ParameterizedComponent } from './parameterized/parameterized.component';
 
 @NgModule({
   imports: [
@@ -223,6 +224,10 @@ import { HomeComponent } from './home/home.component';
         {
           path: 'home',
           component: HomeComponent,
+        },
+        {
+          path: 'parameterized',
+          component: ParameterizedComponent,
         },
         {
           path: '',

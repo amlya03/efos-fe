@@ -205,6 +205,39 @@ export class DataEntryService {
   // ///////////////////////////// Get ai List Agunan BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected getListAgunanById = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getCollateralById?si=');
   // ///////////////////////////// Get api List Agunan BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  // ///////////////////////////// Get ai List data scoring BY  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected getListdatascoring = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_data_scoring');
+  // ///////////////////////////// Get ai List data scoring BY  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // //////////////////////////// Ref List Jabatan Pemberi Ket //////////////////////////////////////////////////
+  protected refListJabatanPemberiKet = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_jabatan_pemberi_ket');
+  // //////////////////////////// Ref List Jabatan Pemberi Ket //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List produk //////////////////////////////////////////////////
+  protected refListproduk = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_produk');
+  // //////////////////////////// Ref List produk //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List program //////////////////////////////////////////////////
+  protected refListprogram = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_program');
+  // //////////////////////////// Ref List program //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List skema //////////////////////////////////////////////////
+  protected refListskema = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_skema');
+  // //////////////////////////// Ref List skema //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List skemanew //////////////////////////////////////////////////
+  protected refListskemanew = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_skema_new');
+  // //////////////////////////// Ref List skemanew //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref List FTVDP //////////////////////////////////////////////////
+  protected refListftvdp = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_ftv_dp');
+  // //////////////////////////// Ref List FTVDP //////////////////////////////////////////////////
+
+  // /////////////////////////////  Ref List FTVDP detail \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchlistftvdpdetail = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_ftv_dp_detail?ss='
+  );
+  // /////////////////////////////  Ref List FTVDP detail \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
@@ -224,7 +257,6 @@ export class DataEntryService {
   // /////////////////////////// Ref Semua Data DE ////////////////////////////////////////////
   getFetchSemuaDataDE(app_no_de: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.fetchSemuaDataDE + app_no_de);
-   
   }
   // /////////////////////////// Ref Semua Data DE ////////////////////////////////////////////
 
@@ -477,6 +509,54 @@ export class DataEntryService {
   }
   // //////////////////////////// GET lIST Kepemilikan Agunan //////////////////////////////////////////////////
 
+  // //////////////////////////// GET lIST datascoringtable//////////////////////////////////////////////////
+  getListdatascoringtable(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getListdatascoring);
+  }
+  // //////////////////////////// GET lIST datascoringtable //////////////////////////////////////////////////
+
+  // //////////////////////////// GET lIST Jabatan Pemberi ket //////////////////////////////////////////////////
+  getListJabatanPemberiKet(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListJabatanPemberiKet);
+  }
+  // //////////////////////////// GET lIST Jabatan Pemberi ket  //////////////////////////////////////////////////
+
+  // //////////////////////////// GET lIST produk //////////////////////////////////////////////////
+  getListproduk(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListproduk);
+  }
+  // //////////////////////////// GET lIST produk //////////////////////////////////////////////////
+
+  // //////////////////////////// GET lIST program //////////////////////////////////////////////////
+  getListprogram(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListprogram);
+  }
+  // //////////////////////////// GET lIST program //////////////////////////////////////////////////
+
+  // //////////////////////////// GET lIST skema //////////////////////////////////////////////////
+  getListskema(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListskema);
+  }
+  // //////////////////////////// GET lIST skema //////////////////////////////////////////////////
+
+  // //////////////////////////// GET lIST skema //////////////////////////////////////////////////
+  getListskemanew(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListskemanew);
+  }
+  // //////////////////////////// GET lIST skema //////////////////////////////////////////////////
+
+  // //////////////////////////// GET lIST ftvdp //////////////////////////////////////////////////
+  getListftvdp(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.refListftvdp);
+  }
+  // //////////////////////////// GET lIST ftvdp //////////////////////////////////////////////////
+
+  // /////////////////////////// Ref Semua Struktur Pembiayaan Data DE ////////////////////////////////////////////
+  getlistftvdpdetail(id: string | null | undefined): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchlistftvdpdetail + id);
+  }
+  // /////////////////////////// Ref Semua Struktur Pembiayaan Data DE ////////////////////////////////////////////
+
   getprovinsi(token: string | null | undefined, req?: number | null): Observable<EntityArrayResponseDaWa> {
     const options = createRequestOption(req);
     const httpOptions = {
@@ -485,7 +565,8 @@ export class DataEntryService {
       Authorization: `Bearer ${token}`,
     };
 
-    return this.http.get<ApiResponse>(this.baseUrlDukcapil + 'wilayahSvc/getProvinsi/', {
+    // return this.http.get<ApiResponse>(this.baseUrlDukcapil + 'wilayahSvc/getProvinsi/', {
+    return this.http.get<ApiResponse>('http://10.20.34.178:8805/api/v1/efos/getPropinsi/', {
       headers: httpOptions,
       params: options,
       observe: 'response',
@@ -501,7 +582,8 @@ export class DataEntryService {
     };
     const kodepotongan = kodekota.split('|');
 
-    return this.http.get<ApiResponse>(this.baseUrlDukcapil + 'wilayahSvc/getKota/' + kodepotongan[0], {
+    // return this.http.get<ApiResponse>(this.baseUrlDukcapil + 'wilayahSvc/getKota/' + kodepotongan[0], {
+    return this.http.get<ApiResponse>(' http://10.20.34.178:8805/api/v1/efos/getKota/' + kodepotongan[0], {
       headers: httpOptions,
       params: options,
       observe: 'response',
@@ -516,7 +598,8 @@ export class DataEntryService {
     };
 
     const kodepotongan = kodekecamatan.split('|');
-    return this.http.get<ApiResponse>(this.baseUrlDukcapil + 'wilayahSvc/getKec/' + kodepotongan[0], {
+    // return this.http.get<ApiResponse>(this.baseUrlDukcapil + 'wilayahSvc/getKec/' + kodepotongan[0], {
+    return this.http.get<ApiResponse>('http://10.20.34.178:8805/api/v1/efos/getKec/' + kodepotongan[0], {
       headers: httpOptions,
       params: options,
       observe: 'response',
@@ -530,7 +613,8 @@ export class DataEntryService {
       Authorization: `Bearer ${token}`,
     };
     const kodepotongan = kodekecamatan.split('|');
-    return this.http.get<ApiResponse>(this.baseUrlDukcapil + 'wilayahSvc/getKel/' + kodepotongan[0], {
+    // return this.http.get<ApiResponse>(this.baseUrlDukcapil + 'wilayahSvc/getKel/' + kodepotongan[0], {
+    return this.http.get<ApiResponse>('http://10.20.34.178:8805/api/v1/efos/getKel/' + kodepotongan[0], {
       headers: httpOptions,
       params: options,
       observe: 'response',
