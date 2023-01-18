@@ -687,62 +687,62 @@
               {{
                 listLajangSlik.id_number != '' || listLajangSlik.responseDesc !== 'request slik checking success'
                   ? listLajangSlik.id_number
-                  : 'checking slik on process'
+                  : responseNasabah
               }}
             </td>
             <td style="text-align: center">
               {{
                 listLajangSlik.ljk_ket != '' || listLajangSlik.responseDesc !== 'request slik checking success'
                   ? listLajangSlik.ljk_ket
-                  : 'checking slik on process'
+                  : responseNasabah
               }}
             </td>
             <td style="text-align: center">
               {{
                 listLajangSlik.jenis_kredit_pembiayaan_ket != '' || listLajangSlik.responseDesc !== 'request slik checking success'
                   ? listLajangSlik.jenis_kredit_pembiayaan_ket
-                  : 'checking slik on process'
+                  : responseNasabah
               }}
             </td>
             <td style="text-align: center">
               {{
                 listLajangSlik.sektor_ekonomi_ket != '' || listLajangSlik.responseDesc !== 'request slik checking success'
                   ? listLajangSlik.sektor_ekonomi_ket
-                  : 'checking slik on process'
+                  : responseNasabah
               }}
             </td>
             <td style="text-align: center">
               {{
                 listLajangSlik.kualitas != '' || listLajangSlik.responseDesc !== 'request slik checking success'
                   ? listLajangSlik.kualitas
-                  : 'checking slik on process'
+                  : responseNasabah
               }}
             </td>
             <td style="text-align: center">
               {{
                 listLajangSlik.jenis_penggunaan_ket != '' || listLajangSlik.responseDesc !== 'request slik checking success'
                   ? listLajangSlik.jenis_penggunaan_ket
-                  : 'checking slik on process'
+                  : responseNasabah
               }}
             </td>
             <td style="text-align: center">
               {{
                 listLajangSlik.baki_debet == '' || listLajangSlik.responseDesc === 'request slik checking success'
-                  ? 'checking slik on process'
+                  ? responseNasabah
                   : (listLajangSlik.baki_debet | currency: 'Rp. ':'symbol':'1.0-0')
               }}
             </td>
             <td style="text-align: center">
               {{
                 listLajangSlik.plafon == null || listLajangSlik.responseDesc === 'request slik checking success'
-                  ? 'checking slik on process'
+                  ? responseNasabah
                   : (listLajangSlik.plafon | currency: 'Rp. ':'symbol':'1.0-0')
               }}
             </td>
             <td style="text-align: center">
               {{
                 listLajangSlik.angsuran == 0 || listLajangSlik.responseDesc === 'request slik checking success'
-                  ? 'checking slik on process'
+                  ? listLajangSlik.angsuran
                   : (listLajangSlik.angsuran | currency: 'Rp. ':'symbol':'1.0-0')
               }}
             </td>
@@ -750,28 +750,28 @@
               {{
                 listLajangSlik.suku_bunga_imbalan != '' || listLajangSlik.responseDesc !== 'request slik checking success'
                   ? listLajangSlik.suku_bunga_imbalan
-                  : 'checking slik on process'
+                  : responseNasabah
               }}%
             </td>
             <td style="text-align: center">
               {{
                 listLajangSlik.tanggal_mulai != '' || listLajangSlik.responseDesc !== 'request slik checking success'
                   ? listLajangSlik.tanggal_mulai
-                  : 'checking slik on process'
+                  : responseNasabah
               }}
             </td>
             <td style="text-align: center">
               {{
                 listLajangSlik.tanggal_jatuh_tempo != '' || listLajangSlik.responseDesc !== 'request slik checking success'
                   ? listLajangSlik.tanggal_jatuh_tempo
-                  : 'checking slik on process'
+                  : responseNasabah
               }}
             </td>
             <td style="text-align: center">
               {{
                 listLajangSlik.kondisi_ket != '' || listLajangSlik.responseDesc !== 'request slik checking success'
                   ? listLajangSlik.kondisi_ket
-                  : 'checking slik on process'
+                  : responseNasabah
               }}
             </td>
           </tr>
@@ -833,62 +833,62 @@
             {{
               listMenikahSlik.id_number != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
                 ? listMenikahSlik.id_number
-                : 'checking slik on process'
+                : responsePasangan
             }}
           </td>
           <td style="text-align: center">
             {{
               listMenikahSlik.ljk_ket != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
                 ? listMenikahSlik.ljk_ket
-                : 'checking slik on process'
+                : responsePasangan
             }}
           </td>
           <td style="text-align: center">
             {{
               listMenikahSlik.jenis_kredit_pembiayaan_ket != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
                 ? listMenikahSlik.jenis_kredit_pembiayaan_ket
-                : 'checking slik on process'
+                : responsePasangan
             }}
           </td>
           <td style="text-align: center">
             {{
               listMenikahSlik.sektor_ekonomi_ket != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
                 ? listMenikahSlik.sektor_ekonomi_ket
-                : 'checking slik on process'
+                : responsePasangan
             }}
           </td>
           <td style="text-align: center">
             {{
               listMenikahSlik.kualitas != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
                 ? listMenikahSlik.kualitas
-                : 'checking slik on process'
+                : responsePasangan
             }}
           </td>
           <td style="text-align: center">
             {{
               listMenikahSlik.jenis_penggunaan_ket != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
                 ? listMenikahSlik.jenis_penggunaan_ket
-                : 'checking slik on process'
+                : responsePasangan
             }}
           </td>
           <td style="text-align: center">
             {{
               listMenikahSlik.baki_debet == '' || listMenikahSlik.responseDesc === 'request slik checking success'
-                ? 'checking slik on process'
+                ? responsePasangan
                 : (listMenikahSlik.baki_debet | currency: 'Rp. ':'symbol':'1.0-0')
             }}
           </td>
           <td style="text-align: center">
             {{
               listMenikahSlik.plafon == null || listMenikahSlik.responseDesc === 'request slik checking success'
-                ? 'checking slik on process'
+                ? responsePasangan
                 : (listMenikahSlik.plafon | currency: 'Rp. ':'symbol':'1.0-0')
             }}
           </td>
           <td style="text-align: center">
             {{
               listMenikahSlik.angsuran == 0 || listMenikahSlik.responseDesc === 'request slik checking success'
-                ? 'checking slik on process'
+                ? listMenikahSlik.angsuran
                 : (listMenikahSlik.angsuran | currency: 'Rp. ':'symbol':'1.0-0')
             }}
           </td>
@@ -896,28 +896,28 @@
             {{
               listMenikahSlik.suku_bunga_imbalan != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
                 ? listMenikahSlik.suku_bunga_imbalan
-                : 'checking slik on process'
+                : responsePasangan
             }}%
           </td>
           <td style="text-align: center">
             {{
               listMenikahSlik.tanggal_mulai != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
                 ? listMenikahSlik.tanggal_mulai
-                : 'checking slik on process'
+                : responsePasangan
             }}
           </td>
           <td style="text-align: center">
             {{
               listMenikahSlik.tanggal_jatuh_tempo != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
                 ? listMenikahSlik.tanggal_jatuh_tempo
-                : 'checking slik on process'
+                : responsePasangan
             }}
           </td>
           <td style="text-align: center">
             {{
               listMenikahSlik.kondisi_ket != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
                 ? listMenikahSlik.kondisi_ket
-                : 'checking slik on process'
+                : responsePasangan
             }}
           </td>
         </tr>
@@ -936,18 +936,18 @@
 </div>
 <br />
 
-<div
-  style="color: #fff; text-align: center"
+<div style="color: #fff; text-align: center" *ngIf="this.resultPDF == 0">
+  <!--
   *ngIf="
-    (this.hideCekSlik == 1 && listLajangSlik[0].response_description === 'checking slik on process') ||
-    (this.hideCekSlik == 1 && listLajangSlik[0].response_description === 'Process Extract') ||
+    (this.hideCekSlik == 1 && responseNasabah === 'checking slik on process') ||
+    (this.hideCekSlik == 1 && responseNasabah === 'Process Extract') ||
     (this.hideCekSlik == 0 && responseSlikMenikah == 1)
   "
->
+-->
   <button (click)="untukSlik()" name="submit_button" class="fa fa-file-archive-o btn btn-dark">Cek Hasil Slik</button>
 </div>
 
-<table id="downloadSlikOJK" *ngIf="this.hideCekSlik == 1 && this.listLajangSlik[0].response_description === 'get SLIK Result Success'">
+<table id="downloadSlikOJK" *ngIf="this.resultPDF == 1">
   <tr>
     <th></th>
   </tr>

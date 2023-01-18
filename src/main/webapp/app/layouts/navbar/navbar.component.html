@@ -394,7 +394,7 @@
         </li>
       </ul>
     </div>
-    <a class="nav-link" [routerLink]="'/'" (click)="logout()" routerLinkActive="active">
+    <a class="nav-link" (click)="logout()" routerLinkActive="active">
       <div class="row" *ngIf="!account?.imageUrl">
         <div class="col" style="text-align: center">
           <fa-icon icon="user"></fa-icon>

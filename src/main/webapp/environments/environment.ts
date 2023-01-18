@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   // baseUrl: 'http://efos-be.megasyariah.co.id:8805/api/',
   baseUrl: 'http://10.20.81.135:8803/api/',
+  // baseUrl: 'http://10.20.34.110:8805/api/',
   baseUrlDukcapil: 'http://10.20.82.12:8083/',
 };
 
