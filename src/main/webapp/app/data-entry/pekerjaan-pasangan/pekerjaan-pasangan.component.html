@@ -238,7 +238,7 @@
                 <button
                   [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
                   id="btnisi1"
-                  (click)="carimenggunakankodepos(this.formPekerjaanPasangan.get('kode_pos')?.value)"
+                  (click)="carimenggunakankodepos(this.formPekerjaanPasangan.get('kode_pos')?.value); clickKdPost = 1"
                   class="btn btn-outline-dark"
                   type="button"
                 >

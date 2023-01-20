@@ -983,7 +983,7 @@
             />
             <div class="input-group-append">
               <button
-                (click)="carimenggunakankodepostsebelum(this.datajobsebelum.get('kode_pos_sebelum')?.value)"
+                (click)="carimenggunakankodepostsebelum(this.datajobsebelum.get('kode_pos_sebelum')?.value); clickKdPostSebelum = 1"
                 class="btn btn-outline-dark"
                 id="kode_pos_sebelumhilang"
                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"

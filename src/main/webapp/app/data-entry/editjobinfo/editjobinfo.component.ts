@@ -67,6 +67,9 @@ export class EditjobinfoComponent implements OnInit {
   retrivekelurahan: any;
   //////////////////////////////
   tipePekerjaanChange: any;
+  clickKdPost = 0;
+  responseKels: refJenisPekerjaan[] = [];
+  responseNamaWilayah: refJenisPekerjaan[] = [];
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -436,6 +439,16 @@ export class EditjobinfoComponent implements OnInit {
 
   carimenggunakankodepos(kodepost: any) {
     this.datEntryService.getKdpost(kodepost).subscribe(data => {
+      if (this.clickKdPost == 1) {
+        this.responseKels = data.result.kels;
+        this.responseKels.forEach(element => {
+          this.responseKels.push(element);
+          if (element.kdPos == kodepost) {
+            let namaWIl = element.namaWilayah;
+            this.responseNamaWilayah.push(namaWIl);
+          }
+        });
+      }
       this.retriveKodeProvinsi = data.result.provKec.kd_prov;
       this.retriveKodeKota = data.result.provKec.kd_kota;
       this.retriveKodeKecamatan = data.result.provKec.kd_kec;
@@ -443,19 +456,27 @@ export class EditjobinfoComponent implements OnInit {
       this.retrivekabkota = data.result.provKec.nm_kota;
       this.retrivekecamatan = data.result.provKec.nm_kec;
 
-      if (data.result.kels == null) {
-        this.retriveKodeKelurahan = kodepost;
-        this.retrivekelurahan = '';
-        this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
-      } else if (data.result.provKec.kd_kel == null) {
-        this.retriveKodeKelurahan = kodepost;
-        this.retrivekelurahan = data.result.kels[0].namaWilayah;
-        this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
-      } else {
-        this.retriveKodeKelurahan = kodepost;
-        this.retrivekelurahan = data.result.provKec.nm_kel;
-        this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
-      }
+      setTimeout(() => {
+        if (this.clickKdPost == 1) {
+          if (data.result.kels == null) {
+            this.retriveKodeKelurahan = kodepost;
+            this.retrivekelurahan = '';
+            this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
+          } else if (data.result.provKec.kd_kel == null) {
+            this.retriveKodeKelurahan = kodepost;
+            this.retrivekelurahan = this.responseNamaWilayah[0];
+            this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
+          } else {
+            this.retriveKodeKelurahan = kodepost;
+            this.retrivekelurahan = data.result.provKec.nm_kel;
+            this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
+          }
+        } else {
+          this.retriveKodeKelurahan = kodepost;
+          this.retrivekelurahan = this.editJob.kelurahan;
+          this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
+        }
+      }, 10);
       this.editJobForm.get('provinsi')?.setValue(this.retriveKodeProvinsi + '|' + this.retriveprovinsi);
       this.onChange(this.retriveKodeProvinsi + '|' + this.retriveprovinsi);
       this.onChangekota(this.retriveKodeKota + '|' + this.retrivekabkota);

@@ -84,7 +84,13 @@ export class JobInfoComponent implements OnInit {
   retriveKodeKelurahan: any;
   //////////////////////////////
   untukListJob: any;
-
+  // //////////////////////////
+  clickKdPostSebelum = 0;
+  responseKels: refJenisPekerjaan[] = [];
+  responseKelsSebelum: refJenisPekerjaan[] = [];
+  responseNamaWilayah: refJenisPekerjaan[] = [];
+  responseNamaWilayahSebelum: refJenisPekerjaan[] = [];
+  // //////////////////////////
   constructor(
     protected datEntryService: DataEntryService,
     private route: ActivatedRoute,
@@ -762,6 +768,14 @@ export class JobInfoComponent implements OnInit {
 
   carimenggunakankodepost(kodepost: any) {
     this.datEntryService.getKdpost(kodepost).subscribe(data => {
+      this.responseKels = data.result.kels;
+      this.responseKels.forEach(element => {
+        this.responseKels.push(element);
+        if (element.kdPos == kodepost) {
+          let namaWIl = element.namaWilayah;
+          this.responseNamaWilayah.push(namaWIl);
+        }
+      });
       this.retriveKodeProvinsi = data.result.provKec.kd_prov;
       this.retriveKodeKota = data.result.provKec.kd_kota;
       this.retriveKodeKecamatan = data.result.provKec.kd_kec;
@@ -775,7 +789,7 @@ export class JobInfoComponent implements OnInit {
         this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
       } else if (data.result.provKec.kd_kel == null) {
         this.retriveKodeKelurahan = kodepost;
-        this.retrivekelurahan = data.result.kels[0].namaWilayah;
+        this.retrivekelurahan = this.responseNamaWilayah[0];
         this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
       } else {
         this.retriveKodeKelurahan = kodepost;
@@ -794,6 +808,16 @@ export class JobInfoComponent implements OnInit {
   carimenggunakankodepostsebelum(kodepost: any) {
     this.datEntryService.getKdpost(kodepost).subscribe({
       next: data => {
+        if (this.clickKdPostSebelum == 1) {
+          this.responseKelsSebelum = data.result.kels;
+          this.responseKelsSebelum.forEach(element => {
+            this.responseKelsSebelum.push(element);
+            if (element.kdPos == kodepost) {
+              let namaWIl = element.namaWilayah;
+              this.responseNamaWilayahSebelum.push(namaWIl);
+            }
+          });
+        }
         this.dataretriveprovinsisebelum = data.result.provKec.nm_prov;
         this.dataretrivekabkotasebelum = data.result.provKec.nm_kota;
         this.dataretrivekecamatansebelum = data.result.provKec.nm_kec;
@@ -803,20 +827,27 @@ export class JobInfoComponent implements OnInit {
         this.kodeKecSeb = data.result.provKec.kd_kec;
         // this.kodeKelSeb = data.result.provKec.kd_kel;
         // alert(this.dataretriveprovinsisebelum + this.dataretrivekabkotasebelum + this.dataretrivekecamatansebelum)
-
-        if (data.result.kels == null) {
-          this.kodeKelSeb = kodepost;
-          this.dataretrivekelurahansebelum = '';
-          this.onChangekelurahanD(this.kodeKelSeb + '|' + this.dataretrivekelurahansebelum);
-        } else if (data.result.provKec.kd_kel == null) {
-          this.kodeKelSeb = kodepost;
-          this.dataretrivekelurahansebelum = data.result.kels[0].namaWilayah;
-          this.onChangekelurahanD(this.kodeKelSeb + '|' + this.dataretrivekelurahansebelum);
-        } else {
-          this.kodeKelSeb = kodepost;
-          this.dataretrivekelurahansebelum = data.result.provKec.nm_kel;
-          this.onChangekelurahanD(this.kodeKelSeb + '|' + this.dataretrivekelurahansebelum);
-        }
+        setTimeout(() => {
+          if (this.clickKdPostSebelum == 1) {
+            if (data.result.kels == null) {
+              this.kodeKelSeb = kodepost;
+              this.dataretrivekelurahansebelum = '';
+              this.onChangekelurahanD(this.kodeKelSeb + '|' + this.dataretrivekelurahansebelum);
+            } else if (data.result.provKec.kd_kel == null) {
+              this.kodeKelSeb = kodepost;
+              this.dataretrivekelurahansebelum = this.responseNamaWilayahSebelum[0];
+              this.onChangekelurahanD(this.kodeKelSeb + '|' + this.dataretrivekelurahansebelum);
+            } else {
+              this.kodeKelSeb = kodepost;
+              this.dataretrivekelurahansebelum = data.result.provKec.nm_kel;
+              this.onChangekelurahanD(this.kodeKelSeb + '|' + this.dataretrivekelurahansebelum);
+            }
+          } else {
+            this.kodeKelSeb = kodepost;
+            this.dataretrivekelurahansebelum = this.tampunganid.kelurahan_sebelum;
+            this.onChangekelurahanD(this.kodeKelSeb + '|' + this.dataretrivekelurahansebelum);
+          }
+        }, 10);
         this.datajobsebelum.get('provinsi_sebelum')?.setValue(this.kodeProvSeb + '|' + this.dataretriveprovinsisebelum);
         this.onChangeD(this.kodeProvSeb + '|' + this.dataretriveprovinsisebelum);
         this.onChangekotaD(this.kodeKotaSeb + '|' + this.dataretrivekabkotasebelum);

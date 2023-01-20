@@ -286,20 +286,9 @@ export class DataPasanganComponent implements OnInit {
       this.retriveprovinsi = data.result.provKec.nm_prov;
       this.retrivekabkota = data.result.provKec.nm_kota;
       this.retrivekecamatan = data.result.provKec.nm_kec;
-
-      if (data.result.kels == null) {
-        this.retriveKodeKelurahan = kodepost;
-        this.retrivekelurahan = '';
-        this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
-      } else if (data.result.provKec.kd_kel == null) {
-        this.retriveKodeKelurahan = kodepost;
-        this.retrivekelurahan = data.result.kels[0].namaWilayah;
-        this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
-      } else {
-        this.retriveKodeKelurahan = kodepost;
-        this.retrivekelurahan = data.result.provKec.nm_kel;
-        this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
-      }
+      this.retriveKodeKelurahan = kodepost;
+      this.retrivekelurahan = this.dataEntry.kelurahan_pasangan;
+      this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
       this.dataPasanganForm.get('provinsi_pasangan')?.setValue(this.retriveKodeProvinsi + '|' + this.retriveprovinsi);
       this.onChange(this.retriveKodeProvinsi + '|' + this.retriveprovinsi);
       this.onChangekota(this.retriveKodeKota + '|' + this.retrivekabkota);

@@ -17,6 +17,7 @@ import { refObjekAgunan } from '../services/config/refObjekAgunan.model';
 import { refStatusSertifikat } from '../services/config/refStatusSertifikat.model';
 import { refTipeAgunan } from '../services/config/refTipeAgunan.model';
 import { environment } from 'environments/environment';
+import { refJenisPekerjaan } from '../services/config/refJenisPekerjaan.model';
 // import { colateralmodel } from './collateral-model';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -137,6 +138,15 @@ export class CollateralEditComponent implements OnInit {
   untukKodeKelurahanSertif: any;
   kirimanhubungan1: any;
   kirimanhubungan1lainya: any;
+
+  // /////////////////////////////////////
+  clickKdPost = 0;
+  clickKdPostSertif = 0;
+  responseKels: refJenisPekerjaan[] = [];
+  responseKelsSertif: refJenisPekerjaan[] = [];
+  responseNamaWilayah: refJenisPekerjaan[] = [];
+  responseNamaWilayahSertif: refJenisPekerjaan[] = [];
+  // /////////////////////////////////////
 
   constructor(
     private formBuilder: FormBuilder,
@@ -687,6 +697,16 @@ export class CollateralEditComponent implements OnInit {
   carimenggunakankodeposagunan(kodepost: any) {
     this.datEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
+        if (this.clickKdPost == 1) {
+          this.responseKels = sukses.result.kels;
+          this.responseKels.forEach(element => {
+            this.responseKels.push(element);
+            if (element.kdPos == kodepost) {
+              let namaWIl = element.namaWilayah;
+              this.responseNamaWilayah.push(namaWIl);
+            }
+          });
+        }
         this.untukKodeProvinsiAgunan = sukses.result.provKec.kd_prov;
         this.untukKodeKobkotAagunan = sukses.result.provKec.kd_kota;
         this.untukKodeKecamatanAgunan = sukses.result.provKec.kd_kec;
@@ -694,21 +714,29 @@ export class CollateralEditComponent implements OnInit {
         this.untukkobkotaagunan = sukses.result.provKec.nm_kota;
         this.untukkecamatanagunan = sukses.result.provKec.nm_kec;
         // console.warn(sukses);
-        if (sukses.result.kels == null) {
-          this.untukKodeKelurahanAgunan = kodepost;
-          this.untukkelurahanagunan = '';
-          this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
-        } else if (sukses.result.provKec.kd_kel == null) {
-          this.untukKodeKelurahanAgunan = kodepost;
-          this.untukkelurahanagunan = sukses.result.kels[0].namaWilayah;
-          this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
-          // alert(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan)
-        } else {
-          this.untukKodeKelurahanAgunan = kodepost;
-          this.untukkelurahanagunan = sukses.result.provKec.nm_kel;
-          this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
-          // alert(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan)
-        }
+        setTimeout(() => {
+          if (this.clickKdPost == 1) {
+            if (sukses.result.kels == null) {
+              this.untukKodeKelurahanAgunan = kodepost;
+              this.untukkelurahanagunan = '';
+              this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
+            } else if (sukses.result.provKec.kd_kel == null) {
+              this.untukKodeKelurahanAgunan = kodepost;
+              this.untukkelurahanagunan = this.responseNamaWilayah[0];
+              this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
+              // alert(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan)
+            } else {
+              this.untukKodeKelurahanAgunan = kodepost;
+              this.untukkelurahanagunan = sukses.result.provKec.nm_kel;
+              this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
+              // alert(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan)
+            }
+          } else {
+            this.untukKodeKelurahanAgunan = kodepost;
+            this.untukkelurahanagunan = this.tableAgunan.kelurahan_agunan;
+            this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
+          }
+        }, 10);
         this.editCollateralForm.get('provinsi_agunan')?.setValue(this.untukKodeProvinsiAgunan + '|' + this.untukprovinsiagunan);
         this.provinsiChange(this.untukKodeProvinsiAgunan + '|' + this.untukprovinsiagunan);
         this.kotaChange(this.untukKodeKobkotAagunan + '|' + this.untukkobkotaagunan);
@@ -722,26 +750,43 @@ export class CollateralEditComponent implements OnInit {
   carimenggunakankodepossertifikat(kodepost: any) {
     this.datEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
+        if (this.clickKdPostSertif == 1) {
+          this.responseKelsSertif = sukses.result.kels;
+          this.responseKelsSertif.forEach(element => {
+            this.responseKelsSertif.push(element);
+            if (element.kdPos == kodepost) {
+              let namaWIl = element.namaWilayah;
+              this.responseNamaWilayahSertif.push(namaWIl);
+            }
+          });
+        }
         this.untukProvinsiSertif = sukses.result.provKec.nm_prov;
         this.untukKobkotaSertif = sukses.result.provKec.nm_kota;
         this.untukKecamatanSertif = sukses.result.provKec.nm_kec;
         this.untukKodeProvinsiSertif = sukses.result.provKec.kd_prov;
         this.untukKodeKobkotaSertif = sukses.result.provKec.kd_kota;
         this.untukKodeKecamatanSertif = sukses.result.provKec.kd_kec;
-        const setNull = sukses.result.provKec.kd_kel;
-        //console.warn(sukses);
-        // alert(this.untukKodeKobkotaSertif + '|' + this.untukKobkotaSertif)
-        if (setNull == null) {
-          this.untukKodeKelurahanSertif = kodepost;
-          this.untukKelurahanSertif = sukses.result.kels[0].namaWilayah;
-          this.SertifKelurahanChange(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
-          // alert(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif)
-        } else {
-          this.untukKodeKelurahanSertif = kodepost;
-          this.untukKelurahanSertif = sukses.result.provKec.nm_kel;
-          this.SertifKelurahanChange(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
-          // alert(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif)
-        }
+        setTimeout(() => {
+          if (this.clickKdPostSertif == 1) {
+            if (sukses.result.kels == null) {
+              this.untukKodeKelurahanSertif = kodepost;
+              this.untukKelurahanSertif = '';
+              this.SertifKelurahanChange(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
+            } else if (sukses.result.provKec.kd_kel == null) {
+              this.untukKodeKelurahanSertif = kodepost;
+              this.untukKelurahanSertif = this.responseNamaWilayahSertif[0];
+              this.SertifKelurahanChange(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
+            } else {
+              this.untukKodeKelurahanSertif = kodepost;
+              this.untukKelurahanSertif = sukses.result.provKec.nm_kel;
+              this.SertifKelurahanChange(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
+            }
+          } else {
+            this.untukKodeKelurahanSertif = kodepost;
+            this.untukKelurahanSertif = this.tableAgunan.kelurahan_agunan;
+            this.SertifKelurahanChange(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
+          }
+        }, 10);
         this.editCollateralForm.get('provinsi_sesuai_sertifikat')?.setValue(this.untukKodeProvinsiSertif + '|' + this.untukProvinsiSertif);
         this.SertifProvChange(this.untukKodeProvinsiSertif + '|' + this.untukProvinsiSertif);
         this.SertifKotaChange(this.untukKodeKobkotaSertif + '|' + this.untukKobkotaSertif);

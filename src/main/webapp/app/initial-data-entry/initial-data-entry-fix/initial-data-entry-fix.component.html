@@ -272,7 +272,11 @@
         <div class="input-group mb-3">
           <input formControlName="kode_pos" type="tel" maxlength="8" class="form-control" id="kode_pos" name="kode_pos" />
           <div class="input-group-append">
-            <button (click)="carimenggunakankodepost(this.ideForm.get('kode_pos')?.value)" class="btn btn-outline-dark" type="button">
+            <button
+              (click)="carimenggunakankodepost(this.ideForm.get('kode_pos')?.value); clickKdPostLajang = 1"
+              class="btn btn-outline-dark"
+              type="button"
+            >
               Cari Data
             </button>
           </div>
@@ -639,7 +643,11 @@
             name="kode_pos_pekerjaan"
           />
           <div class="input-group-append">
-            <button class="btn btn-outline-dark" (click)="cariPekerPost(this.jobForm.get('kode_pos')?.value)" type="button">
+            <button
+              class="btn btn-outline-dark"
+              (click)="cariPekerPost(this.jobForm.get('kode_pos')?.value); clickKdPostJob = 1"
+              type="button"
+            >
               Cari Data
             </button>
           </div>
@@ -1182,7 +1190,7 @@
             <div class="input-group-append">
               <button
                 class="btn btn-outline-dark"
-                (click)="carimenggunakankodepostp(this.ideForm.get('kode_pos_pasangan')?.value)"
+                (click)="carimenggunakankodepostp(this.ideForm.get('kode_pos_pasangan')?.value); clickKdPostMenikah = 1"
                 type="button"
               >
                 Cari Data

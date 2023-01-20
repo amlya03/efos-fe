@@ -154,7 +154,7 @@
               <button
                 class="btn btn-outline-dark"
                 id="kode_poshilang"
-                (click)="carimenggunakankodepos(this.emergencyForm.get('kode_pos')?.value)"
+                (click)="carimenggunakankodepos(this.emergencyForm.get('kode_pos')?.value); clickKdPost = 1"
                 type="button"
                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               >
