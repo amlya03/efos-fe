@@ -10,6 +10,11 @@ import { environment } from 'environments/environment';
 })
 export class InputScoringService {
   baseUrl: string = environment.baseUrl;
+
+  // ////////////////////// get Sub Parameter Scoring BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected getParameterScoringUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/getParameterScoring?si=');
+  // ////////////////////// get Sub Parameter Scoring BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // /////////////////////////// List scoring ////////////////////////////////////////////
   protected listScoring = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_data_scoring');
   // /////////////////////////// List scoring ////////////////////////////////////////////
@@ -79,4 +84,10 @@ export class InputScoringService {
     return this.http.get<ApiResponse>(this.reffgetdatascoringbyid + id);
   }
   // ////////////////////// List getdatascoringdetail\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////// get Sub Parameter Scoring BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getParameterScoring(id: string | null | undefined): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getParameterScoringUrl + id);
+  }
+  // ////////////////////// get Sub Parameter Scoring BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 }

@@ -405,6 +405,16 @@
   </div>
 </nav>
 <nav [ngSwitch]="untukSessionRole" class="nav nav-pills nav-justified" id="nk-sidebar">
+  <div *ngFor="let child of childNavbar">
+    <a
+      class="nav-item nav-link"
+      routerLink="{{child.link}}"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <h6>{{child.menu_name}}</h6>
+    </a>
+  </div>
   <div
     *ngIf="
       router.url === '/daftar-aplikasi-waiting-assigment' ||

@@ -100,7 +100,7 @@ export class NavbarComponent implements OnInit {
     this.verificationServices.postNavbar(this.SessionStorageService.retrieve('sessionRole')).subscribe({
       next: data => {
         this.navbarParameterize = data.result;
-        this.childNavbar = data.result.child;
+        this.childNavbar = data.result[0].child;
       },
     });
     // setTimeout(() => {
