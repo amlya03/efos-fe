@@ -71,6 +71,7 @@ import { KomiteComponent } from './komite/komite.component';
 import { DetailKomiteComponent } from './komite/detail-komite/detail-komite.component';
 import { LoadingScreenComponent } from './layouts/loading-screen/loading-screen.component';
 import { ParameterizedComponent } from './parameterized/parameterized.component';
+import { InputparameterscoringComponent } from './inputparameterscoring/inputparameterscoring.component';
 
 @NgModule({
   imports: [
@@ -148,6 +149,7 @@ import { ParameterizedComponent } from './parameterized/parameterized.component'
     DetailKomiteComponent,
     LoadingScreenComponent,
     ParameterizedComponent,
+    InputparameterscoringComponent,
   ],
   bootstrap: [MainComponent],
 })

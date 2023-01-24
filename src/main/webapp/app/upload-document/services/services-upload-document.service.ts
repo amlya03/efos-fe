@@ -35,7 +35,7 @@ export class ServicesUploadDocumentService {
   /////////////////////////////////// Get Memo /////////////////////////////////////////////
 
   // // /////////////////////////// Upload  ////////////////////////////////////////////
-  protected uploadDataEntry = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/upload_doc?app_no_de=');
+  protected uploadDataEntry = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-de/upload_doc?app_no_de=');
   // // /////////////////////////// Upload  ////////////////////////////////////////////
 
   constructor(
