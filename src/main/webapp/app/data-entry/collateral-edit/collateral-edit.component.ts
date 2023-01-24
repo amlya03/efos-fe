@@ -722,7 +722,7 @@ export class CollateralEditComponent implements OnInit {
               this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
             } else if (sukses.result.provKec.kd_kel == null) {
               this.untukKodeKelurahanAgunan = kodepost;
-              this.untukkelurahanagunan = this.responseNamaWilayah[0];
+              this.untukkelurahanagunan = this.responseNamaWilayah[this.responseNamaWilayah.length - 1];
               this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
               // alert(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan)
             } else {
@@ -774,7 +774,7 @@ export class CollateralEditComponent implements OnInit {
               this.SertifKelurahanChange(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
             } else if (sukses.result.provKec.kd_kel == null) {
               this.untukKodeKelurahanSertif = kodepost;
-              this.untukKelurahanSertif = this.responseNamaWilayahSertif[0];
+              this.untukKelurahanSertif = this.responseNamaWilayahSertif[this.responseNamaWilayahSertif.length - 1];
               this.SertifKelurahanChange(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
             } else {
               this.untukKodeKelurahanSertif = kodepost;

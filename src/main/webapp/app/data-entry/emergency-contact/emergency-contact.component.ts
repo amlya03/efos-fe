@@ -444,7 +444,7 @@ export class EmergencyContactComponent implements OnInit {
             this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
           } else if (data.result.provKec.kd_kel == null) {
             this.retriveKodeKelurahan = kodepost;
-            this.retrivekelurahan = this.responseNamaWilayah[0];
+            this.retrivekelurahan = this.responseNamaWilayah[this.responseNamaWilayah.length - 1];
             this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
           } else {
             this.retriveKodeKelurahan = kodepost;

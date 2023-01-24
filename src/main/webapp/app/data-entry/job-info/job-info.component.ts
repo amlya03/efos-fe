@@ -789,7 +789,7 @@ export class JobInfoComponent implements OnInit {
         this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
       } else if (data.result.provKec.kd_kel == null) {
         this.retriveKodeKelurahan = kodepost;
-        this.retrivekelurahan = this.responseNamaWilayah[0];
+        this.retrivekelurahan = this.responseNamaWilayah[this.responseNamaWilayah.length - 1];
         this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
       } else {
         this.retriveKodeKelurahan = kodepost;
@@ -835,7 +835,7 @@ export class JobInfoComponent implements OnInit {
               this.onChangekelurahanD(this.kodeKelSeb + '|' + this.dataretrivekelurahansebelum);
             } else if (data.result.provKec.kd_kel == null) {
               this.kodeKelSeb = kodepost;
-              this.dataretrivekelurahansebelum = this.responseNamaWilayahSebelum[0];
+              this.dataretrivekelurahansebelum = this.responseNamaWilayahSebelum[this.responseNamaWilayahSebelum.length - 1];
               this.onChangekelurahanD(this.kodeKelSeb + '|' + this.dataretrivekelurahansebelum);
             } else {
               this.kodeKelSeb = kodepost;

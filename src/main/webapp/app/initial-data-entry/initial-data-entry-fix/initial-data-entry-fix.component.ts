@@ -2326,7 +2326,7 @@ export class InitialDataEntryFixComponent implements OnInit {
               this.onChangekelurahan(this.untukKodeKelurahan + '|' + this.untukkelurahan);
             } else if (sukses.result.provKec.kd_kel == null) {
               this.untukKodeKelurahan = kodepost;
-              this.untukkelurahan = this.responseNamaWilayah[0];
+              this.untukkelurahan = this.responseNamaWilayah[this.responseNamaWilayah.length - 1];
               this.onChangekelurahan(this.untukKodeKelurahan + '|' + this.untukkelurahan);
             } else {
               // alert('3');
@@ -2377,7 +2377,7 @@ export class InitialDataEntryFixComponent implements OnInit {
               this.onChangekelurahanD(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
             } else if (sukses.result.provKec.kd_kel == null) {
               this.untukKodeKelurahanD = kodepost;
-              this.untukkelurahanD = this.responseNamaWilayahMenikah[0];
+              this.untukkelurahanD = this.responseNamaWilayahMenikah[this.responseNamaWilayahMenikah.length - 1];
               this.onChangekelurahanD(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
             } else {
               this.untukKodeKelurahanD = kodepost;
@@ -2496,7 +2496,7 @@ export class InitialDataEntryFixComponent implements OnInit {
               this.kelPeker(this.kdKelJob + '|' + this.kelJob);
             } else if (sukses.result.provKec.kd_kel == null) {
               this.kdKelJob = kodepost;
-              this.kelJob = this.responseNamaWilayahJob[0];
+              this.kelJob = this.responseNamaWilayahJob[this.responseNamaWilayahJob.length - 1];
               this.kelPeker(this.kdKelJob + '|' + this.kelJob);
             } else {
               this.kdKelJob = kodepost;

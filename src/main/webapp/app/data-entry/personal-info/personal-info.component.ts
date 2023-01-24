@@ -581,7 +581,7 @@ export class PersonalInfoComponent implements OnInit {
               this.onChangekelurahanD(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
             } else if (sukses.result.provKec.kd_kel == null) {
               this.untukKodeKelurahanD = kodepost;
-              this.untukkelurahanD = this.responseNamaWilayahDomisili[0];
+              this.untukkelurahanD = this.responseNamaWilayahDomisili[this.responseNamaWilayahDomisili.length - 1];
               this.onChangekelurahanD(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
             } else {
               this.untukKodeKelurahanD = kodepost;
