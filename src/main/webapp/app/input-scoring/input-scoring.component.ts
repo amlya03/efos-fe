@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { SessionStorageService } from 'ngx-webstorage';
 import { environment } from 'environments/environment';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { mainparameterscoring } from './mainparameterscoring.model';
 
 @Component({
   selector: 'jhi-input-scoring',
@@ -21,6 +22,7 @@ export class InputScoringComponent implements OnInit {
   scoringForm!: FormGroup;
   submitted = false;
   listScoring: listScoring[] = [];
+  listmainparameterscoring: mainparameterscoring[] = [];
   inputScoring: inputModel[] = [];
 
   @ViewChild(DataTableDirective, { static: false })
@@ -28,6 +30,10 @@ export class InputScoringComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
   listdatafasilitas: any;
+  kirimanstatus: any;
+  listparameterscoring: any;
+  datascoringbyid: any;
+  getjoincome: any;
 
   constructor(
     protected http: HttpClient,
@@ -66,6 +72,17 @@ export class InputScoringComponent implements OnInit {
     this.scoringServices.listDataScoring().subscribe(data => {
       this.listScoring = data.result;
       this.dtTrigger.next(data.result);
+    });
+
+    this.scoringServices.listmainparameterscoring().subscribe(data => {
+      this.listmainparameterscoring = data.result;
+      console.warn(this.listmainparameterscoring);
+      // this.dtTrigger.next(data.result);
+    });
+    this.scoringServices.listparameterscoring().subscribe(data => {
+      this.listparameterscoring = data.result;
+      console.warn(this.listparameterscoring);
+      // this.dtTrigger.next(data.result);
     });
   }
   // scoringChange(parameter: any) {
@@ -113,7 +130,7 @@ export class InputScoringComponent implements OnInit {
   // ////////////// Pop Up Input Scoring ////////////////////////
   // async simpanData() {
   simpanData() {
-    let options = this.inputScoring.map((option: any) => {
+    let options = this.listparameterscoring.map((option: any) => {
       return `
         <option key="${option}" value="${option.parameter_type}">
             ${option.parameter_description}
@@ -207,8 +224,8 @@ export class InputScoringComponent implements OnInit {
         return;
       } else {
         this.http
-          .post<any>(this.baseUrl + 'v1/efos-ref/create_data_scoring', {
-            id: '',
+          .post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_data_scoring', {
+            id: 0,
             created_by: this.SessionStorageService.retrieve('sessionUserName'),
             created_date: '',
             data_value: datVal,
@@ -218,6 +235,243 @@ export class InputScoringComponent implements OnInit {
             parameter: parVal,
             produk: proVal,
             score: scVal,
+          })
+          .subscribe({
+            next: response => {
+              //console.warn(response);
+              alert('Data Berhasil disimpan');
+              window.location.reload();
+            },
+            error: error => console.warn(error),
+          });
+      }
+    });
+
+    // if (formValues) {
+    //   Swal.fire(JSON.stringify(formValues));
+    // }
+    // ////////////// Pop Up Input Scoring ////////////////////////
+  }
+
+  viewdetaildatascoring(id: any) {
+    this.scoringServices.getdatascoringdetailbyid(id).subscribe(data => {
+      this.datascoringbyid = data.result;
+
+      if ((this.datascoringbyid.joint_income = '1')) {
+        this.getjoincome = 'Ya';
+      } else {
+        this.getjoincome = 'Tidak';
+      }
+
+      $('#data_value').val(this.datascoringbyid.data_value);
+      $('#datascoringbyid').val(this.datascoringbyid.score);
+    });
+
+    let options = this.listparameterscoring.map((option: any) => {
+      return `
+        <option key="${option}" value="${option.parameter_type}">
+            ${option.parameter_description}
+        </option>
+      `;
+    });
+
+    let optionsfasilitas = this.listdatafasilitas.map((optionsfasilitas: any) => {
+      return `
+        <option key="${optionsfasilitas}" value="${optionsfasilitas.fasilitas}">
+            ${optionsfasilitas.fasilitas}
+        </option>
+      `;
+    });
+
+    $(document).ready(function () {
+      $('#parameter').change(function () {
+        let parameterValue = $(this).val();
+        if (parameterValue === '1') {
+          $('#minMaxDiv').hide();
+          $('#dataValueDiv').show();
+        } else {
+          $('#minMaxDiv').show();
+          $('#dataValueDiv').hide();
+        }
+      });
+    });
+    // const { value: formValues } = await Swal.fire({
+    Swal.fire({
+      title: 'Input Scoring',
+      html:
+        '<br />' +
+        '<div class="row form-material" style="width:100%"><div class="form-group row">' +
+        '<label class="col-sm-3 col-form-label">Produk</label>' +
+        // '<div class="col-sm-9"><select id="produk" class="form-control"><option value="">Pilih Produk</option><option value="PPR">PPR</option><option value="PPR FLPP">PPR FLPP</option><option value="PTA">PTA</option><option value="PKM">PKM</option><option value="MULTIGUNA">MULTIGUNA</option></select>' +
+        '<div class="col-sm-9"><select class="form-control" id="produk"><option value="' +
+        this.datascoringbyid.produk +
+        '">' +
+        this.datascoringbyid.produk +
+        '</option>' +
+        `${optionsfasilitas}` +
+        '</select>' +
+        '</div></div>' +
+        '<div class="form-group row"><label class="col-sm-3 col-form-label">Joint Income?</label>' +
+        '<div class="col-sm-9"><select id="joint_income" class="form-control"><option value="' +
+        this.datascoringbyid.joint_income +
+        '">' +
+        this.getjoincome +
+        '</option><option value="1">Ya</option><option value="2">Tidak</option></select>' +
+        '</div></div>' +
+        '<div class="form-group row"><label class="col-sm-3 col-form-label">Parameter</label>' +
+        '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="">' +
+        this.datascoringbyid.parameter +
+        '</option>' +
+        `${options}` +
+        '</select>' +
+        // '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="">Pilih Parameter</option><option value="1">1</option><option value="0">0</option></select>' +
+        '</div></div>' +
+        '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Data Value</label>' +
+        '<div class="col-sm-9"><input type="text" class="form-control" id="data_value"/>' +
+        '</div></div>' +
+        '<div class="form-group row" id="minMaxDiv"><label class="col-sm-3 col-form-label">Min / Max</label>' +
+        '<div class="col"><input type="text" class="form-control" id="min"></div><div class="col">Min</div><div class="col"><input type="text" class="form-control" id="max"></div><div class="col">Max</div>' +
+        '</div>' +
+        '<div class="form-group row"><label class="col-sm-3 col-form-label">Score</label>' +
+        '<div class="col-sm-9"><input type="text" class="form-control" id="score">' +
+        '</div></div>' +
+        '<div>',
+      focusConfirm: false,
+      // preConfirm: () => {
+      //   return [$('#produk').val(), $('#joint_income').val(), $('#parameter').val(), $('#data_value').val(), $('#min').val(), $('#max').val(), $('#score').val()];
+      // },
+    }).then(result => {
+      let proVal = $('#produk').val();
+      let joVal = $('#joint_income').val();
+      let parVal = $('#parameter').val();
+      let datVal = $('#data_value').val();
+      let miVal = $('#min').val();
+      let maVal = $('#max').val();
+      let scVal = $('#score').val();
+      if (proVal === '') {
+        alert('Gagal Menyimpan Produk Belum dipilih');
+        return;
+      } else if (joVal === '') {
+        alert('Gagal Menyimpan Joint Income Belum dipilih');
+        return;
+      } else if (parVal === '') {
+        alert('Gagal Menyimpan Parameter Belum dipilih');
+        return;
+      } else if (parVal === '1' && datVal === '') {
+        alert('Gagal Menyimpan Data Value Belum diisi');
+        return;
+      } else if (parVal === '0' && miVal === '') {
+        alert('Gagal Menyimpan Min Value Belum diisi');
+        return;
+      } else if (parVal === '0' && maVal === '') {
+        alert('Gagal Menyimpan Max Value Belum diisi');
+        return;
+      } else if (scVal === '') {
+        alert('Gagal Menyimpan Score Belum diisi');
+        return;
+      } else {
+        this.http
+          .post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_data_scoring', {
+            id: 0,
+            created_by: this.SessionStorageService.retrieve('sessionUserName'),
+            created_date: '',
+            data_value: datVal,
+            joint_income: joVal,
+            max_value: maVal,
+            min_value: miVal,
+            parameter: parVal,
+            produk: proVal,
+            score: scVal,
+          })
+          .subscribe({
+            next: response => {
+              //console.warn(response);
+              alert('Data Berhasil disimpan');
+              window.location.reload();
+            },
+            error: error => console.warn(error),
+          });
+      }
+    });
+  }
+
+  simpanDataparameterscoring() {
+    let options = this.inputScoring.map((option: any) => {
+      return `
+        <option key="${option}" value="${option.parameter_type}">
+            ${option.parameter_description}
+        </option>
+      `;
+    });
+
+    let optionsfasilitas = this.listdatafasilitas.map((optionsfasilitas: any) => {
+      return `
+        <option key="${optionsfasilitas}" value="${optionsfasilitas.fasilitas}">
+            ${optionsfasilitas.fasilitas}
+        </option>
+      `;
+    });
+
+    $(document).ready(function () {
+      $('#parameter').change(function () {
+        let parameterValue = $(this).val();
+        if (parameterValue === '1') {
+          $('#minMaxDiv').hide();
+          $('#dataValueDiv').show();
+        } else {
+          $('#minMaxDiv').show();
+          $('#dataValueDiv').hide();
+        }
+      });
+    });
+    // const { value: formValues } = await Swal.fire({
+    Swal.fire({
+      title: 'Main Parameter Scoring',
+      html:
+        '<br />' +
+        '<div class="form-group row"><label class="col-sm-3 col-form-label">Status aktif</label>' +
+        '<div class="col-sm-9"><select id="status_aktif" class="form-control"><option value="">Pilih Status</option><option value="1">active</option><option value="0">Tidak</option></select>' +
+        '</div></div>' +
+        '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Deskripsi</label>' +
+        '<div class="col-sm-9"><input type="text" class="form-control" id="parameter_deskripsi"/>' +
+        '</div></div>' +
+        '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Bobot</label>' +
+        '<div class="col-sm-9"><input type="text" class="form-control" id="bobot"/>' +
+        '</div></div>' +
+        '<div>',
+      focusConfirm: false,
+      // preConfirm: () => {
+      //   return [$('#produk').val(), $('#joint_income').val(), $('#parameter').val(), $('#data_value').val(), $('#min').val(), $('#max').val(), $('#score').val()];
+      // },
+    }).then(result => {
+      let status_aktif = $('#status_aktif').val();
+      let parameter_deskripsi = $('#parameter_deskripsi').val();
+      let bobot = $('#bobot').val();
+
+      if (status_aktif == '1') {
+        this.kirimanstatus = 1;
+      } else {
+        this.kirimanstatus = 0;
+      }
+
+      if (status_aktif === '') {
+        alert('Gagal Menyimpan Produk Belum dipilih');
+        return;
+      } else if (parameter_deskripsi === '') {
+        alert('Gagal Menyimpan Joint Income Belum dipilih');
+        return;
+      } else if (bobot === '') {
+        alert('Gagal Menyimpan Parameter Belum dipilih');
+        return;
+      } else {
+        this.http
+          .post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_main_parameter_scoring', {
+            id: '',
+            created_by: this.SessionStorageService.retrieve('sessionUserName'),
+            created_date: '',
+            active: this.kirimanstatus,
+            parameter_description: parameter_deskripsi,
+            bobot: bobot,
           })
           .subscribe({
             next: response => {
