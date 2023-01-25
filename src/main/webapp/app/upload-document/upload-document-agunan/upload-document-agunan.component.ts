@@ -105,6 +105,12 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
     file: File | undefined
   ) {
     this.fileUploadService.uploadDocument(file, deUpload, curefUpload, doc_type).subscribe({
+      next: data =>{
+        console.warn(data)
+      },
+      error: data =>{
+        console.error(data)
+      }
       // if (typeof event === 'object') {
       //   // Short link via api response
       //   this.shortLink = event.link;
@@ -114,7 +120,7 @@ export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
     (<HTMLInputElement>document.getElementById('uploadData' + doc_type)).style.display = 'none';
     (<HTMLInputElement>document.getElementById('proggresBar' + doc_type)).style.display = 'block';
     setTimeout(() => {
-      window.location.reload();
+      // window.location.reload();
     }, 3000);
 
     // this.loading = !this.loading;

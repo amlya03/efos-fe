@@ -133,9 +133,9 @@ export class StukturPembiayaanComponent implements OnInit {
       }, 5);
     });
 
-    // Analisa Pembiayaan
+    // Analisa Keuangan
     setTimeout(() => {
-      this.verifikasiServices.fetchAnalisaPembiayaan(this.app_no_de).subscribe(analisa => {
+      this.verifikasiServices.fetchAnalisaKeuangan(this.app_no_de).subscribe(analisa => {
         this.analisaPembiayaan = analisa.result;
         const retSLik = {
           total_kewajiban_bank_pemohon: this.analisaPembiayaan.kewajiban_bank_total,
@@ -179,33 +179,63 @@ export class StukturPembiayaanComponent implements OnInit {
 
     // get struktur pembiayaan
     this.verifikasiServices.getFetchStrukturPembiayaan(this.app_no_de).subscribe(struktur => {
+      // console.warn(struktur)
       if (struktur.result == null) {
         this.getLoading(false);
         this.cekResult = 0;
+        this.comboSkema = '';
+        setTimeout(() => {
+          const retrivestrukturForm = {
+            harga_permintaan: '',
+            down_payment: '',
+            skema: this.comboSkema,
+            tenor: '',
+            nilai_pembiayaan: '',
+            angsuran: '',
+            total_angsuran: '',
+            max_angsuran: '',
+            dsr: '',
+          };
+          this.strukturForm.setValue(retrivestrukturForm);
+        }, 100);
       } else {
         this.cekResult = 1;
+        this.comboSkema = struktur.result.skema_code;
+        this.comboSkema += '|';
+        this.comboSkema += struktur.result.skema_master;
+        this.comboSkema += '|';
+        this.comboSkema += struktur.result.skema;
+        setTimeout(() => {
+          // retrive Tenor
+          if (struktur.result.skema_master === '1') {
+            this.verifikasiServices.getTenorFix(this.strukturPembiayaan.skema_code).subscribe(fix => {
+              this.tenor = fix.result;
+            });
+          } else {
+            this.verifikasiServices.getTenorNon(this.strukturPembiayaan.skema_code).subscribe(Non => {
+              this.tenor = Non.result;
+            });
+          }
+        }, 10);
+        setTimeout(() => {
+          const retrivestrukturForm = {
+            harga_permintaan: this.strukturPembiayaan.harga_permintaan,
+            down_payment: this.strukturPembiayaan.down_payment,
+            skema: this.comboSkema,
+            tenor: this.strukturPembiayaan.tenor,
+            nilai_pembiayaan: this.strukturPembiayaan.nilai_pembiayaan,
+            angsuran: this.strukturPembiayaan.angsuran,
+            total_angsuran: this.strukturPembiayaan.total_angsuran,
+            max_angsuran: this.strukturPembiayaan.max_angsuran,
+            dsr: this.strukturPembiayaan.dsr,
+          };
+          this.strukturForm.setValue(retrivestrukturForm);
+        }, 100);
         this.getLoading(false);
       }
-      setTimeout(() => {
-        // retrive Tenor
-        if (struktur.result.skema_master === '1') {
-          this.verifikasiServices.getTenorFix(this.strukturPembiayaan.skema_code).subscribe(fix => {
-            this.tenor = fix.result;
-          });
-        } else {
-          this.verifikasiServices.getTenorNon(this.strukturPembiayaan.skema_code).subscribe(Non => {
-            this.tenor = Non.result;
-          });
-        }
-      }, 10);
 
       this.strukturPembiayaan = struktur.result;
       // this.comboSkema = this.strukturPembiayaan.skema_code + '|' + this.strukturPembiayaan.skema_master + '|' + this.strukturPembiayaan.skema;
-      this.comboSkema = struktur.result.skema_code;
-      this.comboSkema += '|';
-      this.comboSkema += struktur.result.skema_master;
-      this.comboSkema += '|';
-      this.comboSkema += struktur.result.skema;
       // setTimeout(() => {
       // alert(this.comboSkema)
       // }, 300);
@@ -230,20 +260,6 @@ export class StukturPembiayaanComponent implements OnInit {
         }
       }, 50);
       // ////////////////////////////////////////////////////////////////////////////////////////////////////
-      setTimeout(() => {
-        const retrivestrukturForm = {
-          harga_permintaan: this.strukturPembiayaan.harga_permintaan,
-          down_payment: this.strukturPembiayaan.down_payment,
-          skema: this.comboSkema,
-          tenor: this.strukturPembiayaan.tenor,
-          nilai_pembiayaan: this.strukturPembiayaan.nilai_pembiayaan,
-          angsuran: this.strukturPembiayaan.angsuran,
-          total_angsuran: this.strukturPembiayaan.total_angsuran,
-          max_angsuran: this.strukturPembiayaan.max_angsuran,
-          dsr: this.strukturPembiayaan.dsr,
-        };
-        this.strukturForm.setValue(retrivestrukturForm);
-      }, 100);
     });
   }
 

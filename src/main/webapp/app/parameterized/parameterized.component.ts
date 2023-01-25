@@ -593,8 +593,8 @@ export class ParameterizedComponent implements OnInit {
             // const pemecahbenar=this.tampungpemecah.split('|');
             let parameterValue = $(this).val() as HTMLElement | any;
             hahaha = parameterValue.split('|');
-            console.warn(hahaha);
-            console.warn(parameterValue);
+            // console.warn(hahaha);
+            // console.warn(parameterValue);
             fetch(`http://10.20.34.178:8805/api/v1/efos-ref/list_skema_ftv?ss=` + hahaha[0])
               .then(function (response) {
                 return response.json();

@@ -58,7 +58,7 @@ export class InputparameterscoringComponent implements OnInit {
     this.scoringServices.listmainparameterscoring().subscribe(data => {
       this.listmainparameterscoring = data.result;
       this.dtTriggerMain.next(data.result);
-      console.warn(this.listmainparameterscoring);
+      // console.warn(this.listmainparameterscoring);
       // this.dtTrigger.next(data.result);
     });
 

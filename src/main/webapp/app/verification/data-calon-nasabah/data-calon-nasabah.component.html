@@ -830,13 +830,13 @@
             formControlName="lama_menetap_tahun"
             maxlength="2"
           />
+          <span *ngIf="dataCalonNasabahForm.controls.lama_menetap_tahun.invalid" class="text-danger">Field Wajib Diisi </span>
         </div>
-        <span *ngIf="dataCalonNasabahForm.controls.lama_menetap_tahun.invalid" class="text-danger">Field Wajib Diisi </span>
         <div class="col">Tahun</div>
         <div class="col">
           <input type="text" class="form-control" id="lama_menetap_bulan" name="lama_menetap_bulan" formControlName="lama_menetap_bulan" />
+          <span *ngIf="dataCalonNasabahForm.controls.lama_menetap_tahun.invalid" class="text-danger">Field Wajib Diisi </span>
         </div>
-        <span *ngIf="dataCalonNasabahForm.controls.lama_menetap_bulan.invalid" class="text-danger">Field Wajib Diisi </span>
         <div class="col">Bulan</div>
       </div>
       <br />
