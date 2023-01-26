@@ -107,72 +107,76 @@
 >
   Tambah Data
 </button>
-<p></p>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th style="text-align: center" scope="col">#</th>
-      <th style="text-align: center" scope="col">Nama Bank</th>
-      <th style="text-align: center" scope="col">No Rekening</th>
-      <th style="text-align: center" scope="col">Tahun</th>
-      <th style="text-align: center" scope="col">Bulan</th>
-      <th style="text-align: center" scope="col">Debet</th>
-      <th style="text-align: center" scope="col">Kredit</th>
-      <th style="text-align: center" scope="col">Saldo</th>
-      <th style="text-align: center" scope="col">Aksi</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let mutasiRekening of mutasiRekening; index as i">
-      <th style="text-align: center" scope="row">{{ i + 1 }}</th>
-      <td style="text-align: center">{{ mutasiRekening.nama_bank }}</td>
-      <td style="text-align: center">{{ mutasiRekening.no_rekening }}</td>
-      <td style="text-align: center">{{ mutasiRekening.tahun }}</td>
-      <td style="text-align: center">{{ mutasiRekening.bulan }}</td>
-      <td style="text-align: center">{{ mutasiRekening.debet | currency: 'Rp ' }}</td>
-      <td style="text-align: center">{{ mutasiRekening.kredit | currency: 'Rp ' }}</td>
-      <td style="text-align: center">{{ mutasiRekening.saldo | currency: 'Rp ' }}</td>
-      <td style="text-align: center">
-        <a
-          type="button"
-          (click)="
-            editMutasi(mutasiRekening.id);
-            this.tambahTableMutasi = 1;
-            this.lihatTableMutasi = 1;
-            hubunganDenganBank.style.display = 'block';
-            this.mutasiForm.get('nama_bank')?.disable();
-            this.mutasiForm.get('no_rekening')?.disable();
-            this.mutasiForm.get('tahun')?.disable();
-            this.mutasiForm.get('bulan')?.disable();
-            this.mutasiForm.get('debet')?.disable();
-            this.mutasiForm.get('kredit')?.disable();
-            this.mutasiForm.get('saldo')?.disable()
-          "
-          ><fa-icon icon="ellipsis"></fa-icon><br />View</a
-        >
-        &nbsp;&nbsp;&nbsp;
-        <a type="button" (click)="deleteMutasi(mutasiRekening.id)"><fa-icon icon="trash"></fa-icon><br />Hapus</a>
-        &nbsp;&nbsp;&nbsp;
-        <a
-          type="button"
-          (click)="
-            editMutasi(mutasiRekening.id);
-            this.tambahTableMutasi = 1;
-            hubunganDenganBank.style.display = 'block';
-            this.mutasiForm.get('nama_bank')?.enable();
-            this.mutasiForm.get('no_rekening')?.enable();
-            this.mutasiForm.get('tahun')?.enable();
-            this.mutasiForm.get('bulan')?.enable();
-            this.mutasiForm.get('debet')?.enable();
-            this.mutasiForm.get('kredit')?.enable();
-            this.mutasiForm.get('saldo')?.enable()
-          "
-          ><fa-icon icon="pencil-square"></fa-icon><br />Edit</a
-        >
-      </td>
-    </tr>
-  </tbody>
-</table>
+<br />
+<br />
+<div class="table-responsive">
+  <br />
+  <table class="table table-striped" datatable>
+    <thead>
+      <tr>
+        <th style="text-align: center" scope="col">#</th>
+        <th style="text-align: center" scope="col">Nama Bank</th>
+        <th style="text-align: center" scope="col">No Rekening</th>
+        <th style="text-align: center" scope="col">Tahun</th>
+        <th style="text-align: center" scope="col">Bulan</th>
+        <th style="text-align: center" scope="col">Debet</th>
+        <th style="text-align: center" scope="col">Kredit</th>
+        <th style="text-align: center" scope="col">Saldo</th>
+        <th style="text-align: center" scope="col">Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mutasiRekening of mutasiRekening; index as i">
+        <th style="text-align: center" scope="row">{{ i + 1 }}</th>
+        <td style="text-align: center">{{ mutasiRekening.nama_bank }}</td>
+        <td style="text-align: center">{{ mutasiRekening.no_rekening }}</td>
+        <td style="text-align: center">{{ mutasiRekening.tahun }}</td>
+        <td style="text-align: center">{{ mutasiRekening.bulan }}</td>
+        <td style="text-align: center">{{ mutasiRekening.debet | currency: 'Rp ' }}</td>
+        <td style="text-align: center">{{ mutasiRekening.kredit | currency: 'Rp ' }}</td>
+        <td style="text-align: center">{{ mutasiRekening.saldo | currency: 'Rp ' }}</td>
+        <td style="text-align: center">
+          <a
+            type="button"
+            (click)="
+              editMutasi(mutasiRekening.id);
+              this.tambahTableMutasi = 1;
+              this.lihatTableMutasi = 1;
+              hubunganDenganBank.style.display = 'block';
+              this.mutasiForm.get('nama_bank')?.disable();
+              this.mutasiForm.get('no_rekening')?.disable();
+              this.mutasiForm.get('tahun')?.disable();
+              this.mutasiForm.get('bulan')?.disable();
+              this.mutasiForm.get('debet')?.disable();
+              this.mutasiForm.get('kredit')?.disable();
+              this.mutasiForm.get('saldo')?.disable()
+            "
+            ><fa-icon icon="ellipsis"></fa-icon><br />View</a
+          >
+          &nbsp;&nbsp;&nbsp;
+          <a type="button" (click)="deleteMutasi(mutasiRekening.id)"><fa-icon icon="trash"></fa-icon><br />Hapus</a>
+          &nbsp;&nbsp;&nbsp;
+          <a
+            type="button"
+            (click)="
+              editMutasi(mutasiRekening.id);
+              this.tambahTableMutasi = 1;
+              hubunganDenganBank.style.display = 'block';
+              this.mutasiForm.get('nama_bank')?.enable();
+              this.mutasiForm.get('no_rekening')?.enable();
+              this.mutasiForm.get('tahun')?.enable();
+              this.mutasiForm.get('bulan')?.enable();
+              this.mutasiForm.get('debet')?.enable();
+              this.mutasiForm.get('kredit')?.enable();
+              this.mutasiForm.get('saldo')?.enable()
+            "
+            ><fa-icon icon="pencil-square"></fa-icon><br />Edit</a
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <p></p>
 <div #hubunganDenganBank style="display: none">
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">

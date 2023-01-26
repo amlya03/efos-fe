@@ -12,11 +12,11 @@ export class InputScoringService {
   baseUrl: string = environment.baseUrl;
 
   // ////////////////////// get Sub Parameter Scoring BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  protected getParameterScoringUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/getParameterScoring?si=');
+  protected getParameterScoringUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/getParameterScoring?si=');
   // ////////////////////// get Sub Parameter Scoring BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // /////////////////////////// List scoring ////////////////////////////////////////////
-  protected listScoring = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_data_scoring');
+  protected listScoring = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_data_scoring');
   // /////////////////////////// List scoring ////////////////////////////////////////////
 
   // /////////////////////////// Reff scoring ////////////////////////////////////////////
@@ -24,30 +24,34 @@ export class InputScoringService {
   // /////////////////////////// Reff scoring ////////////////////////////////////////////
 
   // /////////////////////////// Reff mainparameterscoring////////////////////////////////////////////
-  protected mainparameterscoring = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-ref/list_main_parameter_scoring'
-  );
+  protected mainparameterscoring = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_main_parameter_scoring');
   // /////////////////////////// Reff mainparameterscoring ////////////////////////////////////////////
 
   // /////////////////////////// Reff parameterscoring////////////////////////////////////////////
-  protected parameterscoring = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-ref/list_parameter_scoring'
-  );
+  protected parameterscoring = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_parameter_scoring');
   // /////////////////////////// Reff parameterscoring ////////////////////////////////////////////
 
   // /////////////////////////// Reff getmainparamterscoringbyid////////////////////////////////////////////
   protected reffgetmainparamterscoringbyid = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-ref/getMainParameterScoring?si='
+    this.baseUrl + 'v1/efos-ref/getMainParameterScoring?si='
   );
   // /////////////////////////// Reff getmainparamterscoringbyid ////////////////////////////////////////////
 
   // /////////////////////////// Reff getdatascoringbyid////////////////////////////////////////////
-  protected reffgetdatascoringbyid = this.applicationConfigService.getEndpointFor(
-    'http://10.20.34.178:8805/api/v1/efos-ref/getDataScoring?si='
-  );
+  protected reffgetdatascoringbyid = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/getDataScoring?si=');
   // /////////////////////////// Reff getdatascoringbyid ////////////////////////////////////////////
 
+  // /////////////////////////// Reff List Akad ////////////////////////////////////////////
+  protected listAkadUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_akad');
+  // /////////////////////////// Reff List Akad ////////////////////////////////////////////
+
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
+
+  // /////////////////////////// Reff List Akad ////////////////////////////////////////////
+  getListAkad(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.listAkadUrl);
+  }
+  // /////////////////////////// Reff List Akad ////////////////////////////////////////////
 
   // ////////////////////// Ref scoring \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   getScoring(): Observable<ApiResponse> {

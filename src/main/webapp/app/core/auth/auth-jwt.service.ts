@@ -39,8 +39,8 @@ export class AuthServerProvider {
     return (
       this.http
         // .post<JwtToken>(this.applicationConfigService.getEndpointFor('api/authenticate'), credentials)
-        .post<any>(this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos/users/login'), credentials)
-        // .post<any>(this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos/users/login'), credentials)
+        // .post<any>(this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos/users/login'), credentials)
+        .post<any>(this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos/users/login'), credentials)
         // .pipe(map(response => this.authenticateSuccess(response, credentials.rememberMe)));
         .pipe(map(response => this.authenticateSuccess(response)))
     );

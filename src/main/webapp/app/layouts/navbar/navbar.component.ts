@@ -117,10 +117,10 @@ export class NavbarComponent implements OnInit {
     // }, 5);
 
     this.entitiesNavbarItems = EntityNavbarItems;
-    this.profileService.getProfileInfo().subscribe(profileInfo => {
-      this.inProduction = profileInfo.inProduction;
-      this.openAPIEnabled = profileInfo.openAPIEnabled;
-    });
+    // this.profileService.getProfileInfo().subscribe(profileInfo => {
+    //   this.inProduction = profileInfo.inProduction;
+    //   this.openAPIEnabled = profileInfo.openAPIEnabled;
+    // });
 
     this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
@@ -165,9 +165,9 @@ export class NavbarComponent implements OnInit {
       imageHeight: 70,
       imageAlt: 'Eagle Image',
       showCancelButton: true,
-      // showDenyButton: true,
+      showDenyButton: true,
       confirmButtonText: 'Logout',
-      // denyButtonText: ' Ganti password',
+      denyButtonText: ' Ganti password',
       cancelButtonText: 'Tidak',
       confirmButtonColor: '#8567d3',
       cancelButtonColor: '#999999',
@@ -235,28 +235,22 @@ export class NavbarComponent implements OnInit {
             let passwordbaru = $('#passwor_baru').val();
             let confrimpassword = $('#Confirm_password').val();
             if (passwordlama === '') {
-              // alert('Gagal Menyimpan password lama belum di isi');
-              Swal.fire('Gagal Menyimpan password lama belum di isi');
+              Swal.fire('Gagal Menyimpan Password Lama Belum diisi');
               return;
             } else if (passwordbaru === '') {
-              // alert('Gagal Menyimpan password baru belum di isi');
-              Swal.fire('Gagal Menyimpan password baru belum di isi');
+              Swal.fire('Gagal Menyimpan Password Baru Belum diisi');
               return;
             } else if (confrimpassword === '') {
-              // alert('Gagal Menyimpan confirm  password belum di isi');
               Swal.fire('Gagal Menyimpan confirm  password belum di isi');
               return;
             } else if (confrimpassword != passwordbaru) {
-              // alert('confirm atau password baru tidak sama');
-              Swal.fire('confirm atau password baru tidak sama');
+              Swal.fire('Confirm atau Password Baru Tidak Sama');
               return;
             } else if (passwordlama != this.SessionStorageService.retrieve('sessionPs')) {
-              // alert('confirm atau password baru tidak sama');
               Swal.fire('Password lama salah');
               return;
             } else if (passwordlama == passwordbaru) {
-              // alert('confirm atau password baru tidak sama');
-              Swal.fire('Password baru sama dengan Password lama ');
+              Swal.fire('Password Baru sama dengan Password Lama ');
               return;
             } else {
               const body = {
@@ -268,7 +262,7 @@ export class NavbarComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>(this.baseUrl + 'v1/efos/users/resetPassword', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos/users/resetPassword', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   this.sessionStorageService.store('sessionPs', passwordbaru);

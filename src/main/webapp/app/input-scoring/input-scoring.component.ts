@@ -37,7 +37,7 @@ export class InputScoringComponent implements OnInit {
   listdatafasilitas: any;
   kirimanstatus: any;
   listparameterscoring: any;
-  datascoringbyid: listScoring = new listScoring();;
+  datascoringbyid: listScoring = new listScoring();
   getjoincome: any;
   modelPendidikan: refJenisPekerjaan[] = [];
   modelTujuanPembiayaan: refJenisPekerjaan[] = [];
@@ -95,7 +95,7 @@ export class InputScoringComponent implements OnInit {
       this.listparameterscoring = data.result;
     });
 
-    this.dataEntryService.getListPendidikan().subscribe(pendidikan =>{
+    this.dataEntryService.getListPendidikan().subscribe(pendidikan => {
       this.modelPendidikan = pendidikan.result;
     });
 
@@ -217,7 +217,7 @@ export class InputScoringComponent implements OnInit {
       $('#parameter').change(function () {
         let parameter: any;
         parameter = $(this).val();
-        let parameterValue = parameter.split('|')
+        let parameterValue = parameter.split('|');
         if (parameterValue[0] === '1') {
           $('#minMaxDiv').hide();
           $('#dataValueDiv').show();
@@ -226,7 +226,7 @@ export class InputScoringComponent implements OnInit {
           $('#dataValueDiv').hide();
         }
 
-        if(parameterValue[1] === "Tingkat Pendidikan"){
+        if (parameterValue[1] === 'Tingkat Pendidikan') {
           $('#keyInDiv').hide();
           $('#pendidikanDiv').show();
           $('#jenisPerusahaanDiv').hide();
@@ -234,7 +234,7 @@ export class InputScoringComponent implements OnInit {
           $('#jenisPekerjaanDiv').hide();
           $('#statusPerkawinanDiv').hide();
           $('#tujuanPembiayaanDiv').hide();
-        }else if(parameterValue[1] === "Tujuan Pembiayaan"){
+        } else if (parameterValue[1] === 'Tujuan Pembiayaan') {
           $('#keyInDiv').hide();
           $('#tujuanPembiayaanDiv').show();
           $('#jenisPerusahaanDiv').hide();
@@ -242,7 +242,7 @@ export class InputScoringComponent implements OnInit {
           $('#jenisPekerjaanDiv').hide();
           $('#statusPerkawinanDiv').hide();
           $('#pendidikanDiv').hide();
-        }else if(parameterValue[1] === "Status Perkawinan"){
+        } else if (parameterValue[1] === 'Status Perkawinan') {
           $('#keyInDiv').hide();
           $('#statusPerkawinanDiv').show();
           $('#jenisPerusahaanDiv').hide();
@@ -250,7 +250,7 @@ export class InputScoringComponent implements OnInit {
           $('#jenisPekerjaanDiv').hide();
           $('#tujuanPembiayaanDiv').hide();
           $('#pendidikanDiv').hide();
-        }else if(parameterValue[1] === "Tingkat Jabatan"){
+        } else if (parameterValue[1] === 'Tingkat Jabatan') {
           $('#keyInDiv').hide();
           $('#jenisPekerjaanDiv').show();
           $('#statusPerkawinanDiv').hide();
@@ -258,7 +258,7 @@ export class InputScoringComponent implements OnInit {
           $('#pendidikanDiv').hide();
           $('#jenisPerusahaanDiv').hide();
           $('#kepemilikanRumahDiv').hide();
-        }else if(parameterValue[1] === "Kepemilikan Tempat Tinggal"){
+        } else if (parameterValue[1] === 'Kepemilikan Tempat Tinggal') {
           $('#keyInDiv').hide();
           $('#kepemilikanRumahDiv').show();
           $('#jenisPekerjaanDiv').hide();
@@ -266,7 +266,7 @@ export class InputScoringComponent implements OnInit {
           $('#tujuanPembiayaanDiv').hide();
           $('#pendidikanDiv').hide();
           $('#jenisPerusahaanDiv').hide();
-        }else if(parameterValue[1] === "Jenis Perusahaan"){
+        } else if (parameterValue[1] === 'Jenis Perusahaan') {
           $('#keyInDiv').hide();
           $('#jenisPerusahaanDiv').show();
           $('#kepemilikanRumahDiv').hide();
@@ -274,7 +274,7 @@ export class InputScoringComponent implements OnInit {
           $('#statusPerkawinanDiv').hide();
           $('#tujuanPembiayaanDiv').hide();
           $('#pendidikanDiv').hide();
-        }else{
+        } else {
           $('#keyInDiv').show();
           $('#jenisPerusahaanDiv').hide();
           $('#kepemilikanRumahDiv').hide();
@@ -293,7 +293,8 @@ export class InputScoringComponent implements OnInit {
         '<div class="row form-material" style="width:100%"><div class="form-group row">' +
         '<label class="col-sm-3 col-form-label" style="font-size: medium;">Produk</label>' +
         '<div class="col-sm-9"><select class="form-control" id="produk"><option value="">Pilih Parameter</option>' +
-        '<option value="ALL">ALL</option>'+ `${optionsfasilitas}` +
+        '<option value="ALL">ALL</option>' +
+        `${optionsfasilitas}` +
         '</select>' +
         '</div></div><p></p>' +
         '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Joint Income?</label>' +
@@ -306,12 +307,24 @@ export class InputScoringComponent implements OnInit {
         '</div></div><p></p>' +
         '<div class="form-group row" id="dataValueDiv" style="display: none;"><label class="col-sm-3 col-form-label" style="font-size: medium;">Data Value</label>' +
         '<div class="col-sm-9" id="keyInDiv" style="display: none;"><input type="text" class="form-control" id="data_value"/></div>' +
-        '<div class="col-sm-9" id="pendidikanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="">Pilih Data</option>'+`${pendidikan}`+'</select></div>' +
-        '<div class="col-sm-9" id="tujuanPembiayaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="">Pilih Data</option>'+`${tujuanPembiayaan}`+'</select></div>' +
-        '<div class="col-sm-9" id="statusPerkawinanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="">Pilih Data</option>'+`${statusPerkawinan}`+'</select></div>' +
-        '<div class="col-sm-9" id="jenisPekerjaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="">Pilih Data</option>'+`${jenisPekerjaan}`+'</select></div>' +
-        '<div class="col-sm-9" id="kepemilikanRumahDiv" style="display: none;"><select class="form-control" id="data_value"><option value="">Pilih Data</option>'+`${kepemilikanRumah}`+'</select></div>' +
-        '<div class="col-sm-9" id="jenisPerusahaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="">Pilih Data</option>'+`${jenisPerusahaan}`+'</select></div>' +
+        '<div class="col-sm-9" id="pendidikanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="">Pilih Data</option>' +
+        `${pendidikan}` +
+        '</select></div>' +
+        '<div class="col-sm-9" id="tujuanPembiayaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="">Pilih Data</option>' +
+        `${tujuanPembiayaan}` +
+        '</select></div>' +
+        '<div class="col-sm-9" id="statusPerkawinanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="">Pilih Data</option>' +
+        `${statusPerkawinan}` +
+        '</select></div>' +
+        '<div class="col-sm-9" id="jenisPekerjaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="">Pilih Data</option>' +
+        `${jenisPekerjaan}` +
+        '</select></div>' +
+        '<div class="col-sm-9" id="kepemilikanRumahDiv" style="display: none;"><select class="form-control" id="data_value"><option value="">Pilih Data</option>' +
+        `${kepemilikanRumah}` +
+        '</select></div>' +
+        '<div class="col-sm-9" id="jenisPerusahaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="">Pilih Data</option>' +
+        `${jenisPerusahaan}` +
+        '</select></div>' +
         '</div><p></p>' +
         '<div class="form-group row" id="minMaxDiv"><label class="col-sm-3 col-form-label" style="font-size: medium;">Min / Max</label>' +
         '<div class="col"><input type="text" class="form-control" id="min"></div><div class="col">Min</div><div class="col"><input type="text" class="form-control" id="max"></div><div class="col">Max</div>' +
@@ -354,7 +367,7 @@ export class InputScoringComponent implements OnInit {
         return;
       } else {
         this.http
-          .post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_data_scoring', {
+          .post<any>(this.baseUrl + 'v1/efos-ref/create_data_scoring', {
             id: 0,
             created_by: this.SessionStorageService.retrieve('sessionUserName'),
             created_date: '',
@@ -469,7 +482,7 @@ export class InputScoringComponent implements OnInit {
       $('#parameter').change(function () {
         let parameter: any;
         parameter = $(this).val();
-        let parameterValue = parameter.split('|')
+        let parameterValue = parameter.split('|');
         if (parameterValue[0] === '1') {
           $('#minMaxDiv').hide();
           $('#dataValueDiv').show();
@@ -478,7 +491,7 @@ export class InputScoringComponent implements OnInit {
           $('#dataValueDiv').hide();
         }
 
-        if(parameterValue[1] === "Tingkat Pendidikan"){
+        if (parameterValue[1] === 'Tingkat Pendidikan') {
           $('#keyInDiv').hide();
           $('#pendidikanDiv').show();
           $('#jenisPerusahaanDiv').hide();
@@ -486,7 +499,7 @@ export class InputScoringComponent implements OnInit {
           $('#jenisPekerjaanDiv').hide();
           $('#statusPerkawinanDiv').hide();
           $('#tujuanPembiayaanDiv').hide();
-        }else if(parameterValue[1] === "Tujuan Pembiayaan"){
+        } else if (parameterValue[1] === 'Tujuan Pembiayaan') {
           $('#keyInDiv').hide();
           $('#tujuanPembiayaanDiv').show();
           $('#jenisPerusahaanDiv').hide();
@@ -494,7 +507,7 @@ export class InputScoringComponent implements OnInit {
           $('#jenisPekerjaanDiv').hide();
           $('#statusPerkawinanDiv').hide();
           $('#pendidikanDiv').hide();
-        }else if(parameterValue[1] === "Status Perkawinan"){
+        } else if (parameterValue[1] === 'Status Perkawinan') {
           $('#keyInDiv').hide();
           $('#statusPerkawinanDiv').show();
           $('#jenisPerusahaanDiv').hide();
@@ -502,7 +515,7 @@ export class InputScoringComponent implements OnInit {
           $('#jenisPekerjaanDiv').hide();
           $('#tujuanPembiayaanDiv').hide();
           $('#pendidikanDiv').hide();
-        }else if(parameterValue[1] === "Tingkat Jabatan"){
+        } else if (parameterValue[1] === 'Tingkat Jabatan') {
           $('#keyInDiv').hide();
           $('#jenisPekerjaanDiv').show();
           $('#statusPerkawinanDiv').hide();
@@ -510,7 +523,7 @@ export class InputScoringComponent implements OnInit {
           $('#pendidikanDiv').hide();
           $('#jenisPerusahaanDiv').hide();
           $('#kepemilikanRumahDiv').hide();
-        }else if(parameterValue[1] === "Kepemilikan Tempat Tinggal"){
+        } else if (parameterValue[1] === 'Kepemilikan Tempat Tinggal') {
           $('#keyInDiv').hide();
           $('#kepemilikanRumahDiv').show();
           $('#jenisPekerjaanDiv').hide();
@@ -518,7 +531,7 @@ export class InputScoringComponent implements OnInit {
           $('#tujuanPembiayaanDiv').hide();
           $('#pendidikanDiv').hide();
           $('#jenisPerusahaanDiv').hide();
-        }else if(parameterValue[1] === "Jenis Perusahaan"){
+        } else if (parameterValue[1] === 'Jenis Perusahaan') {
           $('#keyInDiv').hide();
           $('#jenisPerusahaanDiv').show();
           $('#kepemilikanRumahDiv').hide();
@@ -526,7 +539,7 @@ export class InputScoringComponent implements OnInit {
           $('#statusPerkawinanDiv').hide();
           $('#tujuanPembiayaanDiv').hide();
           $('#pendidikanDiv').hide();
-        }else{
+        } else {
           $('#keyInDiv').show();
           $('#jenisPerusahaanDiv').hide();
           $('#kepemilikanRumahDiv').hide();
@@ -545,32 +558,87 @@ export class InputScoringComponent implements OnInit {
           '<br />' +
           '<div class="row form-material" style="width:100%"><div class="form-group row">' +
           '<label class="col-sm-3 col-form-label" style="font-size: medium;">Produk</label>' +
-          '<div class="col-sm-9"><select class="form-control" id="produk"><option value="'+ this.datascoringbyid.produk +'">'+ this.datascoringbyid.produk +'</option>' +
-          '<option value="ALL">ALL</option>'+ `${optionsfasilitas}` +
+          '<div class="col-sm-9"><select class="form-control" id="produk"><option value="' +
+          this.datascoringbyid.produk +
+          '">' +
+          this.datascoringbyid.produk +
+          '</option>' +
+          '<option value="ALL">ALL</option>' +
+          `${optionsfasilitas}` +
           '</select>' +
           '</div></div><p></p>' +
           '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Joint Income?</label>' +
-          '<div class="col-sm-9"><select id="joint_income" class="form-control"><option value="'+ this.datascoringbyid.joint_income +'">'+ this.getjoincome +'</option><option value="1">Ya</option><option value="2">Tidak</option></select>' +
+          '<div class="col-sm-9"><select id="joint_income" class="form-control"><option value="' +
+          this.datascoringbyid.joint_income +
+          '">' +
+          this.getjoincome +
+          '</option><option value="1">Ya</option><option value="2">Tidak</option></select>' +
           '</div></div><p></p>' +
           '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Parameter</label>' +
-          '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="'+ this.datascoringbyid.parameter +'">'+ this.datascoringbyid.parameter +'</option>' +
+          '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="' +
+          this.datascoringbyid.parameter +
+          '">' +
+          this.datascoringbyid.parameter +
+          '</option>' +
           `${options}` +
           '</select>' +
           '</div></div><p></p>' +
           '<div class="form-group row" id="dataValueDiv" style="display: none;"><label class="col-sm-3 col-form-label" style="font-size: medium;">Data Value</label>' +
           '<div class="col-sm-9" id="keyInDiv" style="display: none;"><input type="text" class="form-control" id="data_value"/></div>' +
-          '<div class="col-sm-9" id="pendidikanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="'+ this.datascoringbyid.data_value +'">'+ this.datascoringbyid.data_value +'</option>'+`${pendidikan}`+'</select></div>' +
-          '<div class="col-sm-9" id="tujuanPembiayaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="'+ this.datascoringbyid.data_value +'">'+ this.datascoringbyid.data_value +'</option>'+`${tujuanPembiayaan}`+'</select></div>' +
-          '<div class="col-sm-9" id="statusPerkawinanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="'+ this.datascoringbyid.data_value +'">'+ this.datascoringbyid.data_value +'</option>'+`${statusPerkawinan}`+'</select></div>' +
-          '<div class="col-sm-9" id="jenisPekerjaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="'+ this.datascoringbyid.data_value +'">'+ this.datascoringbyid.data_value +'</option>'+`${jenisPekerjaan}`+'</select></div>' +
-          '<div class="col-sm-9" id="kepemilikanRumahDiv" style="display: none;"><select class="form-control" id="data_value"><option value="'+ this.datascoringbyid.data_value +'">'+ this.datascoringbyid.data_value +'</option>'+`${kepemilikanRumah}`+'</select></div>' +
-          '<div class="col-sm-9" id="jenisPerusahaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="'+ this.datascoringbyid.data_value +'">'+ this.datascoringbyid.data_value +'</option>'+`${jenisPerusahaan}`+'</select></div>' +
+          '<div class="col-sm-9" id="pendidikanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
+          this.datascoringbyid.data_value +
+          '">' +
+          this.datascoringbyid.data_value +
+          '</option>' +
+          `${pendidikan}` +
+          '</select></div>' +
+          '<div class="col-sm-9" id="tujuanPembiayaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
+          this.datascoringbyid.data_value +
+          '">' +
+          this.datascoringbyid.data_value +
+          '</option>' +
+          `${tujuanPembiayaan}` +
+          '</select></div>' +
+          '<div class="col-sm-9" id="statusPerkawinanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
+          this.datascoringbyid.data_value +
+          '">' +
+          this.datascoringbyid.data_value +
+          '</option>' +
+          `${statusPerkawinan}` +
+          '</select></div>' +
+          '<div class="col-sm-9" id="jenisPekerjaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
+          this.datascoringbyid.data_value +
+          '">' +
+          this.datascoringbyid.data_value +
+          '</option>' +
+          `${jenisPekerjaan}` +
+          '</select></div>' +
+          '<div class="col-sm-9" id="kepemilikanRumahDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
+          this.datascoringbyid.data_value +
+          '">' +
+          this.datascoringbyid.data_value +
+          '</option>' +
+          `${kepemilikanRumah}` +
+          '</select></div>' +
+          '<div class="col-sm-9" id="jenisPerusahaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
+          this.datascoringbyid.data_value +
+          '">' +
+          this.datascoringbyid.data_value +
+          '</option>' +
+          `${jenisPerusahaan}` +
+          '</select></div>' +
           '</div><p></p>' +
           '<div class="form-group row" id="minMaxDiv"><label class="col-sm-3 col-form-label" style="font-size: medium;">Min / Max</label>' +
-          '<div class="col"><input type="text" class="form-control" id="min" value="'+ this.datascoringbyid.min_value +'"></div><div class="col">Min</div><div class="col"><input type="text" class="form-control" id="max" value="'+ this.datascoringbyid.max_value +'"></div><div class="col">Max</div>' +
+          '<div class="col"><input type="text" class="form-control" id="min" value="' +
+          this.datascoringbyid.min_value +
+          '"></div><div class="col">Min</div><div class="col"><input type="text" class="form-control" id="max" value="' +
+          this.datascoringbyid.max_value +
+          '"></div><div class="col">Max</div>' +
           '</div><p></p>' +
           '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Score</label>' +
-          '<div class="col-sm-9"><input type="text" class="form-control" id="score" value="'+ this.datascoringbyid.score +'">' +
+          '<div class="col-sm-9"><input type="text" class="form-control" id="score" value="' +
+          this.datascoringbyid.score +
+          '">' +
           '</div></div>' +
           '<div>',
         focusConfirm: false,
@@ -607,7 +675,7 @@ export class InputScoringComponent implements OnInit {
           return;
         } else {
           this.http
-            .post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_data_scoring', {
+            .post<any>(this.baseUrl + 'v1/efos-ref/create_data_scoring', {
               id: 0,
               created_by: this.SessionStorageService.retrieve('sessionUserName'),
               created_date: '',

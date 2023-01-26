@@ -186,7 +186,7 @@ export class StukturPembiayaanComponent implements OnInit {
         this.comboSkema = '';
         setTimeout(() => {
           const retrivestrukturForm = {
-            harga_permintaan: '',
+            harga_permintaan: '0',
             down_payment: '',
             skema: this.comboSkema,
             tenor: '',
@@ -326,6 +326,7 @@ export class StukturPembiayaanComponent implements OnInit {
               })
               .subscribe({
                 next: angsuran => {
+                  // console.log(angsuran);
                   this.getLoading(false);
                   this.analisaDsr = angsuran.result.dsr;
                   this.strukturForm.get('dsr')?.setValue((this.analisaDsr += ' %'));
@@ -343,8 +344,16 @@ export class StukturPembiayaanComponent implements OnInit {
                           this.hasilScoring = scoring.result.score_value;
                           this.hasilStatus = scoring.result.score_desc;
                         },
+                        error: errScore => {
+                          alert('Score ' + errScore.error.message);
+                          this.getLoading(false);
+                        },
                       });
                   }, 300);
+                },
+                error: err => {
+                  // alert('Dsr '+err.error.message)
+                  this.getLoading(false);
                 },
               });
           }, 300);
@@ -353,6 +362,9 @@ export class StukturPembiayaanComponent implements OnInit {
           if (err.error.code === '400') {
             alert(err.error.message);
             this.dpKurang = 1;
+            this.getLoading(false);
+          } else {
+            this.getLoading(false);
           }
         },
       });

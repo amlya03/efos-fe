@@ -16,6 +16,7 @@ import { InputScoringService } from 'app/input-scoring/input-scoring.service';
   styleUrls: ['./inputparameterscoring.component.scss'],
 })
 export class InputparameterscoringComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   listmainparameterscoring: mainparameterscoring[] = [];
   listparameterscoring: mainparameterscoring[] = [];
   @ViewChild(DataTableDirective)
@@ -46,13 +47,12 @@ export class InputparameterscoringComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    if(this.dtTriggerMain){
+    if (this.dtTriggerMain) {
       this.dtTriggerMain.unsubscribe();
     }
-    if(this.dtTriggerSub){
+    if (this.dtTriggerSub) {
       this.dtTriggerSub.unsubscribe();
     }
-
   }
   load() {
     this.scoringServices.listmainparameterscoring().subscribe(data => {
@@ -138,7 +138,7 @@ export class InputparameterscoringComponent implements OnInit {
         return;
       } else {
         this.http
-          .post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_main_parameter_scoring', {
+          .post<any>(this.baseUrl + 'v1/efos-ref/create_main_parameter_scoring', {
             id: 0,
             created_by: this.SessionStorageService.retrieve('sessionUserName'),
             created_date: '',
@@ -166,7 +166,7 @@ export class InputparameterscoringComponent implements OnInit {
   simpanParameterscoring() {
     let options = this.listmainparameterscoring.map((option: any) => {
       return `
-        <option key="${option}" value="${option.id +'|'+ option.parameter_description}">
+        <option key="${option}" value="${option.id + '|' + option.parameter_description}">
             ${option.parameter_description}
         </option>
       `;
@@ -218,7 +218,7 @@ export class InputparameterscoringComponent implements OnInit {
         return;
       } else {
         this.http
-          .post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_parameter_scoring', {
+          .post<any>(this.baseUrl + 'v1/efos-ref/create_parameter_scoring', {
             active: this.kirimanstatus,
             created_by: this.SessionStorageService.retrieve('sessionUserName'),
             created_date: '',
@@ -228,7 +228,7 @@ export class InputparameterscoringComponent implements OnInit {
             parameter_description: parameter_deskripsi,
             parameter_type: tipe_inputan,
             updated_by: '',
-            updated_date: ''
+            updated_date: '',
           })
           .subscribe({
             next: response => {
@@ -256,7 +256,6 @@ export class InputparameterscoringComponent implements OnInit {
         this.hasilget = 'tidak';
       }
 
-
       let options = this.listmainparameterscoring.map((option: any) => {
         return `
           <option key="${option}" value="${option.id}">
@@ -271,14 +270,22 @@ export class InputparameterscoringComponent implements OnInit {
             '<br /><div class="row" style="width: 100%;">' +
             '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Status aktif</label>' +
             '<div class="col-sm-9"><select id="status_aktif" class="form-control">' +
-            '<option value="'+ this.mainparameterscoringbyid.active +'">' + this.hasilget + '</option>' +
+            '<option value="' +
+            this.mainparameterscoringbyid.active +
+            '">' +
+            this.hasilget +
+            '</option>' +
             '<option value="1">active</option><option value="0">Tidak</option></select>' +
             '</div></div><p></p>' +
             '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Deskripsi</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control" id="parameter_deskripsi" value="'+ this.mainparameterscoringbyid.parameter_description +'"/>' +
+            '<div class="col-sm-9"><input type="text" class="form-control" id="parameter_deskripsi" value="' +
+            this.mainparameterscoringbyid.parameter_description +
+            '"/>' +
             '</div></div><p></p>' +
             '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Bobot</label>' +
-            '<div class="col-sm-9"><input type="text" class="form-control" id="bobot" value="'+ this.mainparameterscoringbyid.bobot +'"/>' +
+            '<div class="col-sm-9"><input type="text" class="form-control" id="bobot" value="' +
+            this.mainparameterscoringbyid.bobot +
+            '"/>' +
             '</div></div><div>',
           focusConfirm: false,
         }).then(result => {
@@ -303,7 +310,7 @@ export class InputparameterscoringComponent implements OnInit {
             return;
           } else {
             this.http
-              .post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_main_parameter_scoring', {
+              .post<any>(this.baseUrl + 'v1/efos-ref/create_main_parameter_scoring', {
                 id: id,
                 created_by: '',
                 created_date: '',
@@ -329,22 +336,22 @@ export class InputparameterscoringComponent implements OnInit {
 
   viewdetailparameter(id: any) {
     this.scoringServices.getParameterScoring(id).subscribe({
-      next: data =>{
+      next: data => {
         this.subParameterScoringModel = data.result;
-        console.warn('sub by id ', data)
-        if(data.result.active){
-          this.subActive = 'Active'
-        }else{
-          this.subActive = 'Tidak Active'
+        // console.warn('sub by id ', data)
+        if (data.result.active === '1') {
+          this.subActive = 'Active';
+        } else {
+          this.subActive = 'Tidak Active';
         }
-        if(data.result.parameter_type){
-          this.subTipeData = 'Input'
-        }else{
-          this.subTipeData = 'Range'
+        if (data.result.parameter_type === '1') {
+          this.subTipeData = 'Input';
+        } else {
+          this.subTipeData = 'Range';
         }
         let options = this.listmainparameterscoring.map((option: any) => {
           return `
-            <option key="${option}" value="${option.id +'|'+ option.parameter_description }">
+            <option key="${option}" value="${option.id + '|' + option.parameter_description}">
                 ${option.parameter_description}
             </option>
           `;
@@ -355,16 +362,34 @@ export class InputparameterscoringComponent implements OnInit {
             html:
               '<br /><div class="row" style="width: 100%;">' +
               '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Status aktif</label>' +
-              '<div class="col-sm-9"><select id="status_aktif" class="form-control"><option value="'+ this.subParameterScoringModel.active +'">'+ this.subActive +'</option><option value="1">Active</option><option value="0">Tidak Active</option></select>' +
+              '<div class="col-sm-9"><select id="status_aktif" class="form-control"><option value="' +
+              this.subParameterScoringModel.active +
+              '">' +
+              this.subActive +
+              '</option><option value="1">Active</option><option value="0">Tidak Active</option></select>' +
               '</div></div><p></p>' +
               '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Parameter</label>' +
-              '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="'+ this.subParameterScoringModel.id_ref_main_parameter_scoring + '|' + this.subParameterScoringModel.main_parameter_scoring_desc +'">'+ this.subParameterScoringModel.main_parameter_scoring_desc +'</option>' + `${options}` + '</select>' +
+              '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="' +
+              this.subParameterScoringModel.id_ref_main_parameter_scoring +
+              '|' +
+              this.subParameterScoringModel.main_parameter_scoring_desc +
+              '">' +
+              this.subParameterScoringModel.main_parameter_scoring_desc +
+              '</option>' +
+              `${options}` +
+              '</select>' +
               '</div></div><p></p>' +
               '<div class="form-group row" id="dataValueDiv"><label class="col-sm-3 col-form-label" style="font-size: medium;">Deskripsi</label>' +
-              '<div class="col-sm-9"><input type="text" class="form-control" id="parameter_deskripsi" value="'+ this.subParameterScoringModel.parameter_description +'"/>' +
+              '<div class="col-sm-9"><input type="text" class="form-control" id="parameter_deskripsi" value="' +
+              this.subParameterScoringModel.parameter_description +
+              '"/>' +
               '</div></div><p></p>' +
               '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Tipe Field </label>' +
-              '<div class="col-sm-9"><select id="tipe_inputan" class="form-control"><option value="'+ this.subParameterScoringModel.parameter_type +'">'+ this.subTipeData +'</option><option value="1">Input</option><option value="2">Range</option></select>' +
+              '<div class="col-sm-9"><select id="tipe_inputan" class="form-control"><option value="' +
+              this.subParameterScoringModel.parameter_type +
+              '">' +
+              this.subTipeData +
+              '</option><option value="1">Input</option><option value="2">Range</option></select>' +
               '</div></div><div>',
             focusConfirm: false,
           }).then(result => {
@@ -372,7 +397,7 @@ export class InputparameterscoringComponent implements OnInit {
             let parameter_deskripsi = $('#parameter_deskripsi').val();
             let tipe_inputan = $('#tipe_inputan').val();
             this.subParameterSlice = $('#parameter').val();
-            let parameter = this.subParameterSlice.split('|')
+            let parameter = this.subParameterSlice.split('|');
 
             if (status_aktif == '1') {
               this.kirimanstatus = 1;
@@ -394,7 +419,7 @@ export class InputparameterscoringComponent implements OnInit {
               return;
             } else {
               this.http
-                .post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_parameter_scoring', {
+                .post<any>(this.baseUrl + 'v1/efos-ref/create_parameter_scoring', {
                   active: this.kirimanstatus,
                   created_by: this.SessionStorageService.retrieve('sessionUserName'),
                   created_date: '',
@@ -404,7 +429,7 @@ export class InputparameterscoringComponent implements OnInit {
                   parameter_description: parameter_deskripsi,
                   parameter_type: tipe_inputan,
                   updated_by: '',
-                  updated_date: ''
+                  updated_date: '',
                 })
                 .subscribe({
                   next: response => {
@@ -416,8 +441,8 @@ export class InputparameterscoringComponent implements OnInit {
             }
           });
         }, id * 5);
-      }
-    })
+      },
+    });
   }
 
   refreshDatatables(data: any) {

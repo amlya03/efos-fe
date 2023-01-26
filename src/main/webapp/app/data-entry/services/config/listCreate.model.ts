@@ -18,4 +18,5 @@ export class listCreatemodel {
   jenis_objek_deskripsi?: any;
   kode_fasilitas?: any;
   fasilitas?: any;
+  kode_akad: string | number | null | undefined;
 }

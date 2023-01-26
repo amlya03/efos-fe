@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { InputScoringService } from 'app/input-scoring/input-scoring.service';
 import { environment } from 'environments/environment';
+import { SessionStorageService } from 'ngx-webstorage';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -26,6 +28,7 @@ export class ParameterizedComponent implements OnInit {
   tablelistobjekagunan: listCreatemodel[] = [];
   tablelistjenispekerjaan: listCreatemodel[] = [];
   tablelistfasilitas: listCreatemodel[] = [];
+  modelListAkad: listCreatemodel[] = [];
   statusaktif: any;
   kirimactive: any;
   Kodefasilitas: any;
@@ -43,7 +46,13 @@ export class ParameterizedComponent implements OnInit {
   tampunganidviewdetail: any;
   tableftvdpdetail: any;
   tableAgunanlisttipeagunan: any;
-  constructor(private formBuilder: FormBuilder, protected datEntryService: DataEntryService, protected http: HttpClient) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    protected datEntryService: DataEntryService,
+    protected scoringServices: InputScoringService,
+    protected http: HttpClient,
+    private sessionStorageService: SessionStorageService
+  ) {}
 
   ngOnInit(): void {
     this.createform = this.formBuilder.group({
@@ -123,6 +132,12 @@ export class ParameterizedComponent implements OnInit {
       this.tablelistftvdp = table.result;
       // console.log(this.tablelistftvdp);
     });
+
+    // //////////// List Akad //////////////////
+    this.scoringServices.getListAkad().subscribe(akad => {
+      this.modelListAkad = akad.result;
+    });
+    // //////////// List Akad //////////////////
   }
 
   //1
@@ -134,8 +149,8 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
@@ -143,8 +158,8 @@ export class ParameterizedComponent implements OnInit {
           html:
             '<br />' +
             '<div class="row form-material" style="width:100%"><div class="form-group row">' +
-            '<label class="col-sm-4 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-8"><select class="form-control" id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '<label class="col-sm-4 col-form-label">Status Aktif</label>' +
+            '<div class="col-sm-8"><select class="form-control" id="status_active"><option value="">Pilih Status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
             '<br />' +
             '<div class="form-group row"><label class="col-sm-4 col-form-label">Deskripsi</label>' +
@@ -189,7 +204,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_akses_rumah++++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_akses_rumah+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -244,8 +259,8 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
@@ -253,8 +268,8 @@ export class ParameterizedComponent implements OnInit {
           html:
             '<br />' +
             '<div class="row form-material" style="width:100%"><div class="form-group row">' +
-            '<label class="col-sm-4 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-8"><select class="form-control" id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '<label class="col-sm-4 col-form-label">Status Aktif</label>' +
+            '<div class="col-sm-8"><select class="form-control" id="status_active"><option value="">Pilih Status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Jenis Developer</label>' +
@@ -321,7 +336,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_developer++++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_developer+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -375,8 +390,8 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
@@ -476,16 +491,16 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
           title: 'Create Fasilitas Listrik ',
           html:
             '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Status Aktif</label>' +
+            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih Status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Fasilitas Listrik</label>' +
@@ -567,6 +582,7 @@ export class ParameterizedComponent implements OnInit {
   }
   //6
   createftpdp(): void {
+    const baseUrl = this.baseUrl;
     Swal.fire({
       title: 'Mohon Perhatikan',
       text: 'Inputan yang sudah Terinput tidak bisa di edit ',
@@ -574,8 +590,8 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         let options = this.tablelistproduk.map((option: any) => {
@@ -595,7 +611,7 @@ export class ParameterizedComponent implements OnInit {
             hahaha = parameterValue.split('|');
             // console.warn(hahaha);
             // console.warn(parameterValue);
-            fetch(`http://10.20.34.178:8805/api/v1/efos-ref/list_skema_ftv?ss=` + hahaha[0])
+            fetch(baseUrl + 'v1/efos-ref/list_skema_ftv?ss=' + hahaha[0])
               .then(function (response) {
                 return response.json();
               })
@@ -708,7 +724,7 @@ export class ParameterizedComponent implements OnInit {
     this.datEntryService.getlistftvdpdetail(id).subscribe({
       next: de => {
         this.tableftvdpdetail = de.result;
-        console.warn(this.tableftvdpdetail);
+        //console.warn(this.tableftvdpdetail);
       },
       // error: err => {
       //   console.warn('fff', err)
@@ -751,8 +767,8 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         let hahaha;
@@ -760,8 +776,8 @@ export class ParameterizedComponent implements OnInit {
           $('#kode_agunan').change(function () {
             let parameterValue = $(this).val();
             hahaha = parameterValue;
-            console.warn(hahaha);
-            console.warn(parameterValue);
+            // console.warn(hahaha);
+            // console.warn(parameterValue);
             fetch(`http://10.20.34.110:8805/api/v1/efos-de/list_tipe_properti?sp=` + hahaha)
               .then(function (response) {
                 return response.json();
@@ -798,7 +814,7 @@ export class ParameterizedComponent implements OnInit {
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Properti</label>' +
-            '<div class="col-sm-8">  <select id="tipe_properti" class="form-control"><option value="">Pilih status</option></select>' +
+            '<div class="col-sm-8">  <select id="tipe_properti" class="form-control"><option value="">Pilih Status</option></select>' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Min Listrik</label>' +
@@ -926,16 +942,16 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
           title: 'Create Hubungan Kepemilikan Agunan ',
           html:
             '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Status Aktif</label>' +
+            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih Status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Deskripsi</label>' +
@@ -1024,16 +1040,16 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
           title: 'Create Hubungan Emergency',
           html:
             '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Status Aktif</label>' +
+            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih Status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Deskripsi</label>' +
@@ -1122,16 +1138,16 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
           title: 'Create Jabatan ',
           html:
             '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Status Aktif</label>' +
+            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih Status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Deskripsi</label>' +
@@ -1220,16 +1236,16 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
           title: 'Create Jabatan Pemberi Keterangan ',
           html:
             '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
-            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Status Aktif</label>' +
+            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih Status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Jabatan Pemberi keterangan</label>' +
@@ -1318,8 +1334,8 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
@@ -1425,8 +1441,8 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
@@ -1533,8 +1549,8 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
@@ -1644,6 +1660,14 @@ export class ParameterizedComponent implements OnInit {
             </option>
           `;
     });
+
+    let listAkad = this.modelListAkad.map((option: listCreatemodel) => {
+      return `
+            <option key="${option}" value="${option.deskripsi}">
+                ${option.deskripsi}
+            </option>
+          `;
+    });
     ///// menanti api  untuk kodeproduk
     Swal.fire({
       title: 'Mohon Perhatikan',
@@ -1652,18 +1676,18 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         $(document).ready(function () {
-          $('#kode_produk1').change(function () {
-            if ($('#kode_produk1').val() === 'lainya') {
-              alert('ini');
-              $('#lainya1').removeAttr('hidden');
+          $('#skema').change(function () {
+            if ($('#skema').val() === 'Lainnya') {
+              // alert('ini');
+              $('#lainnya1').removeAttr('hidden');
             } else {
-              alert('else');
-              $('#lainya1').attr('hidden', 'true');
+              // alert('else');
+              $('#lainnya1').attr('hidden', 'true');
             }
           });
         });
@@ -1671,67 +1695,64 @@ export class ParameterizedComponent implements OnInit {
         Swal.fire({
           title: 'Create Skema',
           html:
-            '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode produk</label>' +
-            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-8"><select class="form-control" id="kode_produk"><option value="">Pilih produk</option>' +
+            // '<br />' +
+            '<div class="form-lable row" hidden><label class="col-sm-4 col-form-label">Fasilitas</label>' +
+            '<div class="col-sm-8"><select class="form-control" id="fasilitas"><option value="">Pilih Fasilitas</option> <option value="1">Fix Income</option> <option value="2">Non Fix Income</option></select>' +
+            '<br /></div></div>' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Produk</label>' +
+            '<div class="col-sm-8"><select class="form-control" id="kode_produk"><option value="">Pilih Produk</option>' +
             `${options}` +
             '</select>' +
             '</div></div>' +
             '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode produk</label>' +
-            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-8"><select class="form-control" id="kode_produk1"><option value="">Pilih skema</option>' +
+            '<div class="form-lable row"><label class="col-sm-4 col-form-label">Skema Master</label>' +
+            '<div class="col-sm-8"><select class="form-control" id="skema_master"><option value="">Pilih Skema Master</option> <option value="1">Fix Income</option> <option value="2">Non Fix Income</option></select>' +
+            '</div></div>' +
+            '<br />' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Skema</label>' +
+            '<div class="col-sm-8"><select class="form-control" id="skema"><option value="">Pilih Skema</option>' +
             `${optionsskema}` +
-            '<option value="lainya">Lainya</option></select>' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row " id="lainya1" hidden><label class="col-sm-4 col-form-label hidden">Deskripsi skema</label>' +
-            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '<option value="Lainnya">Lainnya</option></select>' +
+            '<br /></div></div>' +
+            '<div class="form-lable row " id="lainnya1" hidden><label class="col-sm-4 col-form-label hidden">Deskripsi skema</label>' +
             '<div class="col-sm-8"><input type="text" class="form-control" id="skema_deskripsi"/>' +
+            '<br /></div></div>' +
+            '<div class="form-lable row"><label class="col-sm-4 col-form-label">Akad</label>' +
+            '<div class="col-sm-8"><select class="form-control" id="akad"><option value="">Pilih Akad</option>' +
+            `${listAkad}` +
+            '</select>' +
             '</div></div>' +
             '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">dp</label>' +
+            '<div class="form-lable row"><label class="col-sm-4 col-form-label">dp</label>' +
             '<div class="col-sm-8"><input type="text" class="form-control" id="dp_min"/> ' +
             '</div></div>' +
             '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Max Platfon</label>' +
+            '<div class="form-lable row"><label class="col-sm-4 col-form-label">Max Platfon</label>' +
             '<div class="col-sm-8"><input type="text" class="form-control" id="max_platfon"/> ' +
             '</div></div>' +
             '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Min Platfon</label>' +
+            '<div class="form-lable row"><label class="col-sm-4 col-form-label">Min Platfon</label>' +
             '<div class="col-sm-8"><input type="text" class="form-control" id="min_platfon"/> ' +
             '</div></div>' +
             '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Max tenor</label>' +
+            '<div class="form-lable row"><label class="col-sm-4 col-form-label">Max tenor</label>' +
             '<div class="col-sm-8"><input type="text" class="form-control" id="max_tenor"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">SKEMA MASTER</label>' +
-            '<div class="col-sm-8"><select class="form-control" id="skema_master"><option value="">Pilih produk</option> <option value="1">FIX income</option> <option value="2">NonFix</option></select>' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">---</label>' +
-            '<div class="col-sm-8"><select class="form-control" id="skema_master"><option value="">Pilih produk</option> <option value="1">FIX income</option> <option value="2">NonFix</option></select>' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
+            let fasilitas = $('#fasilitas').val();
             let kode_produk = $('#kode_produk').val();
             let min_platfon = $('#min_platfon').val();
             let max_platfon = $('#max_platfon').val();
             let max_tenor = $('#max_tenor').val();
             let skema_master = $('#skema_master').val();
-            let skema_deskripsi = $('#kode_produk').val();
-            let skema = $('#kode_produk1').val();
+            let skema = $('#skema').val();
             let dp_min = $('#dp_min').val();
-            //  if(active=='0'){
-            //     this.kirimactive=0;
-            //  }else{
-            //   this.kirimactive=1;
-            //  }
+            let akad = $('#akad').val();
+
             if (kode_produk == '') {
               alert('Kode Produk Harus Di isi');
               return;
@@ -1751,12 +1772,11 @@ export class ParameterizedComponent implements OnInit {
               alert('Skema harus di isi');
               return;
             } else {
-              if (skema == 'lainya') {
-                alert($('#skema_deskripsi').val());
+              if (skema == 'Lainnya') {
                 this.kirimanskema = '';
                 this.kirimanskemadeskripsi = $('#skema_deskripsi').val();
               } else {
-                this.tampungpemecah = $('#kode_produk1').val();
+                this.tampungpemecah = $('#skema').val();
 
                 const pemecahbenar = this.tampungpemecah.split('|');
                 this.kirimanskema = pemecahbenar[0];
@@ -1764,15 +1784,18 @@ export class ParameterizedComponent implements OnInit {
               }
 
               const body = {
+                created_date: this.sessionStorageService.retrieve('sessionUserName'),
                 dp_min: dp_min,
+                fasilitas: fasilitas,
+                id: 0,
                 kode_produk: kode_produk,
-                min_platfon: min_platfon,
-                max_platfon: max_platfon,
+                max_plafond: max_platfon,
                 max_tenor: max_tenor,
-                skema_master: skema_master,
-                skema_deskripsi: this.kirimanskemadeskripsi,
+                min_plafond: min_platfon,
                 skema: this.kirimanskema,
-                fasilitas: '',
+                skema_deskripsi: this.kirimanskemadeskripsi,
+                skema_master: skema_master,
+                akad: akad,
               };
               let headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
@@ -1840,8 +1863,8 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
@@ -1976,8 +1999,8 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         $(document).ready(function () {
@@ -2119,7 +2142,7 @@ export class ParameterizedComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_skema_fasilitas++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_skema_fasilitas+++', body, { headers }).subscribe({
                 next: response => {
                   //console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -2181,8 +2204,8 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
@@ -2301,8 +2324,8 @@ export class ParameterizedComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'tambah',
-      cancelButtonText: 'tidak',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({

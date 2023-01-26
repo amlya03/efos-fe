@@ -78,7 +78,6 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       processing: true,
       responsive: true,
     };
-    this.load();
 
     this.mutasiForm = this.formBuilder.group({
       nama_bank: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
@@ -89,6 +88,8 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       kredit: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
       saldo: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
     });
+
+    this.load();
   }
 
   load(): void {
@@ -109,6 +110,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }

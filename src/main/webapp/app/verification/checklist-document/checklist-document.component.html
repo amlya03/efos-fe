@@ -74,98 +74,100 @@
   </div>
   <p></p>
   <p></p>
-  <table class="table table-striped table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-    <thead>
-      <tr class="table-dark">
-        <th style="text-align: center">#</th>
-        <th style="text-align: center">Tipe Dokumen</th>
-        <th style="text-align: center">Nama File</th>
-        <th style="text-align: center">Validasi</th>
-        <th style="text-align: center">Keterangan</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let uploadDocument of uploadDocument; index as i">
-        <td style="text-align: center">{{ i + 1 }}</td>
-        <td style="text-align: center">{{ uploadDocument.doc_description }}</td>
-        <td style="text-align: center">{{ uploadDocument.nama_dokumen }}</td>
-        <td style="text-align: center">
-          <div class="row">
-            <div class="col">
-              <input
-                type="radio"
-                name="validasiDE{{ i + 1 }}"
-                id="validasiDE{{ i + 1 }}"
-                value="1"
-                [disabled]="this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'"
-                [checked]="this.uploadDocument.validasi == 1"
-              />
-              <br /><label>Sesuai</label>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+      <thead>
+        <tr class="table-dark">
+          <th style="text-align: center">#</th>
+          <th style="text-align: center">Tipe Dokumen</th>
+          <th style="text-align: center">Nama File</th>
+          <th style="text-align: center">Validasi</th>
+          <th style="text-align: center">Keterangan</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let uploadDocument of uploadDocument; index as i">
+          <td style="text-align: center">{{ i + 1 }}</td>
+          <td style="text-align: center">{{ uploadDocument.doc_description }}</td>
+          <td style="text-align: center">{{ uploadDocument.nama_dokumen }}</td>
+          <td style="text-align: center">
+            <div class="row">
+              <div class="col">
+                <input
+                  type="radio"
+                  name="validasiDE{{ i + 1 }}"
+                  id="validasiDE{{ i + 1 }}"
+                  value="1"
+                  [disabled]="this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'"
+                  [checked]="this.uploadDocument.validasi == 1"
+                />
+                <br /><label>Sesuai</label>
+              </div>
+              <div class="col">
+                <input
+                  type="radio"
+                  name="validasiDE{{ i + 1 }}"
+                  id="validasiDE{{ i + 1 }}"
+                  value="0"
+                  [disabled]="this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'"
+                  [checked]="this.uploadDocument.validasi == 0"
+                />
+                <br /><label>Tidak Sesuai</label>
+              </div>
             </div>
-            <div class="col">
-              <input
-                type="radio"
-                name="validasiDE{{ i + 1 }}"
-                id="validasiDE{{ i + 1 }}"
-                value="0"
-                [disabled]="this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'"
-                [checked]="this.uploadDocument.validasi == 0"
-              />
-              <br /><label>Tidak Sesuai</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              [disabled]="this.untukSessionRole == 'VER_PRE_SPV'"
+              type="text"
+              class="form-control"
+              id="keteranganDE{{ i + 1 }}"
+              value="{{ this.uploadDocument.note_validasi }}"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              id="inputDocument{{ uploadDocument.id }}"
+              class="form-control"
+              type="file"
+              (change)="onChange($event, uploadDocument.id)"
+              multiple
+              [hidden]="this.buttonUpload == uploadDocument.id || uploadDocument.status != null"
+            />
+            <button
+              [hidden]="uploadDocument.status != null"
+              [value]="uploadDocument.id"
+              style="display: none"
+              id="uploadData{{ uploadDocument.id }}"
+              (click)="uploadData(this.app_no_de, this.dataEntry.curef, uploadDocument.id, file)"
+              class="btn btn-success"
+            >
+              Upload
+            </button>
+            <div id="proggresBar{{ uploadDocument.id }}" style="display: none" class="progress">
+              <br />
+              <div class="progress-value"></div>
             </div>
-          </div>
-        </td>
-        <td style="text-align: center">
-          <input
-            [disabled]="this.untukSessionRole == 'VER_PRE_SPV'"
-            type="text"
-            class="form-control"
-            id="keteranganDE{{ i + 1 }}"
-            value="{{ this.uploadDocument.note_validasi }}"
-          />
-        </td>
-        <td style="text-align: center">
-          <input
-            id="inputDocument{{ uploadDocument.id }}"
-            class="form-control"
-            type="file"
-            (change)="onChange($event, uploadDocument.id)"
-            multiple
-            [hidden]="this.buttonUpload == uploadDocument.id || uploadDocument.status != null"
-          />
-          <button
-            [hidden]="uploadDocument.status != null"
-            [value]="uploadDocument.id"
-            style="display: none"
-            id="uploadData{{ uploadDocument.id }}"
-            (click)="uploadData(this.app_no_de, this.dataEntry.curef, uploadDocument.id, file)"
-            class="btn btn-success"
-          >
-            Upload
-          </button>
-          <div id="proggresBar{{ uploadDocument.id }}" style="display: none" class="progress">
-            <br />
-            <div class="progress-value"></div>
-          </div>
-          <button
-            [hidden]="uploadDocument.status == null"
-            id="hapusData{{ uploadDocument.id }}"
-            [value]="uploadDocument.id"
-            class="btn btn-warning"
-            (click)="
-              deleteDataUpload(uploadDocument.doc_description, uploadDocument.id, uploadDocument.id_upload, uploadDocument.nama_dokumen)
-            "
-          >
-            Delete
-          </button>
-          <button [hidden]="uploadDocument.status == null" class="btn btn-danger" (click)="detailDataEntry(uploadDocument.nama_dokumen)">
-            View Document
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+            <button
+              [hidden]="uploadDocument.status == null"
+              id="hapusData{{ uploadDocument.id }}"
+              [value]="uploadDocument.id"
+              class="btn btn-warning"
+              (click)="
+                deleteDataUpload(uploadDocument.doc_description, uploadDocument.id, uploadDocument.id_upload, uploadDocument.nama_dokumen)
+              "
+            >
+              Delete
+            </button>
+            <button [hidden]="uploadDocument.status == null" class="btn btn-danger" (click)="detailDataEntry(uploadDocument.nama_dokumen)">
+              View Document
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <p></p>
   <p></p>
   <div [hidden]="this.dataEntry.kode_fasilitas_name === 'PTA'">
