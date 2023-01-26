@@ -189,9 +189,13 @@ export class InputparameterscoringComponent implements OnInit {
         '</div></div><p></p>' +
         '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Tipe Field </label>' +
         '<div class="col-sm-9"><select id="tipe_inputan" class="form-control"><option value="">Pilih Field</option><option value="1">Input</option><option value="2">Range</option></select>' +
+        '</div></div><p></p>' +
+        '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Bobot</label>' +
+        '<div class="col-sm-9"><input type="text" class="form-control" id="bobot"/>' +
         '</div></div><div>',
       focusConfirm: false,
     }).then(result => {
+      let bobot = $('#bobot').val();
       let status_aktif = $('#status_aktif').val();
       let parameter_deskripsi = $('#parameter_deskripsi').val();
       let tipe_inputan = $('#tipe_inputan').val();
@@ -227,8 +231,9 @@ export class InputparameterscoringComponent implements OnInit {
             main_parameter_scoring_desc: parameter[1],
             parameter_description: parameter_deskripsi,
             parameter_type: tipe_inputan,
-            updated_by: '',
+            updated_by: this.SessionStorageService.retrieve('sessionUserName'),
             updated_date: '',
+            bobot: bobot,
           })
           .subscribe({
             next: response => {
@@ -390,9 +395,13 @@ export class InputparameterscoringComponent implements OnInit {
               '">' +
               this.subTipeData +
               '</option><option value="1">Input</option><option value="2">Range</option></select>' +
+              '</div></div><p></p>' +
+              '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Bobot</label>' +
+              '<div class="col-sm-9"><input type="text" class="form-control" id="bobot"/>' +
               '</div></div><div>',
             focusConfirm: false,
           }).then(result => {
+            let bobot = $('#bobot').val();
             let status_aktif = $('#status_aktif').val();
             let parameter_deskripsi = $('#parameter_deskripsi').val();
             let tipe_inputan = $('#tipe_inputan').val();
@@ -428,8 +437,9 @@ export class InputparameterscoringComponent implements OnInit {
                   main_parameter_scoring_desc: parameter[1],
                   parameter_description: parameter_deskripsi,
                   parameter_type: tipe_inputan,
-                  updated_by: '',
+                  updated_by: this.SessionStorageService.retrieve('sessionUserName'),
                   updated_date: '',
+                  bobot: bobot,
                 })
                 .subscribe({
                   next: response => {
