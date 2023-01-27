@@ -2600,13 +2600,14 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   pilihDoc(event: any) {
-    this.file = event.target.files[0];
-    // this.hideDocChange = 1;
-
-    // setTimeout(() => {
-    //   alert('Dokumen Berhasil Tersimpan');
-    this.showProggres = 0;
-    // }, 3000);
+    if (Math.floor(event.target.files[0].size * 0.000001) > 2) {
+      Swal.fire('Gagal', 'File Maksimal 2MB!', 'error').then(() => {
+        window.location.reload();
+      });
+    } else {
+      this.file = event.target.files[0];
+      this.showProggres = 0;
+    }
   }
   uploadDataUntukSlik(deUpload: any, curefUpload: any) {
     this.uploadServices.uploadDocument(this.file, deUpload, curefUpload, '22').subscribe({

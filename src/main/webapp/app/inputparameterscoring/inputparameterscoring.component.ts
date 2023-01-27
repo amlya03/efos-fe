@@ -112,10 +112,13 @@ export class InputparameterscoringComponent implements OnInit {
         '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Bobot</label>' +
         '<div class="col-sm-9"><input type="text" class="form-control" id="bobot"/>' +
         '</div></div></div>',
+      showCancelButton: true,
+      confirmButtonColor: '#202020',
+      cancelButtonColor: '#e06666',
+      confirmButtonText: 'Updated Data',
+      cancelButtonText: 'Cancel',
       focusConfirm: false,
-      // preConfirm: () => {
-      //   return [$('#produk').val(), $('#joint_income').val(), $('#parameter').val(), $('#data_value').val(), $('#min').val(), $('#max').val(), $('#score').val()];
-      // },
+      allowOutsideClick: false,
     }).then(result => {
       let status_aktif = $('#status_aktif').val();
       let parameter_deskripsi = $('#parameter_deskripsi').val();
@@ -126,17 +129,7 @@ export class InputparameterscoringComponent implements OnInit {
       } else {
         this.kirimanstatus = 0;
       }
-
-      if (status_aktif === '') {
-        alert('Gagal Menyimpan Produk Belum dipilih');
-        return;
-      } else if (parameter_deskripsi === '') {
-        alert('Gagal Menyimpan Joint Income Belum dipilih');
-        return;
-      } else if (bobot === '') {
-        alert('Gagal Menyimpan Parameter Belum dipilih');
-        return;
-      } else {
+      if (result.isConfirmed) {
         this.http
           .post<any>(this.baseUrl + 'v1/efos-ref/create_main_parameter_scoring', {
             id: 0,
@@ -148,18 +141,13 @@ export class InputparameterscoringComponent implements OnInit {
           })
           .subscribe({
             next: response => {
-              //console.warn(response);
-              alert('Data Berhasil disimpan');
-              window.location.reload();
+              Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
+                window.location.reload();
+              });
             },
-            // error: error => console.warn(error),
           });
       }
     });
-
-    // if (formValues) {
-    //   Swal.fire(JSON.stringify(formValues));
-    // }
     // ////////////// Pop Up Input Scoring ////////////////////////
   }
 
@@ -193,7 +181,13 @@ export class InputparameterscoringComponent implements OnInit {
         '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Bobot</label>' +
         '<div class="col-sm-9"><input type="text" class="form-control" id="bobot"/>' +
         '</div></div><div>',
+      showCancelButton: true,
+      confirmButtonColor: '#202020',
+      cancelButtonColor: '#e06666',
+      confirmButtonText: 'Updated Data',
+      cancelButtonText: 'Cancel',
       focusConfirm: false,
+      allowOutsideClick: false,
     }).then(result => {
       let bobot = $('#bobot').val();
       let status_aktif = $('#status_aktif').val();
@@ -208,19 +202,7 @@ export class InputparameterscoringComponent implements OnInit {
         this.kirimanstatus = 0;
       }
 
-      if (status_aktif === '') {
-        alert('Gagal Menyimpan Produk Belum dipilih');
-        return;
-      } else if (parameter_deskripsi === '') {
-        alert('Gagal Menyimpan Joint Income Belum dipilih');
-        return;
-      } else if (tipe_inputan === '') {
-        alert('Gagal Menyimpan Parameter Belum dipilih');
-        return;
-      } else if (parameter === '') {
-        alert('Gagal Menyimpan Parameter Belum dipilih');
-        return;
-      } else {
+      if (result.isConfirmed) {
         this.http
           .post<any>(this.baseUrl + 'v1/efos-ref/create_parameter_scoring', {
             active: this.kirimanstatus,
@@ -237,18 +219,13 @@ export class InputparameterscoringComponent implements OnInit {
           })
           .subscribe({
             next: response => {
-              //console.warn(response);
-              alert('Data Berhasil disimpan');
-              window.location.reload();
+              Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
+                window.location.reload();
+              });
             },
-            // error: error => console.warn(error),
           });
       }
     });
-
-    // if (formValues) {
-    //   Swal.fire(JSON.stringify(formValues));
-    // }
     // ////////////// Pop Up Input Scoring ////////////////////////
   }
 
@@ -292,7 +269,13 @@ export class InputparameterscoringComponent implements OnInit {
             this.mainparameterscoringbyid.bobot +
             '"/>' +
             '</div></div><div>',
+          showCancelButton: true,
+          confirmButtonColor: '#202020',
+          cancelButtonColor: '#e06666',
+          confirmButtonText: 'Updated Data',
+          cancelButtonText: 'Cancel',
           focusConfirm: false,
+          allowOutsideClick: false,
         }).then(result => {
           let status_aktif = $('#status_aktif').val();
           let parameter_deskripsi = $('#parameter_deskripsi').val();
@@ -304,16 +287,7 @@ export class InputparameterscoringComponent implements OnInit {
             this.kirimanstatus = 0;
           }
 
-          if (status_aktif === '') {
-            alert('Gagal Menyimpan Produk Belum dipilih');
-            return;
-          } else if (parameter_deskripsi === '') {
-            alert('Gagal Menyimpan Joint Income Belum dipilih');
-            return;
-          } else if (bobot === '') {
-            alert('Gagal Menyimpan Parameter Belum dipilih');
-            return;
-          } else {
+          if (result.isConfirmed) {
             this.http
               .post<any>(this.baseUrl + 'v1/efos-ref/create_main_parameter_scoring', {
                 id: id,
@@ -327,10 +301,10 @@ export class InputparameterscoringComponent implements OnInit {
               })
               .subscribe({
                 next: response => {
-                  alert('Data Berhasil diupdate');
-                  window.location.reload();
+                  Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
+                    window.location.reload();
+                  });
                 },
-                // error: error => console.warn(error),
               });
           }
         });
@@ -397,9 +371,17 @@ export class InputparameterscoringComponent implements OnInit {
               '</option><option value="1">Input</option><option value="2">Range</option></select>' +
               '</div></div><p></p>' +
               '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Bobot</label>' +
-              '<div class="col-sm-9"><input type="text" class="form-control" id="bobot"/>' +
+              '<div class="col-sm-9"><input type="text" class="form-control" id="bobot" value="' +
+              this.subParameterScoringModel.bobot +
+              '"/>' +
               '</div></div><div>',
+            showCancelButton: true,
+            confirmButtonColor: '#202020',
+            cancelButtonColor: '#e06666',
+            confirmButtonText: 'Updated Data',
+            cancelButtonText: 'Cancel',
             focusConfirm: false,
+            allowOutsideClick: false,
           }).then(result => {
             let bobot = $('#bobot').val();
             let status_aktif = $('#status_aktif').val();
@@ -414,19 +396,7 @@ export class InputparameterscoringComponent implements OnInit {
               this.kirimanstatus = 0;
             }
 
-            if (status_aktif === '') {
-              alert('Gagal Menyimpan Produk Belum dipilih');
-              return;
-            } else if (parameter_deskripsi === '') {
-              alert('Gagal Menyimpan Joint Income Belum dipilih');
-              return;
-            } else if (tipe_inputan === '') {
-              alert('Gagal Menyimpan Parameter Belum dipilih');
-              return;
-            } else if (parameter === '') {
-              alert('Gagal Menyimpan Parameter Belum dipilih');
-              return;
-            } else {
+            if (result.isConfirmed) {
               this.http
                 .post<any>(this.baseUrl + 'v1/efos-ref/create_parameter_scoring', {
                   active: this.kirimanstatus,
@@ -443,10 +413,10 @@ export class InputparameterscoringComponent implements OnInit {
                 })
                 .subscribe({
                   next: response => {
-                    alert('Data Berhasil disimpan');
-                    window.location.reload();
+                    Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
+                      window.location.reload();
+                    });
                   },
-                  // error: error => console.warn(error),
                 });
             }
           });

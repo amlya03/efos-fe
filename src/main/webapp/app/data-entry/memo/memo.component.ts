@@ -294,7 +294,13 @@ export class MemoComponent implements OnInit {
   }
 
   pilihFile(pilih: any) {
-    this.file = pilih.target.files[0];
+    if (Math.floor(pilih.target.files[0].size * 0.000001) > 2) {
+      Swal.fire('Gagal', 'File Maksimal 2MB!', 'error').then(() => {
+        window.location.reload();
+      });
+    } else {
+      this.file = pilih.target.files[0];
+    }
   }
   thisFileUpload() {
     if (this.getMemoUpload == null) {

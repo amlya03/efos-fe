@@ -306,6 +306,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                   }, 5);
                   this.dataslik = data.result.dataSlikResult;
                   setTimeout(() => {
+                    window.location.reload();
                     this.dataslik.forEach((response, index) => {
                       if (response.status_applicant === 'Debitur Utama') {
                         this.listLajangSlik.push(response);
@@ -324,7 +325,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                       }
                       setTimeout(() => {
                         if (index == data.result.dataSlikResult.length - 1) {
-                          this.dtTrigger.next(this.dataslik);
+                          this.dtTrigger.next(this.responseNasabah);
                         }
                       }, index * 1);
                     });

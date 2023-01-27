@@ -168,10 +168,10 @@ export class SyaratPersetujuanComponent implements OnInit {
       title: 'Input Syarat Akad',
       html:
         '<br />' +
-        '<div class="row form-material"><div class="form-group row">' +
+        '<div class="row form-material" style="width: 100%;"><div class="form-group row">' +
         '<label class="col-sm-4 col-form-label">Syarat</label>' +
         '<div class="col-sm-8"><input id="syarat" class="form-control"/>' +
-        '</div></div>' +
+        '</div></div><p></p>' +
         '<div class="form-group row"><label class="col-sm-4 col-form-label">Keterangan</label>' +
         '<div class="col-sm-8"><select id="keterangan" class="form-control"><option value="">Pilih Keterangan</option><option value="Disyaratkan">Disyaratkan</option><option value="Tidak Disyaratkan">Tidak Disyaratkan</option></select>' +
         '</div></div>' +
@@ -214,10 +214,10 @@ export class SyaratPersetujuanComponent implements OnInit {
       title: 'Input Syarat Cair',
       html:
         '<br />' +
-        '<div class="row form-material"><div class="form-group row">' +
+        '<div class="row form-material" style="width: 100%;"><div class="form-group row">' +
         '<label class="col-sm-4 col-form-label">Syarat</label>' +
         '<div class="col-sm-8"><input id="syarat" class="form-control"/>' +
-        '</div></div>' +
+        '</div></div><p></p>' +
         '<div class="form-group row"><label class="col-sm-4 col-form-label">Keterangan</label>' +
         '<div class="col-sm-8"><select id="keterangan" class="form-control"><option value="">Pilih Keterangan</option><option value="Disyaratkan">Disyaratkan</option><option value="Tidak Disyaratkan">Tidak Disyaratkan</option></select>' +
         '</div></div>' +
@@ -260,10 +260,10 @@ export class SyaratPersetujuanComponent implements OnInit {
       title: 'Input Syarat Akad Lain - lain',
       html:
         '<br />' +
-        '<div class="row form-material"><div class="form-group row">' +
+        '<div class="row form-material" style="width: 100%;"><div class="form-group row">' +
         '<label class="col-sm-4 col-form-label">Syarat</label>' +
         '<div class="col-sm-8"><input id="syarat" class="form-control"/>' +
-        '</div></div>' +
+        '</div></div><p></p>' +
         '<div class="form-group row"><label class="col-sm-4 col-form-label">Keterangan</label>' +
         '<div class="col-sm-8"><select id="keterangan" class="form-control"><option value="">Pilih Keterangan</option><option value="Disyaratkan">Disyaratkan</option><option value="Tidak Disyaratkan">Tidak Disyaratkan</option></select>' +
         '</div></div>' +

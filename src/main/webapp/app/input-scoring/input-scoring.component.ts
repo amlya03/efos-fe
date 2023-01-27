@@ -30,7 +30,7 @@ export class InputScoringComponent implements OnInit {
   listmainparameterscoring: mainparameterscoring[] = [];
   inputScoring: inputModel[] = [];
 
-  @ViewChild(DataTableDirective, { static: false })
+  @ViewChild(DataTableDirective, { static: true })
   dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
@@ -333,7 +333,13 @@ export class InputScoringComponent implements OnInit {
         '<div class="col-sm-9"><input type="text" class="form-control" id="score">' +
         '</div></div>' +
         '<div>',
+      showCancelButton: true,
+      confirmButtonColor: '#202020',
+      cancelButtonColor: '#e06666',
+      confirmButtonText: 'Updated Data',
+      cancelButtonText: 'Cancel',
       focusConfirm: false,
+      allowOutsideClick: false,
     }).then(result => {
       let proVal = $('#produk').val();
       let joVal = $('#joint_income').val();
@@ -344,28 +350,29 @@ export class InputScoringComponent implements OnInit {
       let miVal = $('#min').val();
       let maVal = $('#max').val();
       let scVal = $('#score').val();
-      if (proVal === '') {
-        alert('Gagal Menyimpan Produk Belum dipilih');
-        return;
-      } else if (joVal === '') {
-        alert('Gagal Menyimpan Joint Income Belum dipilih');
-        return;
-      } else if (parVal === '') {
-        alert('Gagal Menyimpan Parameter Belum dipilih');
-        return;
-      } else if (parVal[0] === '1' && datVal === '') {
-        alert('Gagal Menyimpan Data Value Belum diisi');
-        return;
-      } else if (parVal[0] === '0' && miVal === '') {
-        alert('Gagal Menyimpan Min Value Belum diisi');
-        return;
-      } else if (parVal[0] === '0' && maVal === '') {
-        alert('Gagal Menyimpan Max Value Belum diisi');
-        return;
-      } else if (scVal === '') {
-        alert('Gagal Menyimpan Score Belum diisi');
-        return;
-      } else {
+      // if (proVal === '') {
+      //   alert('Gagal Menyimpan Produk Belum dipilih');
+      //   return;
+      // } else if (joVal === '') {
+      //   alert('Gagal Menyimpan Joint Income Belum dipilih');
+      //   return;
+      // } else if (parVal === '') {
+      //   alert('Gagal Menyimpan Parameter Belum dipilih');
+      //   return;
+      // } else if (parVal[0] === '1' && datVal === '') {
+      //   alert('Gagal Menyimpan Data Value Belum diisi');
+      //   return;
+      // } else if (parVal[0] === '0' && miVal === '') {
+      //   alert('Gagal Menyimpan Min Value Belum diisi');
+      //   return;
+      // } else if (parVal[0] === '0' && maVal === '') {
+      //   alert('Gagal Menyimpan Max Value Belum diisi');
+      //   return;
+      // } else if (scVal === '') {
+      //   alert('Gagal Menyimpan Score Belum diisi');
+      //   return;
+      // } else {
+      if (result.isConfirmed) {
         this.http
           .post<any>(this.baseUrl + 'v1/efos-ref/create_data_scoring', {
             id: 0,
@@ -381,25 +388,257 @@ export class InputScoringComponent implements OnInit {
           })
           .subscribe({
             next: response => {
-              //console.warn(response);
-              alert('Data Berhasil disimpan');
-              window.location.reload();
+              Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
+                window.location.reload();
+              });
             },
-            error: error => console.warn(error),
           });
       }
+      // }
     });
   }
 
   viewdetaildatascoring(id: any) {
-    this.scoringServices.getdatascoringdetailbyid(id).subscribe(data => {
-      this.datascoringbyid = data.result;
-      // console.warn('data by id', data)
-      if ((this.datascoringbyid.joint_income = 1)) {
-        this.getjoincome = 'Ya';
-      } else {
-        this.getjoincome = 'Tidak';
-      }
+    this.scoringServices.getdatascoringdetailbyid(id).subscribe({
+      next: data => {
+        this.datascoringbyid = data.result;
+        if ((this.datascoringbyid.joint_income = 1)) {
+          this.getjoincome = 'Ya';
+        } else {
+          this.getjoincome = 'Tidak';
+        }
+
+        $(document).ready(function () {
+          $('#parameter').change(function () {
+            let parameter: any;
+            parameter = $(this).val();
+            // alert(parameter)
+            let parameterValue = parameter.split('|');
+            if (parameterValue[0] !== '2') {
+              $('#minMaxDiv').hide();
+              $('#dataValueDiv').show();
+            } else {
+              $('#minMaxDiv').show();
+              $('#dataValueDiv').hide();
+            }
+
+            if (parameterValue[1] === 'Tingkat Pendidikan') {
+              $('#keyInDiv').hide();
+              $('#pendidikanDiv').show();
+              $('#jenisPerusahaanDiv').hide();
+              $('#kepemilikanRumahDiv').hide();
+              $('#jenisPekerjaanDiv').hide();
+              $('#statusPerkawinanDiv').hide();
+              $('#tujuanPembiayaanDiv').hide();
+            } else if (parameterValue[1] === 'Tujuan Pembiayaan') {
+              $('#keyInDiv').hide();
+              $('#tujuanPembiayaanDiv').show();
+              $('#jenisPerusahaanDiv').hide();
+              $('#kepemilikanRumahDiv').hide();
+              $('#jenisPekerjaanDiv').hide();
+              $('#statusPerkawinanDiv').hide();
+              $('#pendidikanDiv').hide();
+            } else if (parameterValue[1] === 'Status Perkawinan') {
+              $('#keyInDiv').hide();
+              $('#statusPerkawinanDiv').show();
+              $('#jenisPerusahaanDiv').hide();
+              $('#kepemilikanRumahDiv').hide();
+              $('#jenisPekerjaanDiv').hide();
+              $('#tujuanPembiayaanDiv').hide();
+              $('#pendidikanDiv').hide();
+            } else if (parameterValue[1] === 'Tingkat Jabatan') {
+              $('#keyInDiv').hide();
+              $('#jenisPekerjaanDiv').show();
+              $('#statusPerkawinanDiv').hide();
+              $('#tujuanPembiayaanDiv').hide();
+              $('#pendidikanDiv').hide();
+              $('#jenisPerusahaanDiv').hide();
+              $('#kepemilikanRumahDiv').hide();
+            } else if (parameterValue[1] === 'Kepemilikan Tempat Tinggal') {
+              $('#keyInDiv').hide();
+              $('#kepemilikanRumahDiv').show();
+              $('#jenisPekerjaanDiv').hide();
+              $('#statusPerkawinanDiv').hide();
+              $('#tujuanPembiayaanDiv').hide();
+              $('#pendidikanDiv').hide();
+              $('#jenisPerusahaanDiv').hide();
+            } else if (parameterValue[1] === 'Jenis Perusahaan') {
+              $('#keyInDiv').hide();
+              $('#jenisPerusahaanDiv').show();
+              $('#kepemilikanRumahDiv').hide();
+              $('#jenisPekerjaanDiv').hide();
+              $('#statusPerkawinanDiv').hide();
+              $('#tujuanPembiayaanDiv').hide();
+              $('#pendidikanDiv').hide();
+            } else {
+              $('#keyInDiv').show();
+              $('#jenisPerusahaanDiv').hide();
+              $('#kepemilikanRumahDiv').hide();
+              $('#jenisPekerjaanDiv').hide();
+              $('#statusPerkawinanDiv').hide();
+              $('#tujuanPembiayaanDiv').hide();
+              $('#pendidikanDiv').hide();
+            }
+          });
+        });
+
+        // setTimeout(() => {
+        Swal.fire({
+          title: 'Input Scoring',
+          html:
+            '<br />' +
+            '<div class="row form-material" style="width:100%"><div class="form-group row">' +
+            '<label class="col-sm-3 col-form-label" style="font-size: medium;">Produk</label>' +
+            '<div class="col-sm-9"><select class="form-control" id="produk"><option value="' +
+            this.datascoringbyid.produk +
+            '">' +
+            this.datascoringbyid.produk +
+            '</option>' +
+            '<option value="ALL">ALL</option>' +
+            `${optionsfasilitas}` +
+            '</select>' +
+            '</div></div><p></p>' +
+            '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Joint Income?</label>' +
+            '<div class="col-sm-9"><select id="joint_income" class="form-control"><option value="' +
+            this.datascoringbyid.joint_income +
+            '">' +
+            this.getjoincome +
+            '</option><option value="1">Ya</option><option value="2">Tidak</option></select>' +
+            '</div></div><p></p>' +
+            '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Parameter</label>' +
+            '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="' +
+            this.datascoringbyid.parameter +
+            '">' +
+            this.datascoringbyid.parameter +
+            '</option>' +
+            `${options}` +
+            '</select>' +
+            '</div></div><p></p>' +
+            '<div class="form-group row" id="dataValueDiv" style="display: none;"><label class="col-sm-3 col-form-label" style="font-size: medium;">Data Value</label>' +
+            '<div class="col-sm-9" id="keyInDiv" style="display: none;"><input type="text" class="form-control" id="data_value" value="' +
+            this.datascoringbyid.data_value +
+            '"/></div>' +
+            '<div class="col-sm-9" id="pendidikanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
+            this.datascoringbyid.data_value +
+            '">' +
+            this.datascoringbyid.data_value +
+            '</option>' +
+            `${pendidikan}` +
+            '</select></div>' +
+            '<div class="col-sm-9" id="tujuanPembiayaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
+            this.datascoringbyid.data_value +
+            '">' +
+            this.datascoringbyid.data_value +
+            '</option>' +
+            `${tujuanPembiayaan}` +
+            '</select></div>' +
+            '<div class="col-sm-9" id="statusPerkawinanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
+            this.datascoringbyid.data_value +
+            '">' +
+            this.datascoringbyid.data_value +
+            '</option>' +
+            `${statusPerkawinan}` +
+            '</select></div>' +
+            '<div class="col-sm-9" id="jenisPekerjaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
+            this.datascoringbyid.data_value +
+            '">' +
+            this.datascoringbyid.data_value +
+            '</option>' +
+            `${jenisPekerjaan}` +
+            '</select></div>' +
+            '<div class="col-sm-9" id="kepemilikanRumahDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
+            this.datascoringbyid.data_value +
+            '">' +
+            this.datascoringbyid.data_value +
+            '</option>' +
+            `${kepemilikanRumah}` +
+            '</select></div>' +
+            '<div class="col-sm-9" id="jenisPerusahaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
+            this.datascoringbyid.data_value +
+            '">' +
+            this.datascoringbyid.data_value +
+            '</option>' +
+            `${jenisPerusahaan}` +
+            '</select></div>' +
+            '</div><p></p>' +
+            '<div class="form-group row" id="minMaxDiv" style="display: none;"><label class="col-sm-3 col-form-label" style="font-size: medium;">Min / Max</label>' +
+            '<div class="col"><input type="text" class="form-control" id="min" value="' +
+            this.datascoringbyid.min_value +
+            '"></div><div class="col">Min</div><div class="col"><input type="text" class="form-control" id="max" value="' +
+            this.datascoringbyid.max_value +
+            '"></div><div class="col">Max</div>' +
+            '</div><p></p>' +
+            '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Score</label>' +
+            '<div class="col-sm-9"><input type="text" class="form-control" id="score" value="' +
+            this.datascoringbyid.score +
+            '">' +
+            '</div></div>' +
+            '<div>',
+          showCancelButton: true,
+          confirmButtonColor: '#202020',
+          cancelButtonColor: '#e06666',
+          confirmButtonText: 'Updated Data',
+          cancelButtonText: 'Cancel',
+          focusConfirm: false,
+          allowOutsideClick: false,
+        }).then(result => {
+          let proVal = $('#produk').val();
+          let joVal = $('#joint_income').val();
+          let slicePar: any;
+          slicePar = $('#parameter').val();
+          let parVal = slicePar.split('|');
+          let datVal = $('#data_value').val();
+          let miVal = $('#min').val();
+          let maVal = $('#max').val();
+          let scVal = $('#score').val();
+          // if (proVal === '') {
+          //   alert('Gagal Menyimpan Produk Belum dipilih');
+          //   return;
+          // } else if (joVal === '') {
+          //   alert('Gagal Menyimpan Joint Income Belum dipilih');
+          //   return;
+          // } else if (parVal === '') {
+          //   alert('Gagal Menyimpan Parameter Belum dipilih');
+          //   return;
+          // } else if (parVal[0] === '1' && datVal === '') {
+          //   alert('Gagal Menyimpan Data Value Belum diisi');
+          //   return;
+          // } else if (parVal[0] === '0' && miVal === '') {
+          //   alert('Gagal Menyimpan Min Value Belum diisi');
+          //   return;
+          // } else if (parVal[0] === '0' && maVal === '') {
+          //   alert('Gagal Menyimpan Max Value Belum diisi');
+          //   return;
+          // } else if (scVal === '') {
+          //   alert('Gagal Menyimpan Score Belum diisi');
+          //   return;
+          // } else {
+          if (result.isConfirmed) {
+            this.http
+              .post<any>(this.baseUrl + 'v1/efos-ref/create_data_scoring', {
+                id: id,
+                created_by: this.SessionStorageService.retrieve('sessionUserName'),
+                created_date: '',
+                data_value: datVal,
+                joint_income: joVal,
+                max_value: maVal,
+                min_value: miVal,
+                parameter: parVal[0],
+                produk: proVal,
+                score: scVal,
+              })
+              .subscribe({
+                next: response => {
+                  Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
+                    window.location.reload();
+                  });
+                },
+              });
+          }
+          // }
+        });
+        // }, id * 10);
+      },
     });
 
     let options = this.listparameterscoring.map((option: any) => {
@@ -477,226 +716,5 @@ export class InputScoringComponent implements OnInit {
       `;
     });
     // /////////////// Kepemilikan Rumah /////////////////////////////////
-
-    $(document).ready(function () {
-      $('#parameter').change(function () {
-        let parameter: any;
-        parameter = $(this).val();
-        let parameterValue = parameter.split('|');
-        if (parameterValue[0] === '1') {
-          $('#minMaxDiv').hide();
-          $('#dataValueDiv').show();
-        } else {
-          $('#minMaxDiv').show();
-          $('#dataValueDiv').hide();
-        }
-
-        if (parameterValue[1] === 'Tingkat Pendidikan') {
-          $('#keyInDiv').hide();
-          $('#pendidikanDiv').show();
-          $('#jenisPerusahaanDiv').hide();
-          $('#kepemilikanRumahDiv').hide();
-          $('#jenisPekerjaanDiv').hide();
-          $('#statusPerkawinanDiv').hide();
-          $('#tujuanPembiayaanDiv').hide();
-        } else if (parameterValue[1] === 'Tujuan Pembiayaan') {
-          $('#keyInDiv').hide();
-          $('#tujuanPembiayaanDiv').show();
-          $('#jenisPerusahaanDiv').hide();
-          $('#kepemilikanRumahDiv').hide();
-          $('#jenisPekerjaanDiv').hide();
-          $('#statusPerkawinanDiv').hide();
-          $('#pendidikanDiv').hide();
-        } else if (parameterValue[1] === 'Status Perkawinan') {
-          $('#keyInDiv').hide();
-          $('#statusPerkawinanDiv').show();
-          $('#jenisPerusahaanDiv').hide();
-          $('#kepemilikanRumahDiv').hide();
-          $('#jenisPekerjaanDiv').hide();
-          $('#tujuanPembiayaanDiv').hide();
-          $('#pendidikanDiv').hide();
-        } else if (parameterValue[1] === 'Tingkat Jabatan') {
-          $('#keyInDiv').hide();
-          $('#jenisPekerjaanDiv').show();
-          $('#statusPerkawinanDiv').hide();
-          $('#tujuanPembiayaanDiv').hide();
-          $('#pendidikanDiv').hide();
-          $('#jenisPerusahaanDiv').hide();
-          $('#kepemilikanRumahDiv').hide();
-        } else if (parameterValue[1] === 'Kepemilikan Tempat Tinggal') {
-          $('#keyInDiv').hide();
-          $('#kepemilikanRumahDiv').show();
-          $('#jenisPekerjaanDiv').hide();
-          $('#statusPerkawinanDiv').hide();
-          $('#tujuanPembiayaanDiv').hide();
-          $('#pendidikanDiv').hide();
-          $('#jenisPerusahaanDiv').hide();
-        } else if (parameterValue[1] === 'Jenis Perusahaan') {
-          $('#keyInDiv').hide();
-          $('#jenisPerusahaanDiv').show();
-          $('#kepemilikanRumahDiv').hide();
-          $('#jenisPekerjaanDiv').hide();
-          $('#statusPerkawinanDiv').hide();
-          $('#tujuanPembiayaanDiv').hide();
-          $('#pendidikanDiv').hide();
-        } else {
-          $('#keyInDiv').show();
-          $('#jenisPerusahaanDiv').hide();
-          $('#kepemilikanRumahDiv').hide();
-          $('#jenisPekerjaanDiv').hide();
-          $('#statusPerkawinanDiv').hide();
-          $('#tujuanPembiayaanDiv').hide();
-          $('#pendidikanDiv').hide();
-        }
-      });
-    });
-
-    setTimeout(() => {
-      Swal.fire({
-        title: 'Input Scoring',
-        html:
-          '<br />' +
-          '<div class="row form-material" style="width:100%"><div class="form-group row">' +
-          '<label class="col-sm-3 col-form-label" style="font-size: medium;">Produk</label>' +
-          '<div class="col-sm-9"><select class="form-control" id="produk"><option value="' +
-          this.datascoringbyid.produk +
-          '">' +
-          this.datascoringbyid.produk +
-          '</option>' +
-          '<option value="ALL">ALL</option>' +
-          `${optionsfasilitas}` +
-          '</select>' +
-          '</div></div><p></p>' +
-          '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Joint Income?</label>' +
-          '<div class="col-sm-9"><select id="joint_income" class="form-control"><option value="' +
-          this.datascoringbyid.joint_income +
-          '">' +
-          this.getjoincome +
-          '</option><option value="1">Ya</option><option value="2">Tidak</option></select>' +
-          '</div></div><p></p>' +
-          '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Parameter</label>' +
-          '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="' +
-          this.datascoringbyid.parameter +
-          '">' +
-          this.datascoringbyid.parameter +
-          '</option>' +
-          `${options}` +
-          '</select>' +
-          '</div></div><p></p>' +
-          '<div class="form-group row" id="dataValueDiv" style="display: none;"><label class="col-sm-3 col-form-label" style="font-size: medium;">Data Value</label>' +
-          '<div class="col-sm-9" id="keyInDiv" style="display: none;"><input type="text" class="form-control" id="data_value"/></div>' +
-          '<div class="col-sm-9" id="pendidikanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
-          this.datascoringbyid.data_value +
-          '">' +
-          this.datascoringbyid.data_value +
-          '</option>' +
-          `${pendidikan}` +
-          '</select></div>' +
-          '<div class="col-sm-9" id="tujuanPembiayaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
-          this.datascoringbyid.data_value +
-          '">' +
-          this.datascoringbyid.data_value +
-          '</option>' +
-          `${tujuanPembiayaan}` +
-          '</select></div>' +
-          '<div class="col-sm-9" id="statusPerkawinanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
-          this.datascoringbyid.data_value +
-          '">' +
-          this.datascoringbyid.data_value +
-          '</option>' +
-          `${statusPerkawinan}` +
-          '</select></div>' +
-          '<div class="col-sm-9" id="jenisPekerjaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
-          this.datascoringbyid.data_value +
-          '">' +
-          this.datascoringbyid.data_value +
-          '</option>' +
-          `${jenisPekerjaan}` +
-          '</select></div>' +
-          '<div class="col-sm-9" id="kepemilikanRumahDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
-          this.datascoringbyid.data_value +
-          '">' +
-          this.datascoringbyid.data_value +
-          '</option>' +
-          `${kepemilikanRumah}` +
-          '</select></div>' +
-          '<div class="col-sm-9" id="jenisPerusahaanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +
-          this.datascoringbyid.data_value +
-          '">' +
-          this.datascoringbyid.data_value +
-          '</option>' +
-          `${jenisPerusahaan}` +
-          '</select></div>' +
-          '</div><p></p>' +
-          '<div class="form-group row" id="minMaxDiv"><label class="col-sm-3 col-form-label" style="font-size: medium;">Min / Max</label>' +
-          '<div class="col"><input type="text" class="form-control" id="min" value="' +
-          this.datascoringbyid.min_value +
-          '"></div><div class="col">Min</div><div class="col"><input type="text" class="form-control" id="max" value="' +
-          this.datascoringbyid.max_value +
-          '"></div><div class="col">Max</div>' +
-          '</div><p></p>' +
-          '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Score</label>' +
-          '<div class="col-sm-9"><input type="text" class="form-control" id="score" value="' +
-          this.datascoringbyid.score +
-          '">' +
-          '</div></div>' +
-          '<div>',
-        focusConfirm: false,
-      }).then(result => {
-        let proVal = $('#produk').val();
-        let joVal = $('#joint_income').val();
-        let slicePar: any;
-        slicePar = $('#parameter').val();
-        let parVal = slicePar.split('|');
-        let datVal = $('#data_value').val();
-        let miVal = $('#min').val();
-        let maVal = $('#max').val();
-        let scVal = $('#score').val();
-        if (proVal === '') {
-          alert('Gagal Menyimpan Produk Belum dipilih');
-          return;
-        } else if (joVal === '') {
-          alert('Gagal Menyimpan Joint Income Belum dipilih');
-          return;
-        } else if (parVal === '') {
-          alert('Gagal Menyimpan Parameter Belum dipilih');
-          return;
-        } else if (parVal[0] === '1' && datVal === '') {
-          alert('Gagal Menyimpan Data Value Belum diisi');
-          return;
-        } else if (parVal[0] === '0' && miVal === '') {
-          alert('Gagal Menyimpan Min Value Belum diisi');
-          return;
-        } else if (parVal[0] === '0' && maVal === '') {
-          alert('Gagal Menyimpan Max Value Belum diisi');
-          return;
-        } else if (scVal === '') {
-          alert('Gagal Menyimpan Score Belum diisi');
-          return;
-        } else {
-          this.http
-            .post<any>(this.baseUrl + 'v1/efos-ref/create_data_scoring', {
-              id: 0,
-              created_by: this.SessionStorageService.retrieve('sessionUserName'),
-              created_date: '',
-              data_value: datVal,
-              joint_income: joVal,
-              max_value: maVal,
-              min_value: miVal,
-              parameter: parVal[0],
-              produk: proVal,
-              score: scVal,
-            })
-            .subscribe({
-              next: response => {
-                //console.warn(response);
-                alert('Data Berhasil disimpan');
-                window.location.reload();
-              },
-              error: error => console.warn(error),
-            });
-        }
-      });
-    }, id * 10);
   }
 }

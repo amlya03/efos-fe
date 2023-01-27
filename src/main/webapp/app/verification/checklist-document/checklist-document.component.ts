@@ -10,6 +10,7 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { ServicesUploadDocumentService } from 'app/upload-document/services/services-upload-document.service';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { environment } from 'environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'jhi-checklist-document',
@@ -293,31 +294,20 @@ export class ChecklistDocumentComponent implements OnInit {
     deUpload: string | undefined,
     curefUpload: string | null | undefined,
     doc_type: number | null | undefined,
-    file: File | undefined
+    file: File | any
   ) {
-    this.uploadService.uploadDocument(file, deUpload, curefUpload, doc_type).subscribe({
-      // if (typeof event === 'object') {
-      //   // Short link via api response
-      //   this.shortLink = event.link;
-      //   this.loading = false; // Flag variable
-      // }
-    });
-    (<HTMLInputElement>document.getElementById('uploadData' + doc_type)).style.display = 'none';
-    (<HTMLInputElement>document.getElementById('proggresBar' + doc_type)).style.display = 'block';
-    setTimeout(() => {
-      window.location.reload();
-    }, 3000);
-
-    // this.loading = !this.loading;
-    // alert(this.idUpload);
-    // this.upload(this.file, this.idUpload).subscribe((event: any) => {
-    //   if (typeof event === 'object') {
-    //     // Short link via api response
-    //     this.shortLink = event.link;
-
-    //     this.loading = false; // Flag variable
-    //   }
-    // });
+    if (Math.floor(file.size * 0.000001) > 2) {
+      Swal.fire('Gagal', 'File Maksimal 2MB!', 'error').then(() => {
+        window.location.reload();
+      });
+    } else {
+      this.uploadService.uploadDocument(file, deUpload, curefUpload, doc_type).subscribe({});
+      (<HTMLInputElement>document.getElementById('uploadData' + doc_type)).style.display = 'none';
+      (<HTMLInputElement>document.getElementById('proggresBar' + doc_type)).style.display = 'block';
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    }
   }
 
   // Delete
