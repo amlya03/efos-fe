@@ -134,6 +134,8 @@ export class NavbarComponent implements OnInit {
     if (this.sudahLogin === null) {
       this.router.navigate(['/login']);
     }
+
+    // ADMINISTRATOR //
   }
 
   changeLanguage(languageKey: string): void {

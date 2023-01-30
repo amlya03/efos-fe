@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -16,6 +16,8 @@ import { InputScoringService } from 'app/input-scoring/input-scoring.service';
   styleUrls: ['./inputparameterscoring.component.scss'],
 })
 export class InputparameterscoringComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   listmainparameterscoring: mainparameterscoring[] = [];
   listparameterscoring: mainparameterscoring[] = [];
@@ -55,6 +57,7 @@ export class InputparameterscoringComponent implements OnInit {
     }
   }
   load() {
+    this.getLoading(true);
     this.scoringServices.listmainparameterscoring().subscribe(data => {
       this.listmainparameterscoring = data.result;
       this.dtTriggerMain.next(data.result);
@@ -65,6 +68,7 @@ export class InputparameterscoringComponent implements OnInit {
     this.scoringServices.listparameterscoring().subscribe(data => {
       this.listparameterscoring = data.result;
       this.dtTriggerSub.next(data.result);
+      this.getLoading(false);
       // console.warn(this.listparameterscoring);
       // this.dtTrigger.next(data.result);
     });
@@ -425,16 +429,8 @@ export class InputparameterscoringComponent implements OnInit {
     });
   }
 
-  refreshDatatables(data: any) {
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-      this.dtOptionsSub = {
-        pagingType: 'full_numbers',
-        pageLength: 10,
-        processing: true,
-        responsive: true,
-      };
-      this.dtTriggerSub.next(data);
-    });
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -23,6 +23,8 @@ import { ServiceVerificationService } from 'app/verification/service/service-ver
   styleUrls: ['./input-scoring.component.scss'],
 })
 export class InputScoringComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   scoringForm!: FormGroup;
   submitted = false;
@@ -74,50 +76,74 @@ export class InputScoringComponent implements OnInit {
     // });
   }
   load() {
-    this.scoringServices.getScoring().subscribe(data => {
-      this.inputScoring = data.result;
-    });
+    this.getLoading(true);
+    setTimeout(() => {
+      this.scoringServices.getScoring().subscribe(data => {
+        this.inputScoring = data.result;
+      });
+    }, 1);
 
-    this.dataEntryService.getFetchKodeFasilitas().subscribe(data => {
-      this.listdatafasilitas = data.result;
-    });
+    setTimeout(() => {
+      this.dataEntryService.getFetchKodeFasilitas().subscribe(data => {
+        this.listdatafasilitas = data.result;
+      });
+    }, 3);
 
-    this.scoringServices.listDataScoring().subscribe(data => {
-      this.listScoring = data.result;
-      this.dtTrigger.next(data.result);
-    });
+    setTimeout(() => {
+      this.scoringServices.listmainparameterscoring().subscribe(data => {
+        this.listmainparameterscoring = data.result;
+      });
+    }, 5);
 
-    this.scoringServices.listmainparameterscoring().subscribe(data => {
-      this.listmainparameterscoring = data.result;
-    });
+    setTimeout(() => {
+      this.scoringServices.listparameterscoring().subscribe(data => {
+        this.listparameterscoring = data.result;
+      });
+    }, 7);
 
-    this.scoringServices.listparameterscoring().subscribe(data => {
-      this.listparameterscoring = data.result;
-    });
+    setTimeout(() => {
+      this.dataEntryService.getListPendidikan().subscribe(pendidikan => {
+        this.modelPendidikan = pendidikan.result;
+      });
+    }, 9);
 
-    this.dataEntryService.getListPendidikan().subscribe(pendidikan => {
-      this.modelPendidikan = pendidikan.result;
-    });
+    setTimeout(() => {
+      this.dataEntryService.getFetchTujuanPembiayaan().subscribe(tujuan => {
+        this.modelTujuanPembiayaan = tujuan.result;
+      });
+    }, 12);
 
-    this.dataEntryService.getFetchTujuanPembiayaan().subscribe(tujuan => {
-      this.modelTujuanPembiayaan = tujuan.result;
-    });
+    setTimeout(() => {
+      this.dataEntryService.getFetchListJabatan().subscribe(pekerjaan => {
+        this.modelPekerjaan = pekerjaan.result;
+      });
+    }, 15);
 
-    this.dataEntryService.getFetchListJabatan().subscribe(pekerjaan => {
-      this.modelPekerjaan = pekerjaan.result;
-    });
+    setTimeout(() => {
+      this.dataEntryService.getFetchStatusPerkawinan().subscribe(status => {
+        this.modelStatusPerkawinan = status.result;
+      });
+    }, 18);
 
-    this.dataEntryService.getFetchStatusPerkawinan().subscribe(status => {
-      this.modelStatusPerkawinan = status.result;
-    });
+    setTimeout(() => {
+      this.dataEntryService.getFetchTipePerusahaan().subscribe(perusahaan => {
+        this.modelJenisPerusahaan = perusahaan.result;
+      });
+    }, 20);
 
-    this.dataEntryService.getFetchTipePerusahaan().subscribe(perusahaan => {
-      this.modelJenisPerusahaan = perusahaan.result;
-    });
+    setTimeout(() => {
+      this.verifikasiServices.getStatusRumah().subscribe(rumah => {
+        this.modelKepemilikanRumah = rumah.result;
+      });
+    }, 25);
 
-    this.verifikasiServices.getStatusRumah().subscribe(rumah => {
-      this.modelKepemilikanRumah = rumah.result;
-    });
+    setTimeout(() => {
+      this.scoringServices.listDataScoring().subscribe(data => {
+        this.listScoring = data.result;
+        this.dtTrigger.next(data.result);
+        this.getLoading(false);
+      });
+    }, 30);
   }
 
   cariButton(produk: string, joint: string, parameter: string, dataValue: string, score: string): void {
@@ -716,5 +742,9 @@ export class InputScoringComponent implements OnInit {
       `;
     });
     // /////////////// Kepemilikan Rumah /////////////////////////////////
+  }
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

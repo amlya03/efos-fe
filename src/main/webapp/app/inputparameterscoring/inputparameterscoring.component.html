@@ -33,7 +33,8 @@
 <br />
 <br />
 <br />
-<br /><div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Sub Parameter Scoring</h3>
 </div>
 <p></p>
@@ -54,7 +55,7 @@
     <tr *ngFor="let daWa1 of listparameterscoring; index as i">
       <td style="text-align: center">{{ i + 1 }}</td>
       <td style="text-align: center">{{ daWa1.parameter_description }}</td>
-      <td style="text-align: center">{{ daWa1.parameter_type === '1'? 'Input' : 'Range' }}</td>
+      <td style="text-align: center">{{ daWa1.parameter_type === '1' ? 'Input' : 'Range' }}</td>
       <td style="text-align: center">
         <a type="button" (click)="viewdetailparameter(daWa1.id)">
           <fa-icon icon="eye"></fa-icon>
@@ -64,3 +65,4 @@
     </tr>
   </tbody>
 </table>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>
