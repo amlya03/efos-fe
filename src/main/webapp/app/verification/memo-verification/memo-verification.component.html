@@ -45,7 +45,6 @@
   </div>
 </div>
 <br />
-
 <div class="row" style="text-align: center">
   <div class="col">
     <button type="button" class="btn btn-info" (click)="simpanMemo(keterangan.value)">Simpan Data</button>
@@ -53,7 +52,7 @@
       type="button"
       class="btn btn-warning"
       (click)="updateStatus()"
-      [hidden]="(untukSessionRole === 'VER_PRE_SPV' && valVER_PRE_SPV == 1) || (untukSessionRole === 'VER_PRESCR' && valVER_PRESCR == 1)"
+      *ngIf="(untukSessionRole === 'VER_PRE_SPV' && valVER_PRE_SPV == 1) || (untukSessionRole === 'VER_PRESCR' && valVER_PRESCR == 1)"
     >
       Update Status
     </button>

@@ -78,6 +78,12 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   untukSessionFullName: any;
   untukSessionKodeCabang: any;
 
+  // ///// Join Tanggal //////////////
+  joinLajangTanggalMulai: any;
+  joinLajangJatuhTempoMulai: any;
+  joinMenikahTanggalMulai: any;
+  joinMenikahJatuhTempoMulai: any;
+
   // ////////////////////////
   jenisKelaminHps: any;
   jenisKelaminPasHps: any;
@@ -660,6 +666,38 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                                           }
                                         }
                                       });
+                                      setTimeout(() => {
+                                        for (let i = 0; i < this.listLajangSlik.length; i++) {
+                                          // ///////////////////// Mulai ////////////////////////////
+                                          let tanggalMulaiLajang: any;
+                                          tanggalMulaiLajang = this.listLajangSlik[i].tanggal_mulai;
+                                          let resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
+                                          let resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
+                                          let resultMulaiTanggal = tanggalMulaiLajang.slice(6);
+                                          let resultTanggalMulai: any;
+                                          resultTanggalMulai = [resultMulaiTahun + '/' + resultMulaiBulan + '/' + resultMulaiTanggal];
+                                          this.joinLajangTanggalMulai.push(resultTanggalMulai);
+                                          console.warn(resultTanggalMulai);
+                                          // ///////////////////// Mulai ////////////////////////////
+
+                                          // ///////////////////// Jatuh Tempo ////////////////////////////
+                                          let tanggalJatuhTempoLajang: any;
+                                          tanggalJatuhTempoLajang = this.listLajangSlik[i].tanggal_jatuh_tempo;
+                                          let resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
+                                          let resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
+                                          let resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
+                                          this.joinLajangJatuhTempoMulai =
+                                            resultJatuhTempoTahun + '/' + resultJatuhTempoBulan + '/' + resultJatuhTempoTanggal;
+                                          // ///////////////////// Jatuh Tempo ////////////////////////////
+                                        }
+                                        for (let i = 0; i < this.listMenikahSlik.length; i++) {
+                                          const tanggalMulaiMenikah = this.listMenikahSlik[i].tanggal_mulai;
+                                          const tanggalJatuhTempoMenikah = this.listMenikahSlik[i].tanggal_jatuh_tempo;
+                                        }
+                                        setTimeout(() => {
+                                          console.warn(this.joinLajangTanggalMulai);
+                                        }, this.dataslik.length * 10);
+                                      }, this.dataslik.length * 1);
                                       this.dtTrigger.next(this.dataslik);
                                       this.getLoading(false);
                                     }, 50);

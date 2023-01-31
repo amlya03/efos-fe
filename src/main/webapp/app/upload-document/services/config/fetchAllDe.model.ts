@@ -1,6 +1,6 @@
 export class fetchAllDe {
   id?: number;
-  app_no_ide?: string;
+  app_no_ide?: string | number | undefined | null;
   app_no_de?: string;
   curef?: string;
   id_customer?: number;

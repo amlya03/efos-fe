@@ -25,8 +25,8 @@ export class MemoVerificationComponent implements OnInit {
   listMemo: MemoModel[] = [];
   app_no_de: any;
   detailMemoModel: detailMemo = new detailMemo();
-  valVER_PRESCR: any;
-  valVER_PRE_SPV: any;
+  valVER_PRESCR = 0;
+  valVER_PRE_SPV = 0;
 
   // /////////////Session//////////////////
   untukSessionRole: any;
@@ -89,27 +89,17 @@ export class MemoVerificationComponent implements OnInit {
       this.listMemo = data.result;
       this.dtTrigger.next(this.listMemo);
       setTimeout(() => {
-        for (let i = 0; i < data.result.length; i++) {
-          setTimeout(() => {
-            if (this.listMemo[i].role === 'VER_PRESCR') {
-              this.valVER_PRESCR = 0;
-              this.getLoading(false);
-            } else {
-              this.getLoading(false);
-              this.valVER_PRESCR = 1;
-            }
-          }, 10);
-
-          setTimeout(() => {
-            if (this.listMemo[i].role === 'VER_PRE_SPV') {
-              this.valVER_PRE_SPV = 0;
-              this.getLoading(false);
-            } else {
-              this.valVER_PRE_SPV = 1;
-              this.getLoading(false);
-            }
-          }, 20);
-        }
+        this.listMemo.forEach((data: MemoModel) => {
+          if (data.role === 'VER_PRESCR') {
+            this.valVER_PRESCR = 1;
+            this.getLoading(false);
+          } else if (data.role === 'VER_PRE_SPV') {
+            this.valVER_PRE_SPV = 1;
+            this.getLoading(false);
+          } else {
+            this.getLoading(false);
+          }
+        });
       }, 10);
     });
   }
@@ -127,7 +117,7 @@ export class MemoVerificationComponent implements OnInit {
       .post<any>(this.baseUrl + 'v1/efos-de/create_memo', {
         id: 0,
         keterangan: keterangan,
-        users: this.untukSessionFullName,
+        users: this.untukSessionUserName + '-' + this.untukSessionFullName,
         role: this.untukSessionRole,
         app_no_de: this.app_no_de,
         created_date: '',

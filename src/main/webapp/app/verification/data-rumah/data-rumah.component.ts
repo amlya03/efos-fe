@@ -92,7 +92,7 @@ export class DataRumahComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getLoading(true);
+    // this.getLoading(true);
     this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.untukSessionUsername = this.sessionStorageService.retrieve('sessionUserName');
     this.dtOptions = {
@@ -102,7 +102,6 @@ export class DataRumahComponent implements OnInit {
       responsive: true,
     };
     this.load();
-    this.formatMoney();
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.analisaKeuanganForm = this.formBuilder.group({
@@ -169,6 +168,66 @@ export class DataRumahComponent implements OnInit {
       this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
         this.dataEntry = data.result;
         // alert(this.dataEntry.joint_income)
+        // ambil semua data Slik
+        setTimeout(() => {
+          this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe(data => {
+            this.getLoading(false);
+            this.slikTotal = data.result;
+            let retSlik = {
+              total_angsuran_nasabah: this.slikTotal.total_angsuran_nasabah,
+              total_angsuran_pasangan: this.slikTotal.total_angsuran_pasangan,
+            };
+            this.slikForm.setValue(retSlik);
+            // console.warn(data)
+            // alert(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_angsuran_pasangan)))
+            this.totalOutNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
+              Number(this.slikTotal.total_outstanding_nasabah)
+            );
+            this.totalPlaNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
+              Number(this.slikTotal.total_plafon_nasabah)
+            );
+            this.totalAngNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
+              Number(this.slikTotal.total_angsuran_nasabah)
+            );
+            this.totalPasOut = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
+              Number(this.slikTotal.total_outstanding_pasangan)
+            );
+            this.totalPasPla = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
+              Number(this.slikTotal.total_plafon_pasangan)
+            );
+            this.totalPasAng = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
+              Number(this.slikTotal.total_angsuran_pasangan)
+            );
+
+            // List Slik
+            this.listSlik = data.result.dataSlikResult;
+            // console.log(this.slikTotal.total_angsuran_pasangan)
+            // this.struktur = ('Rp 10000').toLocaleString();
+            // this.struktur = 'Rp 10000'.replace('Rp', '');
+            // const cekkk = 'Rp 10,000'.replace(/,/g, '');
+            // const cuukkk = cekkk.replace('Rp ', '');
+            // alert(this.struktur)
+            // alert(cuukkk)
+
+            this.listSlik?.forEach(element => {
+              if (element.response_description === 'get SLIK Result Success') {
+                if (element.status_applicant === 'Debitur Utama') {
+                  this.listLajangSlik.push(element);
+                } else if (element.status_applicant === 'Pasangan Debitur') {
+                  this.listMenikahSlik.push(element);
+                }
+              }
+            });
+            this.dtTrigger.next(data.result.dataSlikResult);
+            const plafonNasabah = Number(this.slikTotal.total_plafon_nasabah);
+            const plafonPasangan = Number(this.slikTotal.total_plafon_pasangan);
+            const outstandingNasabah = Number(this.slikTotal.total_outstanding_nasabah);
+            const outstandingPasangan = Number(this.slikTotal.total_outstanding_pasangan);
+            this.totalPlafonSlik = plafonNasabah + plafonPasangan;
+            this.totalOutstandingSlik = outstandingNasabah + outstandingPasangan;
+            // alert(this.totalPlafonSlik)
+          });
+        }, 20);
       });
     }, 1);
 
@@ -265,117 +324,96 @@ export class DataRumahComponent implements OnInit {
         }, 10);
       });
     }, 5);
-
-    // ambil semua data Slik
-    setTimeout(() => {
-      this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe(data => {
-        this.getLoading(false);
-        this.slikTotal = data.result;
-        let retSlik = {
-          total_angsuran_nasabah: this.slikTotal.total_angsuran_nasabah,
-          total_angsuran_pasangan: this.slikTotal.total_angsuran_pasangan,
-        };
-        this.slikForm.setValue(retSlik);
-        // console.warn(data)
-        // alert(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(this.slikTotal.total_angsuran_pasangan)))
-        this.totalOutNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
-          Number(this.slikTotal.total_outstanding_nasabah)
-        );
-        this.totalPlaNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
-          Number(this.slikTotal.total_plafon_nasabah)
-        );
-        this.totalAngNas = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
-          Number(this.slikTotal.total_angsuran_nasabah)
-        );
-        this.totalPasOut = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
-          Number(this.slikTotal.total_outstanding_pasangan)
-        );
-        this.totalPasPla = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
-          Number(this.slikTotal.total_plafon_pasangan)
-        );
-        this.totalPasAng = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(
-          Number(this.slikTotal.total_angsuran_pasangan)
-        );
-
-        // List Slik
-        this.listSlik = data.result.dataSlikResult;
-        // console.log(this.slikTotal.total_angsuran_pasangan)
-        // this.struktur = ('Rp 10000').toLocaleString();
-        // this.struktur = 'Rp 10000'.replace('Rp', '');
-        // const cekkk = 'Rp 10,000'.replace(/,/g, '');
-        // const cuukkk = cekkk.replace('Rp ', '');
-        // alert(this.struktur)
-        // alert(cuukkk)
-
-        this.listSlik?.forEach(element => {
-          if (element.response_description === 'get SLIK Result Success') {
-            if (element.status_applicant === 'Debitur Utama') {
-              this.listLajangSlik.push(element);
-            } else if (element.status_applicant === 'Pasangan Debitur') {
-              this.listMenikahSlik.push(element);
-            }
-          }
-        });
-        this.dtTrigger.next(data.result.dataSlikResult);
-        const plafonNasabah = Number(this.slikTotal.total_plafon_nasabah);
-        const plafonPasangan = Number(this.slikTotal.total_plafon_pasangan);
-        const outstandingNasabah = Number(this.slikTotal.total_outstanding_nasabah);
-        const outstandingPasangan = Number(this.slikTotal.total_outstanding_pasangan);
-        this.totalPlafonSlik = plafonNasabah + plafonPasangan;
-        this.totalOutstandingSlik = outstandingNasabah + outstandingPasangan;
-        // alert(this.totalPlafonSlik)
-      });
-    }, 20);
   }
 
   onSubmit(): void {
-    // this.formatMoney('Rp 100,000.00');
-    const total_pro =
+    this.getLoading(true);
+    let total_pro: any;
+    let total_kewa: any;
+    let total_gaji: any;
+    let total_kewaLain: any;
+    let pend_kantorLain: any;
+    let pend_usahaTot: any;
+    let tunjangan_Tot: any;
+    let pend_kotor: any;
+    let pend_kotor_pas: any;
+    let pend_kotor_tot: any;
+    let pend_bersih_nas: any;
+    let pend_bersih_pas: any;
+    let pend_bersih: any;
+    let angsuranKewaTotal: any;
+    let totalPengKot: any;
+    let totalPengKotPas: any;
+    let totalTotalPengKot: any;
+    let totalPengBersih: any;
+    let totalPengBersihPas: any;
+    let totalPengBersihTot: any;
+    let slikKewajibanBankPasangan: any;
+    let slikPlafondPasangan: any;
+    let slikOutstandingPasangan: any;
+
+    if (this.dataEntry.joint_income == 0 || this.dataEntry.kode_fasilitas_name === 'PTA') {
+      // }else if(this.dataEntry.kode_fasilitas_name === 'PTA'){
+      // alert('Join > '+this.dataEntry.joint_income + ' FAsilitas > ' +this.dataEntry.kode_fasilitas_name)
+      // alert(this.dataEntry.joint_income == 0 || this.dataEntry.kode_fasilitas_name === 'PTA')
+      total_kewa = Number(this.slikTotal.total_angsuran_nasabah);
+      slikKewajibanBankPasangan = 0;
+      this.slikForm.get('total_angsuran_pasangan')?.setValue(0);
+      slikPlafondPasangan = 0;
+      slikOutstandingPasangan = 0;
+    } else {
+      total_kewa = Number(this.slikTotal.total_angsuran_nasabah) + Number(this.slikTotal.total_angsuran_pasangan);
+      slikKewajibanBankPasangan = this.slikTotal.total_angsuran_pasangan;
+      this.slikForm.get('total_angsuran_pasangan')?.value;
+      slikPlafondPasangan = this.slikTotal.total_plafon_pasangan;
+      slikOutstandingPasangan = this.slikTotal.total_outstanding_pasangan;
+    }
+
+    total_pro =
       Number(this.analisaKeuanganForm.get('pendapatan_profesional')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value);
-    const total_kewa = Number(this.slikTotal.total_angsuran_nasabah) + Number(this.slikTotal.total_angsuran_pasangan);
-    const total_gaji =
+    total_gaji =
       Number(this.analisaKeuanganForm.get('gaji_kotor')?.value) + Number(this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value);
-    const total_kewaLain =
+    total_kewaLain =
       Number(this.analisaKeuanganForm.get('kewajiban_lainnya')?.value) +
       Number(this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value);
-    const pend_kantorLain =
+    pend_kantorLain =
       Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value);
-    const pend_usahaTot =
+    pend_usahaTot =
       Number(this.analisaKeuanganForm.get('pendapatan_usaha')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value);
-    const tunjangan_Tot =
+    tunjangan_Tot =
       Number(this.analisaKeuanganForm.get('tunjangan')?.value) + Number(this.analisaKeuanganForm.get('tunjangan_pasangan')?.value);
-    const pend_kotor =
+    pend_kotor =
       Number(this.analisaKeuanganForm.get('gaji_kotor')?.value) +
       Number(this.analisaKeuanganForm.get('tunjangan')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value);
-    const pend_kotor_pas =
+    pend_kotor_pas =
       Number(this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value) +
       Number(this.analisaKeuanganForm.get('tunjangan_pasangan')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value);
-    const pend_kotor_tot = pend_kotor + pend_kotor_pas;
-    const pend_bersih_nas = pend_kotor - Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value);
-    const pend_bersih_pas = pend_kotor_pas - Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value);
-    const pend_bersih = pend_bersih_nas + pend_bersih_pas;
-    const angsuranKewaTotal =
+    pend_kotor_tot = pend_kotor + pend_kotor_pas;
+    pend_bersih_nas = pend_kotor - Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value);
+    pend_bersih_pas = pend_kotor_pas - Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value);
+    pend_bersih = pend_bersih_nas + pend_bersih_pas;
+    angsuranKewaTotal =
       Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value) +
       Number(this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value);
     // alert(pend_bersih_nas)
-    const totalPengKot =
+    totalPengKot =
       pend_bersih_nas +
       Number(this.analisaKeuanganForm.get('pendapatan_usaha')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_profesional')?.value);
 
-    const totalPengKotPas =
+    totalPengKotPas =
       pend_bersih_pas +
       Number(this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value);
 
-    const totalTotalPengKot = totalPengKot + totalPengKotPas;
+    totalTotalPengKot = totalPengKot + totalPengKotPas;
 
-    const totalPengBersih =
+    totalPengBersih =
       Number(this.analisaKeuanganForm.get('gaji_kotor')?.value) +
       Number(this.analisaKeuanganForm.get('tunjangan')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value) -
@@ -385,7 +423,7 @@ export class DataRumahComponent implements OnInit {
       Number(this.analisaKeuanganForm.get('kewajiban_lainnya')?.value) -
       Number(this.slikForm.get('total_angsuran_nasabah')?.value);
 
-    const totalPengBersihPas =
+    totalPengBersihPas =
       Number(this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value) +
       Number(this.analisaKeuanganForm.get('tunjangan_pasangan')?.value) +
       Number(this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value) -
@@ -395,143 +433,153 @@ export class DataRumahComponent implements OnInit {
       Number(this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value) -
       Number(this.slikForm.get('total_angsuran_pasangan')?.value);
 
-    const totalPengBersihTot = Number(totalPengBersih) + Number(totalPengBersihPas);
+    totalPengBersihTot = Number(totalPengBersih) + Number(totalPengBersihPas);
 
     // POST
-    this.submitted = true;
-    if (this.analisaKeuanganForm.invalid) {
-      return;
-    } else if (this.cekResult === 0) {
-      this.http
-        .post<any>(this.baseUrl + 'v1/efos-verif/create_analisa_keuangan', {
-          nama_pemohon: this.dataEntry.nama,
-          alamat_perusahaan: this.dataJob.alamat_perusahaan,
-          nama_perusahaan: this.dataJob.nama_perusahaan,
-          app_no_de: this.app_no_de,
-          no_telepon_perusahaan: this.dataJob.no_telepon,
-          created_by: this.untukSessionUsername,
-          created_date: '',
-          nama_dihubungi: this.analisaKeuanganForm.get('nama_dihubungi')?.value,
-          jabatan_dihubungi: this.analisaKeuanganForm.get('jabatan_dihubungi')?.value,
-          gaji_kotor: this.analisaKeuanganForm.get('gaji_kotor')?.value,
-          gaji_kotor_pasangan: this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value,
-          gaji_kotor_total: total_gaji,
-          kewajiban_bank: this.slikTotal.total_angsuran_nasabah,
-          kewajiban_bank_pasangan: this.slikTotal.total_angsuran_pasangan,
-          kewajiban_bank_total: total_kewa,
-          kewajiban_lainnya: this.analisaKeuanganForm.get('kewajiban_lainnya')?.value,
-          kewajiban_lainnya_pasangan: this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value,
-          kewajiban_lainnya_total: total_kewaLain,
-          nama_pemeriksa: this.analisaKeuanganForm.get('nama_pemeriksa')?.value,
-          pendapatan_bersih: pend_bersih_nas,
-          pendapatan_bersih_pasangan: pend_bersih_pas,
-          pendapatan_bersih_total: pend_bersih,
-          pendapatan_kantor_lainnya: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value,
-          pendapatan_kantor_lainnya_pasangan: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value,
-          pendapatan_kantor_lainnya_total: pend_kantorLain,
-          pendapatan_kotor: pend_kotor,
-          pendapatan_kotor_pasangan: pend_kotor_pas,
-          pendapatan_kotor_total: pend_kotor_tot,
-          pendapatan_profesional: this.analisaKeuanganForm.get('pendapatan_profesional')?.value,
-          pendapatan_profesional_pasangan: this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value,
-          pendapatan_profesional_total: total_pro,
-          pendapatan_usaha: this.analisaKeuanganForm.get('pendapatan_usaha')?.value,
-          pendapatan_usaha_pasangan: this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value,
-          pendapatan_usaha_total: pend_usahaTot,
-          tanggal_pemeriksa: this.analisaKeuanganForm.get('tanggal_pemeriksa')?.value,
-          tanggal_permintaan: this.analisaKeuanganForm.get('tanggal_permintaan')?.value,
-          total_angsuran_kantor: this.analisaKeuanganForm.get('total_angsuran_kantor')?.value,
-          total_angsuran_kantor_akumulasi: this.analisaKeuanganForm.get('total_angsuran_kantor_akumulasi')?.value,
-          total_angsuran_kantor_pasangan: this.analisaKeuanganForm.get('total_angsuran_kantor_pasangan')?.value,
-          total_penghasilan_bersih: totalPengBersih,
-          total_penghasilan_bersih_akumulasi: totalPengBersihTot,
-          total_penghasilan_bersih_pasangan: totalPengBersihPas,
-          total_penghasilan_kotor: totalPengKot,
-          total_penghasilan_kotor_akumulasi: totalTotalPengKot,
-          total_penghasilan_kotor_pasangan: totalPengKotPas,
-          tunjangan: this.analisaKeuanganForm.get('tunjangan')?.value,
-          tunjangan_pasangan: this.analisaKeuanganForm.get('tunjangan_pasangan')?.value,
-          tunjangan_total: tunjangan_Tot,
+    setTimeout(() => {
+      this.submitted = true;
+      if (this.analisaKeuanganForm.invalid) {
+        return;
+      } else if (this.cekResult === 0) {
+        this.http
+          .post<any>(this.baseUrl + 'v1/efos-verif/create_analisa_keuangan', {
+            nama_pemohon: this.dataEntry.nama,
+            alamat_perusahaan: this.dataJob.alamat_perusahaan,
+            nama_perusahaan: this.dataJob.nama_perusahaan,
+            app_no_de: this.app_no_de,
+            no_telepon_perusahaan: this.dataJob.no_telepon,
+            created_by: this.untukSessionUsername,
+            created_date: '',
+            nama_dihubungi: this.analisaKeuanganForm.get('nama_dihubungi')?.value,
+            jabatan_dihubungi: this.analisaKeuanganForm.get('jabatan_dihubungi')?.value,
+            gaji_kotor: this.analisaKeuanganForm.get('gaji_kotor')?.value,
+            gaji_kotor_pasangan: this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value,
+            gaji_kotor_total: total_gaji,
+            kewajiban_bank: this.slikTotal.total_angsuran_nasabah,
+            kewajiban_bank_pasangan: slikKewajibanBankPasangan,
+            kewajiban_bank_total: total_kewa,
+            kewajiban_lainnya: this.analisaKeuanganForm.get('kewajiban_lainnya')?.value,
+            kewajiban_lainnya_pasangan: this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value,
+            kewajiban_lainnya_total: total_kewaLain,
+            nama_pemeriksa: this.analisaKeuanganForm.get('nama_pemeriksa')?.value,
+            pendapatan_bersih: pend_bersih_nas,
+            pendapatan_bersih_pasangan: pend_bersih_pas,
+            pendapatan_bersih_total: pend_bersih,
+            pendapatan_kantor_lainnya: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value,
+            pendapatan_kantor_lainnya_pasangan: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value,
+            pendapatan_kantor_lainnya_total: pend_kantorLain,
+            pendapatan_kotor: pend_kotor,
+            pendapatan_kotor_pasangan: pend_kotor_pas,
+            pendapatan_kotor_total: pend_kotor_tot,
+            pendapatan_profesional: this.analisaKeuanganForm.get('pendapatan_profesional')?.value,
+            pendapatan_profesional_pasangan: this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value,
+            pendapatan_profesional_total: total_pro,
+            pendapatan_usaha: this.analisaKeuanganForm.get('pendapatan_usaha')?.value,
+            pendapatan_usaha_pasangan: this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value,
+            pendapatan_usaha_total: pend_usahaTot,
+            tanggal_pemeriksa: this.analisaKeuanganForm.get('tanggal_pemeriksa')?.value,
+            tanggal_permintaan: this.analisaKeuanganForm.get('tanggal_permintaan')?.value,
+            total_angsuran_kantor: this.analisaKeuanganForm.get('total_angsuran_kantor')?.value,
+            total_angsuran_kantor_akumulasi: this.analisaKeuanganForm.get('total_angsuran_kantor_akumulasi')?.value,
+            total_angsuran_kantor_pasangan: this.analisaKeuanganForm.get('total_angsuran_kantor_pasangan')?.value,
+            total_penghasilan_bersih: totalPengBersih,
+            total_penghasilan_bersih_akumulasi: totalPengBersihTot,
+            total_penghasilan_bersih_pasangan: totalPengBersihPas,
+            total_penghasilan_kotor: totalPengKot,
+            total_penghasilan_kotor_akumulasi: totalTotalPengKot,
+            total_penghasilan_kotor_pasangan: totalPengKotPas,
+            tunjangan: this.analisaKeuanganForm.get('tunjangan')?.value,
+            tunjangan_pasangan: this.analisaKeuanganForm.get('tunjangan_pasangan')?.value,
+            tunjangan_total: tunjangan_Tot,
 
-          // tambahan Total
-          angsuran_kewajiban_kantor: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value,
-          angsuran_kewajiban_kantor_pasangan: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value,
-          total_angsuran_kewajiban_kantor: angsuranKewaTotal,
-          outstanding_nasabah: this.slikTotal.total_outstanding_nasabah,
-          outstanding_pasangan: this.slikTotal.total_outstanding_pasangan,
-          total_outstanding: this.totalOutstandingSlik,
-          plafon_nasabah: this.slikTotal.total_plafon_nasabah,
-          plafon_pasangan: this.slikTotal.total_plafon_pasangan,
-          total_plafon: this.totalPlafonSlik,
-        })
-        .subscribe({});
-      this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
-    } else {
-      this.http
-        .post<any>(this.baseUrl + 'v1/efos-verif/update_analisa_keuangan', {
-          nama_pemohon: this.dataEntry.nama,
-          alamat_perusahaan: this.dataJob.alamat_perusahaan,
-          nama_perusahaan: this.dataJob.nama_perusahaan,
-          app_no_de: this.app_no_de,
-          no_telepon_perusahaan: this.dataJob.no_telepon,
-          created_by: this.untukSessionUsername,
-          created_date: '',
-          nama_dihubungi: this.analisaKeuanganForm.get('nama_dihubungi')?.value,
-          jabatan_dihubungi: this.analisaKeuanganForm.get('jabatan_dihubungi')?.value,
-          gaji_kotor: this.analisaKeuanganForm.get('gaji_kotor')?.value,
-          gaji_kotor_pasangan: this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value,
-          gaji_kotor_total: total_gaji,
-          kewajiban_bank: this.slikTotal.total_angsuran_nasabah,
-          kewajiban_bank_pasangan: this.slikTotal.total_angsuran_pasangan,
-          kewajiban_bank_total: total_kewa,
-          kewajiban_lainnya: this.analisaKeuanganForm.get('kewajiban_lainnya')?.value,
-          kewajiban_lainnya_pasangan: this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value,
-          kewajiban_lainnya_total: total_kewaLain,
-          nama_pemeriksa: this.analisaKeuanganForm.get('nama_pemeriksa')?.value,
-          pendapatan_bersih: pend_bersih_nas,
-          pendapatan_bersih_pasangan: pend_bersih_pas,
-          pendapatan_bersih_total: pend_bersih,
-          pendapatan_kantor_lainnya: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value,
-          pendapatan_kantor_lainnya_pasangan: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value,
-          pendapatan_kantor_lainnya_total: pend_kantorLain,
-          pendapatan_kotor: pend_kotor,
-          pendapatan_kotor_pasangan: pend_kotor_pas,
-          pendapatan_kotor_total: pend_kotor_tot,
-          pendapatan_profesional: this.analisaKeuanganForm.get('pendapatan_profesional')?.value,
-          pendapatan_profesional_pasangan: this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value,
-          pendapatan_profesional_total: total_pro,
-          pendapatan_usaha: this.analisaKeuanganForm.get('pendapatan_usaha')?.value,
-          pendapatan_usaha_pasangan: this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value,
-          pendapatan_usaha_total: pend_usahaTot,
-          tanggal_pemeriksa: this.analisaKeuanganForm.get('tanggal_pemeriksa')?.value,
-          tanggal_permintaan: this.analisaKeuanganForm.get('tanggal_permintaan')?.value,
-          total_angsuran_kantor: this.analisaKeuanganForm.get('total_angsuran_kantor')?.value,
-          total_angsuran_kantor_akumulasi: this.analisaKeuanganForm.get('total_angsuran_kantor_akumulasi')?.value,
-          total_angsuran_kantor_pasangan: this.analisaKeuanganForm.get('total_angsuran_kantor_pasangan')?.value,
-          total_penghasilan_bersih: totalPengBersih,
-          total_penghasilan_bersih_akumulasi: totalPengBersihTot,
-          total_penghasilan_bersih_pasangan: totalPengBersihPas,
-          total_penghasilan_kotor: totalPengKot,
-          total_penghasilan_kotor_akumulasi: totalTotalPengKot,
-          total_penghasilan_kotor_pasangan: totalPengKotPas,
-          tunjangan: this.analisaKeuanganForm.get('tunjangan')?.value,
-          tunjangan_pasangan: this.analisaKeuanganForm.get('tunjangan_pasangan')?.value,
-          tunjangan_total: tunjangan_Tot,
+            // tambahan Total
+            angsuran_kewajiban_kantor: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value,
+            angsuran_kewajiban_kantor_pasangan: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value,
+            total_angsuran_kewajiban_kantor: angsuranKewaTotal,
+            outstanding_nasabah: this.slikTotal.total_outstanding_nasabah,
+            outstanding_pasangan: slikOutstandingPasangan,
+            total_outstanding: this.totalOutstandingSlik,
+            plafon_nasabah: this.slikTotal.total_plafon_nasabah,
+            plafon_pasangan: slikPlafondPasangan,
+            total_plafon: this.totalPlafonSlik,
+          })
+          .subscribe({
+            next: () => {
+              this.getLoading(false);
+              this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+            },
+          });
+      } else {
+        this.http
+          .post<any>(this.baseUrl + 'v1/efos-verif/update_analisa_keuangan', {
+            nama_pemohon: this.dataEntry.nama,
+            alamat_perusahaan: this.dataJob.alamat_perusahaan,
+            nama_perusahaan: this.dataJob.nama_perusahaan,
+            app_no_de: this.app_no_de,
+            no_telepon_perusahaan: this.dataJob.no_telepon,
+            created_by: this.untukSessionUsername,
+            created_date: '',
+            nama_dihubungi: this.analisaKeuanganForm.get('nama_dihubungi')?.value,
+            jabatan_dihubungi: this.analisaKeuanganForm.get('jabatan_dihubungi')?.value,
+            gaji_kotor: this.analisaKeuanganForm.get('gaji_kotor')?.value,
+            gaji_kotor_pasangan: this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value,
+            gaji_kotor_total: total_gaji,
+            kewajiban_bank: this.slikTotal.total_angsuran_nasabah,
+            kewajiban_bank_pasangan: slikKewajibanBankPasangan,
+            kewajiban_bank_total: total_kewa,
+            kewajiban_lainnya: this.analisaKeuanganForm.get('kewajiban_lainnya')?.value,
+            kewajiban_lainnya_pasangan: this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value,
+            kewajiban_lainnya_total: total_kewaLain,
+            nama_pemeriksa: this.analisaKeuanganForm.get('nama_pemeriksa')?.value,
+            pendapatan_bersih: pend_bersih_nas,
+            pendapatan_bersih_pasangan: pend_bersih_pas,
+            pendapatan_bersih_total: pend_bersih,
+            pendapatan_kantor_lainnya: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value,
+            pendapatan_kantor_lainnya_pasangan: this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value,
+            pendapatan_kantor_lainnya_total: pend_kantorLain,
+            pendapatan_kotor: pend_kotor,
+            pendapatan_kotor_pasangan: pend_kotor_pas,
+            pendapatan_kotor_total: pend_kotor_tot,
+            pendapatan_profesional: this.analisaKeuanganForm.get('pendapatan_profesional')?.value,
+            pendapatan_profesional_pasangan: this.analisaKeuanganForm.get('pendapatan_profesional_pasangan')?.value,
+            pendapatan_profesional_total: total_pro,
+            pendapatan_usaha: this.analisaKeuanganForm.get('pendapatan_usaha')?.value,
+            pendapatan_usaha_pasangan: this.analisaKeuanganForm.get('pendapatan_usaha_pasangan')?.value,
+            pendapatan_usaha_total: pend_usahaTot,
+            tanggal_pemeriksa: this.analisaKeuanganForm.get('tanggal_pemeriksa')?.value,
+            tanggal_permintaan: this.analisaKeuanganForm.get('tanggal_permintaan')?.value,
+            total_angsuran_kantor: this.analisaKeuanganForm.get('total_angsuran_kantor')?.value,
+            total_angsuran_kantor_akumulasi: this.analisaKeuanganForm.get('total_angsuran_kantor_akumulasi')?.value,
+            total_angsuran_kantor_pasangan: this.analisaKeuanganForm.get('total_angsuran_kantor_pasangan')?.value,
+            total_penghasilan_bersih: totalPengBersih,
+            total_penghasilan_bersih_akumulasi: totalPengBersihTot,
+            total_penghasilan_bersih_pasangan: totalPengBersihPas,
+            total_penghasilan_kotor: totalPengKot,
+            total_penghasilan_kotor_akumulasi: totalTotalPengKot,
+            total_penghasilan_kotor_pasangan: totalPengKotPas,
+            tunjangan: this.analisaKeuanganForm.get('tunjangan')?.value,
+            tunjangan_pasangan: this.analisaKeuanganForm.get('tunjangan_pasangan')?.value,
+            tunjangan_total: tunjangan_Tot,
 
-          // tambahan Total
-          angsuran_kewajiban_kantor: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value,
-          angsuran_kewajiban_kantor_pasangan: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value,
-          total_angsuran_kewajiban_kantor: angsuranKewaTotal,
-          outstanding_nasabah: this.slikTotal.total_outstanding_nasabah,
-          outstanding_pasangan: this.slikTotal.total_outstanding_pasangan,
-          total_outstanding: this.totalOutstandingSlik,
-          plafon_nasabah: this.slikTotal.total_plafon_nasabah,
-          plafon_pasangan: this.slikTotal.total_plafon_pasangan,
-          total_plafon: this.totalPlafonSlik,
-        })
-        .subscribe({});
-      this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
-    }
+            // tambahan Total
+            angsuran_kewajiban_kantor: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor')?.value,
+            angsuran_kewajiban_kantor_pasangan: this.analisaKeuanganForm.get('angsuran_kewajiban_kantor_pasangan')?.value,
+            total_angsuran_kewajiban_kantor: angsuranKewaTotal,
+            outstanding_nasabah: this.slikTotal.total_outstanding_nasabah,
+            outstanding_pasangan: slikOutstandingPasangan,
+            total_outstanding: this.totalOutstandingSlik,
+            plafon_nasabah: this.slikTotal.total_plafon_nasabah,
+            plafon_pasangan: slikPlafondPasangan,
+            total_plafon: this.totalPlafonSlik,
+          })
+          .subscribe({
+            next: () => {
+              this.getLoading(false);
+              this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+            },
+          });
+      }
+    }, 10);
   }
 
   printLajang(ktp: any): void {
@@ -551,10 +599,6 @@ export class DataRumahComponent implements OnInit {
       event.preventDefault();
       return;
     }
-  }
-  formatMoney(value?: number | undefined): void {
-    // value?.replace(/\,/g, '').replace('Rp ', '');
-    new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(value));
   }
 
   // Selanjutnya

@@ -168,8 +168,8 @@ export class ServiceVerificationService {
   // ////////////////////////////////// Analisa \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // //////////////////////////// Slik \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  fetchSlik(app_no_de: any): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.getSlik + app_no_de);
+  fetchSlik(app_no_ide: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getSlik + app_no_ide);
   }
   // //////////////////////////// Slik \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 

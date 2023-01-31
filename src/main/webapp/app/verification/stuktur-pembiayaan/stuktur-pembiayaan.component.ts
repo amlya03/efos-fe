@@ -137,6 +137,7 @@ export class StukturPembiayaanComponent implements OnInit {
     setTimeout(() => {
       this.verifikasiServices.fetchAnalisaKeuangan(this.app_no_de).subscribe(analisa => {
         this.analisaPembiayaan = analisa.result;
+        console.warn(analisa.result);
         const retSLik = {
           total_kewajiban_bank_pemohon: this.analisaPembiayaan.kewajiban_bank_total,
           total_outstanding: this.analisaPembiayaan.total_outstanding,
@@ -157,23 +158,37 @@ export class StukturPembiayaanComponent implements OnInit {
       this.verifikasiServices.fetchMapis(this.app_no_de).subscribe(data => {
         if (data.result == null) {
           this.getLoading(false);
+
+          this.mapisModel = data.result;
+          // console.warn(data)
+          const retriveForm = {
+            luas_bangunan: '',
+            luas_tanah: '',
+            nilai_imb: '',
+            nilai_market: '',
+            objek_pembiayaan: '',
+            ftv: '',
+            tipe_agunan: '',
+            jenis_objek: '',
+          };
+          this.mapisForm.setValue(retriveForm);
         } else {
           this.getLoading(false);
-        }
 
-        this.mapisModel = data.result;
-        // console.warn(data)
-        const retriveForm = {
-          luas_bangunan: this.mapisModel.luas_bangunan,
-          luas_tanah: this.mapisModel.luas_tanah,
-          nilai_imb: this.mapisModel.nilai_imb,
-          nilai_market: this.mapisModel.nilai_market,
-          objek_pembiayaan: this.mapisModel.objek_pembiayaan,
-          ftv: this.dataEntry.uang_muka,
-          tipe_agunan: this.mapisModel.tipe_agunan,
-          jenis_objek: this.mapisModel.jenis_objek,
-        };
-        this.mapisForm.setValue(retriveForm);
+          this.mapisModel = data.result;
+          // console.warn(data)
+          const retriveForm = {
+            luas_bangunan: this.mapisModel.luas_bangunan,
+            luas_tanah: this.mapisModel.luas_tanah,
+            nilai_imb: this.mapisModel.nilai_imb,
+            nilai_market: this.mapisModel.nilai_market,
+            objek_pembiayaan: this.mapisModel.objek_pembiayaan,
+            ftv: this.dataEntry.uang_muka,
+            tipe_agunan: this.mapisModel.tipe_agunan,
+            jenis_objek: this.mapisModel.jenis_objek,
+          };
+          this.mapisForm.setValue(retriveForm);
+        }
       });
     }, 20);
 
@@ -274,7 +289,11 @@ export class StukturPembiayaanComponent implements OnInit {
     this.dataEntryService.getfetchlistagunan(this.curef).subscribe(data => {
       this.listagunan = data.result;
       // console.log(this.listagunan)
-      this.betaFTV = Number(this.listagunan[0].harga_objek) / Number(this.dataEntry.uang_muka);
+      if (data.result == '') {
+        this.betaFTV = 0;
+      } else {
+        this.betaFTV = Number(this.listagunan[0].harga_objek) / Number(this.dataEntry.uang_muka);
+      }
     });
   }
 
