@@ -101,8 +101,22 @@
   </div>
 </div>
 <br />
-<button class="btn btn-warning" (click)="updateStatus()" *ngIf="dataEntry.kode_fasilitas_name === 'PTA'" style="float: right">
+<button
+  class="btn btn-warning"
+  (click)="updateStatus()"
+  *ngIf="dataEntry.kode_fasilitas_name === 'PTA'"
+  style="float: right"
+  [hidden]="this.untukSessionRole === 'BRANCHMANAGER'"
+>
   Update Status
+</button>
+<button
+  (click)="next()"
+  class="btn btn-warning"
+  style="float: left"
+  *ngIf="dataEntry.kode_fasilitas_name === 'PTA' && this.untukSessionRole === 'BRANCHMANAGER'"
+>
+  Selanjutnya
 </button>
 <button (click)="viewUploadDEA()" class="btn btn-warning" style="float: left" [hidden]="dataEntry.kode_fasilitas_name === 'PTA'">
   Selanjutnya Ke Document Agunan

@@ -1,0 +1,690 @@
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Informasi Pemohon Pembiayaan</h3>
+</div>
+<br />
+<form [formGroup]="idefixgrup">
+  <div class="row">
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Nomor Aplikasi<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input type="text" id="app_no_ide" formControlName="app_no_ide" class="form-control" readonly />
+          <input type="text" id="idcustomer" formControlName="id" class="form-control" hidden />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Nama Lengkap<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input type="text" id="nama" formControlName="nama" class="form-control" placeholder="Nama Lengkap" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" id="jenis_kelamin" formControlName="jenis_kelamin">
+              <option value="Laki-laki">Laki - laki</option>
+              <option value="Perempuan">Perempuan</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input class="form-control" type="date" id="tanggal_lahir" formControlName="tanggal_lahir" (change)="submitBday()" />
+          <input class="form-control" type="text" onkeypress="return onlyNumberKey(event)" id="umur" formControlName="usia" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tempat Lahir<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" placeholder="Tempat Lahir" id="tempat_lahir" formControlName="tempat_lahir" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Status Perkawinan<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" id="status_perkawinan" formControlName="status_perkawinan">
+              <option *ngFor="let refStatusPerkawinan of refStatusPerkawinan" value="{{ refStatusPerkawinan.deskripsi }}">
+                {{ refStatusPerkawinan.deskripsi }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Agama<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" id="agama" name="agama" formControlName="agama">
+              <option value="Islam">Islam</option>
+              <option value="Kristen">Kristen</option>
+              <option value="Khatolik">Khatolik</option>
+              <option value="Budha">Budha</option>
+              <option value="Hindu">Hindu</option>
+              <option value="Kong Hu Chu">Kong Hu Chu</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Pendidikan<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" id="pendidikan" name="pendidikan" formControlName="pendidikan">
+              <option value="SMA">SMA</option>
+              <option value="D3">D3</option>
+              <option value="S1">S1</option>
+              <option value="S2">S2</option>
+              <option value="S3">S3</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kewarganegaraan<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" id="kewarganegaraan" name="kewarganegaraan" formControlName="kewarganegaraan">
+              <option value="WNI">WNI</option>
+              <option value="WNA">WNA</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Ibu Kandung<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" placeholder="" id="nama_ibu_kandung" formControlName="nama_ibu_kandung" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">NPWP<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            class="form-control"
+            placeholder="NPWP"
+            maxlength="16"
+            id="npwp"
+            formControlName="npwp"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <textarea class="form-control h-150px" rows="6" id="alamat_ktp" name="alamat_ktp" formControlName="alamat_ktp"></textarea>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" (change)="onChange(provinsi_cabang)" #provinsi_cabang id="provinsi_cabang" name="provinsi">
+              <option value="{{ daWa.provinsi }}">{{ daWa.provinsi }}</option>
+              <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
+                {{ daWaprof.namaWilayah }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" (change)="onChangekota(kabkota_cabang)" #kabkota_cabang id="kabkota_cabang" name="kabkota">
+              <option value="{{ daWa.kabkota }}">{{ daWa.kabkota }}</option>
+              <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
+                {{ daWakota.namaWilayah }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" (change)="onChangekecamatan(kecamatan)" #kecamatan id="kecamatan" name="kecamatan">
+              <option value="{{ daWa.kecamatan }}">{{ daWa.kecamatan }}</option>
+              <option *ngFor="let daWakecamatan of daWakecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
+                {{ daWakecamatan.namaWilayah }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" (change)="onChangekelurahan(kelurahan)" #kelurahan id="kelurahan" name="kelurahan">
+              <option value="{{ daWa.kelurahan }}">{{ daWa.kelurahan }}</option>
+              <option *ngFor="let daWakelurahan of daWakelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
+                {{ daWakelurahan.namaWilayah }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <div class="input-group mb-3">
+            <input
+              type="tel"
+              onkeypress="return onlyNumberKey(event)"
+              class="form-control"
+              id="kode_pos"
+              name="kode_pos"
+              value="{{ daWakodepos }}"
+              #kode_pos
+            />
+            <div class="input-group-append">
+              <button class="btn btn-outline-dark" (click)="carimenggunakankodepost(kode_pos, 0)" type="button">Cari Data</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
+        <div class="col">
+          <input
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            class="form-control"
+            maxlength="3"
+            placeholder="RT"
+            id="rt"
+            formControlName="rt"
+          />
+        </div>
+        <div class="col">RT</div>
+        <div class="col">
+          <input
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            class="form-control"
+            placeholder="RW"
+            maxlength="3"
+            id="rw"
+            formControlName="rw"
+          />
+        </div>
+        <div class="col">RW</div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">No KTP<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input
+            type="tel"
+            onkeypress="return onlyNumberKey(event)"
+            class="form-control"
+            placeholder="Nomor KTP"
+            maxlength="16"
+            id="no_ktp"
+            formControlName="no_ktp"
+            oninvalid="this.setCustomValidity('harap masukan 16 digit no ktp')"
+            oninput="this.setCustomValidity('')"
+          />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input class="form-control" type="date" id="tanggal_terbit_ktp" formControlName="tanggal_terbit_ktp" />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <label for="chkYes"> <input type="radio" id="chkYes" formControlName="status_ktp" value="1" /> Ya </label>
+          <label for="chkNo">
+            <!-- <input type="text" id="retriveBukaKtp" value="<?=$status_ktp_pasangan?>" hidden /> -->
+            <input type="radio" id="chkNo" formControlName="status_ktp" value="0" /> Tidak
+          </label>
+        </div>
+      </div>
+      <br />
+      <div id="ktpSeumurJaguangEdit" class="ktpSeumurJaguangEdit">
+        <div class="form-group row" *ngIf="this.idefixgrup.get('status_ktp')?.value == 0">
+          <br />
+          <label class="col-sm-4 col-form-label">Tanggal Exipred KTP<span class="text-danger">*</span></label>
+          <div class="col-sm-8">
+            <input class="form-control" type="date" id="tanggal_exp_ktp" formControlName="tanggal_exp_ktp" />
+            <!-- <span
+          [hidden]="
+            personalInfoForm.controls.tanggal_exp_ktp.valid ||
+            this.untukSessionRole == 'VER_PRESCR' ||
+            this.untukSessionRole == 'BRANCHMANAGER'
+          "
+          class="text-danger"
+        >
+          Tanggal Exipred KTP Harus Diisi
+        </span> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- <div id="ktpSeumurJaguangEdit" class="ktpSeumurJaguangEdit">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tanggal Exipred KTP<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input class="form-control" type="date" id="tanggal_exp_ktp" formControlName="tanggal_exp_ktp"  />
+        </div>
+      </div>
+      <br />
+    </div> -->
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">No Handphone<span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input
+            onkeypress="return onlyNumberKey(event)"
+            pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
+            class="form-control"
+            placeholder="Nomor Handphone"
+            maxlength="12"
+            id="no_handphone"
+            formControlName="no_telepon"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br />
+
+  <div [ngSwitch]="daWa.status_perkawinan">
+    <div *ngSwitchCase="'Menikah'">
+      <br />
+      <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+        <h3 style="color: #fff; text-align: center">Informasi Pasangan</h3>
+      </div>
+      <br />
+
+      <div class="row">
+        <div class="col">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Nama Lengkap<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" placeholder="Nama Lengkap" formControlName="nama_pasangan" id="nama_pasangan" />
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <select class="form-control" id="jenis_kelamin_pasangan" formControlName="jenis_kelamin_pasangan">
+                  <option id="jLakiEdit" value="Laki-laki">Laki - laki</option>
+                  <option id="jPereEdit" value="Perempuan">Perempuan</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Tanggal Lahir<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <input class="form-control" type="date" id="tanggal_lahir_pasangan" formControlName="tanggal_lahir_pasangan" />
+              <!-- <input class="form-control" type="text" id="umur" name="umur">     -->
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Tempat Lahir<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Tempat Lahir"
+                formControlName="tempat_lahir_pasangan"
+                id="tempat_lahir_pasangan"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Agama<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <select class="form-control" id="agama_pasangan" formControlName="agama_pasangan">
+                  <option value="Islam">Islam</option>
+                  <option value="kriKristensten">Kristen</option>
+                  <option value="Khatolik">Khatolik</option>
+                  <option value="Budha">Budha</option>
+                  <option value="Hindu">Hindu</option>
+                  <option value="Kong Hu Chu">Kong Hu Chu</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Pendidikan</label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <select class="form-control" id="pendidikan_pasangan" formControlName="pendidikan_pasangan">
+                  <option value="SMA">SMA</option>
+                  <option value="D3">D3</option>
+                  <option value="S1">S1</option>
+                  <option value="S2">S2</option>
+                  <option value="S3">S3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Kewarganegaraan</label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <select class="form-control" id="kewarganegaraan_pasangan" formControlName="kewarganegaraan_pasangan">
+                  <option value="WNI">WNI</option>
+                  <option value="WNA">WNA</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Ibu Kandung<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <input
+                type="text"
+                class="form-control"
+                placeholder=""
+                formControlName="nama_ibu_kandung_pasangan"
+                id="nama_ibu_kandung_pasangan"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">NPWP</label>
+            <div class="col-sm-8">
+              <input
+                type="tel"
+                onkeypress="return onlyNumberKey(event)"
+                class="form-control"
+                placeholder="NPWP"
+                maxlength="16"
+                formControlName="npwp_pasangan"
+                id="npwp_pasangan"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label"> Alamat Sama Dengan Pemohon</label>
+            <div class="col-sm-8">
+              <input value="0" type="radio" formControlName="npwp_pasangan" id="tidakSama" /> Tidak Sama
+              <input value="1" type="radio" formControlName="npwp_pasangan" id="harusSama" /> Sama
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Alamat KTP<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <textarea class="form-control h-150px" rows="6" id="alamat_ktp_pasangan" formControlName="alamat_ktp_pasangan"> </textarea>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Provinsi<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <select
+                  class="form-control"
+                  (change)="onChangepasangan(provinsi_pasangan)"
+                  #provinsi_pasangan
+                  id="provinsi_cabang_pasangan"
+                  name="provinsi_pasangan"
+                >
+                  <option value="{{ daWa.provinsi_pasangan }}">{{ daWa.provinsi_pasangan }}</option>
+                  <option
+                    *ngFor="let daWaprofpasangan of daWaprofpasangan"
+                    value="{{ daWaprofpasangan.kdWilayah }}|{{ daWaprofpasangan.namaWilayah }}"
+                  >
+                    {{ daWaprofpasangan.namaWilayah }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Kota<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <select
+                  class="form-control"
+                  (change)="onChangekotapasangan(kabkota_pasangan)"
+                  #kabkota_pasangan
+                  id="kabkota_cabang_pasangan"
+                  name="kabkota_pasangan"
+                >
+                  <option value="{{ daWa.kabkota_pasangan }}">{{ daWa.kabkota_pasangan }}</option>
+                  <option
+                    *ngFor="let daWakotapasangan of daWakotapasangan"
+                    value="{{ daWakotapasangan.kdWilayah }}|{{ daWakotapasangan.namaWilayah }}"
+                  >
+                    {{ daWakotapasangan.namaWilayah }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Kecamatan<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <select
+                  class="form-control"
+                  (change)="onChangekecamatanpasangan(kecamatan_pasangan)"
+                  #kecamatan_pasangan
+                  id="kecamatan_pasangan"
+                  name="kecamatan_pasangan"
+                >
+                  <option value="{{ daWa.kecamatan_pasangan }}">{{ daWa.kecamatan_pasangan }}</option>
+                  <option
+                    *ngFor="let daWakecamatanpasangan of daWakecamatanpasangan"
+                    value="{{ daWakecamatanpasangan.kdWilayah }}|{{ daWakecamatanpasangan.namaWilayah }}"
+                  >
+                    {{ daWakecamatanpasangan.namaWilayah }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Kelurahan<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <select
+                  class="form-control"
+                  (change)="onChangekelurahan(kelurahan_pasangan)"
+                  #kelurahan_pasangan
+                  id="kelurahan_pasangan"
+                  name="kelurahan_pasangan"
+                >
+                  <option value="{{ daWa.kelurahan_pasangan }}">{{ daWa.kelurahan_pasangan }}</option>
+                  <option
+                    *ngFor="let daWakelurahanpasangan of daWakelurahanpasangan"
+                    value="{{ daWakelurahanpasangan.kdPos }}|{{ daWakelurahanpasangan.namaWilayah }}"
+                  >
+                    {{ daWakelurahanpasangan.namaWilayah }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Kode Pos<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <div class="input-group mb-3">
+                <input
+                  type="tel"
+                  onkeypress="return onlyNumberKey(event)"
+                  class="form-control"
+                  id="kode_pos_pasangan"
+                  value="{{ daWakodepospasangan }}"
+                  name="kode_pos_pasangan"
+                  #kode_post_pasangan
+                />
+                <div class="input-group-append">
+                  <button class="btn btn-outline-dark" (click)="carimenggunakankodepospasangan(kode_post_pasangan, 0)" type="button">
+                    Cari Data
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">RT / RW<span class="text-danger">*</span></label>
+            <div class="col">
+              <input
+                type="tel"
+                onkeypress="return onlyNumberKey(event)"
+                class="form-control"
+                placeholder="RT"
+                maxlength="3"
+                id="rt_pasangan"
+                formControlName="rt_pasangan"
+              />
+            </div>
+            <div class="col">RT</div>
+            <div class="col">
+              <input
+                type="tel"
+                onkeypress="return onlyNumberKey(event)"
+                class="form-control"
+                placeholder="RW"
+                maxlength="3"
+                id="rw_pasangan"
+                formControlName="rw_pasangan"
+              />
+            </div>
+            <div class="col">RT</div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">No KTP<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <input
+                type="tel"
+                onkeypress="return onlyNumberKey(event)"
+                class="form-control"
+                placeholder="Nomor KTP"
+                maxlength="16"
+                id="no_ktp_pasangan"
+                formControlName="no_ktp_pasangan"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Tanggal Terbit KTP<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <input class="form-control" type="date" id="tanggal_terbit_ktp_pasangan" formControlName="tanggal_terbit_ktp_pasangan" />
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label"> KTP Seumur Hidup<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <label for="chkYes2"> <input type="radio" id="chkYes2" formControlName="status_ktp_pasangan" value="1" /> Ya </label>
+              <label for="chkNo2">
+                <input type="text" id="retriveBukaKtpPasangan" value="" hidden />
+                <input type="radio" id="chkNo2" formControlName="status_ktp_pasangan" value="0" /> Tidak
+              </label>
+            </div>
+          </div>
+          <br />
+          <div id="ktpSeumurJaguangEdit2" class="ktpSeumurJaguangEdit2">
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Tanggal Expired KTP</label>
+              <div class="col-sm-8">
+                <input class="form-control" type="date" id="tanggal_exp_ktp_pasangan" formControlName="tanggal_exp_ktp_pasangan" />
+              </div>
+            </div>
+            <br />
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">No Handphone<span class="text-danger">*</span></label>
+            <div class="col-sm-8">
+              <input
+                onkeypress="return onlyNumberKey(event)"
+                pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
+                maxlength="12"
+                class="form-control"
+                placeholder="Nomor Handphone"
+                formControlName="no_telepon_pasangan"
+                id="no_handphone_pasangan"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br />
+    </div>
+  </div>
+</form>
+
+<br />
+<div class="row">
+  <div class="col" style="text-align: center">
+    <button
+      class="fa fa-file-archive-o btn btn-dark"
+      id="prosesDataEdit"
+      name="proses"
+      value="proses"
+      type="submit"
+      (click)="gotoprescreaning(daWa.app_no_ide, daWakodepos, daWa.curef, daWakodepospasangan)"
+    >
+      Proses Data
+    </button>
+    <button
+      class="fa fa-file-archive-o btn btn-dark"
+      id="simpan2"
+      name="simpan"
+      value="simpan"
+      (click)="gotodaftaraplikasiide(daWa.app_no_ide, daWakodepos, daWa.curef, daWakodepospasangan)"
+      type="submit"
+    >
+      simpan data
+    </button>
+  </div>
+</div>

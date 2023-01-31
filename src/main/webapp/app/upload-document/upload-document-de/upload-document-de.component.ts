@@ -145,6 +145,15 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     window.location.reload();
   }
 
+  // Next untuk BM && PTA
+  next() {
+    this.SessionStorageService.store('uploadDE', 1);
+    this.SessionStorageService.store('uploadDEA', 1);
+    this.router.navigate(['/upload_document/upload_document_agunan'], {
+      queryParams: { curef: this.dataEntry.curef, app_no_de: this.dataEntry.app_no_de },
+    });
+  }
+
   // Update Status
   updateStatus() {
     this.totalVal = this.uploadDocument.length;
