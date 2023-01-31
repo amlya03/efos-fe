@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { createRequestOption } from 'app/core/request/request-util';
@@ -7,7 +7,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { DataEntryService } from '../services/data-entry.service';
 import { SessionStorageService } from 'ngx-webstorage';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { refListTipeProperti } from 'app/verification/service/config/refListTipeProperti.model';
 import Swal from 'sweetalert2';
 import { listAgunan } from '../services/config/listAgunan.model';
@@ -16,6 +16,8 @@ import { refListJumlahKaryawan } from '../services/config/refListJumlahKaryawan.
 import { refObjekAgunan } from '../services/config/refObjekAgunan.model';
 import { refStatusSertifikat } from '../services/config/refStatusSertifikat.model';
 import { refTipeAgunan } from '../services/config/refTipeAgunan.model';
+import { environment } from 'environments/environment';
+import { refJenisPekerjaan } from '../services/config/refJenisPekerjaan.model';
 // import { colateralmodel } from './collateral-model';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -26,6 +28,9 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./collateral-edit.component.scss'],
 })
 export class CollateralEditComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
+  baseUrl: string = environment.baseUrl;
   editCollateralForm!: FormGroup;
   pemegangHak: refListJumlahKaryawan[] = [];
   listTipeAgunan: refTipeAgunan[] = [];
@@ -38,7 +43,6 @@ export class CollateralEditComponent implements OnInit {
 
   app_no_de: any;
   curef: any;
-  statusPerkawinan: any;
   datakirimanid: any;
 
   daWa: any;
@@ -47,7 +51,6 @@ export class CollateralEditComponent implements OnInit {
   tambahatautidak: any;
   statussertifikat: any;
   listagunan: any;
-  postId: any;
   daWaprof: any;
   daWakota: any;
   daWakotas: any;
@@ -125,6 +128,26 @@ export class CollateralEditComponent implements OnInit {
   kirimantipe_properti: any;
   kirimanwarna: any;
 
+  untukProvinsiSertif: any;
+  untukKobkotaSertif: any;
+  untukKecamatanSertif: any;
+  untukKelurahanSertif: any;
+  untukKodeProvinsiSertif: any;
+  untukKodeKobkotaSertif: any;
+  untukKodeKecamatanSertif: any;
+  untukKodeKelurahanSertif: any;
+  kirimanhubungan1: any;
+  kirimanhubungan1lainya: any;
+
+  // /////////////////////////////////////
+  clickKdPost = 0;
+  clickKdPostSertif = 0;
+  responseKels: refJenisPekerjaan[] = [];
+  responseKelsSertif: refJenisPekerjaan[] = [];
+  responseNamaWilayah: refJenisPekerjaan[] = [];
+  responseNamaWilayahSertif: refJenisPekerjaan[] = [];
+  // /////////////////////////////////////
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -141,278 +164,409 @@ export class CollateralEditComponent implements OnInit {
       this.curef = params['curef'];
     });
     this.route.queryParams.subscribe(params => {
-      this.statusPerkawinan = params['statusPerkawinan'];
       this.datakirimanid = params['datakirimanid'];
     });
   }
 
   ngOnInit(): void {
+    this.getLoading(true);
     this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.load();
     //////////////////////////// validasi /////////////////////////////////////////
     this.editCollateralForm = this.formBuilder.group({
       tipe_agunan: { value: '', disabled: true },
-      jenis_objek: '',
-      tipe_kendaraan: '',
-      merk: '',
-      model: '',
-      seri: '',
-      nomor_bpkb: '',
-      no_plat: '',
-      warna: '',
-      no_mesin: '',
-      no_rangka: '',
-      nama_bpkb: '',
-      hubungan_pemegang_hak: '',
-      tipe_properti: '',
-      status_agunan: '',
-      status_developer: '',
-      developer: '',
-      status_jaminan_sebelumnya: '',
-      tahun_dibuat: '',
-      status_sertifikat: '',
-      no_sertifikat: '',
-      nama_pemegang_hak: '',
-      no_handphone_cp: '',
-      no_id_pemegang_hak_sertifikat: '',
-      alamat_agunan: '',
-      kode_pos_agunan: '',
-      rt: '',
-      rw: '',
-      luas_tanah: '',
-      luas_bangunan: '',
-      harga_objek: '',
-      alamat_sesuai_sertifikat: '',
-      kode_pos_sesuai_sertifikat: '',
-      rt_sertifikat: '',
-      rw_sertifikat: '',
-      id_rumah: '',
-      blok_rumah: '',
-      nomor_rumah: '',
-      tanggal_terbit: '',
-      tanggal_expired: '',
+      jenis_objek: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      tipe_kendaraan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      merk: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      model: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      seri: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      nomor_bpkb: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      no_plat: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      warna: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      no_mesin: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      no_rangka: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      nama_bpkb: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      hubungan_pemegang_hak: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      tipe_properti: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      status_agunan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      status_developer: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      developer: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      status_jaminan_sebelumnya: {
+        value: '',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
+      tahun_dibuat: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      usia_bangunan: { value: '', disabled: true },
+      status_sertifikat: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      no_sertifikat: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      nama_pemegang_hak: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      no_handphone_cp: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      no_id_pemegang_hak_sertifikat: {
+        value: '',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
+      alamat_agunan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      //
+      provinsi_agunan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      kabkota_agunan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      kecamatan_agunan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      kelurahan_agunan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      //
+      kode_pos_agunan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      rt: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      rw: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      luas_tanah: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      luas_bangunan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      harga_objek: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      alamat_sesuai_sertifikat: {
+        value: '',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
+      //
+      provinsi_sesuai_sertifikat: {
+        value: '',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
+      kabkota_sesuai_sertifikat: {
+        value: '',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
+      kecamatan_sesuai_sertifikat: {
+        value: '',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
+      kelurahan_sesuai_sertifikat: {
+        value: '',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
+      //
+      kode_pos_sesuai_sertifikat: {
+        value: '',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
+      rt_sertifikat: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      rw_sertifikat: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      id_rumah: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      blok_rumah: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      nomor_rumah: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      tanggal_terbit: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      tanggal_expired: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      hubungan_pemegang_hak_lainya: {
+        value: '',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
     });
   }
 
   load() {
     ///////////////// REF ////////////////////////////////////////
-    this.datEntryService.getFetchListPemegangHak().subscribe(data => {
-      this.pemegangHak = data.result;
-    });
-    this.datEntryService.getFetchListTipeAgunan().subscribe(agunan => {
-      this.listTipeAgunan = agunan.result;
-    });
-    this.datEntryService.getFetchListObjekAgunan().subscribe(objek => {
-      this.objekAgunan = objek.result;
-    });
-    this.datEntryService.getFetchListDeveloper().subscribe(dev => {
-      this.listDeveloper = dev.result;
-    });
-    this.datEntryService.getFetchListSertifikat().subscribe(sertif => {
-      this.listSertif = sertif.result;
-    });
-    this.datEntryService.getFetchListKendaraan().subscribe(kendaraan => {
-      this.listKendaraan = kendaraan.result;
-    });
-    ///////////////// REF ////////////////////////////////////////
-    this.gettokendukcapil();
-
-    this.datEntryService.getFetchListAgunanById(this.datakirimanid).subscribe(table => {
-      this.tableAgunan = table.result;
-      // alert(this.tableAgunan.provinsi_agunan)
-      if (this.tableAgunan.tipe_agunan == 'Kendaraan') {
-        var tipeAgunan = 'C01';
-      } else if (this.tableAgunan.tipe_agunan == 'Emas') {
-        var tipeAgunan = 'E01';
-      } else if (this.tableAgunan.tipe_agunan == 'Tanah') {
-        var tipeAgunan = 'H01';
-      } else if (this.tableAgunan.tipe_agunan == 'Bangunan') {
-        var tipeAgunan = 'H02';
-      } else {
-        var tipeAgunan = 'H03';
-      }
-      this.datEntryService.getFetchListTipeProperti(tipeAgunan).subscribe(data => {
-        this.tipeProperti = data.result;
+    setTimeout(() => {
+      this.datEntryService.getFetchListPemegangHak().subscribe(data => {
+        this.pemegangHak = data.result;
+        // if(data.result.deskripsi !='Diri Sendiri'||data.result.deskripsi !='Orang Tua'||data.result.deskripsi !='Anak' || data.result.deskripsi !='Lainya'){
+        //   this.pemegangHak = 'Lainya';
+        // }else{
+        //   this.pemegangHak = data.result;
+        // }
       });
-      let retriveAgunan = {
-        tipe_agunan: tipeAgunan,
-        jenis_objek: this.tableAgunan.jenis_objek,
-        tipe_kendaraan: this.tableAgunan.tipe_kendaraan,
-        merk: this.tableAgunan.merk,
-        model: this.tableAgunan.model,
-        seri: this.tableAgunan.seri,
-        nomor_bpkb: this.tableAgunan.nomor_bpkb,
-        no_plat: this.tableAgunan.no_plat,
-        warna: this.tableAgunan.warna,
-        no_mesin: this.tableAgunan.no_mesin,
-        no_rangka: this.tableAgunan.no_rangka,
-        nama_bpkb: this.tableAgunan.nama_bpkb,
-        hubungan_pemegang_hak: this.tableAgunan.hubungan_pemegang_hak,
-        tipe_properti: this.tableAgunan.tipe_properti,
-        status_agunan: this.tableAgunan.status_agunan,
-        status_developer: this.tableAgunan.status_developer,
-        developer: this.tableAgunan.developer,
-        status_jaminan_sebelumnya: this.tableAgunan.status_jaminan_sebelumnya,
-        tahun_dibuat: this.tableAgunan.tahun_dibuat,
-        status_sertifikat: this.tableAgunan.status_sertifikat,
-        no_sertifikat: this.tableAgunan.no_sertifikat,
-        nama_pemegang_hak: this.tableAgunan.nama_pemegang_hak,
-        no_handphone_cp: this.tableAgunan.no_handphone_cp,
-        no_id_pemegang_hak_sertifikat: this.tableAgunan.no_id_pemegang_hak_sertifikat,
-        alamat_agunan: this.tableAgunan.alamat_agunan,
-        kode_pos_agunan: this.tableAgunan.kode_pos_agunan,
-        rt: this.tableAgunan.rt,
-        rw: this.tableAgunan.rw,
-        luas_tanah: this.tableAgunan.luas_tanah,
-        luas_bangunan: this.tableAgunan.luas_bangunan,
-        harga_objek: this.tableAgunan.harga_objek,
-        alamat_sesuai_sertifikat: this.tableAgunan.alamat_sesuai_sertifikat,
-        kode_pos_sesuai_sertifikat: this.tableAgunan.kode_pos_sesuai_sertifikat,
-        rt_sertifikat: this.tableAgunan.rt_sertifikat,
-        rw_sertifikat: this.tableAgunan.rw_sertifikat,
-        id_rumah: this.tableAgunan.id_rumah,
-        blok_rumah: this.tableAgunan.blok_rumah,
-        nomor_rumah: this.tableAgunan.nomor_rumah,
-        tanggal_terbit: this.tableAgunan.tanggal_terbit,
-        tanggal_expired: this.tableAgunan.tanggal_expired,
-      };
-      this.editCollateralForm.setValue(retriveAgunan);
-    });
+    }, 10);
+    setTimeout(() => {
+      this.datEntryService.getFetchListTipeAgunan().subscribe(agunan => {
+        this.listTipeAgunan = agunan.result;
+      });
+    }, 20);
+    setTimeout(() => {
+      this.datEntryService.getFetchListObjekAgunan().subscribe(objek => {
+        this.objekAgunan = objek.result;
+      });
+    }, 30);
+    setTimeout(() => {
+      this.datEntryService.getFetchListDeveloper().subscribe(dev => {
+        this.listDeveloper = dev.result;
+      });
+    }, 40);
+    setTimeout(() => {
+      this.datEntryService.getFetchListSertifikat().subscribe(sertif => {
+        this.listSertif = sertif.result;
+      });
+    }, 50);
+    setTimeout(() => {
+      this.datEntryService.getFetchListKendaraan().subscribe(kendaraan => {
+        this.listKendaraan = kendaraan.result;
+      });
+    }, 60);
+    ///////////////// REF ////////////////////////////////////////
+    setTimeout(() => {
+      this.datEntryService.getprovinsi().subscribe(res => {
+        this.daWaprof = res.result;
+      });
+    }, 70);
+
+    setTimeout(() => {
+      this.datEntryService.getFetchListAgunanById(this.datakirimanid).subscribe(table => {
+        this.tableAgunan = table.result;
+        // alert(this.tableAgunan.provinsi_agunan)
+        if (this.tableAgunan.tipe_agunan == 'Kendaraan') {
+          var tipeAgunan = 'C01';
+        } else if (this.tableAgunan.tipe_agunan == 'Emas') {
+          var tipeAgunan = 'E01';
+        } else if (this.tableAgunan.tipe_agunan == 'Tanah') {
+          var tipeAgunan = 'H01';
+        } else if (this.tableAgunan.tipe_agunan == 'Bangunan') {
+          var tipeAgunan = 'H02';
+        } else {
+          var tipeAgunan = 'H03';
+        }
+
+        if (
+          table.result.hubungan_pemegang_hak == 'Diri Sendiri' ||
+          table.result.hubungan_pemegang_hak == 'Orang Tua' ||
+          table.result.hubungan_pemegang_hak == 'Anak' ||
+          table.result.hubungan_pemegang_hak == 'Lainya'
+        ) {
+          // alert("ini if");
+          // alert(table.result.hubungan_pemegang_hak =='Anak');
+          this.kirimanhubungan1 = table.result.hubungan_pemegang_hak;
+          this.kirimanhubungan1lainya = '';
+        } else {
+          // alert("ini else");
+          this.kirimanhubungan1 = 'Lainya';
+          this.kirimanhubungan1lainya = table.result.hubungan_pemegang_hak;
+        }
+
+        const ValidasiTipeAgunan = <FormControl>this.editCollateralForm.get('tipe_agunan');
+        const ValidasiJenisObjek = <FormControl>this.editCollateralForm.get('jenis_objek');
+        const ValidasiTipeKendaraan = <FormControl>this.editCollateralForm.get('tipe_kendaraan');
+        const ValidasiMerk = <FormControl>this.editCollateralForm.get('merk');
+        const ValidasiModel = <FormControl>this.editCollateralForm.get('model');
+        const ValidasiSeri = <FormControl>this.editCollateralForm.get('seri');
+        const ValidasiNomorBpkb = <FormControl>this.editCollateralForm.get('nomor_bpkb');
+        const ValidasiNoplat = <FormControl>this.editCollateralForm.get('no_plat');
+        const ValidasiWarna = <FormControl>this.editCollateralForm.get('warna');
+        const ValidasiNomesin = <FormControl>this.editCollateralForm.get('no_mesin');
+        const ValidasiNorangka = <FormControl>this.editCollateralForm.get('no_rangka');
+        const ValidasiNamaBpkb = <FormControl>this.editCollateralForm.get('nama_bpkb');
+
+        const ValidasiHubunganPemilikHak = <FormControl>this.editCollateralForm.get('hubungan_pemegang_hak');
+        const ValidasiTipeProperti = <FormControl>this.editCollateralForm.get('tipe_properti');
+        const ValidasiStatusAgunan = <FormControl>this.editCollateralForm.get('status_agunan');
+        const ValidasiStatusDevloper = <FormControl>this.editCollateralForm.get('status_developer');
+        const ValidasiDevloper = <FormControl>this.editCollateralForm.get('developer');
+        const ValidasiStatusJaminanSebelum = <FormControl>this.editCollateralForm.get('status_jaminan_sebelumnya');
+        const ValidasiTahunDibuat = <FormControl>this.editCollateralForm.get('tahun_dibuat');
+        const ValidasiUsiaBangunan = <FormControl>this.editCollateralForm.get('usia_bangunan');
+        const ValidasiStatusSertifikat = <FormControl>this.editCollateralForm.get('status_sertifikat');
+        const ValidasiNoSertifikat = <FormControl>this.editCollateralForm.get('no_sertifikat');
+        const ValidasiNoKontakHr = <FormControl>this.editCollateralForm.get('nama_pemegang_hak');
+        const ValidasiNoHandphoneCp = <FormControl>this.editCollateralForm.get('no_handphone_cp');
+        const ValidasiNoIdPemegangHakSertifikat = <FormControl>this.editCollateralForm.get('no_id_pemegang_hak_sertifikat');
+        const ValidasiAlamatAgunan = <FormControl>this.editCollateralForm.get('alamat_agunan');
+        const ValidasiProvinsiAgunan = <FormControl>this.editCollateralForm.get('provinsi_agunan');
+        const ValidasiKabkotaAgunan = <FormControl>this.editCollateralForm.get('kabkota_agunan');
+        const ValidasiKecamatanAgunan = <FormControl>this.editCollateralForm.get('kecamatan_agunan');
+        const ValidasiKelurahanAgunan = <FormControl>this.editCollateralForm.get('kelurahan_agunan');
+        const ValidasiKodePosAgunan = <FormControl>this.editCollateralForm.get('kode_pos_agunan');
+        const Validasirt = <FormControl>this.editCollateralForm.get('rt');
+        const Validasirw = <FormControl>this.editCollateralForm.get('rw');
+        const ValidasiLuasTanah = <FormControl>this.editCollateralForm.get('luas_tanah');
+        const ValidasiLuasBangunan = <FormControl>this.editCollateralForm.get('luas_bangunan');
+        const ValidasiHargaObjek = <FormControl>this.editCollateralForm.get('harga_objek');
+        const ValidasiAlamatSesuaiSertifikat = <FormControl>this.editCollateralForm.get('alamat_sesuai_sertifikat');
+        const ValidasiProvinsiSesuaiSertifikat = <FormControl>this.editCollateralForm.get('provinsi_sesuai_sertifikat');
+        const ValidasiKabkotaSesuaiSertifikat = <FormControl>this.editCollateralForm.get('kabkota_sesuai_sertifikat');
+        const ValidasiKecamatanSesuaiSertifikat = <FormControl>this.editCollateralForm.get('kecamatan_sesuai_sertifikat');
+        const ValidasiKelurahanSesuaiSertifikat = <FormControl>this.editCollateralForm.get('kelurahan_sesuai_sertifikat');
+        const ValidasiKodePosSesuaiSertifikat = <FormControl>this.editCollateralForm.get('kode_pos_sesuai_sertifikat');
+        const ValidasiRtSertifikat = <FormControl>this.editCollateralForm.get('rt_sertifikat');
+        const ValidasiRwSertifikat = <FormControl>this.editCollateralForm.get('rw_sertifikat');
+        const ValidasiIdRumah = <FormControl>this.editCollateralForm.get('id_rumah');
+        const ValidasiBlokRumah = <FormControl>this.editCollateralForm.get('blok_rumah');
+        const ValidasiNomorRumah = <FormControl>this.editCollateralForm.get('nomor_rumah');
+        const ValidasiTanggalTerbit = <FormControl>this.editCollateralForm.get('tanggal_terbit');
+        const ValidasiTanggalExpired = <FormControl>this.editCollateralForm.get('tanggal_expired');
+        const ValidasiHubunganPemegangHakLainya = <FormControl>this.editCollateralForm.get('hubungan_pemegang_hak_lainya');
+        ValidasiIdRumah.setValidators([Validators.required]);
+        ValidasiBlokRumah.setValidators([Validators.required]);
+        ValidasiNomorRumah.setValidators([Validators.required]);
+        ValidasiTipeAgunan.setValidators([Validators.required]);
+        ValidasiJenisObjek.setValidators([Validators.required]);
+        ValidasiTipeKendaraan.setValidators([Validators.required]);
+        ValidasiMerk.setValidators([Validators.required]);
+        ValidasiModel.setValidators([Validators.required]);
+        ValidasiSeri.setValidators([Validators.required]);
+        ValidasiNomorBpkb.setValidators([Validators.required]);
+        ValidasiNoplat.setValidators([Validators.required]);
+        ValidasiWarna.setValidators([Validators.required]);
+        ValidasiNomesin.setValidators([Validators.required]);
+        ValidasiNorangka.setValidators([Validators.required]);
+        ValidasiNamaBpkb.setValidators([Validators.required]);
+        ValidasiHubunganPemilikHak.setValidators([Validators.required]);
+        ValidasiTipeProperti.setValidators([Validators.required]);
+        ValidasiStatusAgunan.setValidators([Validators.required]);
+        ValidasiStatusDevloper.setValidators([Validators.required]);
+        ValidasiDevloper.setValidators([Validators.required]);
+        ValidasiStatusJaminanSebelum.setValidators([Validators.required]);
+        ValidasiTahunDibuat.setValidators([Validators.required]);
+        ValidasiUsiaBangunan.setValidators([Validators.required]);
+        ValidasiStatusSertifikat.setValidators([Validators.required]);
+        ValidasiNoSertifikat.setValidators([Validators.required]);
+        ValidasiNoKontakHr.setValidators([Validators.required]);
+        ValidasiNoHandphoneCp.setValidators([Validators.required]);
+        ValidasiNoIdPemegangHakSertifikat.setValidators([Validators.required]);
+        ValidasiAlamatAgunan.setValidators([Validators.required]);
+        ValidasiProvinsiAgunan.setValidators([Validators.required]);
+        ValidasiKabkotaAgunan.setValidators([Validators.required]);
+        ValidasiKecamatanAgunan.setValidators([Validators.required]);
+        ValidasiKelurahanAgunan.setValidators([Validators.required]);
+        ValidasiKodePosAgunan.setValidators([Validators.required]);
+        Validasirt.setValidators([Validators.required]);
+        Validasirw.setValidators([Validators.required]);
+        ValidasiLuasTanah.setValidators([Validators.required]);
+        ValidasiLuasBangunan.setValidators([Validators.required]);
+        ValidasiHargaObjek.setValidators([Validators.required]);
+        ValidasiAlamatSesuaiSertifikat.setValidators([Validators.required]);
+        ValidasiProvinsiSesuaiSertifikat.setValidators([Validators.required]);
+        ValidasiKabkotaSesuaiSertifikat.setValidators([Validators.required]);
+        ValidasiKecamatanSesuaiSertifikat.setValidators([Validators.required]);
+        ValidasiKelurahanSesuaiSertifikat.setValidators([Validators.required]);
+        ValidasiRtSertifikat.setValidators([Validators.required]);
+        ValidasiRwSertifikat.setValidators([Validators.required]);
+        ValidasiTanggalTerbit.setValidators([Validators.required]);
+        ValidasiTanggalExpired.setValidators([Validators.required]);
+        ValidasiHubunganPemegangHakLainya.setValidators([Validators.required]);
+
+        this.datEntryService.getFetchListTipeProperti(tipeAgunan).subscribe(data => {
+          this.tipeProperti = data.result;
+        });
+        let retriveAgunan = {
+          tipe_agunan: tipeAgunan,
+          jenis_objek: this.tableAgunan.jenis_objek,
+          tipe_kendaraan: this.tableAgunan.tipe_kendaraan,
+          merk: this.tableAgunan.merk,
+          model: this.tableAgunan.model,
+          seri: this.tableAgunan.seri,
+          nomor_bpkb: this.tableAgunan.nomor_bpkb,
+          no_plat: this.tableAgunan.no_plat,
+          warna: this.tableAgunan.warna,
+          hubungan_pemegang_hak_lainya: this.kirimanhubungan1lainya,
+          no_mesin: this.tableAgunan.no_mesin,
+          no_rangka: this.tableAgunan.no_rangka,
+          nama_bpkb: this.tableAgunan.nama_bpkb,
+          hubungan_pemegang_hak: this.kirimanhubungan1,
+          tipe_properti: this.tableAgunan.tipe_properti,
+          status_agunan: this.tableAgunan.status_agunan,
+          status_developer: this.tableAgunan.status_developer,
+          developer: this.tableAgunan.developer,
+          status_jaminan_sebelumnya: this.tableAgunan.status_jaminan_sebelumnya,
+          tahun_dibuat: this.tableAgunan.tahun_dibuat,
+          usia_bangunan: this.tableAgunan.usia_bangunan,
+          status_sertifikat: this.tableAgunan.status_sertifikat,
+          no_sertifikat: this.tableAgunan.no_sertifikat,
+          nama_pemegang_hak: this.tableAgunan.nama_pemegang_hak,
+          no_handphone_cp: this.tableAgunan.no_handphone_cp,
+          no_id_pemegang_hak_sertifikat: this.tableAgunan.no_id_pemegang_hak_sertifikat,
+          alamat_agunan: this.tableAgunan.alamat_agunan,
+          //
+          provinsi_agunan: '',
+          kabkota_agunan: '',
+          kecamatan_agunan: '',
+          kelurahan_agunan: '',
+          //
+          kode_pos_agunan: this.tableAgunan.kode_pos_agunan,
+          rt: this.tableAgunan.rt,
+          rw: this.tableAgunan.rw,
+          luas_tanah: this.tableAgunan.luas_tanah,
+          luas_bangunan: this.tableAgunan.luas_bangunan,
+          harga_objek: this.tableAgunan.harga_objek,
+          alamat_sesuai_sertifikat: this.tableAgunan.alamat_sesuai_sertifikat,
+          //
+          provinsi_sesuai_sertifikat: '',
+          kabkota_sesuai_sertifikat: '',
+          kecamatan_sesuai_sertifikat: '',
+          kelurahan_sesuai_sertifikat: '',
+          //
+          kode_pos_sesuai_sertifikat: this.tableAgunan.kode_pos_sesuai_sertifikat,
+          rt_sertifikat: this.tableAgunan.rt_sertifikat,
+          rw_sertifikat: this.tableAgunan.rw_sertifikat,
+          id_rumah: this.tableAgunan.id_rumah,
+          blok_rumah: this.tableAgunan.blok_rumah,
+          nomor_rumah: this.tableAgunan.nomor_rumah,
+          tanggal_terbit: this.tableAgunan.tanggal_terbit,
+          tanggal_expired: this.tableAgunan.tanggal_expired,
+        };
+        this.editCollateralForm.setValue(retriveAgunan);
+
+        setTimeout(() => {
+          this.getLoading(false);
+          this.carimenggunakankodeposagunan(this.tableAgunan.kode_pos_agunan);
+          this.carimenggunakankodepossertifikat(this.tableAgunan.kode_pos_sesuai_sertifikat);
+        }, 300);
+      });
+    }, 80);
   }
+
   agunanChange(code: any) {
     this.datEntryService.getFetchListTipeProperti(code).subscribe(data => {
       this.tipeProperti = data.result;
     });
   }
-  gettokendukcapil(): void {
-    this.http
-      .post<any>('http://10.20.82.12:8083/token/generate-token', {
-        password: '3foWeb@pp',
-        username: 'efo',
-        // password_dukcapil: '3foWeb@pp',
-      })
-      .subscribe({
-        next: data => {
-          this.postId = data.result.token;
-          this.datEntryService.getprovinsi(this.postId).subscribe({
-            next: (res: EntityArrayResponseDaWa) => {
-              console.warn('PROVINSI', res);
 
-              this.daWaprof = res.body?.result;
-            },
-          });
-        },
-      });
-  }
-  onChange(selectedStatus: any) {
-    const provinsi_cabang = document.getElementById('provinsi_agunan') as HTMLInputElement | any;
-
-    // alert(this.postId);
-    console.log('kode' + selectedStatus);
-    this.datEntryService.getkabkota(this.postId, provinsi_cabang.value).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kota', res);
-
-        this.daWakota = res.body?.result;
-        // alert(this.postId);
-        // this.onResponseSuccess(res);
-      },
+  provinsiChange(value: any) {
+    const valueProvinsi = value.split('|');
+    this.datEntryService.getkabkota(valueProvinsi[0]).subscribe(data => {
+      //console.warn(data);
+      this.daWakota = data.result;
+      this.editCollateralForm.get('kabkota_agunan')?.setValue(this.untukKodeKobkotAagunan + '|' + this.untukkobkotaagunan);
     });
   }
 
-  onChanges(selectedStatus: any) {
-    const provinsi_cabang = document.getElementById('provinsi_sesuai_sertifikat') as HTMLInputElement | any;
-
-    // alert(this.postId);
-    console.log('kode' + selectedStatus);
-    this.datEntryService.getkabkota(this.postId, provinsi_cabang.value).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kota', res);
-
-        this.daWakotas = res.body?.result;
-        // alert(this.postId);
-        // this.onResponseSuccess(res);
-      },
+  SertifProvChange(value: any): void {
+    const valueKota = value.split('|');
+    this.datEntryService.getkabkota(valueKota[0]).subscribe(data => {
+      this.daWakotas = data.result;
+      this.editCollateralForm.get('kabkota_sesuai_sertifikat')?.setValue(this.untukKodeKobkotaSertif + '|' + this.untukKobkotaSertif);
+      // this.collateralForm.get('kabkota_sesuai_sertifikat')?.setValue(this.collateralForm.get('kabkota_agunan')?.value);
     });
   }
-  onChangekota(selectedStatus: any) {
-    // alert(this.postId);
-    const provinsi_cabang = document.getElementById('kabkota_agunan') as HTMLInputElement | any;
-    this.datEntryService.getkecamatan(this.postId, provinsi_cabang.value).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kecamata', res);
-
-        this.kecamatan = res.body?.result;
-        // alert(this.postId);
-        // this.onResponseSuccess(res);
-      },
+  kotaChange(value: any) {
+    const valueKota = value.split('|');
+    this.datEntryService.getkecamatan(valueKota[0]).subscribe(data => {
+      this.kecamatan = data.result;
+      this.editCollateralForm.get('kecamatan_agunan')?.setValue(this.untukKodeKecamatanAgunan + '|' + this.untukkecamatanagunan);
     });
-    console.log(selectedStatus);
   }
-  onChangekotas(selectedStatus: any) {
-    // alert(this.postId);
-    const provinsi_cabang = document.getElementById('kabkota_sesuai_sertifikat') as HTMLInputElement | any;
-    this.datEntryService.getkecamatan(this.postId, provinsi_cabang.value).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kecamata', res);
-
-        this.kecamatans = res.body?.result;
-        // alert(this.postId);
-        // this.onResponseSuccess(res);
-      },
+  SertifKotaChange(value: any): void {
+    const proValue = value.split('|');
+    this.datEntryService.getkecamatan(proValue[0]).subscribe(data => {
+      this.kecamatans = data.result;
+      this.editCollateralForm.get('kecamatan_sesuai_sertifikat')?.setValue(this.untukKodeKecamatanSertif + '|' + this.untukKecamatanSertif);
+      // this.collateralForm.get('kecamatan_sesuai_sertifikat')?.setValue(this.collateralForm.get('kecamatan_agunan')?.value);
     });
-    console.log(selectedStatus);
   }
-  onChangekecamatan(selectedStatus: any) {
-    // alert(this.postId);
-
-    const provinsi_cabang = document.getElementById('kecamatan_agunan') as HTMLInputElement | any;
-    this.datEntryService.getkelurahan(this.postId, provinsi_cabang.value).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kelurahan', res);
-
-        this.kelurahan = res.body?.result;
-        // alert(this.postId);
-        // this.onResponseSuccess(res);
-      },
+  kecamatanChange(value: any) {
+    const valueKecamatan = value.split('|');
+    this.datEntryService.getkelurahan(valueKecamatan[0]).subscribe(data => {
+      this.kelurahan = data.result;
+      this.editCollateralForm.get('kelurahan_agunan')?.setValue(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
     });
-    console.log(selectedStatus);
   }
-  onChangekecamatans(selectedStatus: any) {
-    // alert(this.postId);
-
-    const provinsi_cabang = document.getElementById('kecamatan_sesuai_sertifikat') as HTMLInputElement | any;
-    this.datEntryService.getkelurahan(this.postId, provinsi_cabang.value).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kelurahan', res);
-
-        this.kelurahans = res.body?.result;
-        // alert(this.postId);
-        // this.onResponseSuccess(res);
-      },
+  SertifKecamatanChange(value: any): void {
+    const valueKecamatan = value.split('|');
+    this.datEntryService.getkelurahan(valueKecamatan[0]).subscribe(data => {
+      this.kelurahans = data.result;
+      this.editCollateralForm.get('kelurahan_sesuai_sertifikat')?.setValue(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
+      // this.collateralForm.get('kelurahan_sesuai_sertifikat')?.setValue(this.collateralForm.get('kelurahan_agunan')?.value);
     });
-    console.log(selectedStatus);
   }
-  onChangekelurahan(selectedStatus: any) {
-    // alert(this.postId);
-    // alert('ganti');
-    const provinsi_cabang = document.getElementById('kelurahan_agunan') as HTMLInputElement | any;
-    const kode_post = document.getElementById('kode_pos_agunan') as HTMLInputElement | any;
-    const datakodepos = provinsi_cabang.value.split('|');
-
+  kelurahanChange(value: any) {
+    const datakodepos = value.split('|');
     this.daWakodepos = datakodepos[0];
-
-    kode_post.value = this.daWakodepos;
+    this.editCollateralForm.get('kode_pos_agunan')?.setValue(this.daWakodepos);
   }
-  onChangekelurahans(selectedStatus: any) {
-    // alert(this.postId);
-    // alert('ganti');
-    const provinsi_cabang = document.getElementById('kelurahan_sesuai_sertifikat') as HTMLInputElement | any;
-    const kode_post = document.getElementById('kode_pos_sesuai_sertifikat') as HTMLInputElement | any;
-    const datakodepos = provinsi_cabang.value.split('|');
-
+  SertifKelurahanChange(value: any): void {
+    const datakodepos = value.split('|');
     this.daWakodepos = datakodepos[0];
-    kode_post.value = this.daWakodepos;
+    this.editCollateralForm.get('kode_pos_sesuai_sertifikat')?.setValue(this.daWakodepos);
   }
 
   changefom() {
@@ -427,44 +581,24 @@ export class CollateralEditComponent implements OnInit {
   }
 
   goto() {
+    this.SessionStorageService.store('collateral', 1);
     this.router.navigate(['/data-entry/struktur-pembiayaan'], {
       queryParams: {
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de,
       },
     });
   }
 
-  gotoeditcollateral(idcollateral: any) {
-    this.router.navigate(['/data-entry/editcollateral'], {
-      queryParams: {
-        curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
-        app_no_de: this.app_no_de,
-        datakirimanid: idcollateral,
-      },
-    });
-  }
-
-  createcollateral(
-    provinsi_agunan: any,
-    kabkota_agunan: any,
-    kecamatan_agunan: any,
-    kelurahan_agunan: any,
-    provinsi_sesuai_sertifikat: any,
-    kabkota_sesuai_sertifikat: any,
-    kecamatan_sesuai_sertifikat: any,
-    kelurahan_sesuai_sertifikat: any
-  ) {
-    let provinsiSplit = provinsi_agunan.split('|');
-    let kotaSplit = kabkota_agunan.split('|');
-    let kecSplit = kecamatan_agunan.split('|');
-    let kelSplit = kelurahan_agunan.split('|');
-    let provSerSplit = provinsi_sesuai_sertifikat.split('|');
-    let kotaSerSplit = kabkota_sesuai_sertifikat.split('|');
-    let kecSerSplit = kecamatan_sesuai_sertifikat.split('|');
-    let kelSerSplit = kelurahan_sesuai_sertifikat.split('|');
+  createcollateral() {
+    let provinsiSplit = this.editCollateralForm.get('provinsi_agunan')?.value.split('|');
+    let kotaSplit = this.editCollateralForm.get('kabkota_agunan')?.value.split('|');
+    let kecSplit = this.editCollateralForm.get('kecamatan_agunan')?.value.split('|');
+    let kelSplit = this.editCollateralForm.get('kelurahan_agunan')?.value.split('|');
+    let provSerSplit = this.editCollateralForm.get('provinsi_sesuai_sertifikat')?.value.split('|');
+    let kotaSerSplit = this.editCollateralForm.get('kabkota_sesuai_sertifikat')?.value.split('|');
+    let kecSerSplit = this.editCollateralForm.get('kecamatan_sesuai_sertifikat')?.value.split('|');
+    let kelSerSplit = this.editCollateralForm.get('kelurahan_sesuai_sertifikat')?.value.split('|');
 
     if (this.editCollateralForm.get('tipe_agunan')?.value == 'C01') {
       var tipeAgunan = 'Kendaraan';
@@ -478,8 +612,14 @@ export class CollateralEditComponent implements OnInit {
       var tipeAgunan = 'Tanah dan Bangunan';
     }
 
+    if (this.editCollateralForm.get('hubungan_pemegang_hak')?.value == 'Lainya') {
+      var kirimhubunganpemeganghak = this.editCollateralForm.get('hubungan_pemegang_hak_lainya')?.value;
+    } else {
+      var kirimhubunganpemeganghak = this.editCollateralForm.get('hubungan_pemegang_hak')?.value;
+    }
+
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_collateral', {
+      .post<any>(this.baseUrl + 'v1/efos-de/update_collateral', {
         tipe_agunan: tipeAgunan,
         jenis_objek: this.editCollateralForm.get('jenis_objek')?.value,
         tipe_kendaraan: this.editCollateralForm.get('tipe_kendaraan')?.value,
@@ -492,13 +632,14 @@ export class CollateralEditComponent implements OnInit {
         no_mesin: this.editCollateralForm.get('no_mesin')?.value,
         no_rangka: this.editCollateralForm.get('no_rangka')?.value,
         nama_bpkb: this.editCollateralForm.get('nama_bpkb')?.value,
-        hubungan_pemegang_hak: this.editCollateralForm.get('hubungan_pemegang_hak')?.value,
+        hubungan_pemegang_hak: kirimhubunganpemeganghak,
         tipe_properti: this.editCollateralForm.get('tipe_properti')?.value,
         status_agunan: this.editCollateralForm.get('status_agunan')?.value,
         status_developer: this.editCollateralForm.get('status_developer')?.value,
         developer: this.editCollateralForm.get('developer')?.value,
         status_jaminan_sebelumnya: this.editCollateralForm.get('status_jaminan_sebelumnya')?.value,
         tahun_dibuat: this.editCollateralForm.get('tahun_dibuat')?.value,
+        usia_bangunan: this.editCollateralForm.get('usia_bangunan')?.value,
         status_sertifikat: this.editCollateralForm.get('status_sertifikat')?.value,
         no_sertifikat: this.editCollateralForm.get('no_sertifikat')?.value,
         nama_pemegang_hak: this.editCollateralForm.get('nama_pemegang_hak')?.value,
@@ -546,7 +687,6 @@ export class CollateralEditComponent implements OnInit {
           this.router.navigate(['/data-entry/collateral'], {
             queryParams: {
               curef: this.curef,
-              statusPerkawinan: this.statusPerkawinan,
               app_no_de: this.app_no_de,
             },
           });
@@ -554,134 +694,137 @@ export class CollateralEditComponent implements OnInit {
       });
   }
 
-  carimenggunakankodeposagunan(kodepost: any, req: any) {
-    this.getkodepostnya(kodepost, req).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kodepost', res);
-
-        // this.dawakodepost = res.body?.result;
-        // alert(this.postId);
-        // this.onResponseSuccess(res);
-        this.untukKodeProvinsiAgunan = res.body?.result.provKec.kd_prov;
-        this.untukKodeKobkotAagunan = res.body?.result.provKec.kd_kota;
-        this.untukKodeKecamatanAgunan = res.body?.result.provKec.kd_kec;
-        this.untukKodeKelurahanAgunan = res.body?.result.provKec.kd_kel;
-
-        this.untukprovinsiagunan = res.body?.result.provKec.nm_prov;
-        this.untukkobkotaagunan = res.body?.result.provKec.nm_kota;
-        this.untukkecamatanagunan = res.body?.result.provKec.nm_kec;
-        this.untukkelurahanagunan = res.body?.result.provKec.nm_kel;
-
-        // $('#provinsi_cabang').attr('selected', 'selected').val(this.provinsi_cabangkode + '|' +    this.provinsi_cabang);
-        $('#provinsi_agunan option:first').text(this.untukprovinsiagunan);
-        $('#provinsi_agunan option:first').val(this.untukKodeProvinsiAgunan + '|' + this.untukprovinsiagunan);
-        // $('#kabkota').append(this.kabkota_cabang);
-
-        $('#kabkota_agunan option:first').text(this.untukkobkotaagunan);
-        $('#kabkota_agunan option:first').val(this.untukKodeKobkotAagunan + '|' + this.untukkobkotaagunan);
-
-        // $('#kecamatan').attr('selected', 'selected').val(this.kecamatankode + '|' +    this.kecamatan);
-        $('#kecamatan_agunan option:first').text(this.untukkecamatanagunan);
-        $('#kecamatan_agunan option:first').val(this.untukKodeKecamatanAgunan + '|' + this.untukkecamatanagunan);
-
-        // $('#kelurahan').attr('selected', 'selected').val(this.kelurahankode + '|' +    this.kelurahan);
-        $('#kelurahan_agunan option:first').text(this.untukkelurahanagunan);
-        $('#kelurahan_agunan option:first').val(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
+  carimenggunakankodeposagunan(kodepost: any) {
+    this.datEntryService.getKdpost(kodepost).subscribe({
+      next: sukses => {
+        if (this.clickKdPost == 1) {
+          this.responseKels = sukses.result.kels;
+          this.responseKels.forEach(element => {
+            this.responseKels.push(element);
+            if (element.kdPos == kodepost) {
+              let namaWIl = element.namaWilayah;
+              this.responseNamaWilayah.push(namaWIl);
+            }
+          });
+        }
+        this.untukKodeProvinsiAgunan = sukses.result.provKec.kd_prov;
+        this.untukKodeKobkotAagunan = sukses.result.provKec.kd_kota;
+        this.untukKodeKecamatanAgunan = sukses.result.provKec.kd_kec;
+        this.untukprovinsiagunan = sukses.result.provKec.nm_prov;
+        this.untukkobkotaagunan = sukses.result.provKec.nm_kota;
+        this.untukkecamatanagunan = sukses.result.provKec.nm_kec;
+        // console.warn(sukses);
+        setTimeout(() => {
+          if (this.clickKdPost == 1) {
+            if (sukses.result.kels == null) {
+              this.untukKodeKelurahanAgunan = kodepost;
+              this.untukkelurahanagunan = '';
+              this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
+            } else if (sukses.result.provKec.kd_kel == null) {
+              this.untukKodeKelurahanAgunan = kodepost;
+              this.untukkelurahanagunan = this.responseNamaWilayah[this.responseNamaWilayah.length - 1];
+              this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
+              // alert(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan)
+            } else {
+              this.untukKodeKelurahanAgunan = kodepost;
+              this.untukkelurahanagunan = sukses.result.provKec.nm_kel;
+              this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
+              // alert(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan)
+            }
+          } else {
+            this.untukKodeKelurahanAgunan = kodepost;
+            this.untukkelurahanagunan = this.tableAgunan.kelurahan_agunan;
+            this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
+          }
+        }, 10);
+        this.editCollateralForm.get('provinsi_agunan')?.setValue(this.untukKodeProvinsiAgunan + '|' + this.untukprovinsiagunan);
+        this.provinsiChange(this.untukKodeProvinsiAgunan + '|' + this.untukprovinsiagunan);
+        this.kotaChange(this.untukKodeKobkotAagunan + '|' + this.untukkobkotaagunan);
+        this.kecamatanChange(this.untukKodeKecamatanAgunan + '|' + this.untukkecamatanagunan);
       },
     });
-
-    console.log(req);
   }
 
   ///sertifikat
 
-  carimenggunakankodepossertifikat(kodepost: any, req: any) {
-    this.getkodepostnya(kodepost, req).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kodepost', res);
-
-        // this.dawakodepost = res.body?.result;
-        // alert(this.postId);
-        // this.onResponseSuccess(res);
-
-        this.untukKodeProvinsiAgunan = res.body?.result.provKec.kd_prov;
-        this.untukKodeKobkotAagunan = res.body?.result.provKec.kd_kota;
-        this.untukKodeKecamatanAgunan = res.body?.result.provKec.kd_kec;
-        this.untukKodeKelurahanAgunan = res.body?.result.provKec.kd_kel;
-        this.untukprovinsiagunan = res.body?.result.provKec.nm_prov;
-        this.untukkobkotaagunan = res.body?.result.provKec.nm_kota;
-        this.untukkecamatanagunan = res.body?.result.provKec.nm_kec;
-        this.untukkelurahanagunan = res.body?.result.provKec.nm_kel;
-
-        // $('#provinsi_cabang').attr('selected', 'selected').val(this.provinsi_cabangkode + '|' +    this.provinsi_cabang);
-        $('#provinsi_sesuai_sertifikat option:first').text(this.untukprovinsiagunan);
-        $('#provinsi_sesuai_sertifikat option:first').val(this.untukKodeProvinsiAgunan + '|' + this.untukprovinsiagunan);
-
-        // $('#kabkota').append(this.kabkota_cabang);
-
-        $('#kabkota_sesuai_sertifikat option:first').text(this.untukkobkotaagunan);
-        $('#kabkota_sesuai_sertifikat option:first').val(this.untukKodeKobkotAagunan + '|' + this.untukkobkotaagunan);
-
-        // $('#kecamatan').attr('selected', 'selected').val(this.kecamatankode + '|' +    this.kecamatan);
-        $('#kecamatan_sesuai_sertifikat option:first').text(this.untukkecamatanagunan);
-        $('#kecamatan_sesuai_sertifikat option:first').val(this.untukKodeKecamatanAgunan + '|' + this.untukkecamatanagunan);
-
-        // $('#kelurahan').attr('selected', 'selected').val(this.kelurahankode + '|' +    this.kelurahan);
-        $('#kelurahan_sesuai_sertifikat option:first').text(this.untukkelurahanagunan);
-        $('#kelurahan_sesuai_sertifikat option:first').val(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
-        // alert(this.provinsi_cabang)
+  carimenggunakankodepossertifikat(kodepost: any) {
+    this.datEntryService.getKdpost(kodepost).subscribe({
+      next: sukses => {
+        if (this.clickKdPostSertif == 1) {
+          this.responseKelsSertif = sukses.result.kels;
+          this.responseKelsSertif.forEach(element => {
+            this.responseKelsSertif.push(element);
+            if (element.kdPos == kodepost) {
+              let namaWIl = element.namaWilayah;
+              this.responseNamaWilayahSertif.push(namaWIl);
+            }
+          });
+        }
+        this.untukProvinsiSertif = sukses.result.provKec.nm_prov;
+        this.untukKobkotaSertif = sukses.result.provKec.nm_kota;
+        this.untukKecamatanSertif = sukses.result.provKec.nm_kec;
+        this.untukKodeProvinsiSertif = sukses.result.provKec.kd_prov;
+        this.untukKodeKobkotaSertif = sukses.result.provKec.kd_kota;
+        this.untukKodeKecamatanSertif = sukses.result.provKec.kd_kec;
+        setTimeout(() => {
+          if (this.clickKdPostSertif == 1) {
+            if (sukses.result.kels == null) {
+              this.untukKodeKelurahanSertif = kodepost;
+              this.untukKelurahanSertif = '';
+              this.SertifKelurahanChange(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
+            } else if (sukses.result.provKec.kd_kel == null) {
+              this.untukKodeKelurahanSertif = kodepost;
+              this.untukKelurahanSertif = this.responseNamaWilayahSertif[this.responseNamaWilayahSertif.length - 1];
+              this.SertifKelurahanChange(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
+            } else {
+              this.untukKodeKelurahanSertif = kodepost;
+              this.untukKelurahanSertif = sukses.result.provKec.nm_kel;
+              this.SertifKelurahanChange(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
+            }
+          } else {
+            this.untukKodeKelurahanSertif = kodepost;
+            this.untukKelurahanSertif = this.tableAgunan.kelurahan_agunan;
+            this.SertifKelurahanChange(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
+          }
+        }, 10);
+        this.editCollateralForm.get('provinsi_sesuai_sertifikat')?.setValue(this.untukKodeProvinsiSertif + '|' + this.untukProvinsiSertif);
+        this.SertifProvChange(this.untukKodeProvinsiSertif + '|' + this.untukProvinsiSertif);
+        this.SertifKotaChange(this.untukKodeKobkotaSertif + '|' + this.untukKobkotaSertif);
+        this.SertifKecamatanChange(this.untukKodeKecamatanSertif + '|' + this.untukKecamatanSertif);
       },
     });
-
-    console.log(req);
   }
 
   ///serifikat
 
-  getkodepostnya(kodepst: any, req: any) {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      // 'Authorization': token,
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.postId}`,
-    };
-    // const kodepotongan = kodekota.split('|');
-
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvKecByKdPos/' + kodepst, {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
-    });
-  }
-
   onItemChange(event: any) {
-    const provinsi_agunan = document.getElementById('provinsi_agunan') as HTMLInputElement | any;
-    const kabkota_agunan = document.getElementById('kabkota_agunan') as HTMLInputElement | any;
-    const kecamatan_agunan = document.getElementById('kecamatan_agunan') as HTMLInputElement | any;
-    const kelurahan_agunan = document.getElementById('kelurahan_agunan') as HTMLInputElement | any;
-    var kirimankabkota_agunan = kabkota_agunan.value.split('|');
-    var kirimankecamatan_agunan = kecamatan_agunan.value.split('|');
-    var kirimankelurahan_agunan = kelurahan_agunan.value.split('|');
-    var kirimanprovinsi_agunan = provinsi_agunan.value.split('|');
-
     if (event.value == 1) {
       this.editCollateralForm.get('alamat_sesuai_sertifikat')?.setValue(this.editCollateralForm.get('alamat_agunan')?.value);
       this.editCollateralForm.get('kode_pos_sesuai_sertifikat')?.setValue(this.editCollateralForm.get('kode_pos_agunan')?.value);
+      this.carimenggunakankodepossertifikat(this.editCollateralForm.get('kode_pos_agunan')?.value);
       this.editCollateralForm.get('rt_sertifikat')?.setValue(this.editCollateralForm.get('rt')?.value);
       this.editCollateralForm.get('rw_sertifikat')?.setValue(this.editCollateralForm.get('rw')?.value);
-
-      $('#provinsi_sesuai_sertifikat option:first').html(kirimanprovinsi_agunan[1]);
-      $('#kabkota_sesuai_sertifikat option:first').html(kirimankabkota_agunan[1]);
-      $('#kecamatan_sesuai_sertifikat option:first').html(kirimankecamatan_agunan[1]);
-      $('#kelurahan_sesuai_sertifikat option:first').html(kirimankelurahan_agunan[1]);
-      $('#provinsi_sesuai_sertifikat option:first').val(provinsi_agunan.value);
-      $('#kabkota_sesuai_sertifikat option:first').val(kabkota_agunan.value);
-      $('#kecamatan_sesuai_sertifikat option:first').val(kecamatan_agunan.value);
-      $('#kelurahan_sesuai_sertifikat option:first').val(kelurahan_agunan.value);
     } else {
-      this.editCollateralForm.get('alamat_sesuai_sertifikat')?.setValue(' ');
-      this.editCollateralForm.get('rt_sertifikat')?.setValue(' ');
-      this.editCollateralForm.get('rw_sertifikat')?.setValue(' ');
+      this.editCollateralForm.get('alamat_sesuai_sertifikat')?.setValue('');
+      this.editCollateralForm.get('provinsi_sesuai_sertifikat')?.setValue(this.editCollateralForm.get('')?.value);
+      this.editCollateralForm.get('kabkota_sesuai_sertifikat')?.setValue(this.editCollateralForm.get('')?.value);
+      this.editCollateralForm.get('kecamatan_sesuai_sertifikat')?.setValue(this.editCollateralForm.get('')?.value);
+      this.editCollateralForm.get('kelurahan_sesuai_sertifikat')?.setValue(this.editCollateralForm.get('')?.value);
+      this.editCollateralForm.get('kode_pos_sesuai_sertifikat')?.setValue(this.editCollateralForm.get('')?.value);
+      this.editCollateralForm.get('rt_sertifikat')?.setValue('');
+      this.editCollateralForm.get('rw_sertifikat')?.setValue('');
     }
+  }
+
+  hitungUsiaBangunan(tahun: any) {
+    const d = new Date();
+    let year = d.getFullYear();
+    let total = Number(year) - Number(tahun);
+    this.editCollateralForm.get('usia_bangunan')?.setValue(total);
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

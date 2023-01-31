@@ -1,6 +1,6 @@
 <form [formGroup]="kesimpulanForm" (ngSubmit)="onSubmit()">
   <div class="row form-material">
-    <label class="col-sm-3 col-form-label">Kesimpulan Hasil Investigasi</label>
+    <label class="col-sm-3 col-form-label">Kesimpulan Hasil Analisa dan Investigasi</label>
     <div class="col-sm-9">
       <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
       <ngx-editor
@@ -16,27 +16,19 @@
   <div class="row form-material">
     <div class="col" style="text-align: center">
       <label>Di Rekomendasikan</label>
-      <input
-        type="radio"
-        style="height: 20px; width: 20px"
-        formControlName="rekomendasi"
-        value="1"
-        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-      />
+      <input type="radio" style="height: 20px; width: 20px" formControlName="rekomendasi" value="1" />
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <input
-        type="radio"
-        style="height: 20px; width: 20px"
-        formControlName="rekomendasi"
-        value="0"
-        [disabled]="this.untukSessionRole == 'VER_PRESCR'"
-      />
+      <input type="radio" style="height: 20px; width: 20px" formControlName="rekomendasi" value="0" />
       <label>Tidak Di Rekomendasikan</label>
     </div>
   </div>
   <br />
   <br />
   <div class="input-group" style="justify-content: center">
-    <button type="submit" class="btn btn-info">Simpan Data</button>
+    <button type="button" class="btn btn-info" [hidden]="this.untukSessionRole == 'VER_PRESCR'">Selanjutnya</button>
+    <button type="submit" class="btn btn-info" [hidden]="this.SessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'">
+      Simpan Data
+    </button>
   </div>
 </form>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

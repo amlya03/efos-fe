@@ -54,4 +54,5 @@ export class listAgunan {
   id_rumah?: string;
   nomor_rumah?: string;
   blok_rumah?: string;
+  usia_bangunan?: string;
 }

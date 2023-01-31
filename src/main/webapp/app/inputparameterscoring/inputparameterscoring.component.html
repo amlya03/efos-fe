@@ -1,0 +1,68 @@
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Main Parameter Scoring</h3>
+</div>
+<p></p>
+<br />
+<button class="btn btn-info" style="float: right" (click)="simpanDataparameterscoring()">Tambah Main Parameter Scoring</button>
+<br />
+<br />
+<table id="dataTables-Main" class="table table-striped table-bordered" datatable [dtOptions]="dtOptionsMain" [dtTrigger]="dtTriggerMain">
+  <thead>
+    <tr class="table-dark">
+      <th style="text-align: center">No</th>
+      <th style="text-align: center">Parameter</th>
+      <th style="text-align: center">Bobot</th>
+      <th style="text-align: center">View</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let daWa1 of listmainparameterscoring; index as i">
+      <td style="text-align: center">{{ i + 1 }}</td>
+      <td style="text-align: center">{{ daWa1.parameter_description }}</td>
+      <td style="text-align: center">{{ daWa1.bobot == null ? '0' : daWa1.bobot }} %</td>
+      <td style="text-align: center">
+        <a type="button" (click)="viewdetailmainparameter(daWa1.id)">
+          <fa-icon icon="eye"></fa-icon>
+          <br />Detail
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<br />
+<br />
+<br />
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Sub Parameter Scoring</h3>
+</div>
+<p></p>
+<br />
+<button class="btn btn-info" style="float: right" (click)="simpanParameterscoring()">Tambah Sub Parameter Scoring</button>
+<br />
+<br />
+<table id="dataTables-Sub" class="table table-striped table-bordered" datatable [dtOptions]="dtOptionsSub" [dtTrigger]="dtTriggerSub">
+  <thead>
+    <tr class="table-dark">
+      <th style="text-align: center">No</th>
+      <th style="text-align: center">Sub Parameter</th>
+      <th style="text-align: center">Tipe Data</th>
+      <th style="text-align: center">View</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let daWa1 of listparameterscoring; index as i">
+      <td style="text-align: center">{{ i + 1 }}</td>
+      <td style="text-align: center">{{ daWa1.parameter_description }}</td>
+      <td style="text-align: center">{{ daWa1.parameter_type === '1' ? 'Input' : 'Range' }}</td>
+      <td style="text-align: center">
+        <a type="button" (click)="viewdetailparameter(daWa1.id)">
+          <fa-icon icon="eye"></fa-icon>
+          <br />Detail
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

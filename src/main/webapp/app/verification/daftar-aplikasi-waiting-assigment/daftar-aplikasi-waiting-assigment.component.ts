@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { daWaModel } from './daWa.model';
 import { daWaModelAprisal } from './daWaAprisal.model';
+import { environment } from 'environments/environment';
 declare let $: any;
 
 @Component({
@@ -19,6 +20,13 @@ declare let $: any;
   styleUrls: ['./daftar-aplikasi-waiting-assigment.component.scss'],
 })
 export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestroy {
+  baseUrl: string = environment.baseUrl;
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
   title = 'EFOS';
   numbers: Array<number> = [];
   daWa?: daWaModel[] = [];
@@ -59,6 +67,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
     this.load();
   }
   load(): void {
+    this.getLoading(true);
     // ///////////////////////// LIst Cari Fasilitas //////////////////////
     this.dataEntryServices.getFetchKodeFasilitas().subscribe(data => {
       this.listFasilitas = data.result;
@@ -71,11 +80,12 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
       if (data.code === 200) {
         this.daWa = data.result;
         this.dtTrigger.next(this.daWa);
+        this.getLoading(false);
       }
     });
     // ////////Aprisal/////
     this.daWaService.getDaWaAprisal().subscribe(data => {
-      console.warn('aprisal', data);
+      // console.warn('aprisal', data);
       if (data.code === 200) {
         this.daWaAprisal = data.result;
       }
@@ -96,7 +106,10 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
   }
 
   clearInput(): void {
-    $('#dataTables-example').DataTable().columns().search('').draw();
+    $('#dataTables-example').DataTable().search('').draw();
+    setTimeout(() => {
+      $('#dataTables-example').DataTable().columns().search('').draw();
+    }, 50);
   }
 
   // ceklis semua
@@ -118,44 +131,55 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
       const index = this.kirimDe.findIndex(list => list === appNoDe);
       this.kirimDe.splice(index, 1);
     }
-    console.warn(this.kirimStatusAplikasi);
-    console.warn(this.kirimDe);
+    // console.warn(this.kirimStatusAplikasi);
+    // console.warn(this.kirimDe);
   }
 
   // post assign
   postAssign(): void {
-    if (this.isChecked === false) {
-      this.kirimDe;
-      for (let i = 0; i < this.kirimDe.length; i++) {
-        this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/verif_assignment', {
-            analis_verifikasi: this.kirimAssign,
-            app_no_de: this.kirimDe[i],
-            status_aplikasi: this.kirimStatusAplikasi[i],
-            created_by: this.sessionStorageService.retrieve('sessionUserName'),
-          })
-          .subscribe({
-            next: data => {
-              window.location.reload();
-            },
-          });
+    // setTimeout(() => {
+    if (this.kirimDe.length != 0 && this.kirimAssign != null) {
+      if (this.isChecked === false) {
+        this.kirimDe;
+        for (let i = 0; i < this.kirimDe.length; i++) {
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
+              analis_verifikasi: this.kirimAssign,
+              app_no_de: this.kirimDe[i],
+              status_aplikasi: this.kirimStatusAplikasi[i],
+              created_by: this.sessionStorageService.retrieve('sessionUserName'),
+            })
+            .subscribe({
+              next: data => {},
+            });
+          if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
+            alert('Data di Assign kepada ' + this.kirimAssign);
+            window.location.reload();
+          }
+        }
+      } else {
+        for (let i = 0; i < this.checkLenghtResult.length; i++) {
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
+              analis_verifikasi: this.kirimAssign,
+              app_no_de: this.checkLenghtResult[i].app_no_de,
+              status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+              created_by: this.sessionStorageService.retrieve('sessionUserName'),
+            })
+            .subscribe({
+              next: data => {},
+            });
+
+          if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
+            alert('Data di Assign kepada ' + this.kirimAssign);
+            window.location.reload();
+          }
+        }
       }
     } else {
-      for (let i = 0; i < this.checkLenghtResult.length; i++) {
-        this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/verif_assignment', {
-            analis_verifikasi: this.kirimAssign,
-            app_no_de: this.checkLenghtResult[i].app_no_de,
-            status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
-            created_by: this.sessionStorageService.retrieve('sessionUserName'),
-          })
-          .subscribe({
-            next: data => {
-              window.location.reload();
-            },
-          });
-      }
+      alert('Harap Pilih Data Terlebih Dahulu');
     }
+    // }, 1000);
 
     this.dtElement.dtInstance.then((dtIntance: DataTables.Api) => {
       dtIntance.destroy();
@@ -169,10 +193,11 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
     });
   }
 
-  viewdataentry(getAppNoDe: any): void {
-    alert(getAppNoDe);
-    // this.router.navigate(['/data-entry/personalinfo'], { queryParams: { curef: getCuref, statusPerkawinan: getStatus, app_no_de: getAppNoDe} });
-    this.router.navigate(['/data-entry/personalinfo'], { queryParams: { app_no_de: getAppNoDe } });
+  viewdataentry(getCuref: any, getStatus: any, getAppNoDe: any): void {
+    this.router.navigate(['/data-entry/personalinfo'], {
+      queryParams: { curef: getCuref, statusPerkawinan: getStatus, app_no_de: getAppNoDe },
+    });
+    // this.router.navigate(['/data-entry/personalinfo'], { queryParams: { app_no_de: getAppNoDe } });
   }
   // /////////////////////////Untuk Alert/////////////////////////////////////
 

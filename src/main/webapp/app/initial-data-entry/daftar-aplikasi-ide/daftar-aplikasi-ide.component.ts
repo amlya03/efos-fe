@@ -44,7 +44,7 @@ export class DaftarAplikasiIdeComponent implements OnInit, OnDestroy {
   }
   load(): void {
     this.initialDatEntryService.getDaftarAplikasiInitialDataEntry().subscribe(data => {
-      console.warn(data);
+      //console.warn(data);
       if (data.code === 200) {
         this.initialDataEntry = (data as any).result;
         this.dtTrigger.next(data.result);
@@ -70,7 +70,10 @@ export class DaftarAplikasiIdeComponent implements OnInit, OnDestroy {
   }
 
   clearInput(): void {
-    $('#dataTables-example').DataTable().columns().search('').draw();
+    $('#dataTables-example').DataTable().search('').draw();
+    setTimeout(() => {
+      $('#dataTables-example').DataTable().columns().search('').draw();
+    }, 50);
     // alert("bbb")
   }
 

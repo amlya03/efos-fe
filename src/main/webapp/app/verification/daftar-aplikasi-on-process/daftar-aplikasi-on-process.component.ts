@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
@@ -15,6 +15,8 @@ declare let $: any;
   styleUrls: ['./daftar-aplikasi-on-process.component.scss'],
 })
 export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   title = 'EFOS';
   daOp?: daOp[];
   listFasilitas: getListFasilitasModel[] = [];
@@ -27,6 +29,11 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
   kirimDe: any;
   dataEntry?: fetchAllDe = new fetchAllDe();
   curef: any;
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -51,6 +58,7 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
     this.load();
   }
   load(): void {
+    this.getLoading(true);
     // ///////////////////////// LIst Cari Fasilitas //////////////////////
     this.dataEntryService.getFetchKodeFasilitas().subscribe(data => {
       this.listFasilitas = data.result;
@@ -61,6 +69,7 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
       if (data.code === 200) {
         this.daOp = data.result;
         this.dtTrigger.next(this.daOp);
+        this.getLoading(false);
       }
     });
   }
@@ -75,7 +84,10 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
     $('#dataTables-example').DataTable().columns(5).search(listKategori).draw();
   }
   clearInput(): void {
-    $('#dataTables-example').DataTable().columns().search('').draw();
+    $('#dataTables-example').DataTable().search('').draw();
+    setTimeout(() => {
+      $('#dataTables-example').DataTable().columns().search('').draw();
+    }, 50);
   }
 
   // ReadOnly
@@ -83,7 +95,7 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
     this.dataEntryService.getFetchSemuaDataDE(app_noDe).subscribe(data => {
       this.dataEntry = data.result;
       this.curef = this.dataEntry?.curef;
-      this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: app_noDe, curef: this.curef } });
+      this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: app_noDe, curef: this.curef } });
     });
   }
 }

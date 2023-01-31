@@ -1,5 +1,5 @@
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
 
 /* ==========================================================================
 Navbar
@@ -84,3 +84,7 @@ Logo styles
   background: url('../../../content/images/bank-mega-syariah.png') no-repeat center center;
   background-size: contain;
 }
+
+/* ==========================================================================
+Parameterize ADMINISTRATOR
+===========================================================================*/

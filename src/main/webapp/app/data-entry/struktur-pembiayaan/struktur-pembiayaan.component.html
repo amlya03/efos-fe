@@ -15,6 +15,13 @@
               <option value="0">Tidak</option>
             </select>
           </div>
+          <span
+            [hidden]="
+              strukturForm.controls.joint_income.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -24,7 +31,7 @@
           <div class="form-group">
             <select
               class="form-control"
-              (change)="onchangefasilitas(this.strukturForm.get('kode_fasilitas')?.value)"
+              (change)="onchangefasilitas(this.strukturForm.get('kode_fasilitas')?.value.split('|')[0])"
               formControlName="kode_fasilitas"
               id="kode_fasilitas"
             >
@@ -33,6 +40,15 @@
               </option>
             </select>
           </div>
+          <span
+            [hidden]="
+              strukturForm.controls.kode_fasilitas.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -51,6 +67,13 @@
               </option>
             </select>
           </div>
+          <span
+            [hidden]="
+              strukturForm.controls.program.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -69,6 +92,13 @@
               </option>
             </select>
           </div>
+          <span
+            [hidden]="
+              strukturForm.controls.produk.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -76,12 +106,7 @@
         <label class="col-sm-4 col-form-label">Skema</label>
         <div class="col-sm-8">
           <div class="form-group">
-            <select
-              class="form-control"
-              (change)="onchangeskema(this.strukturForm.get('skema')?.value, this.strukturForm.get('kode_fasilitas')?.value)"
-              formControlName="skema"
-              id="skema"
-            >
+            <select class="form-control" (change)="onchangeskema(this.strukturForm.get('skema')?.value)" formControlName="skema" id="skema">
               <option
                 *ngFor="let kodeskema of kodeskema"
                 value="{{ kodeskema.skema }}|{{ kodeskema.skema_master }}|{{ kodeskema.skema_deskripsi }}"
@@ -90,6 +115,13 @@
               </option>
             </select>
           </div>
+          <span
+            [hidden]="
+              strukturForm.controls.skema.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -106,6 +138,13 @@
               <option *ngFor="let tenor of tenor" value="{{ tenor.tn_code }}|{{ tenor.margin }}">{{ tenor.tn_code }} Bulan</option>
             </select>
           </div>
+          <span
+            [hidden]="
+              strukturForm.controls.jangka_waktu.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -131,6 +170,15 @@
               </option>
             </select>
           </div>
+          <span
+            [hidden]="
+              strukturForm.controls.tujuan_pembiayaan.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -144,29 +192,41 @@
               <option value="3">3</option>
             </select>
           </div>
+          <span
+            [hidden]="
+              strukturForm.controls.fasilitas_ke.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
     </div>
     <div class="col">
+      <div class="form-group row" hidden>
+        <label class="col-sm-4 col-form-label">Margin</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" readonly formControlName="margin" id="margin" />
+        </div>
+      </div>
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Margin</label>
         <div class="col-sm-8">
           <input
             type="text"
             class="form-control"
-            readonly
-            formControlName="margin"
-            id="margin"
+            disabled
+            value="{{ showMargin }}"
             data-toggle="tooltip"
             data-placement="bottom"
-            title="{{ this.strukturForm.get('margin')?.value }}"
+            title="{{ showMargin }}"
           />
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Harga Objek Pembiayaan</label>
+        <label class="col-sm-4 col-form-label">Harga / Nilai Objek</label>
         <div class="col-sm-8">
           <input
             (keypress)="keyPressNumbers($event)"
@@ -175,7 +235,18 @@
             placeholder="Hrga Objek Pembiayaan"
             formControlName="harga_objek_pembiayaan"
             id="harga_objek_pembiayaan"
+            currencyMask
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
+          <span
+            [hidden]="
+              strukturForm.controls.harga_objek_pembiayaan.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -189,36 +260,61 @@
             formControlName="fee_based"
             id="fee_based"
             (keypress)="keyPressNumbers($event)"
+            currencyMask
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
         </div>
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label" name="siapsiap" id="siapsiap">DP</label>
+        <label class="col-sm-4 col-form-label" name="siapsiap" id="siapsiap">DP / Porsi Nasabah</label>
         <div class="col-sm-8">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" formControlName="uang_muka" id="uang_muka" (keypress)="keyPressNumbers($event)" />
+            <input
+              type="text"
+              class="form-control"
+              formControlName="uang_muka"
+              id="uang_muka"
+              (keypress)="keyPressNumbers($event)"
+              currencyMask
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+            />
             <div class="input-group-append">
-              <button class="btn btn-outline-dark" type="button" id="rincihan" style="float: right" (click)="itungrincihan()">
+              <button
+                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+                class="btn btn-outline-dark"
+                type="button"
+                id="rincihan"
+                style="float: right"
+                (click)="itungrincihan()"
+              >
                 Rincian Pembayaran
               </button>
             </div>
           </div>
+          <span
+            [hidden]="
+              strukturForm.controls.uang_muka.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Angsuran</label>
         <div class="col-sm-8">
+          <input type="text" class="form-control" readonly formControlName="angsuran" id="angsuran" hidden />
           <input
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            readonly
             type="text"
             class="form-control"
-            readonly
-            formControlName="angsuran"
-            id="angsuran"
+            value="{{ this.showAngsuran }}"
             data-toggle="tooltip"
             data-placement="bottom"
-            title="{{ this.strukturForm.get('angsuran')?.value }}"
+            title="{{ this.showAngsuran }}"
           />
         </div>
       </div>
@@ -226,8 +322,15 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
         <div class="col-sm-8">
-          <input type="text"
-           class="form-control" readonly formControlName="nilai_pembiayaan" id="hasil_pembiayaan" />
+          <input
+            type="text"
+            class="form-control"
+            readonly
+            formControlName="nilai_pembiayaan"
+            id="hasil_pembiayaan"
+            currencyMask
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+          />
         </div>
       </div>
       <br />
@@ -235,6 +338,15 @@
         <label class="col-sm-4 col-form-label">Detail Objek Pembiayaan</label>
         <div class="col-sm-8">
           <textarea class="form-control h-150px" rows="6" formControlName="detail_objek_pembiayaan" id="detail_objek_pembiayaan"></textarea>
+          <span
+            [hidden]="
+              strukturForm.controls.detail_objek_pembiayaan.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
     </div>
@@ -242,12 +354,13 @@
   <div class="row">
     <div class="col" style="text-align: center">
       <button
-        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
         type="submit"
         id="btn"
         name="simpandata"
         value="simpandata"
         class="btn btn-dark"
+        [disabled]="strukturForm.invalid"
       >
         Simpan Data
       </button>
@@ -265,3 +378,4 @@
     </div>
   </div>
 </form>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

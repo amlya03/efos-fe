@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
@@ -13,6 +13,8 @@ import { cekUjiKepatuhan } from '../service/config/cekUjiKepatuhan.model';
 import { areaOfConcern } from '../service/config/areaOfConcern.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { ServiceVerificationService } from '../service/service-verification.service';
+import { environment } from 'environments/environment';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'jhi-syarat-persetujuan',
@@ -20,9 +22,13 @@ import { ServiceVerificationService } from '../service/service-verification.serv
   styleUrls: ['./syarat-persetujuan.component.scss'],
 })
 export class SyaratPersetujuanComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
+  baseUrl: string = environment.baseUrl;
   dataEntry: fetchAllDe = new fetchAllDe();
   app_no_de: any;
   untukSessionUserName: any;
+  areaOfConForm!: FormGroup;
 
   // Syarat Persetujuan
   syaratPersetujuan?: syaratPersetujuanModel[];
@@ -38,7 +44,6 @@ export class SyaratPersetujuanComponent implements OnInit {
 
   // Area Of Concern
   areaOfConcernModel: areaOfConcern = new areaOfConcern();
-  bodyAreaOfconcern: any;
   bodyDeskripsiAreaOfconcern: any;
   areaOfConRadio: any;
   areaOfConInput: any;
@@ -69,7 +74,8 @@ export class SyaratPersetujuanComponent implements OnInit {
     protected applicationConfigService: ApplicationConfigService,
     protected sessionStorageService: SessionStorageService,
     protected dataEntryService: DataEntryService,
-    protected serviceVerificationService: ServiceVerificationService
+    protected serviceVerificationService: ServiceVerificationService,
+    private formBuilder: FormBuilder
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -79,7 +85,13 @@ export class SyaratPersetujuanComponent implements OnInit {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
 
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
+
   ngOnInit(): void {
+    this.getLoading(true);
     this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -89,12 +101,21 @@ export class SyaratPersetujuanComponent implements OnInit {
     };
     this.untukSessionUserName = this.sessionStorageService.retrieve('sessionUserName');
     this.load();
+
+    this.areaOfConForm = this.formBuilder.group({
+      area_of_concern: '',
+    });
   }
 
   load(): void {
     // ambil semua data DE
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
+      if (data.result == null || data.result == '') {
+        this.getLoading(false);
+      } else {
+        this.getLoading(false);
+      }
       // alert('DE '+ this.dataEntry?.status_perkawinan)
     });
 
@@ -124,12 +145,15 @@ export class SyaratPersetujuanComponent implements OnInit {
       // Area Of Concern
       this.areaOfConcernModel = data.result.area_of_concern;
 
+      const retriveForm = {
+        area_of_concern: data.result.area_of_concern.status_area,
+      };
+      this.areaOfConForm.setValue(retriveForm);
+
       if (data.result.area_of_concern === null) {
-        this.bodyAreaOfconcern = 0;
         this.bodyDeskripsiAreaOfconcern = '';
         this.cekResult = 0;
       } else {
-        this.bodyAreaOfconcern = data.result.area_of_concern.status_area;
         this.bodyDeskripsiAreaOfconcern = data.result.area_of_concern.deskripsi_area;
         this.cekResult = 1;
       }
@@ -139,87 +163,141 @@ export class SyaratPersetujuanComponent implements OnInit {
   }
 
   // POST sYARAT aKAD
-  async simpanSyaratAkad(): Promise<void> {
-    const { value: email } = await Swal.fire({
+  simpanSyaratAkad() {
+    Swal.fire({
       title: 'Input Syarat Akad',
-      input: 'text',
-      confirmButtonText: `Simpan`,
-      inputPlaceholder: 'Input Syarat',
+      html:
+        '<br />' +
+        '<div class="row form-material" style="width: 100%;"><div class="form-group row">' +
+        '<label class="col-sm-4 col-form-label">Syarat</label>' +
+        '<div class="col-sm-8"><input id="syarat" class="form-control"/>' +
+        '</div></div><p></p>' +
+        '<div class="form-group row"><label class="col-sm-4 col-form-label">Keterangan</label>' +
+        '<div class="col-sm-8"><select id="keterangan" class="form-control"><option value="">Pilih Keterangan</option><option value="Disyaratkan">Disyaratkan</option><option value="Tidak Disyaratkan">Tidak Disyaratkan</option></select>' +
+        '</div></div>' +
+        '<div>',
+      focusConfirm: false,
+      // allowOutsideClick: false,
+    }).then(result => {
+      let syarat = $('#syarat').val();
+      let keterangan = $('#keterangan').val();
+      if (syarat == '') {
+        alert('Mohon Isi Syarat');
+        return;
+      } else if (keterangan == '') {
+        alert('Mohon Isi Keterangan');
+        return;
+      } else {
+        this.http
+          .post<any>(this.baseUrl + 'v1/efos-verif/create_syarat_persetujuan', {
+            app_no_de: this.app_no_de,
+            created_by: this.untukSessionUserName,
+            created_date: '',
+            curef: this.dataEntry.curef,
+            id: 0,
+            keterangan: keterangan,
+            kode_syarat: 1,
+            syarat: syarat,
+          })
+          .subscribe({
+            next: data => {
+              window.location.reload();
+            },
+          });
+      }
     });
-    if (email) {
-      this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_syarat_persetujuan', {
-          app_no_de: this.app_no_de,
-          created_by: this.untukSessionUserName,
-          created_date: '',
-          curef: this.dataEntry.curef,
-          id: 0,
-          keterangan: '',
-          kode_syarat: 1,
-          syarat: email,
-        })
-        .subscribe({});
-      // Swal.fire(`Entered email: ${akadValue}`);
-      Swal.fire('Berhasil Menambahkan Syarat', email);
-      // alert(email)
-      window.location.reload();
-    }
   }
 
   // POST sYARAT Cair
-  async simpanSyaratCair(): Promise<void> {
-    const { value: email } = await Swal.fire({
+  simpanSyaratCair() {
+    Swal.fire({
       title: 'Input Syarat Cair',
-      input: 'text',
-      confirmButtonText: `Simpan`,
-      inputPlaceholder: 'Input Syarat',
+      html:
+        '<br />' +
+        '<div class="row form-material" style="width: 100%;"><div class="form-group row">' +
+        '<label class="col-sm-4 col-form-label">Syarat</label>' +
+        '<div class="col-sm-8"><input id="syarat" class="form-control"/>' +
+        '</div></div><p></p>' +
+        '<div class="form-group row"><label class="col-sm-4 col-form-label">Keterangan</label>' +
+        '<div class="col-sm-8"><select id="keterangan" class="form-control"><option value="">Pilih Keterangan</option><option value="Disyaratkan">Disyaratkan</option><option value="Tidak Disyaratkan">Tidak Disyaratkan</option></select>' +
+        '</div></div>' +
+        '<div>',
+      focusConfirm: false,
+      // allowOutsideClick: false,
+    }).then(result => {
+      let syarat = $('#syarat').val();
+      let keterangan = $('#keterangan').val();
+      if (syarat == '') {
+        alert('Mohon Isi Syarat');
+        return;
+      } else if (keterangan == '') {
+        alert('Mohon Isi Keterangan');
+        return;
+      } else {
+        this.http
+          .post<any>(this.baseUrl + 'v1/efos-verif/create_syarat_persetujuan', {
+            app_no_de: this.app_no_de,
+            created_by: this.untukSessionUserName,
+            created_date: '',
+            curef: this.dataEntry.curef,
+            id: 0,
+            keterangan: keterangan,
+            kode_syarat: 2,
+            syarat: syarat,
+          })
+          .subscribe({
+            next: data => {
+              window.location.reload();
+            },
+          });
+      }
     });
-    if (email) {
-      this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_syarat_persetujuan', {
-          app_no_de: this.app_no_de,
-          created_by: this.untukSessionUserName,
-          created_date: '',
-          curef: this.dataEntry.curef,
-          id: 0,
-          keterangan: '',
-          kode_syarat: 2,
-          syarat: email,
-        })
-        .subscribe({});
-      // Swal.fire(`Entered email: ${akadValue}`);
-      Swal.fire('Berhasil Menambahkan Syarat', email);
-      // alert(email)
-      window.location.reload();
-    }
   }
 
   // POST sYARAT Lain -Lain
-  async simpanSyaratLain(): Promise<void> {
-    const { value: email } = await Swal.fire({
-      title: 'Input Syarat Lain - lain',
-      input: 'text',
-      confirmButtonText: `Simpan`,
-      inputPlaceholder: 'Input Syarat',
+  simpanSyaratLain() {
+    Swal.fire({
+      title: 'Input Syarat Akad Lain - lain',
+      html:
+        '<br />' +
+        '<div class="row form-material" style="width: 100%;"><div class="form-group row">' +
+        '<label class="col-sm-4 col-form-label">Syarat</label>' +
+        '<div class="col-sm-8"><input id="syarat" class="form-control"/>' +
+        '</div></div><p></p>' +
+        '<div class="form-group row"><label class="col-sm-4 col-form-label">Keterangan</label>' +
+        '<div class="col-sm-8"><select id="keterangan" class="form-control"><option value="">Pilih Keterangan</option><option value="Disyaratkan">Disyaratkan</option><option value="Tidak Disyaratkan">Tidak Disyaratkan</option></select>' +
+        '</div></div>' +
+        '<div>',
+      focusConfirm: false,
+      // allowOutsideClick: false,
+    }).then(result => {
+      let syarat = $('#syarat').val();
+      let keterangan = $('#keterangan').val();
+      if (syarat == '') {
+        alert('Mohon Isi Syarat');
+        return;
+      } else if (keterangan == '') {
+        alert('Mohon Isi Keterangan');
+        return;
+      } else {
+        this.http
+          .post<any>(this.baseUrl + 'v1/efos-verif/create_syarat_persetujuan', {
+            app_no_de: this.app_no_de,
+            created_by: this.untukSessionUserName,
+            created_date: '',
+            curef: this.dataEntry.curef,
+            id: 0,
+            keterangan: keterangan,
+            kode_syarat: 3,
+            syarat: syarat,
+          })
+          .subscribe({
+            next: data => {
+              window.location.reload();
+            },
+          });
+      }
     });
-    if (email) {
-      this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_syarat_persetujuan', {
-          app_no_de: this.app_no_de,
-          created_by: this.untukSessionUserName,
-          created_date: '',
-          curef: this.dataEntry.curef,
-          id: 0,
-          keterangan: '',
-          kode_syarat: 3,
-          syarat: email,
-        })
-        .subscribe({});
-      // Swal.fire(`Entered email: ${akadValue}`);
-      Swal.fire('Berhasil Menambahkan Syarat', email);
-      // alert(email)
-      window.location.reload();
-    }
   }
 
   // async confirmBox(): Promise<void> {
@@ -259,9 +337,10 @@ export class SyaratPersetujuanComponent implements OnInit {
       // post Uji Kepatuhan Dan ASrea Of Concren
       if (this.cekUjiResult == 0) {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_cek_uji_kepatuhan', {
+          .post<any>(this.baseUrl + 'v1/efos-verif/create_cek_uji_kepatuhan', {
             app_no_de: this.app_no_de,
-            created_by: this.untukSessionUserName,
+            created_by: this.sessionStorageService.retrieve('sessionUserName'),
+            created_date: '',
             curef: this.dataEntry.curef,
             kegiatan: this.cekUjiKepatuhan[i].id,
             kepatuhan: this.kepatuhanUji,
@@ -270,9 +349,10 @@ export class SyaratPersetujuanComponent implements OnInit {
           .subscribe({});
       } else {
         this.http
-          .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/update_cek_uji_kepatuhan', {
+          .post<any>(this.baseUrl + 'v1/efos-verif/update_cek_uji_kepatuhan', {
             app_no_de: this.app_no_de,
-            created_by: this.untukSessionUserName,
+            updated_by: this.sessionStorageService.retrieve('sessionUserName'),
+            updated_date: '',
             curef: this.dataEntry.curef,
             kegiatan: this.cekUjiKepatuhan[i].id,
             kepatuhan: this.kepatuhanUji,
@@ -285,24 +365,24 @@ export class SyaratPersetujuanComponent implements OnInit {
     // Area Of Concern
     if (this.cekResult === 0) {
       this.http
-        .post<any>('http://10.20.34.110:8805/api/v1/efos-verif/create_area_of_concern', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/create_area_of_concern', {
           app_no_de: this.app_no_de,
-          created_by: this.untukSessionUserName,
+          created_by: this.sessionStorageService.retrieve('sessionUserName'),
           created_date: '',
           curef: this.dataEntry.curef,
           deskripsi_area: this.areaOfConInput,
-          status_area: this.areaOfConRadio,
+          status_area: this.areaOfConForm.get('area_of_concern')?.value,
         })
         .subscribe({});
     } else {
       this.http
-        .post<any>('http://10.20.34.178:8805/api/v1/efos-verif/update_area_of_concern', {
+        .post<any>(this.baseUrl + 'v1/efos-verif/update_area_of_concern', {
           app_no_de: this.app_no_de,
-          created_by: this.untukSessionUserName,
-          created_date: '',
+          updated_by: this.sessionStorageService.retrieve('sessionUserName'),
+          updated_date: '',
           curef: this.dataEntry.curef,
           deskripsi_area: this.areaOfConInput,
-          status_area: this.areaOfConRadio,
+          status_area: this.areaOfConForm.get('area_of_concern')?.value,
         })
         .subscribe({});
     }

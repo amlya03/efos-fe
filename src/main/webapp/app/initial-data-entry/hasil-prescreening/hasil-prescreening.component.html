@@ -16,42 +16,17 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Nama Lengkap</label>
       <div class="col-sm-8">
-        <input type="text" class="form-control" placeholder="Nama Lengkap" id="nama1" name="nama1" value="{{ daWa.nama }}" readonly />
+        <input type="text" class="form-control" placeholder="Nama Lengkap" id="nama1" name="nama1" value="{{ dataEntry.nama }}" readonly />
       </div>
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.namaLengkap.substring(0, 1) === 'T'; else untuknama">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else untuknamatidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untuknamatidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaLengkap }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untuknama>
-      <!-- <div *ngIf="datadukcapilusername === ''; else untuknamatolak"> -->
-      <i class="fa fa-window-close fa-lg" style="color: rgb(0, 204, 0)"></i>
-      <p>
-        <label for="check3" style="font-size: 100%; color: rgb(0, 255, 0)">{{ datadukcapil.namaLengkap }} </label>
-      </p>
-      <!-- </div> -->
-      <!-- <input type="checkbox" id="check3" checked="checked" disabled/><p><label for="check3" style="font-size:100%">{{ datadukcapil.namaLengkap }} </label></p> -->
-    </ng-template>
-
-    <ng-template #untuknamatolak>
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaLengkap }} </label>
-      </p>
-    </ng-template>
+    <fa-icon
+      [icon]="ifNamaLengkap !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: ifNamaLengkap === 'Tidak Sesuai' ? 'red' : 'green' }"
+    ></fa-icon>
+    <br />
+    <h6 [ngStyle]="{ color: ifNamaLengkap === 'Tidak Sesuai' ? 'red' : 'green' }">{{ namaLengkapDukcapil }}</h6>
   </div>
 </div>
 <br />
@@ -61,35 +36,20 @@
       <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
       <div class="col-sm-8">
         <div class="form-row">
-          <input class="form-control" type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ daWa.tanggal_lahir }}" readonly />
+          <input class="form-control" type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ dataEntry.tanggal_lahir }}" readonly />
         </div>
       </div>
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.tglLahir.substring(0, 1) === 'T'; else untuktglLahir">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else untuktglLahirtidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untuktglLahir>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.tglLahir }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untuktglLahirtidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.tglLahir }} </label>
-      </p>
-    </ng-template>
-
-    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
+    <fa-icon
+      [icon]="tglLahirDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: tglLahirDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }"
+    ></fa-icon>
+    <br />
+    <h6 [ngStyle]="{ color: tglLahirDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }">
+      {{ tglLahirDukcapil }}
+    </h6>
   </div>
 </div>
 <br />
@@ -99,35 +59,20 @@
       <label class="col-sm-4 col-form-label">Status Perkawinan</label>
       <div class="col-sm-8">
         <div class="form-group">
-          <input class="form-control" id="status_perkawinan" name="status_perkawinan" value="{{ daWa.status_perkawinan }}" readonly />
+          <input class="form-control" id="status_perkawinan" name="status_perkawinan" value="{{ dataEntry.status_perkawinan }}" readonly />
         </div>
       </div>
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.statusPerkawinan.substring(0, 1) === 'T'; else untukstatuskawin">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else untukstatuskawintidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untukstatuskawin>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.statusPerkawinan }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untukstatuskawintidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.statusPerkawinan }} </label>
-      </p>
-    </ng-template>
-
-    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
+    <fa-icon
+      [icon]="statusPerkawinanDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: statusPerkawinanDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }"
+    ></fa-icon>
+    <br />
+    <h6 [ngStyle]="{ color: statusPerkawinanDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }">
+      {{ statusPerkawinanDukcapil }}
+    </h6>
   </div>
 </div>
 <br />
@@ -136,34 +81,24 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Alamat KTP</label>
       <div class="col-sm-8">
-        <textarea class="form-control h-150px" rows="6" id="alamat_ktp" name="alamat_ktp" value="{{ daWa.alamat_ktp }}" readonly></textarea>
+        <textarea
+          class="form-control h-150px"
+          rows="6"
+          id="alamat_ktp"
+          name="alamat_ktp"
+          value="{{ dataEntry.alamat_ktp }}"
+          readonly
+        ></textarea>
       </div>
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.alamat.substring(0, 1) === 'T'; else untukalamat">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else untukalamattidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untukalamat>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.alamat }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untukalamattidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.alamat }} </label>
-      </p>
-    </ng-template>
-
-    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
+    <fa-icon
+      [icon]="ifAlamat !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: ifAlamat === 'Tidak Sesuai' ? 'red' : 'green' }"
+    ></fa-icon>
+    <br />
+    <h6 [ngStyle]="{ color: ifAlamat === 'Tidak Sesuai' ? 'red' : 'green' }">{{ alamatDukcapil }}</h6>
   </div>
 </div>
 <br />
@@ -173,35 +108,20 @@
       <label class="col-sm-4 col-form-label">Provinsi</label>
       <div class="col-sm-8">
         <div class="form-group">
-          <input class="form-control" id="provinsi_cabang" name="provinsi" value="{{ daWa.provinsi }}" readonly />
+          <input class="form-control" id="provinsi_cabang" name="provinsi" value="{{ dataEntry.provinsi }}" readonly />
         </div>
       </div>
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.namaPropinsi.substring(0, 1) === 'T'; else untukprovinsi">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-
-      <div *ngIf="datadukcapil === null; else untukprovinsitidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untukprovinsi>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.namaPropinsi }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untukprovinsitidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaPropinsi }}</label>
-      </p>
-    </ng-template>
-    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
+    <fa-icon
+      [icon]="namaPropinsiDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: namaPropinsiDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }"
+    ></fa-icon>
+    <br />
+    <h6 [ngStyle]="{ color: namaPropinsiDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }">
+      {{ namaPropinsiDukcapil }}
+    </h6>
   </div>
 </div>
 <br />
@@ -211,35 +131,20 @@
       <label class="col-sm-4 col-form-label">Kota</label>
       <div class="col-sm-8">
         <div class="form-group">
-          <input class="form-control" id="kabkota_cabang" name="kabkota" value="{{ daWa.kabkota }}" readonly />
+          <input class="form-control" id="kabkota_cabang" name="kabkota" value="{{ dataEntry.kabkota }}" readonly />
         </div>
       </div>
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.namaKabupaten.substring(0, 1) === 'T'; else untukkota">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else untukkotatidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untukkota>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.namaKabupaten }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untukkotatidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaKabupaten }} </label>
-      </p>
-    </ng-template>
-
-    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
+    <fa-icon
+      [icon]="namaKabupatenDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: namaKabupatenDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }"
+    ></fa-icon>
+    <br />
+    <h6 [ngStyle]="{ color: namaKabupatenDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }">
+      {{ namaKabupatenDukcapil }}
+    </h6>
   </div>
 </div>
 <br />
@@ -249,35 +154,20 @@
       <label class="col-sm-4 col-form-label">Kecamatan</label>
       <div class="col-sm-8">
         <div class="form-group">
-          <input class="form-control" id="kecamatan" name="kecamatan" value="{{ daWa.kecamatan }}" readonly />
+          <input class="form-control" id="kecamatan" name="kecamatan" value="{{ dataEntry.kecamatan }}" readonly />
         </div>
       </div>
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.namaKecamatan.substring(0, 1) === 'T'; else untukkecamatan">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else untukkecamatantidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untukkecamatan>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.namaKecamatan }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untukkecamatantidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaKecamatan }} </label>
-      </p>
-    </ng-template>
-
-    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
+    <fa-icon
+      [icon]="namaKecamatanDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: namaKecamatanDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }"
+    ></fa-icon>
+    <br />
+    <h6 [ngStyle]="{ color: namaKecamatanDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }">
+      {{ namaKecamatanDukcapil }}
+    </h6>
   </div>
 </div>
 <br />
@@ -287,35 +177,20 @@
       <label class="col-sm-4 col-form-label">Kelurahan</label>
       <div class="col-sm-8">
         <div class="form-group">
-          <input class="form-control" id="kelurahan" name="kelurahan" value="{{ daWa.kelurahan }}" readonly />
+          <input class="form-control" id="kelurahan" name="kelurahan" value="{{ dataEntry.kelurahan }}" readonly />
         </div>
       </div>
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.namaKelurahan.substring(0, 1) === 'T'; else untukkelurahan">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else untukkelurahantidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #untukkelurahan>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.namaKelurahan }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #untukkelurahantidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.namaKelurahan }}</label>
-      </p>
-    </ng-template>
-
-    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
+    <fa-icon
+      [icon]="namaKelurahanDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: namaKelurahanDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }"
+    ></fa-icon>
+    <br />
+    <h6 [ngStyle]="{ color: namaKelurahanDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }">
+      {{ namaKelurahanDukcapil }}
+    </h6>
   </div>
 </div>
 <br />
@@ -324,11 +199,11 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">RT / RW</label>
       <div class="col">
-        <input type="text" class="form-control" placeholder="RT" id="rt" name="rt" value="{{ daWa.rt }}" readonly />
+        <input type="text" class="form-control" placeholder="RT" id="rt" name="rt" value="{{ dataEntry.rt }}" readonly />
       </div>
       <div class="col">RT</div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="RW" maxlength="3" id="rw" name="rw" value="{{ daWa.rw }}" readonly />
+        <input type="text" class="form-control" placeholder="RW" maxlength="3" id="rw" name="rw" value="{{ dataEntry.rw }}" readonly />
       </div>
       <div class="col">RW</div>
     </div>
@@ -336,55 +211,24 @@
   <div class="col" style="text-align: center">
     <div class="row">
       <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapil === null || datadukcapil.noRT.substring(0, 1) === 'T'; else untukrt">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-
-          <div *ngIf="datadukcapil === null; else untukrttidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untukrt>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapil.noRT }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukrttidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.noRT }}</label>
-          </p>
-        </ng-template>
-
-        <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
+        <fa-icon
+          [icon]="noRTDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+          [ngStyle]="{ color: noRTDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }"
+        ></fa-icon>
+        <br />
+        <h6 [ngStyle]="{ color: noRTDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }">
+          {{ noRTDukcapil }}
+        </h6>
       </div>
       <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapil === null || datadukcapil.noRW.substring(0, 1) === 'T'; else untukrw">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapil === null; else untukrwtidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untukrw>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapil.noRW }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukrwtidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.noRW }}</label>
-          </p>
-        </ng-template>
-
-        <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
+        <fa-icon
+          [icon]="noRWDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+          [ngStyle]="{ color: noRWDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }"
+        ></fa-icon>
+        <br />
+        <h6 [ngStyle]="{ color: noRWDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }">
+          {{ noRWDukcapil }}
+        </h6>
       </div>
     </div>
   </div>
@@ -396,634 +240,726 @@
       <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
       <div class="col-sm-8">
         <div class="form-group">
-          <input class="form-control" id="jenis_kelamin" name="jenis_kelamin" value="{{ daWa.jenis_kelamin }}" readonly />
+          <input class="form-control" id="jenis_kelamin" name="jenis_kelamin" value="{{ dataEntry.jenis_kelamin }}" readonly />
         </div>
       </div>
     </div>
   </div>
   <div class="col" style="text-align: center">
-    <div *ngIf="datadukcapil === null || datadukcapil.jenisKelamin.substring(0, 1) === 'T'; else jenisKelamin">
-      <i class="fa fa-window-close fa-lg" style="color: red"></i>
-      <div *ngIf="datadukcapil === null; else jenisKelamintidakktp">
-        <p>
-          <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-        </p>
-      </div>
-    </div>
-
-    <ng-template #jenisKelamin>
-      <input type="checkbox" id="check3" checked="checked" disabled />
-      <p>
-        <label for="check3" style="font-size: 100%">{{ datadukcapil.jenisKelamin }} </label>
-      </p>
-    </ng-template>
-
-    <ng-template #jenisKelamintidakktp>
-      <p>
-        <label for="check3" style="font-size: 100%; color: red">{{ datadukcapil.jenisKelamin }}</label>
-      </p>
-    </ng-template>
-
-    <!-- <label for="check3" style="font-size: 150%"><input type="checkbox" id="check3" checked="checked" /> Sesuai </label> -->
+    <fa-icon
+      [icon]="jenisKelaminDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+      [ngStyle]="{ color: jenisKelaminDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }"
+    ></fa-icon>
+    <br />
+    <h6 [ngStyle]="{ color: jenisKelaminDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }">
+      {{ jenisKelaminDukcapil }}
+    </h6>
   </div>
 </div>
-
-<div [ngSwitch]="dawastatuspernikaham">
-  <div *ngSwitchCase="'Menikah'">
-    <br />
-    <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-      <h3 style="color: #fff; text-align: center">Hasil Pengecekan E-KTP Pasangan</h3>
-    </div>
-    <br />
-    <div class="row form-material">
-      <div class="col">
-        <h4 style="text-align: center">Hasil E-KTP</h4>
-      </div>
-      <div class="col">
-        <h4 style="text-align: center">Keterangan</h4>
-      </div>
-    </div>
-    <br />
-    <div class="row form-material">
-      <div class="col">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Nama Lengkap</label>
-          <div class="col-sm-8">
-            <input
-              type="name"
-              class="form-control"
-              placeholder="Nama Lengkap"
-              value="{{ daWa.nama_pasangan }}"
-              id="nama2"
-              name="nama2"
-              readonly
-            />
-          </div>
-        </div>
-      </div>
-      <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.namaLengkap.substring(0, 1) === 'T'; else untuknama">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else untuknamatidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untuknamatidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.namaLengkap }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untuknama>
-          <!-- <div *ngIf="datadukcapilusername === ''; else untuknamatolak"> -->
-          <i class="fa fa-window-close fa-lg" style="color: rgb(0, 204, 0)"></i>
-          <p>
-            <label for="check3" style="font-size: 100%; color: rgb(0, 255, 0)">{{ datadukcapilpasangan.namaLengkap }} </label>
-          </p>
-          <!-- </div> -->
-          <!-- <input type="checkbox" id="check3" checked="checked" disabled/><p><label for="check3" style="font-size:100%">{{ datadukcapil.namaLengkap }} </label></p> -->
-        </ng-template>
-      </div>
-    </div>
-    <br />
-    <div class="row form-material">
-      <div class="col">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
-          <div class="col-sm-8">
-            <input
-              class="form-control"
-              value="{{ daWa.tanggal_lahir_pasangan }}"
-              type="date"
-              id="tanggal_lahir"
-              name="tanggal_lahir"
-              readonly
-            />
-          </div>
-        </div>
-      </div>
-      <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.tglLahir.substring(0, 1) === 'T'; else untuktglLahir">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else untuktglLahirtidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untuktglLahir>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.tglLahir }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untuktglLahirtidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.tglLahir }} </label>
-          </p>
-        </ng-template>
-      </div>
-    </div>
-    <br />
-    <div class="row form-material">
-      <div class="col">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Status Perkawinan</label>
-          <div class="col-sm-8">
-            <div class="form-group">
-              <input class="form-control" value="{{ daWa.status_perkawinan }}" id="status_perkawinan" name="status_perkawinan" readonly />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.statusPerkawinan.substring(0, 1) === 'T'; else untukstatuskawin">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else untukstatuskawintidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untukstatuskawin>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.statusPerkawinan }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukstatuskawintidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.statusPerkawinan }} </label>
-          </p>
-        </ng-template>
-      </div>
-    </div>
-    <br />
-    <div class="row form-material">
-      <div class="col">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Alamat KTP</label>
-          <div class="col-sm-8">
-            <textarea class="form-control h-150px" rows="6" id="alamat_ktp" name="alamat_ktp" readonly>{{
-              daWa.alamat_ktp_pasangan
-            }}</textarea>
-          </div>
-        </div>
-      </div>
-      <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.alamat.substring(0, 1) === 'T'; else untukalamat">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else untukalamattidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untukalamat>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.alamat }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukalamattidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.alamat }} </label>
-          </p>
-        </ng-template>
-      </div>
-    </div>
-    <br />
-    <div class="row form-material">
-      <div class="col">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Provinsi</label>
-          <div class="col-sm-8">
-            <div class="form-group">
-              <input class="form-control" id="provinsi_cabang" name="provinsi" value="{{ daWa.provinsi_pasangan }}" readonly />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.namaPropinsi.substring(0, 1) === 'T'; else untukprovinsi">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-
-          <div *ngIf="datadukcapilpasangan === null; else untukprovinsitidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untukprovinsi>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.namaPropinsi }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukprovinsitidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.namaPropinsi }}</label>
-          </p>
-        </ng-template>
-      </div>
-    </div>
-    <br />
-    <div class="row form-material">
-      <div class="col">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Kota</label>
-          <div class="col-sm-8">
-            <div class="form-group">
-              <input class="form-control" value="{{ daWa.kabkota_pasangan }}" id="kabkota_cabang" name="kabkota" readonly />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.namaKabupaten.substring(0, 1) === 'T'; else untukkota">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else untukkotatidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untukkota>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.namaKabupaten }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukkotatidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.namaKabupaten }} </label>
-          </p>
-        </ng-template>
-      </div>
-    </div>
-    <br />
-    <div class="row form-material">
-      <div class="col">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Kecamatan</label>
-          <div class="col-sm-8">
-            <div class="form-group">
-              <input class="form-control" value="{{ daWa.kecamatan_pasangan }}" id="kecamatan" name="kecamatan" readonly />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.namaKecamatan.substring(0, 1) === 'T'; else untukkecamatan">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else untukkecamatantidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai </label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untukkecamatan>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.namaKecamatan }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukkecamatantidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.namaKecamatan }} </label>
-          </p>
-        </ng-template>
-      </div>
-    </div>
-    <br />
-    <div class="row form-material">
-      <div class="col">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Kelurahan</label>
-          <div class="col-sm-8">
-            <div class="form-group">
-              <input class="form-control" value="{{ daWa.kelurahan_pasangan }}" id="kelurahan" name="kelurahan" readonly />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.namaKelurahan.substring(0, 1) === 'T'; else untukkelurahan">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else untukkelurahantidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #untukkelurahan>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.namaKelurahan }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #untukkelurahantidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.namaKelurahan }}</label>
-          </p>
-        </ng-template>
-      </div>
-    </div>
-    <br />
-    <div class="row form-material">
-      <div class="col">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">RT / RW</label>
-          <div class="col">
-            <input type="text" class="form-control" value="{{ daWa.rt_pasangan }}" placeholder="RT" id="rt" name="rt" readonly />
-          </div>
-          <div class="col">RT</div>
-          <div class="col">
-            <input
-              type="text"
-              class="form-control"
-              value="{{ daWa.rw_pasangan }}"
-              placeholder="RW"
-              maxlength="3"
-              id="rw"
-              name="rw"
-              readonly
-            />
-          </div>
-          <div class="col">RW</div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="row">
-          <div class="col" style="text-align: center">
-            <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.noRT.substring(0, 1) === 'T'; else untukrt">
-              <i class="fa fa-window-close fa-lg" style="color: red"></i>
-
-              <div *ngIf="datadukcapilpasangan === null; else untukrttidakktp">
-                <p>
-                  <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-                </p>
-              </div>
-            </div>
-
-            <ng-template #untukrt>
-              <input type="checkbox" id="check3" checked="checked" disabled />
-              <p>
-                <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.noRT }} </label>
-              </p>
-            </ng-template>
-
-            <ng-template #untukrttidakktp>
-              <p>
-                <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.noRT }}</label>
-              </p>
-            </ng-template>
-          </div>
-          <div class="col" style="text-align: center">
-            <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.noRW.substring(0, 1) === 'T'; else untukrw">
-              <i class="fa fa-window-close fa-lg" style="color: red"></i>
-              <div *ngIf="datadukcapilpasangan === null; else untukrwtidakktp">
-                <p>
-                  <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-                </p>
-              </div>
-            </div>
-
-            <ng-template #untukrw>
-              <input type="checkbox" id="check3" checked="checked" disabled />
-              <p>
-                <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.noRW }} </label>
-              </p>
-            </ng-template>
-
-            <ng-template #untukrwtidakktp>
-              <p>
-                <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.noRW }}</label>
-              </p>
-            </ng-template>
-          </div>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="row form-material">
-      <div class="col">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
-          <div class="col-sm-8">
-            <div class="form-group">
-              <input class="form-control" value="{{ daWa.jenis_kelamin_pasangan }}" id="jenis_kelamin" name="jenis_kelamin" readonly />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col" style="text-align: center">
-        <div *ngIf="datadukcapilpasangan === null || datadukcapilpasangan.jenisKelamin.substring(0, 1) === 'T'; else jenisKelamin">
-          <i class="fa fa-window-close fa-lg" style="color: red"></i>
-          <div *ngIf="datadukcapilpasangan === null; else jenisKelamintidakktp">
-            <p>
-              <label for="check3" style="font-size: 100%; color: red">Tidak Sesuai</label>
-            </p>
-          </div>
-        </div>
-
-        <ng-template #jenisKelamin>
-          <input type="checkbox" id="check3" checked="checked" disabled />
-          <p>
-            <label for="check3" style="font-size: 100%">{{ datadukcapilpasangan.jenisKelamin }} </label>
-          </p>
-        </ng-template>
-
-        <ng-template #jenisKelamintidakktp>
-          <p>
-            <label for="check3" style="font-size: 100%; color: red">{{ datadukcapilpasangan.jenisKelamin }}</label>
-          </p>
-        </ng-template>
-      </div>
-    </div>
-  </div>
-  <div style="color: #fff; text-align: center">
-    <button
-      (click)="simpanstatusktp(daWa.status_perkawinan)"
-      name="submit_button"
-      onclic="untuksubmit()"
-      class="fa fa-file-archive-o btn btn-dark"
-    >
-      Simpan status KTP
-    </button>
-  </div>
-
-  <br />
+<br />
+<div *ngIf="this.dataEntry.status_perkawinan === 'Menikah'">
   <br />
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-    <h3 style="color: #fff; text-align: center">Hasil Pengecekan Duplicate Checking</h3>
-  </div>
-
-  <br />
-  <div class="row form-material">
-    <div class="card-body">
-      <div class="table-responsive">
-        <table id="example" class="table table-striped table-bordered zero-configuration">
-          <thead>
-            <tr>
-              <th>Nama</th>
-              <th>Nomor aplikasi</th>
-            </tr>
-          </thead>
-          <tbody id="pengecekan_ideb">
-            <tr *ngFor="let duplikate of duplikate">
-              <td style="text-align: center" scope="col">{{ duplikate.nama }}</td>
-              <td style="text-align: center" scope="col">{{ duplikate.no_aplikasi }}</td>
-              <td class="text-end"></td>
-            </tr>
-          </tbody>
-          <tfoot></tfoot>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-    <h3 style="color: #fff; text-align: center">Hasil Pengecekan IDEB / SILK Checking</h3>
+    <h3 style="color: #fff; text-align: center">Hasil Pengecekan E-KTP Pasangan</h3>
   </div>
   <br />
   <div class="row form-material">
-    <div class="card-body">
-      <div class="table-responsive">
-        <table id="example" class="table table-striped table-bordered zero-configuration">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Jenis Fasilitas</th>
-              <th>Nama Lembaga Keuangan</th>
-              <th>Plafond</th>
-              <th>Out Standing</th>
-              <th>Kolektibitas</th>
-              <th>Jumlah Hari Tunggakan</th>
-              <th>Keterangan</th>
-            </tr>
-          </thead>
-          <tbody id="pengecekan_ideb">
-            <tr *ngFor="let listLajangSlik of listLajangSlik">
-              <!-- <td style="text-align: center" scope="col">{{ i + 1 }}</td> -->
-              <!-- <td style="text-align: center;" scope="col">{{ daWa.id }}</td> -->
-              <td style="text-align: center" scope="col">{{ listLajangSlik.id }}</td>
-              <td style="text-align: center" scope="col">
-                {{
-                  listLajangSlik.jenis_kredit_pembiayaan_ket !== ''
-                    ? listLajangSlik.jenis_kredit_pembiayaan_ket
-                    : listLajangSlik.response_description
-                }}
-              </td>
-              <td style="text-align: center" scope="col">
-                {{ listLajangSlik.ljk_ket !== '' ? listLajangSlik.ljk_ket : listLajangSlik.response_description }}
-              </td>
-              <td style="text-align: center" scope="col">
-                {{ listLajangSlik.plafon !== '' ? listLajangSlik.plafon : listLajangSlik.response_description }}
-              </td>
-              <!-- <td *ngIf="listLajangSlik.kualitas_ket == null">{{ listLajangSlik.response_description }}</td> -->
-              <td style="text-align: center" scope="col">
-                {{ listLajangSlik.baki_debet !== '' ? listLajangSlik.baki_debet : listLajangSlik.response_description }}
-              </td>
-              <td style="text-align: center" scope="col">
-                {{ listLajangSlik.kondisi_ket !== '' ? listLajangSlik.kondisi_ket : listLajangSlik.response_description }}
-              </td>
-              <td style="text-align: center" scope="col">
-                {{ listLajangSlik.tanggal_jatuh_tempo !== '' ? listLajangSlik.tanggal_jatuh_tempo : listLajangSlik.response_description }}
-              </td>
-              <td style="text-align: center" scope="col">
-                {{ listLajangSlik.kualitas_ket !== '' ? listLajangSlik.kualitas_ket : listLajangSlik.response_description }}
-              </td>
-              <!-- ngIf="listLajangSlik.kualitas_ket == null"<td style="text-align: center" scope="col">{{ listLajangSlik.kualitas_ket }}||{{ listLajangSlik.response_description}}</td> -->
-              <!-- (change)="getProoduct(daWa.isSelected, daWa.app_no_de)" -->
-              <!-- <td> <input   (change)="getProoduct($event, daWa.app_no_de ,i+1)"  type="checkbox" > </td> -->
-              <td class="text-end"></td>
-            </tr>
-          </tbody>
-          <tfoot></tfoot>
-        </table>
+    <div class="col">
+      <h4 style="text-align: center">Hasil E-KTP</h4>
+    </div>
+    <div class="col">
+      <h4 style="text-align: center">Keterangan</h4>
+    </div>
+  </div>
+  <br />
+  <div class="row form-material">
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Nama Lengkap</label>
+        <div class="col-sm-8">
+          <input
+            type="name"
+            class="form-control"
+            placeholder="Nama Lengkap"
+            value="{{ dataEntry.nama_pasangan }}"
+            id="nama2"
+            name="nama2"
+            readonly
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <fa-icon
+        [icon]="PasangaNnamaLengkapDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+        [ngStyle]="{ color: PasangaNnamaLengkapDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }"
+      ></fa-icon>
+      <br />
+      <h6 [ngStyle]="{ color: PasangaNnamaLengkapDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }">
+        {{ PasangaNnamaLengkapDukcapil }}
+      </h6>
+    </div>
+  </div>
+  <br />
+  <div class="row form-material">
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
+        <div class="col-sm-8">
+          <input
+            class="form-control"
+            value="{{ dataEntry.tanggal_lahir_pasangan }}"
+            type="date"
+            id="tanggal_lahir"
+            name="tanggal_lahir"
+            readonly
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <fa-icon
+        [icon]="PasangaNtglLahirDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+        [ngStyle]="{ color: PasangaNtglLahirDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }"
+      ></fa-icon>
+      <br />
+      <h6 [ngStyle]="{ color: PasangaNtglLahirDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }">
+        {{ PasangaNtglLahirDukcapil }}
+      </h6>
+    </div>
+  </div>
+  <br />
+  <div class="row form-material">
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Status Perkawinan</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <input
+              class="form-control"
+              value="{{ dataEntry.status_perkawinan }}"
+              id="status_perkawinan"
+              name="status_perkawinan"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <fa-icon
+        [icon]="PasangaNstatusPerkawinanDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+        [ngStyle]="{
+          color: PasangaNstatusPerkawinanDukcapil === 'Tidak Sesuai' ? 'red' : 'green'
+        }"
+      ></fa-icon>
+      <br />
+      <h6
+        [ngStyle]="{
+          color: PasangaNstatusPerkawinanDukcapil === 'Tidak Sesuai' ? 'red' : 'green'
+        }"
+      >
+        {{ PasangaNstatusPerkawinanDukcapil }}
+      </h6>
+    </div>
+  </div>
+  <br />
+  <div class="row form-material">
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Alamat KTP</label>
+        <div class="col-sm-8">
+          <textarea class="form-control h-150px" rows="6" id="alamat_ktp" name="alamat_ktp" readonly>{{
+            dataEntry.alamat_ktp_pasangan
+          }}</textarea>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <fa-icon
+        [icon]="PasangaNalamatDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+        [ngStyle]="{ color: PasangaNalamatDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }"
+      ></fa-icon>
+      <br />
+      <h6 [ngStyle]="{ color: PasangaNalamatDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }">{{ PasangaNalamatDukcapil }}</h6>
+    </div>
+  </div>
+  <br />
+  <div class="row form-material">
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Provinsi</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <input class="form-control" id="provinsi_cabang" name="provinsi" value="{{ dataEntry.provinsi_pasangan }}" readonly />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <fa-icon
+        [icon]="PasangaNnamaPropinsiDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+        [ngStyle]="{
+          color: PasangaNnamaPropinsiDukcapil === 'Tidak Sesuai' ? 'red' : 'green'
+        }"
+      ></fa-icon>
+      <br />
+      <h6
+        [ngStyle]="{
+          color: PasangaNnamaPropinsiDukcapil === 'Tidak Sesuai' ? 'red' : 'green'
+        }"
+      >
+        {{ PasangaNnamaPropinsiDukcapil }}
+      </h6>
+    </div>
+  </div>
+  <br />
+  <div class="row form-material">
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kota</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <input class="form-control" value="{{ dataEntry.kabkota_pasangan }}" id="kabkota_cabang" name="kabkota" readonly />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <fa-icon
+        [icon]="PasangaNnamaKabupatenDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+        [ngStyle]="{
+          color: PasangaNnamaKabupatenDukcapil === 'Tidak Sesuai' ? 'red' : 'green'
+        }"
+      ></fa-icon>
+      <br />
+      <h6
+        [ngStyle]="{
+          color: PasangaNnamaKabupatenDukcapil === 'Tidak Sesuai' ? 'red' : 'green'
+        }"
+      >
+        {{ PasangaNnamaKabupatenDukcapil }}
+      </h6>
+    </div>
+  </div>
+  <br />
+  <div class="row form-material">
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kecamatan</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <input class="form-control" value="{{ dataEntry.kecamatan_pasangan }}" id="kecamatan" name="kecamatan" readonly />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <fa-icon
+        [icon]="PasangaNnamaKecamatanDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+        [ngStyle]="{
+          color: PasangaNnamaKecamatanDukcapil === 'Tidak Sesuai' ? 'red' : 'green'
+        }"
+      ></fa-icon>
+      <br />
+      <h6
+        [ngStyle]="{
+          color: PasangaNnamaKecamatanDukcapil === 'Tidak Sesuai' ? 'red' : 'green'
+        }"
+      >
+        {{ PasangaNnamaKecamatanDukcapil }}
+      </h6>
+    </div>
+  </div>
+  <br />
+  <div class="row form-material">
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kelurahan</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <input class="form-control" value="{{ dataEntry.kelurahan_pasangan }}" id="kelurahan" name="kelurahan" readonly />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <fa-icon
+        [icon]="PasangaNnamaKelurahanDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+        [ngStyle]="{
+          color: PasangaNnamaKelurahanDukcapil === 'Tidak Sesuai' ? 'red' : 'green'
+        }"
+      ></fa-icon>
+      <br />
+      <h6
+        [ngStyle]="{
+          color: PasangaNnamaKelurahanDukcapil === 'Tidak Sesuai' ? 'red' : 'green'
+        }"
+      >
+        {{ PasangaNnamaKelurahanDukcapil }}
+      </h6>
+    </div>
+  </div>
+  <br />
+  <div class="row form-material">
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">RT / RW</label>
+        <div class="col">
+          <input type="text" class="form-control" value="{{ dataEntry.rt_pasangan }}" placeholder="RT" id="rt" name="rt" readonly />
+        </div>
+        <div class="col">RT</div>
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            value="{{ dataEntry.rw_pasangan }}"
+            placeholder="RW"
+            maxlength="3"
+            id="rw"
+            name="rw"
+            readonly
+          />
+        </div>
+        <div class="col">RW</div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col" style="text-align: center">
+          <fa-icon
+            [icon]="PasangaNnoRTDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+            [ngStyle]="{ color: PasangaNnoRTDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }"
+          ></fa-icon>
+          <br />
+          <h6 [ngStyle]="{ color: PasangaNnoRTDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }">
+            {{ PasangaNnoRTDukcapil }}
+          </h6>
+        </div>
+        <div class="col" style="text-align: center">
+          <fa-icon
+            [icon]="PasangaNnoRWDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+            [ngStyle]="{ color: PasangaNnoRWDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }"
+          ></fa-icon>
+          <br />
+          <h6 [ngStyle]="{ color: PasangaNnoRWDukcapil === 'Tidak Sesuai' ? 'red' : 'green' }">
+            {{ PasangaNnoRWDukcapil }}
+          </h6>
+        </div>
       </div>
     </div>
   </div>
-  <!-- <div style="color: #fff; text-align: center">
-    <button (click)="contoh()" name="submit_button" onclic="untuksubmit()" class="fa fa-file-archive-o btn btn-dark">
+  <br />
+  <div class="row form-material">
+    <div class="col">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <input class="form-control" value="{{ dataEntry.jenis_kelamin_pasangan }}" id="jenis_kelamin" name="jenis_kelamin" readonly />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <fa-icon
+        [icon]="PasangaNjenisKelaminDukcapil !== 'Tidak Sesuai' ? 'circle-check' : 'circle-xmark'"
+        [ngStyle]="{
+          color: PasangaNjenisKelaminDukcapil === 'Tidak Sesuai' ? 'red' : 'green'
+        }"
+      ></fa-icon>
+      <br />
+      <h6
+        [ngStyle]="{
+          color: PasangaNjenisKelaminDukcapil === 'Tidak Sesuai' ? 'red' : 'green'
+        }"
+      >
+        {{ PasangaNjenisKelaminDukcapil }}
+      </h6>
+    </div>
+  </div>
+</div>
+<br />
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Hasil Pengecekan Duplicate Checking</h3>
+</div>
+<br />
+<div class="row form-material">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table" style="width: 100%" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+        <thead>
+          <tr class="table-dark">
+            <th style="text-align: center" scope="col">#</th>
+            <th style="text-align: center" scope="col">Nama</th>
+            <th style="text-align: center" scope="col">Nomor aplikasi</th>
+          </tr>
+        </thead>
+        <tbody id="pengecekan_ideb">
+          <tr *ngFor="let duplikate of duplikate; index as i">
+            <th style="text-align: center" scope="row">{{ i + 1 }}</th>
+            <td style="text-align: center">{{ duplikate.nama }}</td>
+            <td style="text-align: center">{{ duplikate.no_aplikasi }}</td>
+          </tr>
+        </tbody>
+        <tfoot></tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+<br />
+
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Hasil Pengecekan Blacklist / DHN</h3>
+</div>
+<br />
+<div class="row form-material">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table
+        class="table table-striped table-bordered dt-responsive nowrap"
+        style="width: 100%"
+        datatable
+        [dtOptions]="dtOptions"
+        [dtTrigger]="dtTrigger"
+      >
+        <thead>
+          <tr class="table-dark">
+            <th scope="col" style="text-align: center">#</th>
+            <th scope="col" style="text-align: center">Nama</th>
+            <th scope="col" style="text-align: center">NIK</th>
+            <th scope="col" style="text-align: center">Keterangan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let getDhn of tableGetDhn; index as i">
+            <th scope="row" style="text-align: center">{{ i + 1 }}</th>
+            <td style="text-align: center">{{ getDhn.nama }}</td>
+            <td style="text-align: center">{{ getDhn.no_id }}</td>
+            <td style="text-align: center">{{ getDhn.namaBank }}</td>
+          </tr>
+        </tbody>
+        <tfoot></tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+<br />
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Hasil Pengecekan IDEB / SILK Checking</h3>
+</div>
+<br />
+<!-- <span>Tanggal Request Slik : {{this.tanggalReq[0].created_date | date: 'fullDate'}}</span> -->
+<div class="row form-material">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table
+        id="example"
+        class="table table-striped table-bordered dt-responsive nowrap"
+        style="width: 100%"
+        datatable
+        [dtOptions]="dtOptions"
+        [dtTrigger]="dtTrigger"
+      >
+        <thead>
+          <tr class="table-dark">
+            <th scope="col" style="text-align: center">#</th>
+            <th scope="col" style="text-align: center">NIK</th>
+            <th scope="col" style="text-align: center">Nama Bank</th>
+            <th scope="col" style="text-align: center">Jenis Fasilitas</th>
+            <th scope="col" style="text-align: center">Sektor Ekonomi</th>
+            <th scope="col" style="text-align: center">Kol</th>
+            <th scope="col" style="text-align: center">Keterangan</th>
+            <th scope="col" style="text-align: center">Outstanding</th>
+            <th scope="col" style="text-align: center">Plafond</th>
+            <th scope="col" style="text-align: center">Angsuran</th>
+            <th scope="col" style="text-align: center">Suku Bunga</th>
+            <th scope="col" style="text-align: center">Tanggal Mulai</th>
+            <th scope="col" style="text-align: center">Tanggal Berakhir</th>
+            <th scope="col" style="text-align: center">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let listLajangSlik of listLajangSlik; index as i">
+            <th scope="row" style="text-align: center">{{ i + 1 }}</th>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.id_number != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.id_number
+                  : responseNasabah
+              }}
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.ljk_ket != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.ljk_ket
+                  : responseNasabah
+              }}
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.jenis_kredit_pembiayaan_ket != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.jenis_kredit_pembiayaan_ket
+                  : responseNasabah
+              }}
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.sektor_ekonomi_ket != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.sektor_ekonomi_ket
+                  : responseNasabah
+              }}
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.kualitas != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.kualitas
+                  : responseNasabah
+              }}
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.jenis_penggunaan_ket != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.jenis_penggunaan_ket
+                  : responseNasabah
+              }}
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.baki_debet == '' || listLajangSlik.responseDesc === 'request slik checking success'
+                  ? responseNasabah
+                  : (listLajangSlik.baki_debet | currency: 'Rp. ':'symbol':'1.0-0')
+              }}
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.plafon == null || listLajangSlik.responseDesc === 'request slik checking success'
+                  ? responseNasabah
+                  : (listLajangSlik.plafon | currency: 'Rp. ':'symbol':'1.0-0')
+              }}
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.angsuran == 0 || listLajangSlik.responseDesc === 'request slik checking success'
+                  ? listLajangSlik.angsuran
+                  : (listLajangSlik.angsuran | currency: 'Rp. ':'symbol':'1.0-0')
+              }}
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.suku_bunga_imbalan != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.suku_bunga_imbalan
+                  : responseNasabah
+              }}%
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.tanggal_mulai != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.tanggal_mulai
+                  : responseNasabah
+              }}
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.tanggal_jatuh_tempo != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.tanggal_jatuh_tempo
+                  : responseNasabah
+              }}
+            </td>
+            <td style="text-align: center">
+              {{
+                listLajangSlik.kondisi_ket != '' || listLajangSlik.responseDesc !== 'request slik checking success'
+                  ? listLajangSlik.kondisi_ket
+                  : responseNasabah
+              }}
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr style="background-color: #ffd966">
+            <th style="text-align: center" colspan="7">Total</th>
+            <th style="text-align: center">{{ this.totalOutNas | currency: 'Rp. ':'symbol':'1.0-0' }}</th>
+            <th style="text-align: center">{{ this.totalPlaNas | currency: 'Rp. ':'symbol':'1.0-0' }}</th>
+            <th style="text-align: center">{{ this.totalAngNas | currency: 'Rp. ':'symbol':'1.0-0' }}</th>
+            <th colspan="4"></th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- <div style="color: #fff; text-align: center">
+    <button (click)="contoh()" name="submit_button" class="fa fa-file-archive-o btn btn-dark">
       Tambah slik jimblo
     </button>
   </div> -->
-  <br />
-  <div [ngSwitch]="dawastatuspernikaham">
-    <div *ngSwitchCase="'Menikah'">
-      <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-        <h3 style="color: #fff; text-align: center">Hasil Pengecekan IDEB / SILK Checking Pasangan</h3>
-      </div>
-      <div class="table-responsive">
-        <table id="example" class="table table-striped table-bordered zero-configuration">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Jenis Fasilitas</th>
-              <th>Nama Lembaga Keuangan</th>
-              <th>Plafond</th>
-              <th>Out Standing</th>
-              <th>Kolektibitas</th>
-              <th>Jumlah Hari Tunggakan</th>
-              <th>Keterangan</th>
-            </tr>
-          </thead>
-
-          <tbody id="pengecekan_ideb">
-            <tr *ngFor="let listMenikahSlik of listMenikahSlik">
-              <!-- <td style="text-align: center" scope="col">{{ i + 1 }}</td> -->
-              <!-- <td style="text-align: center;" scope="col">{{ daWa.id }}</td> -->
-              <td style="text-align: center" scope="col">{{ listMenikahSlik.id }}</td>
-              <td style="text-align: center" scope="col">{{ listMenikahSlik.jenis_kredit_pembiayaan_ket }}</td>
-              <td style="text-align: center" scope="col">{{ listMenikahSlik.ljk_ket }}</td>
-              <td style="text-align: center" scope="col">{{ listMenikahSlik.plafon }}</td>
-              <td style="text-align: center" scope="col">{{ listMenikahSlik.baki_debet }}</td>
-              <td style="text-align: center" scope="col">{{ listMenikahSlik.kondisi_ket }}</td>
-              <td style="text-align: center" scope="col">{{ listMenikahSlik.tanggal_jatuh_tempo }}</td>
-              <td style="text-align: center" scope="col">{{ listMenikahSlik.kualitas_ket }}</td>
-              <!-- (change)="getProoduct(daWa.isSelected, daWa.app_no_de)" -->
-              <!-- <td> <input   (change)="getProoduct($event, daWa.app_no_de ,i+1)"  type="checkbox" > </td> -->
-              <td class="text-end"></td>
-            </tr>
-          </tbody>
-
-          <tfoot></tfoot>
-        </table>
-      </div>
-      <!-- 
-      <div style="color: #fff; text-align: center">
-        <button (click)="contohpasangan()" name="submit_button" onclic="untuksubmit()" class="fa fa-file-archive-o btn btn-dark">
-          Tambah slik
-        </button>
-      </div> -->
-    </div>
-  </div>
-
-  <div style="color: #fff; text-align: center">
-    <button (click)="cekkembalislik()" name="submit_button" onclic="untuksubmit()" class="fa fa-file-archive-o btn btn-dark">
-      Cekkembali
-    </button>
-  </div>
-
+<br />
+<div *ngIf="this.dataEntry.status_perkawinan === 'Menikah'">
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Hasil Pengecekan IDEB / SILK Checking Pasangan</h3>
+  </div>
+  <div class="table-responsive">
+    <table
+      id="slikMenikah"
+      class="table table-striped table-bordered dt-responsive nowrap"
+      style="width: 100%"
+      datatable
+      [dtOptions]="dtOptions"
+      [dtTrigger]="dtTrigger"
+    >
+      <thead>
+        <tr class="table-dark">
+          <th scope="col" style="text-align: center">#</th>
+          <th scope="col" style="text-align: center">NIK</th>
+          <th scope="col" style="text-align: center">Nama Bank</th>
+          <th scope="col" style="text-align: center">Jenis Fasilitas</th>
+          <th scope="col" style="text-align: center">Sektor Ekonomi</th>
+          <th scope="col" style="text-align: center">Kol</th>
+          <th scope="col" style="text-align: center">Keterangan</th>
+          <th scope="col" style="text-align: center">Outstanding</th>
+          <th scope="col" style="text-align: center">Plafond</th>
+          <th scope="col" style="text-align: center">Angsuran</th>
+          <th scope="col" style="text-align: center">Suku Bunga</th>
+          <th scope="col" style="text-align: center">Tanggal Mulai</th>
+          <th scope="col" style="text-align: center">Tanggal Berakhir</th>
+          <th scope="col" style="text-align: center">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let listMenikahSlik of listMenikahSlik; index as i">
+          <th scope="row" style="text-align: center">{{ i + 1 }}</th>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.id_number != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.id_number
+                : responsePasangan
+            }}
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.ljk_ket != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.ljk_ket
+                : responsePasangan
+            }}
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.jenis_kredit_pembiayaan_ket != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.jenis_kredit_pembiayaan_ket
+                : responsePasangan
+            }}
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.sektor_ekonomi_ket != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.sektor_ekonomi_ket
+                : responsePasangan
+            }}
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.kualitas != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.kualitas
+                : responsePasangan
+            }}
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.jenis_penggunaan_ket != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.jenis_penggunaan_ket
+                : responsePasangan
+            }}
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.baki_debet == '' || listMenikahSlik.responseDesc === 'request slik checking success'
+                ? responsePasangan
+                : (listMenikahSlik.baki_debet | currency: 'Rp. ':'symbol':'1.0-0')
+            }}
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.plafon == null || listMenikahSlik.responseDesc === 'request slik checking success'
+                ? responsePasangan
+                : (listMenikahSlik.plafon | currency: 'Rp. ':'symbol':'1.0-0')
+            }}
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.angsuran == 0 || listMenikahSlik.responseDesc === 'request slik checking success'
+                ? listMenikahSlik.angsuran
+                : (listMenikahSlik.angsuran | currency: 'Rp. ':'symbol':'1.0-0')
+            }}
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.suku_bunga_imbalan != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.suku_bunga_imbalan
+                : responsePasangan
+            }}%
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.tanggal_mulai != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.tanggal_mulai
+                : responsePasangan
+            }}
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.tanggal_jatuh_tempo != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.tanggal_jatuh_tempo
+                : responsePasangan
+            }}
+          </td>
+          <td style="text-align: center">
+            {{
+              listMenikahSlik.kondisi_ket != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
+                ? listMenikahSlik.kondisi_ket
+                : responsePasangan
+            }}
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr style="background-color: #ffd966">
+          <th style="text-align: center" colspan="7">Total</th>
+          <th style="text-align: center">{{ this.totalPasOut | currency: 'Rp. ':'symbol':'1.0-0' }}</th>
+          <th style="text-align: center">{{ this.totalPasPla | currency: 'Rp. ':'symbol':'1.0-0' }}</th>
+          <th style="text-align: center">{{ this.totalPasAng | currency: 'Rp. ':'symbol':'1.0-0' }}</th>
+          <th colspan="4"></th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<br />
+
+<div style="color: #fff; text-align: center" *ngIf="this.resultPDF == 0">
+  <!--
+  *ngIf="
+    (this.hideCekSlik == 1 && responseNasabah === 'checking slik on process') ||
+    (this.hideCekSlik == 1 && responseNasabah === 'Process Extract') ||
+    (this.hideCekSlik == 0 && responseSlikMenikah == 1)
+  "
+-->
+  <button (click)="untukSlik()" name="submit_button" class="fa fa-file-archive-o btn btn-dark">Cek Hasil Slik</button>
+</div>
+
+<table id="downloadSlikOJK" *ngIf="this.resultPDF == 1">
+  <tr>
+    <th></th>
+  </tr>
+  <tr *ngFor="let room of this.downloadSlik; let i = index">
+    <td>
+      <button class="fa fa-file-archive-o btn btn-dark" (click)="joinRoom(room.id_number)">Download Slik - {{ room.id_number }}</button>
+    </td>
+  </tr>
+</table>
+
+<!-- <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
     <h3 style="color: #fff; text-align: center">Hasil Pengecekan Kredit_biro</h3>
   </div>
   <br />
@@ -1032,48 +968,15 @@
     <div class="col-sm-10">
       <input type="text" class="form-control" placeholder="Hasil Score" />
     </div>
-  </div>
-  <br />
-  <br />
-  <div class="row form-material">
-    <div class="col" style="text-align: center">
-      <button
-        (click)="gotopersonalinfo(daWa.app_no_ide, daWa.curef)"
-        name="submit_button"
-        onclic="untuksubmit()"
-        class="fa fa-file-archive-o btn btn-dark"
-      >
-        prosesssss
-      </button>
-
-      <button name="submit_button" (click)="backtoide()" class="fa fa-file-archive-o btn btn-dark">Tolak</button>
-
-      <!-- <div *ngIf="dataif != 00; else untukbutton">
-      <button name="submit_button" onclic="untuksubmit()" class="fa fa-file-archive-o btn btn-dark">Tolak</button>
-    </div> -->
-
-      <!-- <ng-template #untukbutton>
-      <button
-        (click)="gotopersonalinfo(daWa.app_no_ide, daWa.curef)"
-        name="submit_button"
-        onclic="untuksubmit()"
-        class="fa fa-file-archive-o btn btn-dark"
-      >
-        prosesssss
-      </button>
-
-      <button name="submit_button"   (click)="backtoide()" class="fa fa-file-archive-o btn btn-dark">Tolak</button> -->
-
-      <!-- <input type="checkbox" id="check3" checked="checked" disabled/><p><label for="check3" style="font-size:100%">{{ datadukcapil.namaLengkap }} </label></p> -->
-      <!-- </ng-template> -->
-
-      <!-- <div [ngSwitch]= "'{{ dataif}}'">
-      <div *ngSwitchCase="'00'">
-<button (click)="gotodaftaraplikaside()" name="submit_button" onclic="untuksubmit()" class="fa fa-file-archive-o btn btn-dark">
+  </div> -->
+<br />
+<br />
+<div class="row form-material">
+  <div class="col" style="text-align: center">
+    <button (click)="gotopersonalinfo()" name="submit_button" class="fa fa-file-archive-o btn btn-warning" [hidden]="this.simpanDhn == 1">
       Proses Data
     </button>
-        </div>
-      </div> -->
-    </div>
+    <button name="submit_button" (click)="backtoide()" class="fa fa-file-archive-o btn btn-danger">Tolak</button>
   </div>
 </div>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

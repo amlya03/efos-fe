@@ -13,6 +13,7 @@ import { daftarAplkasiKomiteModel } from './services/config/daftarAplikasiKomite
 import { listPersetujuanKhususModel } from './services/config/listPersetujuanKhususModel.model';
 import { refPersetujuanKhususModel } from './services/config/refPersetujuanKhususModel.model';
 import { SessionStorageService } from 'ngx-webstorage';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-komite',
@@ -20,6 +21,7 @@ import { SessionStorageService } from 'ngx-webstorage';
   styleUrls: ['./komite.component.scss'],
 })
 export class KomiteComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   title = 'EFOS';
   modelListAgunan: daftarAplkasiKomiteModel[] = [];
   valueCariButton = '';
@@ -90,7 +92,10 @@ export class KomiteComponent implements OnInit {
   }
 
   clearInput(): void {
-    $('#dataTables-example').DataTable().columns().search('').draw();
+    $('#dataTables-example').DataTable().search('').draw();
+    setTimeout(() => {
+      $('#dataTables-example').DataTable().columns().search('').draw();
+    }, 50);
   }
 
   view(app_no_de: string | undefined, curef: string | undefined): void {
@@ -98,7 +103,7 @@ export class KomiteComponent implements OnInit {
       if (data.result == '') {
         for (let i = 0; i < this.refPersetujuanKhusus.length; i++) {
           this.http
-            .post<any>('http://10.20.34.110:8805/api/v1/efos-approval/create_persetujuan_khusus', {
+            .post<any>(this.baseUrl + 'v1/efos-approval/create_persetujuan_khusus', {
               app_no_de: app_no_de,
               created_by: this.sessionStorageService.retrieve('sessionUserName'),
               created_date: '',
@@ -112,7 +117,7 @@ export class KomiteComponent implements OnInit {
             })
             .subscribe({
               next: data => {
-                console.warn(data);
+                //console.warn(data);
                 this.router.navigate(['/komite/detail-komite'], { queryParams: { app_no_de: app_no_de, curef: curef } });
               },
               error: err => {

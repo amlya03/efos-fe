@@ -44,14 +44,10 @@
         <td style="text-align: center">{{ initialDataEntry.nama }}</td>
         <td style="text-align: center">{{ initialDataEntry.app_no_ide }}</td>
         <td style="text-align: center">
-          <button
-            type="button"
-            (click)="viewdataide(initialDataEntry.id_customer, initialDataEntry.kategori_pekerjaan)"
-            class="btn btn-outline-info"
-          >
+          <a (click)="viewdataide(initialDataEntry.id_customer, initialDataEntry.kategori_pekerjaan)">
             <fa-icon icon="ellipsis"></fa-icon>
-            <p class="d-none d-md-inline">Detail</p>
-          </button>
+            <br />Detail
+          </a>
         </td>
       </tr>
     </tbody>

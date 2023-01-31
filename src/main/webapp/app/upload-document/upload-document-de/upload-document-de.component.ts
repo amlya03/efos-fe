@@ -8,6 +8,9 @@ import { fetchAllDe } from '../services/config/fetchAllDe.model';
 import { uploadDocument } from '../services/config/uploadDocument.model';
 import { ServicesUploadDocumentService } from '../services/services-upload-document.service';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { environment } from 'environments/environment';
+import { SessionStorageService } from 'ngx-webstorage';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'jhi-upload-document-de',
@@ -15,6 +18,7 @@ import { DataEntryService } from 'app/data-entry/services/data-entry.service';
   styleUrls: ['./upload-document-de.component.scss'],
 })
 export class UploadDocumentDeComponent implements OnInit, OnDestroy {
+  baseUrl: string = environment.baseUrl;
   uploadDocument: Array<uploadDocument> = new Array<uploadDocument>();
   dataEntry: fetchAllDe = new fetchAllDe();
   curef: any;
@@ -29,9 +33,13 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   inputUpload: any;
   hapusUpload: any;
   popup: any;
+  untukSessionRole: any;
 
   // Progress bar
   proggresBar: any;
+
+  // validasi
+  totalVal: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -45,7 +53,8 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     protected fileUploadService: ServicesUploadDocumentService,
-    protected dataEntryService: DataEntryService
+    protected dataEntryService: DataEntryService,
+    private SessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.curef = params.curef;
@@ -60,6 +69,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
       processing: true,
       responsive: true,
     };
+    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.load();
   }
 
@@ -72,7 +82,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
 
     // get List DE
     this.fileUploadService.getListUploadDocument(this.curef, 'DE').subscribe(dE => {
-      this.uploadDocument = (dE as any).result;
+      this.uploadDocument = dE.result;
       this.dtTrigger.next(dE.result);
     });
   }
@@ -83,8 +93,9 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   }
 
   viewUploadDEA(): void {
+    this.SessionStorageService.store('uploadDE', 1);
     this.router.navigate(['/upload_document/upload_document_agunan'], {
-      queryParams: { curef: this.curef, app_no_de: this.app_no_de },
+      queryParams: { curef: this.dataEntry.curef, app_no_de: this.dataEntry.app_no_de },
     });
   }
 
@@ -100,35 +111,19 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   }
 
   // Upload
-  uploadData(
-    deUpload: string | undefined,
-    curefUpload: string | null | undefined,
-    doc_type: number | null | undefined,
-    file: File | undefined
-  ) {
-    this.fileUploadService.uploadDocument(file, deUpload, curefUpload, doc_type).subscribe({
-      // if (typeof event === 'object') {
-      //   // Short link via api response
-      //   this.shortLink = event.link;
-      //   this.loading = false; // Flag variable
-      // }
-    });
-    (<HTMLInputElement>document.getElementById('uploadData' + doc_type)).style.display = 'none';
-    (<HTMLInputElement>document.getElementById('proggresBar' + doc_type)).style.display = 'block';
-    setTimeout(() => {
-      window.location.reload();
-    }, 3000);
-
-    // this.loading = !this.loading;
-    // alert(this.idUpload);
-    // this.upload(this.file, this.idUpload).subscribe((event: any) => {
-    //   if (typeof event === 'object') {
-    //     // Short link via api response
-    //     this.shortLink = event.link;
-
-    //     this.loading = false; // Flag variable
-    //   }
-    // });
+  uploadData(deUpload: string | undefined, curefUpload: string | null | undefined, doc_type: number | null | undefined, file: File | any) {
+    if (Math.floor(file.size * 0.000001) > 2) {
+      Swal.fire('Gagal', 'File Maksimal 2MB!', 'error').then(() => {
+        window.location.reload();
+      });
+    } else {
+      this.fileUploadService.uploadDocument(file, deUpload, curefUpload, doc_type).subscribe({});
+      (<HTMLInputElement>document.getElementById('uploadData' + doc_type)).style.display = 'none';
+      (<HTMLInputElement>document.getElementById('proggresBar' + doc_type)).style.display = 'block';
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    }
   }
 
   // Delete
@@ -139,7 +134,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     nama: string | null | undefined
   ) {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/deleteDocUpload', {
+      .post<any>(this.baseUrl + 'v1/efos-de/deleteDocUpload', {
         created_date: '',
         doc_description: doc,
         id: id,
@@ -150,13 +145,43 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     window.location.reload();
   }
 
+  // Update Status
+  updateStatus() {
+    this.totalVal = this.uploadDocument.length;
+    for (let i = 0; i < this.uploadDocument.length; i++) {
+      if (this.uploadDocument[i].status == null) {
+        this.totalVal += 1;
+        alert('Gagal, Mohon Upload ' + this.uploadDocument[i].doc_description);
+      } else {
+        this.totalVal -= 1;
+        if (this.totalVal == 0) {
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+              app_no_de: this.app_no_de,
+              created_by: this.SessionStorageService.retrieve('sessionUserName'),
+              status_aplikasi: this.dataEntry.status_aplikasi,
+            })
+            .subscribe({
+              next: response => {
+                alert('Data Berhasil Di Updated');
+                this.router.navigate(['/data-entry']);
+              },
+              error: error => {
+                alert(error.error.messages);
+              },
+            });
+        }
+      }
+    }
+  }
+
   // View Upload
   viewData(nama_dok: any) {
     const buatPdf = nama_dok.split('.').pop();
     if (buatPdf == 'pdf') {
-      window.open('http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dok + '');
+      window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + nama_dok + '');
     } else {
-      const url = 'http://10.20.34.110:8805/api/v1/efos-de/downloadFile/' + nama_dok + '';
+      const url = this.baseUrl + 'v1/efos-de/downloadFile/' + nama_dok + '';
       const img = '<img src="' + url + '">';
       this.popup = window.open('');
       this.popup.document.write(img);

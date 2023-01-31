@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { dataentrymodel } from '../data-entry/data-entry-model';
@@ -7,6 +7,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { DataEntryService } from './services/data-entry.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SessionStorageService } from 'ngx-webstorage';
 declare let $: any;
 
 @Component({
@@ -15,6 +16,8 @@ declare let $: any;
   styleUrls: ['./data-entry.component.scss'],
 })
 export class DataEntryComponent implements OnInit, OnDestroy {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   title = 'EFOS';
   app_no_de!: string;
   tampungandataygdibawa: any;
@@ -36,7 +39,8 @@ export class DataEntryComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     protected http: HttpClient,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    private SessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.app_no_de = params['app_no_de'];
@@ -54,13 +58,28 @@ export class DataEntryComponent implements OnInit, OnDestroy {
   }
 
   load(): void {
-    this.datEntryService.getDaftarAplikasiDataEntry().subscribe(data => {
-      console.warn(data);
-      if (data.code === 200) {
-        this.dataEntry = (data as any).result;
-        this.dtTrigger.next(data.result);
-      }
-    });
+    this.getLoading(true);
+    setTimeout(() => {
+      this.SessionStorageService.store('personalInfo', 0);
+      this.SessionStorageService.store('jobInfo', 0);
+      this.SessionStorageService.store('dataPas', 0);
+      this.SessionStorageService.store('pekerPas', 0);
+      this.SessionStorageService.store('collateral', 0);
+      this.SessionStorageService.store('strukturPemb', 0);
+      this.SessionStorageService.store('callReport', 0);
+      this.SessionStorageService.store('uploadDE', 0);
+      this.SessionStorageService.store('uploadDEA', 0);
+    }, 10);
+    setTimeout(() => {
+      this.datEntryService.getDaftarAplikasiDataEntry().subscribe(data => {
+        // console.warn(data);
+        if (data.code === 200) {
+          this.dataEntry = (data as any).result;
+          this.dtTrigger.next(data.result);
+          this.getLoading(false);
+        }
+      });
+    }, 20);
   }
 
   ngOnDestroy(): void {
@@ -81,12 +100,26 @@ export class DataEntryComponent implements OnInit, OnDestroy {
   }
 
   clearInput(): void {
-    $('#dataTables-example').DataTable().columns().search('').draw();
+    $('#dataTables-example').DataTable().search('').draw();
+    setTimeout(() => {
+      $('#dataTables-example').DataTable().columns().search('').draw();
+    }, 50);
     // alert("bbb")
   }
 
-  viewdataentry(getAppNoDe: any, getStatus: any, getCuref: any): void {
-    // alert(getAppNoDe);curef=curef_20220819_342&statusPerkawinan=Menikah&app_no_de=de220820000156
-    this.router.navigate(['/data-entry/personalinfo'], { queryParams: { curef: getCuref, statusPerkawinan: getStatus, app_no_de: getAppNoDe} });
+  viewdataentry(getAppNoDe: any, getCuref: any): void {
+    this.getLoading(true);
+    this.router
+      .navigate(['/data-entry/personalinfo'], {
+        queryParams: { curef: getCuref, app_no_de: getAppNoDe },
+      })
+      .then(() => {
+        window.location.reload();
+      });
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

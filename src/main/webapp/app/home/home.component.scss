@@ -63,11 +63,13 @@ Main page styles
   padding: 30px;
   text-align: center;
   width: 100%;
-  transition: 0.5s;
+  transition: 1s;
+  animation-delay: 1s;
   transform: translateY(190px);
 }
 .kartu:hover .konten .details {
   transform: translateY(10px);
+  animation-delay: 1s;
 }
 .kartu .konten .details h2 {
   font-size: 1.25em;
@@ -126,7 +128,8 @@ Main page styles
   padding: 30px;
   text-align: center;
   width: 100%;
-  transition: 0.5s;
+  transition: 1s;
+  animation-delay: 1s;
   transform: translateY(100px);
 }
 .kartu:hover .konten .details-2 {
@@ -166,7 +169,8 @@ Main page styles
   padding: 40px;
   text-align: center;
   width: 100%;
-  transition: 0.5s;
+  transition: 1s;
+  animation-delay: 1s;
   transform: translateY(140px);
 }
 .kartu:hover .konten .details-3 {

@@ -2,263 +2,279 @@
   <h3 style="color: #fff; text-align: center">Struktur Pembiayaan</h3>
 </div>
 <p></p>
-<form [formGroup]="strukturForm">
-  <div class="row form-material">
-    <!-- ////Colom ke 1\\\\\ -->
-    <div class="col">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nama Pemohon</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nama" name="nama" value="{{ this.dataEntry.nama }}" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">No Aplikasi</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="no_aplikasi" name="no_aplikasi" value="{{ this.dataEntry.app_no_de }}" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Fasilitas</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="fasilitas"
-            name="fasilitas"
-            value="{{ this.dataEntry.kode_fasilitas_name }}"
-          />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Program</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="program" name="program" value="{{ this.dataEntry.program_pembiayaan }}" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Down Payment</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="down_payment"
-            name="down_payment"
-            value="{{ this.dataEntry.uang_muka | currency: 'Rp ' }}"
-          />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Joint Income</label>
-        <div class="col-sm-8">
-          <input disabled type="checkbox" id="joint_income" name="joint_income" [checked]="this.dataEntry.joint_income == 1" />
-        </div>
+<div class="row form-material">
+  <!-- ////Colom ke 1\\\\\ -->
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nama Pemohon</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="nama" name="nama" value="{{ this.dataEntry.nama }}" />
       </div>
     </div>
-    <!-- ////Colom ke 2\\\\\ -->
-    <div class="col">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Product</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="product" name="product" value="{{ this.dataEntry.produk_pembiayaan }}" />
-        </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">No Aplikasi</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="no_aplikasi" name="no_aplikasi" value="{{ this.dataEntry.app_no_de }}" />
       </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Skema</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="skema" name="skema" value="{{ this.dataEntry.skema_name }}" />
-        </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Fasilitas</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="fasilitas" name="fasilitas" value="{{ this.dataEntry.kode_fasilitas_name }}" />
       </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tenor</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="tenor" name="tenor" value="{{ this.dataEntry.jangka_waktu }} Bulan" />
-        </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Program</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="program" name="program" value="{{ this.dataEntry.program_pembiayaan }}" />
       </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="nilai_pembiayaan"
-            name="nilai_pembiayaan"
-            value="{{ this.dataEntry.nilai_pembiayaan | currency: 'Rp ' }}"
-          />
-        </div>
+    </div>
+    <br />
+    <div class="form-group row" [hidden]="this.dataEntry.kode_fasilitas_name === 'PTA'">
+      <label class="col-sm-4 col-form-label">Down Payment</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="down_payment"
+          name="down_payment"
+          value="{{ this.dataEntry.uang_muka | currency: 'Rp. ':'symbol':'1.0-0' }}"
+        />
       </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Angsuran</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="angsuran"
-            name="angsuran"
-            value="{{ this.dataEntry.angsuran | currency: 'Rp ' }}"
-          />
-        </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Mitra</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" value="{{ this.fetchJob.nama_perusahaan }}" />
       </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Total Pendapatan</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="total_pendapatan"
-            name="total_pendapatan"
-            value="{{ this.fetchJob.total_pendapatan | currency: 'Rp ' }}"
-          />
-        </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Joint Income</label>
+      <div class="col-sm-8">
+        <fa-icon [icon]="this.dataEntry.joint_income == 1 ? 'circle-check' : 'circle-xmark'"></fa-icon>
       </div>
     </div>
   </div>
-  <p></p>
-  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-    <h3 style="color: #fff; text-align: center">Analisa Pembiayaan</h3>
-  </div>
-  <p></p>
-  <div class="row form-material">
-    <div class="col">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Total Pendapatan Pemohon</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="total_pendapatan_pemohon"
-            name="total_pendapatan_pemohon"
-            value="{{ this.analisaPembiayaan.total_penghasilan_bersih }}"
-          />
-        </div>
-      </div>
-      <p></p>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Total Pendapatan Pasangan</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="total_pendapatan_pasangan"
-            name="total_pendapatan_pasangan"
-            value="{{ this.analisaPembiayaan.total_penghasilan_bersih_pasangan }}"
-          />
-        </div>
-      </div>
-      <p></p>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Total Pendapatan</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="analisa_total_pendapatan"
-            name="analisa_total_pendapatan"
-            value="{{ this.analisaPembiayaan.total_penghasilan_bersih_akumulasi }}"
-          />
-        </div>
-      </div>
-      <p></p>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Total Kewajiban Bank Pemohon</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="analisa_kewajiban_bank_pemohon"
-            name="analisa_kewajiban_bank_pemohon"
-            value="{{ this.analisaPembiayaan.kewajiban_bank }}"
-          />
-        </div>
-      </div>
-      <p></p>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Total Kewajiban Bank Pasangan</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="total_kewajiban_bank_pemohon"
-            name="total_kewajiban_bank_pemohon"
-            value="{{ this.analisaPembiayaan.kewajiban_bank_pasangan }}"
-          />
-        </div>
-      </div>
-      <p></p>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Total Kewajiban Bank</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="total_kewajiban_bank_pemohon"
-            name="total_kewajiban_bank_pemohon"
-            value="{{ this.analisaPembiayaan.kewajiban_bank_total }}"
-            #total_kewajiban_bank_pemohon1
-          />
-        </div>
-      </div>
-      <p></p>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Total Outstanding</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" value="{{ this.analisaPembiayaan.total_outstanding }}" #total_outstanding1 />
-        </div>
-      </div>
-      <p></p>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Total Plafound</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" value="{{ this.analisaPembiayaan.total_plafon }}" #total_plafon1 />
-        </div>
-      </div>
-      <p></p>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Presentase Penggunaan fasilitas Existing</label>
-        <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="persentase_penggunaan_fasilitas"
-            name="persentase_penggunaan_fasilitas"
-            #persentase_penggunaan_fasilitas1
-            value="{{ (+total_outstanding1.value / +total_plafon1.value) * 100 | currency: ' ' }}%"
-          />
-        </div>
+  <!-- ////Colom ke 2\\\\\ -->
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Product</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="product" name="product" value="{{ this.dataEntry.produk_pembiayaan }}" />
       </div>
     </div>
-    <div class="col">
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Skema</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="skema" name="skema" value="{{ this.dataEntry.skema_name }}" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tenor</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="tenor" name="tenor" value="{{ this.dataEntry.jangka_waktu }} Bulan" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="nilai_pembiayaan"
+          name="nilai_pembiayaan"
+          value="{{ this.dataEntry.nilai_pembiayaan | currency: 'Rp. ':'symbol':'1.0-0' }}"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Angsuran</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="angsuran"
+          name="angsuran"
+          value="{{ this.dataEntry.angsuran | currency: 'Rp. ':'symbol':'1.0-0' }}"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Total Pendapatan</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="total_pendapatan"
+          name="total_pendapatan"
+          value="{{ this.fetchJob.total_pendapatan | currency: 'Rp. ':'symbol':'1.0-0' }}"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<p></p>
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Analisa Pembiayaan</h3>
+</div>
+<p></p>
+<div class="row form-material">
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Total Pendapatan Pemohon</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="total_pendapatan_pemohon"
+          name="total_pendapatan_pemohon"
+          currencyMask
+          value="{{ this.analisaPembiayaan.total_penghasilan_bersih | currency: 'Rp. ':'symbol':'1.0-0' }}"
+        />
+      </div>
+    </div>
+    <p></p>
+    <div class="form-group row" *ngIf="this.dataEntry.joint_income == 1">
+      <label class="col-sm-4 col-form-label">Total Pendapatan Pasangan</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="total_pendapatan_pasangan"
+          name="total_pendapatan_pasangan"
+          currencyMask
+          value="{{ this.analisaPembiayaan.total_penghasilan_bersih_pasangan | currency: 'Rp. ':'symbol':'1.0-0' }}"
+        />
+      </div>
+    </div>
+    <p></p>
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Total Pendapatan</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="analisa_total_pendapatan"
+          name="analisa_total_pendapatan"
+          currencyMask
+          value="{{ this.analisaPembiayaan.total_penghasilan_bersih_akumulasi | currency: 'Rp. ':'symbol':'1.0-0' }}"
+        />
+      </div>
+    </div>
+    <p></p>
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Total Kewajiban Bank Pemohon</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="analisa_kewajiban_bank_pemohon"
+          name="analisa_kewajiban_bank_pemohon"
+          currencyMask
+          value="{{ this.analisaPembiayaan.kewajiban_bank | currency: 'Rp. ':'symbol':'1.0-0' }}"
+        />
+      </div>
+    </div>
+    <p></p>
+    <div class="form-group row" *ngIf="this.dataEntry.joint_income == 1">
+      <label class="col-sm-4 col-form-label">Total Kewajiban Bank Pasangan</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="total_kewajiban_bank_pemohon"
+          name="total_kewajiban_bank_pemohon"
+          currencyMask
+          value="{{ this.analisaPembiayaan.kewajiban_bank_pasangan | currency: 'Rp. ':'symbol':'1.0-0' }}"
+        />
+      </div>
+    </div>
+    <p></p>
+    <div class="form-group row" [formGroup]="slikForm">
+      <label class="col-sm-4 col-form-label">Total Kewajiban Bank</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="total_kewajiban_bank_pemohon"
+          formControlName="total_kewajiban_bank_pemohon"
+          currencyMask
+          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+        />
+      </div>
+    </div>
+    <p></p>
+    <div class="form-group row" [formGroup]="slikForm">
+      <label class="col-sm-4 col-form-label">Total Outstanding</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          formControlName="total_outstanding"
+          class="form-control"
+          currencyMask
+          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+        />
+      </div>
+    </div>
+    <p></p>
+    <div class="form-group row" [formGroup]="slikForm">
+      <label class="col-sm-4 col-form-label">Total Plafound</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          formControlName="total_plafon"
+          class="form-control"
+          currencyMask
+          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+        />
+      </div>
+    </div>
+    <p></p>
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Presentase Penggunaan fasilitas Existing</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="persentase_penggunaan_fasilitas"
+          name="persentase_penggunaan_fasilitas"
+          #persentase_penggunaan_fasilitas1
+          currencyMask
+          value="{{ (+this.slikForm.get('total_outstanding')?.value / +this.slikForm.get('total_plafon')?.value) * 100 | currency: ' ' }}%"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <form [formGroup]="strukturForm">
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Skema</label>
         <div class="col-sm-8">
-          <select
-            formControlName="skema"
-            #analisa_skema
-            class="form-control"
-            (change)="tenorSkema(analisa_skema.value, this.dataEntry.kode_fasilitas_name)"
-          >
+          <select formControlName="skema" #analisa_skema class="form-control" (change)="tenorSkema(analisa_skema.value)">
+            <option value="">Pilih Skema</option>
             <option *ngFor="let Skema of Skema" value="{{ Skema.skema }}|{{ Skema.skema_master }}|{{ Skema.skema_deskripsi }}">
               {{ Skema.skema_deskripsi }}
             </option>
@@ -270,6 +286,7 @@
         <label class="col-sm-4 col-form-label">Tenor</label>
         <div class="col-sm-8">
           <select formControlName="tenor" #analisa_tenor class="form-control">
+            <option value="">Pilih Tenor</option>
             <option *ngFor="let tenor of tenor" value="{{ tenor.tn_code }}">{{ tenor.tn_code }} Bulan</option>
           </select>
         </div>
@@ -282,8 +299,9 @@
             type="text"
             class="form-control"
             formControlName="harga_permintaan"
-            #harga_permintaan1
-            (change)="hitungAngsuran(this.strukturForm.get('skema')?.value)"
+            (blur)="hitungAngsuran(this.strukturForm.get('skema')?.value)"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
           />
         </div>
       </div>
@@ -297,8 +315,8 @@
             class="form-control"
             id="analisa_nilai_pembiayaan"
             formControlName="nilai_pembiayaan"
-            #analisa_nilai_pembiayaan1
-            [value]="this.nilaiPembiayaan"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
           />
         </div>
       </div>
@@ -310,8 +328,9 @@
             type="text"
             class="form-control"
             formControlName="down_payment"
-            #analisa_down_payment1
-            (change)="hitungAngsuran(this.strukturForm.get('skema')?.value)"
+            (blur)="hitungAngsuran(this.strukturForm.get('skema')?.value)"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
           />
         </div>
         <div class="col-sm-3">
@@ -322,7 +341,15 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Angsuran</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="analisa_angsuran" formControlName="angsuran" #analisa_angsuran1 />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="analisa_angsuran"
+            formControlName="angsuran"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          />
         </div>
       </div>
       <br />
@@ -331,12 +358,23 @@
         <div class="col-sm-8">
           <input
             type="text"
-            readonly
+            hidden
             class="form-control"
             id="total_angsuran"
             formControlName="total_angsuran"
             #total_angsuran1
-            value="{{ +total_kewajiban_bank_pemohon1.value + +this.strukturForm.get('angsuran')?.value | currency: 'Rp ' }}"
+            currencyMask
+            value="{{ +this.slikForm.get('total_kewajiban_bank_pemohon')?.value + +this.strukturForm.get('angsuran')?.value }}"
+          />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            currencyMask
+            value="{{
+              +this.slikForm.get('total_kewajiban_bank_pemohon')?.value + +this.strukturForm.get('angsuran')?.value
+                | currency: 'Rp. ':'symbol':'1.0-0'
+            }}"
           />
         </div>
       </div>
@@ -359,7 +397,15 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Maximal Angsuran</label>
         <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="maximal_angsuran" formControlName="max_angsuran" #maximal_angsuran1 />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="maximal_angsuran"
+            formControlName="max_angsuran"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          />
         </div>
       </div>
       <br />
@@ -369,91 +415,117 @@
           <input type="text" readonly class="form-control" #analisaDsr1 id="dsr" formControlName="dsr" />
         </div>
       </div>
-    </div>
+    </form>
   </div>
-  <br />
-  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-    <h3 style="color: #fff; text-align: center">Analisa Agunan</h3>
-  </div>
-  <p></p>
-  <div class="row form-material" [formGroup]="mapisForm">
-    <!-- ////Colom ke 1\\\\\ -->
-    <div class="col">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nilai Market</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nilai_market" formControlName="nilai_market" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nilai IMB</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="nilai_imb" formControlName="nilai_imb" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Luas Tanah</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="luas_tanah" formControlName="luas_tanah" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Luas Bangunan</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="luas_bangunan" formControlName="luas_bangunan" />
-        </div>
+</div>
+<br />
+<div
+  style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)"
+  [hidden]="this.dataEntry.kode_fasilitas_name === 'PTA'"
+>
+  <h3 style="color: #fff; text-align: center">Analisa Agunan</h3>
+</div>
+<p></p>
+<div class="row form-material" [formGroup]="mapisForm" [hidden]="this.dataEntry.kode_fasilitas_name === 'PTA'">
+  <!-- ////Colom ke 1\\\\\ -->
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nilai Market</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="nilai_market"
+          formControlName="nilai_market"
+          currencyMask
+          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+        />
       </div>
     </div>
-    <!-- ////Colom ke 2\\\\\ -->
-    <div class="col">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Objek Pembiayaan</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="objek_pembiayaan" formControlName="objek_pembiayaan" />
-        </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nilai IMB</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="nilai_imb"
+          formControlName="nilai_imb"
+          currencyMask
+          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+        />
       </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tipe Angunan</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="tipe_agunan" formControlName="tipe_agunan" />
-        </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Luas Tanah</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="luas_tanah" formControlName="luas_tanah" />
       </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Jenis Objek</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="jenis_objek" formControlName="jenis_objek" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">FTV</label>
-        <div class="col-sm-6">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="ftv"
-            formControlName="ftv"
-            [value]="this.mapisForm.get('ftv')?.value | currency: 'Rp '"
-          />
-        </div>
-        <div class="col-sm-2">{{ this.mapisModel.ftv }} %</div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Luas Bangunan</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="luas_bangunan" formControlName="luas_bangunan" />
       </div>
     </div>
   </div>
-  <p></p>
-  <p></p>
-  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-    <h3 style="color: #fff; text-align: center">Daftar Agunan</h3>
+  <!-- ////Colom ke 2\\\\\ -->
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Objek Pembiayaan</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="objek_pembiayaan" formControlName="objek_pembiayaan" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tipe Angunan</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="tipe_agunan" formControlName="tipe_agunan" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Jenis Objek</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="jenis_objek" formControlName="jenis_objek" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">FTV</label>
+      <div class="col-sm-4">
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="ftv"
+          formControlName="ftv"
+          [value]="this.mapisForm.get('ftv')?.value | currency: 'Rp. ':'symbol':'1.0-0'"
+        />
+      </div>
+      <div class="col-sm-4">
+        <h6>{{ this.betaFTV }} %</h6>
+      </div>
+    </div>
   </div>
-  <p></p>
-  <p></p>
-  <table class="table table-striped">
+</div>
+<p></p>
+<p></p>
+<div
+  style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)"
+  [hidden]="this.dataEntry.kode_fasilitas_name === 'PTA'"
+>
+  <h3 style="color: #fff; text-align: center">Daftar Agunan</h3>
+</div>
+<p></p>
+<p></p>
+<div class="table-responsive">
+  <table class="table table-striped" [hidden]="this.dataEntry.kode_fasilitas_name === 'PTA'">
     <thead>
       <tr>
         <th style="text-align: center" scope="col">#</th>
@@ -470,149 +542,138 @@
         <td style="text-align: center" scope="col">{{ listagunan.jenis_objek_deskripsi }}</td>
         <td style="text-align: center" scope="col">{{ listagunan.tipe_agunan }}</td>
         <td style="text-align: center" scope="col">100 %</td>
-        <td style="text-align: center" scope="col">{{ listagunan.harga_objek }}</td>
+        <td style="text-align: center" scope="col">{{ listagunan.harga_objek | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
         <!-- <td style="text-align: center" scope="col"></td> -->
       </tr>
     </tbody>
   </table>
-  <p></p>
-  <p></p>
-  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-    <h3 style="color: #fff; text-align: center">Rekomendasi System</h3>
-  </div>
-  <p></p>
-  <div class="row form-material">
-    <!-- ////Colom ke 1\\\\\ -->
-    <div class="col">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Tenor</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="rekomendasi_tenor" name="rekomendasi_tenor" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Harga Perolehan</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="harga_perolehan" name="harga_perolehan" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="rekomendasi_nilai_pembiayaan" name="rekomendasi_nilai_pembiayaan" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Down Payment</label>
-        <div class="col">
-          <input type="text" readonly class="form-control" id="rekomendasi_down_payment" name="rekomendasi_down_payment" />
-        </div>
-        <div class="col">
-          <label>35 %</label>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Angsuran</label>
-        <div class="col">
-          <input type="text" readonly class="form-control" id="angsuran_tahun_ke_1_2" name="angsuran_tahun_ke_1_2" />
-          <p></p>
-          <input type="text" readonly class="form-control" id="angsuran_tahun_ke_3_5" name="angsuran_tahun_ke_3_5" />
-        </div>
-        <div class="col">
-          <label>Tahun Ke 1 - 2</label>
-          <p></p>
-          <br />
-          <label>Tahun Ke 3 - 5</label>
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Rate Margin</label>
-        <div class="col">
-          <input type="text" readonly class="form-control" id="rate_margin_ke_1_2" name="rate_margin_ke_1_2" />
-          <p></p>
-          <input type="text" readonly class="form-control" id="rate_margin_ke_3_5" name="rate_margin_ke_3_5" />
-        </div>
-        <div class="col">
-          <label>Tahun Ke 1 - 2</label>
-          <p></p>
-          <br />
-          <label>Tahun Ke 3 - 5</label>
-        </div>
-      </div>
-      <br />
-    </div>
-    <!-- ////Colom ke 2\\\\\ -->
-    <div class="col">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Harga Jual</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="harga_jual" name="harga_jual" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Margin</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="margin" name="margin" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Akad</label>
-        <div class="col-sm-8">
-          <input type="text" readonly class="form-control" id="akad" name="akad" />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Hasil Scoring</label>
-        <div class="col-sm-3">
-          <input type="text" readonly class="form-control" id="hasil_scoring" name="hasil_scoring" [value]="this.hasilScoring" />
-        </div>
-        <div class="col-sm-3">
-          <h5 [hidden]="this.hasilStatus !== 'BAD'" style="color: red">{{ this.hasilStatus }}</h5>
-          <h5 [hidden]="this.hasilStatus === 'BAD'" style="color: green">{{ this.hasilStatus }}</h5>
-        </div>
+</div>
+<p></p>
+<p></p>
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Rekomendasi System</h3>
+</div>
+<p></p>
+<div class="row form-material">
+  <!-- ////Colom ke 1\\\\\ -->
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Tenor</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="rekomendasi_tenor" name="rekomendasi_tenor" />
       </div>
     </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Harga Perolehan</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="harga_perolehan" name="harga_perolehan" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="rekomendasi_nilai_pembiayaan" name="rekomendasi_nilai_pembiayaan" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Down Payment</label>
+      <div class="col">
+        <input type="text" readonly class="form-control" id="rekomendasi_down_payment" name="rekomendasi_down_payment" />
+      </div>
+      <div class="col">
+        <label>35 %</label>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Angsuran</label>
+      <div class="col">
+        <input type="text" readonly class="form-control" id="angsuran_tahun_ke_1_2" name="angsuran_tahun_ke_1_2" />
+        <p></p>
+        <input type="text" readonly class="form-control" id="angsuran_tahun_ke_3_5" name="angsuran_tahun_ke_3_5" />
+      </div>
+      <div class="col">
+        <label>Tahun Ke 1 - 2</label>
+        <p></p>
+        <br />
+        <label>Tahun Ke 3 - 5</label>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Rate Margin</label>
+      <div class="col">
+        <input type="text" readonly class="form-control" id="rate_margin_ke_1_2" name="rate_margin_ke_1_2" />
+        <p></p>
+        <input type="text" readonly class="form-control" id="rate_margin_ke_3_5" name="rate_margin_ke_3_5" />
+      </div>
+      <div class="col">
+        <label>Tahun Ke 1 - 2</label>
+        <p></p>
+        <br />
+        <label>Tahun Ke 3 - 5</label>
+      </div>
+    </div>
+    <br />
   </div>
-  <div class="col" style="text-align: center">
-    <button
-      [hidden]="this.untukSessionRole == 'VER_PRE_SPV'"
-      [disabled]="this.dpKurang == 1"
-      type="submit"
-      class="btn btn-info"
-      (click)="
-        onSubmit(
-          this.strukturForm.get('angsuran')?.value,
-          this.strukturForm.get('down_payment')?.value,
-          this.strukturForm.get('dsr')?.value,
-          harga_permintaan1.value,
-          maximal_angsuran1.value,
-          maximal_dsr1.value,
-          analisa_nilai_pembiayaan1.value,
-          persentase_penggunaan_fasilitas1.value,
-          analisa_skema.value,
-          analisa_tenor.value,
-          total_angsuran1.value
-        )
-      "
-    >
-      Simpan Data
-    </button>
-    <button
-      [disabled]="this.dpKurang == 1"
-      type="button"
-      class="btn btn-info"
-      (click)="viewStruktur()"
-      [hidden]="this.untukSessionRole == 'VER_PRESCR'"
-    >
-      Selanjutnya
-    </button>
+  <!-- ////Colom ke 2\\\\\ -->
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Harga Jual</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="harga_jual" name="harga_jual" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Margin</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="margin" name="margin" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Akad</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" id="akad" name="akad" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Hasil Scoring</label>
+      <div class="col-sm-3">
+        <input type="text" readonly class="form-control" id="hasil_scoring" name="hasil_scoring" [value]="this.hasilScoring" />
+      </div>
+      <div class="col-sm-3">
+        <h5 [hidden]="this.hasilStatus !== 'BAD'" style="color: red">{{ this.hasilStatus }}</h5>
+        <h5 [hidden]="this.hasilStatus === 'BAD'" style="color: green">{{ this.hasilStatus }}</h5>
+      </div>
+    </div>
   </div>
-</form>
+</div>
+<div class="col" style="text-align: center">
+  <button
+    [hidden]="this.untukSessionRole == 'VER_PRE_SPV'"
+    [disabled]="this.dpKurang == 1"
+    type="submit"
+    class="btn btn-info"
+    (click)="
+      onSubmit(maximal_dsr1.value, persentase_penggunaan_fasilitas1.value, analisa_skema.value, analisa_tenor.value, total_angsuran1.value)
+    "
+  >
+    Simpan Data
+  </button>
+  <button
+    [disabled]="this.dpKurang == 1"
+    type="button"
+    class="btn btn-info"
+    (click)="viewStruktur()"
+    [hidden]="this.untukSessionRole == 'VER_PRESCR'"
+  >
+    Selanjutnya
+  </button>
+</div>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

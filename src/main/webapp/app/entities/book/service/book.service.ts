@@ -7,6 +7,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { IBook, NewBook } from '../book.model';
 import { ApiResponse } from '../ApiResponse';
+import { environment } from 'environments/environment';
 
 export type PartialUpdateBook = Partial<IBook> & Pick<IBook, 'id'>;
 
@@ -15,8 +16,9 @@ export type EntityArrayResponseType = HttpResponse<ApiResponse>;
 
 @Injectable({ providedIn: 'root' })
 export class BookService {
+  baseUrl: string = environment.baseUrl;
   // protected resourceUrl = this.applicationConfigService.getEndpointFor('api/books');
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('http://10.20.34.110:8805/api/v1/efos-verif/list_app_verif');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/list_app_verif');
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(book: NewBook): Observable<EntityResponseType> {

@@ -15,7 +15,7 @@
 
 spring:
   application:
-    name: newEfos
+    name: EFOS
   # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
   liquibase:
     contexts: test
@@ -56,7 +56,7 @@ server:
 # ===================================================================
 jhipster:
   clientApp:
-    name: 'newEfosApp'
+    name: 'EFOS'
   mail:
     from: newEfos@localhost.com
     base-url: http://127.0.0.1:8080

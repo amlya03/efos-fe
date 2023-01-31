@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { createRequestOption } from 'app/core/request/request-util';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
 
 @Component({
   selector: 'jhi-daftar-aplikasi-pilih',
@@ -21,15 +17,15 @@ export class DaftarAplikasiPilihComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
-  gotofix() {
+  gotofix(kategori: any) {
     this.router.navigate(['/initial-data-entryfix'], {
-      queryParams: {},
+      queryParams: { kategori: kategori },
     });
   }
 
-  gotonon() {
-    this.router.navigate(['/initial-data-entrynon'], {
-      queryParams: {},
+  gotonon(kategori: any) {
+    this.router.navigate(['/initial-data-entryfix'], {
+      queryParams: { kategori: kategori },
     });
   }
 }

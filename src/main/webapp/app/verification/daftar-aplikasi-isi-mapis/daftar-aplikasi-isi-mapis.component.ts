@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
@@ -16,6 +16,12 @@ import { getListFasilitasModel } from 'app/data-entry/services/config/getListFas
   styleUrls: ['./daftar-aplikasi-isi-mapis.component.scss'],
 })
 export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
   title = 'EFOS';
   numbers: any;
   daWa?: daWaModel[] = [];
@@ -56,13 +62,15 @@ export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
     this.load();
   }
   load(): void {
+    this.getLoading(true);
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
     this.daWaService.getListAppAppraisal().subscribe(data => {
-      console.warn(data);
+      //console.warn(data);
       if (data.code === 200) {
         this.daWa = data.result;
         this.getCheckDaWa = data.result;
         this.dtTrigger.next(this.daWa);
+        this.getLoading(false);
       }
     });
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
@@ -85,7 +93,10 @@ export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
   }
 
   clearInput(): void {
-    $('#dataTables-example').DataTable().columns().search('').draw();
+    $('#dataTables-example').DataTable().search('').draw();
+    setTimeout(() => {
+      $('#dataTables-example').DataTable().columns().search('').draw();
+    }, 50);
   }
 
   viewdataentry(getAppNoDe: any): void {

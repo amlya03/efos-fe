@@ -81,7 +81,7 @@ export class fetchAllDe {
   kode_fasilitas_name?: string;
   angsuran?: number;
   produk?: string;
-  uang_muka?: number;
+  uang_muka: number | string | undefined | null;
   skema_name?: string;
   fasilitas_ke?: number;
   joint_income?: number;

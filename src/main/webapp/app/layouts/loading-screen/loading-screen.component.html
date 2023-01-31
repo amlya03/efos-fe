@@ -1,0 +1,18 @@
+<div class="loading-screen" *ngIf="isLoading">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="body-loading">
+        <div class="d-flex justify-content-center" *ngIf="isSpin">
+          <div class="wrapper" *ngIf="isSpin">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="shadow"></div>
+            <div class="shadow"></div>
+            <div class="shadow"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

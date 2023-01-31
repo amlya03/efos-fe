@@ -13,4 +13,6 @@ export class getMapis {
   tipe_agunan?: string;
   updated_by?: string;
   updated_date?: string;
+  note: string | number | undefined | null;
+  harga_transaksi: string | number | undefined | null;
 }

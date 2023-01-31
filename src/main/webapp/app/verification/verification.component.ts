@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
@@ -17,10 +17,17 @@ import { ServiceVerificationService } from './service/service-verification.servi
   styleUrls: ['./verification.component.scss'],
 })
 export class VerificationComponent implements OnInit, OnDestroy {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   dataEntry?: fetchAllDe = new fetchAllDe();
   daftarAplikasiVerif?: daOp[];
   listFasilitas: getListFasilitasModel[] = [];
   curef: any;
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -52,6 +59,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
   // }
 
   load(): void {
+    this.getLoading(true);
     // ///////////////////////// LIst Cari Fasilitas //////////////////////
     this.dataEntryService.getFetchKodeFasilitas().subscribe(data => {
       this.listFasilitas = data.result;
@@ -62,8 +70,9 @@ export class VerificationComponent implements OnInit, OnDestroy {
       if (data.code === 200) {
         this.daftarAplikasiVerif = data.result;
         this.dtTrigger.next(data.result);
+        this.getLoading(false);
       }
-      console.log(this.daftarAplikasiVerif);
+      //console.log(this.daftarAplikasiVerif);
     });
   }
 
@@ -80,14 +89,17 @@ export class VerificationComponent implements OnInit, OnDestroy {
   }
 
   clearInput(): void {
-    $('#dataTables-example').DataTable().columns().search('').draw();
+    $('#dataTables-example').DataTable().search('').draw();
+    setTimeout(() => {
+      $('#dataTables-example').DataTable().columns().search('').draw();
+    }, 50);
   }
 
   viewVerification(app_no_de: any): void {
     this.dataEntryService.getFetchSemuaDataDE(app_no_de).subscribe(data => {
       this.dataEntry = data.result;
       this.curef = this.dataEntry?.curef;
-      this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: app_no_de, curef: this.curef } });
+      this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: app_no_de, curef: this.curef } });
     });
   }
 }

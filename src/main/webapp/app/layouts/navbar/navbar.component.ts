@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SessionStorageService } from 'ngx-webstorage';
@@ -10,8 +10,13 @@ import { LoginService } from 'app/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
+import { navbarModel } from './navbarModel.model';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-navbar',
@@ -19,6 +24,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   // private loggedIn = new BehaviorSubject<boolean>(false); // {1}
   sudahLogin = true;
   inProduction?: boolean;
@@ -35,15 +43,19 @@ export class NavbarComponent implements OnInit {
   role: string | undefined;
   navbarPersonalInfo: string | undefined;
   app_no_de: string | undefined;
-  daWa: any;
+  dataEntry: fetchAllDe = new fetchAllDe();
   curef: string | undefined;
-  statusPerkawinan: string | undefined;
   datakirimanakategoripekerjaan: any;
   datakirimanakategoripekerjaanNav: any;
   datakirimanid: any;
   datakirimantgllahir: any;
   datakirimanappide: any;
   datakirimanidcustomer: any;
+  paramId: any;
+  kategori: any;
+  navbarParameterize: navbarModel[] = [];
+  childNavbar: navbarModel[] = [];
+  statusPerkawinan: any;
 
   constructor(
     protected http: HttpClient,
@@ -55,7 +67,9 @@ export class NavbarComponent implements OnInit {
     private profileService: ProfileService,
     public router: Router,
     private route: ActivatedRoute,
-    protected applicationConfigService: ApplicationConfigService
+    protected applicationConfigService: ApplicationConfigService,
+    protected verificationServices: ServiceVerificationService,
+    protected dataEntryServices: DataEntryService
   ) {
     if (VERSION) {
       this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`;
@@ -67,23 +81,46 @@ export class NavbarComponent implements OnInit {
       this.datakirimantgllahir = params.datakirimantgllahir;
       this.datakirimanappide = params.datakirimanappide;
       this.datakirimanidcustomer = params.datakirimanidcustomer;
-
+      this.paramId = params.id;
+      this.kategori = params.kategori;
       // ///////////////// Data Entry //////////////////////////////////
       this.curef = params['curef'];
       this.app_no_de = params['app_no_de'];
-      this.statusPerkawinan = params.statusPerkawinan;
       this.datakirimanakategoripekerjaan = params.datakirimanakategoripekerjaan;
       this.datakirimanakategoripekerjaanNav = params.datakirimanakategoripekerjaan;
+      this.datakirimanid = params.datakirimanid;
+      this.datakirimantgllahir = params.datakirimantgllahir;
+      this.datakirimanappide = params.datakirimanappide;
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
 
   ngOnInit(): void {
-    this.entitiesNavbarItems = EntityNavbarItems;
-    this.profileService.getProfileInfo().subscribe(profileInfo => {
-      this.inProduction = profileInfo.inProduction;
-      this.openAPIEnabled = profileInfo.openAPIEnabled;
+    this.getLoading(true);
+    this.verificationServices.postNavbar(this.SessionStorageService.retrieve('sessionRole')).subscribe({
+      next: data => {
+        this.navbarParameterize = data.result;
+        this.childNavbar = data.result[0].child;
+      },
     });
+    // setTimeout(() => {
+    this.dataEntryServices.getFetchSemuaDataDE(this.app_no_de).subscribe(de => {
+      this.dataEntry = de.result;
+      if (de.result == null) {
+        this.statusPerkawinan = 'Lajang';
+        this.getLoading(false);
+      } else {
+        this.statusPerkawinan = this.dataEntry.status_perkawinan;
+        this.getLoading(false);
+      }
+    });
+    // }, 5);
+
+    this.entitiesNavbarItems = EntityNavbarItems;
+    // this.profileService.getProfileInfo().subscribe(profileInfo => {
+    //   this.inProduction = profileInfo.inProduction;
+    //   this.openAPIEnabled = profileInfo.openAPIEnabled;
+    // });
 
     this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
@@ -97,6 +134,8 @@ export class NavbarComponent implements OnInit {
     if (this.sudahLogin === null) {
       this.router.navigate(['/login']);
     }
+
+    // ADMINISTRATOR //
   }
 
   changeLanguage(languageKey: string): void {
@@ -120,7 +159,7 @@ export class NavbarComponent implements OnInit {
         this.untukSessionUserName +
         ' <p>Nama : ' +
         this.untukSessionFullName +
-        '</p><p>Saya adalah ' +
+        '</p><p>Saya adalah   ' +
         this.untukSessionRole +
         '</p>',
       imageUrl: '../../../content/images/bank-mega-syariah.png',
@@ -128,7 +167,9 @@ export class NavbarComponent implements OnInit {
       imageHeight: 70,
       imageAlt: 'Eagle Image',
       showCancelButton: true,
+      showDenyButton: true,
       confirmButtonText: 'Logout',
+      denyButtonText: ' Ganti password',
       cancelButtonText: 'Tidak',
       confirmButtonColor: '#8567d3',
       cancelButtonColor: '#999999',
@@ -141,11 +182,140 @@ export class NavbarComponent implements OnInit {
           this.router.navigate(['/login']);
           window.location.reload();
         });
+      } else if (result.isDenied) {
+        $(document).ready(function () {
+          $('#togglePassword').click(function () {
+            let paswd = $('#password_lama');
+            if (paswd.attr('type') == 'password') {
+              document.getElementById('password_lama')?.setAttribute('type', 'text');
+              $('#togglePassword').attr('src', '../../../content/images/show.png');
+            } else {
+              document.getElementById('password_lama')?.setAttribute('type', 'password');
+              $('#togglePassword').attr('src', '../../../content/images/hide.png');
+            }
+          });
+          $('#togglePassword2').click(function () {
+            let paswd = $('#passwor_baru');
+            if (paswd.attr('type') == 'password') {
+              document.getElementById('passwor_baru')?.setAttribute('type', 'text');
+              $('#togglePassword2').attr('src', '../../../content/images/show.png');
+            } else {
+              document.getElementById('passwor_baru')?.setAttribute('type', 'password');
+              $('#togglePassword2').attr('src', '../../../content/images/hide.png');
+            }
+          });
+          $('#togglePassword3').click(function () {
+            let paswd = $('#Confirm_password');
+            if (paswd.attr('type') == 'password') {
+              document.getElementById('Confirm_password')?.setAttribute('type', 'text');
+              $('#togglePassword3').attr('src', '../../../content/images/show.png');
+            } else {
+              document.getElementById('Confirm_password')?.setAttribute('type', 'password');
+              $('#togglePassword3').attr('src', '../../../content/images/hide.png');
+            }
+          });
+        });
+
+        Swal.fire({
+          title: 'Change Password',
+          html:
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-3 col-form-label">Password lama</label>' +
+            '<div class="col-sm-9"><input  type="password" class="form-control2" id="password_lama"/> <img src="../../../content/images/hide.png" width="20px" height="20px" style="margin-left: -11%;display:inline;vertical-align: middle" id="togglePassword">' +
+            '</div></div>' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Password baru</label>' +
+            '<div class="col-sm-9"><input type="password" class="form-control2" id="passwor_baru"/> <img src="../../../content/images/hide.png" width="20px" height="20px" style="margin-left: -11%;display:inline;vertical-align: middle" id="togglePassword2">' +
+            '</div></div>' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-3 col-form-label">Confirm password</label>' +
+            '<div class="col-sm-9"><input type="password" class="form-control2" id="Confirm_password"/>  <img src="../../../content/images/hide.png" width="20px" height="20px" style="margin-left: -11%;display:inline;vertical-align: middle" id="togglePassword3">' +
+            '</div></div>',
+          allowOutsideClick: false,
+          showDenyButton: true,
+          focusConfirm: false,
+        }).then(result => {
+          if (result.isConfirmed) {
+            let passwordlama = $('#password_lama').val();
+            let passwordbaru = $('#passwor_baru').val();
+            let confrimpassword = $('#Confirm_password').val();
+            if (passwordlama === '') {
+              Swal.fire('Gagal Menyimpan Password Lama Belum diisi');
+              return;
+            } else if (passwordbaru === '') {
+              Swal.fire('Gagal Menyimpan Password Baru Belum diisi');
+              return;
+            } else if (confrimpassword === '') {
+              Swal.fire('Gagal Menyimpan confirm  password belum di isi');
+              return;
+            } else if (confrimpassword != passwordbaru) {
+              Swal.fire('Confirm atau Password Baru Tidak Sama');
+              return;
+            } else if (passwordlama != this.SessionStorageService.retrieve('sessionPs')) {
+              Swal.fire('Password lama salah');
+              return;
+            } else if (passwordlama == passwordbaru) {
+              Swal.fire('Password Baru sama dengan Password Lama ');
+              return;
+            } else {
+              const body = {
+                username: this.SessionStorageService.retrieve('sessionUserName'),
+                old_password: passwordlama,
+                new_password: passwordbaru,
+              };
+              let headers = new HttpHeaders({
+                'Content-Type': 'application/json; charset=utf-8',
+                Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
+              });
+              this.http.post<any>(this.baseUrl + 'v1/efos/users/resetPassword', body, { headers }).subscribe({
+                next: response => {
+                  //console.warn(response);
+                  this.sessionStorageService.store('sessionPs', passwordbaru);
+                  const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: toast => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer);
+                      toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    },
+                  });
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'Change Password Berhasil',
+                  });
+                },
+                error: error => {
+                  const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: toast => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer);
+                      toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    },
+                  });
+                  Toast.fire({
+                    icon: 'error',
+                    title: 'Change Password Gagal',
+                  });
+                },
+              });
+            }
+          } else if (result.isDenied) {
+          }
+        });
       }
     });
   }
 
   toggleNavbar(): void {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

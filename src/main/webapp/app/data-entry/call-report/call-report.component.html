@@ -15,7 +15,7 @@
             class="form-control"
             placeholder="app_no_de"
             value="{{ daWa1.app_no_de }}"
-            readonly
+            disabled
           />
         </div>
       </div>
@@ -23,7 +23,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama Nasabah</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" placeholder="Nama Nasabah" name="nama" id="nama" value="{{ daWa1.nama }}" readonly />
+          <input disabled type="text" class="form-control" placeholder="Nama Nasabah" name="nama" id="nama" value="{{ daWa1.nama }}" />
         </div>
       </div>
       <br />
@@ -37,7 +37,7 @@
             id="fasilitas"
             name="fasilitas"
             value="{{ daWa1.kode_fasilitas_name }}"
-            readonly
+            disabled
           />
         </div>
       </div>
@@ -52,7 +52,7 @@
             id="tenor"
             name="tenor"
             value="{{ daWa1.jangka_waktu }} Bulan"
-            readonly
+            disabled
           />
         </div>
       </div>
@@ -67,7 +67,7 @@
             id="platform"
             name="platform"
             value="{{ daWa1.nilai_pembiayaan | currency: 'Rp ' }}"
-            readonly
+            disabled
           />
         </div>
       </div>
@@ -83,7 +83,7 @@
             id="cabang"
             name="cabang"
             value="{{ this.untukSessionKodeCabang }}"
-            readonly
+            disabled
           />
         </div>
       </div>
@@ -98,7 +98,7 @@
             id="nama_ao"
             name="nama_ao"
             value="{{ this.untukSessionFullName }}"
-            readonly
+            disabled
           />
         </div>
       </div>
@@ -113,7 +113,7 @@
             id="tipe_nasabah"
             name="tipe_nasabah"
             value="{{ daWa1.kategori_pekerjaan }}"
-            readonly
+            disabled
           />
         </div>
       </div>
@@ -131,6 +131,15 @@
         <label class="col-sm-4 col-form-label">Alamat Tinggal</label>
         <div class="col-sm-8">
           <textarea class="form-control h-150px" rows="6" id="alamat_ktp" formControlName="alamat_tinggal"></textarea>
+          <span
+            [hidden]="
+              callReportForm.controls.alamat_tinggal.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -138,6 +147,15 @@
         <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
         <div class="col-sm-8">
           <input class="form-control" type="date" id="tanggal_lahir" formControlName="tanggal_lahir" />
+          <span
+            [hidden]="
+              callReportForm.controls.tanggal_lahir.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
     </div>
@@ -152,6 +170,15 @@
               </option>
             </select>
           </div>
+          <span
+            [hidden]="
+              callReportForm.controls.status_kawin.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -161,13 +188,16 @@
           <div class="form-group">
             <select class="form-control" id="pendidikan" formControlName="pendidikan">
               <option value="">Pilih Pendidikan</option>
-              <option value="SMA">SMA</option>
-              <option value="D3">D3</option>
-              <option value="S1">S1</option>
-              <option value="S2">S2</option>
-              <option value="S3">S3</option>
+              <option *ngFor="let pendidikan of pendidikanModel" value="{{ pendidikan.deskripsi }}">{{ pendidikan.deskripsi }}</option>
             </select>
           </div>
+          <span
+            [hidden]="
+              callReportForm.controls.pendidikan.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -181,6 +211,13 @@
               </option>
             </select>
           </div>
+          <span
+            [hidden]="
+              callReportForm.controls.kendaraan.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
     </div>
@@ -198,13 +235,12 @@
         <div class="form-group col-md-4">
           <select class="form-control" id="status_agunan" formControlName="status_agunan">
             <option value="">Pilih Kepemilikan Agunan</option>
-            <option value="Penjual">Penjual</option>
-            <option value="Milik Orang tua">Milik Orang tua</option>
-            <option value="Milik sendiri">Milik sendiri</option>
-            <option value="Lain nya">Lain nya</option>
+            <option *ngFor="let listKepegawaian of kepemilikanAgunan" value="{{ listKepegawaian.deskripsi }}">
+              {{ listKepegawaian.deskripsi }}
+            </option>
           </select>
         </div>
-        <div class="form-group col-md-4" *ngIf="this.callReportForm.get('status_agunan')?.value == 'Lain nya'">
+        <div class="form-group col-md-4" *ngIf="this.callReportForm.get('status_agunan')?.value == 'Lainnya'">
           <input
             data-toggle="tooltip"
             data-placement="bottom"
@@ -214,19 +250,48 @@
             formControlName="catatan_status_agunan"
             class="form-control"
           />
+          <span
+            [hidden]="
+              callReportForm.controls.catatan_status_agunan.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
+        <span
+          [hidden]="
+            callReportForm.controls.status_agunan.valid ||
+            this.untukSessionRole == 'BRANCHMANAGER' ||
+            this.untukSessionRole == 'VER_PRE_SPV'
+          "
+          class="text-danger"
+          >Field Wajib Diisi
+        </span>
       </div>
+
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Dokumen Kepemilikan</label>
         <div class="form-group col-md-4">
           <select class="form-control" id="dokumen_kepemilikan" formControlName="dokumen_agunan">
+            <option value="">Pilih Dokumen Agunan</option>
             <option *ngFor="let listSertif of listSertif" value="{{ listSertif.sertifikat_deskripsi }}">
               {{ listSertif.sertifikat_deskripsi }}
             </option>
           </select>
         </div>
-        <div class="form-group col-md-4" *ngIf="this.callReportForm.get('dokumen_agunan')?.value == 'Lain nya'">
+        <span
+          [hidden]="
+            callReportForm.controls.dokumen_agunan.valid ||
+            this.untukSessionRole == 'BRANCHMANAGER' ||
+            this.untukSessionRole == 'VER_PRE_SPV'
+          "
+          class="text-danger"
+          >Field Wajib Diisi
+        </span>
+        <div class="form-group col-md-4" *ngIf="this.callReportForm.get('dokumen_agunan')?.value == 'Lainnya'">
           <input
             data-toggle="tooltip"
             data-placement="bottom"
@@ -244,15 +309,16 @@
         <label class="col-sm-4 col-form-label">Posisi Dokumen</label>
         <div class="form-group col-md-4">
           <select class="form-control" id="posisi_dokumen" formControlName="posisi_dokumen">
+            <option value="">Posisi dokumen</option>
             <option value="On Hand">On Hand</option>
             <option value="Di Bank Lain">Di Bank Lain</option>
-            <option value="Lain nya">Lainnya</option>
+            <option value="Lainnya">Lainnya</option>
           </select>
         </div>
         <div
           id="catatanLainnyaPosisi_dokumen"
           class="form-group col-md-4"
-          *ngIf="this.callReportForm.get('posisi_dokumen')?.value == 'Lain nya'"
+          *ngIf="this.callReportForm.get('posisi_dokumen')?.value == 'Lainnya'"
         >
           <input
             data-toggle="tooltip"
@@ -262,6 +328,15 @@
             formControlName="catatan_posisi_dokumen"
             class="form-control"
           />
+          <span
+            [hidden]="
+              callReportForm.controls.catatan_posisi_dokumen.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
     </div>
@@ -284,6 +359,15 @@
               <option value="Wiraswasta">Wiraswasta</option>
               <option value="Profesional">Profesional</option>
             </select>
+            <span
+              [hidden]="
+                callReportForm.controls.tipe_pekerjaan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -294,6 +378,15 @@
               <option value="Tetap">Tetap</option>
               <option value="Kontrak">Kontrak</option>
             </select>
+            <span
+              [hidden]="
+                callReportForm.controls.status_pekerjaan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -301,10 +394,28 @@
           <label class="col-sm-4 col-form-label">Lama Bekerja</label>
           <div class="col">
             <input type="tel" class="form-control" formControlName="lama_bekerja_tahun" maxlength="2" />
+            <span
+              [hidden]="
+                callReportForm.controls.lama_bekerja_tahun.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
           <div class="col">Tahun</div>
           <div class="col">
             <input type="tel" class="form-control" formControlName="lama_bekerja_bulan" maxlength="2" />
+            <span
+              [hidden]="
+                callReportForm.controls.lama_bekerja_bulan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
           <div class="col">Bulan</div>
         </div>
@@ -313,6 +424,15 @@
           <label class="col-sm-4 col-form-label">Jabatan Terakhir</label>
           <div class="col-sm-8">
             <input type="text" class="form-control" id="jabatan_terakhir" formControlName="jabatan_terakhir" />
+            <span
+              [hidden]="
+                callReportForm.controls.jabatan_terakhir.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -320,6 +440,15 @@
           <label class="col-sm-4 col-form-label">Nama Perusahaan</label>
           <div class="col-sm-8">
             <input type="text" class="form-control" id="nama_perusahan" formControlName="nama_perusahaan" />
+            <span
+              [hidden]="
+                callReportForm.controls.nama_perusahaan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -327,6 +456,15 @@
           <label class="col-sm-4 col-form-label">Bidang Usaha</label>
           <div class="col-sm-8">
             <input type="text" class="form-control" id="bidang_usaha" formControlName="bidang_usaha" />
+            <span
+              [hidden]="
+                callReportForm.controls.bidang_usaha.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -338,6 +476,15 @@
                 {{ skalaprusahaan.deskripsi }}
               </option>
             </select>
+            <span
+              [hidden]="
+                callReportForm.controls.skala_perusahaan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
       </div>
@@ -346,7 +493,7 @@
           <label class="col-sm-4 col-form-label">Tahun Berdiri</label>
           <div class="col-sm-8">
             <input
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               type="tel"
               onkeypress="return onlyNumberKey(event)"
               class="form-control"
@@ -355,6 +502,15 @@
               id="tahun_berdiri_perusahaan"
               formControlName="tahun_berdiri_perusahaan"
             />
+            <span
+              [hidden]="
+                callReportForm.controls.tahun_berdiri_perusahaan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -362,6 +518,15 @@
           <label class="col-sm-4 col-form-label">Alamat</label>
           <div class="col-sm-8">
             <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan" formControlName="alamat_perusahaan"></textarea>
+            <span
+              [hidden]="
+                callReportForm.controls.alamat_perusahaan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -372,10 +537,18 @@
               type="tel"
               onkeypress="return onlyNumberKey(event)"
               class="form-control"
-              maxlength="10000"
               id="jumlah_karyawan"
               formControlName="jumlah_karyawan"
             />
+            <span
+              [hidden]="
+                callReportForm.controls.jumlah_karyawan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -386,6 +559,15 @@
               <option value="Cukup Berdampak">Cukup Berdampak</option>
               <option value="Tidak Berdampak">Tidak Berdampak</option>
             </select>
+            <span
+              [hidden]="
+                callReportForm.controls.kondisi_pandemi.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -393,7 +575,7 @@
           <label class="col-sm-4 col-form-label">No Kontak HR</label>
           <div class="col-sm-8">
             <input
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               type="tel"
               pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
               class="form-control"
@@ -401,6 +583,15 @@
               id="no_kontak_hr"
               formControlName="no_kontak_hr"
             />
+            <span
+              [hidden]="
+                callReportForm.controls.no_kontak_hr.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
       </div>
@@ -421,6 +612,15 @@
               <option value="Badan Usaha">Badan Usaha</option>
               <option value="Perorangan">Perorangan</option>
             </select>
+            <span
+              [hidden]="
+                callReportForm.controls.jenis_usaha.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -428,6 +628,15 @@
           <label class="col-sm-4 col-form-label">Lama Usaha</label>
           <div class="col-sm-8">
             <input type="tel" maxlength="2" class="form-control" id="lama_usaha" formControlName="lama_usaha" />
+            <span
+              [hidden]="
+                callReportForm.controls.lama_usaha.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -453,6 +662,15 @@
           <label class="col-sm-4 col-form-label">Bidang Usaha</label>
           <div class="col-sm-8">
             <input type="text" class="form-control" id="bidang_usaha" formControlName="bidang_usaha" />
+            <span
+              [hidden]="
+                callReportForm.controls.bidang_usaha.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -460,6 +678,15 @@
           <label class="col-sm-4 col-form-label">Nama Perusahaan (Badan Usaha)</label>
           <div class="col-sm-8">
             <input type="text" class="form-control" id="nama_badan_usaha" formControlName="nama_perusahaan" />
+            <span
+              [hidden]="
+                callReportForm.controls.nama_perusahaan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -471,6 +698,15 @@
                 {{ skalaprusahaan.deskripsi }}
               </option>
             </select>
+            <span
+              [hidden]="
+                callReportForm.controls.skala_perusahaan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -481,6 +717,15 @@
               <option value="Barang">Barang</option>
               <option value="Jasa">Jasa</option>
             </select>
+            <span
+              [hidden]="
+                callReportForm.controls.jenis_produk.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
       </div>
@@ -496,6 +741,15 @@
               id="tahun_berdiri_perusahaan"
               formControlName="tahun_berdiri_perusahaan"
             />
+            <span
+              [hidden]="
+                callReportForm.controls.tahun_berdiri_perusahaan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -503,13 +757,31 @@
           <label class="col-sm-4 col-form-label">Alamat</label>
           <div class="col-sm-8">
             <textarea class="form-control h-150px" rows="6" id="alamat_perusahaan" formControlName="alamat_perusahaan"></textarea>
+            <span
+              [hidden]="
+                callReportForm.controls.alamat_perusahaan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" maxlength="100000" id="jumlah_karyawan" formControlName="jumlah_karyawan" />
+            <input type="tel" class="form-control" id="jumlah_karyawan" formControlName="jumlah_karyawan" />
+            <span
+              [hidden]="
+                callReportForm.controls.jumlah_karyawan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -520,6 +792,15 @@
               <option value="Cukup Berdampak">Cukup Berdampak</option>
               <option value="Tidak Berdampak">Tidak Berdampak</option>
             </select>
+            <span
+              [hidden]="
+                callReportForm.controls.kondisi_pandemi.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -527,6 +808,15 @@
           <label class="col-sm-4 col-form-label">Kepemilikan Usaha</label>
           <div class="col-sm-8">
             <input type="text" class="form-control" id="kepemilikan_usaha" formControlName="kepemilikan_usaha" />
+            <span
+              [hidden]="
+                callReportForm.controls.kepemilikan_usaha.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
       </div>
@@ -534,7 +824,7 @@
   </div>
   <br />
   <!-- untuk Perkerjaan Pasangan -->
-  <div *ngIf="this.callReportForm.get('status_kawin')?.value == 'Menikah'">
+  <div *ngIf="this.daWa1.joint_income == 1">
     <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
       <h3 style="color: #fff; text-align: center">Pekerjaan Pasangan</h3>
     </div>
@@ -549,6 +839,15 @@
               <option value="Wiraswasta">Wiraswasta</option>
               <option value="Profesional">Profesional</option>
             </select>
+            <span
+              [hidden]="
+                callReportForm.controls.tipe_pekerjaan_pasangan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -559,6 +858,15 @@
               <option value="Tetap">Tetap</option>
               <option value="Kontrak">Kontrak</option>
             </select>
+            <span
+              [hidden]="
+                callReportForm.controls.status_pekerjaan_pasangan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -566,6 +874,15 @@
           <label class="col-sm-4 col-form-label">Lama Bekerja</label>
           <div class="col">
             <input class="form-control" id="lama_bekerja_bulan_pasangan" formControlName="lama_bekerja_bulan_pasangan" />
+            <span
+              [hidden]="
+                callReportForm.controls.lama_bekerja_bulan_pasangan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
           <div class="col">Tahun</div>
           <div class="col">
@@ -576,6 +893,15 @@
               formControlName="lama_bekerja_tahun_pasangan"
               maxlength="2"
             />
+            <span
+              [hidden]="
+                callReportForm.controls.lama_bekerja_tahun_pasangan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
           <div class="col">Bulan</div>
         </div>
@@ -584,6 +910,15 @@
           <label class="col-sm-4 col-form-label">Jabatan Terakhir</label>
           <div class="col-sm-8">
             <input type="text" class="form-control" id="jabatan_terakhir_pasangan" formControlName="jabatan_terakhir_pasangan" />
+            <span
+              [hidden]="
+                callReportForm.controls.jabatan_terakhir_pasangan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -591,6 +926,15 @@
           <label class="col-sm-4 col-form-label">Nama Perusahaan</label>
           <div class="col-sm-8">
             <input type="text" class="form-control" id="nama_perusahaan_pasangan" formControlName="nama_perusahaan_pasangan" />
+            <span
+              [hidden]="
+                callReportForm.controls.nama_perusahaan_pasangan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -598,6 +942,15 @@
           <label class="col-sm-4 col-form-label">Bidang Usaha</label>
           <div class="col-sm-8">
             <input type="text" class="form-control" id="bidang_usaha_pasangan" formControlName="bidang_usaha_pasangan" />
+            <span
+              [hidden]="
+                callReportForm.controls.bidang_usaha_pasangan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -609,6 +962,15 @@
                 {{ skalaprusahaan.deskripsi }}
               </option>
             </select>
+            <span
+              [hidden]="
+                callReportForm.controls.skala_perusahaan_pasangan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
       </div>
@@ -624,6 +986,15 @@
               id="tahun_berdiri_perusahaan_pasangan"
               formControlName="tahun_berdiri_perusahaan_pasangan"
             />
+            <span
+              [hidden]="
+                callReportForm.controls.tahun_berdiri_perusahaan_pasangan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -636,6 +1007,15 @@
               id="alamat_perusahaan_pasangan"
               formControlName="alamat_perusahaan_pasangan"
             ></textarea>
+            <span
+              [hidden]="
+                callReportForm.controls.alamat_perusahaan_pasangan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -645,11 +1025,12 @@
             <input
               class="form-control"
               type="tel"
-              minlength="4"
-              maxlength="1000"
               id="jumlah_karyawan_perusahaan_pasangan"
               formControlName="jumlah_karyawan_perusahaan_pasangan"
             />
+            <span [hidden]="callReportForm.controls.jumlah_karyawan_perusahaan_pasangan.valid" class="text-danger">
+              Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -660,6 +1041,9 @@
               <option value="Cukup Berdampak">Cukup Berdampak</option>
               <option value="Tidak Berdampak">Tidak Berdampak</option>
             </select>
+            <span [hidden]="callReportForm.controls.kondisi_pandemi_perusahaan_pasangan.valid" class="text-danger">
+              Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
@@ -674,6 +1058,15 @@
               id="no_kontak_hr_pasangan"
               formControlName="no_kontak_hr_pasangan"
             />
+            <span
+              [hidden]="
+                callReportForm.controls.no_kontak_hr_pasangan.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
       </div>
@@ -691,35 +1084,115 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode I (Per Tahun)</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" id="laba_periode_1" formControlName="laba_periode_1" />
+            <input
+              type="tel"
+              class="form-control"
+              id="laba_periode_1"
+              formControlName="laba_periode_1"
+              currencyMask
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+            />
+            <span
+              [hidden]="
+                callReportForm.controls.laba_periode_1.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode II (Per Tahun)</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" id="laba_periode_2" formControlName="laba_periode_2" />
+            <input
+              type="tel"
+              class="form-control"
+              id="laba_periode_2"
+              formControlName="laba_periode_2"
+              currencyMask
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+            />
+            <span
+              [hidden]="
+                callReportForm.controls.laba_periode_2.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode III (Per Tahun)</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" id="laba_periode_3" formControlName="laba_periode_3" />
+            <input
+              type="tel"
+              class="form-control"
+              id="laba_periode_3"
+              formControlName="laba_periode_3"
+              currencyMask
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+            />
+            <span
+              [hidden]="
+                callReportForm.controls.laba_periode_3.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Laba Bersih Setelah Pajak Periode IIII (Per Tahun)</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" id="laba_periode_4" formControlName="laba_periode_4" />
+            <input
+              type="tel"
+              class="form-control"
+              id="laba_periode_4"
+              formControlName="laba_periode_4"
+              currencyMask
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+            />
+            <span
+              [hidden]="
+                callReportForm.controls.laba_periode_4.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
         <br />
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Rata Rata Laba Bersih Setelah Pajak (Per Bulan)</label>
           <div class="col-sm-8">
-            <input type="tel" class="form-control" id="rata_rata_laba" formControlName="rata_rata_laba" />
+            <input
+              type="tel"
+              class="form-control"
+              id="rata_rata_laba"
+              formControlName="rata_rata_laba"
+              currencyMask
+              [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+            />
+            <span
+              [hidden]="
+                callReportForm.controls.rata_rata_laba.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
       </div>
@@ -728,18 +1201,44 @@
         <div class="col-sm-8">
           <input
             type="tel"
-            onkeypress="return onlyNumberKey(event)"
             class="form-control"
             id="takeHomepay"
             formControlName="take_home_pay"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
           />
+          <span
+            [hidden]="
+              callReportForm.controls.take_home_pay.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Estimasi Angsuran Saat Ini</label>
         <div class="col-sm-8">
-          <input type="tel" class="form-control" id="estimasi_angsuran" formControlName="estimasi_angsuran" />
+          <input
+            type="tel"
+            class="form-control"
+            id="estimasi_angsuran"
+            formControlName="estimasi_angsuran"
+            currencyMask
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+          />
+          <span
+            [hidden]="
+              callReportForm.controls.estimasi_angsuran.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -752,8 +1251,15 @@
             class="form-control"
             cols="100"
             rows="6"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
           ></textarea>
+          <span
+            [hidden]="
+              callReportForm.controls.keterangan.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
           <br />
         </div>
       </div>
@@ -766,6 +1272,15 @@
               <option value="Tidak">Tidak</option>
             </select>
           </div>
+          <span
+            [hidden]="
+              callReportForm.controls.validasi_rekening.valid ||
+              this.untukSessionRole == 'BRANCHMANAGER' ||
+              this.untukSessionRole == 'VER_PRE_SPV'
+            "
+            class="text-danger"
+            >Field Wajib Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -776,9 +1291,10 @@
             <p id="denganini">
               <input
                 (change)="onclikwawancara($event)"
-                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
                 style="width: 20px; height: 20px"
                 type="checkbox"
+                [checked]="this.callReportForm.get('tanggal_wawancara')?.value != ''"
               />
               {{ this.contohtex }}
             </p>
@@ -790,13 +1306,34 @@
         <label class="col-sm-4 col-form-label">Tanggal wawancara</label>
         <div class="col-md-8">
           <div class="form-group">
-            <input
-              class="form-control"
-              type="date"
-              id="tanggal_wawancara"
-              formControlName="tanggal_wawancara"
-              onchange="tanggalWawancara()"
-            />
+            <input class="form-control" type="date" id="tanggal_wawancara" formControlName="tanggal_wawancara" (change)="datepicker()" />
+            <span
+              [hidden]="
+                callReportForm.controls.tanggal_wawancara.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Tanggal Appraisal</label>
+        <div class="col-md-8">
+          <div class="form-group">
+            <input class="form-control" type="date" formControlName="tanggal_appraisal" />
+            <span
+              [hidden]="
+                callReportForm.controls.tanggal_appraisal.valid ||
+                this.untukSessionRole == 'BRANCHMANAGER' ||
+                this.untukSessionRole == 'VER_PRE_SPV'
+              "
+              class="text-danger"
+              >Field Wajib Diisi
+            </span>
           </div>
         </div>
       </div>
@@ -805,7 +1342,13 @@
         <label class="col-sm-4 col-form-label">No wawancara</label>
         <div class="col-md-8">
           <div class="form-group">
-            <input type="text" class="form-control" value="{{ this.nowawancara }}" readonly />
+            <input
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+              type="text"
+              class="form-control"
+              value="{{ this.nowawancara }}"
+              readonly
+            />
           </div>
         </div>
       </div>
@@ -827,16 +1370,18 @@
         Selanjutnya<span>&nbsp;<i class="fa fa-chevron-circle-right"></i></span>
       </button>
       <button
-        *ngIf="this.cekSimpanData == 1"
+        *ngIf="this.cekSimpanData == 1 || this.callReportForm.get('tanggal_wawancara')?.value != ''"
         type="submit"
         id="buttonsimpan"
         name="buttonsimpan"
         value="buttonsimpan"
         class="btn mb-1 btn-dark"
-        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRESCR'"
+        [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+        [disabled]="this.tanggalWawancara > 60 || this.tanggalWawancara < 0 || callReportForm.invalid"
       >
         Simpan Data<span class="btn-icon-right"><i class="fa fa-floppy-o"></i></span>
       </button>
     </div>
   </div>
 </form>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

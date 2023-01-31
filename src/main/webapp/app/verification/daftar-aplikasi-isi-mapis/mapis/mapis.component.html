@@ -7,27 +7,54 @@
     <!-- ////Colom ke 1\\\\\ -->
     <div class="col">
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nilai Market</label>
+        <label class="col-sm-4 col-form-label">Harga Transaksi</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="nilai_market" formControlName="nilai_market" />
+          <input
+            type="text"
+            class="form-control"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
+            formControlName="harga_transaksi"
+          />
         </div>
       </div>
       <br />
       <div class="form-group row">
+        <label class="col-sm-4 col-form-label">{{ dataEntry.kode_fasilitas_name === 'PPK' ? 'Nilai Appraisal' : 'Nilai Market' }}</label>
+        <div class="col-sm-8">
+          <input
+            type="text"
+            class="form-control"
+            id="nilai_market"
+            formControlName="nilai_market"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
+          />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row" [hidden]="dataEntry.kode_fasilitas_name === 'PPK'">
         <label class="col-sm-4 col-form-label">Nilai IMB</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="nilai_imb" formControlName="nilai_imb" />
+          <input
+            type="text"
+            class="form-control"
+            id="nilai_imb"
+            formControlName="nilai_imb"
+            currencyMask
+            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
+          />
         </div>
       </div>
       <br />
-      <div class="form-group row">
+      <div class="form-group row" [hidden]="dataEntry.kode_fasilitas_name === 'PPK'">
         <label class="col-sm-4 col-form-label">Luas Tanah</label>
         <div class="col-sm-8">
           <input type="text" class="form-control" id="luas_tanah" formControlName="luas_tanah" />
         </div>
       </div>
       <br />
-      <div class="form-group row">
+      <div class="form-group row" [hidden]="dataEntry.kode_fasilitas_name === 'PPK'">
         <label class="col-sm-4 col-form-label">Luas Bangunan</label>
         <div class="col-sm-8">
           <input type="text" class="form-control" id="luas_bangunan" formControlName="luas_bangunan" />
@@ -45,7 +72,7 @@
             class="form-control"
             id="objek_pembiayaan"
             name="objek_pembiayaan"
-            value="{{ this.listagunan[0].tipe_properti }}"
+            value="{{ this.retTipePro == '' ? this.retTipeKen : this.retTipePro }}"
           />
         </div>
       </div>
@@ -53,37 +80,38 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tipe Angunan</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="tipe_agunan"
-            name="tipe_agunan"
-            value="{{ this.listagunan[0].tipe_agunan }}"
-          />
+          <input type="text" readonly class="form-control" id="tipe_agunan" name="tipe_agunan" value="{{ this.retTipeAg }}" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Jenis Objek</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="jenis_objek"
-            name="jenis_objek"
-            value="{{ listagunan[0].jenis_objek_deskripsi }}"
-          />
+          <input type="text" readonly class="form-control" id="jenis_objek" name="jenis_objek" value="{{ this.retJenisObj }}" />
         </div>
       </div>
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">FTV</label>
         <div class="col-sm-6">
-          <input type="text" readonly class="form-control" id="ftv" name="ftv" value="{{ this.dataEntry.uang_muka | currency: 'Rp ' }}" />
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="ftv"
+            name="ftv"
+            value="{{ this.dataEntry.uang_muka | currency: 'Rp ' }}"
+            currencyMask
+          />
         </div>
-        <div class="col-sm-2">{{ this.betaFTV }} %</div>
+        <div class="col-sm-2">{{ this.betaFTV | number }} %</div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Note</label>
+        <div class="col-sm-8">
+          <textarea class="form-control" cols="30" rows="5" formControlName="note"></textarea>
+        </div>
       </div>
     </div>
   </div>

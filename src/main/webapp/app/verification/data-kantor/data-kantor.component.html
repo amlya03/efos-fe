@@ -37,7 +37,7 @@
         <div class="col-sm-8">
           <select class="form-control" formControlName="hubungan_pemberi_keterangan">
             <option value="">Pilih Data</option>
-            <option value="Penjual (Developer dan Pembeli)">Penjual (Developer dan Pembeli)</option>
+            <option *ngFor="let hubungan of refHubunganAgunan" value="{{ hubungan.deskripsi }}">{{ hubungan.deskripsi }}</option>
           </select>
         </div>
       </div>
@@ -153,10 +153,6 @@
         <label class="col-sm-4 col-form-label">Provinsi</label>
         <div class="col-sm-8">
           <input class="form-control" [value]="this.dataEntry.provinsi" readonly />
-          <!-- <option *ngFor="let getProvinsi of getProvinsi" value="{{ getProvinsi.kdWilayah }}|{{ getProvinsi.namaWilayah }}">
-              {{ getProvinsi.namaWilayah }}
-            </option>
-          </select> -->
         </div>
       </div>
     </div>
@@ -180,10 +176,6 @@
         <label class="col-sm-4 col-form-label">Kota</label>
         <div class="col-sm-8">
           <input class="form-control" [value]="this.dataEntry.kabkota" readonly />
-          <!-- <option *ngFor="let getKota of getKota" value="{{ getKota.kdWilayah }}|{{ getKota.namaWilayah }}">
-              {{ getKota.namaWilayah }}
-            </option>
-          </select> -->
         </div>
       </div>
     </div>
@@ -207,10 +199,6 @@
         <label class="col-sm-4 col-form-label">Kecamatan</label>
         <div class="col-sm-8">
           <input class="form-control" [value]="this.dataEntry.kecamatan" readonly />
-          <!-- <option *ngFor="let getKecamatan of getKecamatan" value="{{ getKecamatan.kdWilayah }}|{{ getKecamatan.namaWilayah }}">
-              {{ getKecamatan.namaWilayah }}
-            </option>
-          </select> -->
         </div>
       </div>
     </div>
@@ -234,10 +222,6 @@
         <label class="col-sm-4 col-form-label">Kelurahan</label>
         <div class="col-sm-8">
           <input class="form-control" [value]="this.dataEntry.kelurahan" readonly />
-          <!-- <option *ngFor="let getKelurahan of getKelurahan" value="{{ getKelurahan.kdPos }}|{{ getKelurahan.namaWilayah }}">
-              {{ getKelurahan.namaWilayah }}
-            </option>
-          </select> -->
         </div>
       </div>
     </div>
@@ -312,7 +296,6 @@
         <div class="col">
           <input
             type="text"
-            (keypress)="keyPressNumbers($event)"
             maxlength="2"
             class="form-control"
             id="lama_bekerja_bulan"
@@ -333,7 +316,7 @@
     </div>
     <div class="col">
       <div class="form-group row">
-        <input (keypress)="keyPressNumbers($event)" type="text" class="form-control" formControlName="note_verif_lama_bekerja" />
+        <input type="text" class="form-control" formControlName="note_verif_lama_bekerja" />
       </div>
     </div>
   </div>
@@ -344,11 +327,6 @@
         <label class="col-sm-4 col-form-label">Bidang Usaha</label>
         <div class="col-sm-8">
           <input name="bidang_usaha" id="bidang_usaha" class="form-control" [value]="this.dataJob.jenis_bidang" readonly />
-          <!-- <option selected value="">Pilih Data</option>
-            <option *ngFor="let refBidang of refBidang" value="{{ refBidang.group_sektor }}|{{ refBidang.nama_group_sektor }}">
-              {{ refBidang.nama_group_sektor }}
-            </option>
-          </select> -->
         </div>
       </div>
     </div>
@@ -372,11 +350,6 @@
         <label class="col-sm-4 col-form-label">Sektor Ekonomi</label>
         <div class="col-sm-8">
           <input name="sektor_ekonomi" id="sektor_ekonomi" class="form-control" [value]="this.dataJob.sektor_ekonomi" readonly />
-          <!-- <option selected value="">Pilih Data</option>
-            <option *ngFor="let refSektor of refSektor" value="{{ refSektor.nama_sub_sektor }}">
-              {{ refSektor.nama_sub_sektor }}
-            </option>
-          </select> -->
         </div>
       </div>
     </div>
@@ -523,3 +496,4 @@
     </div>
   </div>
 </form>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

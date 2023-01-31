@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
@@ -10,15 +10,23 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { Subject } from 'rxjs';
 import { MemoModel } from '../service/config/memo.model';
 import Swal from 'sweetalert2';
+import { detailMemo } from 'app/data-entry/services/config/detailMemo.model';
+import { environment } from 'environments/environment';
 @Component({
   selector: 'jhi-memo-verification',
   templateUrl: './memo-verification.component.html',
   styleUrls: ['./memo-verification.component.scss'],
 })
 export class MemoVerificationComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
+  baseUrl: string = environment.baseUrl;
   dataEntry: fetchAllDe = new fetchAllDe();
-  listMemo?: MemoModel[];
+  listMemo: MemoModel[] = [];
   app_no_de: any;
+  detailMemoModel: detailMemo = new detailMemo();
+  valVER_PRESCR: any;
+  valVER_PRE_SPV: any;
 
   // /////////////Session//////////////////
   untukSessionRole: any;
@@ -64,7 +72,13 @@ export class MemoVerificationComponent implements OnInit {
     this.load();
   }
 
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
+  }
+
   load(): void {
+    this.getLoading(true);
     // ambil semua data DE
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
@@ -74,9 +88,29 @@ export class MemoVerificationComponent implements OnInit {
     this.dataEntryService.getfetchMemo(this.app_no_de).subscribe(data => {
       this.listMemo = data.result;
       this.dtTrigger.next(this.listMemo);
-      if (data.code === 200) {
-        console.log('MEMo ' + data.result.keterangan);
-      }
+      setTimeout(() => {
+        for (let i = 0; i < data.result.length; i++) {
+          setTimeout(() => {
+            if (this.listMemo[i].role === 'VER_PRESCR') {
+              this.valVER_PRESCR = 0;
+              this.getLoading(false);
+            } else {
+              this.getLoading(false);
+              this.valVER_PRESCR = 1;
+            }
+          }, 10);
+
+          setTimeout(() => {
+            if (this.listMemo[i].role === 'VER_PRE_SPV') {
+              this.valVER_PRE_SPV = 0;
+              this.getLoading(false);
+            } else {
+              this.valVER_PRE_SPV = 1;
+              this.getLoading(false);
+            }
+          }, 20);
+        }
+      }, 10);
     });
   }
 
@@ -90,7 +124,7 @@ export class MemoVerificationComponent implements OnInit {
   // Simpan
   simpanMemo(keterangan: any) {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/create_memo', {
+      .post<any>(this.baseUrl + 'v1/efos-de/create_memo', {
         id: 0,
         keterangan: keterangan,
         users: this.untukSessionFullName,
@@ -110,7 +144,7 @@ export class MemoVerificationComponent implements OnInit {
   // Update STatus
   updateStatus() {
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_status_tracking', {
+      .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
         app_no_de: this.app_no_de,
         created_by: this.untukSessionUserName,
         status_aplikasi: this.dataEntry.status_aplikasi,
@@ -124,36 +158,53 @@ export class MemoVerificationComponent implements OnInit {
   }
 
   // detail memo
-  detailMemo() {
-    // Swal.fire({
-    //     title: 'Do you want to save the changes?',
-    //     text: "Modal with a custom image.",
-    //     showDenyButton: true,  showCancelButton: true,
-    //     confirmButtonText: `Save`,
-    //     denyButtonText: `Don't save`,
-    //   }).then((result) => {
-    //     /* Read more about isConfirmed, isDenied below */
-    //       if (result.isConfirmed) {
-    //         Swal.fire('Saved!', '', 'success')
-    //       } else if (result.isDenied) {
-    //         Swal.fire('Changes are not saved', '', 'info')
-    //      }
-    //   });
+  detailMemo(id: number | null | undefined) {
+    this.dataEntryService.getFetchListMemo(id).subscribe(data => {
+      this.detailMemoModel = data.result;
+      Swal.fire({
+        // title: 'Detail Memo',
+        imageUrl: '../../../content/images/bank-mega-syariah.png',
+        imageHeight: 100,
+        html:
+          '<div class="row"><div class="col">' +
+          '<br/>' +
+          '<ul><h5>Keterangan Memo :</h5><li>' +
+          '<h6 style="text-align: left;">' +
+          this.detailMemoModel.keterangan +
+          '</h6>' +
+          '</li></ul></div>' +
+          '<div class="col">' +
+          '<h4>' +
+          this.dataEntry.nama +
+          '</h4>' +
+          '<p class="text-muted">Dibuat Oleh ' +
+          this.detailMemoModel.role +
+          ' /  ' +
+          this.detailMemoModel.users +
+          '</p>' +
+          '<ul style="text-align: left;"><h6>' +
+          this.dataEntry.produk_pembiayaan +
+          '</h6>' +
+          '<li style="text-align: left;"><label>Fasilitas</label> : ' +
+          this.dataEntry.kode_fasilitas_name +
+          '</li>' +
+          '<li><label>Plafond</label>: ' +
+          Number(this.dataEntry.nilai_pembiayaan).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) +
+          '</li>' +
+          '<li><label>Tenor</label> : ' +
+          this.dataEntry.jangka_waktu +
+          '</li>' +
+          '</ul></div></div>',
+        focusConfirm: false,
+        // preConfirm: () => {
+        //   return [$('#produk').val(), $('#joint_income').val(), $('#parameter').val(), $('#data_value').val(), $('#min').val(), $('#max').val(), $('#score').val()];
+        // },
+      }).then(result => {});
 
-    Swal.fire({
-      title: 'Memo',
-      // text: " - lkdzflkxcbxbxcvbcvbcvsd",
-      html: 'Testno  sporocilo za objekt: <p>test</p>',
-      imageUrl: '../../../content/images/bank-mega-syariah.png',
-      imageWidth: 100,
-      imageHeight: 70,
-      imageAlt: 'Eagle Image',
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-      confirmButtonColor: '#00ff55',
-      cancelButtonColor: '#999999',
-      reverseButtons: true,
+      // if (formValues) {
+      //   Swal.fire(JSON.stringify(formValues));
+      // }
+      // ////////////// Pop Up Input Scoring ////////////////////////
     });
   }
 }

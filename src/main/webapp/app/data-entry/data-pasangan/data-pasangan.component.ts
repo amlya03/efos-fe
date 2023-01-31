@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpResponse } from '@angular/common/http';
@@ -9,6 +9,8 @@ import { DataEntryService } from '../services/data-entry.service';
 import { SessionStorageService } from 'ngx-webstorage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
+import { environment } from 'environments/environment';
+import { refJenisPekerjaan } from '../services/config/refJenisPekerjaan.model';
 
 export type EntityResponseDaWa = HttpResponse<datapasangamodel>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -18,21 +20,21 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./data-pasangan.component.scss'],
 })
 export class DataPasanganComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
+  baseUrl: string = environment.baseUrl;
   dataPasanganForm!: FormGroup;
   dataEntry: fetchAllDe = new fetchAllDe();
   datakiriman: any;
   datakirimanakategoripekerjaan: any;
   daWa: any;
   app_no_de: any;
-
   curef: any;
-  postId: any;
   daWaprof: any;
   daWakota: any;
   kecamatan: any;
   kelurahan: any;
   daWakodepos: any;
-  statusPerkawinan: any;
   kirimanstatusktp: any;
   untukktp: any;
   untukSessionRole: any;
@@ -40,6 +42,11 @@ export class DataPasanganComponent implements OnInit {
   retrivekabkota: any;
   retrivekecamatan: any;
   retrivekelurahan: any;
+  retriveKodeProvinsi: any;
+  retriveKodeKota: any;
+  retriveKodeKecamatan: any;
+  retriveKodeKelurahan: any;
+  pendidikanModel: refJenisPekerjaan[] = [];
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -51,7 +58,6 @@ export class DataPasanganComponent implements OnInit {
     private SessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.statusPerkawinan = params.statusPerkawinan;
       this.app_no_de = params['app_no_de'];
       this.curef = params['curef'];
     });
@@ -60,77 +66,62 @@ export class DataPasanganComponent implements OnInit {
   ngOnInit(): void {
     this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
     this.load();
-
+    this.getLoading(true);
     this.dataPasanganForm = this.formBuilder.group({
-      nama_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      jenis_kelamin_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      alamat_ktp_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      rt_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      rw_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      kewarganegaraan_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      pendidikan_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      nama_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      jenis_kelamin_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      alamat_ktp_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      provinsi_pasangan: {
+        value: '' || null,
+        disabled: true,
+      },
+      kabkota_pasangan: { value: '' || null, disabled: true },
+      kecamatan_pasangan: {
+        value: '' || null,
+        disabled: true,
+      },
+      kelurahan_pasangan: {
+        value: '' || null,
+        disabled: true,
+      },
+      kode_pos_pasangan: {
+        value: '' || null,
+        disabled: true,
+      },
+      // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      rt_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      rw_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      kewarganegaraan_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      pendidikan_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
       email_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
         Validators.required,
       ],
-      no_handphone_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      no_ktp_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      tanggal_terbit_ktp_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      status_ktp_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      tanggal_exp_ktp_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      npwp_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      tanggal_lahir_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      usia_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRESCR' || this.untukSessionRole == 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      no_handphone_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      no_ktp_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      tanggal_terbit_ktp_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      status_ktp_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      tanggal_exp_ktp_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      npwp_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      tanggal_lahir_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
+      usia_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
     });
   }
 
   load() {
-    this.gettokendukcapil();
+    setTimeout(() => {
+      this.datEntryService.getListPendidikan().subscribe({
+        next: data => {
+          this.pendidikanModel = data.result;
+        },
+      });
+    }, 10);
+
+    this.datEntryService.getprovinsi().subscribe(res => {
+      this.daWaprof = res.result;
+    });
+
     this.datEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
       this.retriveprovinsi = data.result.provinsi_pasangan;
@@ -144,6 +135,13 @@ export class DataPasanganComponent implements OnInit {
         nama_pasangan: this.dataEntry.nama_pasangan,
         jenis_kelamin_pasangan: this.dataEntry.jenis_kelamin_pasangan,
         alamat_ktp_pasangan: this.dataEntry.alamat_ktp_pasangan,
+        // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        provinsi_pasangan: '',
+        kabkota_pasangan: '',
+        kecamatan_pasangan: '',
+        kelurahan_pasangan: '',
+        kode_pos_pasangan: this.dataEntry.kode_pos_pasangan,
+        // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         rt_pasangan: this.dataEntry.rt_pasangan,
         rw_pasangan: this.dataEntry.rw_pasangan,
         kewarganegaraan_pasangan: this.dataEntry.kewarganegaraan_pasangan,
@@ -160,6 +158,8 @@ export class DataPasanganComponent implements OnInit {
 
       setTimeout(() => {
         this.hitungUsia();
+        this.carimenggunakankodepos(this.dataEntry.kode_pos_pasangan);
+        this.getLoading(false);
       }, 300);
     });
   }
@@ -171,114 +171,38 @@ export class DataPasanganComponent implements OnInit {
     this.dataPasanganForm.get('usia_pasangan')?.setValue(getTahun);
   }
 
-  gettokendukcapil(): void {
-    this.http
-      .post<any>('http://10.20.82.12:8083/token/generate-token', {
-        password: '3foWeb@pp',
-        username: 'efo',
-        // password_dukcapil: '3foWeb@pp',
-      })
-      .subscribe({
-        next: data => {
-          this.postId = data.result.token;
-          // this.postId.open(ChildComponent, {data : {responseDataParameter: this.postId.Data}});
-          // return this.postId;
-
-          console.warn(data.result.token);
-          console.warn(this.postId);
-          // this.router.navigate(['/daftaraplikasiide'], {
-          //   queryParams: {},
-          // });
-          // alert('dapetnih');
-
-          this.datEntryService.getprovinsi(this.postId).subscribe({
-            next: (res: EntityArrayResponseDaWa) => {
-              console.warn('PROVINSI', res);
-
-              this.daWaprof = res.body?.result;
-              // alert(this.postId);
-              // this.onResponseSuccess(res);
-            },
-          });
-
-          // this.getdataentry(this.postId).subscribe({
-          //   next: (res: EntityArrayResponseDaWa) => {
-          //     this.daWa = res.body?.result;
-          //     // this.onResponseSuccess(res);
-          //     console.warn('loadingNIH',this.postId );
-          //     alert(this.postId)
-          //   },
-          // });
-        },
-      });
-  }
-
-  onChange(selectedStatus: any) {
-    const provinsi_cabang = document.getElementById('provinsi_pasangan') as HTMLInputElement | any;
-
-    // alert(this.postId);
-    console.log('kode' + selectedStatus);
-    this.datEntryService.getkabkota(this.postId, provinsi_cabang.value).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kota', res);
-
-        this.daWakota = res.body?.result;
-        // alert(this.postId);
-        // this.onResponseSuccess(res);
-      },
+  onChange(value: any) {
+    const valuenya = value.split('|');
+    this.datEntryService.getkabkota(valuenya[0]).subscribe(res => {
+      this.daWakota = res.result;
+      this.dataPasanganForm.get('kabkota_pasangan')?.setValue(this.retriveKodeKota + '|' + this.retrivekabkota);
     });
   }
 
-  onChangekota(selectedStatus: any) {
-    // alert(this.postId);
-    const provinsi_cabang = document.getElementById('kabkota_pasangan') as HTMLInputElement | any;
-    this.datEntryService.getkecamatan(this.postId, provinsi_cabang.value).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kecamata', res);
-
-        this.kecamatan = res.body?.result;
-        // alert(this.postId);
-        // this.onResponseSuccess(res);
-      },
+  onChangekota(value: any) {
+    const valuenya = value.split('|');
+    this.datEntryService.getkecamatan(valuenya[0]).subscribe(res => {
+      this.kecamatan = res.result;
+      this.dataPasanganForm.get('kecamatan_pasangan')?.setValue(this.retriveKodeKecamatan + '|' + this.retrivekecamatan);
     });
-    console.log(selectedStatus);
   }
 
-  onChangekecamatan(selectedStatus: any) {
-    // alert(this.postId);
-
-    const provinsi_cabang = document.getElementById('kecamatan_pasangan') as HTMLInputElement | any;
-    this.datEntryService.getkelurahan(this.postId, provinsi_cabang.value).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kelurahan', res);
-
-        this.kelurahan = res.body?.result;
-        // alert(this.postId);
-        // this.onResponseSuccess(res);
-      },
+  onChangekecamatan(value: any) {
+    const valuenya = value.split('|');
+    this.datEntryService.getkelurahan(valuenya[0]).subscribe(res => {
+      this.kelurahan = res.result;
+      this.dataPasanganForm.get('kelurahan_pasangan')?.setValue(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
     });
-    console.log(selectedStatus);
   }
 
-  onChangekelurahan(selectedStatus: any) {
-    // alert(this.postId);
-    // alert('ganti');
-    const provinsi_cabang = document.getElementById('kelurahan_pasangan') as HTMLInputElement | any;
-    var kode_post = document.getElementById('kode_pos_pasangan') as HTMLInputElement | any;
-    const datakodepos = provinsi_cabang.value.split('|');
-
+  onChangekelurahan(value: any) {
+    const datakodepos = value.split('|');
     this.daWakodepos = datakodepos[0];
-
-    // alert(this.daWakodepos);
-    // kode_post.innerHTML=this.daWakodepos ;
-    kode_post.value = this.daWakodepos;
-    // alert('kodepos' + kode_post);
-    // document.getElementById('kode_pos').value=this.daWakodepos;
-    // alert(this.daWakodepos);
-    // this.onResponseSuccess(res);
+    this.dataPasanganForm.get('kode_pos_pasangan')?.setValue(this.daWakodepos);
   }
 
   goto(contohtampungancuref: any) {
+    this.SessionStorageService.store('dataPas', 1);
     // this.onResponseSuccess(res);
     // alert(contohtampungancuref);
     // alert(this.app_no_de);
@@ -286,19 +210,9 @@ export class DataPasanganComponent implements OnInit {
     this.router.navigate(['/data-entry/pekerjaan-pasangan'], {
       queryParams: {
         curef: this.curef,
-        statusPerkawinan: this.statusPerkawinan,
         app_no_de: this.app_no_de,
       },
     });
-    // if(this.statusPerkawinan === 'Menikah'){
-    //   this.router.navigate(['/data-pasangan'], { queryParams: { datakiriman:this.app_no_de } });
-    //   alert(' ini NIKAH');
-    //   console.warn(this.datakiriman);
-    // }
-    // else{
-    //   alert('ini jomblo');
-    //   this.router.navigate(['/collateral'], { queryParams: { datakiriman:this.app_no_de } });
-    // }
   }
 
   updatedatapasngan() {
@@ -308,33 +222,13 @@ export class DataPasanganComponent implements OnInit {
     const kelurahan_pasangan = document.getElementById('kelurahan_pasangan') as HTMLInputElement | any;
     const kode_pos_pasangan = document.getElementById('kode_pos_pasangan') as HTMLInputElement | any;
 
-    var potonganprov = provinsi_pasangan.value.split('|');
-    if (provinsi_pasangan.value.indexOf('|') !== -1) {
-      var kirimanpro = potonganprov[1];
-    } else {
-      var kirimanpro = provinsi_pasangan.value;
-    }
-    var potongankota = kabkota_pasangan.value.split('|');
-    if (kabkota_pasangan.value.indexOf('|') !== -1) {
-      var kirimankabkota = potongankota[1];
-    } else {
-      var kirimankabkota = kabkota_pasangan.value;
-    }
-    var potongankec = kecamatan_pasangan.value.split('|');
-    if (kecamatan_pasangan.value.indexOf('|') !== -1) {
-      var kirimankec = potongankec[1];
-    } else {
-      var kirimankec = kecamatan_pasangan.value;
-    }
-    var potongankel = kelurahan_pasangan.value.split('|');
-    if (kelurahan_pasangan.value.indexOf('|') !== -1) {
-      var kirimankel = potongankel[1];
-    } else {
-      var kirimankel = kelurahan_pasangan.value;
-    }
+    const kirimanpro = this.dataPasanganForm.get('provinsi_pasangan')?.value.split('|');
+    const kirimankabkota = this.dataPasanganForm.get('kabkota_pasangan')?.value.split('|');
+    const kirimankec = this.dataPasanganForm.get('kecamatan_pasangan')?.value.split('|');
+    const kirimankel = this.dataPasanganForm.get('kelurahan_pasangan')?.value.split('|');
 
     this.http
-      .post<any>('http://10.20.34.110:8805/api/v1/efos-de/update_pasangan', {
+      .post<any>(this.baseUrl + 'v1/efos-de/update_pasangan', {
         id: this.dataEntry.id_customer,
         app_no_ide: this.dataEntry.app_no_ide,
         kategori_pekerjaan: this.dataEntry.kategori_pekerjaan,
@@ -345,15 +239,15 @@ export class DataPasanganComponent implements OnInit {
         curef: this.dataEntry.curef,
         email_pasangan: this.dataPasanganForm.get('email_pasangan')?.value,
         npwp_pasangan: this.dataPasanganForm.get('npwp_pasangan')?.value,
-        kabkota_pasangan: kirimankabkota,
-        kecamatan_pasangan: kirimankec,
-        kelurahan_pasangan: kirimankel,
+        provinsi_pasangan: kirimanpro[1],
+        kabkota_pasangan: kirimankabkota[1],
+        kecamatan_pasangan: kirimankec[1],
+        kelurahan_pasangan: kirimankel[1],
         kewarganegaraan_pasangan: this.dataPasanganForm.get('kewarganegaraan_pasangan')?.value,
-        kode_pos_pasangan: kode_pos_pasangan.value,
+        kode_pos_pasangan: this.dataPasanganForm.get('kode_pos_pasangan')?.value,
         no_handphone_pasangan: this.dataPasanganForm.get('no_handphone_pasangan')?.value,
         no_ktp_pasangan: this.dataPasanganForm.get('no_ktp_pasangan')?.value,
         pendidikan_pasangan: this.dataPasanganForm.get('pendidikan_pasangan')?.value,
-        provinsi_pasangan: kirimanpro,
         rt_pasangan: this.dataPasanganForm.get('rt_pasangan')?.value,
         rw_pasangan: this.dataPasanganForm.get('rw_pasangan')?.value,
         status_ktp_pasangan: this.dataPasanganForm.get('status_ktp_pasangan')?.value,
@@ -368,7 +262,6 @@ export class DataPasanganComponent implements OnInit {
           this.router.navigate(['/data-entry/pekerjaan-pasangan'], {
             queryParams: {
               curef: this.curef,
-              statusPerkawinan: this.statusPerkawinan,
               app_no_de: this.app_no_de,
             },
           });
@@ -385,56 +278,21 @@ export class DataPasanganComponent implements OnInit {
     this.untukktp = 0;
   }
 
-  carimenggunakankodepos(kodepost: any, req: any) {
-    this.getkodepostnya(kodepost, req).subscribe({
-      next: (res: EntityArrayResponseDaWa) => {
-        console.warn('kodepost', res);
-
-        // this.dawakodepost = res.body?.result;
-        // alert(this.postId);
-        // this.onResponseSuccess(res);
-
-        this.retriveprovinsi = res.body?.result.provKec.nm_prov;
-
-        this.retrivekabkota = res.body?.result.provKec.nm_kota;
-
-        this.retrivekecamatan = res.body?.result.provKec.nm_kec;
-
-        this.retrivekelurahan = res.body?.result.provKec.nm_kel;
-
-        // $('#provinsi_cabang').attr('selected', 'selected').val(this.provinsi_cabangkode + '|' +    this.provinsi_cabang);
-        $('#provinsi_cabang option:first').text(this.retriveprovinsi);
-
-        // $('#kabkota').append(this.kabkota_cabang);
-
-        $('#kabkota_cabang option:first').text(this.retrivekabkota);
-        // $('#kabkota_cabang').attr('selected', 'selected').val(this.kabkota_cabangkode + '|' +    this.kabkota_cabang);
-
-        // $('#kecamatan').attr('selected', 'selected').val(this.kecamatankode + '|' +    this.kecamatan);
-        $('#kecamatan option:first').text(this.retrivekecamatan);
-
-        // $('#kelurahan').attr('selected', 'selected').val(this.kelurahankode + '|' +    this.kelurahan);
-        $('#kelurahan option:first').text(this.retrivekelurahan);
-        // alert(this.provinsi_cabang)
-      },
-    });
-
-    console.log(req);
-  }
-
-  getkodepostnya(kodepst: any, req: any) {
-    const options = createRequestOption(req);
-    const httpOptions = {
-      // 'Authorization': token,
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.postId}`,
-    };
-    // const kodepotongan = kodekota.split('|');
-
-    return this.http.get<ApiResponse>('http://10.20.82.12:8083/wilayahSvc/getProvKecByKdPos/' + kodepst, {
-      headers: httpOptions,
-      params: options,
-      observe: 'response',
+  carimenggunakankodepos(kodepost: any) {
+    this.datEntryService.getKdpost(kodepost).subscribe(data => {
+      this.retriveKodeProvinsi = data.result.provKec.kd_prov;
+      this.retriveKodeKota = data.result.provKec.kd_kota;
+      this.retriveKodeKecamatan = data.result.provKec.kd_kec;
+      this.retriveprovinsi = data.result.provKec.nm_prov;
+      this.retrivekabkota = data.result.provKec.nm_kota;
+      this.retrivekecamatan = data.result.provKec.nm_kec;
+      this.retriveKodeKelurahan = kodepost;
+      this.retrivekelurahan = this.dataEntry.kelurahan_pasangan;
+      this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
+      this.dataPasanganForm.get('provinsi_pasangan')?.setValue(this.retriveKodeProvinsi + '|' + this.retriveprovinsi);
+      this.onChange(this.retriveKodeProvinsi + '|' + this.retriveprovinsi);
+      this.onChangekota(this.retriveKodeKota + '|' + this.retrivekabkota);
+      this.onChangekecamatan(this.retriveKodeKecamatan + '|' + this.retrivekecamatan);
     });
   }
 
@@ -447,5 +305,10 @@ export class DataPasanganComponent implements OnInit {
       event.preventDefault();
       return;
     }
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }
