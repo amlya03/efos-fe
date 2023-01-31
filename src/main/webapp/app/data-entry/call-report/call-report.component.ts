@@ -259,6 +259,20 @@ export class CallReportComponent implements OnInit {
         const ValidasiNoKontakHr = <FormControl>this.callReportForm.get('no_kontak_hr');
         const ValidasiTakeHomePay = <FormControl>this.callReportForm.get('take_home_pay');
 
+        const Validasitipe_pekerjaan_pasangan = <FormControl>this.callReportForm.get('tipe_pekerjaan_pasangan');
+        const Validasistatus_pekerjaan_pasangan = <FormControl>this.callReportForm.get('status_pekerjaan_pasangan');
+        const Validasilama_bekerja_bulan_pasangan = <FormControl>this.callReportForm.get('lama_bekerja_bulan_pasangan');
+        const Validasilama_bekerja_tahun_pasangan = <FormControl>this.callReportForm.get('lama_bekerja_tahun_pasangan');
+        const Validasijabatan_terakhir_pasangan = <FormControl>this.callReportForm.get('jabatan_terakhir_pasangan');
+        const Validasinama_perusahaan_pasangan = <FormControl>this.callReportForm.get('nama_perusahaan_pasangan');
+        const Validasibidang_usaha_pasangan = <FormControl>this.callReportForm.get('bidang_usaha_pasangan');
+        const Validasiskala_perusahaan_pasangan = <FormControl>this.callReportForm.get('skala_perusahaan_pasangan');
+        const Validasitahun_berdiri_perusahaan_pasangan = <FormControl>this.callReportForm.get('tahun_berdiri_perusahaan_pasangan');
+        const Validasialamat_perusahaan_pasangan = <FormControl>this.callReportForm.get('alamat_perusahaan_pasangan');
+        const Validasijumlah_karyawan_perusahaan_pasangan = <FormControl>this.callReportForm.get('jumlah_karyawan_perusahaan_pasangan');
+        const Validasikondisi_pandemi_perusahaan_pasangan = <FormControl>this.callReportForm.get('kondisi_pandemi_perusahaan_pasangan');
+        const Validasino_kontak_hr_pasangan = <FormControl>this.callReportForm.get('no_kontak_hr_pasangan');
+
         ValidasiAlamatTinggal.setValidators([Validators.required]);
         ValidasiTanggalLahir.setValidators([Validators.required]);
         ValidasiStatusKawin.setValidators([Validators.required]);
@@ -273,10 +287,36 @@ export class CallReportComponent implements OnInit {
           ValidasiStatusAgunan.setValidators(null);
           ValidasiDokumenAgunan.setValidators(null);
           ValidasiPosisiDokumen.setValidators(null);
+          Validasitipe_pekerjaan_pasangan.setValidators(null);
+          Validasistatus_pekerjaan_pasangan.setValidators(null);
+          Validasilama_bekerja_bulan_pasangan.setValidators(null);
+          Validasilama_bekerja_tahun_pasangan.setValidators(null);
+          Validasijabatan_terakhir_pasangan.setValidators(null);
+          Validasinama_perusahaan_pasangan.setValidators(null);
+          Validasibidang_usaha_pasangan.setValidators(null);
+          Validasiskala_perusahaan_pasangan.setValidators(null);
+          Validasitahun_berdiri_perusahaan_pasangan.setValidators(null);
+          Validasialamat_perusahaan_pasangan.setValidators(null);
+          Validasijumlah_karyawan_perusahaan_pasangan.setValidators(null);
+          Validasikondisi_pandemi_perusahaan_pasangan.setValidators(null);
+          Validasino_kontak_hr_pasangan.setValidators(null);
         } else {
           ValidasiStatusAgunan.setValidators([Validators.required]);
           ValidasiDokumenAgunan.setValidators([Validators.required]);
           ValidasiPosisiDokumen.setValidators([Validators.required]);
+          Validasitipe_pekerjaan_pasangan.setValidators([Validators.required]);
+          Validasistatus_pekerjaan_pasangan.setValidators([Validators.required]);
+          Validasilama_bekerja_bulan_pasangan.setValidators([Validators.required]);
+          Validasilama_bekerja_tahun_pasangan.setValidators([Validators.required]);
+          Validasijabatan_terakhir_pasangan.setValidators([Validators.required]);
+          Validasinama_perusahaan_pasangan.setValidators([Validators.required]);
+          Validasibidang_usaha_pasangan.setValidators([Validators.required]);
+          Validasiskala_perusahaan_pasangan.setValidators([Validators.required]);
+          Validasitahun_berdiri_perusahaan_pasangan.setValidators([Validators.required]);
+          Validasialamat_perusahaan_pasangan.setValidators([Validators.required]);
+          Validasijumlah_karyawan_perusahaan_pasangan.setValidators([Validators.required]);
+          Validasikondisi_pandemi_perusahaan_pasangan.setValidators([Validators.required]);
+          Validasino_kontak_hr_pasangan.setValidators([Validators.required]);
         }
         if (this.daWa1.kategori_pekerjaan === 'Fix Income') {
           ValidasiTipePekerjaan.setValidators([Validators.required]);

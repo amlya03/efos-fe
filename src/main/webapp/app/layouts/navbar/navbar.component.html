@@ -647,7 +647,11 @@
       (router.url === '/upload_document/upload_document_de?curef=' + this.curef + '&app_no_de=' + this.app_no_de &&
         untukSessionRole === 'BRANCHMANAGER') ||
       (router.url === '/upload_document/upload_document_agunan?curef=' + this.curef + '&app_no_de=' + this.app_no_de &&
-        untukSessionRole === 'BRANCHMANAGER')
+        untukSessionRole === 'BRANCHMANAGER') ||
+      (router.url === '/upload_document/upload_document_de?curef=' + this.curef + '&app_no_de=' + this.app_no_de &&
+        untukSessionRole === 'VER_PRE_SPV') ||
+      (router.url === '/upload_document/upload_document_agunan?curef=' + this.curef + '&app_no_de=' + this.app_no_de &&
+        untukSessionRole === 'VER_PRE_SPV')
     "
   >
     <!-- <div>
@@ -796,12 +800,11 @@
       routerLink="upload_document/upload_document_de"
       [queryParams]="{
         curef: this.curef,
-
         app_no_de: this.app_no_de
       }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngSwitchCase="'BRANCHMANAGER'"
+      *ngIf="untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
     >
       <h6>Upload Document Data Entry</h6>
     </a>
@@ -812,10 +815,10 @@
       [routerLinkActiveOptions]="{ exact: true }"
       [queryParams]="{
         curef: this.curef,
-
         app_no_de: this.app_no_de
       }"
-      *ngSwitchCase="'BRANCHMANAGER'"
+      *ngIf="untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
+      [hidden]="dataEntry.kode_fasilitas_name === 'PTA'"
     >
       <h6>Upload Document Agunan</h6>
     </a>
@@ -826,7 +829,6 @@
       [routerLinkActiveOptions]="{ exact: true }"
       [queryParams]="{
         curef: this.curef,
-
         app_no_de: this.app_no_de
       }"
       *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
@@ -847,7 +849,6 @@
       routerLink="upload_document/upload_document_de"
       [queryParams]="{
         curef: this.curef,
-
         app_no_de: this.app_no_de
       }"
       [routerLinkActive]="'active'"

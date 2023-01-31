@@ -106,7 +106,9 @@
   (click)="updateStatus()"
   *ngIf="dataEntry.kode_fasilitas_name === 'PTA'"
   style="float: right"
-  [hidden]="this.untukSessionRole === 'BRANCHMANAGER'"
+  [hidden]="
+    this.untukSessionRole === 'BRANCHMANAGER' || (dataEntry.kode_fasilitas_name === 'PTA' && this.untukSessionRole === 'VER_PRE_SPV')
+  "
 >
   Update Status
 </button>
@@ -114,7 +116,10 @@
   (click)="next()"
   class="btn btn-warning"
   style="float: left"
-  *ngIf="dataEntry.kode_fasilitas_name === 'PTA' && this.untukSessionRole === 'BRANCHMANAGER'"
+  *ngIf="
+    (dataEntry.kode_fasilitas_name === 'PTA' && this.untukSessionRole === 'BRANCHMANAGER') ||
+    (dataEntry.kode_fasilitas_name === 'PTA' && this.untukSessionRole === 'VER_PRE_SPV')
+  "
 >
   Selanjutnya
 </button>

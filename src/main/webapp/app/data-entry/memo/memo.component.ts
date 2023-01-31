@@ -115,8 +115,6 @@ export class MemoComponent implements OnInit {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Call Report!', 'error');
                 } else if (uploadDE == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Data Entry!', 'error');
-                } else if (uploadDEA == 0) {
-                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Agunan!', 'error');
                 } else {
                   this.checkBM == 0;
                 }
@@ -145,18 +143,12 @@ export class MemoComponent implements OnInit {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Personal Info!', 'error');
                 } else if (jobInfo == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Job Info!', 'error');
-                } else if (dataPas == 0) {
-                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Data Pasangan!', 'error');
-                } else if (pekerPas == 0) {
-                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Pekerjaan Pasangan!', 'error');
                 } else if (strukturPemb == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Struktur Pembiayaan!', 'error');
                 } else if (callReport == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Call Report!', 'error');
                 } else if (uploadDE == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Data Entry!', 'error');
-                } else if (uploadDEA == 0) {
-                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Agunan!', 'error');
                 } else {
                   this.checkBM == 0;
                 }

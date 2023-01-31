@@ -323,7 +323,7 @@
       <br />
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Down Payment</label>
-        <div class="col-sm-8">
+        <div [ngClass]="dataEntry.kode_fasilitas_name === 'PTA' ? 'col-sm-8' : 'col-sm-5'">
           <input
             type="text"
             class="form-control"
@@ -333,9 +333,9 @@
             [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
           />
         </div>
-        <!-- <div class="col-sm-3">
+        <div class="col-sm-3" [hidden]="dataEntry.kode_fasilitas_name === 'PTA'">
           <label>Min 20%</label>
-        </div> -->
+        </div>
       </div>
       <br />
       <div class="form-group row">

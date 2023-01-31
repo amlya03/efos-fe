@@ -96,7 +96,7 @@ export class KesimpulanComponent implements OnInit {
         })
         .subscribe({
           next: response => this.router.navigate(['/verification/memo'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } }),
-          error: error => console.warn(error),
+          // error: error => console.warn(error),
         });
     } else {
       this.http
@@ -112,8 +112,13 @@ export class KesimpulanComponent implements OnInit {
         })
         .subscribe({
           next: response => this.router.navigate(['/verification/memo'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } }),
-          error: error => console.warn(error),
+          // error: error => console.warn(error),
         });
     }
+  }
+
+  // Selanjutnya
+  next() {
+    this.router.navigate(['/verification/memo'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

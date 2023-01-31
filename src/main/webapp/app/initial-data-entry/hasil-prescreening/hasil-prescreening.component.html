@@ -757,14 +757,14 @@
             <td style="text-align: center">
               {{
                 listLajangSlik.tanggal_mulai != '' || listLajangSlik.responseDesc !== 'request slik checking success'
-                  ? listLajangSlik.tanggal_mulai
+                  ? joinLajangTanggalMulai
                   : responseNasabah
               }}
             </td>
             <td style="text-align: center">
               {{
                 listLajangSlik.tanggal_jatuh_tempo != '' || listLajangSlik.responseDesc !== 'request slik checking success'
-                  ? listLajangSlik.tanggal_jatuh_tempo
+                  ? this.joinLajangJatuhTempoMulai
                   : responseNasabah
               }}
             </td>
@@ -903,14 +903,14 @@
           <td style="text-align: center">
             {{
               listMenikahSlik.tanggal_mulai != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
-                ? listMenikahSlik.tanggal_mulai
+                ? joinMenikahTanggalMulai
                 : responsePasangan
             }}
           </td>
           <td style="text-align: center">
             {{
               listMenikahSlik.tanggal_jatuh_tempo != '' || listMenikahSlik.responseDesc !== 'request slik checking success'
-                ? listMenikahSlik.tanggal_jatuh_tempo
+                ? joinMenikahJatuhTempoMulai
                 : responsePasangan
             }}
           </td>

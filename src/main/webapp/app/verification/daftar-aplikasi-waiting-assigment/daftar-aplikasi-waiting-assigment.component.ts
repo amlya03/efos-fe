@@ -193,10 +193,14 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
     });
   }
 
-  viewdataentry(getCuref: any, getStatus: any, getAppNoDe: any): void {
-    this.router.navigate(['/data-entry/personalinfo'], {
-      queryParams: { curef: getCuref, statusPerkawinan: getStatus, app_no_de: getAppNoDe },
-    });
+  viewdataentry(getCuref: any, getAppNoDe: any): void {
+    this.router
+      .navigate(['/data-entry/personalinfo'], {
+        queryParams: { curef: getCuref, app_no_de: getAppNoDe },
+      })
+      .then(() => {
+        window.location.reload();
+      });
     // this.router.navigate(['/data-entry/personalinfo'], { queryParams: { app_no_de: getAppNoDe } });
   }
   // /////////////////////////Untuk Alert/////////////////////////////////////

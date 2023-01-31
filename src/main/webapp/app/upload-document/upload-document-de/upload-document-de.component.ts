@@ -148,8 +148,8 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   // Next untuk BM && PTA
   next() {
     this.SessionStorageService.store('uploadDE', 1);
-    this.SessionStorageService.store('uploadDEA', 1);
-    this.router.navigate(['/upload_document/upload_document_agunan'], {
+    // this.SessionStorageService.store('uploadDEA', 1);
+    this.router.navigate(['/data-entry/memo'], {
       queryParams: { curef: this.dataEntry.curef, app_no_de: this.dataEntry.app_no_de },
     });
   }
