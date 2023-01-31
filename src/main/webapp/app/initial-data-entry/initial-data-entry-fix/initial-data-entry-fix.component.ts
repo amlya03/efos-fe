@@ -23,7 +23,6 @@ import { refListJumlahKaryawan } from '../../data-entry/services/config/refListJ
 import { environment } from 'environments/environment';
 import { ServicesUploadDocumentService } from 'app/upload-document/services/services-upload-document.service';
 import Swal from 'sweetalert2';
-import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'jhi-initial-data-entry-fix',
