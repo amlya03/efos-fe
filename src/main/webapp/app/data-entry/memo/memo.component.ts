@@ -83,89 +83,6 @@ export class MemoComponent implements OnInit {
     let callReport = this.SessionStorageService.retrieve('callReport');
     let uploadDE = this.SessionStorageService.retrieve('uploadDE');
     let uploadDEA = this.SessionStorageService.retrieve('uploadDEA');
-    if (this.untukSessionRole === 'BRANCHMANAGER') {
-      if (this.dataEntryModel.status_perkawinan === 'Lajang') {
-        if (this.dataEntryModel.kode_fasilitas_name === 'PTA') {
-          if (personalInfo == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Personal Info!', 'error');
-          } else if (jobInfo == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Job Info!', 'error');
-          } else if (strukturPemb == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Struktur Pembiayaan!', 'error');
-          } else if (callReport == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Call Report!', 'error');
-          } else if (uploadDE == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Data Entry!', 'error');
-          } else if (uploadDEA == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Agunan!', 'error');
-          } else {
-            this.checkBM == 0;
-          }
-        } else {
-          if (personalInfo == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Personal Info!', 'error');
-          } else if (jobInfo == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Job Info!', 'error');
-          } else if (collateral == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Collateral!', 'error');
-          } else if (strukturPemb == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Struktur Pembiayaan!', 'error');
-          } else if (callReport == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Call Report!', 'error');
-          } else if (uploadDE == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Data Entry!', 'error');
-          } else if (uploadDEA == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Agunan!', 'error');
-          } else {
-            this.checkBM == 0;
-          }
-        }
-      } else {
-        if (this.dataEntryModel.kode_fasilitas_name === 'PTA') {
-          if (personalInfo == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Personal Info!', 'error');
-          } else if (jobInfo == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Job Info!', 'error');
-          } else if (dataPas == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Data Pasangan!', 'error');
-          } else if (pekerPas == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Pekerjaan Pasangan!', 'error');
-          } else if (strukturPemb == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Struktur Pembiayaan!', 'error');
-          } else if (callReport == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Call Report!', 'error');
-          } else if (uploadDE == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Data Entry!', 'error');
-          } else if (uploadDEA == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Agunan!', 'error');
-          } else {
-            this.checkBM == 0;
-          }
-        } else {
-          if (personalInfo == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Personal Info!', 'error');
-          } else if (jobInfo == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Job Info!', 'error');
-          } else if (dataPas == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Data Pasangan!', 'error');
-          } else if (pekerPas == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Pekerjaan Pasangan!', 'error');
-          } else if (collateral == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Collateral!', 'error');
-          } else if (strukturPemb == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Struktur Pembiayaan!', 'error');
-          } else if (callReport == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Call Report!', 'error');
-          } else if (uploadDE == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Data Entry!', 'error');
-          } else if (uploadDEA == 0) {
-            Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Agunan!', 'error');
-          } else {
-            this.checkBM == 0;
-          }
-        }
-      }
-    }
 
     setTimeout(() => {
       this.fileUploadService.getMemoUpload(this.curef, this.app_no_de).subscribe(data => {
@@ -181,9 +98,94 @@ export class MemoComponent implements OnInit {
     }, 5);
 
     setTimeout(() => {
-      this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
-        this.dataEntryModel = data.result;
-        this.tampilanfixornon = data.result.kategori_pekerjaan;
+      this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe({
+        next: data => {
+          this.dataEntryModel = data.result;
+          this.tampilanfixornon = data.result.kategori_pekerjaan;
+          if (this.untukSessionRole === 'BRANCHMANAGER') {
+            if (this.dataEntryModel.status_perkawinan === 'Lajang') {
+              if (this.dataEntryModel.kode_fasilitas_name === 'PTA') {
+                if (personalInfo == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Personal Info!', 'error');
+                } else if (jobInfo == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Job Info!', 'error');
+                } else if (strukturPemb == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Struktur Pembiayaan!', 'error');
+                } else if (callReport == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Call Report!', 'error');
+                } else if (uploadDE == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Data Entry!', 'error');
+                } else if (uploadDEA == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Agunan!', 'error');
+                } else {
+                  this.checkBM == 0;
+                }
+              } else {
+                if (personalInfo == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Personal Info!', 'error');
+                } else if (jobInfo == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Job Info!', 'error');
+                } else if (collateral == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Collateral!', 'error');
+                } else if (strukturPemb == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Struktur Pembiayaan!', 'error');
+                } else if (callReport == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Call Report!', 'error');
+                } else if (uploadDE == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Data Entry!', 'error');
+                } else if (uploadDEA == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Agunan!', 'error');
+                } else {
+                  this.checkBM == 0;
+                }
+              }
+            } else {
+              if (this.dataEntryModel.kode_fasilitas_name === 'PTA') {
+                if (personalInfo == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Personal Info!', 'error');
+                } else if (jobInfo == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Job Info!', 'error');
+                } else if (dataPas == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Data Pasangan!', 'error');
+                } else if (pekerPas == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Pekerjaan Pasangan!', 'error');
+                } else if (strukturPemb == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Struktur Pembiayaan!', 'error');
+                } else if (callReport == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Call Report!', 'error');
+                } else if (uploadDE == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Data Entry!', 'error');
+                } else if (uploadDEA == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Agunan!', 'error');
+                } else {
+                  this.checkBM == 0;
+                }
+              } else {
+                if (personalInfo == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Personal Info!', 'error');
+                } else if (jobInfo == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Job Info!', 'error');
+                } else if (dataPas == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Data Pasangan!', 'error');
+                } else if (pekerPas == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Pekerjaan Pasangan!', 'error');
+                } else if (collateral == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Collateral!', 'error');
+                } else if (strukturPemb == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Struktur Pembiayaan!', 'error');
+                } else if (callReport == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Call Report!', 'error');
+                } else if (uploadDE == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Data Entry!', 'error');
+                } else if (uploadDEA == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Agunan!', 'error');
+                } else {
+                  this.checkBM == 0;
+                }
+              }
+            }
+          }
+        },
       });
     }, 10);
 
