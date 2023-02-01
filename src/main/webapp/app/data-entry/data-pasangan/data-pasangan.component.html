@@ -169,7 +169,7 @@
             type="date"
             id="tanggal_lahir_pasangan"
             formControlName="tanggal_lahir_pasangan"
-            (change)="hitungUsia()"
+            (change)="hitungUsia(this.dataPasanganForm.get('tanggal_lahir_pasangan')?.value)"
           />
         </div>
       </div>

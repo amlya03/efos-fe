@@ -312,7 +312,6 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                   }, 5);
                   this.dataslik = data.result.dataSlikResult;
                   setTimeout(() => {
-                    window.location.reload();
                     this.dataslik.forEach((response, index) => {
                       if (response.status_applicant === 'Debitur Utama') {
                         this.listLajangSlik.push(response);
@@ -331,11 +330,13 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                       }
                       setTimeout(() => {
                         if (index == data.result.dataSlikResult.length - 1) {
+                          window.location.reload();
                           this.dtTrigger.next(this.responseNasabah);
                         }
-                      }, index * 1);
+                      }, index * 10);
                     });
-                  }, 10);
+                    window.location.reload();
+                  }, 300);
                 },
               });
             } else {
@@ -612,10 +613,13 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                                         next: data => {
                                           setTimeout(() => {
                                             if (data.code == 200) {
+                                              let responseResultSukses: any;
                                               const responseSlikMenikah = data.result.responseDesc;
                                               if (responseSlikMenikah === 'request slik checking success') {
                                                 this.responseSlikMenikah = 1;
+                                                responseResultSukses = '';
                                               } else {
+                                                responseResultSukses = data.result.dataSlikResult;
                                                 this.responseSlikMenikah = 0;
                                               }
                                               this.dataslik = data.result.responseObject;
@@ -623,7 +627,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                                                 if (element.statusApplicant === 'Debitur Utama') {
                                                   this.listLajangSlik.push(element);
                                                   if (this.listLajangSlik[0].idNumber === 'undefined') {
-                                                    this.responseNasabah = this.listLajangSlik[0].response_description;
+                                                    this.responseNasabah = responseResultSukses[0].response_description;
                                                   } else {
                                                     this.responseNasabah = 'checking slik on process';
                                                   }
@@ -649,21 +653,34 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                                   } else {
                                     this.dataslik = data.result.dataSlikResult;
                                     setTimeout(() => {
+                                      let responseFailedLaj: any;
+                                      let responseFailedMen: any;
                                       this.dataslik.forEach(response => {
-                                        if (response.status_applicant === 'Debitur Utama') {
+                                        if (response.status_applicant === 'Debitur Utama' || response.status_applicant == '') {
                                           this.listLajangSlik.push(response);
-                                          if (this.listLajangSlik[0].idNumber === 'undefined') {
-                                            this.responseNasabah = this.listLajangSlik[0].response_description;
+                                          // if (this.listLajangSlik[0].idNumber === 'undefined') {
+                                          responseFailedLaj = this.listLajangSlik[0].response_description;
+                                          if (responseFailedLaj.includes('get SLIK Result Failed')) {
+                                            this.responseNasabah = 'SLIK Result Failed';
                                           } else {
-                                            this.responseNasabah = 'checking slik on process';
+                                            this.responseNasabah = this.listLajangSlik[0].response_description;
                                           }
+                                          //   console.warn(this.responseNasabah)
+                                          // } else {
+                                          //   this.responseNasabah = 'checking slik on process';
+                                          // }
                                         } else {
                                           this.listMenikahSlik.push(response);
-                                          if (this.listMenikahSlik[0].idNumber === 'undefined') {
-                                            this.responsePasangan = this.listMenikahSlik[0].response_description;
+                                          // if (this.listMenikahSlik[0].idNumber === 'undefined') {
+                                          responseFailedMen = this.listMenikahSlik[0].response_description;
+                                          if (responseFailedMen.includes('get SLIK Result Failed')) {
+                                            this.responsePasangan = 'SLIK Result Failed';
                                           } else {
-                                            this.responsePasangan = 'checking slik on process';
+                                            this.responsePasangan = this.listMenikahSlik[0].response_description;
                                           }
+                                          // } else {
+                                          //   this.responsePasangan = 'checking slik on process';
+                                          // }
                                         }
                                       });
                                       setTimeout(() => {
@@ -841,7 +858,6 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                     if (data.result == '') {
                       this.getLoading(false);
                     }
-                    this.resultDataSlik = this.resultDataSlik;
                     this.listLajangSlik = data.result.dataSlikResult;
 
                     if (data.result.dataSlikResult == '') {
@@ -861,7 +877,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                     }, 20);
 
                     setTimeout(() => {
-                      if (this.resultDataSlik == '') {
+                      if (data.result.dataSlikResult == '') {
                         this.http
                           .post<any>(this.baseUrl + 'v1/efos-ide/slik_verify', {
                             channelID: 'EFOS',
@@ -893,16 +909,39 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                               });
                               this.dtTrigger.unsubscribe();
                               if (data.code == 200) {
-                                this.dtTrigger.next(this.resultDataSlik);
+                                this.responseNasabah = this.listLajangSlik[0].response_description;
+                                this.dtTrigger.next(this.listLajangSlik);
                                 this.getLoading(false);
                               } else {
-                                this.dtTrigger.next(this.resultDataSlik);
+                                this.responseNasabah = this.listLajangSlik[0].response_description;
+                                this.dtTrigger.next(this.listLajangSlik);
                                 this.getLoading(false);
                               }
                             },
                           });
                       } else {
-                        this.dtTrigger.next(this.resultDataSlik);
+                        this.responseNasabah = this.listLajangSlik[0].response_description;
+                        this.listLajangSlik.forEach(data => {
+                          // ///////////////////// Mulai ////////////////////////////
+                          let tanggalMulaiLajang: any;
+                          tanggalMulaiLajang = data.tanggal_mulai;
+                          let resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
+                          let resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
+                          let resultMulaiTanggal = tanggalMulaiLajang.slice(6);
+                          this.joinLajangTanggalMulai = resultMulaiTahun + '/' + resultMulaiBulan + '/' + resultMulaiTanggal;
+                          // ///////////////////// Mulai ////////////////////////////
+
+                          // ///////////////////// Jatuh Tempo ////////////////////////////
+                          let tanggalJatuhTempoLajang: any;
+                          tanggalJatuhTempoLajang = data.tanggal_jatuh_tempo;
+                          let resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
+                          let resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
+                          let resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
+                          this.joinLajangJatuhTempoMulai =
+                            resultJatuhTempoTahun + '/' + resultJatuhTempoBulan + '/' + resultJatuhTempoTanggal;
+                          // ///////////////////// Jatuh Tempo ////////////////////////////
+                        });
+                        this.dtTrigger.next(this.listLajangSlik);
                       }
                     }, 30);
                   },

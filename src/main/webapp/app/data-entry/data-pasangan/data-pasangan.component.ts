@@ -157,15 +157,15 @@ export class DataPasanganComponent implements OnInit {
       this.dataPasanganForm.setValue(retriveDataPasangan);
 
       setTimeout(() => {
-        this.hitungUsia();
+        this.hitungUsia(this.dataEntry.tanggal_lahir_pasangan);
         this.carimenggunakankodepos(this.dataEntry.kode_pos_pasangan);
         this.getLoading(false);
       }, 300);
     });
   }
 
-  hitungUsia() {
-    const getValueTanggal = +new Date(this.dataPasanganForm.value.tanggal_lahir_pasangan);
+  hitungUsia(tgl: any) {
+    const getValueTanggal = +new Date(tgl);
     //////////////////////////// ini buat dapet bulan ////////////////////////////
     const getTahun = +~~((Date.now() - getValueTanggal) / 31557600000);
     this.dataPasanganForm.get('usia_pasangan')?.setValue(getTahun);
