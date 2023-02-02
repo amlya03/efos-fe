@@ -211,7 +211,7 @@ export class InitialDataEntryFixComponent implements OnInit {
 
       // /////////////// Pasangan /////////////////////////////////
       nama_pasangan: '',
-      jenis_kelamin_pasangan: '',
+      jenis_kelamin_pasangan: { value: '', disabled: true },
       tanggal_lahir_pasangan: '',
       usia_pasangan: '',
       tempat_lahir_pasangan: '',

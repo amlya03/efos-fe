@@ -624,7 +624,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                                               }
                                               this.dataslik = data.result.responseObject;
                                               this.dataslik.forEach(element => {
-                                                if (element.statusApplicant === 'Debitur Utama') {
+                                                if (element.statusApplicant === 'Debitur Utama' || element.statusApplicant == '') {
                                                   this.listLajangSlik.push(element);
                                                   if (this.listLajangSlik[0].idNumber === 'undefined') {
                                                     this.responseNasabah = responseResultSukses[0].response_description;
