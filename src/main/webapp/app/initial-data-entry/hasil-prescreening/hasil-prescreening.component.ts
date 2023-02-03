@@ -624,7 +624,11 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                                               }
                                               this.dataslik = data.result.responseObject;
                                               this.dataslik.forEach(element => {
-                                                if (element.statusApplicant === 'Debitur Utama' || element.statusApplicant == '') {
+                                                if (
+                                                  element.statusApplicant === 'Debitur Utama' ||
+                                                  element.statusApplicant == '' ||
+                                                  element.statusApplicant == null
+                                                ) {
                                                   this.listLajangSlik.push(element);
                                                   if (this.listLajangSlik[0].idNumber === 'undefined') {
                                                     this.responseNasabah = responseResultSukses[0].response_description;
@@ -656,7 +660,12 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                                       let responseFailedLaj: any;
                                       let responseFailedMen: any;
                                       this.dataslik.forEach(response => {
-                                        if (response.status_applicant === 'Debitur Utama' || response.status_applicant == '') {
+                                        if (
+                                          response.status_applicant === 'Debitur Utama' ||
+                                          response.status_applicant == '' ||
+                                          response.status_applicant == null
+                                        ) {
+                                          // alert(this.dataslik[0].status_applicant)
                                           this.listLajangSlik.push(response);
                                           // if (this.listLajangSlik[0].idNumber === 'undefined') {
                                           responseFailedLaj = this.listLajangSlik[0].response_description;
@@ -910,10 +919,50 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                               this.dtTrigger.unsubscribe();
                               if (data.code == 200) {
                                 this.responseNasabah = this.listLajangSlik[0].response_description;
+                                this.listLajangSlik.forEach(data => {
+                                  // ///////////////////// Mulai ////////////////////////////
+                                  let tanggalMulaiLajang: any;
+                                  tanggalMulaiLajang = data.tanggal_mulai;
+                                  let resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
+                                  let resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
+                                  let resultMulaiTanggal = tanggalMulaiLajang.slice(6);
+                                  this.joinLajangTanggalMulai = resultMulaiTahun + '/' + resultMulaiBulan + '/' + resultMulaiTanggal;
+                                  // ///////////////////// Mulai ////////////////////////////
+
+                                  // ///////////////////// Jatuh Tempo ////////////////////////////
+                                  let tanggalJatuhTempoLajang: any;
+                                  tanggalJatuhTempoLajang = data.tanggal_jatuh_tempo;
+                                  let resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
+                                  let resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
+                                  let resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
+                                  this.joinLajangJatuhTempoMulai =
+                                    resultJatuhTempoTahun + '/' + resultJatuhTempoBulan + '/' + resultJatuhTempoTanggal;
+                                  // ///////////////////// Jatuh Tempo ////////////////////////////
+                                });
                                 this.dtTrigger.next(this.listLajangSlik);
                                 this.getLoading(false);
                               } else {
                                 this.responseNasabah = this.listLajangSlik[0].response_description;
+                                this.listLajangSlik.forEach(data => {
+                                  // ///////////////////// Mulai ////////////////////////////
+                                  let tanggalMulaiLajang: any;
+                                  tanggalMulaiLajang = data.tanggal_mulai;
+                                  let resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
+                                  let resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
+                                  let resultMulaiTanggal = tanggalMulaiLajang.slice(6);
+                                  this.joinLajangTanggalMulai = resultMulaiTahun + '/' + resultMulaiBulan + '/' + resultMulaiTanggal;
+                                  // ///////////////////// Mulai ////////////////////////////
+
+                                  // ///////////////////// Jatuh Tempo ////////////////////////////
+                                  let tanggalJatuhTempoLajang: any;
+                                  tanggalJatuhTempoLajang = data.tanggal_jatuh_tempo;
+                                  let resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
+                                  let resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
+                                  let resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
+                                  this.joinLajangJatuhTempoMulai =
+                                    resultJatuhTempoTahun + '/' + resultJatuhTempoBulan + '/' + resultJatuhTempoTanggal;
+                                  // ///////////////////// Jatuh Tempo ////////////////////////////
+                                });
                                 this.dtTrigger.next(this.listLajangSlik);
                                 this.getLoading(false);
                               }
@@ -982,8 +1031,9 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
               window.location.reload();
             });
         },
-        error: err => {
-          alert(err.error.message);
+        error: () => {
+          this.router.navigate(['/data-entry']);
+          // alert(err.error.message);
         },
       });
 

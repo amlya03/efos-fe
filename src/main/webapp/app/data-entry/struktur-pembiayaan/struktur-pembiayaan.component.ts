@@ -312,6 +312,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   }
 
   onchangefasilitas(kodefasilitasnya: any) {
+    this.getLoading(true);
     if (kodefasilitasnya == 'U') {
       $('#uang_muka').attr('hidden', 'hidden');
       $('#siapsiap').attr('hidden', 'hidden');
@@ -319,38 +320,71 @@ export class StrukturPembiayaanComponent implements OnInit {
       $('#siapsiap').removeAttr('hidden');
       $('#uang_muka').removeAttr('hidden');
     }
-    this.dataEntryService.getFetchProgramByKode(kodefasilitasnya).subscribe(data => {
-      this.kodeprogram = data.result;
+    this.dataEntryService.getFetchProgramByKode(kodefasilitasnya).subscribe({
+      next: data => {
+        this.getLoading(false);
+        this.kodeprogram = data.result;
+      },
+      error: () => {
+        this.getLoading(false);
+      },
     });
   }
 
   onchangeprogram(kodeProgram: any) {
+    this.getLoading(true);
     let kode = kodeProgram.split('|');
-    this.dataEntryService.getFetchProdukByKode(kode[0]).subscribe(data => {
-      this.kodeproduk = data.result;
+    this.dataEntryService.getFetchProdukByKode(kode[0]).subscribe({
+      next: data => {
+        this.getLoading(false);
+        this.kodeproduk = data.result;
+      },
+      error: () => {
+        this.getLoading(false);
+      },
     });
   }
 
   onchangeproduk(kodeProduk: any) {
+    this.getLoading(true);
     let kode = kodeProduk.split('|');
-    this.dataEntryService.getFetchSkemaByKode(kode[0]).subscribe(data => {
-      this.kodeskema = data.result;
-      //console.warn(this.kodeskema);
+    this.dataEntryService.getFetchSkemaByKode(kode[0]).subscribe({
+      next: data => {
+        this.getLoading(false);
+        this.kodeskema = data.result;
+      },
+      error: () => {
+        this.getLoading(false);
+      },
     });
   }
 
   onchangeskema(valueSkema: any) {
+    this.getLoading(true);
     const pemisahskemamaster = valueSkema.split('|');
     const programSkema = valueSkema.split('|');
     if (programSkema[1] === '1') {
       this.strukturForm.get('tipe_margin')?.setValue('FIX');
-      this.dataEntryService.getTenorFix(pemisahskemamaster[0]).subscribe(data => {
-        this.tenor = data.result;
+      this.dataEntryService.getTenorFix(pemisahskemamaster[0]).subscribe({
+        next: data => {
+          this.getLoading(false);
+          this.tenor = data.result;
+        },
+        error: () => {
+          this.getLoading(false);
+        },
       });
     } else {
+      this.getLoading(false);
       this.strukturForm.get('tipe_margin')?.setValue('STEPUP');
-      this.dataEntryService.getTenorNon(pemisahskemamaster[0]).subscribe(data => {
-        this.tenor = data.result;
+      this.dataEntryService.getTenorNon(pemisahskemamaster[0]).subscribe({
+        next: data => {
+          this.getLoading(false);
+          this.tenor = data.result;
+        },
+        error: () => {
+          this.getLoading(false);
+        },
       });
     }
   }
