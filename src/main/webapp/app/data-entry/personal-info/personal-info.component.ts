@@ -495,24 +495,24 @@ export class PersonalInfoComponent implements OnInit {
 
   onItemChange(event: any) {
     // alert(event.value)
-    if (event.value == 1) {
-      this.personalInfoForm.get('alamat_domisili')?.setValue(this.personalInfoForm.get('alamat_ktp')?.value);
-      this.personalInfoForm.get('rt_domisili')?.setValue(this.personalInfoForm.get('rt')?.value);
-      this.personalInfoForm.get('rw_domisili')?.setValue(this.personalInfoForm.get('rw')?.value);
-      this.personalInfoModel.provinsi_domisili = this.personalInfoModel.provinsi;
-      this.personalInfoModel.kabkota_domisili = this.personalInfoModel.kabkota;
-      this.personalInfoModel.kecamatan_domisili = this.personalInfoModel.kecamatan;
-      this.personalInfoModel.kelurahan_domisili = this.personalInfoModel.kelurahan;
-      this.personalInfoModel.kode_pos_domisili = this.personalInfoModel.kode_pos;
-    } else {
-      this.personalInfoForm.get('alamat_domisili')?.setValue(' ');
-      this.personalInfoForm.get('rt_domisili')?.setValue(' ');
-      this.personalInfoForm.get('rw_domisili')?.setValue(' ');
-      this.personalInfoModel.provinsi_domisili = '';
-      this.personalInfoModel.kabkota_domisili = '';
-      this.personalInfoModel.kecamatan_domisili = '';
-      this.personalInfoModel.kelurahan_domisili = '';
-    }
+    // if (event.value == 1) {
+    //   this.personalInfoForm.get('alamat_domisili')?.setValue(this.personalInfoForm.get('alamat_ktp')?.value);
+    //   this.personalInfoForm.get('rt_domisili')?.setValue(this.personalInfoForm.get('rt')?.value);
+    //   this.personalInfoForm.get('rw_domisili')?.setValue(this.personalInfoForm.get('rw')?.value);
+    //   this.personalInfoModel.provinsi_domisili = this.personalInfoModel.provinsi;
+    //   this.personalInfoModel.kabkota_domisili = this.personalInfoModel.kabkota;
+    //   this.personalInfoModel.kecamatan_domisili = this.personalInfoModel.kecamatan;
+    //   this.personalInfoModel.kelurahan_domisili = this.personalInfoModel.kelurahan;
+    //   this.personalInfoModel.kode_pos_domisili = this.personalInfoModel.kode_pos;
+    // } else {
+    //   this.personalInfoForm.get('alamat_domisili')?.setValue(' ');
+    //   this.personalInfoForm.get('rt_domisili')?.setValue(' ');
+    //   this.personalInfoForm.get('rw_domisili')?.setValue(' ');
+    //   this.personalInfoModel.provinsi_domisili = '';
+    //   this.personalInfoModel.kabkota_domisili = '';
+    //   this.personalInfoModel.kecamatan_domisili = '';
+    //   this.personalInfoModel.kelurahan_domisili = '';
+    // }
 
     if (event.value == 1) {
       this.personalInfoForm.get('alamat_domisili')?.setValue(this.personalInfoForm.get('alamat_ktp')?.value);

@@ -339,8 +339,8 @@ export class InitialDataEntryFixComponent implements OnInit {
       rw: '',
       jumlah_karyawan: '',
       npwp: '',
-      lama_bekerja_bulan: '',
-      lama_bekerja_tahun: '',
+      lama_bekerja_bulan: 0,
+      lama_bekerja_tahun: 0,
       no_siup: '',
       barang_jasa: '',
       posisi: '',
@@ -351,8 +351,8 @@ export class InitialDataEntryFixComponent implements OnInit {
       alamat_pekerjaan_sebelum: '',
       jenis_bidang_sebelum: '',
       sektor_ekonomi_sebelum: '',
-      lama_bekerja_bulan_sebelum: '0',
-      lama_bekerja_tahun_sebelum: '0',
+      lama_bekerja_bulan_sebelum: 0,
+      lama_bekerja_tahun_sebelum: 0,
     });
 
     const ValidasiNamaPerusahaaan = <FormControl>this.jobForm.get('nama_perusahaan');
@@ -2300,8 +2300,10 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   carimenggunakankodepost(kodepost: any) {
+    this.getLoading(true);
     this.dataEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
+        this.getLoading(false);
         if (this.clickKdPostLajang == 1) {
           this.responseKels = sukses.result.kels;
           this.responseKels.forEach(element => {
@@ -2350,8 +2352,10 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   carimenggunakankodepostp(kodepost: any) {
+    this.getLoading(true);
     this.dataEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
+        this.getLoading(false);
         if (this.clickKdPostMenikah == 1) {
           this.responseKelsMenikah = sukses.result.kels;
           this.responseKelsMenikah.forEach(element => {
@@ -2469,8 +2473,10 @@ export class InitialDataEntryFixComponent implements OnInit {
     this.jobForm.get('kode_pos')?.setValue(datakodepos[0]);
   }
   cariPekerPost(kodepost: any) {
+    this.getLoading(true);
     this.dataEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
+        this.getLoading(false);
         if (this.clickKdPostJob == 1) {
           this.responseKelsJob = sukses.result.kels;
           this.responseKelsJob.forEach(element => {
@@ -2531,24 +2537,24 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
   onItemChange(event: any) {
     // alert(event.value)
-    if (event.value == 1) {
-      this.ideForm.get('alamat_ktp_pasangan')?.setValue(this.ideForm.get('alamat_ktp')?.value);
-      this.ideForm.get('rt_pasangan')?.setValue(this.ideForm.get('rt')?.value);
-      this.ideForm.get('rw_pasangan')?.setValue(this.ideForm.get('rw')?.value);
-      this.modelIde.provinsi_pasangan = this.modelIde.provinsi;
-      this.modelIde.kabkota_pasangan = this.modelIde.kabkota;
-      this.modelIde.kecamatan_pasangan = this.modelIde.kecamatan;
-      this.modelIde.kelurahan_pasangan = this.modelIde.kelurahan;
-      this.modelIde.kode_pos_pasangan = this.modelIde.kode_pos;
-    } else {
-      this.ideForm.get('alamat_ktp_pasangan')?.setValue(' ');
-      this.ideForm.get('rt_pasangan')?.setValue(' ');
-      this.ideForm.get('rw_pasangan')?.setValue(' ');
-      this.modelIde.provinsi_pasangan = '';
-      this.modelIde.kabkota_pasangan = '';
-      this.modelIde.kecamatan_pasangan = '';
-      this.modelIde.kelurahan_pasangan = '';
-    }
+    // if (event.value == 1) {
+    //   this.ideForm.get('alamat_ktp_pasangan')?.setValue(this.ideForm.get('alamat_ktp')?.value);
+    //   this.ideForm.get('rt_pasangan')?.setValue(this.ideForm.get('rt')?.value);
+    //   this.ideForm.get('rw_pasangan')?.setValue(this.ideForm.get('rw')?.value);
+    //   this.modelIde.provinsi_pasangan = this.modelIde.provinsi;
+    //   this.modelIde.kabkota_pasangan = this.modelIde.kabkota;
+    //   this.modelIde.kecamatan_pasangan = this.modelIde.kecamatan;
+    //   this.modelIde.kelurahan_pasangan = this.modelIde.kelurahan;
+    //   this.modelIde.kode_pos_pasangan = this.modelIde.kode_pos;
+    // } else {
+    //   this.ideForm.get('alamat_ktp_pasangan')?.setValue(' ');
+    //   this.ideForm.get('rt_pasangan')?.setValue(' ');
+    //   this.ideForm.get('rw_pasangan')?.setValue(' ');
+    //   this.modelIde.provinsi_pasangan = '';
+    //   this.modelIde.kabkota_pasangan = '';
+    //   this.modelIde.kecamatan_pasangan = '';
+    //   this.modelIde.kelurahan_pasangan = '';
+    // }
 
     if (event.value == 1) {
       this.ideForm.get('alamat_pasangan')?.setValue(this.ideForm.get('alamat_ktp')?.value);
