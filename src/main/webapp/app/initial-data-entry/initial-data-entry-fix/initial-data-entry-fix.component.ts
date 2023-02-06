@@ -2462,6 +2462,9 @@ export class InitialDataEntryFixComponent implements OnInit {
         this.kotaChangeJob = data.result;
         this.jobForm.get('kabkota')?.setValue(this.kdKotaJob + '|' + this.kotaJob);
       },
+      error: () => {
+        this.getLoading(false);
+      },
     });
   }
   kotaPeker(value: any) {
@@ -2473,6 +2476,9 @@ export class InitialDataEntryFixComponent implements OnInit {
         this.kecChangeJob = data.result;
         this.jobForm.get('kecamatan')?.setValue(this.kdKecJob + '|' + this.kecJob);
       },
+      error: () => {
+        this.getLoading(false);
+      },
     });
   }
   kecPeker(value: any) {
@@ -2483,6 +2489,9 @@ export class InitialDataEntryFixComponent implements OnInit {
         this.getLoading(false);
         this.kelChangeJob = data.result;
         this.jobForm.get('kelurahan')?.setValue(this.kdKelJob + '|' + this.kelJob);
+      },
+      error: () => {
+        this.getLoading(false);
       },
     });
   }
@@ -2537,6 +2546,9 @@ export class InitialDataEntryFixComponent implements OnInit {
         this.provPeker(this.kdProJob + '|' + this.proJob);
         this.kotaPeker(this.kdKotaJob + '|' + this.kotaJob);
         this.kecPeker(this.kdKecJob + '|' + this.kecJob);
+      },
+      error: () => {
+        this.getLoading(false);
       },
     });
   }
