@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -21,6 +21,8 @@ import { refJenisPekerjaan } from '../services/config/refJenisPekerjaan.model';
   styleUrls: ['./personal-info.component.scss'],
 })
 export class PersonalInfoComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   personalInfoForm!: FormGroup;
   submitted = false;
@@ -424,9 +426,11 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   onChangeD(value: any) {
+    this.getLoading(true);
     const valueProv = value.split('|');
     this.datEntryService.getkabkota(valueProv[0]).subscribe({
       next: data => {
+        this.getLoading(false);
         this.daWakotaD = data.result;
         this.personalInfoForm.get('kabkota_domisili')?.setValue(this.untukKodeKobkotaD + '|' + this.untukkobkotaD);
       },
@@ -434,9 +438,11 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   onChangekotaD(value: any) {
+    this.getLoading(true);
     const valueKota = value.split('|');
     this.datEntryService.getkecamatan(valueKota[0]).subscribe({
       next: data => {
+        this.getLoading(false);
         this.kecamatanD = data.result;
         this.personalInfoForm.get('kecamatan_domisili')?.setValue(this.untukKodeKecamatanD + '|' + this.untukkecamatanD);
       },
@@ -444,9 +450,11 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   onChangekecamatanD(value: any) {
+    this.getLoading(true);
     const valueKecamatan = value.split('|');
     this.datEntryService.getkelurahan(valueKecamatan[0]).subscribe({
       next: data => {
+        this.getLoading(false);
         this.kelurahanD = data.result;
         this.personalInfoForm.get('kelurahan_domisili')?.setValue(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
       },
@@ -613,5 +621,10 @@ export class PersonalInfoComponent implements OnInit {
       event.preventDefault();
       return;
     }
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

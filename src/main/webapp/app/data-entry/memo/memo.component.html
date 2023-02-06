@@ -84,7 +84,7 @@
   <label class="col-sm-2 col-form-label">Isi Memo</label>
   <div class="col-sm-10">
     <textarea
-      [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+      [disabled]="this.untukSessionRole === 'BRANCHMANAGER' || this.untukSessionRole === 'VER_PRE_SPV'"
       class="form-control"
       rows="6"
       id="keterangan"
@@ -95,7 +95,7 @@
 <br />
 <div class="text-center">
   <button
-    [hidden]="this.untukSessionRole == 'VER_PRE_SPV'"
+    [hidden]="this.untukSessionRole === 'VER_PRE_SPV'"
     (click)="simpanmemo()"
     type="submit"
     id="update_memo"
@@ -106,7 +106,7 @@
     Simpan Memo
   </button>
   <button
-    [hidden]="this.untukSessionRole == 'VER_PRE_SPV'"
+    [hidden]="this.untukSessionRole === 'VER_PRE_SPV'"
     type="button"
     (click)="cetakmemo()"
     id="cetakYuk"
@@ -114,13 +114,12 @@
   >
     Cetak Memo<span class="btn-icon-right"><i class="fa fa-print"></i></span>
   </button>
-  <!-- (this.untukSessionRole == 'AO' && this.modelResultmemo == 1) || -->
   <button
     type="button"
-    [hidden]="
-      (this.untukSessionRole == 'AO' && this.resultGetMemoUpload == 1) ||
-      (this.untukSessionRole == 'BRANCHMANAGER' && this.valBM == 1 && this.checkBM == 1) ||
-      this.untukSessionRole == 'VER_PRE_SPV'
+    *ngIf="
+      (this.untukSessionRole === 'AO' && this.modelResultmemo == 0) ||
+      (this.untukSessionRole === 'BRANCHMANAGER' && this.valBM == 0 && this.checkBM == 0) ||
+      (this.untukSessionRole === 'VER_PRE_SPV' && this.valBM == 0 && this.checkBM == 0)
     "
     (click)="updatekeupload()"
     id="simpan_memo"
@@ -132,10 +131,9 @@
   </button>
   <button
     (click)="kembalikede()"
-    [hidden]="
-      (this.untukSessionRole == 'AO' && this.resultGetMemoUpload == 1) ||
-      (this.untukSessionRole == 'BRANCHMANAGER' && this.valBM == 1 && this.checkBM == 1) ||
-      this.untukSessionRole == 'VER_PRE_SPV'
+    *ngIf="
+      (this.untukSessionRole === 'BRANCHMANAGER' && this.valBM == 0 && this.checkBM == 0) ||
+      (this.untukSessionRole === 'VER_PRE_SPV' && this.valBM == 0 && this.checkBM == 0)
     "
     type="button"
     id="kembalide"
@@ -147,7 +145,7 @@
   </button>
   <button
     type="button"
-    [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'AO'"
+    [hidden]="this.untukSessionRole === 'BRANCHMANAGER' || this.untukSessionRole == 'AO'"
     (click)="backtoverifikatro()"
     id="selesai"
     name="selesai"

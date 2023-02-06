@@ -438,18 +438,22 @@ export class JobInfoComponent implements OnInit {
   }
 
   jenisbidangselect(value: any) {
+    this.getLoading(true);
     const idsektorpotongan = value.split('|');
     this.initialDataEntry.getSektor(idsektorpotongan[0]).subscribe({
       next: data => {
+        this.getLoading(false);
         this.getdatasektorekonomi = data.result;
       },
     });
   }
 
   jenisbidangsebelumselect(value: any) {
+    this.getLoading(true);
     const idsektorpotongan = value.split('|');
     this.initialDataEntry.getSektor(idsektorpotongan[0]).subscribe({
       next: data => {
+        this.getLoading(false);
         this.getdatasektorekonomi = data.result;
       },
     });
@@ -476,24 +480,30 @@ export class JobInfoComponent implements OnInit {
   }
 
   onChange(value: any) {
+    this.getLoading(true);
     const proValue = value.split('|');
     this.datEntryService.getkabkota(proValue[0]).subscribe(data => {
+      this.getLoading(false);
       this.daWakota = data.result;
       this.jobInfoForm.get('kabkota')?.setValue(this.retriveKodeKota + '|' + this.retrivekabkota);
     });
   }
 
   onChangekota(value: any) {
+    this.getLoading(true);
     const kotaValue = value.split('|');
     this.datEntryService.getkecamatan(kotaValue[0]).subscribe(data => {
+      this.getLoading(false);
       this.kecamatan = data.result;
       this.jobInfoForm.get('kecamatan')?.setValue(this.retriveKodeKecamatan + '|' + this.retrivekecamatan);
     });
   }
 
   onChangekecamatan(value: any) {
+    this.getLoading(true);
     const kecValue = value.split('|');
     this.datEntryService.getkelurahan(kecValue[0]).subscribe(data => {
+      this.getLoading(false);
       this.kelurahan = data.result;
       this.jobInfoForm.get('kelurahan')?.setValue(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
     });
@@ -506,32 +516,47 @@ export class JobInfoComponent implements OnInit {
   }
 
   onChangeD(value: any) {
+    this.getLoading(true);
     const proValue = value.split('|');
     this.datEntryService.getkabkota(proValue[0]).subscribe({
       next: res => {
+        this.getLoading(false);
         this.daWakotaD = res.result;
         this.datajobsebelum.get('kabkota_sebelum')?.setValue(this.kodeKotaSeb + '|' + this.dataretrivekabkotasebelum);
+      },
+      error: () => {
+        this.getLoading(false);
       },
     });
   }
 
   onChangekotaD(value: any) {
+    this.getLoading(true);
     const kotaValue = value.split('|');
     this.datEntryService.getkecamatan(kotaValue[0]).subscribe({
       next: res => {
+        this.getLoading(false);
         this.kecamatanD = res.result;
         this.datajobsebelum.get('kecamatan_sebelum')?.setValue(this.kodeKecSeb + '|' + this.dataretrivekecamatansebelum);
+      },
+      error: () => {
+        this.getLoading(false);
       },
     });
     //console.log();
   }
 
   onChangekecamatanD(value: any) {
+    this.getLoading(true);
     const kecValue = value.split('|');
     this.datEntryService.getkelurahan(kecValue[0]).subscribe({
       next: res => {
+        this.getLoading(false);
         this.kelurahanD = res.result;
         this.datajobsebelum.get('kelurahan_sebelum')?.setValue(this.kodeKelSeb + '|' + this.dataretrivekelurahansebelum);
+      },
+      error: () => {
+        this.getLoading(false);
       },
     });
     //console.log();
@@ -767,7 +792,9 @@ export class JobInfoComponent implements OnInit {
   }
 
   carimenggunakankodepost(kodepost: any) {
+    this.getLoading(true);
     this.datEntryService.getKdpost(kodepost).subscribe(data => {
+      this.getLoading(false);
       this.responseKels = data.result.kels;
       this.responseKels.forEach(element => {
         this.responseKels.push(element);
@@ -806,8 +833,10 @@ export class JobInfoComponent implements OnInit {
   ////sebelum
 
   carimenggunakankodepostsebelum(kodepost: any) {
+    this.getLoading(true);
     this.datEntryService.getKdpost(kodepost).subscribe({
       next: data => {
+        this.getLoading(false);
         if (this.clickKdPostSebelum == 1) {
           this.responseKelsSebelum = data.result.kels;
           this.responseKelsSebelum.forEach(element => {
@@ -852,6 +881,9 @@ export class JobInfoComponent implements OnInit {
         this.onChangeD(this.kodeProvSeb + '|' + this.dataretriveprovinsisebelum);
         this.onChangekotaD(this.kodeKotaSeb + '|' + this.dataretrivekabkotasebelum);
         this.onChangekecamatanD(this.kodeKecSeb + '|' + this.dataretrivekecamatansebelum);
+      },
+      error: () => {
+        this.getLoading(false);
       },
     });
 

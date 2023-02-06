@@ -535,6 +535,7 @@
               id="provinsi_domisili"
               formControlName="provinsi_domisili"
             >
+              <option value="">Pilih Data</option>
               <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                 {{ daWaprof.namaWilayah }}
               </option>
@@ -553,6 +554,7 @@
               id="kabkota_domisili"
               formControlName="kabkota_domisili"
             >
+              <option value="">Pilih Data</option>
               <option *ngFor="let daWakotaD of daWakotaD" value="{{ daWakotaD.kdWilayah }}|{{ daWakotaD.namaWilayah }}">
                 {{ daWakotaD.namaWilayah }}
               </option>
@@ -571,6 +573,7 @@
               id="kecamatan_domisili"
               formControlName="kecamatan_domisili"
             >
+              <option value="">Pilih Data</option>
               <option *ngFor="let daWakecamatanD of kecamatanD" value="{{ daWakecamatanD.kdWilayah }}|{{ daWakecamatanD.namaWilayah }}">
                 {{ daWakecamatanD.namaWilayah }}
               </option>
@@ -589,6 +592,7 @@
               id="kelurahan_domisili"
               formControlName="kelurahan_domisili"
             >
+              <option value="">Pilih Data</option>
               <option *ngFor="let daWakelurahanD of kelurahanD" value="{{ daWakelurahanD.kdPos }}|{{ daWakelurahanD.namaWilayah }}">
                 {{ daWakelurahanD.namaWilayah }}
               </option>
@@ -697,3 +701,4 @@
     </div>
   </div>
 </form>
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

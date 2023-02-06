@@ -2230,9 +2230,11 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   onChangeD(value: any) {
+    this.getLoading(true);
     const valueProv = value.split('|');
     this.dataEntryService.getkabkota(valueProv[0]).subscribe({
       next: data => {
+        this.getLoading(false);
         this.daWakotaD = data.result;
         this.ideForm.get('kabkota_pasangan')?.setValue(this.untukKodeKobkotaD + '|' + this.untukkobkotaD);
       },
@@ -2240,9 +2242,11 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   onChangekotaD(value: any) {
+    this.getLoading(true);
     const valueKota = value.split('|');
     this.dataEntryService.getkecamatan(valueKota[0]).subscribe({
       next: data => {
+        this.getLoading(false);
         this.kecamatanD = data.result;
         this.ideForm.get('kecamatan_pasangan')?.setValue(this.untukKodeKecamatanD + '|' + this.untukkecamatanD);
       },
@@ -2250,9 +2254,11 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   onChangekecamatanD(value: any) {
+    this.getLoading(true);
     const valueKecamatan = value.split('|');
     this.dataEntryService.getkelurahan(valueKecamatan[0]).subscribe({
       next: data => {
+        this.getLoading(false);
         this.kelurahanD = data.result;
         this.ideForm.get('kelurahan_pasangan')?.setValue(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
       },
@@ -2265,9 +2271,11 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   onChange(value: any) {
+    this.getLoading(true);
     const valueProv = value.split('|');
     this.dataEntryService.getkabkota(valueProv[0]).subscribe({
       next: data => {
+        this.getLoading(false);
         this.daWakota = data.result;
         this.ideForm.get('kabkota')?.setValue(this.untukKodeKobkota + '|' + this.untukkobkota);
       },
@@ -2275,9 +2283,11 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   onChangekota(value: any) {
+    this.getLoading(true);
     const valueKota = value.split('|');
     this.dataEntryService.getkecamatan(valueKota[0]).subscribe({
       next: data => {
+        this.getLoading(false);
         this.kecamatan = data.result;
         this.ideForm.get('kecamatan')?.setValue(this.untukKodeKecamatan + '|' + this.untukkecamatan);
       },
@@ -2285,9 +2295,11 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   onChangekecamatan(value: any) {
+    this.getLoading(true);
     const valueKecamatan = value.split('|');
     this.dataEntryService.getkelurahan(valueKecamatan[0]).subscribe({
       next: data => {
+        this.getLoading(false);
         this.kelurahan = data.result;
         this.ideForm.get('kelurahan')?.setValue(this.untukKodeKelurahan + '|' + this.untukkelurahan);
       },
@@ -2442,27 +2454,33 @@ export class InitialDataEntryFixComponent implements OnInit {
     });
   }
   provPeker(value: any) {
+    this.getLoading(true);
     const valueProv = value.split('|');
     this.dataEntryService.getkabkota(valueProv[0]).subscribe({
       next: data => {
+        this.getLoading(false);
         this.kotaChangeJob = data.result;
         this.jobForm.get('kabkota')?.setValue(this.kdKotaJob + '|' + this.kotaJob);
       },
     });
   }
   kotaPeker(value: any) {
+    this.getLoading(true);
     const valueKota = value.split('|');
     this.dataEntryService.getkecamatan(valueKota[0]).subscribe({
       next: data => {
+        this.getLoading(false);
         this.kecChangeJob = data.result;
         this.jobForm.get('kecamatan')?.setValue(this.kdKecJob + '|' + this.kecJob);
       },
     });
   }
   kecPeker(value: any) {
+    this.getLoading(true);
     const valueKecamatan = value.split('|');
     this.dataEntryService.getkelurahan(valueKecamatan[0]).subscribe({
       next: data => {
+        this.getLoading(false);
         this.kelChangeJob = data.result;
         this.jobForm.get('kelurahan')?.setValue(this.kdKelJob + '|' + this.kelJob);
       },

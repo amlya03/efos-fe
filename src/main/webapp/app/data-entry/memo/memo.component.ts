@@ -30,14 +30,14 @@ export class MemoComponent implements OnInit {
   resultGetMemoUpload = 0;
   memoModel: memomodel[] = [];
   detailMemoModel: detailMemo = new detailMemo();
-  modelResultmemo = 0;
+  modelResultmemo = 1;
   dataEntryModel: fetchAllDe = new fetchAllDe();
   tampilanfixornon: any;
   untukSessionRole: any;
   untukSessionusername: any;
   untukSessionfullname: any;
   popup: any;
-  valBM: any;
+  valBM = 1;
   checkBM = 1;
 
   constructor(
@@ -88,7 +88,7 @@ export class MemoComponent implements OnInit {
       this.fileUploadService.getMemoUpload(this.curef, this.app_no_de).subscribe(data => {
         this.getMemoUpload = data.result;
         // alert(data.result == '')
-        if (data.result == '') {
+        if (data.result == null) {
           this.resultGetMemoUpload = 1;
           this.getLoading(false);
         } else {
@@ -116,7 +116,7 @@ export class MemoComponent implements OnInit {
                 } else if (uploadDE == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Data Entry!', 'error');
                 } else {
-                  this.checkBM == 0;
+                  this.checkBM = 0;
                 }
               } else {
                 if (personalInfo == 0) {
@@ -134,7 +134,7 @@ export class MemoComponent implements OnInit {
                 } else if (uploadDEA == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Agunan!', 'error');
                 } else {
-                  this.checkBM == 0;
+                  this.checkBM = 0;
                 }
               }
             } else {
@@ -150,7 +150,7 @@ export class MemoComponent implements OnInit {
                 } else if (uploadDE == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Data Entry!', 'error');
                 } else {
-                  this.checkBM == 0;
+                  this.checkBM = 0;
                 }
               } else {
                 if (personalInfo == 0) {
@@ -172,7 +172,7 @@ export class MemoComponent implements OnInit {
                 } else if (uploadDEA == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Upload Document Agunan!', 'error');
                 } else {
-                  this.checkBM == 0;
+                  this.checkBM = 0;
                 }
               }
             }
@@ -190,7 +190,6 @@ export class MemoComponent implements OnInit {
         }
 
         this.memoModel = data.result;
-        this.valBM = 0;
         setTimeout(() => {
           for (let i = 0; i < this.memoModel.length; i++) {
             setTimeout(() => {

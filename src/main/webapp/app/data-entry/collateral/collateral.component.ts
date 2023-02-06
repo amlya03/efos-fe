@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
@@ -25,6 +25,8 @@ export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
   styleUrls: ['./collateral.component.scss'],
 })
 export class CollateralComponent implements OnInit {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   collateralForm!: FormGroup;
   pemegangHak: refListJumlahKaryawan[] = [];
@@ -317,47 +319,58 @@ export class CollateralComponent implements OnInit {
   }
 
   provinsiChange(value: any): void {
+    this.getLoading(true);
     const valueProvinsi = value.split('|');
     this.datEntryService.getkabkota(valueProvinsi[0]).subscribe(data => {
-      //console.warn(data);
+      this.getLoading(false);
       this.daWakota = data.result;
       this.collateralForm.get('kabkota_agunan')?.setValue(this.untukKodeKobkotAagunan + '|' + this.untukkobkotaagunan);
     });
   }
 
   provinsiSertifChange(value: any): void {
+    this.getLoading(true);
     const valueKota = value.split('|');
     this.datEntryService.getkabkota(valueKota[0]).subscribe(data => {
+      this.getLoading(false);
       this.daWakotas = data.result;
       this.collateralForm.get('kabkota_sesuai_sertifikat')?.setValue(this.untukKodeKobkotaSertif + '|' + this.untukKobkotaSertif);
       // this.collateralForm.get('kabkota_sesuai_sertifikat')?.setValue(this.collateralForm.get('kabkota_agunan')?.value);
     });
   }
   kotaChange(value: any): void {
+    this.getLoading(true);
     const valueKota = value.split('|');
     this.datEntryService.getkecamatan(valueKota[0]).subscribe(data => {
+      this.getLoading(false);
       this.kecamatan = data.result;
       this.collateralForm.get('kecamatan_agunan')?.setValue(this.untukKodeKecamatanAgunan + '|' + this.untukkecamatanagunan);
     });
   }
   kotasSertifChange(value: any): void {
+    this.getLoading(true);
     const proValue = value.split('|');
     this.datEntryService.getkecamatan(proValue[0]).subscribe(data => {
+      this.getLoading(false);
       this.kecamatans = data.result;
       this.collateralForm.get('kecamatan_sesuai_sertifikat')?.setValue(this.untukKodeKecamatanSertif + '|' + this.untukKecamatanSertif);
       // this.collateralForm.get('kecamatan_sesuai_sertifikat')?.setValue(this.collateralForm.get('kecamatan_agunan')?.value);
     });
   }
   kecamatanChange(value: any): void {
+    this.getLoading(true);
     const valueKecamatan = value.split('|');
     this.datEntryService.getkelurahan(valueKecamatan[0]).subscribe(data => {
+      this.getLoading(false);
       this.kelurahan = data.result;
       this.collateralForm.get('kelurahan_agunan')?.setValue(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
     });
   }
   kecamatanSertifChange(value: any): void {
+    this.getLoading(true);
     const valueKecamatan = value.split('|');
     this.datEntryService.getkelurahan(valueKecamatan[0]).subscribe(data => {
+      this.getLoading(false);
       this.kelurahans = data.result;
       this.collateralForm.get('kelurahan_sesuai_sertifikat')?.setValue(this.untukKodeKelurahanSertif + '|' + this.untukKelurahanSertif);
       // this.collateralForm.get('kelurahan_sesuai_sertifikat')?.setValue(this.collateralForm.get('kelurahan_agunan')?.value);
@@ -682,5 +695,10 @@ export class CollateralComponent implements OnInit {
     let year = d.getFullYear();
     let total = Number(year) - Number(tahun);
     this.collateralForm.get('usia_bangunan')?.setValue(total);
+  }
+
+  public getLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

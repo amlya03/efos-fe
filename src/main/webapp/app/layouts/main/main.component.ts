@@ -5,6 +5,10 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import dayjs from 'dayjs/esm';
 
 import { AccountService } from 'app/core/auth/account.service';
+import { environment } from 'environments/environment';
+import Swal from 'sweetalert2';
+import { LoginService } from 'app/login/login.service';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 
 @Component({
   selector: 'jhi-main',
@@ -12,13 +16,17 @@ import { AccountService } from 'app/core/auth/account.service';
 })
 export class MainComponent implements OnInit {
   private renderer: Renderer2;
+  baseUrl: string = environment.baseUrl;
+  baseUrlDukcapil: string = environment.baseUrlDukcapil;
 
   constructor(
     private accountService: AccountService,
     private titleService: Title,
     private router: Router,
     private translateService: TranslateService,
-    rootRenderer: RendererFactory2
+    rootRenderer: RendererFactory2,
+    protected de: DataEntryService,
+    private loginService: LoginService
   ) {
     this.renderer = rootRenderer.createRenderer(document.querySelector('html'), null);
   }
@@ -38,6 +46,26 @@ export class MainComponent implements OnInit {
       dayjs.locale(langChangeEvent.lang);
       this.renderer.setAttribute(document.querySelector('html'), 'lang', langChangeEvent.lang);
     });
+    // //////////////// Check Server /////////////////////////
+    let interval = setInterval(() => {
+      this.de.getFetchStatusPerkawinan().subscribe({
+        next: () => {},
+        error: () => {
+          clearInterval(interval);
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Jaringan Terputus',
+            showConfirmButton: false,
+          }).then(() => {
+            this.loginService.logout();
+            this.router.navigate(['/login']).then(() => {
+              window.location.reload();
+            });
+          });
+        },
+      });
+    }, 6 * 1000);
   }
 
   private getPageTitle(routeSnapshot: ActivatedRouteSnapshot): string {

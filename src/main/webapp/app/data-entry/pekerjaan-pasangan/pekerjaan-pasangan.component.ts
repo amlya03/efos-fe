@@ -314,31 +314,39 @@ export class PekerjaanPasanganComponent implements OnInit {
   }
 
   jenisbidangsebelumselect(value: any) {
+    this.getLoading(true);
     const idsektorpotongan = value.split('|');
     this.initialDataEntry.getSektor(idsektorpotongan[0]).subscribe(data => {
+      this.getLoading(false);
       this.getdatasektorekonomi = data.result;
     });
   }
 
   onChange(value: any) {
+    this.getLoading(true);
     const proValue = value.split('|');
     this.datEntryService.getkabkota(proValue[0]).subscribe(data => {
+      this.getLoading(false);
       this.daWakota = data.result;
       this.formPekerjaanPasangan.get('kabkota')?.setValue(this.retriveKodeKota + '|' + this.retrivekabkota);
     });
   }
 
   onChangekota(value: any) {
+    this.getLoading(true);
     const kotaValue = value.split('|');
     this.datEntryService.getkecamatan(kotaValue[0]).subscribe(data => {
+      this.getLoading(false);
       this.kecamatan = data.result;
       this.formPekerjaanPasangan.get('kecamatan')?.setValue(this.retriveKodeKecamatan + '|' + this.retrivekecamatan);
     });
   }
 
   onChangekecamatan(value: any) {
+    this.getLoading(true);
     const kecValue = value.split('|');
     this.datEntryService.getkelurahan(kecValue[0]).subscribe(data => {
+      this.getLoading(false);
       this.kelurahan = data.result;
       this.formPekerjaanPasangan.get('kelurahan')?.setValue(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
     });

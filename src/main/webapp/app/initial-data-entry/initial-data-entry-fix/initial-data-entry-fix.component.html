@@ -1076,7 +1076,14 @@
         <label class="col-sm-4 col-form-label"> Alamat Sama Dengan Pemohon</label>
         <div class="col-sm-8">
           <input value="0" type="radio" formControlName="status_alamat" id="tidakSama" (change)="onItemChange($event.target)" /> Tidak Sama
-          <input value="1" type="radio" formControlName="status_alamat" id="harusSama" (change)="onItemChange($event.target)" /> Sama
+          <input
+            value="1"
+            type="radio"
+            formControlName="status_alamat"
+            id="harusSama"
+            (change)="onItemChange($event.target); clickKdPostMenikah = 1"
+          />
+          Sama
         </div>
       </div>
       <br />

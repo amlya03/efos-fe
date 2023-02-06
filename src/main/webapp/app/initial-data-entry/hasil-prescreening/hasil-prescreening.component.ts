@@ -286,59 +286,61 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
         .subscribe({
           next: inquiry => {
             if (inquiry.code === '200') {
-              this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe({
-                next: data => {
-                  setTimeout(() => {
-                    if (data.code == 200) {
-                      this.initialDataEntry.getDownloadSlik(this.dataEntry.app_no_ide).subscribe(download => {
-                        this.downloadSlik = download.result;
-                        if (download.result == '') {
-                          this.resultPDF = 0;
-                        } else {
-                          this.resultPDF = 1;
-                        }
-                        $('#downloadSlikOJK').DataTable().rows.add(download.result).draw();
-                      });
-                    }
-                  }, 2);
-                  setTimeout(() => {
-                    if (data.result.dataSlikResult === '') {
-                      this.getLoading(false);
-                      this.hideCekSlik = 0;
-                    } else {
-                      this.hideCekSlik = 1;
-                      this.getLoading(false);
-                    }
-                  }, 5);
-                  this.dataslik = data.result.dataSlikResult;
-                  setTimeout(() => {
-                    this.dataslik.forEach((response, index) => {
-                      if (response.status_applicant === 'Debitur Utama') {
-                        this.listLajangSlik.push(response);
-                        if (this.listLajangSlik[0].idNumber === 'undefined') {
-                          this.responseNasabah = this.listLajangSlik[0].response_description;
-                        } else {
-                          this.responseNasabah = 'checking slik on process';
-                        }
-                      } else {
-                        this.listMenikahSlik.push(response);
-                        if (this.listMenikahSlik[0].idNumber === 'undefined') {
-                          this.responsePasangan = this.listMenikahSlik[0].response_description;
-                        } else {
-                          this.responsePasangan = 'checking slik on process';
-                        }
+              setTimeout(() => {
+                this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe({
+                  next: data => {
+                    setTimeout(() => {
+                      if (data.code == 200) {
+                        this.initialDataEntry.getDownloadSlik(this.dataEntry.app_no_ide).subscribe(download => {
+                          this.downloadSlik = download.result;
+                          if (download.result == '') {
+                            this.resultPDF = 0;
+                          } else {
+                            this.resultPDF = 1;
+                          }
+                          $('#downloadSlikOJK').DataTable().rows.add(download.result).draw();
+                        });
                       }
-                      setTimeout(() => {
-                        if (index == data.result.dataSlikResult.length - 1) {
-                          window.location.reload();
-                          this.dtTrigger.next(this.responseNasabah);
+                    }, 2);
+                    setTimeout(() => {
+                      if (data.result.dataSlikResult === '') {
+                        this.getLoading(false);
+                        this.hideCekSlik = 0;
+                      } else {
+                        this.hideCekSlik = 1;
+                        this.getLoading(false);
+                      }
+                    }, 5);
+                    this.dataslik = data.result.dataSlikResult;
+                    setTimeout(() => {
+                      this.dataslik.forEach((response, index) => {
+                        if (response.status_applicant === 'Debitur Utama') {
+                          this.listLajangSlik.push(response);
+                          if (this.listLajangSlik[0].idNumber === 'undefined') {
+                            this.responseNasabah = this.listLajangSlik[0].response_description;
+                          } else {
+                            this.responseNasabah = 'checking slik on process';
+                          }
+                        } else {
+                          this.listMenikahSlik.push(response);
+                          if (this.listMenikahSlik[0].idNumber === 'undefined') {
+                            this.responsePasangan = this.listMenikahSlik[0].response_description;
+                          } else {
+                            this.responsePasangan = 'checking slik on process';
+                          }
                         }
-                      }, index * 10);
-                    });
-                    window.location.reload();
-                  }, 300);
-                },
-              });
+                        setTimeout(() => {
+                          if (index == data.result.dataSlikResult.length - 1) {
+                            window.location.reload();
+                            this.dtTrigger.next(this.responseNasabah);
+                          }
+                        }, index * 10);
+                      });
+                      window.location.reload();
+                    }, 300);
+                  },
+                });
+              }, inquiry.code * 30);
             } else {
               alert(inquiry.message);
             }

@@ -234,24 +234,30 @@ export class EditjobinfoComponent implements OnInit {
   }
 
   onChange(value: any) {
+    this.getLoading(true);
     const proValue = value.split('|');
     this.datEntryService.getkabkota(proValue[0]).subscribe(data => {
+      this.getLoading(false);
       this.daWakota = data.result;
       this.editJobForm.get('kabkota')?.setValue(this.retriveKodeKota + '|' + this.retrivekabkota);
     });
   }
 
   onChangekota(value: any) {
+    this.getLoading(true);
     const kotaValue = value.split('|');
     this.datEntryService.getkecamatan(kotaValue[0]).subscribe(data => {
+      this.getLoading(false);
       this.kecamatan = data.result;
       this.editJobForm.get('kecamatan')?.setValue(this.retriveKodeKecamatan + '|' + this.retrivekecamatan);
     });
   }
 
   onChangekecamatan(value: any) {
+    this.getLoading(true);
     const kecValue = value.split('|');
     this.datEntryService.getkelurahan(kecValue[0]).subscribe(data => {
+      this.getLoading(false);
       this.kelurahan = data.result;
       this.editJobForm.get('kelurahan')?.setValue(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
     });
@@ -264,9 +270,11 @@ export class EditjobinfoComponent implements OnInit {
   }
 
   jenisbidangselect() {
+    this.getLoading(true);
     const id_sektor = document.getElementById('jenis_bidang') as HTMLInputElement | any;
     const idsektorpotongan = id_sektor.value.split('|');
     this.initialDataEntry.getSektor(idsektorpotongan[0]).subscribe(data => {
+      this.getLoading(false);
       this.getdatasektorekonomi = data.result;
     });
   }
