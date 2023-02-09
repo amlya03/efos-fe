@@ -36,6 +36,7 @@ export class CollateralComponent implements OnInit {
   listDeveloper: refListDeveloper[] = [];
   listSertif: refStatusSertifikat[] = [];
   listKendaraan: refListJumlahKaryawan[] = [];
+  negaraProdusen: refListJumlahKaryawan[] = [];
   tableAgunan: listAgunan[] = [];
   app_no_de: any;
   curef: any;
@@ -280,6 +281,14 @@ export class CollateralComponent implements OnInit {
         { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
+      negara_produsen: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      berwawasan_lingkungan: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
     });
   }
 
@@ -310,6 +319,10 @@ export class CollateralComponent implements OnInit {
 
     this.datEntryService.getfetchlistagunan(this.curef).subscribe(table => {
       this.tableAgunan = table.result;
+    });
+
+    this.datEntryService.getlistNegaraProdusen().subscribe(negara => {
+      this.negaraProdusen = negara.result;
     });
   }
   agunanChange(code: any): void {
@@ -524,6 +537,8 @@ export class CollateralComponent implements OnInit {
         luas_tanah_sertifikat: this.collateralForm.get('luas_tanah')?.value,
         tanggal_terbit: this.collateralForm.get('tanggal_terbit')?.value,
         tanggal_expired: this.collateralForm.get('tanggal_expired')?.value,
+        negara_produsen: this.collateralForm.get('negara_produsen')?.value,
+        berwawasan_lingkungan: this.collateralForm.get('berwawasan_lingkungan')?.value,
 
         provinsi_agunan: kirimanprovinsi_agunan[1],
         provinsi_sesuai_sertifikat: kirimanprovinsi_sesuai_sertifikat[1],

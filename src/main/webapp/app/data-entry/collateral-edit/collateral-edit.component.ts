@@ -40,7 +40,7 @@ export class CollateralEditComponent implements OnInit {
   listSertif: refStatusSertifikat[] = [];
   listKendaraan: refListJumlahKaryawan[] = [];
   tableAgunan: listAgunan = new listAgunan();
-
+  negaraProdusen: refListJumlahKaryawan[] = [];
   app_no_de: any;
   curef: any;
   datakirimanid: any;
@@ -294,6 +294,9 @@ export class CollateralEditComponent implements OnInit {
       this.datEntryService.getFetchListKendaraan().subscribe(kendaraan => {
         this.listKendaraan = kendaraan.result;
       });
+      this.datEntryService.getlistNegaraProdusen().subscribe(negara => {
+        this.negaraProdusen = negara.result;
+      });
     }, 60);
     ///////////////// REF ////////////////////////////////////////
     setTimeout(() => {
@@ -466,6 +469,8 @@ export class CollateralEditComponent implements OnInit {
           no_handphone_cp: this.tableAgunan.no_handphone_cp,
           no_id_pemegang_hak_sertifikat: this.tableAgunan.no_id_pemegang_hak_sertifikat,
           alamat_agunan: this.tableAgunan.alamat_agunan,
+          negara_produsen: this.tableAgunan.negara_produsen,
+          berwawasan_lingkungan: this.tableAgunan.berwawasan_lingkungan,
           //
           provinsi_agunan: '',
           kabkota_agunan: '',
@@ -677,6 +682,8 @@ export class CollateralEditComponent implements OnInit {
         luas_tanah_sertifikat: this.editCollateralForm.get('luas_tanah')?.value,
         tanggal_terbit: this.editCollateralForm.get('tanggal_terbit')?.value,
         tanggal_expired: this.editCollateralForm.get('tanggal_expired')?.value,
+        negara_produsen: this.editCollateralForm.get('negara_produsen')?.value,
+        berwawasan_lingkungan: this.editCollateralForm.get('berwawasan_lingkungan')?.value,
 
         /// provinsiiiaanann
         provinsi_agunan: provinsiSplit[1],

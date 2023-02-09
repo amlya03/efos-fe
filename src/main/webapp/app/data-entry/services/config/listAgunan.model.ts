@@ -55,4 +55,6 @@ export class listAgunan {
   nomor_rumah?: string;
   blok_rumah?: string;
   usia_bangunan?: string;
+  negara_produsen?: string;
+  berwawasan_lingkungan?: string;
 }

@@ -109,7 +109,7 @@
             <select class="form-control" (change)="onchangeskema(this.strukturForm.get('skema')?.value)" formControlName="skema" id="skema">
               <option
                 *ngFor="let kodeskema of kodeskema"
-                value="{{ kodeskema.skema }}|{{ kodeskema.skema_master }}|{{ kodeskema.skema_deskripsi }}"
+                value="{{ kodeskema.skema }}|{{ kodeskema.skema_master }}|{{ kodeskema.skema_deskripsi }} | {{ kodeskema.akad }}"
               >
                 {{ kodeskema.skema_deskripsi }}
               </option>
@@ -122,6 +122,15 @@
             class="text-danger"
             >Field Wajib Diisi
           </span>
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Akad</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <input type="text" class="form-control" formControlName="akad" />
+          </div>
         </div>
       </div>
       <br />

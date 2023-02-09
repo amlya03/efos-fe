@@ -199,10 +199,7 @@
             </div>
           </div>
           <br />
-          <div
-            class="form-group row"
-            [hidden]="this.collateralForm.get('tipe_agunan')?.value == 'C01' || this.collateralForm.get('tipe_agunan')?.value == 'H01'"
-          >
+          <div class="form-group row" [hidden]="this.collateralForm.get('tipe_agunan')?.value == 'H01'">
             <label class="col-sm-4 col-form-label">Status Agunan</label>
             <div class="col">
               <label>Baru</label>
@@ -213,10 +210,7 @@
             </div>
             <br />
           </div>
-          <div
-            class="form-group row"
-            [hidden]="this.collateralForm.get('tipe_agunan')?.value == 'C01' || this.collateralForm.get('tipe_agunan')?.value == 'H01'"
-          >
+          <div class="form-group row" [hidden]="this.collateralForm.get('tipe_agunan')?.value == 'H01'">
             <label class="col-sm-4 col-form-label"></label>
             <div class="col">
               <input
@@ -237,12 +231,12 @@
           <div
             class="form-group row"
             [hidden]="
-              this.collateralForm.get('tipe_agunan')?.value == 'C01' ||
-              this.collateralForm.get('tipe_agunan')?.value == 'H01' ||
-              this.collateralForm.get('status_developer')?.value == 'perorangan'
+              this.collateralForm.get('tipe_agunan')?.value == 'H01' || this.collateralForm.get('status_developer')?.value == 'perorangan'
             "
           >
-            <label class="col-sm-4 col-form-label">Developer</label>
+            <label class="col-sm-4 col-form-label">{{
+              this.collateralForm.get('tipe_agunan')?.value == 'C01' ? 'Penjual' : 'Developer'
+            }}</label>
             <div class="col-sm-8">
               <div class="form-group">
                 <select
@@ -294,22 +288,21 @@
             <label class="col-sm-4 col-form-label">Negara Produsen</label>
             <div class="col-sm-8">
               <div class="form-group">
-                <select class="form-control">
+                <select class="form-control" formControlName="negara_produsen">
                   <option value="">Pilih Data</option>
-                  <option value="Jepang">Jepang</option>
-                  <option value="Eropa">Eropa</option>
-                  <option value="Amerika">Amerika</option>
-                  <option value="Lainnya">Lainnya</option>
+                  <option *ngFor="let negaraProdusen of negaraProdusen" value="{{ negaraProdusen.deskripsi }}">
+                    {{ negaraProdusen.deskripsi }}
+                  </option>
                 </select>
               </div>
               <br />
             </div>
           </div>
-          <!-- <div class="form-group row">
+          <div class="form-group row">
             <label class="col-sm-4 col-form-label">Properti Berwawasan Lingkungan</label>
             <div class="col-sm-8">
               <div class="form-group">
-                <select class="form-control">
+                <select class="form-control" formControlName="berwawasan_lingkungan">
                   <option value="">Pilih Data</option>
                   <option value="Ya">Ya</option>
                   <option value="Tidak">Tidak</option>
@@ -317,7 +310,7 @@
               </div>
               <br />
             </div>
-          </div> -->
+          </div>
           <!-- CR Manrisk -->
         </div>
         <div class="col">

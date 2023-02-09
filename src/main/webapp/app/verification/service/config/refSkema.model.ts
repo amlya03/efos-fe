@@ -9,4 +9,5 @@ export class refSkema {
   fasilitas?: string;
   dp_min?: number;
   max_tenor?: number;
+  akad?: string;
 }

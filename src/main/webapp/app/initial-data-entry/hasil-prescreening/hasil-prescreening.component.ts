@@ -15,6 +15,7 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { modelCustomer } from '../services/config/modelCustomer.model';
 import { dukcapilModel } from '../services/config/dukcapilModel.model';
 import { environment } from 'environments/environment';
+import Swal from 'sweetalert2';
 // import { count } from 'console';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -71,6 +72,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   listLajangSlik: slik[] = new Array<slik>();
   listMenikahSlik: slik[] = new Array<slik>();
   dataEntry: modelCustomer = new modelCustomer();
+  ideResponseById = 0;
   downloadSlik: any;
   simpanDhn = 0;
   untukSessionRole: any;
@@ -263,7 +265,25 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
         }, 800);
       },
     });
+    // alert(this.paramId)
+    this.initialDataEntry.getIdeById(this.paramId).subscribe({
+      next: data => {
+        if (data.result.status_aplikasi.includes(9)) {
+          this.ideResponseById = 1;
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Gagal, ' + data.result.status_aplikasi_desc,
+            showConfirmButton: false,
+            // timer: 1500
+          });
+        } else {
+          this.ideResponseById = 0;
+        }
+      },
+    });
   }
+
   untukSlik() {
     this.getLoading(true);
     setTimeout(() => {

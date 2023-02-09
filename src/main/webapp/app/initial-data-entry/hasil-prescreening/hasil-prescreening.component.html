@@ -945,7 +945,14 @@
     (this.hideCekSlik == 0 && responseSlikMenikah == 1)
   "
 -->
-  <button (click)="untukSlik()" name="submit_button" class="fa fa-file-archive-o btn btn-dark">Cek Hasil Slik</button>
+  <button
+    [hidden]="this.responseNasabah === 'NOT FOUND'"
+    (click)="untukSlik()"
+    name="submit_button"
+    class="fa fa-file-archive-o btn btn-dark"
+  >
+    Cek Hasil Slik
+  </button>
 </div>
 
 <table id="downloadSlikOJK" *ngIf="this.resultPDF == 1">
@@ -971,12 +978,12 @@
   </div> -->
 <br />
 <br />
-<div class="row form-material">
+<div class="row form-material" [hidden]="this.ideResponseById == 1">
   <div class="col" style="text-align: center">
     <button (click)="gotopersonalinfo()" name="submit_button" class="fa fa-file-archive-o btn btn-warning" [hidden]="this.simpanDhn == 1">
       Proses Data
     </button>
-    <button name="submit_button" (click)="backtoide()" class="fa fa-file-archive-o btn btn-danger">Tolak</button>
+    <!-- <button name="submit_button" (click)="backtoide()" class="fa fa-file-archive-o btn btn-danger">Tolak</button> -->
   </div>
 </div>
 <jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

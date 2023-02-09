@@ -105,6 +105,7 @@ export class StrukturPembiayaanComponent implements OnInit {
         { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
         Validators.required,
       ],
+      akad: { value: '' || null, disabled: true },
       jangka_waktu: [
         { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
         Validators.required,
@@ -276,6 +277,7 @@ export class StrukturPembiayaanComponent implements OnInit {
               program: this.kodeProgramRet,
               produk: this.kodeProdukRet,
               skema: this.skemaRet,
+              akad: this.strukturModel.akad,
               jangka_waktu: this.jangkaWaktuRet,
               tipe_margin: this.strukturModel.tipe_margin,
               tujuan_pembiayaan: this.strukturModel.tujuan_pembiayaan,
@@ -363,6 +365,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     this.getLoading(true);
     const pemisahskemamaster = valueSkema.split('|');
     const programSkema = valueSkema.split('|');
+    this.strukturForm.get('akad')?.setValue(pemisahskemamaster[3]);
     if (programSkema[1] === '1') {
       this.strukturForm.get('tipe_margin')?.setValue('FIX');
       this.dataEntryService.getTenorFix(pemisahskemamaster[0]).subscribe({
@@ -495,6 +498,7 @@ export class StrukturPembiayaanComponent implements OnInit {
           program: kirimanpotongprogram[0],
           program_name: kirimanpotongprogram[1],
           skema: kirimanpotongskema[0],
+          akad: this.strukturForm.get('akad')?.value,
           skema_master: kirimanpotongskema[1],
           skema_name: kirimanpotongskema[2],
           tipe_margin: this.strukturForm.get('tipe_margin')?.value,
@@ -542,6 +546,7 @@ export class StrukturPembiayaanComponent implements OnInit {
           program: kirimanpotongprogram[0],
           program_name: kirimanpotongprogram[1],
           skema: kirimanpotongskema[0],
+          akad: this.strukturForm.get('akad')?.value,
           skema_master: kirimanpotongskema[1],
           skema_name: kirimanpotongskema[2],
           tipe_margin: this.strukturForm.get('tipe_margin')?.value,

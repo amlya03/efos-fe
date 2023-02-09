@@ -35,6 +35,10 @@ export class DataEntryService {
     this.untukSessionFullName = this.SessionStorageService.retrieve('sessionFullName');
     this.untukSessionKodeCabang = this.SessionStorageService.retrieve('sessionKdCabang');
   }
+  // //////////////////////////// GET lIST Negara Produsen //////////////////////////////////////////////////
+  protected listNegaraProdusenUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_negara_produsen');
+  // //////////////////////////// GET lIST Negara Produsen //////////////////////////////////////////////////
+
   // //////////////////////////// GET lIST Kodepost //////////////////////////////////////////////////
   protected getKodePost = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos/getWilByKdPos/');
   // //////////////////////////// GET lIST Kodepost //////////////////////////////////////////////////
@@ -576,4 +580,10 @@ export class DataEntryService {
   getKdpost(req?: number | null): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getWilByKdPos/' + req);
   }
+
+  // //////////////////////////// GET lIST Negara Produsen //////////////////////////////////////////////////
+  getlistNegaraProdusen(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.listNegaraProdusenUrl);
+  }
+  // //////////////////////////// GET lIST Negara Produsen //////////////////////////////////////////////////
 }

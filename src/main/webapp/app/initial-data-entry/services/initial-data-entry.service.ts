@@ -55,7 +55,7 @@ export class InitialDataEntryService {
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
-  protected ideByAppId = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/getAppId');
+  protected ideAppId = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/getAppId');
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
@@ -73,6 +73,10 @@ export class InitialDataEntryService {
   // /////////////////////////// Reff Sektor Ekonomi ////////////////////////////////////////////
   protected getListSektor = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/list_sektor_ekonomi?se=');
   // /////////////////////////// Reff Sektor Ekonomi ////////////////////////////////////////////
+
+  // /////////////////////////////// Get APP IDE by ID ////////////////////////////////////////////////////////////////////////////
+  protected getIdeByIdUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/getIdeById?si=');
+  // /////////////////////////////// Get APP IDE by ID ////////////////////////////////////////////////////////////////////////////
 
   constructor(
     protected http: HttpClient,
@@ -94,8 +98,8 @@ export class InitialDataEntryService {
   // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getIdeById(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.ideByAppId);
+  getAppId(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.ideAppId);
   }
   // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -173,4 +177,10 @@ export class InitialDataEntryService {
     return this.http.get<ApiResponse>(this.informasiSlik);
   }
   // /////////////////////////////////////////////////////// get Information SLik ////////////////////////////////////////////
+
+  // /////////////////////////////// Get APP IDE by ID ////////////////////////////////////////////////////////////////////////////
+  getIdeById(id: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getIdeByIdUrl + id);
+  }
+  // /////////////////////////////// Get APP IDE by ID ////////////////////////////////////////////////////////////////////////////
 }

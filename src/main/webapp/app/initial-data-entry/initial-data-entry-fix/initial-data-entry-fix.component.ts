@@ -455,7 +455,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       this.cekResultIde = 1;
     } else {
       this.cekResultIde = 0;
-      this.ideFixServices.getIdeById().subscribe(data => {
+      this.ideFixServices.getAppId().subscribe(data => {
         this.app_no_ide = data.result;
       });
       this.ideFixServices.getIdeByCuref().subscribe(data => {
@@ -718,7 +718,7 @@ export class InitialDataEntryFixComponent implements OnInit {
 
               setTimeout(() => {
                 if (this.cekResultIde == 0) {
-                  this.ideFixServices.getIdeById().subscribe(data => {
+                  this.ideFixServices.getAppId().subscribe(data => {
                     this.app_no_ide = data.result;
                   });
                   this.ideFixServices.getIdeByCuref().subscribe(data => {

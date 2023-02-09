@@ -83,11 +83,11 @@
         </div>
       </div>
       <!-- CR Manrisk -->
-      <!-- <div class="form-group row">
+      <div class="form-group row">
         <label class="col-sm-4 col-form-label">Properti Berwawasan Lingkungan</label>
         <div class="col-sm-8">
           <div class="form-group">
-            <select class="form-control">
+            <select class="form-control" formControlName="berwawasan_lingkungan">
               <option value="">Pilih Data</option>
               <option value="Ya">Ya</option>
               <option value="Tidak">Tidak</option>
@@ -95,7 +95,21 @@
           </div>
           <br />
         </div>
-      </div> -->
+      </div>
+      <div class="form-group row" *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'">
+        <label class="col-sm-4 col-form-label">Negara Produsen</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" formControlName="negara_produsen">
+              <option value="">Pilih Data</option>
+              <option *ngFor="let negaraProdusen of negaraProdusen" value="{{ negaraProdusen.deskripsi }}">
+                {{ negaraProdusen.deskripsi }}
+              </option>
+            </select>
+          </div>
+          <br />
+        </div>
+      </div>
       <!-- CR Manrisk -->
       <div class="form-group row" [hidden]="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'">
         <label class="col-sm-4 col-form-label">Hubungan Anatara Pemegang Hak dan Calon Nasabah</label>

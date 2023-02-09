@@ -25,4 +25,5 @@ export class getStrukturPembiayaan {
   skema_master?: number;
   created_date?: string;
   created_by?: string;
+  akad?: string;
 }
