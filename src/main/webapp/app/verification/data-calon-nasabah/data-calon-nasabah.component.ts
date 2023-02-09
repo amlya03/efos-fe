@@ -18,6 +18,7 @@ import { refAnalisaCalonNasabah } from './refAnalisaCalonNasabah.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { SessionStorageService } from 'ngx-webstorage';
 import { environment } from 'environments/environment';
+import { callreport } from 'app/data-entry/call-report/call-report-model';
 
 @Component({
   selector: 'jhi-data-calon-nasabah',
@@ -43,7 +44,7 @@ export class DataCalonNasabahComponent implements OnInit {
   dataEntry: fetchAllDe = new fetchAllDe();
   tempunganCek: number[] = [];
   tampunganIsiRum: number[] = [];
-
+  modelCallReport: callreport[] = [];
   // checkbox cek ke
   checkboxCek: any;
   checkboxCekSertif: any;
@@ -380,6 +381,7 @@ export class DataCalonNasabahComponent implements OnInit {
         // }
       });
     }, 7);
+
     setTimeout(() => {
       this.dataEntryService.getFetchListLokasiRumah().subscribe(data => {
         // if(data.code === 200) {
@@ -389,6 +391,14 @@ export class DataCalonNasabahComponent implements OnInit {
         // }
       });
     }, 10);
+
+    // call Report
+    setTimeout(() => {
+      this.dataEntryService.getFetchCallReport(this.app_no_de).subscribe(call => {
+        this.modelCallReport = call.result;
+        console.warn('call ', call);
+      });
+    }, 17);
 
     // ref Hubungan Emergency
     setTimeout(() => {

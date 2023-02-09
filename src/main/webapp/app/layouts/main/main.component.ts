@@ -52,16 +52,17 @@ export class MainComponent implements OnInit {
         next: () => {},
         error: () => {
           clearInterval(interval);
+          this.loginService.logout();
           Swal.fire({
             position: 'center',
             icon: 'error',
             title: 'Jaringan Terputus',
             showConfirmButton: false,
           }).then(() => {
-            this.loginService.logout();
-            this.router.navigate(['/login']).then(() => {
-              window.location.reload();
-            });
+            window.location.reload();
+            // this.router.navigate(['/login']).then(() => {
+            //   window.location.reload();
+            // });
           });
         },
       });

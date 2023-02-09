@@ -206,6 +206,8 @@ export class CollateralEditComponent implements OnInit {
         disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
       },
       alamat_agunan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      negara_produsen: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
+      berwawasan_lingkungan: '',
       //
       provinsi_agunan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
       kabkota_agunan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
@@ -349,7 +351,7 @@ export class CollateralEditComponent implements OnInit {
         const ValidasiNomesin = <FormControl>this.editCollateralForm.get('no_mesin');
         const ValidasiNorangka = <FormControl>this.editCollateralForm.get('no_rangka');
         const ValidasiNamaBpkb = <FormControl>this.editCollateralForm.get('nama_bpkb');
-
+        const ValidasiNegaraProdusen = <FormControl>this.editCollateralForm.get('negara_produsen');
         const ValidasiHubunganPemilikHak = <FormControl>this.editCollateralForm.get('hubungan_pemegang_hak');
         const ValidasiTipeProperti = <FormControl>this.editCollateralForm.get('tipe_properti');
         const ValidasiStatusAgunan = <FormControl>this.editCollateralForm.get('status_agunan');
@@ -403,6 +405,7 @@ export class CollateralEditComponent implements OnInit {
         ValidasiNomesin.setValidators([Validators.required]);
         ValidasiNorangka.setValidators([Validators.required]);
         ValidasiNamaBpkb.setValidators([Validators.required]);
+        ValidasiNegaraProdusen.setValidators([Validators.required]);
         ValidasiHubunganPemilikHak.setValidators([Validators.required]);
         ValidasiTipeProperti.setValidators([Validators.required]);
         ValidasiStatusAgunan.setValidators([Validators.required]);

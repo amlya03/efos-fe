@@ -109,7 +109,7 @@
             <select class="form-control" (change)="onchangeskema(this.strukturForm.get('skema')?.value)" formControlName="skema" id="skema">
               <option
                 *ngFor="let kodeskema of kodeskema"
-                value="{{ kodeskema.skema }}|{{ kodeskema.skema_master }}|{{ kodeskema.skema_deskripsi }} | {{ kodeskema.akad }}"
+                value="{{ kodeskema.skema }}|{{ kodeskema.skema_master }}|{{ kodeskema.skema_deskripsi }}|{{ kodeskema.akad }}"
               >
                 {{ kodeskema.skema_deskripsi }}
               </option>

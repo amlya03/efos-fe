@@ -185,7 +185,14 @@ export class StrukturPembiayaanComponent implements OnInit {
           this.kodeFasilitasRet = this.strukturModel.kode_fasilitas + '|' + this.strukturModel.kode_fasilitas_name;
           this.kodeProgramRet = this.strukturModel.program + '|' + this.strukturModel.program_name;
           this.kodeProdukRet = this.strukturModel.produk + '|' + this.strukturModel.produk_name;
-          this.skemaRet = this.strukturModel.skema + '|' + this.strukturModel.skema_master + '|' + this.strukturModel.skema_name;
+          this.skemaRet =
+            this.strukturModel.skema +
+            '|' +
+            this.strukturModel.skema_master +
+            '|' +
+            this.strukturModel.skema_name +
+            '|' +
+            this.strukturModel.akad;
           this.jangkaWaktuRet = this.strukturModel.jangka_waktu + '|' + this.strukturModel.margin;
 
           setTimeout(() => {
