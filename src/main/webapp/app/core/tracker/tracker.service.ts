@@ -13,9 +13,11 @@ import { TrackerActivity } from './tracker-activity.model';
 export class TrackerService {
   private stompClient: Client | null = null;
   private routerSubscription: Subscription | null = null;
+  // eslint-disable-next-line @typescript-eslint/consistent-generic-constructors
   private connectionSubject: ReplaySubject<void> = new ReplaySubject(1);
   private connectionSubscription: Subscription | null = null;
   private stompSubscription: StompSubscription | null = null;
+  // eslint-disable-next-line @typescript-eslint/consistent-generic-constructors
   private listenerSubject: Subject<TrackerActivity> = new Subject();
 
   constructor(private router: Router, private authServerProvider: AuthServerProvider, private location: Location) {}

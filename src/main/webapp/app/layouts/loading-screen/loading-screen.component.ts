@@ -1,15 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'jhi-loading-screen',
   templateUrl: './loading-screen.component.html',
   styleUrls: ['./loading-screen.component.scss'],
 })
-export class LoadingScreenComponent implements OnInit {
+export class LoadingScreenComponent {
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = true;
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
+  constructor() {
+    //
+  }
 }

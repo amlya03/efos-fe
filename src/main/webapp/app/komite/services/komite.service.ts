@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -47,7 +48,7 @@ export class KomiteService {
 
   // //////////////////////////////////////////////// Get Detail Approval ///////////////////////////////////////////////////////////////////////
   getDetailApproval(app_no_de: string | undefined): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.getDetailApprovalByDE + app_no_de);
+    return this.http.get<ApiResponse>((this.getDetailApprovalByDE += app_no_de));
   }
   // //////////////////////////////////////////////// Get Detail Approval ///////////////////////////////////////////////////////////////////////
 
@@ -59,19 +60,19 @@ export class KomiteService {
 
   // //////////////////////////////////////////////// List Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
   getListPersetujuanKhusus(app_no_de: string | undefined): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.ListPersetujuanKhusus + app_no_de);
+    return this.http.get<ApiResponse>((this.ListPersetujuanKhusus += app_no_de));
   }
   // //////////////////////////////////////////////// List Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
 
   // //////////////////////////////////////////////// Get Persetujuan Pembiayaan ///////////////////////////////////////////////////////////////////////
   getPersetujuanPembiayaan(app_no_de: string | undefined): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.getPersetujuanPembiayaanUrl + app_no_de);
+    return this.http.get<ApiResponse>((this.getPersetujuanPembiayaanUrl += app_no_de));
   }
   // //////////////////////////////////////////////// Get Persetujuan Pembiayaan ///////////////////////////////////////////////////////////////////////
 
   // //////////////////////////////////////////////// Get Data Users ///////////////////////////////////////////////////////////////////////
   getDataUsers(app_no_de: string | undefined): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.getDataUsersUrl + app_no_de);
+    return this.http.get<ApiResponse>((this.getDataUsersUrl += app_no_de));
   }
   // //////////////////////////////////////////////// Get Data Users ///////////////////////////////////////////////////////////////////////
 }

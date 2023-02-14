@@ -13,9 +13,9 @@ import { Account } from 'app/core/auth/account.model';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
+  harusUnset: any;
 
   private readonly destroy$ = new Subject<void>();
-  harusUnset: any;
 
   constructor(private accountService: AccountService, private router: Router) {}
 
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  nextPembiayaan() {
+  nextPembiayaan(): void {
     this.router.navigate(['/daftaraplikasiidetambahide']);
   }
 }

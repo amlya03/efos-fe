@@ -9,4 +9,5 @@ import { LoginComponent } from './login.component';
   imports: [SharedModule, RouterModule.forChild([LOGIN_ROUTE])],
   declarations: [LoginComponent],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class LoginModule {}

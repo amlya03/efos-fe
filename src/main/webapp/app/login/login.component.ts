@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from 'app/login/login.service';
@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   selector: 'jhi-login',
   templateUrl: './login.component.html',
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements AfterViewInit {
   @ViewChild('username', { static: false })
   username!: ElementRef;
   loginCounter = 0;
@@ -33,15 +33,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     protected http: HttpClient,
     private sessionStorageService: SessionStorageService
   ) {}
-
-  ngOnInit(): void {
-    // if already authenticated then navigate to home page
-    // this.accountService.identity().subscribe(() => {
-    //   if (this.accountService.isAuthenticated()) {
-    //     this.router.navigate(['']);
-    //   }
-    // });
-  }
 
   ngAfterViewInit(): void {
     this.username.nativeElement.focus();

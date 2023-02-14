@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-boolean-literal-compare */
 /* eslint-disable @typescript-eslint/prefer-for-of */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/member-ordering */
@@ -27,15 +28,15 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
   title = 'EFOS';
-  numbers: Array<number> = [];
+  numbers: number[] = [];
   daWa?: daWaModel[] = [];
   listFasilitas: getListFasilitasModel[] = [];
   daWaAprisal?: daWaModelAprisal[];
   onResponseSuccess: any;
   valueCariButton = '';
   kategori_pekerjaan = '';
-  kirimDe: Array<number> = [];
-  kirimStatusAplikasi: Array<number> = [];
+  kirimDe: number[] = [];
+  kirimStatusAplikasi: number[] = [];
   kirimAssign: any;
 
   // checklist dawa

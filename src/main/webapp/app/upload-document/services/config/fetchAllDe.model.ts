@@ -65,8 +65,8 @@ export class fetchAllDe {
   usia?: number;
   usia_pasangan?: number;
   kategori_pekerjaan?: string;
-  status_ktp?: Number;
-  status_ktp_pasangan?: Number;
+  status_ktp?: number;
+  status_ktp_pasangan?: number;
   email_pasangan?: string;
   customer_created_date?: string;
   customer_updated_date?: string;
@@ -75,7 +75,7 @@ export class fetchAllDe {
   produk_pembiayaan?: string;
   status_aplikasi_desc?: string;
   status_aplikasi?: string;
-  status_alamat?: Number;
+  status_alamat?: number;
   jangka_waktu?: number;
   nilai_pembiayaan?: number;
   kode_fasilitas_name?: string;

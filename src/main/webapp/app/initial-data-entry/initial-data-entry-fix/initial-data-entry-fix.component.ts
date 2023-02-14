@@ -1600,7 +1600,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             umur_pensiun_sebelum: '',
           })
           .subscribe({
-            next: data => {
+            next: () => {
               this.http
                 .post<any>(this.baseUrl + 'v1/efos-ide/create_app_ide_temp', {
                   nama: this.ideForm.get('nama')?.value,
@@ -1763,7 +1763,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             umur_pensiun_sebelum: '',
           })
           .subscribe({
-            next: data => {
+            next: () => {
               if (this.ideForm.get('status_perkawinan')?.value === 'Menikah') {
                 this.http
                   .post<any>(this.baseUrl + 'v1/efos-ide/update_app_ide_temp', {
@@ -2601,6 +2601,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     }
   }
 
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

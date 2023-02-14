@@ -3,9 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { DataEntryService } from '../services/data-entry.service';
 import { SessionStorageService } from 'ngx-webstorage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -502,7 +501,7 @@ export class PekerjaanPasanganComponent implements OnInit {
         })
 
         .subscribe({
-          next: bawaan => {
+          next: () => {
             alert('Berhasil Menyimpan Data');
             // setTimeout(() => {
             this.router.navigate(['/data-entry/collateral'], {

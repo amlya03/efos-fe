@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-boolean-literal-compare */
 /* eslint-disable eqeqeq */
 /* eslint-disable @typescript-eslint/prefer-for-of */
 import { HttpClient } from '@angular/common/http';
@@ -34,9 +35,9 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
   valueNoAplikasi = '';
   valueCariButton = '';
   kategori_pekerjaan = '';
-  kirimDe: Array<number> = [];
-  kirimStatusAplikasi: Array<number> = [];
-  updateStatusDaWuS: Array<number> = [];
+  kirimDe: number[] = [];
+  kirimStatusAplikasi: number[] = [];
+  updateStatusDaWuS: number[] = [];
   listFasilitas: getListFasilitasModel[] = [];
   checkLenghtResult: any;
   curef: any;

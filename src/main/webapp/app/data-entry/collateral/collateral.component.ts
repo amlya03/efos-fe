@@ -562,8 +562,8 @@ export class CollateralComponent implements OnInit {
         nama_perumahan: '',
       })
       .subscribe({
-        next(bawaan) {
-          //console.warn(bawaan);
+        next() {
+          // console.warn(bawaan);
           alert('Berhasil Menyimpan Data');
           window.location.reload();
         },

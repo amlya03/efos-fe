@@ -12,7 +12,7 @@ export class BookRoutingResolveService implements Resolve<IBook | null> {
   constructor(protected service: BookService, protected router: Router) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<IBook | null | never> {
-    const id = route.params['id'];
+    const id = route.params.id;
     if (id) {
       return this.service.find(id).pipe(
         mergeMap((book: HttpResponse<IBook>) => {

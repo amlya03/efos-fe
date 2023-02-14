@@ -8,6 +8,7 @@ import {
 } from '../../support/commands';
 
 describe('/account/password', () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
 

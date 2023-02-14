@@ -169,7 +169,7 @@ export class ServiceVerificationService {
 
   // //////////////////////////// Slik \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   fetchSlik(app_no_ide: any): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.getSlik + app_no_ide);
+    return this.http.get<ApiResponse>((this.getSlik += app_no_ide));
   }
   // //////////////////////////// Slik \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -193,7 +193,7 @@ export class ServiceVerificationService {
 
   // /////////////////////get mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   getMutasiRekening(id: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.getMutasi + id);
+    return this.http.get<ApiResponse>((this.getMutasi += id));
   }
   // //////////////////////get mutasi Rekening\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -272,16 +272,16 @@ export class ServiceVerificationService {
 
   // ////////////////////// Ref SKema \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   getSkema(produk: string | undefined): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.refSkema + produk);
+    return this.http.get<ApiResponse>((this.refSkema += produk));
   }
   // ////////////////////// Ref SKema \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// Ref Tenor \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   getTenorFix(skema: any): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.refTenorFix + skema);
+    return this.http.get<ApiResponse>((this.refTenorFix += skema));
   }
   getTenorNon(skema: any): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.refTenorNon + skema);
+    return this.http.get<ApiResponse>((this.refTenorNon += skema));
   }
   // ////////////////////// Ref Tenor \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 

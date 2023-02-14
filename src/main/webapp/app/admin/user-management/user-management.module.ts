@@ -17,4 +17,5 @@ import { userManagementRoute } from './user-management.route';
     UserManagementDeleteDialogComponent,
   ],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class UserManagementModule {}

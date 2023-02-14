@@ -9,4 +9,5 @@ import { trackerRoute } from './tracker.route';
   imports: [SharedModule, RouterModule.forChild([trackerRoute])],
   declarations: [TrackerComponent],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class TrackerModule {}

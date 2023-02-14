@@ -10,4 +10,5 @@ import { BookRoutingModule } from './route/book-routing.module';
   imports: [SharedModule, BookRoutingModule],
   declarations: [BookComponent, BookDetailComponent, BookUpdateComponent, BookDeleteDialogComponent],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class BookModule {}

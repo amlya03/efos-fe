@@ -51,6 +51,7 @@ export class InitialDataEntryComponent implements OnInit {
     });
   }
 
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
     // alert('knfsdkds');

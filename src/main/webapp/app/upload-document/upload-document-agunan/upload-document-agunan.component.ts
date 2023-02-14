@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable eqeqeq */
 /* eslint-disable @typescript-eslint/prefer-for-of */
@@ -23,8 +24,8 @@ import Swal from 'sweetalert2';
 })
 export class UploadDocumentAgunanComponent implements OnInit, OnDestroy {
   baseUrl: string = environment.baseUrl;
-  uploadDocument: Array<uploadDocument> = new Array<uploadDocument>();
-  valDE: Array<uploadDocument> = new Array<uploadDocument>();
+  uploadDocument: uploadDocument[] = new Array<uploadDocument>();
+  valDE: uploadDocument[] = new Array<uploadDocument>();
   curef: any;
   app_no_de: any;
   fetchAllAgunan: fetchAllDe = new fetchAllDe();

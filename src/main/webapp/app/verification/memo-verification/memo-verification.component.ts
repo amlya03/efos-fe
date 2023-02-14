@@ -106,6 +106,7 @@ export class MemoVerificationComponent implements OnInit {
   }
 
   printData(): void {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     const printTable = <HTMLInputElement>document.getElementById('tableMemo');
     document.write(printTable.outerHTML);
     window.print();

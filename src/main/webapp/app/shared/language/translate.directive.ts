@@ -13,7 +13,7 @@ import { translationNotFoundMessage } from 'app/config/translation.config';
 })
 export class TranslateDirective implements OnChanges, OnInit, OnDestroy {
   @Input() jhiTranslate!: string;
-  @Input() translateValues?: { [key: string]: unknown };
+  @Input() translateValues?: Record<string, unknown>;
 
   private readonly directiveDestroyed = new Subject();
 

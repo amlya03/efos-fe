@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { Observable } from 'rxjs';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { SessionStorageService } from 'ngx-webstorage';
-import { createRequestOption } from 'app/core/request/request-util';
 import { environment } from 'environments/environment';
 
 @Injectable({
@@ -28,12 +29,12 @@ export class DataEntryService {
   constructor(
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private SessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService
   ) {
-    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
-    this.untukSessionUserName = this.SessionStorageService.retrieve('sessionUserName');
-    this.untukSessionFullName = this.SessionStorageService.retrieve('sessionFullName');
-    this.untukSessionKodeCabang = this.SessionStorageService.retrieve('sessionKdCabang');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
+    this.untukSessionUserName = this.sessionStorageService.retrieve('sessionUserName');
+    this.untukSessionFullName = this.sessionStorageService.retrieve('sessionFullName');
+    this.untukSessionKodeCabang = this.sessionStorageService.retrieve('sessionKdCabang');
   }
   // //////////////////////////// GET lIST Negara Produsen //////////////////////////////////////////////////
   protected listNegaraProdusenUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_negara_produsen');
@@ -330,41 +331,41 @@ export class DataEntryService {
   }
   // /////////////////////////// listagunan ////////////////////////////////////////////
 
-  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
+  // //////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
   getFetchListTipeKendaraaan(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.ListTipeKendaraaan);
   }
-  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
+  // //////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
 
-  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
+  // //////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
   getFetchStatusPerkawinan(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.refStatusPerkawinan);
   }
-  ////////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
+  // //////////////////////////////////// REF Status Perkawinan //////////////////////////////////////////////
 
-  ////////////////////////////////////// REF List Tipe Pekerjaan //////////////////////////////////////////////
+  // //////////////////////////////////// REF List Tipe Pekerjaan //////////////////////////////////////////////
   getFetchListTipePekerjaan(id: number | null | string | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.refListTipePekerjaan + id);
   }
-  ////////////////////////////////////// REF List Tipe Pekerjaan //////////////////////////////////////////////
+  // //////////////////////////////////// REF List Tipe Pekerjaan //////////////////////////////////////////////
 
-  ////////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
+  // //////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
   getFetchListJabatan(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.refListJabatan);
   }
-  ////////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
+  // //////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
 
-  ////////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
+  // //////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
   getFetchListJenisPekerjaan(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.refJenisPekerjaan);
   }
-  ////////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
+  // //////////////////////////////////// REF List Jabatan //////////////////////////////////////////////
 
-  ////////////////////////////////////// REF List Jumlah Karyawan //////////////////////////////////////////////
+  // //////////////////////////////////// REF List Jumlah Karyawan //////////////////////////////////////////////
   getFetchListJumlahKaryawan(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.refListJumlahKaryawan);
   }
-  ////////////////////////////////////// REF List Jumlah Karyawan //////////////////////////////////////////////
+  // //////////////////////////////////// REF List Jumlah Karyawan //////////////////////////////////////////////
 
   // //////////////////////////// Ref List Tipe Perusahaan //////////////////////////////////////////////////
   getFetchTipePerusahaan(): Observable<ApiResponse> {

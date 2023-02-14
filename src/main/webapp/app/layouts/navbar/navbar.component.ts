@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -59,7 +64,6 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     protected http: HttpClient,
-    private SessionStorageService: SessionStorageService,
     private loginService: LoginService,
     private translateService: TranslateService,
     private sessionStorageService: SessionStorageService,
@@ -84,8 +88,8 @@ export class NavbarComponent implements OnInit {
       this.paramId = params.id;
       this.kategori = params.kategori;
       // ///////////////// Data Entry //////////////////////////////////
-      this.curef = params['curef'];
-      this.app_no_de = params['app_no_de'];
+      this.curef = params.curef;
+      this.app_no_de = params.app_no_de;
       this.datakirimanakategoripekerjaan = params.datakirimanakategoripekerjaan;
       this.datakirimanakategoripekerjaanNav = params.datakirimanakategoripekerjaan;
       this.datakirimanid = params.datakirimanid;
@@ -97,7 +101,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLoading(true);
-    this.verificationServices.postNavbar(this.SessionStorageService.retrieve('sessionRole')).subscribe({
+    this.verificationServices.postNavbar(this.sessionStorageService.retrieve('sessionRole')).subscribe({
       next: data => {
         this.navbarParameterize = data.result;
         this.childNavbar = data.result[0].child;
@@ -126,11 +130,11 @@ export class NavbarComponent implements OnInit {
       this.account = account;
     });
 
-    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
-    this.untukSessionUserName = this.SessionStorageService.retrieve('sessionUserName');
-    this.untukSessionFullName = this.SessionStorageService.retrieve('sessionFullName');
-    this.untukSessionKodeCabang = this.SessionStorageService.retrieve('sessionKdCabang');
-    this.sudahLogin = this.SessionStorageService.retrieve('SudahLogin');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
+    this.untukSessionUserName = this.sessionStorageService.retrieve('sessionUserName');
+    this.untukSessionFullName = this.sessionStorageService.retrieve('sessionFullName');
+    this.untukSessionKodeCabang = this.sessionStorageService.retrieve('sessionKdCabang');
+    this.sudahLogin = this.sessionStorageService.retrieve('SudahLogin');
     if (this.sudahLogin === null) {
       this.router.navigate(['/login']);
     }
@@ -177,7 +181,7 @@ export class NavbarComponent implements OnInit {
     }).then(result => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('Berhasil Logout!', '', 'warning').then((message: any) => {
+        Swal.fire('Berhasil Logout!', '', 'warning').then(() => {
           this.loginService.logout();
           this.router.navigate(['/login']);
           window.location.reload();
@@ -185,7 +189,7 @@ export class NavbarComponent implements OnInit {
       } else if (result.isDenied) {
         $(document).ready(function () {
           $('#togglePassword').click(function () {
-            let paswd = $('#password_lama');
+            const paswd = $('#password_lama');
             if (paswd.attr('type') == 'password') {
               document.getElementById('password_lama')?.setAttribute('type', 'text');
               $('#togglePassword').attr('src', '../../../content/images/show.png');
@@ -195,7 +199,7 @@ export class NavbarComponent implements OnInit {
             }
           });
           $('#togglePassword2').click(function () {
-            let paswd = $('#passwor_baru');
+            const paswd = $('#passwor_baru');
             if (paswd.attr('type') == 'password') {
               document.getElementById('passwor_baru')?.setAttribute('type', 'text');
               $('#togglePassword2').attr('src', '../../../content/images/show.png');
@@ -205,7 +209,7 @@ export class NavbarComponent implements OnInit {
             }
           });
           $('#togglePassword3').click(function () {
-            let paswd = $('#Confirm_password');
+            const paswd = $('#Confirm_password');
             if (paswd.attr('type') == 'password') {
               document.getElementById('Confirm_password')?.setAttribute('type', 'text');
               $('#togglePassword3').attr('src', '../../../content/images/show.png');
@@ -233,9 +237,9 @@ export class NavbarComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let passwordlama = $('#password_lama').val();
-            let passwordbaru = $('#passwor_baru').val();
-            let confrimpassword = $('#Confirm_password').val();
+            const passwordlama = $('#password_lama').val();
+            const passwordbaru = $('#passwor_baru').val();
+            const confrimpassword = $('#Confirm_password').val();
             if (passwordlama === '') {
               Swal.fire('Gagal Menyimpan Password Lama Belum diisi');
               return;
@@ -248,7 +252,7 @@ export class NavbarComponent implements OnInit {
             } else if (confrimpassword != passwordbaru) {
               Swal.fire('Confirm atau Password Baru Tidak Sama');
               return;
-            } else if (passwordlama != this.SessionStorageService.retrieve('sessionPs')) {
+            } else if (passwordlama != this.sessionStorageService.retrieve('sessionPs')) {
               Swal.fire('Password lama salah');
               return;
             } else if (passwordlama == passwordbaru) {
@@ -256,17 +260,17 @@ export class NavbarComponent implements OnInit {
               return;
             } else {
               const body = {
-                username: this.SessionStorageService.retrieve('sessionUserName'),
+                username: this.sessionStorageService.retrieve('sessionUserName'),
                 old_password: passwordlama,
                 new_password: passwordbaru,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
-                Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
+                Authorization: `Bearer ${this.sessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos/users/resetPassword', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -274,7 +278,7 @@ export class NavbarComponent implements OnInit {
                     showConfirmButton: false,
                     timer: 3000,
                     timerProgressBar: true,
-                    didOpen: toast => {
+                    didOpen(toast) {
                       toast.addEventListener('mouseenter', Swal.stopTimer);
                       toast.addEventListener('mouseleave', Swal.resumeTimer);
                     },
@@ -284,14 +288,14 @@ export class NavbarComponent implements OnInit {
                     title: 'Change Password Berhasil',
                   });
                 },
-                error: error => {
+                error() {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
                     showConfirmButton: false,
                     timer: 3000,
                     timerProgressBar: true,
-                    didOpen: toast => {
+                    didOpen(toast) {
                       toast.addEventListener('mouseenter', Swal.stopTimer);
                       toast.addEventListener('mouseleave', Swal.resumeTimer);
                     },
@@ -303,7 +307,6 @@ export class NavbarComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
@@ -314,7 +317,7 @@ export class NavbarComponent implements OnInit {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }

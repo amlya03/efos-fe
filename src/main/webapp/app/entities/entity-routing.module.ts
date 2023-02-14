@@ -13,4 +13,5 @@ import { RouterModule } from '@angular/router';
     ]),
   ],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class EntityRoutingModule {}

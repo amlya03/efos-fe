@@ -10,4 +10,5 @@ import { healthRoute } from './health.route';
   imports: [SharedModule, RouterModule.forChild([healthRoute])],
   declarations: [HealthComponent, HealthModalComponent],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class HealthModule {}

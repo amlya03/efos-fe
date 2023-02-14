@@ -33,8 +33,8 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      if (params['key']) {
-        this.key = params['key'];
+      if (params.key) {
+        this.key = params.key;
       }
       this.initialized = true;
     });

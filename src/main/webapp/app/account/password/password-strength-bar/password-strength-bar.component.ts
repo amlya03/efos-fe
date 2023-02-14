@@ -19,7 +19,7 @@ export class PasswordStrengthBarComponent {
     const symbols = regex.test(p);
 
     const flags = [lowerLetters, upperLetters, numbers, symbols];
-    const passedMatches = flags.filter((isMatchedFlag: boolean) => isMatchedFlag === true).length;
+    const passedMatches = flags.filter((isMatchedFlag: boolean) => isMatchedFlag).length;
 
     force += 2 * p.length + (p.length >= 10 ? 1 : 0);
     force += passedMatches * 10;

@@ -9,4 +9,5 @@ import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
   exports: [FormsModule, CommonModule, NgbModule, InfiniteScrollModule, FontAwesomeModule, ReactiveFormsModule, TranslateModule],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class SharedLibsModule {}

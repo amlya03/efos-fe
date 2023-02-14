@@ -47,4 +47,5 @@ const bookRoute: Routes = [
   imports: [RouterModule.forChild(bookRoute)],
   exports: [RouterModule],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class BookRoutingModule {}

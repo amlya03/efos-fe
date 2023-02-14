@@ -16,12 +16,12 @@ type BookFormGroupInput = IBook | PartialWithRequiredKeyOf<NewBook>;
 
 type BookFormDefaults = Pick<NewBook, 'id'>;
 
-type BookFormGroupContent = {
+interface BookFormGroupContent {
   id: FormControl<IBook['id'] | NewBook['id']>;
   // contoh: FormControl<IBook['contoh']>;
   nama: FormControl<IBook['nama']>;
   app_no_de: FormControl<IBook['app_no_de']>;
-};
+}
 
 export type BookFormGroup = FormGroup<BookFormGroupContent>;
 

@@ -2,7 +2,6 @@ import { Injectable, isDevMode } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
 import { AccountService } from 'app/core/auth/account.service';
 import { StateStorageService } from './state-storage.service';
 
@@ -14,7 +13,7 @@ export class UserRouteAccessService implements CanActivate {
     return this.accountService.identity().pipe(
       map(account => {
         if (account) {
-          const authorities = route.data['authorities'];
+          const authorities = route.data.authorities;
 
           if (!authorities || authorities.length === 0 || this.accountService.hasAnyAuthority(authorities)) {
             return true;

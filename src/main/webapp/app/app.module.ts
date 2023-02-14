@@ -153,6 +153,7 @@ import { InputparameterscoringComponent } from './inputparameterscoring/inputpar
   ],
   bootstrap: [MainComponent],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class AppModule {
   constructor(applicationConfigService: ApplicationConfigService, iconLibrary: FaIconLibrary, dpConfig: NgbDatepickerConfig) {
     applicationConfigService.setEndpointPrefix(SERVER_API_URL);

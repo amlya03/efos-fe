@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-for-of */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable eqeqeq */
 import { Component, Input, OnInit } from '@angular/core';

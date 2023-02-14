@@ -9,4 +9,5 @@ import { docsRoute } from './docs.route';
   imports: [SharedModule, RouterModule.forChild([docsRoute])],
   declarations: [DocsComponent],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class DocsModule {}

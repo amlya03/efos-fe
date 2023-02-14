@@ -147,7 +147,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
 
   @ViewChild(DataTableDirective)
   dtElement!: DataTableDirective;
-  dtTrigger: Subject<any> = new Subject();
+  dtTrigger = new Subject<any>();
   dtOptions: DataTables.Settings = {};
 
   constructor(
@@ -218,21 +218,6 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   }
 
   load(): void {
-    // //////////// ReffNumber //////////////////////////
-    const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const yyyy = today.getFullYear();
-    const hour = today.getHours();
-    // today.getMinutes() <10?'0':'';
-    const menit = String(today.getMinutes()).padStart(2, '0');
-    const secon = today.getSeconds();
-    const milisecon = today.getMilliseconds();
-    const reffnumbernya = yyyy + mm + dd + hour + menit + secon + milisecon;
-    // //////////// time stamp //////////////////////////
-    const pipe = new DatePipe('en-US');
-    const timestamp2 = pipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss');
-
     this.initialDataEntry.getCustomer(this.paramId).subscribe({
       next: data => {
         this.dataEntry = data.result.customer;
@@ -373,35 +358,13 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   }
 
   cekdukcapil(): void {
-    // alert(tglLahir)
-    // let dateTime = new Date()
-    const dateTime = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
-    const str1 = new Date();
-    const str = new Date().setSeconds(0, 0);
-    const dt = new Date(str1).toISOString();
-
-    const str2 = new Date();
-    const dt2 = new Date(str2).toISOString().replace(/-/g, '');
-    const stringhapustitik = dt2.replace(/T/g, '');
-    const stringhilangz = stringhapustitik.replace(/Z/g, '');
-    const stringhilangtitik = stringhilangz.replace(/'.'/g, '');
-    const finalhasil = stringhilangtitik.replace(/:/g, '');
-    const finalhasil2 = stringhilangtitik.replace(/./g, '');
-    const d = new Date();
-    const Datenih = new Date();
     const pipe = new DatePipe('en-US');
     const datee = this.dataEntry.tanggal_lahir;
     const dateepasangan = this.dataEntry.tanggal_lahir_pasangan;
 
-    const str4 = new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta' });
     const timestamp2 = pipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss');
     const tgllahirkirim = pipe.transform(datee, 'dd-MM-yyyy');
     const tgllahirkirimpasangan = pipe.transform(dateepasangan, 'dd-MM-yyyy');
-    const hasilmiripdongbanyak = pipe.transform(datee, 'yyyy:MM:dd ');
-    const hasilmiripdong = pipe.transform(Date.now(), 'yyyy:mm:ddHH:mm:ss');
-    //  const hasilmiripdong1 = hasilmiripdong?.replace(/|/g,'');
-    const hasilmiripdongfinal = hasilmiripdong?.replace(/:/g, '');
-    // yyyy/mm/dd HH:mm:ss
 
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');

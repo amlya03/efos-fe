@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { SharedModule } from 'app/shared/shared.module';
 import { MetricsComponent } from './metrics.component';
 import { metricsRoute } from './metrics.route';
@@ -29,4 +28,5 @@ import { MetricsSystemComponent } from './blocks/metrics-system/metrics-system.c
     MetricsSystemComponent,
   ],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class MetricsModule {}

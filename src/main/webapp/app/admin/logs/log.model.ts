@@ -7,6 +7,7 @@ export interface Logger {
 
 export interface LoggersResponse {
   levels: Level[];
+  // eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
   loggers: { [key: string]: Logger };
 }
 

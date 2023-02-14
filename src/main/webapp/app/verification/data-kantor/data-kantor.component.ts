@@ -359,7 +359,7 @@ export class DataKantorComponent implements OnInit {
           waktu_verifikasi: this.dataKantorForm.get('waktu_verifikasi')?.value,
         })
         .subscribe({
-          next: data => {
+          next: () => {
             this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
           },
         });
@@ -486,7 +486,7 @@ export class DataKantorComponent implements OnInit {
           // waktu_verifikasi: this.dataKantorForm.get('waktu_verifikasi')?.value,
         })
         .subscribe({
-          next: data => {
+          next: () => {
             this.router.navigate(['/mutasi-rekening'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
           },
         });

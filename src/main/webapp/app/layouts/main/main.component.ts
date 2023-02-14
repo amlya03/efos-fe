@@ -15,9 +15,9 @@ import { DataEntryService } from 'app/data-entry/services/data-entry.service';
   templateUrl: './main.component.html',
 })
 export class MainComponent implements OnInit {
-  private renderer: Renderer2;
   baseUrl: string = environment.baseUrl;
   baseUrlDukcapil: string = environment.baseUrlDukcapil;
+  private renderer: Renderer2;
 
   constructor(
     private accountService: AccountService,
@@ -47,9 +47,11 @@ export class MainComponent implements OnInit {
       this.renderer.setAttribute(document.querySelector('html'), 'lang', langChangeEvent.lang);
     });
     // //////////////// Check Server /////////////////////////
-    let interval = setInterval(() => {
+    const interval = setInterval(() => {
       this.de.getFetchStatusPerkawinan().subscribe({
-        next: () => {},
+        next() {
+          //
+        },
         error: () => {
           clearInterval(interval);
           this.loginService.logout();
@@ -70,6 +72,7 @@ export class MainComponent implements OnInit {
   }
 
   private getPageTitle(routeSnapshot: ActivatedRouteSnapshot): string {
+    // eslint-disable-next-line @typescript-eslint/dot-notation
     const title: string = routeSnapshot.data['pageTitle'] ?? '';
     if (routeSnapshot.firstChild) {
       return this.getPageTitle(routeSnapshot.firstChild) || title;

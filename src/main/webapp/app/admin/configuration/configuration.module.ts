@@ -9,4 +9,5 @@ import { configurationRoute } from './configuration.route';
   imports: [SharedModule, RouterModule.forChild([configurationRoute])],
   declarations: [ConfigurationComponent],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class ConfigurationModule {}

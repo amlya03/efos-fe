@@ -63,5 +63,5 @@ export class getJobById {
   kategori_pekerjaan_sebelum?: null;
   status_active?: number;
   jenis_pekerjaan?: string;
-  jenis_pekerjaan_sebelum?: String;
+  jenis_pekerjaan_sebelum?: string;
 }

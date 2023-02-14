@@ -1,10 +1,10 @@
 export class refJenisPekerjaan {
-  id?: Number;
+  id?: number;
   deskripsi?: string;
   active?: string;
   created_date?: string;
-  created_by?: String;
-  kdPos?: Number;
-  kdWilayah?: Number;
+  created_by?: string;
+  kdPos?: number;
+  kdWilayah?: number;
   namaWilayah: any;
 }

@@ -46,4 +46,5 @@ import { FilterComponent } from './filter/filter.component';
     FilterComponent,
   ],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class SharedModule {}

@@ -54,6 +54,7 @@ export class InputparameterscoringComponent implements OnInit {
     this.load();
   }
 
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngOnDestroy(): void {
     if (this.dtTriggerMain) {
       this.dtTriggerMain.unsubscribe();
@@ -248,13 +249,6 @@ export class InputparameterscoringComponent implements OnInit {
         this.hasilget = 'tidak';
       }
 
-      const options = this.listmainparameterscoring.map((option: any) => {
-        return `
-          <option key="${option}" value="${option.id}">
-              ${option.parameter_description}
-          </option>
-        `;
-      });
       setTimeout(() => {
         Swal.fire({
           title: 'Main Parameter Scoring',

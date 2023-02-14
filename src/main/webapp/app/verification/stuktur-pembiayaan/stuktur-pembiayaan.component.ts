@@ -267,7 +267,7 @@ export class StukturPembiayaanComponent implements OnInit {
             })
             .subscribe({
               next: data => {
-                //console.warn(data);
+                // console.warn(data);
                 this.hasilScoring = data.result.score_value;
                 this.hasilStatus = data.result.score_desc;
               },
@@ -372,7 +372,7 @@ export class StukturPembiayaanComponent implements OnInit {
                       });
                   }, 300);
                 },
-                error: err => {
+                error: () => {
                   // alert('Dsr '+err.error.message)
                   this.getLoading(false);
                 },
@@ -391,6 +391,7 @@ export class StukturPembiayaanComponent implements OnInit {
       });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onSubmit(max_dsr: any, persentase_pembiayaan_existing: any, skema: any, tenorKirim: any, total_angsuran: any): void {
     const Skemanya = skema.split('|');
     const analisaDsr = this.strukturForm.get('dsr')?.value.replace(' %', '');
@@ -419,8 +420,8 @@ export class StukturPembiayaanComponent implements OnInit {
           skema_master: Skemanya[1],
         })
         .subscribe({
-          next: response => {
-            //console.warn(response);
+          next: () => {
+            // console.warn(response);
             alert('Berhasil Menyimpan Data');
             this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
           },
@@ -448,8 +449,8 @@ export class StukturPembiayaanComponent implements OnInit {
           skema_master: Skemanya[1],
         })
         .subscribe({
-          next: response => {
-            //console.warn(response);
+          next: () => {
+            // console.warn(response);
             // alert('Berhasil Menyimpan Data');
             this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
           },

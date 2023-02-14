@@ -248,4 +248,5 @@ import { InputparameterscoringComponent } from './inputparameterscoring/inputpar
   ],
   exports: [RouterModule],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class AppRoutingModule {}

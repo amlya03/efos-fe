@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-boolean-literal-compare */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable eqeqeq */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { Component, Input, OnInit } from '@angular/core';

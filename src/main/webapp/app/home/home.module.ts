@@ -9,4 +9,5 @@ import { HomeComponent } from './home.component';
   imports: [SharedModule, RouterModule.forChild([HOME_ROUTE])],
   declarations: [HomeComponent],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class HomeModule {}

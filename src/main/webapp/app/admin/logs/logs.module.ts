@@ -9,4 +9,5 @@ import { logsRoute } from './logs.route';
   imports: [SharedModule, RouterModule.forChild([logsRoute])],
   declarations: [LogsComponent],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class LogsModule {}

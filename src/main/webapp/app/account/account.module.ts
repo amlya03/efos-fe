@@ -23,4 +23,5 @@ import { accountState } from './account.route';
     SettingsComponent,
   ],
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class AccountModule {}

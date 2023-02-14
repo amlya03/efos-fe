@@ -1,8 +1,8 @@
 export interface Metrics {
-  jvm: { [key: string]: JvmMetrics };
+  jvm: Record<string, JvmMetrics>;
   databases: Databases;
   'http.server.requests': HttpServerRequests;
-  cache: { [key: string]: CacheMetrics };
+  cache: Record<string, CacheMetrics>;
   garbageCollector: GarbageCollector;
   services: Services;
   processMetrics: ProcessMetrics;
@@ -47,6 +47,7 @@ export interface HttpServerRequests {
   all: {
     count: number;
   };
+  // eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
   percode: { [key: string]: MaxMeanCount };
 }
 
@@ -74,11 +75,12 @@ export interface GarbageCollector {
   classesUnloaded: number;
 }
 
-export interface Services {
-  [key: string]: {
+export type Services = Record<
+  string,
+  {
     [key in HttpMethod]?: MaxMeanCount;
-  };
-}
+  }
+>;
 
 export enum HttpMethod {
   Post = 'POST',

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-base-to-string */
+/* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable arrow-body-style */
@@ -210,7 +212,7 @@ export class ParameterizedComponent implements OnInit {
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_akses_rumah+++', body, { headers }).subscribe({
-                next: response => {
+                next: () => {
                   // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
@@ -538,7 +540,7 @@ export class ParameterizedComponent implements OnInit {
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_fasilitas_listrik+++', body, { headers }).subscribe({
-                next: response => {
+                next: () => {
                   // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
@@ -1948,7 +1950,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -2063,7 +2065,6 @@ export class ParameterizedComponent implements OnInit {
         }).then(result => {
           if (result.isConfirmed) {
             const active = $('#status_active').val();
-            const kode_skema = $('#kode_skema').val();
             const tear_select = $('#tear_select').val();
             const tenor_tier1 = $('#tenor_tier1').val();
             const tenor_tier2 = $('#tenor_tier2').val();

@@ -12,7 +12,7 @@ export class MetricsCacheComponent {
   /**
    * object containing all cache related metrics
    */
-  @Input() cacheMetrics?: { [key: string]: CacheMetrics };
+  @Input() cacheMetrics?: Record<string, CacheMetrics>;
 
   /**
    * boolean field saying if the metrics are in the process of being updated
