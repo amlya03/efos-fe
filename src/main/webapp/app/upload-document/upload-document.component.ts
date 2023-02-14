@@ -37,8 +37,6 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
-  static curef: string | null | undefined;
-  static this: string | number | null | undefined;
 
   constructor(
     protected uploadSerices: ServicesUploadDocumentService,
@@ -50,7 +48,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     protected dataEntryServices: DataEntryService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.app_no_de = params['app_no_de'];
+      this.app_no_de = params.app_no_de;
     });
   }
 
@@ -123,7 +121,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     });
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }

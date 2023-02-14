@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -34,7 +35,7 @@ export class KesimpulanComponent implements OnInit {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     private formBuilder: FormBuilder,
-    protected SessionStorageService: SessionStorageService,
+    protected sessionStorageService: SessionStorageService,
     protected serviceVerificationService: ServiceVerificationService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -45,27 +46,28 @@ export class KesimpulanComponent implements OnInit {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }
 
   ngOnInit(): void {
     this.getLoading(true);
-    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
-    this.untukSessionUserName = this.SessionStorageService.retrieve('sessionUserName');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
+    this.untukSessionUserName = this.sessionStorageService.retrieve('sessionUserName');
     this.editor = new Editor();
     this.load();
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.kesimpulanForm = this.formBuilder.group({
-      kesimpulan: { value: '', disabled: this.SessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      rekomendasi: { value: '', disabled: this.SessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      kesimpulan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      rekomendasi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
     });
   }
 
   load(): void {
     // ambil semua data Kesimpulan
     this.serviceVerificationService.fetchKesimpulan(this.app_no_de).subscribe(data => {
+      // eslint-disable-next-line eqeqeq
       if (data.result == null || data.result == '') {
         this.getLoading(false);
       } else {
@@ -95,7 +97,9 @@ export class KesimpulanComponent implements OnInit {
           updated_by: this.untukSessionUserName,
         })
         .subscribe({
-          next: response => this.router.navigate(['/verification/memo'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } }),
+          next: () => {
+            this.router.navigate(['/verification/memo'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+          },
           // error: error => console.warn(error),
         });
     } else {
@@ -111,14 +115,16 @@ export class KesimpulanComponent implements OnInit {
           updated_by: this.untukSessionUserName,
         })
         .subscribe({
-          next: response => this.router.navigate(['/verification/memo'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } }),
+          next: () => {
+            this.router.navigate(['/verification/memo'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
+          },
           // error: error => console.warn(error),
         });
     }
   }
 
   // Selanjutnya
-  next() {
+  next(): void {
     this.router.navigate(['/verification/memo'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 }

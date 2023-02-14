@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { Component, Input, OnInit } from '@angular/core';
-import { createRequestOption } from 'app/core/request/request-util';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -55,16 +56,16 @@ export class DataPasanganComponent implements OnInit {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     private formBuilder: FormBuilder,
-    private SessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.app_no_de = params['app_no_de'];
-      this.curef = params['curef'];
+      this.app_no_de = params.app_no_de;
+      this.curef = params.curef;
     });
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.load();
     this.getLoading(true);
     this.dataPasanganForm = this.formBuilder.group({
@@ -95,7 +96,7 @@ export class DataPasanganComponent implements OnInit {
       kewarganegaraan_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
       pendidikan_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
       email_pasangan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       no_handphone_pasangan: [{ value: '' || null, disabled: true }, Validators.required],
@@ -109,7 +110,7 @@ export class DataPasanganComponent implements OnInit {
     });
   }
 
-  load() {
+  load(): void {
     setTimeout(() => {
       this.datEntryService.getListPendidikan().subscribe({
         next: data => {
@@ -129,7 +130,7 @@ export class DataPasanganComponent implements OnInit {
       this.retrivekecamatan = data.result.kecamatan_pasangan;
       this.retrivekelurahan = data.result.kelurahan_pasangan;
 
-      let retriveDataPasangan = {
+      const retriveDataPasangan = {
         tanggal_lahir_pasangan: this.dataEntry.tanggal_lahir_pasangan,
         usia_pasangan: this.dataEntry.usia_pasangan,
         nama_pasangan: this.dataEntry.nama_pasangan,
@@ -164,45 +165,49 @@ export class DataPasanganComponent implements OnInit {
     });
   }
 
-  hitungUsia(tgl: any) {
+  hitungUsia(tgl: any): void {
     const getValueTanggal = +new Date(tgl);
-    //////////////////////////// ini buat dapet bulan ////////////////////////////
+    // ////////////////////////// ini buat dapet bulan ////////////////////////////
+    // eslint-disable-next-line no-bitwise
     const getTahun = +~~((Date.now() - getValueTanggal) / 31557600000);
     this.dataPasanganForm.get('usia_pasangan')?.setValue(getTahun);
   }
 
-  onChange(value: any) {
+  onChange(value: any): void {
     const valuenya = value.split('|');
     this.datEntryService.getkabkota(valuenya[0]).subscribe(res => {
       this.daWakota = res.result;
+      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       this.dataPasanganForm.get('kabkota_pasangan')?.setValue(this.retriveKodeKota + '|' + this.retrivekabkota);
     });
   }
 
-  onChangekota(value: any) {
+  onChangekota(value: any): void {
     const valuenya = value.split('|');
     this.datEntryService.getkecamatan(valuenya[0]).subscribe(res => {
       this.kecamatan = res.result;
+      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       this.dataPasanganForm.get('kecamatan_pasangan')?.setValue(this.retriveKodeKecamatan + '|' + this.retrivekecamatan);
     });
   }
 
-  onChangekecamatan(value: any) {
+  onChangekecamatan(value: any): void {
     const valuenya = value.split('|');
     this.datEntryService.getkelurahan(valuenya[0]).subscribe(res => {
       this.kelurahan = res.result;
+      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       this.dataPasanganForm.get('kelurahan_pasangan')?.setValue(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
     });
   }
 
-  onChangekelurahan(value: any) {
+  onChangekelurahan(value: any): void {
     const datakodepos = value.split('|');
     this.daWakodepos = datakodepos[0];
     this.dataPasanganForm.get('kode_pos_pasangan')?.setValue(this.daWakodepos);
   }
 
-  goto(contohtampungancuref: any) {
-    this.SessionStorageService.store('dataPas', 1);
+  goto(): void {
+    this.sessionStorageService.store('dataPas', 1);
     // this.onResponseSuccess(res);
     // alert(contohtampungancuref);
     // alert(this.app_no_de);
@@ -215,13 +220,7 @@ export class DataPasanganComponent implements OnInit {
     });
   }
 
-  updatedatapasngan() {
-    const provinsi_pasangan = document.getElementById('provinsi_pasangan') as HTMLInputElement | any;
-    const kabkota_pasangan = document.getElementById('kabkota_pasangan') as HTMLInputElement | any;
-    const kecamatan_pasangan = document.getElementById('kecamatan_pasangan') as HTMLInputElement | any;
-    const kelurahan_pasangan = document.getElementById('kelurahan_pasangan') as HTMLInputElement | any;
-    const kode_pos_pasangan = document.getElementById('kode_pos_pasangan') as HTMLInputElement | any;
-
+  updatedatapasngan(): void {
     const kirimanpro = this.dataPasanganForm.get('provinsi_pasangan')?.value.split('|');
     const kirimankabkota = this.dataPasanganForm.get('kabkota_pasangan')?.value.split('|');
     const kirimankec = this.dataPasanganForm.get('kecamatan_pasangan')?.value.split('|');
@@ -235,7 +234,7 @@ export class DataPasanganComponent implements OnInit {
         nama_pasangan: this.dataPasanganForm.get('nama_pasangan')?.value,
         alamat_ktp_pasangan: this.dataPasanganForm.get('alamat_ktp_pasangan')?.value,
         jenis_kelamin_pasangan: this.dataPasanganForm.get('jenis_kelamin_pasangan')?.value,
-        updated_by: this.SessionStorageService.retrieve('sessionUserName'),
+        updated_by: this.sessionStorageService.retrieve('sessionUserName'),
         curef: this.dataEntry.curef,
         email_pasangan: this.dataPasanganForm.get('email_pasangan')?.value,
         npwp_pasangan: this.dataPasanganForm.get('npwp_pasangan')?.value,
@@ -257,7 +256,7 @@ export class DataPasanganComponent implements OnInit {
         usia_pasangan: this.dataPasanganForm.get('usia_pasangan')?.value,
       })
       .subscribe({
-        next: bawaan => {
+        next: () => {
           alert('Berhasil Menyimpan Data');
           this.router.navigate(['/data-entry/pekerjaan-pasangan'], {
             queryParams: {
@@ -266,19 +265,19 @@ export class DataPasanganComponent implements OnInit {
             },
           });
         },
-        error: error => {
+        error() {
           alert('Gagal Menyimpan Data');
         },
       });
   }
-  radiobbuttonktp() {
+  radiobbuttonktp(): void {
     this.untukktp = 1;
   }
-  radiobbutton() {
+  radiobbutton(): void {
     this.untukktp = 0;
   }
 
-  carimenggunakankodepos(kodepost: any) {
+  carimenggunakankodepos(kodepost: any): void {
     this.datEntryService.getKdpost(kodepost).subscribe(data => {
       this.retriveKodeProvinsi = data.result.provKec.kd_prov;
       this.retriveKodeKota = data.result.provKec.kd_kota;
@@ -307,7 +306,7 @@ export class DataPasanganComponent implements OnInit {
     }
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }

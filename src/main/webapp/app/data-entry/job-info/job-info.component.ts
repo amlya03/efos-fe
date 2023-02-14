@@ -1,9 +1,10 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient } from '@angular/common/http';
-import { createRequestOption } from 'app/core/request/request-util';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { DataEntryService } from '../services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { SessionStorageService } from 'ngx-webstorage';
@@ -82,7 +83,7 @@ export class JobInfoComponent implements OnInit {
   retriveKodeKota: any;
   retriveKodeKecamatan: any;
   retriveKodeKelurahan: any;
-  //////////////////////////////
+  // ////////////////////////////
   untukListJob: any;
   // //////////////////////////
   clickKdPostSebelum = 0;
@@ -98,22 +99,22 @@ export class JobInfoComponent implements OnInit {
     protected http: HttpClient,
     private formBuilder: FormBuilder,
     protected applicationConfigService: ApplicationConfigService,
-    private SessionStorageService: SessionStorageService, // private currencyPipe: CurrencyPipe
+    private sessionStorageService: SessionStorageService, // private currencyPipe: CurrencyPipe
     private currencyPipe: CurrencyPipe,
     protected initialDataEntry: InitialDataEntryService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.curef = params['curef'];
-      this.app_no_de = params['app_no_de'];
+      this.curef = params.curef;
+      this.app_no_de = params.app_no_de;
     });
   }
 
   ngOnInit(): void {
     this.getLoading(true);
-    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     // const job_info_retrive = (<HTMLInputElement>document.getElementById("job_info")).value;
     // localStorage.setItem('daftar_aplikasi_de', job_info_retrive)
-    ////////////////////////////// Validasi ////////////////////////////////////////////////////////
+    // //////////////////////////// Validasi ////////////////////////////////////////////////////////
     this.jobInfoForm = this.formBuilder.group({
       tipe_pekerjaan: '',
       payroll: '1',
@@ -171,7 +172,7 @@ export class JobInfoComponent implements OnInit {
     this.load();
   }
 
-  load() {
+  load(): void {
     setTimeout(() => {
       if (this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER') {
         this.jobInfoForm.disable();
@@ -236,8 +237,8 @@ export class JobInfoComponent implements OnInit {
           this.untukListJob = 2;
         }
 
-        this.datEntryService.getFetchListTipePekerjaan(this.untukListJob).subscribe(data => {
-          this.listTipePekerjaan = data.result;
+        this.datEntryService.getFetchListTipePekerjaan(this.untukListJob).subscribe(job => {
+          this.listTipePekerjaan = job.result;
         });
       });
     }, 65);
@@ -245,7 +246,7 @@ export class JobInfoComponent implements OnInit {
     setTimeout(() => {
       this.datEntryService.getFetchSemuaDataJob(this.curef).subscribe(data => {
         this.jobInfo = data.result;
-        //console.log(this.jobInfo);
+        // console.log(this.jobInfo);
         // alert(this.jobInfo[0] == null)
         const validasiTipePek = <FormControl>this.jobInfoForm.get('tipe_pekerjaan');
         // const validasiPosisi = <FormControl>this.jobInfoForm.get('posisi');
@@ -270,6 +271,7 @@ export class JobInfoComponent implements OnInit {
         const validasiTunjangan = <FormControl>this.jobInfoForm.get('tunjangan');
         const validasiTipePerusahaan = <FormControl>this.jobInfoForm.get('tipe_perusahaan');
         const validasiTipeKepegawaian = <FormControl>this.jobInfoForm.get('tipe_kepegawaian');
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (this.jobInfo[0] == null) {
           validasiTipePek.setValidators([Validators.required]);
           // validasiPosisi.setValidators([Validators.required]);
@@ -366,7 +368,7 @@ export class JobInfoComponent implements OnInit {
         setTimeout(() => {
           if (job.result.kategori_pekerjaan_sebelum == null) {
             // alert('inijalan');
-            let retrivejobsebelum = {
+            const retrivejobsebelum = {
               kategori_pekerjaan_sebelum: '',
               tipe_pekerjaan_sebelum: '',
               payroll_sebelum: '1',
@@ -393,7 +395,7 @@ export class JobInfoComponent implements OnInit {
             };
             this.datajobsebelum.setValue(retrivejobsebelum);
           } else {
-            let retrivejobsebelum = {
+            const retrivejobsebelum = {
               kategori_pekerjaan_sebelum: this.nampungsebelum + '|' + this.tampunganid.kategori_pekerjaan_sebelum,
               tipe_pekerjaan_sebelum: this.tampunganid.tipe_pekerjaan_sebelum,
               payroll_sebelum: this.tampunganid.payroll_sebelum,
@@ -437,7 +439,7 @@ export class JobInfoComponent implements OnInit {
     }, 75);
   }
 
-  jenisbidangselect(value: any) {
+  jenisbidangselect(value: any): void {
     this.getLoading(true);
     const idsektorpotongan = value.split('|');
     this.initialDataEntry.getSektor(idsektorpotongan[0]).subscribe({
@@ -448,7 +450,7 @@ export class JobInfoComponent implements OnInit {
     });
   }
 
-  jenisbidangsebelumselect(value: any) {
+  jenisbidangsebelumselect(value: any): void {
     this.getLoading(true);
     const idsektorpotongan = value.split('|');
     this.initialDataEntry.getSektor(idsektorpotongan[0]).subscribe({
@@ -459,13 +461,13 @@ export class JobInfoComponent implements OnInit {
     });
   }
 
-  transformAmount(element: any) {
+  transformAmount(element: any): void {
     this.formattedAmount = this.currencyPipe.transform(this.formattedAmount, 'Rp');
 
     element.target.value = this.formattedAmount;
   }
 
-  katagoripekerjaanselect(value: any) {
+  katagoripekerjaanselect(value: any): void {
     const pemisahjumlahkaryawan = value.split('|');
     if (value.indexOf('|') !== -1) {
       this.nampungdatakatagoripekerjaan = pemisahjumlahkaryawan[0];
@@ -479,7 +481,7 @@ export class JobInfoComponent implements OnInit {
     });
   }
 
-  onChange(value: any) {
+  onChange(value: any): void {
     this.getLoading(true);
     const proValue = value.split('|');
     this.datEntryService.getkabkota(proValue[0]).subscribe(data => {
@@ -489,7 +491,7 @@ export class JobInfoComponent implements OnInit {
     });
   }
 
-  onChangekota(value: any) {
+  onChangekota(value: any): void {
     this.getLoading(true);
     const kotaValue = value.split('|');
     this.datEntryService.getkecamatan(kotaValue[0]).subscribe(data => {
@@ -499,7 +501,7 @@ export class JobInfoComponent implements OnInit {
     });
   }
 
-  onChangekecamatan(value: any) {
+  onChangekecamatan(value: any): void {
     this.getLoading(true);
     const kecValue = value.split('|');
     this.datEntryService.getkelurahan(kecValue[0]).subscribe(data => {
@@ -509,13 +511,13 @@ export class JobInfoComponent implements OnInit {
     });
   }
 
-  onChangekelurahan(value: any) {
+  onChangekelurahan(value: any): void {
     const datakodepos = value.split('|');
     this.daWakodepos = datakodepos[0];
     this.jobInfoForm.get('kode_pos')?.setValue(this.daWakodepos);
   }
 
-  onChangeD(value: any) {
+  onChangeD(value: any): void {
     this.getLoading(true);
     const proValue = value.split('|');
     this.datEntryService.getkabkota(proValue[0]).subscribe({
@@ -530,7 +532,7 @@ export class JobInfoComponent implements OnInit {
     });
   }
 
-  onChangekotaD(value: any) {
+  onChangekotaD(value: any): void {
     this.getLoading(true);
     const kotaValue = value.split('|');
     this.datEntryService.getkecamatan(kotaValue[0]).subscribe({
@@ -543,10 +545,10 @@ export class JobInfoComponent implements OnInit {
         this.getLoading(false);
       },
     });
-    //console.log();
+    // console.log();
   }
 
-  onChangekecamatanD(value: any) {
+  onChangekecamatanD(value: any): void {
     this.getLoading(true);
     const kecValue = value.split('|');
     this.datEntryService.getkelurahan(kecValue[0]).subscribe({
@@ -559,17 +561,17 @@ export class JobInfoComponent implements OnInit {
         this.getLoading(false);
       },
     });
-    //console.log();
+    // console.log();
   }
 
-  onChangekelurahanD(value: any) {
+  onChangekelurahanD(value: any): void {
     const kelValue = value.split('|');
     this.daWakodeposD = kelValue[0];
     this.datajobsebelum.get('kode_pos_sebelum')?.setValue(this.daWakodeposD);
   }
 
-  goto() {
-    this.SessionStorageService.store('jobInfo', 1);
+  goto(): void {
+    this.sessionStorageService.store('jobInfo', 1);
     // this.onResponseSuccess(res);
     if (this.dataEntry.status_perkawinan === 'Menikah') {
       this.router.navigate(['/data-entry/data-pasangan'], {
@@ -579,7 +581,7 @@ export class JobInfoComponent implements OnInit {
         },
       });
 
-      //console.warn(this.curef);
+      // console.warn(this.curef);
     } else {
       this.router.navigate(['/data-entry/collateral'], {
         queryParams: {
@@ -604,7 +606,7 @@ export class JobInfoComponent implements OnInit {
     });
   }
 
-  buatcreatejobinfo() {
+  buatcreatejobinfo(): void {
     this.getLoading(true);
     // if () {
     //   // alert("Bisa")
@@ -677,7 +679,8 @@ export class JobInfoComponent implements OnInit {
     // }
   }
 
-  updatejobsebelum() {
+  updatejobsebelum(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (this.ideJob == null) {
       alert('Perkerjaan Belum Ada');
       return;
@@ -685,38 +688,43 @@ export class JobInfoComponent implements OnInit {
       const kirimKatePeker = this.datajobsebelum.get('kategori_pekerjaan_sebelum')?.value.split('|');
 
       const potonganPro = this.datajobsebelum.get('provinsi_sebelum')?.value.split('|');
+      let kirimanprovinsi: any;
       if (this.datajobsebelum.get('provinsi_sebelum')?.value.indexOf('|') !== -1) {
-        var kirimanprovinsi = potonganPro[1];
+        kirimanprovinsi = potonganPro[1];
       } else {
-        var kirimanprovinsi = this.datajobsebelum.get('provinsi_sebelum')?.value;
+        kirimanprovinsi = this.datajobsebelum.get('provinsi_sebelum')?.value;
       }
 
       const potonganKot = this.datajobsebelum.get('kabkota_sebelum')?.value.split('|');
+      let kirimankabkota: any;
       if (this.datajobsebelum.get('kabkota_sebelum')?.value.indexOf('|') !== -1) {
-        var kirimankabkota = potonganKot[1];
+        kirimankabkota = potonganKot[1];
       } else {
-        var kirimankabkota = this.datajobsebelum.get('kabkota_sebelum')?.value;
+        kirimankabkota = this.datajobsebelum.get('kabkota_sebelum')?.value;
       }
 
       const potonganKec = this.datajobsebelum.get('kecamatan_sebelum')?.value.split('|');
+      let kirimankecamatan: any;
       if (this.datajobsebelum.get('kecamatan_sebelum')?.value.indexOf('|') !== -1) {
-        var kirimankecamatan = potonganKec[1];
+        kirimankecamatan = potonganKec[1];
       } else {
-        var kirimankecamatan = this.datajobsebelum.get('kecamatan_sebelum')?.value;
+        kirimankecamatan = this.datajobsebelum.get('kecamatan_sebelum')?.value;
       }
 
       const potonganKel = this.datajobsebelum.get('kelurahan_sebelum')?.value.split('|');
+      let kirimankelurahan: any;
       if (this.datajobsebelum.get('kelurahan_sebelum')?.value.indexOf('|') !== -1) {
-        var kirimankelurahan = potonganKel[1];
+        kirimankelurahan = potonganKel[1];
       } else {
-        var kirimankelurahan = this.datajobsebelum.get('kelurahan_sebelum')?.value;
+        kirimankelurahan = this.datajobsebelum.get('kelurahan_sebelum')?.value;
       }
 
+      let kirimanjenisbidang: any;
       if (this.datajobsebelum.get('jenis_bidang_sebelum')?.value.indexOf('|') !== -1) {
         const potonganjenisbidang = this.datajobsebelum.get('jenis_bidang_sebelum')?.value.split('|');
-        var kirimanjenisbidang = potonganjenisbidang[1];
+        kirimanjenisbidang = potonganjenisbidang[1];
       } else {
-        var kirimanjenisbidang = this.dataretrivejenisbidangsebelum;
+        kirimanjenisbidang = this.dataretrivejenisbidangsebelum;
       }
       if (this.datajobsebelum.get('jenis_bidang_sebelum')?.value.indexOf('|') !== -1) {
         this.datajobsebelum.get('sektor_ekonomi_sebelum')?.value;
@@ -758,11 +766,11 @@ export class JobInfoComponent implements OnInit {
           // umur_pensiun_sebelum: kirimankabkota,
           curef: this.tampunganid.curef,
           updated_date: '',
-          updated_by: this.SessionStorageService.retrieve('sessionUserName'),
+          updated_by: this.sessionStorageService.retrieve('sessionUserName'),
         })
 
         .subscribe({
-          next: bawaan => {
+          next: () => {
             if (this.dataEntry.status_perkawinan === 'Menikah') {
               alert('Berhasil Menyimpan Data');
               this.router.navigate(['/data-entry/data-pasangan'], {
@@ -791,7 +799,7 @@ export class JobInfoComponent implements OnInit {
     }
   }
 
-  carimenggunakankodepost(kodepost: any) {
+  carimenggunakankodepost(kodepost: any): void {
     this.getLoading(true);
     this.datEntryService.getKdpost(kodepost).subscribe(data => {
       this.getLoading(false);
@@ -799,7 +807,7 @@ export class JobInfoComponent implements OnInit {
       this.responseKels.forEach(element => {
         this.responseKels.push(element);
         if (element.kdPos == kodepost) {
-          let namaWIl = element.namaWilayah;
+          const namaWIl = element.namaWilayah;
           this.responseNamaWilayah.push(namaWIl);
         }
       });
@@ -830,9 +838,9 @@ export class JobInfoComponent implements OnInit {
     });
   }
 
-  ////sebelum
+  // //sebelum
 
-  carimenggunakankodepostsebelum(kodepost: any) {
+  carimenggunakankodepostsebelum(kodepost: any): void {
     this.getLoading(true);
     this.datEntryService.getKdpost(kodepost).subscribe({
       next: data => {
@@ -842,7 +850,7 @@ export class JobInfoComponent implements OnInit {
           this.responseKelsSebelum.forEach(element => {
             this.responseKelsSebelum.push(element);
             if (element.kdPos == kodepost) {
-              let namaWIl = element.namaWilayah;
+              const namaWIl = element.namaWilayah;
               this.responseNamaWilayahSebelum.push(namaWIl);
             }
           });
@@ -887,10 +895,10 @@ export class JobInfoComponent implements OnInit {
       },
     });
 
-    //console.log(req);
+    // console.log(req);
   }
 
-  ////sebelum
+  // //sebelum
 
   hapusJobList(idJob: any): void {
     Swal.fire({
@@ -907,7 +915,7 @@ export class JobInfoComponent implements OnInit {
             id: idJob,
           })
           .subscribe({});
-        Swal.fire('Terhapus!', 'File Sudah Tidak Ada', 'success').then((message: any) => {
+        Swal.fire('Terhapus!', 'File Sudah Tidak Ada', 'success').then(() => {
           window.location.reload();
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -927,7 +935,7 @@ export class JobInfoComponent implements OnInit {
     }
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }

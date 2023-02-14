@@ -65,7 +65,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     // alert(this.app_no_de)
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }
@@ -80,13 +80,13 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     };
 
     this.mutasiForm = this.formBuilder.group({
-      nama_bank: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
-      no_rekening: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
-      tahun: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
-      bulan: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
-      debet: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
-      kredit: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
-      saldo: { disabled: this.untukSessionRole == 'VER_PRE_SPV', value: '' },
+      nama_bank: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
+      no_rekening: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
+      tahun: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
+      bulan: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
+      debet: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
+      kredit: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
+      saldo: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
     });
 
     this.load();
@@ -117,6 +117,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
 
   submitForm(): void {
     // alert(this.lihatTableMutasi)
+    // eslint-disable-next-line eqeqeq
     if (this.tambahTableMutasi == 0) {
       this.http
         .post<mutasiRekening>(this.baseUrl + 'v1/efos-verif/create_verif_mutasi', {
@@ -133,7 +134,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           tahun: this.mutasiForm.get('tahun')?.value,
         })
         .subscribe({
-          next: response => {
+          next() {
             window.location.reload();
           },
           error: error => console.warn(error),
@@ -154,7 +155,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           updated_date: '',
         })
         .subscribe({
-          next: response => {
+          next() {
             window.location.reload();
           },
           error: error => console.warn(error),
@@ -171,7 +172,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       .getMutasiRekening(id) // by id dari table atas
       .subscribe(data => {
         this.getTableMutasi = data.result;
-        let retriveMutasi = {
+        const retriveMutasi = {
           nama_bank: this.getTableMutasi.nama_bank,
           no_rekening: this.getTableMutasi.no_rekening,
           tahun: this.getTableMutasi.tahun,
@@ -185,7 +186,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   }
 
   // delete Mutasi
-  deleteMutasi(id: any) {
+  deleteMutasi(idMutasi: any): void {
     Swal.fire({
       title: 'Hapus Data Mutasi Rekening?',
       text: 'Data akan dihapus dari table Mutasi Rekening!',
@@ -197,14 +198,14 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       cancelButtonText: 'Tidak, Simpan Data ini',
     }).then(result => {
       if (result.isConfirmed) {
-        Swal.fire('Berhasil dihapus!', 'Data Sudah Tidak Ada pada Table Mutasi', 'success').then(result => {
+        Swal.fire('Berhasil dihapus!', 'Data Sudah Tidak Ada pada Table Mutasi', 'success').then(() => {
           this.http
             .post<any>(this.baseUrl + 'v1/efos-verif/delete_verif_mutasi_rekening', {
-              id: id,
+              id: idMutasi,
             })
             .subscribe({
-              next: response => {
-                //console.warn(response);
+              next() {
+                // console.warn(response);
                 window.location.reload();
               },
               error: error => console.warn(error),
@@ -216,7 +217,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   goto(): void {
     this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
-  next() {
+  next(): void {
     this.router.navigate(['/analisa-keuangan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
   // Only Numbers

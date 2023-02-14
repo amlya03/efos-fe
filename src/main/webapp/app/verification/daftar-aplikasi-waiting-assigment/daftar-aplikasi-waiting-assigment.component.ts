@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/prefer-for-of */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/member-ordering */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,10 +26,6 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
   baseUrl: string = environment.baseUrl;
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
-  public getLoading(loading: boolean) {
-    this.isLoading = loading;
-    this.isSpin = loading;
-  }
   title = 'EFOS';
   numbers: Array<number> = [];
   daWa?: daWaModel[] = [];
@@ -114,7 +113,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
 
   // ceklis semua
   isChecked = false;
-  checkuncheckall() {
+  checkuncheckall(): void {
     if (this.isChecked === true) {
       this.isChecked = false;
     } else {
@@ -138,7 +137,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
   // post assign
   postAssign(): void {
     // setTimeout(() => {
-    if (this.kirimDe.length != 0 && this.kirimAssign != null) {
+    if (this.kirimDe.length !== 0 && this.kirimAssign != null) {
       if (this.isChecked === false) {
         this.kirimDe;
         for (let i = 0; i < this.kirimDe.length; i++) {
@@ -149,10 +148,8 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
               status_aplikasi: this.kirimStatusAplikasi[i],
               created_by: this.sessionStorageService.retrieve('sessionUserName'),
             })
-            .subscribe({
-              next: data => {},
-            });
-          if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
+            .subscribe({});
+          if (this.kirimDe[this.kirimDe.length - 1] === this.kirimDe[i]) {
             alert('Data di Assign kepada ' + this.kirimAssign);
             window.location.reload();
           }
@@ -166,11 +163,9 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
               status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
               created_by: this.sessionStorageService.retrieve('sessionUserName'),
             })
-            .subscribe({
-              next: data => {},
-            });
+            .subscribe({});
 
-          if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
+          if (this.checkLenghtResult[this.checkLenghtResult.length - 1] === this.checkLenghtResult[i]) {
             alert('Data di Assign kepada ' + this.kirimAssign);
             window.location.reload();
           }
@@ -241,5 +236,10 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
         Swal.fire('Cancelled', 'File disimpan', 'error');
       }
     });
+  }
+
+  public getLoading(loading: boolean): void {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

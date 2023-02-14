@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,7 +25,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
   listFasilitas: getListFasilitasModel[] = [];
   curef: any;
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }
@@ -72,7 +73,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
         this.dtTrigger.next(data.result);
         this.getLoading(false);
       }
-      //console.log(this.daftarAplikasiVerif);
+      // console.log(this.daftarAplikasiVerif);
     });
   }
 
@@ -95,11 +96,11 @@ export class VerificationComponent implements OnInit, OnDestroy {
     }, 50);
   }
 
-  viewVerification(app_no_de: any): void {
-    this.dataEntryService.getFetchSemuaDataDE(app_no_de).subscribe(data => {
+  viewVerification(app_no_deView: any): void {
+    this.dataEntryService.getFetchSemuaDataDE(app_no_deView).subscribe(data => {
       this.dataEntry = data.result;
       this.curef = this.dataEntry?.curef;
-      this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: app_no_de, curef: this.curef } });
+      this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: app_no_deView, curef: this.curef } });
     });
   }
 }

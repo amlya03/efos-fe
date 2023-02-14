@@ -40,10 +40,10 @@ export class DataEntryComponent implements OnInit, OnDestroy {
     private router: Router,
     protected http: HttpClient,
     protected modalService: NgbModal,
-    private SessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.app_no_de = params['app_no_de'];
+      this.app_no_de = params.app_no_de;
     });
   }
 
@@ -60,15 +60,15 @@ export class DataEntryComponent implements OnInit, OnDestroy {
   load(): void {
     this.getLoading(true);
     setTimeout(() => {
-      this.SessionStorageService.store('personalInfo', 0);
-      this.SessionStorageService.store('jobInfo', 0);
-      this.SessionStorageService.store('dataPas', 0);
-      this.SessionStorageService.store('pekerPas', 0);
-      this.SessionStorageService.store('collateral', 0);
-      this.SessionStorageService.store('strukturPemb', 0);
-      this.SessionStorageService.store('callReport', 0);
-      this.SessionStorageService.store('uploadDE', 0);
-      this.SessionStorageService.store('uploadDEA', 0);
+      this.sessionStorageService.store('personalInfo', 0);
+      this.sessionStorageService.store('jobInfo', 0);
+      this.sessionStorageService.store('dataPas', 0);
+      this.sessionStorageService.store('pekerPas', 0);
+      this.sessionStorageService.store('collateral', 0);
+      this.sessionStorageService.store('strukturPemb', 0);
+      this.sessionStorageService.store('callReport', 0);
+      this.sessionStorageService.store('uploadDE', 0);
+      this.sessionStorageService.store('uploadDEA', 0);
     }, 10);
     setTimeout(() => {
       this.datEntryService.getDaftarAplikasiDataEntry().subscribe(data => {
@@ -118,7 +118,7 @@ export class DataEntryComponent implements OnInit, OnDestroy {
       });
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }

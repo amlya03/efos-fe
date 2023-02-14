@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable eqeqeq */
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -45,25 +47,25 @@ export class MemoComponent implements OnInit {
     private router: Router,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private SessionStorageService: SessionStorageService,
+    private sessionStorageService: SessionStorageService,
     protected fileUploadService: ServicesUploadDocumentService,
     private formBuilder: FormBuilder,
     protected dataEntryService: DataEntryService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.curef = params['curef'];
+      this.curef = params.curef;
     });
 
     this.route.queryParams.subscribe(params => {
-      this.app_no_de = params['app_no_de'];
+      this.app_no_de = params.app_no_de;
     });
   }
 
   ngOnInit(): void {
     this.getLoading(true);
-    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
-    this.untukSessionusername = this.SessionStorageService.retrieve('sessionUserName');
-    this.untukSessionfullname = this.SessionStorageService.retrieve('sessionFullName');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
+    this.untukSessionusername = this.sessionStorageService.retrieve('sessionUserName');
+    this.untukSessionfullname = this.sessionStorageService.retrieve('sessionFullName');
 
     this.load();
 
@@ -72,17 +74,17 @@ export class MemoComponent implements OnInit {
     });
   }
 
-  load() {
+  load(): void {
     // ////////////// Sesion untuk di BM ////////////////
-    let personalInfo = this.SessionStorageService.retrieve('personalInfo');
-    let jobInfo = this.SessionStorageService.retrieve('jobInfo');
-    let dataPas = this.SessionStorageService.retrieve('dataPas');
-    let pekerPas = this.SessionStorageService.retrieve('pekerPas');
-    let collateral = this.SessionStorageService.retrieve('collateral');
-    let strukturPemb = this.SessionStorageService.retrieve('strukturPemb');
-    let callReport = this.SessionStorageService.retrieve('callReport');
-    let uploadDE = this.SessionStorageService.retrieve('uploadDE');
-    let uploadDEA = this.SessionStorageService.retrieve('uploadDEA');
+    const personalInfo = this.sessionStorageService.retrieve('personalInfo');
+    const jobInfo = this.sessionStorageService.retrieve('jobInfo');
+    const dataPas = this.sessionStorageService.retrieve('dataPas');
+    const pekerPas = this.sessionStorageService.retrieve('pekerPas');
+    const collateral = this.sessionStorageService.retrieve('collateral');
+    const strukturPemb = this.sessionStorageService.retrieve('strukturPemb');
+    const callReport = this.sessionStorageService.retrieve('callReport');
+    const uploadDE = this.sessionStorageService.retrieve('uploadDE');
+    const uploadDEA = this.sessionStorageService.retrieve('uploadDEA');
 
     setTimeout(() => {
       this.fileUploadService.getMemoUpload(this.curef, this.app_no_de).subscribe(data => {
@@ -221,11 +223,11 @@ export class MemoComponent implements OnInit {
         keterangan: this.memoForm.get('keterangan')?.value,
         users: this.untukSessionfullname,
         role: this.untukSessionRole,
-        created_by: this.SessionStorageService.retrieve('sessionUserName'),
+        created_by: this.sessionStorageService.retrieve('sessionUserName'),
         app_no_de: this.app_no_de,
       })
       .subscribe({
-        next: bawaan => {
+        next() {
           window.location.reload();
         },
       });
@@ -235,11 +237,11 @@ export class MemoComponent implements OnInit {
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/update_status_back_de', {
         app_no_de: this.app_no_de,
-        created_by: this.SessionStorageService.retrieve('sessionUserName'),
+        created_by: this.sessionStorageService.retrieve('sessionUserName'),
         status_aplikasi: this.dataEntryModel.status_aplikasi,
       })
       .subscribe({
-        next: bawaan => {
+        next: () => {
           alert('Data Telah Kembali Ke AO');
           this.router.navigate(['/data-entry'], {
             queryParams: { app_no_de: this.app_no_de },
@@ -260,11 +262,11 @@ export class MemoComponent implements OnInit {
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/update_status_dataentry', {
         app_no_de: this.app_no_de,
-        created_by: this.SessionStorageService.retrieve('sessionUserName'),
+        created_by: this.sessionStorageService.retrieve('sessionUserName'),
         status_aplikasi: this.dataEntryModel.status_aplikasi,
       })
       .subscribe({
-        next: bawaan => {
+        next: () => {
           if (this.untukSessionRole === 'BRANCHMANAGER') {
             alert('Berhasil Menyimpan Data');
             this.router.navigate(['/data-entry']);
@@ -286,7 +288,7 @@ export class MemoComponent implements OnInit {
     this.router.navigate(['/daftar-aplikasi-waiting-assigment'], {});
   }
 
-  pilihFile(pilih: any) {
+  pilihFile(pilih: any): void {
     if (Math.floor(pilih.target.files[0].size * 0.000001) > 2) {
       Swal.fire('Gagal', 'File Maksimal 2MB!', 'error').then(() => {
         window.location.reload();
@@ -295,10 +297,11 @@ export class MemoComponent implements OnInit {
       this.file = pilih.target.files[0];
     }
   }
-  thisFileUpload() {
+  thisFileUpload(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (this.getMemoUpload == null) {
       this.fileUploadService.uploadMemo(this.file, this.app_no_de, this.curef).subscribe({
-        next: bawaan => {
+        next() {
           alert('Data Berhasil diupload');
           window.location.reload();
         },
@@ -307,18 +310,20 @@ export class MemoComponent implements OnInit {
       alert('Data Sudah diupload');
     }
   }
-  download() {
+  download(): void {
     const buatPdf = this.getMemoUpload.nama_dokumen?.split('.').pop();
     if (buatPdf == 'pdf') {
+      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + this.getMemoUpload.nama_dokumen + '');
     } else {
+      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       const url = this.baseUrl + 'v1/efos-de/downloadFile/' + this.getMemoUpload.nama_dokumen + '';
       const img = '<img src="' + url + '">';
       this.popup = window.open('');
       this.popup.document.write(img);
     }
   }
-  view(id: number | null | undefined) {
+  view(id: number | null | undefined): void {
     this.dataEntryService.getFetchListMemo(id).subscribe(data => {
       this.detailMemoModel = data.result;
       Swal.fire({
@@ -359,7 +364,7 @@ export class MemoComponent implements OnInit {
         // preConfirm: () => {
         //   return [$('#produk').val(), $('#joint_income').val(), $('#parameter').val(), $('#data_value').val(), $('#min').val(), $('#max').val(), $('#score').val()];
         // },
-      }).then(result => {});
+      });
 
       // if (formValues) {
       //   Swal.fire(JSON.stringify(formValues));
@@ -368,7 +373,7 @@ export class MemoComponent implements OnInit {
     });
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }

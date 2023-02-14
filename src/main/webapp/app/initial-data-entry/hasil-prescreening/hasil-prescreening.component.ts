@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { Component, OnInit, ViewChild, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -155,7 +158,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     protected applicationConfigService: ApplicationConfigService,
     protected initialDataEntry: InitialDataEntryService,
-    private SessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.paramId = params.id;
@@ -164,12 +167,12 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
       this.kategori = params.kategori;
     });
     this.route.queryParams.subscribe(params => {
-      this.datakirimanappide = params['datakirimanappide'];
+      this.datakirimanappide = params.datakirimanappide;
     });
-    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
-    this.untukSessionUserName = this.SessionStorageService.retrieve('sessionUserName');
-    this.untukSessionFullName = this.SessionStorageService.retrieve('sessionFullName');
-    this.untukSessionKodeCabang = this.SessionStorageService.retrieve('sessionKdCabang');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
+    this.untukSessionUserName = this.sessionStorageService.retrieve('sessionUserName');
+    this.untukSessionFullName = this.sessionStorageService.retrieve('sessionFullName');
+    this.untukSessionKodeCabang = this.sessionStorageService.retrieve('sessionKdCabang');
   }
 
   ngOnInit(): void {
@@ -214,21 +217,21 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     this.dtTrigger.unsubscribe();
   }
 
-  load() {
+  load(): void {
     // //////////// ReffNumber //////////////////////////
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0');
-    let yyyy = today.getFullYear();
-    let hour = today.getHours();
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    const hour = today.getHours();
     // today.getMinutes() <10?'0':'';
-    let menit = String(today.getMinutes()).padStart(2, '0');
-    let secon = today.getSeconds();
-    let milisecon = today.getMilliseconds();
+    const menit = String(today.getMinutes()).padStart(2, '0');
+    const secon = today.getSeconds();
+    const milisecon = today.getMilliseconds();
     const reffnumbernya = yyyy + mm + dd + hour + menit + secon + milisecon;
     // //////////// time stamp //////////////////////////
-    var pipe = new DatePipe('en-US');
-    const timestamp = pipe.transform(Date.now(), 'yyyy-mm-dd HH:mm:ss');
+    const pipe = new DatePipe('en-US');
+    const timestamp2 = pipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss');
 
     this.initialDataEntry.getCustomer(this.paramId).subscribe({
       next: data => {
@@ -284,7 +287,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     });
   }
 
-  untukSlik() {
+  untukSlik(): void {
     this.getLoading(true);
     setTimeout(() => {
       this.ngOnDestroy();
@@ -369,47 +372,47 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     }, 10);
   }
 
-  cekdukcapil() {
+  cekdukcapil(): void {
     // alert(tglLahir)
     // let dateTime = new Date()
-    let dateTime = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
-    var str1 = new Date();
-    var str = new Date().setSeconds(0, 0);
-    var dt = new Date(str1).toISOString();
+    const dateTime = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
+    const str1 = new Date();
+    const str = new Date().setSeconds(0, 0);
+    const dt = new Date(str1).toISOString();
 
-    var str2 = new Date();
-    var dt2 = new Date(str2).toISOString().replace(/-/g, '');
-    var stringhapustitik = dt2.replace(/T/g, '');
-    var stringhilangz = stringhapustitik.replace(/Z/g, '');
-    var stringhilangtitik = stringhilangz.replace(/'.'/g, '');
-    var finalhasil = stringhilangtitik.replace(/:/g, '');
-    var finalhasil2 = stringhilangtitik.replace(/./g, '');
-    var d = new Date();
-    var Datenih = new Date();
-    var pipe = new DatePipe('en-US');
-    var datee = this.dataEntry.tanggal_lahir;
-    var dateepasangan = this.dataEntry.tanggal_lahir_pasangan;
+    const str2 = new Date();
+    const dt2 = new Date(str2).toISOString().replace(/-/g, '');
+    const stringhapustitik = dt2.replace(/T/g, '');
+    const stringhilangz = stringhapustitik.replace(/Z/g, '');
+    const stringhilangtitik = stringhilangz.replace(/'.'/g, '');
+    const finalhasil = stringhilangtitik.replace(/:/g, '');
+    const finalhasil2 = stringhilangtitik.replace(/./g, '');
+    const d = new Date();
+    const Datenih = new Date();
+    const pipe = new DatePipe('en-US');
+    const datee = this.dataEntry.tanggal_lahir;
+    const dateepasangan = this.dataEntry.tanggal_lahir_pasangan;
 
     const str4 = new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta' });
-    var timestamp = pipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss');
-    var tgllahirkirim = pipe.transform(datee, 'dd-MM-yyyy');
-    var tgllahirkirimpasangan = pipe.transform(dateepasangan, 'dd-MM-yyyy');
-    var hasilmiripdongbanyak = pipe.transform(datee, 'yyyy:MM:dd ');
-    var hasilmiripdong = pipe.transform(Date.now(), 'yyyy:mm:ddHH:mm:ss');
-    //  var hasilmiripdong1 = hasilmiripdong?.replace(/|/g,'');
-    var hasilmiripdongfinal = hasilmiripdong?.replace(/:/g, '');
+    const timestamp2 = pipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss');
+    const tgllahirkirim = pipe.transform(datee, 'dd-MM-yyyy');
+    const tgllahirkirimpasangan = pipe.transform(dateepasangan, 'dd-MM-yyyy');
+    const hasilmiripdongbanyak = pipe.transform(datee, 'yyyy:MM:dd ');
+    const hasilmiripdong = pipe.transform(Date.now(), 'yyyy:mm:ddHH:mm:ss');
+    //  const hasilmiripdong1 = hasilmiripdong?.replace(/|/g,'');
+    const hasilmiripdongfinal = hasilmiripdong?.replace(/:/g, '');
     // yyyy/mm/dd HH:mm:ss
 
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = today.getFullYear();
-    var hour = today.getHours();
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    const hour = today.getHours();
     // today.getMinutes() <10?'0':'';
-    var menit = String(today.getMinutes()).padStart(2, '0');
-    var secon = today.getSeconds();
-    var milisecon = today.getMilliseconds();
-    var reffnumbernya = yyyy + mm + dd + hour + menit + secon + milisecon;
+    const menit = String(today.getMinutes()).padStart(2, '0');
+    const secon = today.getSeconds();
+    const milisecon = today.getMilliseconds();
+    const reffnumbernya = yyyy + mm + dd + hour + menit + secon + milisecon;
 
     if (this.dataEntry.status_perkawinan === 'Menikah') {
       this.statusnikah = 'KAWIN';
@@ -450,7 +453,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
             no_id: this.dataEntry.app_no_ide,
             tanggal_lahir: this.dataEntry.tanggal_lahir,
             reffNumber: reffnumbernya,
-            timestamp: timestamp,
+            timestamp: timestamp2,
             channelID: 'EFOS',
             NIK: this.dataEntry.no_ktp,
             noKK: '',
@@ -519,7 +522,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                       no_id: this.dataEntry.app_no_ide,
                       tanggal_lahir: this.dataEntry.tanggal_lahir_pasangan,
                       reffNumber: reffnumbernya,
-                      timestamp: timestamp,
+                      timestamp: timestamp2,
                       channelID: 'EFOS',
                       NIK: this.dataEntry.no_ktp_pasangan,
                       noKK: '',
@@ -547,10 +550,10 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                       noRT: this.dataEntry.rt_pasangan,
                     })
                     .subscribe({
-                      next: data => {
-                        this.datadukcapilpasangan = data.result;
-                        if (data.result.responseCode != '00') {
-                          alert(data.result.responseDesc);
+                      next: responseCode => {
+                        this.datadukcapilpasangan = responseCode.result;
+                        if (responseCode.result.responseCode != '00') {
+                          alert(responseCode.result.responseDesc);
                           this.PasangaNnamaLengkapDukcapil = 'Tidak Sesuai';
                           this.ifPasangaNnamaLengkap = 'Tidak Sesuai';
                           this.PasangaNtglLahirDukcapil = 'Tidak Sesuai';
@@ -567,7 +570,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                           this.getLoading(false);
                           return;
                         } else {
-                          this.datadukcapilpasangan = data.result;
+                          this.datadukcapilpasangan = responseCode.result;
                           this.PasangaNnamaLengkapDukcapil = this.datadukcapilpasangan.namaLengkap;
                           this.ifPasangaNnamaLengkap = this.datadukcapilpasangan.namaLengkap.includes('Tidak') ? 'Tidak Sesuai' : 'Sesuai';
                           this.PasangaNtglLahirDukcapil = this.datadukcapilpasangan.tglLahir;
@@ -584,25 +587,25 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
 
                           setTimeout(() => {
                             this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe({
-                              next: data => {
-                                if (data.result == '') {
+                              next: getdataSLikMenikah => {
+                                if (getdataSLikMenikah.result == '') {
                                   this.getLoading(false);
                                 }
-                                this.resultDataSlik = data.result.dataSlikResult;
+                                this.resultDataSlik = getdataSLikMenikah.result.dataSlikResult;
 
-                                if (data.result.dataSlikResult == '') {
+                                if (getdataSLikMenikah.result.dataSlikResult == '') {
                                   this.hideCekSlik = 0;
                                 } else {
                                   this.hideCekSlik = 1;
                                 }
 
                                 setTimeout(() => {
-                                  this.totalOutNas = data.result.total_outstanding_nasabah;
-                                  this.totalPlaNas = data.result.total_plafon_nasabah;
-                                  this.totalAngNas = data.result.total_angsuran_nasabah;
-                                  this.totalPasOut = data.result.total_outstanding_pasangan;
-                                  this.totalPasPla = data.result.total_plafon_pasangan;
-                                  this.totalPasAng = data.result.total_angsuran_pasangan;
+                                  this.totalOutNas = getdataSLikMenikah.result.total_outstanding_nasabah;
+                                  this.totalPlaNas = getdataSLikMenikah.result.total_plafon_nasabah;
+                                  this.totalAngNas = getdataSLikMenikah.result.total_angsuran_nasabah;
+                                  this.totalPasOut = getdataSLikMenikah.result.total_outstanding_pasangan;
+                                  this.totalPasPla = getdataSLikMenikah.result.total_plafon_pasangan;
+                                  this.totalPasAng = getdataSLikMenikah.result.total_angsuran_pasangan;
                                 }, 10);
 
                                 setTimeout(() => {
@@ -610,12 +613,12 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                                     this.http
                                       .post<any>(this.baseUrl + 'v1/efos-ide/slik_verify', {
                                         channelID: 'EFOS',
-                                        createdBy: this.SessionStorageService.retrieve('sessionUserName'),
-                                        idUserCabang: this.SessionStorageService.retrieve('sessionUserName'),
+                                        createdBy: this.sessionStorageService.retrieve('sessionUserName'),
+                                        idUserCabang: this.sessionStorageService.retrieve('sessionUserName'),
                                         jenisKelamin: this.jenisKelaminHps,
                                         jenisKelaminPasangan: this.jenisKelaminPasHps,
                                         jenisProduct: 'PTA',
-                                        kodeCabang: this.SessionStorageService.retrieve('sessionKdCabang'),
+                                        kodeCabang: this.sessionStorageService.retrieve('sessionKdCabang'),
                                         namaNasabah: this.dataEntry.nama,
                                         namaPasangan: this.dataEntry.nama_pasangan,
                                         noAplikasi: this.dataEntry.app_no_ide,
@@ -628,23 +631,23 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                                         tempatLahirPasangan: this.dataEntry.tempat_lahir_pasangan,
                                         tglLahir: this.dataEntry.tanggal_lahir,
                                         tglLahirPasangan: this.dataEntry.tanggal_lahir_pasangan,
-                                        timestamp: timestamp,
+                                        timestamp: timestamp2,
                                         tujuanSlikChecking: '1',
                                       })
                                       .subscribe({
-                                        next: data => {
+                                        next: menikahSlikResponse => {
                                           setTimeout(() => {
-                                            if (data.code == 200) {
+                                            if (menikahSlikResponse.code == 200) {
                                               let responseResultSukses: any;
-                                              const responseSlikMenikah = data.result.responseDesc;
+                                              const responseSlikMenikah = menikahSlikResponse.result.responseDesc;
                                               if (responseSlikMenikah === 'request slik checking success') {
                                                 this.responseSlikMenikah = 1;
                                                 responseResultSukses = '';
                                               } else {
-                                                responseResultSukses = data.result.dataSlikResult;
+                                                responseResultSukses = menikahSlikResponse.result.dataSlikResult;
                                                 this.responseSlikMenikah = 0;
                                               }
-                                              this.dataslik = data.result.responseObject;
+                                              this.dataslik = menikahSlikResponse.result.responseObject;
                                               this.dataslik.forEach(element => {
                                                 if (
                                                   element.statusApplicant === 'Debitur Utama' ||
@@ -671,13 +674,13 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                                             } else {
                                               this.dtTrigger.next(this.resultDataSlik);
                                               this.getLoading(false);
-                                              alert(data.message);
+                                              alert(menikahSlikResponse.message);
                                             }
                                           }, 50);
                                         },
                                       });
                                   } else {
-                                    this.dataslik = data.result.dataSlikResult;
+                                    this.dataslik = getdataSLikMenikah.result.dataSlikResult;
                                     setTimeout(() => {
                                       let responseFailedLaj: any;
                                       let responseFailedMen: any;
@@ -715,45 +718,45 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                                         }
                                       });
                                       setTimeout(() => {
-                                        this.listLajangSlik.forEach(data => {
+                                        let tanggalJatuhTempoLajang: any;
+                                        let tanggalMulaiLajang: any;
+                                        this.listLajangSlik.forEach(sLikMenikahRssponse => {
                                           // ///////////////////// Mulai ////////////////////////////
-                                          let tanggalMulaiLajang: any;
-                                          tanggalMulaiLajang = data.tanggal_mulai;
-                                          let resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
-                                          let resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
-                                          let resultMulaiTanggal = tanggalMulaiLajang.slice(6);
+                                          tanggalMulaiLajang = sLikMenikahRssponse.tanggal_mulai;
+                                          const resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
+                                          const resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
+                                          const resultMulaiTanggal = tanggalMulaiLajang.slice(6);
                                           this.joinLajangTanggalMulai =
                                             resultMulaiTahun + '/' + resultMulaiBulan + '/' + resultMulaiTanggal;
                                           // ///////////////////// Mulai ////////////////////////////
 
                                           // ///////////////////// Jatuh Tempo ////////////////////////////
-                                          let tanggalJatuhTempoLajang: any;
-                                          tanggalJatuhTempoLajang = data.tanggal_jatuh_tempo;
-                                          let resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
-                                          let resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
-                                          let resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
+                                          tanggalJatuhTempoLajang = sLikMenikahRssponse.tanggal_jatuh_tempo;
+                                          const resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
+                                          const resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
+                                          const resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
                                           this.joinLajangJatuhTempoMulai =
                                             resultJatuhTempoTahun + '/' + resultJatuhTempoBulan + '/' + resultJatuhTempoTanggal;
                                           // ///////////////////// Jatuh Tempo ////////////////////////////
                                         });
 
-                                        this.listMenikahSlik.forEach(data => {
+                                        let tanggalMulaiMenikah: any;
+                                        let tanggalJatuhTempoMenikah: any;
+                                        this.listMenikahSlik.forEach(slikMenikah => {
                                           // ///////////////////// Mulai ////////////////////////////
-                                          let tanggalMulaiMenikah: any;
-                                          tanggalMulaiMenikah = data.tanggal_mulai;
-                                          let resultMenikahMulaiTahun = tanggalMulaiMenikah.slice(0, 4);
-                                          let resultMenikahMulaiBulan = tanggalMulaiMenikah.slice(4, 6);
-                                          let resultMenikahMulaiTanggal = tanggalMulaiMenikah.slice(6);
+                                          tanggalMulaiMenikah = slikMenikah.tanggal_mulai;
+                                          const resultMenikahMulaiTahun = tanggalMulaiMenikah.slice(0, 4);
+                                          const resultMenikahMulaiBulan = tanggalMulaiMenikah.slice(4, 6);
+                                          const resultMenikahMulaiTanggal = tanggalMulaiMenikah.slice(6);
                                           this.joinMenikahTanggalMulai =
                                             resultMenikahMulaiTahun + '/' + resultMenikahMulaiBulan + '/' + resultMenikahMulaiTanggal;
                                           // ///////////////////// Mulai ////////////////////////////
 
                                           // ///////////////////// Jatuh Tempo ////////////////////////////
-                                          let tanggalJatuhTempoMenikah: any;
-                                          tanggalJatuhTempoMenikah = data.tanggal_jatuh_tempo;
-                                          let resultMenikahJatuhTempoTahun = tanggalJatuhTempoMenikah.slice(0, 4);
-                                          let resultMenikahJatuhTempoBulan = tanggalJatuhTempoMenikah.slice(4, 6);
-                                          let resultMenikahJatuhTempoTanggal = tanggalJatuhTempoMenikah.slice(6);
+                                          tanggalJatuhTempoMenikah = slikMenikah.tanggal_jatuh_tempo;
+                                          const resultMenikahJatuhTempoTahun = tanggalJatuhTempoMenikah.slice(0, 4);
+                                          const resultMenikahJatuhTempoBulan = tanggalJatuhTempoMenikah.slice(4, 6);
+                                          const resultMenikahJatuhTempoTanggal = tanggalJatuhTempoMenikah.slice(6);
                                           this.joinMenikahJatuhTempoMulai =
                                             resultMenikahJatuhTempoTahun +
                                             '/' +
@@ -781,7 +784,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                 }, 10);
               }
             },
-            error: err => {
+            error(err) {
               alert(err.result);
             },
           });
@@ -792,7 +795,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
           no_id: this.dataEntry.app_no_ide,
           tanggal_lahir: this.dataEntry.tanggal_lahir,
           reffNumber: reffnumbernya,
-          timestamp: timestamp,
+          timestamp: timestamp2,
           channelID: 'EFOS',
           NIK: this.dataEntry.no_ktp,
           noKK: '',
@@ -885,39 +888,39 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
 
               setTimeout(() => {
                 this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe({
-                  next: data => {
-                    if (data.result == '') {
+                  next: getDataSLik => {
+                    if (getDataSLik.result == '') {
                       this.getLoading(false);
                     }
-                    this.listLajangSlik = data.result.dataSlikResult;
+                    this.listLajangSlik = getDataSLik.result.dataSlikResult;
 
-                    if (data.result.dataSlikResult == '') {
+                    if (getDataSLik.result.dataSlikResult == '') {
                       this.hideCekSlik = 0;
                     } else {
                       this.hideCekSlik = 1;
                     }
 
                     setTimeout(() => {
-                      this.totalOutNas = data.result.total_outstanding_nasabah;
-                      this.totalPlaNas = data.result.total_plafon_nasabah;
-                      this.totalAngNas = data.result.total_angsuran_nasabah;
-                      this.totalPasOut = data.result.total_outstanding_pasangan;
-                      this.totalPasPla = data.result.total_plafon_pasangan;
-                      this.totalPasAng = data.result.total_angsuran_pasangan;
+                      this.totalOutNas = getDataSLik.result.total_outstanding_nasabah;
+                      this.totalPlaNas = getDataSLik.result.total_plafon_nasabah;
+                      this.totalAngNas = getDataSLik.result.total_angsuran_nasabah;
+                      this.totalPasOut = getDataSLik.result.total_outstanding_pasangan;
+                      this.totalPasPla = getDataSLik.result.total_plafon_pasangan;
+                      this.totalPasAng = getDataSLik.result.total_angsuran_pasangan;
                       this.getLoading(false);
                     }, 20);
 
                     setTimeout(() => {
-                      if (data.result.dataSlikResult == '') {
+                      if (getDataSLik.result.dataSlikResult == '') {
                         this.http
                           .post<any>(this.baseUrl + 'v1/efos-ide/slik_verify', {
                             channelID: 'EFOS',
-                            createdBy: this.SessionStorageService.retrieve('sessionUserName'),
-                            idUserCabang: this.SessionStorageService.retrieve('sessionUserName'),
+                            createdBy: this.sessionStorageService.retrieve('sessionUserName'),
+                            idUserCabang: this.sessionStorageService.retrieve('sessionUserName'),
                             jenisKelamin: this.jenisKelaminHps,
                             jenisKelaminPasangan: this.jenisKelaminPasHps,
                             jenisProduct: 'PTA',
-                            kodeCabang: this.SessionStorageService.retrieve('sessionKdCabang'),
+                            kodeCabang: this.sessionStorageService.retrieve('sessionKdCabang'),
                             namaNasabah: this.dataEntry.nama,
                             namaPasangan: this.dataEntry.nama_pasangan,
                             noAplikasi: this.dataEntry.app_no_ide,
@@ -930,33 +933,33 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                             tempatLahirPasangan: this.dataEntry.tempat_lahir_pasangan,
                             tglLahir: this.dataEntry.tanggal_lahir,
                             tglLahirPasangan: this.dataEntry.tanggal_lahir_pasangan,
-                            timestamp: timestamp,
+                            timestamp: timestamp2,
                             tujuanSlikChecking: '1',
                           })
                           .subscribe({
-                            next: data => {
+                            next: dataSlikVerify => {
                               $('#example').DataTable({
                                 destroy: true,
                               });
                               this.dtTrigger.unsubscribe();
-                              if (data.code == 200) {
+                              if (dataSlikVerify.code == 200) {
                                 this.responseNasabah = this.listLajangSlik[0].response_description;
-                                this.listLajangSlik.forEach(data => {
+                                let tanggalMulaiLajang: any;
+                                let tanggalJatuhTempoLajang: any;
+                                this.listLajangSlik.forEach(lajangSLikResponse => {
                                   // ///////////////////// Mulai ////////////////////////////
-                                  let tanggalMulaiLajang: any;
-                                  tanggalMulaiLajang = data.tanggal_mulai;
-                                  let resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
-                                  let resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
-                                  let resultMulaiTanggal = tanggalMulaiLajang.slice(6);
+                                  tanggalMulaiLajang = lajangSLikResponse.tanggal_mulai;
+                                  const resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
+                                  const resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
+                                  const resultMulaiTanggal = tanggalMulaiLajang.slice(6);
                                   this.joinLajangTanggalMulai = resultMulaiTahun + '/' + resultMulaiBulan + '/' + resultMulaiTanggal;
                                   // ///////////////////// Mulai ////////////////////////////
 
                                   // ///////////////////// Jatuh Tempo ////////////////////////////
-                                  let tanggalJatuhTempoLajang: any;
-                                  tanggalJatuhTempoLajang = data.tanggal_jatuh_tempo;
-                                  let resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
-                                  let resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
-                                  let resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
+                                  tanggalJatuhTempoLajang = lajangSLikResponse.tanggal_jatuh_tempo;
+                                  const resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
+                                  const resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
+                                  const resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
                                   this.joinLajangJatuhTempoMulai =
                                     resultJatuhTempoTahun + '/' + resultJatuhTempoBulan + '/' + resultJatuhTempoTanggal;
                                   // ///////////////////// Jatuh Tempo ////////////////////////////
@@ -965,22 +968,22 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                                 this.getLoading(false);
                               } else {
                                 this.responseNasabah = this.listLajangSlik[0].response_description;
-                                this.listLajangSlik.forEach(data => {
+                                let tanggalMulaiLajang: any;
+                                let tanggalJatuhTempoLajang: any;
+                                this.listLajangSlik.forEach(slikLajangResonse => {
                                   // ///////////////////// Mulai ////////////////////////////
-                                  let tanggalMulaiLajang: any;
-                                  tanggalMulaiLajang = data.tanggal_mulai;
-                                  let resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
-                                  let resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
-                                  let resultMulaiTanggal = tanggalMulaiLajang.slice(6);
+                                  tanggalMulaiLajang = slikLajangResonse.tanggal_mulai;
+                                  const resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
+                                  const resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
+                                  const resultMulaiTanggal = tanggalMulaiLajang.slice(6);
                                   this.joinLajangTanggalMulai = resultMulaiTahun + '/' + resultMulaiBulan + '/' + resultMulaiTanggal;
                                   // ///////////////////// Mulai ////////////////////////////
 
                                   // ///////////////////// Jatuh Tempo ////////////////////////////
-                                  let tanggalJatuhTempoLajang: any;
-                                  tanggalJatuhTempoLajang = data.tanggal_jatuh_tempo;
-                                  let resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
-                                  let resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
-                                  let resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
+                                  tanggalJatuhTempoLajang = slikLajangResonse.tanggal_jatuh_tempo;
+                                  const resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
+                                  const resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
+                                  const resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
                                   this.joinLajangJatuhTempoMulai =
                                     resultJatuhTempoTahun + '/' + resultJatuhTempoBulan + '/' + resultJatuhTempoTanggal;
                                   // ///////////////////// Jatuh Tempo ////////////////////////////
@@ -991,23 +994,23 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                             },
                           });
                       } else {
+                        let tanggalMulaiLajang: any;
+                        let tanggalJatuhTempoLajang: any;
                         this.responseNasabah = this.listLajangSlik[0].response_description;
-                        this.listLajangSlik.forEach(data => {
+                        this.listLajangSlik.forEach(slikLajang => {
                           // ///////////////////// Mulai ////////////////////////////
-                          let tanggalMulaiLajang: any;
-                          tanggalMulaiLajang = data.tanggal_mulai;
-                          let resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
-                          let resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
-                          let resultMulaiTanggal = tanggalMulaiLajang.slice(6);
+                          tanggalMulaiLajang = slikLajang.tanggal_mulai;
+                          const resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
+                          const resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
+                          const resultMulaiTanggal = tanggalMulaiLajang.slice(6);
                           this.joinLajangTanggalMulai = resultMulaiTahun + '/' + resultMulaiBulan + '/' + resultMulaiTanggal;
                           // ///////////////////// Mulai ////////////////////////////
 
                           // ///////////////////// Jatuh Tempo ////////////////////////////
-                          let tanggalJatuhTempoLajang: any;
-                          tanggalJatuhTempoLajang = data.tanggal_jatuh_tempo;
-                          let resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
-                          let resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
-                          let resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
+                          tanggalJatuhTempoLajang = slikLajang.tanggal_jatuh_tempo;
+                          const resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
+                          const resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
+                          const resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
                           this.joinLajangJatuhTempoMulai =
                             resultJatuhTempoTahun + '/' + resultJatuhTempoBulan + '/' + resultJatuhTempoTanggal;
                           // ///////////////////// Jatuh Tempo ////////////////////////////
@@ -1028,14 +1031,14 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     }
   }
 
-  gotopersonalinfo() {
+  gotopersonalinfo(): void {
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/create_app_de', {
         analis_verifikasi: '',
         app_no_de: '',
         app_no_ide: this.dataEntry.app_no_ide,
         cabang: this.untukSessionKodeCabang,
-        created_by: this.SessionStorageService.retrieve('sessionUserName'),
+        created_by: this.sessionStorageService.retrieve('sessionUserName'),
         created_date: '',
         curef: this.dataEntry.curef,
         flag_tab: '',
@@ -1071,12 +1074,12 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
         tanggal_lahir: this.dataEntry.tanggal_lahir,
       })
       .subscribe({
-        next: data => {
-          this.hasildhn = data.result.token;
+        next: dhn => {
+          this.hasildhn = dhn.result.token;
           this.initialDataEntry.getDataDhn(this.dataEntry.app_no_ide).subscribe({
-            next: data => {
-              this.tableGetDhn = data.result;
-              if (data.result != '') {
+            next: getdhn => {
+              this.tableGetDhn = getdhn.result;
+              if (getdhn.result != '') {
                 this.simpanDhn = 1;
               } else {
                 this.simpanDhn = 0;
@@ -1091,16 +1094,16 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     this.router.navigate(['/daftaraplikasiide']);
   }
 
-  joinRoom(jenis: any) {
+  joinRoom(jenis: any): void {
     window.open(this.baseUrl + 'v1/efos-ide/downloadSlik/' + jenis);
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }
 
-  refreshDatatables(data: any) {
+  refreshDatatables(data: any): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.destroy();
       this.dtOptions = {

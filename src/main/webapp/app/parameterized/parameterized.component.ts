@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable arrow-body-style */
+/* eslint-disable object-shorthand */
+/* eslint-disable @typescript-eslint/no-shadow */
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -140,7 +145,7 @@ export class ParameterizedComponent implements OnInit {
     // //////////// List Akad //////////////////
   }
 
-  //1
+  // 1
   createaksesrumah(): void {
     Swal.fire({
       title: 'Mohon Perhatikan',
@@ -180,17 +185,17 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let active = $('#status_active').val();
-            let akses_rumah = $('#akses_rumah').val();
+            const active = $('#status_active').val();
+            const akses_rumah = $('#akses_rumah').val();
 
-            if (active == '') {
+            if (active === '') {
               alert('Status Harus di pilih');
               return;
-            } else if (akses_rumah == '') {
+            } else if (akses_rumah === '') {
               alert('Akses Rumah Harus  di Pilih');
               return;
             } else {
-              if (active == '0') {
+              if (active === '0') {
                 this.kirimactive = 0;
               } else {
                 this.kirimactive = 1;
@@ -200,13 +205,13 @@ export class ParameterizedComponent implements OnInit {
                 active: this.kirimactive,
                 akses_rumah: akses_rumah,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_akses_rumah+++', body, { headers }).subscribe({
                 next: response => {
-                  //console.warn(response);
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -224,7 +229,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -243,14 +248,13 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //datascoring gk di masukan
-  //3
+  // datascoring gk di masukan
+  // 3
   createdeveloper(): void {
     Swal.fire({
       title: 'Mohon Perhatikan',
@@ -302,25 +306,25 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let active = $('#status_active').val();
-            let jenis_developer = $('#Jenis_developer').val();
-            let kantor_Cabang = $('#Kantor_Cabang').val();
-            let nama_developer = $('#Nama_developer').val();
+            const active = $('#status_active').val();
+            const jenis_developer = $('#Jenis_developer').val();
+            const kantor_Cabang = $('#Kantor_Cabang').val();
+            const nama_developer = $('#Nama_developer').val();
 
-            if (active == '') {
+            if (active === '') {
               alert('Status Harus di pilih');
               return;
-            } else if (jenis_developer == '') {
+            } else if (jenis_developer === '') {
               alert('Jenis Developer harus di isi');
               return;
-            } else if (kantor_Cabang == '') {
+            } else if (kantor_Cabang === '') {
               alert('Kantor Cabang harus di isi');
               return;
-            } else if (nama_developer == '') {
+            } else if (nama_developer === '') {
               alert('Nama Developer harus di isi');
               return;
             } else {
-              if (active == '0') {
+              if (active === '0') {
                 this.kirimactive = 0;
               } else {
                 this.kirimactive = 1;
@@ -332,13 +336,13 @@ export class ParameterizedComponent implements OnInit {
                 jenis_developer: kantor_Cabang,
                 nama_developer: nama_developer,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_developer+++', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -356,7 +360,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -375,13 +379,12 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //4
+  // 4
   createfasilitas(): void {
     Swal.fire({
       title: 'Mohon Perhatikan',
@@ -414,17 +417,17 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let deskripsi = $('#deskripsi').val();
-            let fasilitas = $('#fasilitas').val();
-            let kode_fasilitas = $('#kode_fasilitas').val();
+            const deskripsi = $('#deskripsi').val();
+            const fasilitas = $('#fasilitas').val();
+            const kode_fasilitas = $('#kode_fasilitas').val();
 
-            if (deskripsi == '') {
+            if (deskripsi === '') {
               alert('Deskripsi harus di isi');
               return;
-            } else if (fasilitas == '') {
+            } else if (fasilitas === '') {
               alert('Fasilitas harus di isi');
               return;
-            } else if (kode_fasilitas == '') {
+            } else if (kode_fasilitas === '') {
               alert('Kode Fasilitas harus di isi');
               return;
             } else {
@@ -433,13 +436,13 @@ export class ParameterizedComponent implements OnInit {
                 fasilitas: fasilitas,
                 kode_fasilitas: kode_fasilitas,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_fasilitas+++', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -457,7 +460,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -476,13 +479,12 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //5
+  // 5
   createfasilitaslistrik(): void {
     Swal.fire({
       title: 'Mohon Perhatikan',
@@ -511,17 +513,17 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let active = $('#status_active').val();
-            let fasilitas_listrik = $('#fasilitas_listrik').val();
+            const active = $('#status_active').val();
+            const fasilitas_listrik = $('#fasilitas_listrik').val();
 
-            if (active == '') {
+            if (active === '') {
               alert('Status Aktif Harus Di isi');
               return;
-            } else if (fasilitas_listrik == '') {
+            } else if (fasilitas_listrik === '') {
               alert('Fasilitas Listrik harus di isi');
               return;
             } else {
-              if (active == '0') {
+              if (active === '0') {
                 this.kirimactive = 0;
               } else {
                 this.kirimactive = 1;
@@ -531,13 +533,13 @@ export class ParameterizedComponent implements OnInit {
                 active: this.kirimactive,
                 fasilitas_listrik: fasilitas_listrik,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_fasilitas_listrik+++', body, { headers }).subscribe({
                 next: response => {
-                  //console.warn(response);
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -555,7 +557,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -574,13 +576,12 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //6
+  // 6
   createftpdp(): void {
     const baseUrl = this.baseUrl;
     Swal.fire({
@@ -594,7 +595,7 @@ export class ParameterizedComponent implements OnInit {
       cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
-        let options = this.tablelistproduk.map((option: any) => {
+        const options = this.tablelistproduk.map((option: any) => {
           return `
             <option key="${option}" value="${option.kode_produk}| ${option.produk_deskripsi}">
                 ${option.produk_deskripsi}
@@ -607,7 +608,7 @@ export class ParameterizedComponent implements OnInit {
             alert('jalan');
             //  this.tampungpemecah= $('#jangankodeproduk').val();
             // const pemecahbenar=this.tampungpemecah.split('|');
-            let parameterValue = $(this).val() as HTMLElement | any;
+            const parameterValue = $(this).val() as HTMLElement | any;
             hahaha = parameterValue.split('|');
             // console.warn(hahaha);
             // console.warn(parameterValue);
@@ -648,16 +649,16 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let jangankodeproduk = $('#jangankodeproduk').val();
-            let kodeskema = $('#kodeskema').val();
+            const jangankodeproduk = $('#jangankodeproduk').val();
+            const kodeskema = $('#kodeskema').val();
 
             this.tampungpemecah = $('#jangankodeproduk').val();
             const pemecahbenar = this.tampungpemecah.split('|');
 
-            if (jangankodeproduk == '') {
+            if (jangankodeproduk === '') {
               alert('Status Aktif Harus Di isi');
               return;
-            } else if (kodeskema == '') {
+            } else if (kodeskema === '') {
               alert('Fasilitas Listrik harus di isi');
               return;
             }
@@ -668,13 +669,13 @@ export class ParameterizedComponent implements OnInit {
               id: '',
               skema_id: kodeskema,
             };
-            let headers = new HttpHeaders({
+            const headers = new HttpHeaders({
               'Content-Type': 'application/json; charset=utf-8',
               // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
             });
             this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_ftv_dp', body, { headers }).subscribe({
-              next: response => {
-                //console.warn(response);
+              next: () => {
+                // console.warn(response);
                 // this.sessionStorageService.store('sessionPs', passwordbaru);
                 const Toast = Swal.mixin({
                   toast: true,
@@ -692,7 +693,7 @@ export class ParameterizedComponent implements OnInit {
                   title: 'Data berhasil di simpan',
                 });
               },
-              error: error => {
+              error: () => {
                 const Toast = Swal.mixin({
                   toast: true,
                   position: 'top-end',
@@ -710,7 +711,6 @@ export class ParameterizedComponent implements OnInit {
                 });
               },
             });
-          } else if (result.isDenied) {
           }
         });
       }
@@ -724,7 +724,7 @@ export class ParameterizedComponent implements OnInit {
     this.datEntryService.getlistftvdpdetail(id).subscribe({
       next: de => {
         this.tableftvdpdetail = de.result;
-        //console.warn(this.tableftvdpdetail);
+        // console.warn(this.tableftvdpdetail);
       },
       // error: err => {
       //   console.warn('fff', err)
@@ -742,9 +742,9 @@ export class ParameterizedComponent implements OnInit {
     //   });
   }
 
-  //7
+  // 7
   createftpdpdetail(): void {
-    let options = this.tablelistfasilitas.map((option: any) => {
+    const options = this.tablelistfasilitas.map((option: any) => {
       return `
         <option key="${option}" value="${option.id}">
             ${option.fasilitas}
@@ -752,7 +752,7 @@ export class ParameterizedComponent implements OnInit {
       `;
     });
 
-    let optionsagunan = this.tableAgunanlisttipeagunan.map((option: any) => {
+    const optionsagunan = this.tableAgunanlisttipeagunan.map((option: any) => {
       return `
         <option key="${option}" value="${option.type_collateral_code}">
             ${option.collateral_deskripsi}
@@ -774,7 +774,7 @@ export class ParameterizedComponent implements OnInit {
         let hahaha;
         $(document).ready(function () {
           $('#kode_agunan').change(function () {
-            let parameterValue = $(this).val();
+            const parameterValue = $(this).val();
             hahaha = parameterValue;
             // console.warn(hahaha);
             // console.warn(parameterValue);
@@ -838,37 +838,37 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let kode_fasilitas = $('#kode_fasilitas').val();
-            let kode_agunan = $('#kode_agunan').val();
-            let tipe_properti = $('#tipe_properti').val();
-            let Min = $('#Min').val();
-            let Max = $('#Max').val();
-            let ftv = $('#ftv').val();
-            let dp = $('#dp').val();
+            const kode_fasilitas = $('#kode_fasilitas').val();
+            const kode_agunan = $('#kode_agunan').val();
+            const tipe_properti = $('#tipe_properti').val();
+            const Min = $('#Min').val();
+            const Max = $('#Max').val();
+            const ftv = $('#ftv').val();
+            const dp = $('#dp').val();
 
             this.tampungpemecah = $('#tipe_properti').val();
 
             const pemecahbenar = this.tampungpemecah.split('|');
 
-            if (kode_fasilitas == '') {
+            if (kode_fasilitas === '') {
               alert('Status Aktif Harus Di isi');
               return;
-            } else if (kode_agunan == '') {
+            } else if (kode_agunan === '') {
               alert('Fasilitas Listrik harus di isi');
               return;
-            } else if (tipe_properti == '') {
+            } else if (tipe_properti === '') {
               alert('Fasilitas Listrik harus di isi');
               return;
-            } else if (Min == '') {
+            } else if (Min === '') {
               alert('Fasilitas Listrik harus di isi');
               return;
-            } else if (Max == '') {
+            } else if (Max === '') {
               alert('Fasilitas Listrik harus di isi');
               return;
-            } else if (ftv == '') {
+            } else if (ftv === '') {
               alert('Fasilitas Listrik harus di isi');
               return;
-            } else if (dp == '') {
+            } else if (dp === '') {
               alert('Fasilitas Listrik harus di isi');
               return;
             } else {
@@ -884,13 +884,13 @@ export class ParameterizedComponent implements OnInit {
                 tipe_properti_deskripsi: pemecahbenar[1],
               };
 
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_ftv_dp_detail', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -908,7 +908,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -927,13 +927,12 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //8
+  // 8
   createhubkepemilikanagunan(): void {
     Swal.fire({
       title: 'Mohon Perhatikan',
@@ -962,17 +961,17 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let active = $('#status_active').val();
-            let deskripsi = $('#deskripsi').val();
+            const active = $('#status_active').val();
+            const deskripsi = $('#deskripsi').val();
 
-            if (active == '') {
+            if (active === '') {
               alert('Status Aktif Harus Di isi');
               return;
-            } else if (deskripsi == '') {
+            } else if (deskripsi === '') {
               alert('Deskripsi harus di isi');
               return;
             } else {
-              if (active == '0') {
+              if (active === '0') {
                 this.kirimactive = 0;
               } else {
                 this.kirimactive = 1;
@@ -982,13 +981,13 @@ export class ParameterizedComponent implements OnInit {
                 active: this.kirimactive,
                 deskripsi: deskripsi,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_hub_kepemilikan_agunan+++', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -1006,7 +1005,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -1025,13 +1024,12 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //9
+  // 9
   createhubunganemergency(): void {
     Swal.fire({
       title: 'Mohon Perhatikan',
@@ -1060,17 +1058,17 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let active = $('#status_active').val();
-            let deskripsi = $('#deskripsi').val();
+            const active = $('#status_active').val();
+            const deskripsi = $('#deskripsi').val();
 
-            if (active == '') {
+            if (active === '') {
               alert('Status Aktif Harus Di isi');
               return;
-            } else if (deskripsi == '') {
+            } else if (deskripsi === '') {
               alert('Deskripsi harus di isi');
               return;
             } else {
-              if (active == '0') {
+              if (active === '0') {
                 this.kirimactive = 0;
               } else {
                 this.kirimactive = 1;
@@ -1080,13 +1078,13 @@ export class ParameterizedComponent implements OnInit {
                 active: this.kirimactive,
                 deskripsi: deskripsi,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_hubungan_emergency+++', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -1104,7 +1102,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -1123,13 +1121,12 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //10
+  // 10
   createjabatan(): void {
     Swal.fire({
       title: 'Mohon Perhatikan',
@@ -1158,17 +1155,17 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let active = $('#status_active').val();
-            let jabatan_deskripsi = $('#jabatan_deskripsi').val();
+            const active = $('#status_active').val();
+            const jabatan_deskripsi = $('#jabatan_deskripsi').val();
 
-            if (active == '') {
+            if (active === '') {
               alert('Status Aktif Harus Di isi');
               return;
-            } else if (jabatan_deskripsi == '') {
+            } else if (jabatan_deskripsi === '') {
               alert('Jabatan Deskripsi harus di isi');
               return;
             } else {
-              if (active == '0') {
+              if (active === '0') {
                 this.kirimactive = 0;
               } else {
                 this.kirimactive = 1;
@@ -1178,13 +1175,13 @@ export class ParameterizedComponent implements OnInit {
                 active: this.kirimactive,
                 jabatan_deskripsi: jabatan_deskripsi,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_jabatan+++', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -1202,7 +1199,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -1221,13 +1218,12 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //11
+  // 11
   createjabatanpemberiket(): void {
     Swal.fire({
       title: 'Mohon Perhatikan',
@@ -1256,17 +1252,17 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let active = $('#status_active').val();
-            let deskripsi = $('#deskripsi').val();
+            const active = $('#status_active').val();
+            const deskripsi = $('#deskripsi').val();
 
-            if (active == '') {
+            if (active === '') {
               alert('Status Aktif Harus Di isi');
               return;
-            } else if (deskripsi == '') {
+            } else if (deskripsi === '') {
               alert('Deskripsi harus di isi');
               return;
             } else {
-              if (active == '0') {
+              if (active === '0') {
                 this.kirimactive = 0;
               } else {
                 this.kirimactive = 1;
@@ -1276,13 +1272,13 @@ export class ParameterizedComponent implements OnInit {
                 active: this.kirimactive,
                 deskripsi: deskripsi,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_jabatan_pemberi_ket+++', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -1300,7 +1296,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -1319,13 +1315,12 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //12
+  // 12
   createjenisobjekagunan(): void {
     Swal.fire({
       title: 'Mohon Perhatikan',
@@ -1358,21 +1353,21 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let active = $('#status_active').val();
-            let jenis_objek_deskripsi = $('#jenis_objek_deskripsi').val();
-            let jenis_objek_code = $('#jenis_objek_code').val();
+            const active = $('#status_active').val();
+            const jenis_objek_deskripsi = $('#jenis_objek_deskripsi').val();
+            const jenis_objek_code = $('#jenis_objek_code').val();
 
-            if (active == '') {
+            if (active === '') {
               alert('Status Aktif Harus Di isi');
               return;
-            } else if (jenis_objek_deskripsi == '') {
+            } else if (jenis_objek_deskripsi === '') {
               alert('Jenis Objek Deskripsi harus di isi');
               return;
-            } else if (jenis_objek_code == '') {
+            } else if (jenis_objek_code === '') {
               alert('Jenis Objek code harus di isi');
               return;
             } else {
-              if (active == '0') {
+              if (active === '0') {
                 this.kirimactive = 0;
               } else {
                 this.kirimactive = 1;
@@ -1383,13 +1378,13 @@ export class ParameterizedComponent implements OnInit {
                 jenis_objek_deskripsi: jenis_objek_deskripsi,
                 jenis_objek_code: jenis_objek_code,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_jenis_objek_agunan+++', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -1407,7 +1402,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -1426,13 +1421,12 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //13
+  // 13
   createjenispekerjaan(): void {
     Swal.fire({
       title: 'Mohon Perhatikan',
@@ -1461,17 +1455,17 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let active = $('#status_active').val();
-            let deskripsi = $('#deskripsi').val();
+            const active = $('#status_active').val();
+            const deskripsi = $('#deskripsi').val();
 
-            if (active == '') {
+            if (active === '') {
               alert('Status Aktif Harus Di isi');
               return;
-            } else if (deskripsi == '') {
+            } else if (deskripsi === '') {
               alert('Deskripsi harus di isi');
               return;
             } else {
-              if (active == '0') {
+              if (active === '0') {
                 this.kirimactive = 0;
               } else {
                 this.kirimactive = 1;
@@ -1481,13 +1475,13 @@ export class ParameterizedComponent implements OnInit {
                 active: this.kirimactive,
                 deskripsi: deskripsi,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -1505,7 +1499,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -1524,16 +1518,15 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //14
+  // 14
   createproduk(): void {
-    ///// menanti api  untuk kodeProgram
-    let options = this.tablelistprogram.map((option: any) => {
+    // /// menanti api  untuk kodeProgram
+    const options = this.tablelistprogram.map((option: any) => {
       return `
         <option key="${option}" value="${option.kode_program}">
             ${option.program}
@@ -1541,7 +1534,7 @@ export class ParameterizedComponent implements OnInit {
       `;
     });
 
-    ///// menanti api  untuk kodeProgram
+    // /// menanti api  untuk kodeProgram
     Swal.fire({
       title: 'Mohon Perhatikan',
       text: 'Inputan yang sudah Terinput tidak bisa di edit ',
@@ -1572,18 +1565,18 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let kode_program = $('#kode_program').val();
-            let produk_deskripsi = $('#produk_deskripsi').val();
+            const kode_program = $('#kode_program').val();
+            const produk_deskripsi = $('#produk_deskripsi').val();
 
             //  if(active=='0'){
             //     this.kirimactive=0;
             //  }else{
             //   this.kirimactive=1;
             //  }
-            if (kode_program == '') {
+            if (kode_program === '') {
               alert('Kode Program Harus Di isi');
               return;
-            } else if (produk_deskripsi == '') {
+            } else if (produk_deskripsi === '') {
               alert('Produk Deskripsi harus di isi');
               return;
             } else {
@@ -1592,13 +1585,13 @@ export class ParameterizedComponent implements OnInit {
                 kode_produk: '',
                 produk_deskripsi: produk_deskripsi,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_produk+++', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -1616,7 +1609,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -1635,17 +1628,16 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //15
+  // 15
   createskema(): void {
-    /////DELAY
-    ///// menanti api  untuk kodeproduk
-    let options = this.tablelistproduk.map((option: any) => {
+    // ///DELAY
+    // /// menanti api  untuk kodeproduk
+    const options = this.tablelistproduk.map((option: any) => {
       return `
             <option key="${option}" value="${option.kode_produk}">
                 ${option.produk_deskripsi}
@@ -1653,7 +1645,7 @@ export class ParameterizedComponent implements OnInit {
           `;
     });
 
-    let optionsskema = this.tablelistskema.map((option: any) => {
+    const optionsskema = this.tablelistskema.map((option: any) => {
       return `
             <option key="${option}" value="${option.skema}|${option.skema_deskripsi}">
                 ${option.skema_deskripsi}
@@ -1661,14 +1653,14 @@ export class ParameterizedComponent implements OnInit {
           `;
     });
 
-    let listAkad = this.modelListAkad.map((option: listCreatemodel) => {
+    const listAkad = this.modelListAkad.map((option: listCreatemodel) => {
       return `
             <option key="${option}" value="${option.deskripsi}">
                 ${option.deskripsi}
             </option>
           `;
     });
-    ///// menanti api  untuk kodeproduk
+    // /// menanti api  untuk kodeproduk
     Swal.fire({
       title: 'Mohon Perhatikan',
       text: 'Inputan yang sudah Terinput tidak bisa di edit ',
@@ -1743,36 +1735,36 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let fasilitas = $('#fasilitas').val();
-            let kode_produk = $('#kode_produk').val();
-            let min_platfon = $('#min_platfon').val();
-            let max_platfon = $('#max_platfon').val();
-            let max_tenor = $('#max_tenor').val();
-            let skema_master = $('#skema_master').val();
-            let skema = $('#skema').val();
-            let dp_min = $('#dp_min').val();
-            let akad = $('#akad').val();
+            const fasilitas = $('#fasilitas').val();
+            const kode_produk = $('#kode_produk').val();
+            const min_platfon = $('#min_platfon').val();
+            const max_platfon = $('#max_platfon').val();
+            const max_tenor = $('#max_tenor').val();
+            const skema_master = $('#skema_master').val();
+            const skema = $('#skema').val();
+            const dp_min = $('#dp_min').val();
+            const akad = $('#akad').val();
 
-            if (kode_produk == '') {
+            if (kode_produk === '') {
               alert('Kode Produk Harus Di isi');
               return;
-            } else if (min_platfon == '') {
+            } else if (min_platfon === '') {
               alert('Min Platfron harus di isi');
               return;
-            } else if (max_platfon == '') {
+            } else if (max_platfon === '') {
               alert('Max Platfon harus di isi');
               return;
-            } else if (max_tenor == '') {
+            } else if (max_tenor === '') {
               alert('Max Tenor harus di isi');
               return;
-            } else if (skema_master == '') {
+            } else if (skema_master === '') {
               alert('Skema Master harus di isi');
               return;
-            } else if (skema == '') {
+            } else if (skema === '') {
               alert('Skema harus di isi');
               return;
             } else {
-              if (skema == 'Lainnya') {
+              if (skema === 'Lainnya') {
                 this.kirimanskema = '';
                 this.kirimanskemadeskripsi = $('#skema_deskripsi').val();
               } else {
@@ -1797,13 +1789,13 @@ export class ParameterizedComponent implements OnInit {
                 skema_master: skema_master,
                 akad: akad,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_skema+++', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -1821,7 +1813,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -1840,15 +1832,14 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //16
+  // 16
   createprogram(): void {
-    let options = this.inputScoring.map((option: any) => {
+    const options = this.inputScoring.map((option: any) => {
       return `
         <option key="${option}" value="${option.kode_fasilitas}">
             ${option.fasilitas}
@@ -1898,25 +1889,25 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let kode_fasilitas = $('#kode_fasilitas').val();
-            let program = $('#program').val();
-            let min_plafond = $('#min_plafond').val();
-            let max_plafond = $('#max_plafond').val();
-            let expired_date = $('#expired_date').val();
+            const kode_fasilitas = $('#kode_fasilitas').val();
+            const program = $('#program').val();
+            const min_plafond = $('#min_plafond').val();
+            const max_plafond = $('#max_plafond').val();
+            const expired_date = $('#expired_date').val();
 
-            if (kode_fasilitas == '') {
+            if (kode_fasilitas === '') {
               alert('Kode Fasilitas Harus Di isi');
               return;
-            } else if (program == '') {
+            } else if (program === '') {
               alert('Profram harus di isi');
               return;
-            } else if (min_plafond == '') {
+            } else if (min_plafond === '') {
               alert('Min Platfron harus di isi');
               return;
-            } else if (max_plafond == '') {
+            } else if (max_plafond === '') {
               alert('Max Plafond harus di isi');
               return;
-            } else if (expired_date == '') {
+            } else if (expired_date === '') {
               alert('Expired date harus di isi');
               return;
             } else {
@@ -1933,13 +1924,13 @@ export class ParameterizedComponent implements OnInit {
                 max_plafond: max_plafond,
                 expired_date: expired_date,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_program+++', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -1976,15 +1967,14 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //17
+  // 17
   createskemafasilitas(): void {
-    let options = this.tablelistskemanew.map((option: any) => {
+    const options = this.tablelistskemanew.map((option: any) => {
       return `
         <option key="${option}" value="${option.skema}|${option.skema_master}">
             ${option.skema_deskripsi}
@@ -2072,51 +2062,51 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let active = $('#status_active').val();
-            let kode_skema = $('#kode_skema').val();
-            let tear_select = $('#tear_select').val();
-            let tenor_tier1 = $('#tenor_tier1').val();
-            let tenor_tier2 = $('#tenor_tier2').val();
-            let tenor_tier3 = $('#tenor_tier3').val();
+            const active = $('#status_active').val();
+            const kode_skema = $('#kode_skema').val();
+            const tear_select = $('#tear_select').val();
+            const tenor_tier1 = $('#tenor_tier1').val();
+            const tenor_tier2 = $('#tenor_tier2').val();
+            const tenor_tier3 = $('#tenor_tier3').val();
 
-            if (active == '') {
+            if (active === '') {
               alert('Kode Fasilitas Harus Di isi');
               return;
-            } else if (tear_select == '') {
+            } else if (tear_select === '') {
               alert('Profram harus di isi');
               return;
             } else {
-              if (active == '0') {
+              if (active === '0') {
                 this.kirimactive = 0;
               } else {
                 this.kirimactive = 1;
               }
 
-              if (tear_select == '1') {
-                if (tenor_tier1 == '') {
+              if (tear_select === '1') {
+                if (tenor_tier1 === '') {
                   alert('tenor tier 1 Harus Di isi');
                   return;
                 }
                 this.kirimantenortier = tenor_tier1;
-              } else if (tear_select == '2') {
-                if (tenor_tier1 == '') {
+              } else if (tear_select === '2') {
+                if (tenor_tier1 === '') {
                   alert('tenor tier 1 Harus Di isi');
                   return;
-                } else if (tenor_tier2 == '') {
+                } else if (tenor_tier2 === '') {
                   alert('tenor tier 2 Harus Di isi');
                   return;
                 }
                 this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2;
               } else {
-                if (tenor_tier1 == '') {
+                if (tenor_tier1 === '') {
                   alert('tenor tier 1 Harus Di isi');
                   return;
                 }
-                if (tenor_tier2 == '') {
+                if (tenor_tier2 === '') {
                   alert('tenor tier 2 Harus Di isi');
                   return;
                 }
-                if (tenor_tier3 == '') {
+                if (tenor_tier3 === '') {
                   alert('tenor tier 3 Harus Di isi');
                   return;
                 }
@@ -2138,13 +2128,13 @@ export class ParameterizedComponent implements OnInit {
                 // max_plafond:max_plafond,
                 // expired_date:expired_date,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_skema_fasilitas+++', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -2162,7 +2152,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -2181,15 +2171,14 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //18
+  // 18
   createstenormarginfix(): void {
-    let options = this.inputScoring.map((option: any) => {
+    const options = this.inputScoring.map((option: any) => {
       return `
         <option key="${option}" value="${option.kode_fasilitas}">
             ${option.fasilitas}
@@ -2231,19 +2220,19 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let skema_fasilitas = $('#skema_fasilitas').val();
-            let margin = $('#margin').val();
-            let tn_code = $('#tn_code').val();
+            const skema_fasilitas = $('#skema_fasilitas').val();
+            const margin = $('#margin').val();
+            const tn_code = $('#tn_code').val();
             // let max_plafond = $('#max_plafond').val();
             // let expired_date = $('#expired_date').val();
 
-            if ((skema_fasilitas = '')) {
+            if (skema_fasilitas === '') {
               alert('Skema Fasilitas Harus Di isi ');
               return;
-            } else if ((margin = '')) {
+            } else if (margin === '') {
               alert('Margin Harus Di isi');
               return;
-            } else if ((tn_code = '')) {
+            } else if (tn_code === '') {
               alert('Tn Code Harus Di isi');
               return;
             } else {
@@ -2258,13 +2247,13 @@ export class ParameterizedComponent implements OnInit {
                 margin: margin,
                 tn_code: tn_code,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_program+++', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -2282,7 +2271,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -2301,15 +2290,14 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
     });
   }
-  //19
+  // 19
   createstenormarginstepup(): void {
-    let options = this.inputScoring.map((option: any) => {
+    const options = this.inputScoring.map((option: any) => {
       return `
         <option key="${option}" value="${option.kode_fasilitas}">
             ${option.fasilitas}
@@ -2351,17 +2339,17 @@ export class ParameterizedComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            let skema_fasilitas = $('#skema_fasilitas').val();
-            let margin = $('#margin').val();
-            let tn_code = $('#tn_code').val();
+            const skema_fasilitas = $('#skema_fasilitas').val();
+            const margin = $('#margin').val();
+            const tn_code = $('#tn_code').val();
 
-            if ((skema_fasilitas = '')) {
+            if (skema_fasilitas === '') {
               alert('Skema Fasilitas harus di isi');
               return;
-            } else if ((margin = '')) {
+            } else if (margin === '') {
               alert('Margin harus di isi');
               return;
-            } else if ((tn_code = '')) {
+            } else if (tn_code === '') {
               alert('Tn code harus di isi');
               return;
             } else {
@@ -2376,13 +2364,13 @@ export class ParameterizedComponent implements OnInit {
                 margin: margin,
                 tn_code: tn_code,
               };
-              let headers = new HttpHeaders({
+              const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
               this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_program+++', body, { headers }).subscribe({
-                next: response => {
-                  //console.warn(response);
+                next: () => {
+                  // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
                   const Toast = Swal.mixin({
                     toast: true,
@@ -2400,7 +2388,7 @@ export class ParameterizedComponent implements OnInit {
                     title: 'Data berhasil di simpan',
                   });
                 },
-                error: error => {
+                error: () => {
                   const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -2419,7 +2407,6 @@ export class ParameterizedComponent implements OnInit {
                 },
               });
             }
-          } else if (result.isDenied) {
           }
         });
       }
@@ -2427,7 +2414,7 @@ export class ParameterizedComponent implements OnInit {
   }
 
   createaksesrumahgagal(): void {
-    if (this.createform.get('status_aktifitas')?.value == '0') {
+    if (this.createform.get('status_aktifitas')?.value === '0') {
       this.statusaktif = 0;
     } else {
       this.statusaktif = 1;
@@ -2439,14 +2426,14 @@ export class ParameterizedComponent implements OnInit {
       active: this.statusaktif,
       akses_rumah: this.createform.get('akses_rumah')?.value,
     };
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=utf-8',
       // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
     });
 
     this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_akses_rumah', body, { headers }).subscribe({
-      next: response => {
-        //console.warn(response);
+      next: () => {
+        // console.warn(response);
         // this.sessionStorageService.store('sessionPs', passwordbaru);
         const Toast = Swal.mixin({
           toast: true,
@@ -2465,7 +2452,7 @@ export class ParameterizedComponent implements OnInit {
         });
         window.location.reload();
       },
-      error: error => {
+      error: () => {
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -2501,7 +2488,7 @@ export class ParameterizedComponent implements OnInit {
   }
 
   createjabatanpemberiketgagal(): void {
-    if (this.createform.get('status_aktifitas')?.value == '0') {
+    if (this.createform.get('status_aktifitas')?.value === '0') {
       alert('0');
       this.statusaktif = 0;
     } else {
@@ -2514,14 +2501,14 @@ export class ParameterizedComponent implements OnInit {
       active: this.statusaktif,
       deskripsi: this.createform.get('deskripsi')?.value,
     };
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=utf-8',
       // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
     });
 
     this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_jabatan_pemberi_ket', body, { headers }).subscribe({
-      next: response => {
-        //console.warn(response);
+      next: () => {
+        // console.warn(response);
         // this.sessionStorageService.store('sessionPs', passwordbaru);
         const Toast = Swal.mixin({
           toast: true,
@@ -2539,7 +2526,7 @@ export class ParameterizedComponent implements OnInit {
           title: 'Data telah di tambahkan ',
         });
       },
-      error: error => {
+      error: () => {
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',

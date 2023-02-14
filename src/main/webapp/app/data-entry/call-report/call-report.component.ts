@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -42,7 +43,7 @@ export class CallReportComponent implements OnInit {
   contohtex: any;
   skalaprusahaan: any;
   checkboxCekaktapendirian: any;
-  tempunganCek: Array<number> = [];
+  tempunganCek: number[] = [];
   checkboxCek: any;
   textwawancara: any;
   untukSessionRole: any;
@@ -65,23 +66,23 @@ export class CallReportComponent implements OnInit {
     protected applicationConfigService: ApplicationConfigService,
     private formBuilder: FormBuilder,
     protected dataEntryService: DataEntryService,
-    private SessionStorageService: SessionStorageService,
+    private sessionStorageService: SessionStorageService,
     protected verificationServices: ServiceVerificationService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.curef = params['curef'];
+      this.curef = params.curef;
     });
     this.route.queryParams.subscribe(params => {
-      this.app_no_de = params['app_no_de'];
+      this.app_no_de = params.app_no_de;
     });
   }
 
   ngOnInit(): void {
     this.getLoading(true);
-    this.untukSessionUserName = this.SessionStorageService.retrieve('sessionUserName');
-    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
-    this.untukSessionFullName = this.SessionStorageService.retrieve('sessionFullName');
-    this.untukSessionKodeCabang = this.SessionStorageService.retrieve('sessionKdCabang');
+    this.untukSessionUserName = this.sessionStorageService.retrieve('sessionUserName');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
+    this.untukSessionFullName = this.sessionStorageService.retrieve('sessionFullName');
+    this.untukSessionKodeCabang = this.sessionStorageService.retrieve('sessionKdCabang');
     this.load();
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
@@ -177,7 +178,7 @@ export class CallReportComponent implements OnInit {
     });
   }
 
-  load() {
+  load(): void {
     // /////////////////////////Ref////////////////////////////////////
     setTimeout(() => {
       setTimeout(() => {
@@ -228,6 +229,7 @@ export class CallReportComponent implements OnInit {
         this.daWa1 = de.result;
 
         this.contohtex =
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           'Dengan ini saya menyatakan hasil wawancara yang diisi oleh saya ' +
           this.untukSessionFullName +
           ' dan pemberi Informasi yang disebut nasabah adalah benar adanya ' +
@@ -381,10 +383,11 @@ export class CallReportComponent implements OnInit {
           if (this.daWa1.kode_fasilitas_name === 'PTA') {
             this.checkboxCek = '';
           } else {
-            if (this.daWa === null) {
+            if (call.result === null) {
               this.checkboxCek = '';
             } else {
               this.checkboxCek = this.daWa.legalitas_usaha.split(', ');
+              // eslint-disable-next-line @typescript-eslint/prefer-for-of
               for (let i = 0; i < this.checkboxCek.length; i++) {
                 if (this.checkboxCek[i] === 'SIU') {
                   this.checkboxCeksiu = 'SIU';
@@ -405,16 +408,17 @@ export class CallReportComponent implements OnInit {
         }, 30);
 
         setTimeout(() => {
-          if (this.daWa !== null) {
+          if (call.result !== null) {
             this.nowawancara = this.daWa.no_wawancara;
           } else {
             this.dataEntryService.getFetchGetWawancara().subscribe(wawancara => {
+              // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
               this.nowawancara = 'CR_' + this.app_no_de + '_' + wawancara.result;
             });
           }
         }, 80);
 
-        let retriveCallReport = {
+        const retriveCallReport = {
           alamat_tinggal: this.daWa.alamat_tinggal,
           tanggal_lahir: this.daWa.tanggal_lahir,
           status_kawin: this.daWa.status_kawin,
@@ -478,8 +482,8 @@ export class CallReportComponent implements OnInit {
     }, 200);
   }
 
-  goto() {
-    this.SessionStorageService.store('callReport', 1);
+  goto(): void {
+    this.sessionStorageService.store('callReport', 1);
     this.router.navigate(['/upload_document/upload_document_de'], {
       queryParams: {
         curef: this.curef,
@@ -488,7 +492,7 @@ export class CallReportComponent implements OnInit {
     });
   }
 
-  onCheckCek(e: any) {
+  onCheckCek(e: any): void {
     this.checkboxCeksiu = '';
     this.checkboxCeksiup = '';
     this.checkboxCeknib = '';
@@ -500,7 +504,7 @@ export class CallReportComponent implements OnInit {
     }
   }
 
-  onclikwawancara(e: any) {
+  onclikwawancara(e: any): void {
     if (e.target.checked) {
       this.cekSimpanData = 1;
     } else {
@@ -508,11 +512,12 @@ export class CallReportComponent implements OnInit {
     }
   }
 
-  simpancallreport() {
+  simpancallreport(): void {
     const legalitas = this.tempunganCek.join(', ');
     if (legalitas !== '') {
       this.legalitasUsaha = legalitas;
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (this.daWa === null) {
         this.legalitasUsaha = '';
       } else {
@@ -527,11 +532,11 @@ export class CallReportComponent implements OnInit {
         app_no_de: this.app_no_de,
         bidang_usaha: this.callReportForm.get('bidang_usaha')?.value,
         bidang_usaha_pasangan: this.callReportForm.get('bidang_usaha_pasangan')?.value,
-        cabang: this.SessionStorageService.retrieve('sessionKdCabang'),
+        cabang: this.sessionStorageService.retrieve('sessionKdCabang'),
         catatan_dokumen_agunan: this.callReportForm.get('catatan_dokumen_agunan')?.value,
         catatan_posisi_dokumen: this.callReportForm.get('catatan_posisi_dokumen')?.value,
         catatan_status_agunan: this.callReportForm.get('catatan_status_agunan')?.value,
-        created_by: this.SessionStorageService.retrieve('sessionUserName'),
+        created_by: this.sessionStorageService.retrieve('sessionUserName'),
         curef: this.curef,
         dokumen_agunan: this.callReportForm.get('dokumen_agunan')?.value,
         estimasi_angsuran: this.callReportForm.get('estimasi_angsuran')?.value,
@@ -555,7 +560,7 @@ export class CallReportComponent implements OnInit {
         lama_bekerja_tahun_pasangan: this.callReportForm.get('lama_bekerja_tahun_pasangan')?.value,
         lama_usaha: this.callReportForm.get('lama_usaha')?.value,
         legalitas_usaha: this.legalitasUsaha,
-        nama_ao: this.SessionStorageService.retrieve('sessionFullName'),
+        nama_ao: this.sessionStorageService.retrieve('sessionFullName'),
         nama_perusahaan: this.callReportForm.get('nama_perusahaan')?.value,
         nama_perusahaan_pasangan: this.callReportForm.get('nama_perusahaan_pasangan')?.value,
         no_kontak_hr_pasangan: this.callReportForm.get('no_kontak_hr_pasangan')?.value,
@@ -584,7 +589,7 @@ export class CallReportComponent implements OnInit {
         tanggal_appraisal: this.callReportForm.get('tanggal_appraisal')?.value,
       })
       .subscribe({
-        next: bawaan => {
+        next: () => {
           alert('Berhasil Menyimpan Data');
           this.router.navigate(['/data-entry/memo'], {
             queryParams: {
@@ -596,9 +601,9 @@ export class CallReportComponent implements OnInit {
       });
   }
 
-  datepicker() {
+  datepicker(): any {
     const getValueTanggal = +new Date(this.callReportForm.get('tanggal_wawancara')?.value);
-    let tanggalExpNyaPakeKoma = (Date.now() - getValueTanggal) / 86400000;
+    const tanggalExpNyaPakeKoma = (Date.now() - getValueTanggal) / 86400000;
     this.tanggalWawancara = Math.floor(tanggalExpNyaPakeKoma);
     // alert(this.tanggalWawancara)
     if (this.tanggalWawancara > 60) {
@@ -608,7 +613,7 @@ export class CallReportComponent implements OnInit {
     }
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }

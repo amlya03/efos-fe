@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable eqeqeq */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -85,7 +88,7 @@ export class SyaratPersetujuanComponent implements OnInit {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }
@@ -163,7 +166,7 @@ export class SyaratPersetujuanComponent implements OnInit {
   }
 
   // POST sYARAT aKAD
-  simpanSyaratAkad() {
+  simpanSyaratAkad(): void {
     Swal.fire({
       title: 'Input Syarat Akad',
       html:
@@ -178,13 +181,13 @@ export class SyaratPersetujuanComponent implements OnInit {
         '<div>',
       focusConfirm: false,
       // allowOutsideClick: false,
-    }).then(result => {
-      let syarat = $('#syarat').val();
-      let keterangan = $('#keterangan').val();
-      if (syarat == '') {
+    }).then(() => {
+      const syaratSyarat = $('#syarat').val();
+      const keteranganSyarat = $('#keterangan').val();
+      if (syaratSyarat == '') {
         alert('Mohon Isi Syarat');
         return;
-      } else if (keterangan == '') {
+      } else if (keteranganSyarat == '') {
         alert('Mohon Isi Keterangan');
         return;
       } else {
@@ -195,12 +198,12 @@ export class SyaratPersetujuanComponent implements OnInit {
             created_date: '',
             curef: this.dataEntry.curef,
             id: 0,
-            keterangan: keterangan,
+            keterangan: keteranganSyarat,
             kode_syarat: 1,
-            syarat: syarat,
+            syarat: syaratSyarat,
           })
           .subscribe({
-            next: data => {
+            next() {
               window.location.reload();
             },
           });
@@ -209,7 +212,7 @@ export class SyaratPersetujuanComponent implements OnInit {
   }
 
   // POST sYARAT Cair
-  simpanSyaratCair() {
+  simpanSyaratCair(): void {
     Swal.fire({
       title: 'Input Syarat Cair',
       html:
@@ -224,13 +227,13 @@ export class SyaratPersetujuanComponent implements OnInit {
         '<div>',
       focusConfirm: false,
       // allowOutsideClick: false,
-    }).then(result => {
-      let syarat = $('#syarat').val();
-      let keterangan = $('#keterangan').val();
-      if (syarat == '') {
+    }).then(() => {
+      const syaratSyaratLain = $('#syarat').val();
+      const keteranganSyaratLain = $('#keterangan').val();
+      if (syaratSyaratLain == '') {
         alert('Mohon Isi Syarat');
         return;
-      } else if (keterangan == '') {
+      } else if (keteranganSyaratLain == '') {
         alert('Mohon Isi Keterangan');
         return;
       } else {
@@ -241,12 +244,12 @@ export class SyaratPersetujuanComponent implements OnInit {
             created_date: '',
             curef: this.dataEntry.curef,
             id: 0,
-            keterangan: keterangan,
+            keterangan: keteranganSyaratLain,
             kode_syarat: 2,
-            syarat: syarat,
+            syarat: syaratSyaratLain,
           })
           .subscribe({
-            next: data => {
+            next() {
               window.location.reload();
             },
           });
@@ -255,7 +258,7 @@ export class SyaratPersetujuanComponent implements OnInit {
   }
 
   // POST sYARAT Lain -Lain
-  simpanSyaratLain() {
+  simpanSyaratLain(): void {
     Swal.fire({
       title: 'Input Syarat Akad Lain - lain',
       html:
@@ -270,13 +273,13 @@ export class SyaratPersetujuanComponent implements OnInit {
         '<div>',
       focusConfirm: false,
       // allowOutsideClick: false,
-    }).then(result => {
-      let syarat = $('#syarat').val();
-      let keterangan = $('#keterangan').val();
-      if (syarat == '') {
+    }).then(() => {
+      const syaratValue = $('#syarat').val();
+      const keteranganValue = $('#keterangan').val();
+      if (syaratValue == '') {
         alert('Mohon Isi Syarat');
         return;
-      } else if (keterangan == '') {
+      } else if (keteranganValue == '') {
         alert('Mohon Isi Keterangan');
         return;
       } else {
@@ -287,12 +290,12 @@ export class SyaratPersetujuanComponent implements OnInit {
             created_date: '',
             curef: this.dataEntry.curef,
             id: 0,
-            keterangan: keterangan,
+            keterangan: keteranganValue,
             kode_syarat: 3,
-            syarat: syarat,
+            syarat: syaratValue,
           })
           .subscribe({
-            next: data => {
+            next() {
               window.location.reload();
             },
           });

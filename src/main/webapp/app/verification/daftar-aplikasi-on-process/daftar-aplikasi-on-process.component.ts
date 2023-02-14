@@ -30,11 +30,6 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
   dataEntry?: fetchAllDe = new fetchAllDe();
   curef: any;
 
-  public getLoading(loading: boolean) {
-    this.isLoading = loading;
-    this.isSpin = loading;
-  }
-
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
@@ -97,5 +92,10 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
       this.curef = this.dataEntry?.curef;
       this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: app_noDe, curef: this.curef } });
     });
+  }
+
+  public getLoading(loading: boolean): void {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

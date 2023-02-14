@@ -83,7 +83,7 @@ export class StukturPembiayaanComponent implements OnInit {
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }
@@ -289,6 +289,7 @@ export class StukturPembiayaanComponent implements OnInit {
     this.dataEntryService.getfetchlistagunan(this.curef).subscribe(data => {
       this.listagunan = data.result;
       // console.log(this.listagunan)
+      // eslint-disable-next-line eqeqeq
       if (data.result == '') {
         this.betaFTV = 0;
       } else {
@@ -364,6 +365,7 @@ export class StukturPembiayaanComponent implements OnInit {
                           this.hasilStatus = scoring.result.score_desc;
                         },
                         error: errScore => {
+                          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
                           alert('Score ' + errScore.error.message);
                           this.getLoading(false);
                         },
@@ -458,8 +460,5 @@ export class StukturPembiayaanComponent implements OnInit {
 
   viewStruktur(): void {
     this.router.navigate(['/syarat-persetujuan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
-  }
-  hhh() {
-    alert('kkj');
   }
 }

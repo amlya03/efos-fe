@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable eqeqeq */
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { createRequestOption } from 'app/core/request/request-util';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
@@ -65,19 +67,19 @@ export class EmergencyContactComponent implements OnInit {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     private formBuilder: FormBuilder,
-    private SessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.curef = params['curef'];
+      this.curef = params.curef;
     });
 
     this.route.queryParams.subscribe(params => {
-      this.app_no_de = params['app_no_de'];
+      this.app_no_de = params.app_no_de;
     });
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.load();
     this.getLoading(true);
     // ////////// Validasi \\\\\\\\\\\\\\\\\
@@ -135,7 +137,7 @@ export class EmergencyContactComponent implements OnInit {
     });
   }
 
-  load() {
+  load(): void {
     setTimeout(() => {
       this.datEntryService.getprovinsi().subscribe(res => {
         this.daWaprof = res.result;
@@ -258,7 +260,7 @@ export class EmergencyContactComponent implements OnInit {
     // }, 100);
   }
 
-  onChange(value: any) {
+  onChange(value: any): void {
     const proValue = value.split('|');
     this.datEntryService.getkabkota(proValue[0]).subscribe(data => {
       this.daWakota = data.result;
@@ -266,7 +268,7 @@ export class EmergencyContactComponent implements OnInit {
     });
   }
 
-  onChangekota(value: any) {
+  onChangekota(value: any): void {
     const kotaValue = value.split('|');
     this.datEntryService.getkecamatan(kotaValue[0]).subscribe(data => {
       this.kecamatan = data.result;
@@ -274,7 +276,7 @@ export class EmergencyContactComponent implements OnInit {
     });
   }
 
-  onChangekecamatan(value: any) {
+  onChangekecamatan(value: any): void {
     const kecValue = value.split('|');
     this.datEntryService.getkelurahan(kecValue[0]).subscribe(data => {
       this.kelurahan = data.result;
@@ -282,13 +284,13 @@ export class EmergencyContactComponent implements OnInit {
     });
   }
 
-  onChangekelurahan(value: any) {
+  onChangekelurahan(value: any): void {
     const datakodepos = value.split('|');
     this.daWakodepos = datakodepos[0];
     this.emergencyForm.get('kode_pos')?.setValue(this.daWakodepos);
   }
 
-  goto(appde: any) {
+  goto(): void {
     this.router.navigate(['/data-entry/call-report'], {
       queryParams: {
         curef: this.curef,
@@ -300,55 +302,42 @@ export class EmergencyContactComponent implements OnInit {
     // this.router.navigate(['/call-report'], { queryParams: { datakiriman:this.datakirimiancure , datakirimiancure:this.datakiriman } });
   }
 
-  simpanemergency() {
-    // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
-    const id = document.getElementById('id') as HTMLInputElement | any;
-    const nama = document.getElementById('nama') as HTMLInputElement | any;
-    const alamat = document.getElementById('alamat') as HTMLInputElement | any;
+  simpanemergency(): void {
     const provinsi_cabang = document.getElementById('provinsi_cabang') as HTMLInputElement | any;
     const kabkota_cabang = document.getElementById('kabkota_cabang') as HTMLInputElement | any;
     const kecamatan = document.getElementById('kecamatan') as HTMLInputElement | any;
     const kelurahan = document.getElementById('kelurahan') as HTMLInputElement | any;
-    const kode_pos = document.getElementById('kode_pos') as HTMLInputElement | any;
-    const rt = document.getElementById('rt') as HTMLInputElement | any;
-    const rw = document.getElementById('rw') as HTMLInputElement | any;
-    const no_telepon = document.getElementById('no_telepon') as HTMLInputElement | any;
-    const hubungan = document.getElementById('hubungan') as HTMLInputElement | any;
-    const email = document.getElementById('email') as HTMLInputElement | any;
-    // const angsuran = document.getElementById('angsuran') as HTMLInputElement | any;
-    // const hasil_pembiayaan = document.getElementById('hasil_pembiayaan') as HTMLInputElement | any;
-    // const detail_objek_pembiayaan = document.getElementById('detail_objek_pembiayaan') as HTMLInputElement | any;
-    // const fee_based = document.getElementById('fee_based') as HTMLInputElement | any;
 
-    var potonganprovinsi = provinsi_cabang.value.split('|');
+    let kirimanprov: any;
+    let kirimankabkota: any;
+    let kirimamnkecamatan: any;
+    let kirimankelurahan: any;
+    const potonganprovinsi = provinsi_cabang.value.split('|');
     if (provinsi_cabang.value.indexOf('|') !== -1) {
-      var kirimanprov = potonganprovinsi[1];
+      kirimanprov = potonganprovinsi[1];
     } else {
-      var kirimanprov = provinsi_cabang.value;
+      kirimanprov = provinsi_cabang.value;
     }
-    var potongankabkota = kabkota_cabang.value.split('|');
+    const potongankabkota = kabkota_cabang.value.split('|');
     if (kabkota_cabang.value.indexOf('|') !== -1) {
-      var kirimankabkota = potongankabkota[1];
+      kirimankabkota = potongankabkota[1];
     } else {
-      var kirimankabkota = kabkota_cabang.value;
+      kirimankabkota = kabkota_cabang.value;
     }
-    var potongankecamatan = kecamatan.value.split('|');
+    const potongankecamatan = kecamatan.value.split('|');
     if (kecamatan.value.indexOf('|') !== -1) {
-      var kirimamnkecamatan = potongankecamatan[1];
+      kirimamnkecamatan = potongankecamatan[1];
     } else {
-      var kirimamnkecamatan = kecamatan.value;
+      kirimamnkecamatan = kecamatan.value;
     }
-    var potongankelurahan = kelurahan.value.split('|');
+    const potongankelurahan = kelurahan.value.split('|');
     if (kelurahan.value.indexOf('|') !== -1) {
-      var kirimankelurahan = potongankelurahan[1];
+      kirimankelurahan = potongankelurahan[1];
     } else {
-      var kirimankelurahan = kelurahan.value;
+      kirimankelurahan = kelurahan.value;
     }
 
     if (this.daWa === null) {
-      // alert('ini create');
-      const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
-
       this.http
         .post<any>(this.baseUrl + 'v1/efos-de/create_emergency_contact', {
           id: '',
@@ -365,12 +354,12 @@ export class EmergencyContactComponent implements OnInit {
           no_telepon: this.emergencyForm.get('no_telepon')?.value,
           email: this.emergencyForm.get('email')?.value,
           hubungan: this.emergencyForm.get('hubungan')?.value,
-          created_by: this.SessionStorageService.retrieve('sessionUserName'),
+          created_by: this.sessionStorageService.retrieve('sessionUserName'),
           created_date: '',
         })
 
         .subscribe({
-          next: bawaan => {
+          next: () => {
             alert('Berhasil Menyimpan Data');
             this.router.navigate(['/data-entry/call-report'], {
               queryParams: {
@@ -381,9 +370,6 @@ export class EmergencyContactComponent implements OnInit {
           },
         });
     } else {
-      // alert('ini update');
-      const headers = { Authorization: 'Bearer my-token', 'My-Custom-Header': 'foobar' };
-
       this.http
         .post<any>(this.baseUrl + 'v1/efos-de/update_emergency_contact', {
           id: this.daWa.id,
@@ -400,11 +386,11 @@ export class EmergencyContactComponent implements OnInit {
           no_telepon: this.emergencyForm.get('no_telepon')?.value,
           email: this.emergencyForm.get('email')?.value,
           hubungan: this.emergencyForm.get('hubungan')?.value,
-          updated_by: this.SessionStorageService.retrieve('sessionUserName'),
+          updated_by: this.sessionStorageService.retrieve('sessionUserName'),
           updated_date: '',
         })
         .subscribe({
-          next: bawaan => {
+          next: () => {
             alert('Berhasil Menyimpan Data');
             this.router.navigate(['/data-entry/call-report'], {
               queryParams: {
@@ -417,14 +403,14 @@ export class EmergencyContactComponent implements OnInit {
     }
   }
 
-  carimenggunakankodepos(kodepost: any) {
+  carimenggunakankodepos(kodepost: any): void {
     this.datEntryService.getKdpost(kodepost).subscribe(data => {
       if (this.clickKdPost == 1) {
         this.responseKels = data.result.kels;
         this.responseKels.forEach(element => {
           this.responseKels.push(element);
           if (element.kdPos == kodepost) {
-            let namaWIl = element.namaWilayah;
+            const namaWIl = element.namaWilayah;
             this.responseNamaWilayah.push(namaWIl);
           }
         });
@@ -475,7 +461,7 @@ export class EmergencyContactComponent implements OnInit {
     }
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }

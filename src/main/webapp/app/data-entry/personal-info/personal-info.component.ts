@@ -1,9 +1,10 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
-import { createRequestOption } from 'app/core/request/request-util';
 import { SessionStorageService } from 'ngx-webstorage';
 import { DataEntryService } from '../services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
@@ -42,45 +43,16 @@ export class PersonalInfoComponent implements OnInit {
 
   hasildhn: any;
   personal_info_value: any;
-  // nama: string | undefined;
-  // jenis_kelamin: string | undefined;
-  // app_no_ide: string | undefined;
-  // tanggal_lahir: string | undefined;
-  // tempat_lahir: string | undefined;
-  // status_perkawinan: string | undefined;
-  // agama: string | undefined;
-  // pendidikan: string | undefined;
-  // kewarganegaraan: string | undefined;
-  // nama_ibu_kandung: string | undefined;
-  // npwp: string | undefined;
-  // alamat_ktp: string | undefined;
-  // alamat_domisili: string | undefined;
   provinsi_domisili: string | undefined;
   kabkota_domisili: string | undefined;
   kecamatan_domisili: string | undefined;
   kelurahan_domisili: string | undefined;
   kode_pos_domisili: string | undefined;
-  // rt_domisili: string | undefined;
-  // rw_domisili: string | undefined;
   provinsi_cabang: any;
   kabkota_cabang: any;
-  // no_telepon: any;
-  // email: any;
-  // jumlah_anak: any;
-  // status_rumah: any;
-  // lama_menetap: any;
-  // status_kendaraan: any;
-  // tipe_kendaraan: any;
   kecamatan: any;
-  // usia: any;
   kelurahan: any;
   kode_pos: string | undefined;
-  // rt: string | undefined;
-  // rw: string | undefined;
-  // no_ktp: string | undefined;
-  // tanggal_terbit_ktp: string | undefined;
-  // tanggal_exp_ktp: string | undefined;
-  // no_handphone: string | undefined;
   databawaan: any;
   contohdata: any;
   daWaprof: any;
@@ -95,7 +67,7 @@ export class PersonalInfoComponent implements OnInit {
   untukSessionRole: any;
   curefGetDE: any;
   statusKawin: any;
-  /////
+  // ///
   untukKodeProvinsi: any;
   untukKodeKobkota: any;
   untukKodeKecamatan: any;
@@ -104,7 +76,7 @@ export class PersonalInfoComponent implements OnInit {
   untukkecamatan: any;
   untukKodeKelurahan: any;
   untukkelurahan: any;
-  //////
+  // ////
   untukKodeProvinsiD: any;
   untukKodeKobkotaD: any;
   untukKodeKecamatanD: any;
@@ -126,18 +98,18 @@ export class PersonalInfoComponent implements OnInit {
     private router: Router,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private SessionStorageService: SessionStorageService,
+    private sessionStorageService: SessionStorageService,
     private formBuilder: FormBuilder,
     protected verificationServices: ServiceVerificationService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.curef = params['curef'];
-      this.app_no_de = params['app_no_de'];
+      this.curef = params.curef;
+      this.app_no_de = params.app_no_de;
     });
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.load();
 
     // ////////// Validasi \\\\\\\\\\\\\\\\\
@@ -269,8 +241,8 @@ export class PersonalInfoComponent implements OnInit {
         this.curefGetDE = this.personalInfoModel.curef;
         this.statusKawin = this.personalInfoModel.status_perkawinan;
         // alert(this.personalInfoModel.jenis_kelamin)
-        /////////////////////////////////////////////////////////////////////////////
-        let retrivePersonalInfo = {
+        // ///////////////////////////////////////////////////////////////////////////
+        const retrivePersonalInfo = {
           nama: this.personalInfoModel.nama,
           jenis_kelamin: this.personalInfoModel.jenis_kelamin,
           tanggal_lahir: this.personalInfoModel.tanggal_lahir,
@@ -323,15 +295,16 @@ export class PersonalInfoComponent implements OnInit {
     }, 60);
   }
 
-  hitungUsia() {
+  hitungUsia(): void {
     const getValueTanggal = +new Date(this.personalInfoForm.value.tanggal_lahir);
-    //////////////////////////// ini buat dapet bulan ////////////////////////////
+    // ////////////////////////// ini buat dapet bulan ////////////////////////////
+    // eslint-disable-next-line no-bitwise
     const getTahun = +~~((Date.now() - getValueTanggal) / 31557600000);
     this.personalInfoForm.get('usia')?.setValue(getTahun);
   }
 
   gotojobinfo(contohtampungancuref: any, contohtampungstatuskawain: any, contohtampunganappde: any): void {
-    this.SessionStorageService.store('personalInfo', 1);
+    this.sessionStorageService.store('personalInfo', 1);
     this.router.navigate(['/data-entry/job-info'], {
       queryParams: {
         curef: contohtampungancuref,
@@ -345,7 +318,7 @@ export class PersonalInfoComponent implements OnInit {
     contohtampungstatuskawain: any,
     contohtampunganappde: any,
     contohtampungankategoripekerjaan: any
-  ) {
+  ): void {
     this.submitted = true;
 
     const kirimanpotonganprovinsi = this.personalInfoForm.get('provinsi')?.value.split('|');
@@ -404,13 +377,13 @@ export class PersonalInfoComponent implements OnInit {
         tanggal_exp_ktp: this.personalInfoForm.get('tanggal_exp_ktp')?.value,
         no_handphone: this.personalInfoForm.get('no_handphone')?.value,
         no_telepon: this.personalInfoForm.get('no_telepon')?.value,
-        updated_by: this.SessionStorageService.retrieve('sessionUserName'),
+        updated_by: this.sessionStorageService.retrieve('sessionUserName'),
         tipe_kendaraan: this.personalInfoForm.get('tipe_kendaraan')?.value,
         // updated_date: '1 ',
       })
 
       .subscribe({
-        next: bawaan => {
+        next: () => {
           alert('Berhasil Menyimpan Data');
           // setTimeout(() => {
           this.router.navigate(['/data-entry/job-info'], {
@@ -425,7 +398,7 @@ export class PersonalInfoComponent implements OnInit {
     // }
   }
 
-  onChangeD(value: any) {
+  onChangeD(value: any): void {
     this.getLoading(true);
     const valueProv = value.split('|');
     this.datEntryService.getkabkota(valueProv[0]).subscribe({
@@ -437,7 +410,7 @@ export class PersonalInfoComponent implements OnInit {
     });
   }
 
-  onChangekotaD(value: any) {
+  onChangekotaD(value: any): void {
     this.getLoading(true);
     const valueKota = value.split('|');
     this.datEntryService.getkecamatan(valueKota[0]).subscribe({
@@ -449,7 +422,7 @@ export class PersonalInfoComponent implements OnInit {
     });
   }
 
-  onChangekecamatanD(value: any) {
+  onChangekecamatanD(value: any): void {
     this.getLoading(true);
     const valueKecamatan = value.split('|');
     this.datEntryService.getkelurahan(valueKecamatan[0]).subscribe({
@@ -461,12 +434,12 @@ export class PersonalInfoComponent implements OnInit {
     });
   }
 
-  onChangekelurahanD(value: any) {
+  onChangekelurahanD(value: any): void {
     const datakodepos = value.split('|');
     this.personalInfoForm.get('kode_pos_domisili')?.setValue(datakodepos[0]);
   }
 
-  onChange(value: any) {
+  onChange(value: any): void {
     const valueProv = value.split('|');
     this.datEntryService.getkabkota(valueProv[0]).subscribe({
       next: data => {
@@ -476,7 +449,7 @@ export class PersonalInfoComponent implements OnInit {
     });
   }
 
-  onChangekota(value: any) {
+  onChangekota(value: any): void {
     const valueKota = value.split('|');
     this.datEntryService.getkecamatan(valueKota[0]).subscribe({
       next: data => {
@@ -486,7 +459,7 @@ export class PersonalInfoComponent implements OnInit {
     });
   }
 
-  onChangekecamatan(value: any) {
+  onChangekecamatan(value: any): void {
     const valueKecamatan = value.split('|');
     this.datEntryService.getkelurahan(valueKecamatan[0]).subscribe({
       next: data => {
@@ -496,12 +469,12 @@ export class PersonalInfoComponent implements OnInit {
     });
   }
 
-  onChangekelurahan(value: any) {
+  onChangekelurahan(value: any): void {
     const datakodepos = value.split('|');
     this.personalInfoForm.get('kode_pos')?.setValue(datakodepos[0]);
   }
 
-  onItemChange(event: any) {
+  onItemChange(event: any): void {
     // alert(event.value)
     // if (event.value == 1) {
     //   this.personalInfoForm.get('alamat_domisili')?.setValue(this.personalInfoForm.get('alamat_ktp')?.value);
@@ -540,7 +513,7 @@ export class PersonalInfoComponent implements OnInit {
     }
   }
 
-  kodePosApi(kodepost: any) {
+  kodePosApi(kodepost: any): void {
     this.datEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
         this.untukKodeProvinsi = sukses.result.provKec.kd_prov;
@@ -560,8 +533,8 @@ export class PersonalInfoComponent implements OnInit {
     });
   }
 
-  ////// domisili
-  kodePosApiDomisili(kodepost: any) {
+  // //// domisili
+  kodePosApiDomisili(kodepost: any): void {
     this.datEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
         if (this.clickKdPostDomisili == 1) {
@@ -569,7 +542,7 @@ export class PersonalInfoComponent implements OnInit {
           this.responseKelsDomisili.forEach(element => {
             this.responseKelsDomisili.push(element);
             if (element.kdPos == kodepost) {
-              let namaWIl = element.namaWilayah;
+              const namaWIl = element.namaWilayah;
               this.responseNamaWilayahDomisili.push(namaWIl);
             }
           });
@@ -610,7 +583,7 @@ export class PersonalInfoComponent implements OnInit {
     });
   }
 
-  ///domisili
+  // /domisili
 
   // Only Numbers
   keyPressNumbers(event?: any): void {
@@ -623,7 +596,7 @@ export class PersonalInfoComponent implements OnInit {
     }
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }

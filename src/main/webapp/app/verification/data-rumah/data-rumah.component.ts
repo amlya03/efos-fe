@@ -1,3 +1,6 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable prefer-const */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -170,10 +173,10 @@ export class DataRumahComponent implements OnInit {
         // alert(this.dataEntry.joint_income)
         // ambil semua data Slik
         setTimeout(() => {
-          this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe(data => {
+          this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe(slikRes => {
             this.getLoading(false);
-            this.slikTotal = data.result;
-            let retSlik = {
+            this.slikTotal = slikRes.result;
+            const retSlik = {
               total_angsuran_nasabah: this.slikTotal.total_angsuran_nasabah,
               total_angsuran_pasangan: this.slikTotal.total_angsuran_pasangan,
             };
@@ -200,7 +203,7 @@ export class DataRumahComponent implements OnInit {
             );
 
             // List Slik
-            this.listSlik = data.result.dataSlikResult;
+            this.listSlik = slikRes.result.dataSlikResult;
             // console.log(this.slikTotal.total_angsuran_pasangan)
             // this.struktur = ('Rp 10000').toLocaleString();
             // this.struktur = 'Rp 10000'.replace('Rp', '');
@@ -218,7 +221,7 @@ export class DataRumahComponent implements OnInit {
                 }
               }
             });
-            this.dtTrigger.next(data.result.dataSlikResult);
+            this.dtTrigger.next(slikRes.result.dataSlikResult);
             const plafonNasabah = Number(this.slikTotal.total_plafon_nasabah);
             const plafonPasangan = Number(this.slikTotal.total_plafon_pasangan);
             const outstandingNasabah = Number(this.slikTotal.total_outstanding_nasabah);
@@ -606,7 +609,7 @@ export class DataRumahComponent implements OnInit {
     this.router.navigate(['/sturktur-pembiayaan'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }

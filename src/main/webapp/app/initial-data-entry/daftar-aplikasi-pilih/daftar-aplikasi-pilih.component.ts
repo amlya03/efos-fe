@@ -1,31 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'jhi-daftar-aplikasi-pilih',
   templateUrl: './daftar-aplikasi-pilih.component.html',
   styleUrls: ['./daftar-aplikasi-pilih.component.scss'],
 })
-export class DaftarAplikasiPilihComponent implements OnInit {
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    protected http: HttpClient,
-    protected applicationConfigService: ApplicationConfigService
-  ) {}
+export class DaftarAplikasiPilihComponent {
+  constructor(private router: Router, protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  ngOnInit(): void {}
-  gotofix(kategori: any) {
+  gotofix(kategoriFix: any): void {
     this.router.navigate(['/initial-data-entryfix'], {
-      queryParams: { kategori: kategori },
+      queryParams: { kategori: kategoriFix },
     });
   }
 
-  gotonon(kategori: any) {
+  gotonon(kategoriNon: any): void {
     this.router.navigate(['/initial-data-entryfix'], {
-      queryParams: { kategori: kategori },
+      queryParams: { kategori: kategoriNon },
     });
   }
 }

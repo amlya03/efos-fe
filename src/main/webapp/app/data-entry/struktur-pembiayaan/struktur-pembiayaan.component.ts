@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
@@ -63,94 +66,94 @@ export class StrukturPembiayaanComponent implements OnInit {
     private router: Router,
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private SessionStorageService: SessionStorageService,
+    private sessionStorageService: SessionStorageService,
     private formBuilder: FormBuilder
   ) {
     this.route.queryParams.subscribe(params => {
-      this.app_no_de = params['app_no_de'];
+      this.app_no_de = params.app_no_de;
     });
 
     this.route.queryParams.subscribe(params => {
-      this.datakirimiancure = params['datakirimiancure'];
+      this.datakirimiancure = params.datakirimiancure;
     });
     this.route.queryParams.subscribe(params => {
-      this.datakirimanakategoripekerjaan = params['datakirimanakategoripekerjaan'];
+      this.datakirimanakategoripekerjaan = params.datakirimanakategoripekerjaan;
     });
     this.route.queryParams.subscribe(params => {
-      this.curef = params['curef'];
+      this.curef = params.curef;
     });
   }
 
   ngOnInit(): void {
-    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.load();
     this.strukturForm = this.formBuilder.group({
       joint_income: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       kode_fasilitas: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       program: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       produk: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       skema: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       akad: { value: '' || null, disabled: true },
       jangka_waktu: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       tipe_margin: { value: '', disabled: true },
       tujuan_pembiayaan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       fasilitas_ke: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       harga_objek_pembiayaan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       fee_based: [
-        { value: '0' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '0' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       uang_muka: [
-        { value: '0' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '0' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       detail_objek_pembiayaan: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       margin: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       angsuran: [
-        { value: '' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
       nilai_pembiayaan: [
-        { value: '0' || null, disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER' },
+        { value: '0' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
     });
   }
 
-  load() {
+  load(): void {
     this.getLoading(true);
 
     setTimeout(() => {
@@ -196,28 +199,28 @@ export class StrukturPembiayaanComponent implements OnInit {
           this.jangkaWaktuRet = this.strukturModel.jangka_waktu + '|' + this.strukturModel.margin;
 
           setTimeout(() => {
-            this.dataEntryService.getFetchProgramByKode(this.strukturModel.kode_fasilitas).subscribe(data => {
-              this.kodeprogram = data.result;
+            this.dataEntryService.getFetchProgramByKode(this.strukturModel.kode_fasilitas).subscribe(fasilitas => {
+              this.kodeprogram = fasilitas.result;
             });
           }, 50);
           setTimeout(() => {
-            this.dataEntryService.getFetchProdukByKode(this.strukturModel.program).subscribe(data => {
-              this.kodeproduk = data.result;
+            this.dataEntryService.getFetchProdukByKode(this.strukturModel.program).subscribe(program => {
+              this.kodeproduk = program.result;
             });
           }, 70);
           setTimeout(() => {
-            this.dataEntryService.getFetchSkemaByKode(this.strukturModel.produk).subscribe(data => {
-              this.kodeskema = data.result;
+            this.dataEntryService.getFetchSkemaByKode(this.strukturModel.produk).subscribe(produk => {
+              this.kodeskema = produk.result;
             });
           }, 90);
           setTimeout(() => {
             if (this.strukturModel.skema_master == 1) {
-              this.dataEntryService.getTenorFix(this.strukturModel.skema).subscribe(data => {
-                this.tenor = data.result;
+              this.dataEntryService.getTenorFix(this.strukturModel.skema).subscribe(skemaFix => {
+                this.tenor = skemaFix.result;
               });
             } else {
-              this.dataEntryService.getTenorNon(this.strukturModel.skema).subscribe(data => {
-                this.tenor = data.result;
+              this.dataEntryService.getTenorNon(this.strukturModel.skema).subscribe(skemaNon => {
+                this.tenor = skemaNon.result;
               });
             }
           }, 120);
@@ -226,8 +229,8 @@ export class StrukturPembiayaanComponent implements OnInit {
             if (this.strukturModel.skema_master == 1) {
               this.showMargin = 'Margin = ' + this.strukturModel.margin;
             } else {
-              this.dataEntryService.getFetchMarginStepUp(this.strukturModel.skema).subscribe(data => {
-                let marginStep = data.result;
+              this.dataEntryService.getFetchMarginStepUp(this.strukturModel.skema).subscribe(margin => {
+                const marginStep = margin.result;
                 // for (let i = 0; i < data.result.length; i++) {
                 //   this.showMargin
                 // });
@@ -251,9 +254,9 @@ export class StrukturPembiayaanComponent implements OnInit {
                 tenor: this.strukturModel.jangka_waktu,
               })
               .subscribe({
-                next: data => {
-                  let anguran1 = data.result.angsuran[0];
-                  let anguran2 = data.result.angsuran[1];
+                next: anguran => {
+                  const anguran1 = anguran.result.angsuran[0];
+                  const anguran2 = anguran.result.angsuran[1];
 
                   if (anguran2 == null) {
                     this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ');
@@ -268,7 +271,7 @@ export class StrukturPembiayaanComponent implements OnInit {
                       Number(anguran2).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
                   }
                 },
-                error: err => {
+                error(err) {
                   if (err.error.code == 400) {
                     alert(err.error.message);
                   }
@@ -277,8 +280,8 @@ export class StrukturPembiayaanComponent implements OnInit {
           }, 500);
 
           setTimeout(() => {
-            ///////////////////////////////////////////////////////////////////////////
-            let retrivestrukturForm = {
+            // /////////////////////////////////////////////////////////////////////////
+            const retrivestrukturForm = {
               joint_income: this.strukturModel.joint_income,
               kode_fasilitas: this.kodeFasilitasRet,
               program: this.kodeProgramRet,
@@ -299,7 +302,7 @@ export class StrukturPembiayaanComponent implements OnInit {
             };
             this.strukturForm.setValue(retrivestrukturForm);
             this.getLoading(false);
-            ///////////////////////////////////////////////////////////////////////////////
+            // /////////////////////////////////////////////////////////////////////////////
           }, 1000);
         }
       });
@@ -310,8 +313,8 @@ export class StrukturPembiayaanComponent implements OnInit {
     // }, 2000);
   }
 
-  goto() {
-    this.SessionStorageService.store('strukturPemb', 1);
+  goto(): void {
+    this.sessionStorageService.store('strukturPemb', 1);
     this.router.navigate(['/data-entry/emergency-contact'], {
       queryParams: {
         curef: this.curef,
@@ -320,7 +323,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     });
   }
 
-  onchangefasilitas(kodefasilitasnya: any) {
+  onchangefasilitas(kodefasilitasnya: any): void {
     this.getLoading(true);
     if (kodefasilitasnya == 'U') {
       $('#uang_muka').attr('hidden', 'hidden');
@@ -340,9 +343,9 @@ export class StrukturPembiayaanComponent implements OnInit {
     });
   }
 
-  onchangeprogram(kodeProgram: any) {
+  onchangeprogram(kodeProgram: any): void {
     this.getLoading(true);
-    let kode = kodeProgram.split('|');
+    const kode = kodeProgram.split('|');
     this.dataEntryService.getFetchProdukByKode(kode[0]).subscribe({
       next: data => {
         this.getLoading(false);
@@ -354,9 +357,9 @@ export class StrukturPembiayaanComponent implements OnInit {
     });
   }
 
-  onchangeproduk(kodeProduk: any) {
+  onchangeproduk(kodeProduk: any): void {
     this.getLoading(true);
-    let kode = kodeProduk.split('|');
+    const kode = kodeProduk.split('|');
     this.dataEntryService.getFetchSkemaByKode(kode[0]).subscribe({
       next: data => {
         this.getLoading(false);
@@ -368,7 +371,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     });
   }
 
-  onchangeskema(valueSkema: any) {
+  onchangeskema(valueSkema: any): void {
     this.getLoading(true);
     const pemisahskemamaster = valueSkema.split('|');
     const programSkema = valueSkema.split('|');
@@ -399,30 +402,29 @@ export class StrukturPembiayaanComponent implements OnInit {
     }
   }
 
-  onchangejangkawaktu(jangkaWaktu: any, skema: any) {
+  onchangejangkawaktu(jangkaWaktu: any, skema: any): void {
     const pemisahfixr = jangkaWaktu.split('|');
     const pemisahskemamaster = skema.split('|');
 
     if (pemisahskemamaster[1] == 1) {
-      let margin = pemisahfixr[1];
+      const margin = pemisahfixr[1];
       this.showMargin = 'Margin = ' + margin;
       this.strukturForm.get('margin')?.setValue(margin);
     } else {
       this.dataEntryService.getFetchMarginStepUp(pemisahskemamaster[0]).subscribe(data => {
-        let marginStep = data.result;
+        const marginStep = data.result;
         this.showMargin = 'Margin Tahun Ke 1 = ' + marginStep[0] + '; ' + 'Margin Tahun Ke 2 = ' + marginStep[1];
         this.strukturForm.get('margin')?.setValue(pemisahfixr[1]);
       });
     }
   }
 
-  itungrincihan() {
+  itungrincihan(): void {
     this.getLoading(true);
-    var kirimanpotonganprovinsi = this.strukturForm.get('kode_fasilitas')?.value.split('|');
-    var kirimanprogram = this.strukturForm.get('program')?.value.split('|');
-    var kirimanproduk = this.strukturForm.get('produk')?.value.split('|');
-    var kirimanskema = this.strukturForm.get('skema')?.value.split('|');
-    var kirimanjangkawaktu = this.strukturForm.get('jangka_waktu')?.value.split('|');
+    const kirimanpotonganprovinsi = this.strukturForm.get('kode_fasilitas')?.value.split('|');
+    const kirimanproduk = this.strukturForm.get('produk')?.value.split('|');
+    const kirimanskema = this.strukturForm.get('skema')?.value.split('|');
+    const kirimanjangkawaktu = this.strukturForm.get('jangka_waktu')?.value.split('|');
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
         // headers: headers,
@@ -441,9 +443,9 @@ export class StrukturPembiayaanComponent implements OnInit {
         next: data => {
           this.postId = data.result;
 
-          var anguran1 = data.result.angsuran[0];
-          var anguran2 = data.result.angsuran[1];
-          var nilai = data.result.nilai_pembiayaan;
+          const anguran1 = data.result.angsuran[0];
+          const anguran2 = data.result.angsuran[1];
+          const nilai = data.result.nilai_pembiayaan;
 
           if (anguran2 == null) {
             this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ');
@@ -470,23 +472,23 @@ export class StrukturPembiayaanComponent implements OnInit {
       });
   }
 
-  simpanstruktur() {
-    let kirimanpotongkodefasilitas = this.strukturForm.get('kode_fasilitas')?.value.split('|');
-    let kirimanpotongproduk = this.strukturForm.get('produk')?.value.split('|');
-    let kirimanpotongprogram = this.strukturForm.get('program')?.value.split('|');
-    let kirimanpotongskema = this.strukturForm.get('skema')?.value.split('|');
-    let kirimanjangwaktunya = this.strukturForm.get('jangka_waktu')?.value.split('|');
+  simpanstruktur(): void {
+    const kirimanpotongkodefasilitas = this.strukturForm.get('kode_fasilitas')?.value.split('|');
+    const kirimanpotongproduk = this.strukturForm.get('produk')?.value.split('|');
+    const kirimanpotongprogram = this.strukturForm.get('program')?.value.split('|');
+    const kirimanpotongskema = this.strukturForm.get('skema')?.value.split('|');
+    const kirimanjangwaktunya = this.strukturForm.get('jangka_waktu')?.value.split('|');
     // let marginfix = this.strukturForm.get('margin')?.value.replace('Margin = ', '');
     // let marginNon1 = marginfix.replace('Margin Tahun Ke 1 = ', '');
     // let marginNon2 = marginNon1.replace('Margin Tahun Ke 2 = ', '');
     // let marginnya = marginNon2.split('; ');
-    let angsurannya = this.strukturForm.get('angsuran')?.value.split('; ');
+    const angsurannya = this.strukturForm.get('angsuran')?.value.split('; ');
     if (this.strukturModel == null) {
       this.http
         .post<any>(this.baseUrl + 'v1/efos-de/create_struktur_pembiayaan', {
           angsuran: angsurannya[0],
           app_no_de: this.app_no_de,
-          created_by: this.SessionStorageService.retrieve('sessionUserName'),
+          created_by: this.sessionStorageService.retrieve('sessionUserName'),
           created_date: '',
           curef: this.curef,
           detail_objek_pembiayaan: this.strukturForm.get('detail_objek_pembiayaan')?.value,
@@ -513,7 +515,7 @@ export class StrukturPembiayaanComponent implements OnInit {
           uang_muka: this.strukturForm.get('uang_muka')?.value,
         })
         .subscribe({
-          next: bawaan => {
+          next: () => {
             alert('Berhasil Menyimpan Data');
             this.router.navigate(['/data-entry/emergency-contact'], {
               queryParams: {
@@ -522,7 +524,7 @@ export class StrukturPembiayaanComponent implements OnInit {
               },
             });
           },
-          error: error => {
+          error(error) {
             if (error.error.code == 400) {
               alert('Gagal Menyimpan Data');
               alert(error.error.message);
@@ -534,7 +536,7 @@ export class StrukturPembiayaanComponent implements OnInit {
         .post<any>(this.baseUrl + 'v1/efos-de/update_struktur_pembiayaan', {
           angsuran: angsurannya[0],
           app_no_de: this.app_no_de,
-          updated_by: this.SessionStorageService.retrieve('sessionUserName'),
+          updated_by: this.sessionStorageService.retrieve('sessionUserName'),
           updated_date: '',
           curef: this.curef,
           detail_objek_pembiayaan: this.strukturForm.get('detail_objek_pembiayaan')?.value,
@@ -561,7 +563,7 @@ export class StrukturPembiayaanComponent implements OnInit {
           uang_muka: this.strukturForm.get('uang_muka')?.value,
         })
         .subscribe({
-          next: bawaan => {
+          next: () => {
             alert('Berhasil Menyimpan Data');
             // setTimeout(() => {
             this.router.navigate(['/data-entry/emergency-contact'], {
@@ -571,7 +573,7 @@ export class StrukturPembiayaanComponent implements OnInit {
               },
             });
           },
-          error: error => {
+          error(error) {
             if (error.error.code == 400) {
               alert('Gagal Menyimpan Data');
               alert(error.error.message);
@@ -591,7 +593,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     }
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }

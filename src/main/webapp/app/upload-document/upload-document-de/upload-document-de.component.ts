@@ -1,3 +1,6 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/prefer-for-of */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,7 +22,7 @@ import Swal from 'sweetalert2';
 })
 export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   baseUrl: string = environment.baseUrl;
-  uploadDocument: Array<uploadDocument> = new Array<uploadDocument>();
+  uploadDocument: uploadDocument[] = [];
   dataEntry: fetchAllDe = new fetchAllDe();
   curef: any;
   app_no_de: any;
@@ -54,7 +57,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     protected applicationConfigService: ApplicationConfigService,
     protected fileUploadService: ServicesUploadDocumentService,
     protected dataEntryService: DataEntryService,
-    private SessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.curef = params.curef;
@@ -69,7 +72,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
       processing: true,
       responsive: true,
     };
-    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.load();
   }
 
@@ -93,14 +96,14 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   }
 
   viewUploadDEA(): void {
-    this.SessionStorageService.store('uploadDE', 1);
+    this.sessionStorageService.store('uploadDE', 1);
     this.router.navigate(['/upload_document/upload_document_agunan'], {
       queryParams: { curef: this.dataEntry.curef, app_no_de: this.dataEntry.app_no_de },
     });
   }
 
   // On file Select
-  onChange(event: any, id: number | null | undefined) {
+  onChange(event: any, id: number | null | undefined): void {
     this.file = event.target.files[0];
     this.idUpload = id;
     this.buttonUpload = (<HTMLInputElement>document.getElementById('uploadData' + id)).value;
@@ -111,7 +114,12 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   }
 
   // Upload
-  uploadData(deUpload: string | undefined, curefUpload: string | null | undefined, doc_type: number | null | undefined, file: File | any) {
+  uploadData(
+    deUpload: string | undefined,
+    curefUpload: string | null | undefined,
+    doc_type: number | null | undefined,
+    file: File | any
+  ): void {
     if (Math.floor(file.size * 0.000001) > 2) {
       Swal.fire('Gagal', 'File Maksimal 2MB!', 'error').then(() => {
         window.location.reload();
@@ -129,16 +137,16 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   // Delete
   deleteDataUpload(
     doc: string | null | undefined,
-    id: number | null | undefined,
-    id_upload: number | null | undefined,
+    idData: number | null | undefined,
+    id_uploadData: number | null | undefined,
     nama: string | null | undefined
-  ) {
+  ): void {
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/deleteDocUpload', {
         created_date: '',
         doc_description: doc,
-        id: id,
-        id_upload: id_upload,
+        id: idData,
+        id_upload: id_uploadData,
         nama_dokumen: nama,
       })
       .subscribe({});
@@ -146,16 +154,16 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   }
 
   // Next untuk BM && PTA
-  next() {
-    this.SessionStorageService.store('uploadDE', 1);
-    // this.SessionStorageService.store('uploadDEA', 1);
+  next(): void {
+    this.sessionStorageService.store('uploadDE', 1);
+    // this.sessionStorageService.store('uploadDEA', 1);
     this.router.navigate(['/data-entry/memo'], {
       queryParams: { curef: this.dataEntry.curef, app_no_de: this.dataEntry.app_no_de },
     });
   }
 
   // Update Status
-  updateStatus() {
+  updateStatus(): void {
     this.totalVal = this.uploadDocument.length;
     for (let i = 0; i < this.uploadDocument.length; i++) {
       if (this.uploadDocument[i].status == null) {
@@ -167,15 +175,15 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
           this.http
             .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
               app_no_de: this.app_no_de,
-              created_by: this.SessionStorageService.retrieve('sessionUserName'),
+              created_by: this.sessionStorageService.retrieve('sessionUserName'),
               status_aplikasi: this.dataEntry.status_aplikasi,
             })
             .subscribe({
-              next: response => {
+              next: () => {
                 alert('Data Berhasil Di Updated');
                 this.router.navigate(['/data-entry']);
               },
-              error: error => {
+              error(error) {
                 alert(error.error.messages);
               },
             });
@@ -185,7 +193,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   }
 
   // View Upload
-  viewData(nama_dok: any) {
+  viewData(nama_dok: any): void {
     const buatPdf = nama_dok.split('.').pop();
     if (buatPdf == 'pdf') {
       window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + nama_dok + '');

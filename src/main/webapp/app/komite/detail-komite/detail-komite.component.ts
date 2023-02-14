@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/prefer-for-of */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable eqeqeq */
 import { Component, Input, OnInit } from '@angular/core';
 import { DataEntryService } from '../../data-entry/services/data-entry.service';
 import { fetchAllDe } from '../../upload-document/services/config/fetchAllDe.model';
@@ -125,7 +128,7 @@ export class DetailKomiteComponent implements OnInit {
       keterangan: '',
     });
   }
-  load() {
+  load(): void {
     // //////////////////////////////////////////////// Get Data Users ///////////////////////////////////////////////////////////////////////
     setTimeout(() => {
       this.komiteServices.getDataUsers(this.app_no_de).subscribe(data => {
@@ -164,7 +167,7 @@ export class DetailKomiteComponent implements OnInit {
       this.komiteServices.getPersetujuanPembiayaan(this.app_no_de).subscribe(data => {
         this.persetujuanPembiayaan = data.result;
         this.retriveFinal = data.result;
-        let retrivepersetujuanPembiayaanForm = {
+        const retrivepersetujuanPembiayaanForm = {
           limit_kewenangan_memutus: this.retriveFinal[this.retriveFinal.length - 1].limit_kewenangan_memutus,
           plafon_pembiayaan: this.retriveFinal[this.retriveFinal.length - 1].plafon_pembiayaan,
           keputusan: this.retriveFinal[this.retriveFinal.length - 1].keputusan,
@@ -201,9 +204,9 @@ export class DetailKomiteComponent implements OnInit {
 
         // ////////////////////////////////////////////////////////////////////////////////////////
         // Ref Skema
-        this.verifikasiServices.getSkema(this.dataEntry.produk).subscribe(data => {
-          if (data.code === 200) {
-            this.Skema = data.result;
+        this.verifikasiServices.getSkema(this.dataEntry.produk).subscribe(verif => {
+          if (verif.code === 200) {
+            this.Skema = verif.result;
           }
         });
         // ////////////////////////////////////////////////////////////////////////////////////////
@@ -264,6 +267,8 @@ export class DetailKomiteComponent implements OnInit {
             this.komiteFasilitasYangDimintaForm.setValue(retrivestrukturForm);
           }
         }, 10);
+        let anguran1: any;
+        let anguran2: any;
 
         setTimeout(() => {
           this.http
@@ -281,8 +286,8 @@ export class DetailKomiteComponent implements OnInit {
             })
             .subscribe({
               next: data => {
-                let anguran1 = data.result.angsuran[0];
-                let anguran2 = data.result.angsuran[1];
+                anguran1 = data.result.angsuran[0];
+                anguran2 = data.result.angsuran[1];
 
                 if (anguran2 == null) {
                   this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue('Angsuran = ' + anguran1);
@@ -299,8 +304,8 @@ export class DetailKomiteComponent implements OnInit {
                       app_no_de: this.dataEntry.app_no_de,
                     })
                     .subscribe({
-                      next: data => {
-                        this.komiteFasilitasYangDimintaForm.get('dsr')?.setValue(data.result.dsr);
+                      next: dsrRes => {
+                        this.komiteFasilitasYangDimintaForm.get('dsr')?.setValue(dsrRes.result.dsr);
                         setTimeout(() => {
                           this.http
                             .post<any>(this.baseUrl + 'v1/efos-verif/getHitungScoring', {
@@ -308,10 +313,10 @@ export class DetailKomiteComponent implements OnInit {
                               app_no_de: this.dataEntry.app_no_de,
                             })
                             .subscribe({
-                              next: data => {
-                                //console.warn(data);
-                                this.hasilScoring = data.result.score_value;
-                                this.hasilStatus = data.result.score_desc;
+                              next: score => {
+                                // console.warn(data);
+                                this.hasilScoring = score.result.score_value;
+                                this.hasilStatus = score.result.score_desc;
                               },
                             });
                         }, 10);
@@ -384,15 +389,15 @@ export class DetailKomiteComponent implements OnInit {
             })
             .subscribe({
               next: data => {
-                let anguran1 = data.result.angsuran[0];
-                let anguran2 = data.result.angsuran[1];
+                const anguranKe1 = data.result.angsuran[0];
+                const anguranKe2 = data.result.angsuran[1];
 
-                if (anguran2 == null) {
-                  this.keputusanPembiayaanForm.get('angsuran')?.setValue('Angsuran = ' + anguran1);
+                if (anguranKe2 == null) {
+                  this.keputusanPembiayaanForm.get('angsuran')?.setValue('Angsuran = ' + anguranKe1);
                 } else {
                   this.keputusanPembiayaanForm
                     .get('angsuran')
-                    ?.setValue('Angsuran Tahun Ke 1 = ' + anguran1 + '; ' + 'Angsuran Tahun Ke 2 = ' + anguran2);
+                    ?.setValue('Angsuran Tahun Ke 1 = ' + anguranKe1 + '; ' + 'Angsuran Tahun Ke 2 = ' + anguranKe2);
                 }
                 this.getLoading(false);
               },
@@ -408,7 +413,7 @@ export class DetailKomiteComponent implements OnInit {
       });
     }, 60);
   }
-  hitungFasilitasYangDiminta() {
+  hitungFasilitasYangDiminta(): void {
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
         app_no_de: this.dataEntry.app_no_de,
@@ -424,8 +429,8 @@ export class DetailKomiteComponent implements OnInit {
       })
       .subscribe({
         next: data => {
-          let anguran1 = data.result.angsuran[0];
-          let anguran2 = data.result.angsuran[1];
+          const anguran1 = data.result.angsuran[0];
+          const anguran2 = data.result.angsuran[1];
 
           if (anguran2 == null) {
             this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue('Angsuran = ' + anguran1);
@@ -435,7 +440,7 @@ export class DetailKomiteComponent implements OnInit {
               ?.setValue('Angsuran Tahun Ke 1 = ' + anguran1 + '; ' + 'Angsuran Tahun Ke 2 = ' + anguran2);
           }
         },
-        error: err => {
+        error(err) {
           if (err.error.code === '400') {
             alert(err.error.message);
           }
@@ -443,7 +448,7 @@ export class DetailKomiteComponent implements OnInit {
       });
   }
 
-  changeKeputusanPembiayaan(skema: any) {
+  changeKeputusanPembiayaan(skema: any): void {
     const getSkema = skema.split('|');
     if (getSkema[1] === '1') {
       this.keputusanPembiayaanForm.get('tipe_margin')?.setValue('FIX');
@@ -458,7 +463,7 @@ export class DetailKomiteComponent implements OnInit {
     }
   }
 
-  hitungRekomendasiSystem() {
+  hitungRekomendasiSystem(): void {
     const deskripsiSkema = this.keputusanPembiayaanForm.get('skema')?.value.split('|');
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
@@ -475,9 +480,9 @@ export class DetailKomiteComponent implements OnInit {
       })
       .subscribe({
         next: data => {
-          //console.warn('rekon', data);
-          let anguran1 = data.result.angsuran[0];
-          let anguran2 = data.result.angsuran[1];
+          // console.warn('rekon', data);
+          const anguran1 = data.result.angsuran[0];
+          const anguran2 = data.result.angsuran[1];
 
           if (anguran2 == null) {
             this.keputusanPembiayaanForm.get('angsuran')?.setValue('Angsuran = ' + anguran1);
@@ -487,7 +492,7 @@ export class DetailKomiteComponent implements OnInit {
               ?.setValue('Angsuran Tahun Ke 1 = ' + anguran1 + '; ' + 'Angsuran Tahun Ke 2 = ' + anguran2);
           }
         },
-        error: err => {
+        error(err) {
           if (err.error.code === '400') {
             alert(err.error.message);
           }
@@ -495,20 +500,20 @@ export class DetailKomiteComponent implements OnInit {
       });
   }
 
-  approve() {
+  approve(): void {
     // /////////////////////// Create Approval /////////////////////////////
     // contooohhhhh// this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value.replace(/,/g, '').replace('Rp ', '').split('.')[0]
     const skemaFull = this.keputusanPembiayaanForm.get('skema')?.value.split('|');
     const totalPendapatanFull = this.jobByCurefDE.total_pendapatan;
-    let angsuranfix = this.komiteFasilitasYangDimintaForm.get('angsuran')?.value.replace('Angsuran = ', '');
-    let angsuranNon1 = angsuranfix.replace('Angsuran Tahun Ke 1 = ', '');
-    let angsuranNon2 = angsuranNon1.replace('Angsuran Tahun Ke 2 = ', '');
-    let angsurannya = angsuranNon2.split('; ');
+    const angsuranfix = this.komiteFasilitasYangDimintaForm.get('angsuran')?.value.replace('Angsuran = ', '');
+    const angsuranNon1 = angsuranfix.replace('Angsuran Tahun Ke 1 = ', '');
+    const angsuranNon2 = angsuranNon1.replace('Angsuran Tahun Ke 2 = ', '');
+    const angsurannya = angsuranNon2.split('; ');
 
-    let angsuranfix2 = this.keputusanPembiayaanForm.get('angsuran')?.value.replace('Angsuran = ', '');
-    let angsuranNon12 = angsuranfix2.replace('Angsuran Tahun Ke 1 = ', '');
-    let angsuranNon22 = angsuranNon12.replace('Angsuran Tahun Ke 2 = ', '');
-    let angsurannya2 = angsuranNon22.split('; ');
+    const angsuranfix2 = this.keputusanPembiayaanForm.get('angsuran')?.value.replace('Angsuran = ', '');
+    const angsuranNon12 = angsuranfix2.replace('Angsuran Tahun Ke 1 = ', '');
+    const angsuranNon22 = angsuranNon12.replace('Angsuran Tahun Ke 2 = ', '');
+    const angsurannya2 = angsuranNon22.split('; ');
     if (this.cekDetailKomite === 0) {
       this.http
         .post<any>(this.baseUrl + 'v1/efos-approval/create_approval', {
@@ -531,8 +536,8 @@ export class DetailKomiteComponent implements OnInit {
           total_pendapatan: totalPendapatanFull,
         })
         .subscribe({
-          next: data => {
-            //console.warn(data);
+          next: () => {
+            // console.warn(data);
             // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
             this.http
               .post<any>(this.baseUrl + 'v1/efos-approval/create_history_persetujuan', {
@@ -547,8 +552,8 @@ export class DetailKomiteComponent implements OnInit {
                 approved_date: '',
               })
               .subscribe({
-                next: data => {
-                  //console.warn(data);
+                next: () => {
+                  // console.warn(data);
                   // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                   for (let i = 0; i < this.refPersetujuanKhusus.length; i++) {
                     if ($('#persetujuan_ya' + i).is(':checked')) {
@@ -559,10 +564,10 @@ export class DetailKomiteComponent implements OnInit {
                       this.persetujuanPost = 0;
                     }
                     this.idPost = $('#id' + i).val();
-                    let detail_persetujuanPost = $('#detail_persetujuan' + i).val();
-                    let ketentuanPost = $('#ketentuan' + i).val();
-                    let mitigasi_resikoPost = $('#mitigasi_resiko' + i).val();
-                    let usulanPost = $('#usulan' + i).val();
+                    const detail_persetujuanPost = $('#detail_persetujuan' + i).val();
+                    const ketentuanPost = $('#ketentuan' + i).val();
+                    const mitigasi_resikoPost = $('#mitigasi_resiko' + i).val();
+                    const usulanPost = $('#usulan' + i).val();
 
                     this.http
                       .post<any>(this.baseUrl + 'v1/efos-approval/update_persetujuan_khusus', {
@@ -578,28 +583,28 @@ export class DetailKomiteComponent implements OnInit {
                         usulan: usulanPost,
                       })
                       .subscribe({
-                        next: data => {
-                          //console.warn(data);
+                        next: () => {
+                          // console.warn(data);
                           if (this.idPost[this.refPersetujuanKhusus.length - 1] == this.idPost[i]) {
                             alert('Data Berhasil disimpan');
                             window.location.reload();
                           }
                         },
-                        error: err => {
-                          //console.error(err);
+                        error() {
+                          // console.error(err);
                         },
                       });
                   }
                   // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                 },
-                error: err => {
-                  //console.error(err);
+                error() {
+                  // console.error(err);
                 },
               });
             // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
           },
-          error: err => {
-            //console.error(err);
+          error() {
+            // console.error(err);
           },
         });
     } else {
@@ -624,8 +629,8 @@ export class DetailKomiteComponent implements OnInit {
           updated_date: '',
         })
         .subscribe({
-          next: data => {
-            //console.warn(data);
+          next: () => {
+            // console.warn(data);
             // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
             this.http
               .post<any>(this.baseUrl + 'v1/efos-approval/create_history_persetujuan', {
@@ -640,8 +645,8 @@ export class DetailKomiteComponent implements OnInit {
                 approved_date: '',
               })
               .subscribe({
-                next: data => {
-                  //console.warn(data);
+                next: () => {
+                  // console.warn(data);
                   // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                   for (let i = 0; i < this.refPersetujuanKhusus.length; i++) {
                     if ($('#persetujuan_ya' + i).is(':checked')) {
@@ -652,10 +657,10 @@ export class DetailKomiteComponent implements OnInit {
                       this.persetujuanPost = 0;
                     }
                     this.idPost = $('#id' + i).val();
-                    let detail_persetujuanPost = $('#detail_persetujuan' + i).val();
-                    let ketentuanPost = $('#ketentuan' + i).val();
-                    let mitigasi_resikoPost = $('#mitigasi_resiko' + i).val();
-                    let usulanPost = $('#usulan' + i).val();
+                    const detail_persetujuanPost = $('#detail_persetujuan' + i).val();
+                    const ketentuanPost = $('#ketentuan' + i).val();
+                    const mitigasi_resikoPost = $('#mitigasi_resiko' + i).val();
+                    const usulanPost = $('#usulan' + i).val();
 
                     this.http
                       .post<any>(this.baseUrl + 'v1/efos-approval/update_persetujuan_khusus', {
@@ -671,15 +676,15 @@ export class DetailKomiteComponent implements OnInit {
                         usulan: usulanPost,
                       })
                       .subscribe({
-                        next: data => {
-                          //console.warn(data);
+                        next: () => {
+                          // console.warn(data);
                           if (this.idPost[this.refPersetujuanKhusus.length - 1] == this.idPost[i]) {
                             alert('Data Berhasil disimpan');
                             window.location.reload();
                           }
                         },
-                        error: err => {
-                          //console.error(err);
+                        error() {
+                          // console.error(err);
                         },
                       });
                   }
@@ -689,21 +694,21 @@ export class DetailKomiteComponent implements OnInit {
                   // }, 300);
                   // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                 },
-                error: err => {
-                  //console.error(err);
+                error() {
+                  // console.error(err);
                 },
               });
             // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
           },
-          error: err => {
-            //console.error(err);
+          error() {
+            // console.error(err);
           },
         });
     }
     // /////////////////////// Create Approval /////////////////////////////
   }
 
-  forward() {
+  forward(): void {
     Swal.fire({
       title: 'Forward ke Analis atau Forward ke Supervisor?',
       text: 'Update Status ke Analis atau Update Status ke Analis ke Supervisor',
@@ -713,31 +718,31 @@ export class DetailKomiteComponent implements OnInit {
       cancelButtonText: 'Forward ke Supervisor',
     }).then(result => {
       if (result.value) {
-        Swal.fire('Data Berhasil diUpdate!', 'Data Sudah di Tim Analis', 'success').then((message: any) => {
+        Swal.fire('Data Berhasil diUpdate!', 'Data Sudah di Tim Analis', 'success').then(() => {
           window.location.reload();
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Data Berhasil diUpdate', 'Data Sudah di Tim Supervisor', 'success').then((message: any) => {
+        Swal.fire('Data Berhasil diUpdate', 'Data Sudah di Tim Supervisor', 'success').then(() => {
           window.location.reload();
         });
       }
     });
   }
 
-  reject() {
+  reject(): void {
     // /////////////////////// Create Approval /////////////////////////////
     // contooohhhhh// this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value.replace(/,/g, '').replace('Rp ', '').split('.')[0]
     const skemaFull = this.keputusanPembiayaanForm.get('skema')?.value.split('|');
     const totalPendapatanFull = this.jobByCurefDE.total_pendapatan;
-    let angsuranfix = this.komiteFasilitasYangDimintaForm.get('angsuran')?.value.replace('Angsuran = ', '');
-    let angsuranNon1 = angsuranfix.replace('Angsuran Tahun Ke 1 = ', '');
-    let angsuranNon2 = angsuranNon1.replace('Angsuran Tahun Ke 2 = ', '');
-    let angsurannya = angsuranNon2.split('; ');
+    const angsuranfix = this.komiteFasilitasYangDimintaForm.get('angsuran')?.value.replace('Angsuran = ', '');
+    const angsuranNon1 = angsuranfix.replace('Angsuran Tahun Ke 1 = ', '');
+    const angsuranNon2 = angsuranNon1.replace('Angsuran Tahun Ke 2 = ', '');
+    const angsurannya = angsuranNon2.split('; ');
 
-    let angsuranfix2 = this.keputusanPembiayaanForm.get('angsuran')?.value.replace('Angsuran = ', '');
-    let angsuranNon12 = angsuranfix2.replace('Angsuran Tahun Ke 1 = ', '');
-    let angsuranNon22 = angsuranNon12.replace('Angsuran Tahun Ke 2 = ', '');
-    let angsurannya2 = angsuranNon22.split('; ');
+    const angsuranfix2 = this.keputusanPembiayaanForm.get('angsuran')?.value.replace('Angsuran = ', '');
+    const angsuranNon12 = angsuranfix2.replace('Angsuran Tahun Ke 1 = ', '');
+    const angsuranNon22 = angsuranNon12.replace('Angsuran Tahun Ke 2 = ', '');
+    const angsurannya2 = angsuranNon22.split('; ');
     // /////////////////////// Create Approval /////////////////////////////
 
     Swal.fire({
@@ -771,8 +776,8 @@ export class DetailKomiteComponent implements OnInit {
               total_pendapatan: totalPendapatanFull,
             })
             .subscribe({
-              next: data => {
-                //console.warn(data);
+              next: () => {
+                // console.warn(data);
                 // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
                 this.http
                   .post<any>(this.baseUrl + 'v1/efos-approval/create_history_persetujuan', {
@@ -787,8 +792,8 @@ export class DetailKomiteComponent implements OnInit {
                     approved_date: '',
                   })
                   .subscribe({
-                    next: data => {
-                      //console.warn(data);
+                    next: () => {
+                      // console.warn(data);
                       // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                       for (let i = 0; i < this.refPersetujuanKhusus.length; i++) {
                         if ($('#persetujuan_ya' + i).is(':checked')) {
@@ -799,10 +804,10 @@ export class DetailKomiteComponent implements OnInit {
                           this.persetujuanPost = 0;
                         }
                         this.idPost = $('#id' + i).val();
-                        let detail_persetujuanPost = $('#detail_persetujuan' + i).val();
-                        let ketentuanPost = $('#ketentuan' + i).val();
-                        let mitigasi_resikoPost = $('#mitigasi_resiko' + i).val();
-                        let usulanPost = $('#usulan' + i).val();
+                        const detail_persetujuanPost = $('#detail_persetujuan' + i).val();
+                        const ketentuanPost = $('#ketentuan' + i).val();
+                        const mitigasi_resikoPost = $('#mitigasi_resiko' + i).val();
+                        const usulanPost = $('#usulan' + i).val();
 
                         this.http
                           .post<any>(this.baseUrl + 'v1/efos-approval/update_persetujuan_khusus', {
@@ -818,26 +823,26 @@ export class DetailKomiteComponent implements OnInit {
                             usulan: usulanPost,
                           })
                           .subscribe({
-                            next: data => {
+                            next: () => {
                               if (this.idPost[this.refPersetujuanKhusus.length - 1] == this.idPost[i]) {
                                 window.location.reload();
                               }
                             },
-                            error: err => {
-                              //console.error(err);
+                            error() {
+                              // console.error(err);
                             },
                           });
                       }
                       // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                     },
-                    error: err => {
-                      //console.error(err);
+                    error() {
+                      // console.error(err);
                     },
                   });
                 // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
               },
-              error: err => {
-                //console.error(err);
+              error() {
+                // console.error(err);
               },
             });
         } else {
@@ -862,8 +867,8 @@ export class DetailKomiteComponent implements OnInit {
               updated_date: '',
             })
             .subscribe({
-              next: data => {
-                //console.warn(data);
+              next: () => {
+                // console.warn(data);
                 // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
                 this.http
                   .post<any>(this.baseUrl + 'v1/efos-approval/create_history_persetujuan', {
@@ -878,8 +883,8 @@ export class DetailKomiteComponent implements OnInit {
                     approved_date: '',
                   })
                   .subscribe({
-                    next: data => {
-                      //console.warn(data);
+                    next: () => {
+                      // console.warn(data);
                       // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                       for (let i = 0; i < this.refPersetujuanKhusus.length; i++) {
                         if ($('#persetujuan_ya' + i).is(':checked')) {
@@ -890,10 +895,10 @@ export class DetailKomiteComponent implements OnInit {
                           this.persetujuanPost = 0;
                         }
                         this.idPost = $('#id' + i).val();
-                        let detail_persetujuanPost = $('#detail_persetujuan' + i).val();
-                        let ketentuanPost = $('#ketentuan' + i).val();
-                        let mitigasi_resikoPost = $('#mitigasi_resiko' + i).val();
-                        let usulanPost = $('#usulan' + i).val();
+                        const detail_persetujuanPost = $('#detail_persetujuan' + i).val();
+                        const ketentuanPost = $('#ketentuan' + i).val();
+                        const mitigasi_resikoPost = $('#mitigasi_resiko' + i).val();
+                        const usulanPost = $('#usulan' + i).val();
 
                         this.http
                           .post<any>(this.baseUrl + 'v1/efos-approval/update_persetujuan_khusus', {
@@ -909,14 +914,14 @@ export class DetailKomiteComponent implements OnInit {
                             usulan: usulanPost,
                           })
                           .subscribe({
-                            next: data => {
-                              //console.warn(data);
+                            next: () => {
+                              // console.warn(data);
                               if (this.idPost[this.refPersetujuanKhusus.length - 1] == this.idPost[i]) {
                                 window.location.reload();
                               }
                             },
-                            error: err => {
-                              //console.error(err);
+                            error() {
+                              // console.error(err);
                             },
                           });
                       }
@@ -926,22 +931,22 @@ export class DetailKomiteComponent implements OnInit {
                       // }, 300);
                       // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                     },
-                    error: err => {
-                      //console.error(err);
+                    error() {
+                      // console.error(err);
                     },
                   });
                 // /////////////////////// Persetujuan Pembiayaan /////////////////////////////
               },
-              error: err => {
-                //console.error(err);
+              error() {
+                // console.error(err);
               },
             });
         }
-        Swal.fire('Data Berhasil direject!', 'Data Sudah direject', 'success').then((message: any) => {
+        Swal.fire('Data Berhasil direject!', 'Data Sudah direject', 'success').then(() => {
           window.location.reload();
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Data Tidak direject!', 'Data disimpan', 'info').then((message: any) => {
+        Swal.fire('Data Tidak direject!', 'Data disimpan', 'info').then(() => {
           // window.location.reload();
         });
       }
@@ -958,14 +963,14 @@ export class DetailKomiteComponent implements OnInit {
     }
   }
 
-  formatCurrency(value: any) {
-    value = value.replace(/Rp/, '').replace(/\,/g, '');
-    ////console.log('value ', value);
+  formatCurrency(value: any): void {
+    value = value.replace(/Rp/, '').replace(/,/g, '');
+    // //console.log('value ', value);
     if (value && !isNaN(value)) {
-      let num: number = value;
+      const num: number = value;
       // let temp = new Intl.NumberFormat("en-IN").format(num); //inplace of en-IN you can mention your country's code
       // console.log(temp, ' temp ');
-      let result = new Intl.NumberFormat('id-ID', {
+      const result = new Intl.NumberFormat('id-ID', {
         style: 'currency',
         currency: 'IDR',
       }).format(Number(num));
@@ -975,7 +980,7 @@ export class DetailKomiteComponent implements OnInit {
     }
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }

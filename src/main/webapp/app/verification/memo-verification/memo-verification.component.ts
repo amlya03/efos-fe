@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -47,13 +48,13 @@ export class MemoVerificationComponent implements OnInit {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     protected dataEntryService: DataEntryService,
-    private SessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService
   ) {
     // ///////////////////////////// Session /////////////////////////////////////////////
-    this.untukSessionRole = this.SessionStorageService.retrieve('sessionRole');
-    this.untukSessionUserName = this.SessionStorageService.retrieve('sessionUserName');
-    this.untukSessionFullName = this.SessionStorageService.retrieve('sessionFullName');
-    this.untukSessionKodeCabang = this.SessionStorageService.retrieve('sessionKdCabang');
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
+    this.untukSessionUserName = this.sessionStorageService.retrieve('sessionUserName');
+    this.untukSessionFullName = this.sessionStorageService.retrieve('sessionFullName');
+    this.untukSessionKodeCabang = this.sessionStorageService.retrieve('sessionKdCabang');
     // ///////////////////////////// Session /////////////////////////////////////////////
 
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -72,7 +73,7 @@ export class MemoVerificationComponent implements OnInit {
     this.load();
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }
@@ -89,11 +90,11 @@ export class MemoVerificationComponent implements OnInit {
       this.listMemo = data.result;
       this.dtTrigger.next(this.listMemo);
       setTimeout(() => {
-        this.listMemo.forEach((data: MemoModel) => {
-          if (data.role === 'VER_PRESCR') {
+        this.listMemo.forEach((dataMemo: MemoModel) => {
+          if (dataMemo.role === 'VER_PRESCR') {
             this.valVER_PRESCR = 1;
             this.getLoading(false);
-          } else if (data.role === 'VER_PRE_SPV') {
+          } else if (dataMemo.role === 'VER_PRE_SPV') {
             this.valVER_PRE_SPV = 1;
             this.getLoading(false);
           } else {
@@ -104,7 +105,7 @@ export class MemoVerificationComponent implements OnInit {
     });
   }
 
-  printData() {
+  printData(): void {
     const printTable = <HTMLInputElement>document.getElementById('tableMemo');
     document.write(printTable.outerHTML);
     window.print();
@@ -112,11 +113,11 @@ export class MemoVerificationComponent implements OnInit {
   }
 
   // Simpan
-  simpanMemo(keterangan: any) {
+  simpanMemo(keteranganMemo: any): void {
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/create_memo', {
         id: 0,
-        keterangan: keterangan,
+        keterangan: keteranganMemo,
         users: this.untukSessionUserName + '-' + this.untukSessionFullName,
         role: this.untukSessionRole,
         app_no_de: this.app_no_de,
@@ -124,7 +125,7 @@ export class MemoVerificationComponent implements OnInit {
         created_by: this.untukSessionUserName,
       })
       .subscribe({
-        next: response => {
+        next() {
           window.location.reload();
         },
         error: error => console.warn(error),
@@ -132,7 +133,7 @@ export class MemoVerificationComponent implements OnInit {
   }
 
   // Update STatus
-  updateStatus() {
+  updateStatus(): void {
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
         app_no_de: this.app_no_de,
@@ -140,7 +141,7 @@ export class MemoVerificationComponent implements OnInit {
         status_aplikasi: this.dataEntry.status_aplikasi,
       })
       .subscribe({
-        next: response => {
+        next: () => {
           this.router.navigate(['/daftar-aplikasi-verification']);
         },
         error: error => console.warn(error),
@@ -148,7 +149,7 @@ export class MemoVerificationComponent implements OnInit {
   }
 
   // detail memo
-  detailMemo(id: number | null | undefined) {
+  detailMemo(id: number | null | undefined): void {
     this.dataEntryService.getFetchListMemo(id).subscribe(data => {
       this.detailMemoModel = data.result;
       Swal.fire({
@@ -189,7 +190,7 @@ export class MemoVerificationComponent implements OnInit {
         // preConfirm: () => {
         //   return [$('#produk').val(), $('#joint_income').val(), $('#parameter').val(), $('#data_value').val(), $('#min').val(), $('#max').val(), $('#score').val()];
         // },
-      }).then(result => {});
+      });
 
       // if (formValues) {
       //   Swal.fire(JSON.stringify(formValues));

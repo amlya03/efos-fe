@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/prefer-for-of */
+/* eslint-disable eqeqeq */
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -98,13 +100,13 @@ export class KomiteComponent implements OnInit {
     }, 50);
   }
 
-  view(app_no_de: string | undefined, curef: string | undefined): void {
-    this.komiteService.getListPersetujuanKhusus(app_no_de).subscribe(data => {
+  view(app_no_deView: string | undefined, curefView: string | undefined): void {
+    this.komiteService.getListPersetujuanKhusus(app_no_deView).subscribe(data => {
       if (data.result == '') {
         for (let i = 0; i < this.refPersetujuanKhusus.length; i++) {
           this.http
             .post<any>(this.baseUrl + 'v1/efos-approval/create_persetujuan_khusus', {
-              app_no_de: app_no_de,
+              app_no_de: app_no_deView,
               created_by: this.sessionStorageService.retrieve('sessionUserName'),
               created_date: '',
               detail_persetujuan: '',
@@ -116,24 +118,20 @@ export class KomiteComponent implements OnInit {
               usulan: '',
             })
             .subscribe({
-              next: data => {
-                //console.warn(data);
-                this.router.navigate(['/komite/detail-komite'], { queryParams: { app_no_de: app_no_de, curef: curef } });
-              },
-              error: err => {
-                console.error(err);
+              next: () => {
+                this.router.navigate(['/komite/detail-komite'], { queryParams: { app_no_de: app_no_deView, curef: curefView } });
               },
             });
         }
       } else {
-        this.router.navigate(['/komite/detail-komite'], { queryParams: { app_no_de: app_no_de, curef: curef } });
+        this.router.navigate(['/komite/detail-komite'], { queryParams: { app_no_de: app_no_deView, curef: curefView } });
       }
     });
   }
   // /////////////////////////Untuk Alert/////////////////////////////////////
 
   // /////////////////////////// Fasilitas ///////////////////////////////
-  changeFasilitas(fasilitas: string) {
+  changeFasilitas(fasilitas: string): void {
     this.dataEntryService.getFetchProgramByKode(fasilitas).subscribe(data => {
       this.kodeprogram = data.result;
     });
@@ -141,7 +139,7 @@ export class KomiteComponent implements OnInit {
   // /////////////////////////// Fasilitas ///////////////////////////////
 
   // /////////////////////////// Program ///////////////////////////////
-  validasiProgram(fasilitas: string) {
+  validasiProgram(fasilitas: string): void {
     if (fasilitas == '') {
       alert('Harap Pilih Fasilitasnya Terlebih Dahulu');
     }

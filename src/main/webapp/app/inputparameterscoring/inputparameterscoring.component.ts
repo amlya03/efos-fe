@@ -1,6 +1,12 @@
+/* eslint-disable no-constant-condition */
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable arrow-body-style */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -41,7 +47,7 @@ export class InputparameterscoringComponent implements OnInit {
     private formBuilder: FormBuilder,
     protected scoringServices: InputScoringService,
     protected datEntryService: DataEntryService,
-    private SessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +62,7 @@ export class InputparameterscoringComponent implements OnInit {
       this.dtTriggerSub.unsubscribe();
     }
   }
-  load() {
+  load(): void {
     this.getLoading(true);
     this.scoringServices.listmainparameterscoring().subscribe(data => {
       this.listmainparameterscoring = data.result;
@@ -89,10 +95,10 @@ export class InputparameterscoringComponent implements OnInit {
     }, 50);
   }
 
-  simpanDataparameterscoring() {
+  simpanDataparameterscoring(): void {
     $(document).ready(function () {
       $('#parameter').change(function () {
-        let parameterValue = $(this).val();
+        const parameterValue = $(this).val();
         if (parameterValue === '1') {
           $('#minMaxDiv').hide();
           $('#dataValueDiv').show();
@@ -124,9 +130,9 @@ export class InputparameterscoringComponent implements OnInit {
       focusConfirm: false,
       allowOutsideClick: false,
     }).then(result => {
-      let status_aktif = $('#status_aktif').val();
-      let parameter_deskripsi = $('#parameter_deskripsi').val();
-      let bobot = $('#bobot').val();
+      const status_aktif = $('#status_aktif').val();
+      const parameter_deskripsi = $('#parameter_deskripsi').val();
+      const bobot1 = $('#bobot').val();
 
       if (status_aktif == '1') {
         this.kirimanstatus = 1;
@@ -137,14 +143,14 @@ export class InputparameterscoringComponent implements OnInit {
         this.http
           .post<any>(this.baseUrl + 'v1/efos-ref/create_main_parameter_scoring', {
             id: 0,
-            created_by: this.SessionStorageService.retrieve('sessionUserName'),
+            created_by: this.sessionStorageService.retrieve('sessionUserName'),
             created_date: '',
             active: this.kirimanstatus,
             parameter_description: parameter_deskripsi,
-            bobot: bobot,
+            bobot: bobot1,
           })
           .subscribe({
-            next: response => {
+            next() {
               Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
                 window.location.reload();
               });
@@ -155,8 +161,8 @@ export class InputparameterscoringComponent implements OnInit {
     // ////////////// Pop Up Input Scoring ////////////////////////
   }
 
-  simpanParameterscoring() {
-    let options = this.listmainparameterscoring.map((option: any) => {
+  simpanParameterscoring(): void {
+    const options = this.listmainparameterscoring.map((option: any) => {
       return `
         <option key="${option}" value="${option.id + '|' + option.parameter_description}">
             ${option.parameter_description}
@@ -193,12 +199,12 @@ export class InputparameterscoringComponent implements OnInit {
       focusConfirm: false,
       allowOutsideClick: false,
     }).then(result => {
-      let bobot = $('#bobot').val();
-      let status_aktif = $('#status_aktif').val();
-      let parameter_deskripsi = $('#parameter_deskripsi').val();
-      let tipe_inputan = $('#tipe_inputan').val();
+      const bobot2 = $('#bobot').val();
+      const status_aktif = $('#status_aktif').val();
+      const parameter_deskripsi = $('#parameter_deskripsi').val();
+      const tipe_inputan = $('#tipe_inputan').val();
       this.mainParameterSlice = $('#parameter').val();
-      let parameter = this.mainParameterSlice.split('|');
+      const parameter = this.mainParameterSlice.split('|');
 
       if (status_aktif == '1') {
         this.kirimanstatus = 1;
@@ -210,19 +216,19 @@ export class InputparameterscoringComponent implements OnInit {
         this.http
           .post<any>(this.baseUrl + 'v1/efos-ref/create_parameter_scoring', {
             active: this.kirimanstatus,
-            created_by: this.SessionStorageService.retrieve('sessionUserName'),
+            created_by: this.sessionStorageService.retrieve('sessionUserName'),
             created_date: '',
             id: 0,
             id_ref_main_parameter_scoring: parameter[0],
             main_parameter_scoring_desc: parameter[1],
             parameter_description: parameter_deskripsi,
             parameter_type: tipe_inputan,
-            updated_by: this.SessionStorageService.retrieve('sessionUserName'),
+            updated_by: this.sessionStorageService.retrieve('sessionUserName'),
             updated_date: '',
-            bobot: bobot,
+            bobot: bobot2,
           })
           .subscribe({
-            next: response => {
+            next() {
               Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
                 window.location.reload();
               });
@@ -233,8 +239,8 @@ export class InputparameterscoringComponent implements OnInit {
     // ////////////// Pop Up Input Scoring ////////////////////////
   }
 
-  viewdetailmainparameter(id: any) {
-    this.scoringServices.getmainparameterscoringbyid(id).subscribe(data => {
+  viewdetailmainparameter(idParam: any): void {
+    this.scoringServices.getmainparameterscoringbyid(idParam).subscribe(data => {
       this.mainparameterscoringbyid = data.result;
       if ((this.mainparameterscoringbyid.active = '1')) {
         this.hasilget = 'Active';
@@ -242,7 +248,7 @@ export class InputparameterscoringComponent implements OnInit {
         this.hasilget = 'tidak';
       }
 
-      let options = this.listmainparameterscoring.map((option: any) => {
+      const options = this.listmainparameterscoring.map((option: any) => {
         return `
           <option key="${option}" value="${option.id}">
               ${option.parameter_description}
@@ -281,9 +287,9 @@ export class InputparameterscoringComponent implements OnInit {
           focusConfirm: false,
           allowOutsideClick: false,
         }).then(result => {
-          let status_aktif = $('#status_aktif').val();
-          let parameter_deskripsi = $('#parameter_deskripsi').val();
-          let bobot = $('#bobot').val();
+          const status_aktif = $('#status_aktif').val();
+          const parameter_deskripsi = $('#parameter_deskripsi').val();
+          const bobot3 = $('#bobot').val();
 
           if (status_aktif == '1') {
             this.kirimanstatus = 1;
@@ -294,17 +300,17 @@ export class InputparameterscoringComponent implements OnInit {
           if (result.isConfirmed) {
             this.http
               .post<any>(this.baseUrl + 'v1/efos-ref/create_main_parameter_scoring', {
-                id: id,
+                id: idParam,
                 created_by: '',
                 created_date: '',
                 active: this.kirimanstatus,
                 parameter_description: parameter_deskripsi,
-                bobot: bobot,
-                updated_by: this.SessionStorageService.retrieve('sessionUserName'),
+                bobot: bobot3,
+                updated_by: this.sessionStorageService.retrieve('sessionUserName'),
                 updated_date: '',
               })
               .subscribe({
-                next: response => {
+                next() {
                   Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
                     window.location.reload();
                   });
@@ -312,13 +318,13 @@ export class InputparameterscoringComponent implements OnInit {
               });
           }
         });
-      }, id * 5);
+      }, idParam * 5);
     });
     // ////////////// Pop Up Input Scoring ////////////////////////
   }
 
-  viewdetailparameter(id: any) {
-    this.scoringServices.getParameterScoring(id).subscribe({
+  viewdetailparameter(idDetail: any): void {
+    this.scoringServices.getParameterScoring(idDetail).subscribe({
       next: data => {
         this.subParameterScoringModel = data.result;
         // console.warn('sub by id ', data)
@@ -332,7 +338,7 @@ export class InputparameterscoringComponent implements OnInit {
         } else {
           this.subTipeData = 'Range';
         }
-        let options = this.listmainparameterscoring.map((option: any) => {
+        const options = this.listmainparameterscoring.map((option: any) => {
           return `
             <option key="${option}" value="${option.id + '|' + option.parameter_description}">
                 ${option.parameter_description}
@@ -387,12 +393,12 @@ export class InputparameterscoringComponent implements OnInit {
             focusConfirm: false,
             allowOutsideClick: false,
           }).then(result => {
-            let bobot = $('#bobot').val();
-            let status_aktif = $('#status_aktif').val();
-            let parameter_deskripsi = $('#parameter_deskripsi').val();
-            let tipe_inputan = $('#tipe_inputan').val();
+            const bobot5 = $('#bobot').val();
+            const status_aktif = $('#status_aktif').val();
+            const parameter_deskripsi = $('#parameter_deskripsi').val();
+            const tipe_inputan = $('#tipe_inputan').val();
             this.subParameterSlice = $('#parameter').val();
-            let parameter = this.subParameterSlice.split('|');
+            const parameter = this.subParameterSlice.split('|');
 
             if (status_aktif == '1') {
               this.kirimanstatus = 1;
@@ -404,19 +410,19 @@ export class InputparameterscoringComponent implements OnInit {
               this.http
                 .post<any>(this.baseUrl + 'v1/efos-ref/create_parameter_scoring', {
                   active: this.kirimanstatus,
-                  created_by: this.SessionStorageService.retrieve('sessionUserName'),
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
                   created_date: '',
-                  id: id,
+                  id: idDetail,
                   id_ref_main_parameter_scoring: parameter[0],
                   main_parameter_scoring_desc: parameter[1],
                   parameter_description: parameter_deskripsi,
                   parameter_type: tipe_inputan,
-                  updated_by: this.SessionStorageService.retrieve('sessionUserName'),
+                  updated_by: this.sessionStorageService.retrieve('sessionUserName'),
                   updated_date: '',
-                  bobot: bobot,
+                  bobot: bobot5,
                 })
                 .subscribe({
-                  next: response => {
+                  next() {
                     Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
                       window.location.reload();
                     });
@@ -424,12 +430,12 @@ export class InputparameterscoringComponent implements OnInit {
                 });
             }
           });
-        }, id * 5);
+        }, idDetail * 5);
       },
     });
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }

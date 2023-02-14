@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -21,10 +22,6 @@ export class ChecklistDocumentComponent implements OnInit {
   baseUrl: string = environment.baseUrl;
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
-  public getLoading(loading: boolean) {
-    this.isLoading = loading;
-    this.isSpin = loading;
-  }
   uploadDocument: uploadDocument[] = new Array<uploadDocument>();
   uploadAgunan: uploadDocument[] = new Array<uploadDocument>();
   dataEntry: fetchAllDe = new fetchAllDe();
@@ -135,7 +132,7 @@ export class ChecklistDocumentComponent implements OnInit {
       // Upload Data Entry
       for (let i = 0; i < this.uploadDocument.length; i++) {
         // get Radio Button Validasi
-        const validasiDE = $('#validasiDE' + (i + 1)).is(':checked'); //(document.getElementById('validasiDE'+ i + 1) as HTMLInputElement).checked;
+        const validasiDE = $('#validasiDE' + (i + 1)).is(':checked'); // (document.getElementById('validasiDE'+ i + 1) as HTMLInputElement).checked;
         // alert(validasiDE);
         if (validasiDE === true) {
           this.radioValidasiDE = 1;
@@ -155,7 +152,7 @@ export class ChecklistDocumentComponent implements OnInit {
             validasi: this.radioValidasiDE,
           })
           .subscribe({
-            next: sukses => {
+            next: () => {
               this.router.navigate(['/data-calon-nasabah'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
             },
           });
@@ -164,7 +161,7 @@ export class ChecklistDocumentComponent implements OnInit {
       // Upload Data Entry
       for (let i = 0; i < this.uploadDocument.length; i++) {
         // get Radio Button Validasi
-        const validasiDE = $('#validasiDE' + (i + 1)).is(':checked'); //(document.getElementById('validasiDE'+ i + 1) as HTMLInputElement).checked;
+        const validasiDE = $('#validasiDE' + (i + 1)).is(':checked'); // (document.getElementById('validasiDE'+ i + 1) as HTMLInputElement).checked;
         // alert(validasiDE);
         if (validasiDE === true) {
           this.radioValidasiDE = 1;
@@ -184,7 +181,7 @@ export class ChecklistDocumentComponent implements OnInit {
             validasi: this.radioValidasiDE,
           })
           .subscribe({
-            next: sukses => {
+            next: () => {
               // Upload Agunan
               for (let j = 0; j < this.uploadAgunan.length; j++) {
                 // get Radio Button Validasi
@@ -217,7 +214,7 @@ export class ChecklistDocumentComponent implements OnInit {
   }
 
   // On file Select
-  onChange(event: any, id: number | null | undefined) {
+  onChange(event: any, id: number | null | undefined): void {
     this.file = event.target.files[0];
     this.idUpload = id;
     this.buttonUpload = (<HTMLInputElement>document.getElementById('uploadData' + id)).value;
@@ -233,7 +230,7 @@ export class ChecklistDocumentComponent implements OnInit {
     curefUpload: string | null | undefined,
     doc_type: number | null | undefined,
     file: File | undefined
-  ) {
+  ): void {
     this.uploadService.uploadDocument(file, deUpload, curefUpload, doc_type).subscribe({
       // if (typeof event === 'object') {
       //   // Short link via api response
@@ -262,16 +259,16 @@ export class ChecklistDocumentComponent implements OnInit {
   // Delete
   deleteDataUpload(
     doc: string | null | undefined,
-    id: number | null | undefined,
-    id_upload: number | null | undefined,
+    idData: number | null | undefined,
+    id_uploadData: number | null | undefined,
     nama: string | null | undefined
-  ) {
+  ): void {
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/deleteDocUpload', {
         created_date: '',
         doc_description: doc,
-        id: id,
-        id_upload: id_upload,
+        id: idData,
+        id_upload: id_uploadData,
         nama_dokumen: nama,
       })
       .subscribe({});
@@ -279,7 +276,7 @@ export class ChecklistDocumentComponent implements OnInit {
   }
 
   // On file Select
-  onChangeAgunan(event: any, id: number | null | undefined) {
+  onChangeAgunan(event: any, id: number | null | undefined): void {
     this.file = event.target.files[0];
     this.idUpload = id;
     this.buttonUpload = (<HTMLInputElement>document.getElementById('uploadData' + id)).value;
@@ -295,7 +292,7 @@ export class ChecklistDocumentComponent implements OnInit {
     curefUpload: string | null | undefined,
     doc_type: number | null | undefined,
     file: File | any
-  ) {
+  ): void {
     if (Math.floor(file.size * 0.000001) > 2) {
       Swal.fire('Gagal', 'File Maksimal 2MB!', 'error').then(() => {
         window.location.reload();
@@ -313,20 +310,24 @@ export class ChecklistDocumentComponent implements OnInit {
   // Delete
   deleteDataUploadAgunan(
     doc: string | null | undefined,
-    id: number | null | undefined,
-    id_upload: number | null | undefined,
+    idData: number | null | undefined,
+    id_uploadData: number | null | undefined,
     nama: string | null | undefined
-  ) {
+  ): void {
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/deleteDocUpload', {
         created_date: '',
         doc_description: doc,
-        id: id,
-        id_upload: id_upload,
+        id: idData,
+        id_upload: id_uploadData,
         nama_dokumen: nama,
       })
       .subscribe({});
     window.location.reload();
+  }
+  public getLoading(loading: boolean): void {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }
 // update Status

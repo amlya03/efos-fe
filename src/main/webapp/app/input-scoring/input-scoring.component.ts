@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable eqeqeq */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -54,7 +58,7 @@ export class InputScoringComponent implements OnInit {
     protected scoringServices: InputScoringService,
     protected dataEntryService: DataEntryService,
     protected verifikasiServices: ServiceVerificationService,
-    private SessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService
   ) {}
 
   ngOnInit(): void {
@@ -75,7 +79,7 @@ export class InputScoringComponent implements OnInit {
     //   score: '',
     // });
   }
-  load() {
+  load(): void {
     this.getLoading(true);
     setTimeout(() => {
       this.scoringServices.getScoring().subscribe(data => {
@@ -162,88 +166,93 @@ export class InputScoringComponent implements OnInit {
   }
 
   // ////////////// Pop Up Input Scoring ////////////////////////
-  simpanData() {
-    let options = this.listparameterscoring.map((option: any) => {
-      return `
+  simpanData(): void {
+    const options = this.listparameterscoring.map(
+      (option: any) => `
         <option key="${option}" value="${option.parameter_type + '|' + option.parameter_description}">
             ${option.parameter_description}
         </option>
-      `;
-    });
+      `
+    );
 
-    let optionsfasilitas = this.listdatafasilitas.map((optionsfasilitas: any) => {
-      return `
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const optionsfasilitas = this.listdatafasilitas.map(
+      (optionsfasilitas: any) => `
         <option key="${optionsfasilitas}" value="${optionsfasilitas.fasilitas}">
             ${optionsfasilitas.fasilitas}
         </option>
-      `;
-    });
+      `
+    );
 
     // /////////////// Pendidikan /////////////////////////////////
-    let pendidikan = this.modelPendidikan.map((pendidikan: refJenisPekerjaan) => {
-      return `
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const pendidikan = this.modelPendidikan.map(
+      (pendidikan: refJenisPekerjaan) => `
         <option key="${pendidikan}" value="${pendidikan.deskripsi}">
             ${pendidikan.deskripsi}
         </option>
-      `;
-    });
+      `
+    );
     // /////////////// Pendidikan /////////////////////////////////
 
     // /////////////// Tujuan Pembiayaan /////////////////////////////////
-    let tujuanPembiayaan = this.modelTujuanPembiayaan.map((tujuan: refJenisPekerjaan) => {
-      return `
+    const tujuanPembiayaan = this.modelTujuanPembiayaan.map(
+      (tujuan: refJenisPekerjaan) => `
         <option key="${tujuan}" value="${tujuan.deskripsi}">
             ${tujuan.deskripsi}
         </option>
-      `;
-    });
+      `
+    );
     // /////////////// Tujuan Pembiayaan /////////////////////////////////
 
     // /////////////// Pekerjaan /////////////////////////////////
-    let jenisPekerjaan = this.modelPekerjaan.map((pekerjaan: refJenisPekerjaan) => {
-      return `
+    const jenisPekerjaan = this.modelPekerjaan.map(
+      (pekerjaan: refJenisPekerjaan) => `
         <option key="${pekerjaan}" value="${pekerjaan.deskripsi}">
             ${pekerjaan.deskripsi}
         </option>
-      `;
-    });
+      `
+    );
     // /////////////// Pekerjaan /////////////////////////////////
 
     // /////////////// Status Perkawinan /////////////////////////////////
-    let statusPerkawinan = this.modelStatusPerkawinan.map((statusPerkawinan: refStatusPerkawinan) => {
-      return `
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const statusPerkawinan = this.modelStatusPerkawinan.map(
+      (statusPerkawinan: refStatusPerkawinan) => `
         <option key="${statusPerkawinan}" value="${statusPerkawinan.deskripsi}">
             ${statusPerkawinan.deskripsi}
         </option>
-      `;
-    });
+      `
+    );
     // /////////////// Status Perkawinan /////////////////////////////////
 
     // /////////////// Jenis Perusahaan /////////////////////////////////
-    let jenisPerusahaan = this.modelJenisPerusahaan.map((jenisPerusahaan: refListTipePerusahaan) => {
-      return `
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const jenisPerusahaan = this.modelJenisPerusahaan.map(
+      (jenisPerusahaan: refListTipePerusahaan) => `
         <option key="${jenisPerusahaan}" value="${jenisPerusahaan.company_deskripsi}">
             ${jenisPerusahaan.company_deskripsi}
         </option>
-      `;
-    });
+      `
+    );
     // /////////////// Jenis Perusahaan /////////////////////////////////
 
     // /////////////// Kepemilikan Rumah /////////////////////////////////
-    let kepemilikanRumah = this.modelKepemilikanRumah.map((kepemilikanRumah: refStatusRumah) => {
-      return `
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const kepemilikanRumah = this.modelKepemilikanRumah.map(
+      (kepemilikanRumah: refStatusRumah) => `
         <option key="${kepemilikanRumah}" value="${kepemilikanRumah.description}">
             ${kepemilikanRumah.description}
         </option>
-      `;
-    });
+      `
+    );
     // /////////////// Kepemilikan Rumah /////////////////////////////////
 
+    let parameter: any;
     $(document).ready(function () {
       $('#parameter').change(function () {
-        let parameter: any;
         parameter = $(this).val();
-        let parameterValue = parameter.split('|');
+        const parameterValue = parameter.split('|');
         if (parameterValue[0] === '1') {
           $('#minMaxDiv').hide();
           $('#dataValueDiv').show();
@@ -312,6 +321,7 @@ export class InputScoringComponent implements OnInit {
       });
     });
 
+    let slicePar: any;
     Swal.fire({
       title: 'Input Scoring',
       html:
@@ -367,15 +377,14 @@ export class InputScoringComponent implements OnInit {
       focusConfirm: false,
       allowOutsideClick: false,
     }).then(result => {
-      let proVal = $('#produk').val();
-      let joVal = $('#joint_income').val();
-      let slicePar: any;
+      const proVal = $('#produk').val();
+      const joVal = $('#joint_income').val();
       slicePar = $('#parameter').val();
-      let parVal = slicePar.split('|');
-      let datVal = $('#data_value').val();
-      let miVal = $('#min').val();
-      let maVal = $('#max').val();
-      let scVal = $('#score').val();
+      const parVal = slicePar.split('|');
+      const datVal = $('#data_value').val();
+      const miVal = $('#min').val();
+      const maVal = $('#max').val();
+      const scVal = $('#score').val();
       // if (proVal === '') {
       //   alert('Gagal Menyimpan Produk Belum dipilih');
       //   return;
@@ -402,7 +411,7 @@ export class InputScoringComponent implements OnInit {
         this.http
           .post<any>(this.baseUrl + 'v1/efos-ref/create_data_scoring', {
             id: 0,
-            created_by: this.SessionStorageService.retrieve('sessionUserName'),
+            created_by: this.sessionStorageService.retrieve('sessionUserName'),
             created_date: '',
             data_value: datVal,
             joint_income: joVal,
@@ -413,7 +422,7 @@ export class InputScoringComponent implements OnInit {
             score: scVal,
           })
           .subscribe({
-            next: response => {
+            next() {
               Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
                 window.location.reload();
               });
@@ -424,22 +433,22 @@ export class InputScoringComponent implements OnInit {
     });
   }
 
-  viewdetaildatascoring(id: any) {
-    this.scoringServices.getdatascoringdetailbyid(id).subscribe({
+  viewdetaildatascoring(idScore: any): void {
+    this.scoringServices.getdatascoringdetailbyid(idScore).subscribe({
       next: data => {
         this.datascoringbyid = data.result;
-        if ((this.datascoringbyid.joint_income = 1)) {
+        if (this.datascoringbyid.joint_income == 1) {
           this.getjoincome = 'Ya';
         } else {
           this.getjoincome = 'Tidak';
         }
 
+        let parameter: any;
         $(document).ready(function () {
           $('#parameter').change(function () {
-            let parameter: any;
             parameter = $(this).val();
             // alert(parameter)
-            let parameterValue = parameter.split('|');
+            const parameterValue = parameter.split('|');
             if (parameterValue[0] !== '2') {
               $('#minMaxDiv').hide();
               $('#dataValueDiv').show();
@@ -508,6 +517,7 @@ export class InputScoringComponent implements OnInit {
           });
         });
 
+        let slicePar: any;
         // setTimeout(() => {
         Swal.fire({
           title: 'Input Scoring',
@@ -608,15 +618,14 @@ export class InputScoringComponent implements OnInit {
           focusConfirm: false,
           allowOutsideClick: false,
         }).then(result => {
-          let proVal = $('#produk').val();
-          let joVal = $('#joint_income').val();
-          let slicePar: any;
+          const proVal = $('#produk').val();
+          const joVal = $('#joint_income').val();
           slicePar = $('#parameter').val();
-          let parVal = slicePar.split('|');
-          let datVal = $('#data_value').val();
-          let miVal = $('#min').val();
-          let maVal = $('#max').val();
-          let scVal = $('#score').val();
+          const parVal = slicePar.split('|');
+          const datVal = $('#data_value').val();
+          const miVal = $('#min').val();
+          const maVal = $('#max').val();
+          const scVal = $('#score').val();
           // if (proVal === '') {
           //   alert('Gagal Menyimpan Produk Belum dipilih');
           //   return;
@@ -642,8 +651,8 @@ export class InputScoringComponent implements OnInit {
           if (result.isConfirmed) {
             this.http
               .post<any>(this.baseUrl + 'v1/efos-ref/create_data_scoring', {
-                id: id,
-                created_by: this.SessionStorageService.retrieve('sessionUserName'),
+                id: idScore,
+                created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 created_date: '',
                 data_value: datVal,
                 joint_income: joVal,
@@ -654,7 +663,7 @@ export class InputScoringComponent implements OnInit {
                 score: scVal,
               })
               .subscribe({
-                next: response => {
+                next() {
                   Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
                     window.location.reload();
                   });
@@ -667,83 +676,83 @@ export class InputScoringComponent implements OnInit {
       },
     });
 
-    let options = this.listparameterscoring.map((option: any) => {
-      return `
+    const options = this.listparameterscoring.map(
+      (option: any) => `
         <option key="${option}" value="${option.parameter_type + '|' + option.parameter_description}">
             ${option.parameter_description}
         </option>
-      `;
-    });
+      `
+    );
 
-    let optionsfasilitas = this.listdatafasilitas.map((optionsfasilitas: any) => {
-      return `
+    const optionsfasilitas = this.listdatafasilitas.map(
+      (optionsfasilitas: any) => `
         <option key="${optionsfasilitas}" value="${optionsfasilitas.fasilitas}">
             ${optionsfasilitas.fasilitas}
         </option>
-      `;
-    });
+      `
+    );
 
     // /////////////// Pendidikan /////////////////////////////////
-    let pendidikan = this.modelPendidikan.map((pendidikan: refJenisPekerjaan) => {
-      return `
+    const pendidikan = this.modelPendidikan.map(
+      (pendidikan: refJenisPekerjaan) => `
         <option key="${pendidikan}" value="${pendidikan.deskripsi}">
             ${pendidikan.deskripsi}
         </option>
-      `;
-    });
+      `
+    );
     // /////////////// Pendidikan /////////////////////////////////
 
     // /////////////// Tujuan Pembiayaan /////////////////////////////////
-    let tujuanPembiayaan = this.modelTujuanPembiayaan.map((tujuan: refJenisPekerjaan) => {
-      return `
+    const tujuanPembiayaan = this.modelTujuanPembiayaan.map(
+      (tujuan: refJenisPekerjaan) => `
         <option key="${tujuan}" value="${tujuan.deskripsi}">
             ${tujuan.deskripsi}
         </option>
-      `;
-    });
+      `
+    );
     // /////////////// Tujuan Pembiayaan /////////////////////////////////
 
     // /////////////// Pekerjaan /////////////////////////////////
-    let jenisPekerjaan = this.modelPekerjaan.map((pekerjaan: refJenisPekerjaan) => {
-      return `
+    const jenisPekerjaan = this.modelPekerjaan.map(
+      (pekerjaan: refJenisPekerjaan) => `
         <option key="${pekerjaan}" value="${pekerjaan.deskripsi}">
             ${pekerjaan.deskripsi}
         </option>
-      `;
-    });
+      `
+    );
     // /////////////// Pekerjaan /////////////////////////////////
 
     // /////////////// Status Perkawinan /////////////////////////////////
-    let statusPerkawinan = this.modelStatusPerkawinan.map((statusPerkawinan: refStatusPerkawinan) => {
-      return `
+    const statusPerkawinan = this.modelStatusPerkawinan.map(
+      (statusPerkawinan: refStatusPerkawinan) => `
         <option key="${statusPerkawinan}" value="${statusPerkawinan.deskripsi}">
             ${statusPerkawinan.deskripsi}
         </option>
-      `;
-    });
+      `
+    );
     // /////////////// Status Perkawinan /////////////////////////////////
 
     // /////////////// Jenis Perusahaan /////////////////////////////////
-    let jenisPerusahaan = this.modelJenisPerusahaan.map((jenisPerusahaan: refListTipePerusahaan) => {
-      return `
+    const jenisPerusahaan = this.modelJenisPerusahaan.map(
+      (jenisPerusahaan: refListTipePerusahaan) => `
         <option key="${jenisPerusahaan}" value="${jenisPerusahaan.company_deskripsi}">
             ${jenisPerusahaan.company_deskripsi}
         </option>
-      `;
-    });
+      `
+    );
     // /////////////// Jenis Perusahaan /////////////////////////////////
 
     // /////////////// Kepemilikan Rumah /////////////////////////////////
-    let kepemilikanRumah = this.modelKepemilikanRumah.map((kepemilikanRumah: refStatusRumah) => {
-      return `
+    const kepemilikanRumah = this.modelKepemilikanRumah.map(
+      (kepemilikanRumah: refStatusRumah) => `
         <option key="${kepemilikanRumah}" value="${kepemilikanRumah.description}">
             ${kepemilikanRumah.description}
         </option>
-      `;
-    });
+      `
+    );
     // /////////////// Kepemilikan Rumah /////////////////////////////////
   }
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }

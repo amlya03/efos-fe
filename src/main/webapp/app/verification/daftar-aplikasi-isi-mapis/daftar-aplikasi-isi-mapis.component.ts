@@ -18,10 +18,6 @@ import { getListFasilitasModel } from 'app/data-entry/services/config/getListFas
 export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
-  public getLoading(loading: boolean) {
-    this.isLoading = loading;
-    this.isSpin = loading;
-  }
   title = 'EFOS';
   numbers: any;
   daWa?: daWaModel[] = [];
@@ -65,7 +61,7 @@ export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
     this.getLoading(true);
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
     this.daWaService.getListAppAppraisal().subscribe(data => {
-      //console.warn(data);
+      // console.warn(data);
       if (data.code === 200) {
         this.daWa = data.result;
         this.getCheckDaWa = data.result;
@@ -101,5 +97,10 @@ export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
 
   viewdataentry(getAppNoDe: any): void {
     this.router.navigate(['/mapis'], { queryParams: { app_no_de: getAppNoDe } });
+  }
+
+  public getLoading(loading: boolean): void {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/prefer-for-of */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,10 +24,6 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
   baseUrl: string = environment.baseUrl;
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
-  public getLoading(loading: boolean) {
-    this.isLoading = loading;
-    this.isSpin = loading;
-  }
   title = 'EFOS';
   daWuS?: daWuS[];
   dataEntry: fetchAllDe = new fetchAllDe();
@@ -42,6 +40,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
   listFasilitas: getListFasilitasModel[] = [];
   checkLenghtResult: any;
   curef: any;
+  isChecked = false;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -59,8 +58,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
   ) {}
 
   // ceklis semua
-  isChecked = false;
-  checkuncheckall() {
+  checkuncheckall(): void {
     if (this.isChecked === true) {
       this.isChecked = false;
     } else {
@@ -88,7 +86,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
 
     this.daWusService.getDaWuS().subscribe(data => {
       this.checkLenghtResult = data.result;
-      //console.log(this.checkLenghtResult);
+      // console.log(this.checkLenghtResult);
       if (data.code === 200) {
         this.daWuS = data.result;
         this.dtTrigger.next(this.daWuS);
@@ -125,7 +123,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
       this.kirimDe.splice(index, 1);
       // alert(statusAplikasi);
     }
-    //console.warn(this.kirimDe);
+    // console.warn(this.kirimDe);
   }
   // update status
   postUpdateStatus(): void {
@@ -141,11 +139,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
               status_aplikasi: this.kirimStatusAplikasi[i],
               created_by: this.sessionStorageService.retrieve('sessionUserName'),
             })
-            .subscribe({
-              next: data => {
-                // window.location.reload();
-              },
-            });
+            .subscribe({});
           if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
             Swal.fire('Data Berhasil di Updated', '', 'success').then(() => {
               window.location.reload();
@@ -160,11 +154,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
               status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
               created_by: this.sessionStorageService.retrieve('sessionUserName'),
             })
-            .subscribe({
-              next: data => {
-                // window.location.reload();
-              },
-            });
+            .subscribe({});
           if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
             Swal.fire('Data Berhasil di Updated', '', 'success').then(() => {
               window.location.reload();
@@ -200,11 +190,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
                   status_aplikasi: this.kirimStatusAplikasi[i],
                   created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 })
-                .subscribe({
-                  next: data => {
-                    // window.location.reload();
-                  },
-                });
+                .subscribe({});
               if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
                 Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Data Entry', 'success').then(() => {
                   window.location.reload();
@@ -219,11 +205,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
                   status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
                   created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 })
-                .subscribe({
-                  next: data => {
-                    // window.location.reload();
-                  },
-                });
+                .subscribe({});
               if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
                 Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Data Entry', 'success').then(() => {
                   window.location.reload();
@@ -245,11 +227,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
                   status_aplikasi: this.kirimStatusAplikasi[i],
                   created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 })
-                .subscribe({
-                  next: data => {
-                    // window.location.reload();
-                  },
-                });
+                .subscribe({});
               if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
                 Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Analys Staff', 'success').then(() => {
                   window.location.reload();
@@ -264,11 +242,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
                   status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
                   created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 })
-                .subscribe({
-                  next: data => {
-                    // window.location.reload();
-                  },
-                });
+                .subscribe({});
               if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
                 Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Analys Staff', 'success').then(() => {
                   window.location.reload();
@@ -306,11 +280,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
                   status_aplikasi: this.kirimStatusAplikasi[i],
                   created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 })
-                .subscribe({
-                  next: data => {
-                    // window.location.reload();
-                  },
-                });
+                .subscribe({});
               if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
                 Swal.fire('Data di Reject!', 'File Sudah Tidak Ada', 'success').then(() => {
                   window.location.reload();
@@ -325,11 +295,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
                   status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
                   created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 })
-                .subscribe({
-                  next: data => {
-                    // window.location.reload();
-                  },
-                });
+                .subscribe({});
               if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
                 Swal.fire('Data di Reject!', 'File Sudah Tidak Ada', 'success').then(() => {
                   window.location.reload();
@@ -353,5 +319,10 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
       this.curef = this.dataEntry.curef;
       this.router.navigate(['/checklist-document'], { queryParams: { app_no_de: app_noDe, curef: this.curef } });
     });
+  }
+
+  public getLoading(loading: boolean): void {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 }

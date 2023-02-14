@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -127,7 +128,7 @@ export class MapisComponent implements OnInit {
       cancelButtonText: 'Tidak, Simpan Data',
     }).then(result => {
       if (result.value) {
-        Swal.fire('Data Berhasil diUpdate!', 'Data Sudah di Tim Analis', 'success').then((message: any) => {
+        Swal.fire('Data Berhasil diUpdate!', 'Data Sudah di Tim Analis', 'success').then(() => {
           if (this.cekResuklt == 0) {
             this.http
               .post<any>(this.baseUrl + 'v1/efos-verif/create_data_appraisal', {
@@ -149,7 +150,7 @@ export class MapisComponent implements OnInit {
                 // "updated_by": null
               })
               .subscribe({
-                next: bawaan => {
+                next: () => {
                   this.http
                     .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
                       app_no_de: this.app_noDe,
@@ -157,7 +158,7 @@ export class MapisComponent implements OnInit {
                       status_aplikasi: this.dataEntry.status_aplikasi,
                     })
                     .subscribe({
-                      next: bawaan => {
+                      next: () => {
                         this.router.navigate(['daftar_input_mapis']);
                         // setTimeout(() => {
                         // }, 1000);
@@ -186,7 +187,7 @@ export class MapisComponent implements OnInit {
                 updated_by: this.sessionStorageService.retrieve('sessionUserName'),
               })
               .subscribe({
-                next: bawaan => {
+                next: () => {
                   this.http
                     .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
                       app_no_de: this.app_noDe,
@@ -194,7 +195,7 @@ export class MapisComponent implements OnInit {
                       status_aplikasi: this.dataEntry.status_aplikasi,
                     })
                     .subscribe({
-                      next: bawaan => {
+                      next: () => {
                         this.router.navigate(['daftar_input_mapis']);
                         // setTimeout(() => {
                         // }, 1000);
@@ -205,7 +206,7 @@ export class MapisComponent implements OnInit {
           }
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Data Berhasil disimpan', 'Data disimpan', 'success').then((message: any) => {
+        Swal.fire('Data Berhasil disimpan', 'Data disimpan', 'success').then(() => {
           if (this.cekResuklt == 0) {
             this.http
               .post<any>(this.baseUrl + 'v1/efos-verif/create_data_appraisal', {
@@ -227,7 +228,7 @@ export class MapisComponent implements OnInit {
                 // "updated_by": null
               })
               .subscribe({
-                next: bawaan => {
+                next() {
                   window.location.reload();
                   // setTimeout(() => {
                   // }, 1000);
@@ -254,7 +255,7 @@ export class MapisComponent implements OnInit {
                 updated_by: this.sessionStorageService.retrieve('sessionUserName'),
               })
               .subscribe({
-                next: bawaan => {
+                next() {
                   window.location.reload();
                   // setTimeout(() => {
                   // }, 1000);

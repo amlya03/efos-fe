@@ -1,9 +1,11 @@
+/* eslint-disable no-bitwise */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { Component, Input, OnInit } from '@angular/core';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { createRequestOption } from 'app/core/request/request-util';
-import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { InitialDataEntryService } from '../services/initial-data-entry.service';
 import { refStatusPerkawinan } from 'app/verification/service/config/refStatusPerkawinan.model';
 import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
@@ -60,7 +62,7 @@ export class InitialDataEntryFixComponent implements OnInit {
   isiUpload: any;
   popup: any;
   // Upload ////////
-  /////
+  // ///
   untukKodeProvinsi: any;
   untukKodeKobkota: any;
   untukKodeKecamatan: any;
@@ -69,7 +71,7 @@ export class InitialDataEntryFixComponent implements OnInit {
   untukkecamatan: any;
   untukKodeKelurahan: any;
   untukkelurahan: any;
-  //////
+  // ////
   untukKodeProvinsiD: any;
   untukKodeKobkotaD: any;
   untukKodeKecamatanD: any;
@@ -78,7 +80,7 @@ export class InitialDataEntryFixComponent implements OnInit {
   untukkecamatanD: any;
   untukKodeKelurahanD: any;
   untukkelurahanD: any;
-  //////
+  // ////
   proJob: any;
   kotaJob: any;
   kecJob: any;
@@ -91,7 +93,7 @@ export class InitialDataEntryFixComponent implements OnInit {
   kotaChangeJob: any;
   kecChangeJob: any;
   kelChangeJob: any;
-  ///////
+  // /////
   kirimKatePeker: any;
   kirimProPas: any;
   kirimKotaPas: any;
@@ -344,7 +346,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       no_siup: '',
       barang_jasa: '',
       posisi: '',
-      /////////////////////////////////////
+      // ///////////////////////////////////
       nama_perusahaan_sebelum: '',
       tipe_perusahaan_sebelum: '',
       tipe_pekerjaan_sebelum: '',
@@ -361,13 +363,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     const ValidasiKepemilikanPerusahaan = <FormControl>this.jobForm.get('kepemilikan_perusahaan');
     const ValidasiPemilikUsaha = <FormControl>this.jobForm.get('pemilik_usaha');
     const ValidasiNoTelepon = <FormControl>this.jobForm.get('no_telepon');
-    // const ValidasiJenisBidang = <FormControl>this.jobForm.get('jenis_bidang');
-    // const  = <FormControl>this.jobForm.get('sektor_ekonomi');
     const ValidasiAlamatPerusahaan = <FormControl>this.jobForm.get('alamat_perusahaan');
-    // const ValidasiProvinsiPerusahaan = <FormControl>this.jobForm.get('provinsi');
-    // const ValidasiKotaPerusahaan = <FormControl>this.jobForm.get('kabkota');
-    // const ValidasiKecamatanPerusahaan = <FormControl>this.jobForm.get('kecamatan');
-    // const ValidasiKelurahanPerusahaan = <FormControl>this.jobForm.get('kelurahan');
     const ValidasiKodePosPerusahaan = <FormControl>this.jobForm.get('kode_pos');
     const ValidasiRtPerusahaan = <FormControl>this.jobForm.get('rt');
     const ValidasiRwPerusahaan = <FormControl>this.jobForm.get('rw');
@@ -384,13 +380,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       ValidasiKepemilikanPerusahaan.setValidators([Validators.required]);
       ValidasiPemilikUsaha.setValidators([Validators.required]);
       ValidasiNoTelepon.setValidators([Validators.required]);
-      // ValidasiJenisBidang.setValidators([Validators.required]);
-      // ValidasiSektorEkonomi.setValidators([Validators.required]);
       ValidasiAlamatPerusahaan.setValidators([Validators.required]);
-      // ValidasiProvinsiPerusahaan.setValidators([Validators.required]);
-      // ValidasiKotaPerusahaan.setValidators([Validators.required]);
-      // ValidasiKecamatanPerusahaan.setValidators([Validators.required]);
-      // ValidasiKelurahanPerusahaan.setValidators([Validators.required]);
       ValidasiKodePosPerusahaan.setValidators([Validators.required]);
       ValidasiRtPerusahaan.setValidators([Validators.required]);
       ValidasiRwPerusahaan.setValidators([Validators.required]);
@@ -407,13 +397,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       ValidasiKepemilikanPerusahaan.setValidators(null);
       ValidasiPemilikUsaha.setValidators(null);
       ValidasiNoTelepon.setValidators(null);
-      // ValidasiJenisBidang.setValidators(null);
-      // ValidasiSektorEkonomi.setValidators(null);
       ValidasiAlamatPerusahaan.setValidators(null);
-      // ValidasiProvinsiPerusahaan.setValidators(null);
-      // ValidasiKotaPerusahaan.setValidators(null);
-      // ValidasiKecamatanPerusahaan.setValidators(null);
-      // ValidasiKelurahanPerusahaan.setValidators(null);
       ValidasiKodePosPerusahaan.setValidators(null);
       ValidasiRtPerusahaan.setValidators(null);
       ValidasiRwPerusahaan.setValidators(null);
@@ -431,13 +415,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       ValidasiKepemilikanPerusahaan.updateValueAndValidity();
       ValidasiPemilikUsaha.updateValueAndValidity();
       ValidasiNoTelepon.updateValueAndValidity();
-      // ValidasiJenisBidang.updateValueAndValidity();
-      // ValidasiSektorEkonomi.updateValueAndValidity();
       ValidasiAlamatPerusahaan.updateValueAndValidity();
-      // ValidasiProvinsiPerusahaan.updateValueAndValidity();
-      // ValidasiKotaPerusahaan.updateValueAndValidity();
-      // ValidasiKecamatanPerusahaan.updateValueAndValidity();
-      // ValidasiKelurahanPerusahaan.updateValueAndValidity();
       ValidasiKodePosPerusahaan.updateValueAndValidity();
       ValidasiRtPerusahaan.updateValueAndValidity();
       ValidasiRwPerusahaan.updateValueAndValidity();
@@ -609,9 +587,9 @@ export class InitialDataEntryFixComponent implements OnInit {
 
           setTimeout(() => {
             this.ideFixServices.getUploadSlik(this.app_no_ide, '22').subscribe({
-              next: data => {
-                this.isiUpload = data.result;
-                if (data.result == '') {
+              next: uploadSlik => {
+                this.isiUpload = uploadSlik.result;
+                if (uploadSlik.result == '') {
                   this.resultUpload = 0;
                 } else {
                   this.resultUpload = 1;
@@ -621,12 +599,11 @@ export class InitialDataEntryFixComponent implements OnInit {
           }, 600);
 
           setTimeout(() => {
-            this.ideFixServices.getJobByCurefIDE(this.modelIde.curef).subscribe(data => {
-              this.modelJob = data.result;
-              // console.warn(data)
-
+            this.ideFixServices.getJobByCurefIDE(this.modelIde.curef).subscribe(curef => {
+              this.modelJob = curef.result;
+              // console.warn(curef)
               // setTimeout(() => {
-              if (data.result == null) {
+              if (curef.result == null) {
                 const retriveJob = {
                   nama_perusahaan: '',
                   tipe_perusahaan: '',
@@ -651,7 +628,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                   no_siup: '',
                   barang_jasa: '',
                   posisi: '',
-                  /////////////////////////////////////
+                  // ///////////////////////////////////
                   nama_perusahaan_sebelum: '',
                   tipe_perusahaan_sebelum: '',
                   tipe_pekerjaan_sebelum: '',
@@ -693,7 +670,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                   no_siup: this.modelJob.no_siup,
                   barang_jasa: this.modelJob.barang_jasa,
                   posisi: this.modelJob.posisi,
-                  /////////////////////////////////////
+                  // ///////////////////////////////////
                   nama_perusahaan_sebelum: this.modelJob.nama_perusahaan_sebelum,
                   tipe_perusahaan_sebelum: this.modelJob.tipe_perusahaan_sebelum,
                   tipe_pekerjaan_sebelum: this.modelJob.tipe_pekerjaan_sebelum,
@@ -718,11 +695,11 @@ export class InitialDataEntryFixComponent implements OnInit {
 
               setTimeout(() => {
                 if (this.cekResultIde == 0) {
-                  this.ideFixServices.getAppId().subscribe(data => {
-                    this.app_no_ide = data.result;
+                  this.ideFixServices.getAppId().subscribe(appId => {
+                    this.app_no_ide = appId.result;
                   });
-                  this.ideFixServices.getIdeByCuref().subscribe(data => {
-                    this.curef = data.result;
+                  this.ideFixServices.getIdeByCuref().subscribe(ideByCuref => {
+                    this.curef = ideByCuref.result;
                   });
                 } else {
                   this.app_no_ide = this.modelIde.app_no_ide;
@@ -778,7 +755,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       confirmButtonText: 'Ya, Data Sudah Lengkap dan Valid!',
     }).then(result => {
       if (result.isConfirmed) {
-        Swal.fire('Berhasil!', 'Data Berhasil diproses Ke Pre Screening.', 'success').then(data => {
+        Swal.fire('Berhasil!', 'Data Berhasil diproses Ke Pre Screening.', 'success').then(() => {
           this.getLoading(true);
           if (this.kategori == 2) {
             this.sendProJob = this.jobForm.get('provinsi')?.value.split('|');
@@ -1038,7 +1015,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                 umur_pensiun_sebelum: '',
               })
               .subscribe({
-                next: data => {
+                next: () => {
                   if (this.ideForm.get('status_perkawinan')?.value === 'Menikah') {
                     this.http
                       .post<any>(this.baseUrl + 'v1/efos-ide/update_app_ide', {
@@ -1701,15 +1678,15 @@ export class InitialDataEntryFixComponent implements OnInit {
                   usia_pasangan: this.ideForm.get('usia_pasangan')?.value,
                 })
                 .subscribe({
-                  next: data => {
+                  next: goDe => {
                     this.router.navigate(['/daftaraplikasiide']);
                     setTimeout(() => {
-                      this.uploadDataUntukSlik(data.result.app_no_ide, data.result.curef);
+                      this.uploadDataUntukSlik(goDe.result.app_no_ide, goDe.result.curef);
                     }, 300);
                   },
                 });
             },
-            error: error => {
+            error(error) {
               // if (error.error.code == 400) {
               alert('Gagal Menyimpan Data');
               alert(error.error.message);
@@ -1865,10 +1842,10 @@ export class InitialDataEntryFixComponent implements OnInit {
                     tempat_lahir_pasangan: this.ideForm.get('tempat_lahir_pasangan')?.value,
                   })
                   .subscribe({
-                    next: data => {
+                    next: dataDe => {
                       this.router.navigate(['/daftaraplikasiide']);
                       setTimeout(() => {
-                        this.uploadDataUntukSlik(data.result.app_no_ide, data.result.curef);
+                        this.uploadDataUntukSlik(dataDe.result.app_no_ide, dataDe.result.curef);
                       }, 300);
                     },
                   });
@@ -1950,16 +1927,16 @@ export class InitialDataEntryFixComponent implements OnInit {
                     tempat_lahir_pasangan: '',
                   })
                   .subscribe({
-                    next: data => {
+                    next: dataSukses => {
                       this.router.navigate(['/daftaraplikasiide']);
                       setTimeout(() => {
-                        this.uploadDataUntukSlik(data.result.app_no_ide, data.result.curef);
+                        this.uploadDataUntukSlik(dataSukses.result.app_no_ide, dataSukses.result.curef);
                       }, 300);
                     },
                   });
               }
             },
-            error: error => {
+            error(error) {
               if (error.error.code == 400) {
                 alert('Gagal Menyimpan Data');
                 alert(error.error.message);
@@ -2229,7 +2206,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     }
   }
 
-  onChangeD(value: any) {
+  onChangeD(value: any): void {
     this.getLoading(true);
     const valueProv = value.split('|');
     this.dataEntryService.getkabkota(valueProv[0]).subscribe({
@@ -2241,7 +2218,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     });
   }
 
-  onChangekotaD(value: any) {
+  onChangekotaD(value: any): void {
     this.getLoading(true);
     const valueKota = value.split('|');
     this.dataEntryService.getkecamatan(valueKota[0]).subscribe({
@@ -2253,7 +2230,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     });
   }
 
-  onChangekecamatanD(value: any) {
+  onChangekecamatanD(value: any): void {
     this.getLoading(true);
     const valueKecamatan = value.split('|');
     this.dataEntryService.getkelurahan(valueKecamatan[0]).subscribe({
@@ -2265,12 +2242,12 @@ export class InitialDataEntryFixComponent implements OnInit {
     });
   }
 
-  onChangekelurahanD(value: any) {
+  onChangekelurahanD(value: any): void {
     const datakodepos = value.split('|');
     this.ideForm.get('kode_pos_pasangan')?.setValue(datakodepos[0]);
   }
 
-  onChange(value: any) {
+  onChange(value: any): void {
     this.getLoading(true);
     const valueProv = value.split('|');
     this.dataEntryService.getkabkota(valueProv[0]).subscribe({
@@ -2282,7 +2259,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     });
   }
 
-  onChangekota(value: any) {
+  onChangekota(value: any): void {
     this.getLoading(true);
     const valueKota = value.split('|');
     this.dataEntryService.getkecamatan(valueKota[0]).subscribe({
@@ -2294,7 +2271,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     });
   }
 
-  onChangekecamatan(value: any) {
+  onChangekecamatan(value: any): void {
     this.getLoading(true);
     const valueKecamatan = value.split('|');
     this.dataEntryService.getkelurahan(valueKecamatan[0]).subscribe({
@@ -2306,12 +2283,12 @@ export class InitialDataEntryFixComponent implements OnInit {
     });
   }
 
-  onChangekelurahan(value: any) {
+  onChangekelurahan(value: any): void {
     const datakodepos = value.split('|');
     this.ideForm.get('kode_pos')?.setValue(datakodepos[0]);
   }
 
-  carimenggunakankodepost(kodepost: any) {
+  carimenggunakankodepost(kodepost: any): void {
     this.getLoading(true);
     this.dataEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
@@ -2321,7 +2298,7 @@ export class InitialDataEntryFixComponent implements OnInit {
           this.responseKels.forEach(element => {
             this.responseKels.push(element);
             if (element.kdPos == kodepost) {
-              let namaWIl = element.namaWilayah;
+              const namaWIl = element.namaWilayah;
               this.responseNamaWilayah.push(namaWIl);
             }
           });
@@ -2363,7 +2340,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     });
   }
 
-  carimenggunakankodepostp(kodepost: any) {
+  carimenggunakankodepostp(kodepost: any): void {
     this.getLoading(true);
     this.dataEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
@@ -2373,7 +2350,7 @@ export class InitialDataEntryFixComponent implements OnInit {
           this.responseKelsMenikah.forEach(element => {
             this.responseKelsMenikah.push(element);
             if (element.kdPos == kodepost) {
-              let namaWIl = element.namaWilayah;
+              const namaWIl = element.namaWilayah;
               this.responseNamaWilayahMenikah.push(namaWIl);
             }
           });
@@ -2414,10 +2391,10 @@ export class InitialDataEntryFixComponent implements OnInit {
     });
   }
 
-  submitBday(tanggal: any) {
+  submitBday(tanggal: any): void {
     let Q4A = '';
-    let Bdate = tanggal;
-    let Bday = +new Date(Bdate);
+    const Bdate = tanggal;
+    const Bday = +new Date(Bdate);
     Q4A += +~~((Date.now() - Bday) / 31557600000);
     this.ideForm.get('usia')?.setValue(Q4A);
 
@@ -2433,10 +2410,10 @@ export class InitialDataEntryFixComponent implements OnInit {
     }, 100);
   }
 
-  submitBdayp(tanggal: any) {
+  submitBdayp(tanggal: any): void {
     let Q4A = '';
-    let Bdate = tanggal;
-    let Bday = +new Date(Bdate);
+    const Bdate = tanggal;
+    const Bday = +new Date(Bdate);
     Q4A += +~~((Date.now() - Bday) / 31557600000);
     this.ideForm.get('usia_pasangan')?.setValue(Q4A);
 
@@ -2447,13 +2424,13 @@ export class InitialDataEntryFixComponent implements OnInit {
     }, 100);
   }
 
-  jenisbidangselect(value: any) {
+  jenisbidangselect(value: any): void {
     const sektor = value.split('|');
     this.ideFixServices.getSektor(sektor[0]).subscribe(data => {
       this.getdatasektorekonomi = data.result;
     });
   }
-  provPeker(value: any) {
+  provPeker(value: any): void {
     this.getLoading(true);
     const valueProv = value.split('|');
     this.dataEntryService.getkabkota(valueProv[0]).subscribe({
@@ -2467,7 +2444,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       },
     });
   }
-  kotaPeker(value: any) {
+  kotaPeker(value: any): void {
     this.getLoading(true);
     const valueKota = value.split('|');
     this.dataEntryService.getkecamatan(valueKota[0]).subscribe({
@@ -2481,7 +2458,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       },
     });
   }
-  kecPeker(value: any) {
+  kecPeker(value: any): void {
     this.getLoading(true);
     const valueKecamatan = value.split('|');
     this.dataEntryService.getkelurahan(valueKecamatan[0]).subscribe({
@@ -2495,11 +2472,11 @@ export class InitialDataEntryFixComponent implements OnInit {
       },
     });
   }
-  kelPeker(value: any) {
+  kelPeker(value: any): void {
     const datakodepos = value.split('|');
     this.jobForm.get('kode_pos')?.setValue(datakodepos[0]);
   }
-  cariPekerPost(kodepost: any) {
+  cariPekerPost(kodepost: any): void {
     this.getLoading(true);
     this.dataEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
@@ -2509,7 +2486,7 @@ export class InitialDataEntryFixComponent implements OnInit {
           this.responseKelsJob.forEach(element => {
             this.responseKelsJob.push(element);
             if (element.kdPos == kodepost) {
-              let namaWIl = element.namaWilayah;
+              const namaWIl = element.namaWilayah;
               this.responseNamaWilayahJob.push(namaWIl);
             }
           });
@@ -2552,20 +2529,20 @@ export class InitialDataEntryFixComponent implements OnInit {
       },
     });
   }
-  jenisbidangselectsebelum(value: any) {
+  jenisbidangselectsebelum(value: any): void {
     const sektor = value.split('|');
     this.ideFixServices.getSektor(sektor[0]).subscribe(data => {
       this.getdatasektorekonomiSebelum = data.result;
     });
   }
-  changeJenis(value: string | undefined) {
+  changeJenis(value: string | undefined): void {
     if (value === 'Laki-laki') {
       this.ideForm.get('jenis_kelamin_pasangan')?.setValue('Perempuan');
     } else {
       this.ideForm.get('jenis_kelamin_pasangan')?.setValue('Laki-laki');
     }
   }
-  onItemChange(event: any) {
+  onItemChange(event: any): void {
     // alert(event.value)
     // if (event.value == 1) {
     //   this.ideForm.get('alamat_ktp_pasangan')?.setValue(this.ideForm.get('alamat_ktp')?.value);
@@ -2630,12 +2607,12 @@ export class InitialDataEntryFixComponent implements OnInit {
     }
   }
 
-  public getLoading(loading: boolean) {
+  public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
   }
 
-  pilihDoc(event: any) {
+  pilihDoc(event: any): void {
     if (Math.floor(event.target.files[0].size * 0.000001) > 2) {
       Swal.fire('Gagal', 'File Maksimal 2MB!', 'error').then(() => {
         window.location.reload();
@@ -2645,7 +2622,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       this.showProggres = 0;
     }
   }
-  uploadDataUntukSlik(deUpload: any, curefUpload: any) {
+  uploadDataUntukSlik(deUpload: any, curefUpload: any): void {
     this.uploadServices.uploadDocument(this.file, deUpload, curefUpload, '22').subscribe({
       // next: data =>{
       //   console.warn('Upload ', data)
@@ -2653,7 +2630,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       // }
     });
   }
-  download() {
+  download(): void {
     const buatPdf = this.isiUpload[0].nama_dokumen.split('.').pop();
     if (buatPdf == 'pdf') {
       window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + this.isiUpload[0].nama_dokumen + '');
