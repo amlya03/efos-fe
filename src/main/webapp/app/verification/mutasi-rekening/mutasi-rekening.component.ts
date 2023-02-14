@@ -45,6 +45,14 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   // Role
   untukSessionRole: any;
 
+  // ////// check ///////
+  postKepemilikanTabungan: any;
+  postKepemilikanGiro: any;
+  postKepemilikanDeposito: any;
+  getKepemilikanTabungan: any;
+  getKepemilikanGiro: any;
+  getKepemilikanDeposito: any;
+
   constructor(
     protected mutasiRekeningService: ServiceVerificationService,
     protected activatedRoute: ActivatedRoute,
@@ -87,6 +95,9 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       debet: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
       kredit: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
       saldo: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
+      kepemilikan_tabungan: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: false },
+      kepemilikan_giro: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: false },
+      kepemilikan_deposito: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: false },
     });
 
     this.load();
@@ -116,7 +127,24 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   }
 
   submitForm(): void {
-    // alert(this.lihatTableMutasi)
+    if (this.mutasiForm.get('kepemilikan_tabungan')?.value) {
+      this.postKepemilikanTabungan = 1;
+    } else {
+      this.postKepemilikanTabungan = 0;
+    }
+    if (this.mutasiForm.get('kepemilikan_giro')?.value) {
+      this.postKepemilikanGiro = 1;
+    } else {
+      this.postKepemilikanGiro = 0;
+    }
+    if (this.mutasiForm.get('kepemilikan_deposito')?.value) {
+      this.postKepemilikanDeposito = 1;
+    } else {
+      this.postKepemilikanDeposito = 0;
+    }
+
+    // alert(this.postKepemilikanTabungan + ' | ' + this.postKepemilikanGiro + ' | ' + this.postKepemilikanDeposito)
+    // return
     // eslint-disable-next-line eqeqeq
     if (this.tambahTableMutasi == 0) {
       this.http
@@ -132,6 +160,9 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           no_rekening: this.mutasiForm.get('no_rekening')?.value,
           saldo: this.mutasiForm.get('saldo')?.value,
           tahun: this.mutasiForm.get('tahun')?.value,
+          kepemilikan_tabungan: this.postKepemilikanTabungan,
+          kepemilikan_giro: this.postKepemilikanGiro,
+          kepemilikan_deposito: this.postKepemilikanDeposito,
         })
         .subscribe({
           next() {
@@ -151,6 +182,9 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           no_rekening: this.mutasiForm.get('no_rekening')?.value,
           saldo: this.mutasiForm.get('saldo')?.value,
           tahun: this.mutasiForm.get('tahun')?.value,
+          kepemilikan_tabungan: this.postKepemilikanTabungan,
+          kepemilikan_giro: this.postKepemilikanGiro,
+          kepemilikan_deposito: this.postKepemilikanDeposito,
           updated_by: this.sessionStorageService.retrieve('sessionUserName'),
           updated_date: '',
         })
@@ -172,6 +206,27 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       .getMutasiRekening(id) // by id dari table atas
       .subscribe(data => {
         this.getTableMutasi = data.result;
+
+        // eslint-disable-next-line eqeqeq
+        if (this.getTableMutasi.kepemilikan_tabungan == 1) {
+          this.getKepemilikanTabungan = 1;
+        } else {
+          this.getKepemilikanTabungan = 0;
+        }
+
+        // eslint-disable-next-line eqeqeq
+        if (this.getTableMutasi.kepemilikan_giro == 1) {
+          this.getKepemilikanGiro = 1;
+        } else {
+          this.getKepemilikanGiro = 0;
+        }
+
+        // eslint-disable-next-line eqeqeq
+        if (this.getTableMutasi.kepemilikan_deposito == 1) {
+          this.getKepemilikanDeposito = 1;
+        } else {
+          this.getKepemilikanDeposito = 0;
+        }
         const retriveMutasi = {
           nama_bank: this.getTableMutasi.nama_bank,
           no_rekening: this.getTableMutasi.no_rekening,
@@ -180,6 +235,9 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           debet: this.getTableMutasi.debet,
           kredit: this.getTableMutasi.kredit,
           saldo: this.getTableMutasi.saldo,
+          kepemilikan_tabungan: this.getKepemilikanTabungan,
+          kepemilikan_giro: this.getKepemilikanGiro,
+          kepemilikan_deposito: this.getKepemilikanDeposito,
         };
         this.mutasiForm.setValue(retriveMutasi);
       });

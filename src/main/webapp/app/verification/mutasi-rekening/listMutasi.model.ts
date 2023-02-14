@@ -12,4 +12,7 @@ export class listMutasi {
   created_by?: string;
   updated_date?: string;
   updated_by?: string;
+  kepemilikan_tabungan?: number;
+  kepemilikan_giro?: number;
+  kepemilikan_deposito?: number;
 }

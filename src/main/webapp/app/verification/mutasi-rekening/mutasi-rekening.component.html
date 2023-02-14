@@ -207,6 +207,13 @@
           <input formControlName="tahun" type="tel" maxlength="4" minlength="4" class="form-control" (keypress)="keyPressNumbers($event)" />
         </div>
       </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Kepemilikan Rekening</label>
+        <div class="col"><input type="checkbox" formControlName="kepemilikan_tabungan" />&nbsp;Kepemilikan Tabungan</div>
+        <div class="col"><input type="checkbox" formControlName="kepemilikan_giro" />&nbsp;Kepemilikan Giro</div>
+        <div class="col"><input type="checkbox" formControlName="kepemilikan_deposito" />&nbsp;Kepemilikan Deposito</div>
+      </div>
     </div>
     <!-- ////Colom ke 2\\\\\ -->
     <div class="col">
