@@ -496,6 +496,7 @@ export class PersonalInfoComponent implements OnInit {
     // }
 
     if (event.value == 1) {
+      this.clickKdPostDomisili = 1;
       this.personalInfoForm.get('alamat_domisili')?.setValue(this.personalInfoForm.get('alamat_ktp')?.value);
       this.personalInfoForm.get('kode_pos_domisili')?.setValue(this.personalInfoForm.get('kode_pos')?.value);
       this.kodePosApiDomisili(this.personalInfoForm.get('kode_pos')?.value);
