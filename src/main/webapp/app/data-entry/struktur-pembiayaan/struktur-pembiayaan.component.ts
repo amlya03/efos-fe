@@ -169,12 +169,6 @@ export class StrukturPembiayaanComponent implements OnInit {
     }, 20);
 
     setTimeout(() => {
-      this.dataEntryService.getFetchTujuanPembiayaan().subscribe(data => {
-        this.tujuanpembiayaan = data.result;
-      });
-    }, 30);
-
-    setTimeout(() => {
       this.dataEntryService.getFetchStrukturDE(this.app_no_de, this.curef).subscribe(data => {
         this.strukturModel = data.result;
         if (data.result == null || data.result == '') {
@@ -198,6 +192,11 @@ export class StrukturPembiayaanComponent implements OnInit {
             this.strukturModel.akad;
           this.jangkaWaktuRet = this.strukturModel.jangka_waktu + '|' + this.strukturModel.margin;
 
+          setTimeout(() => {
+            this.dataEntryService.getFetchTujuanPembiayaan(this.strukturModel.kode_fasilitas_name).subscribe(tujuanPem => {
+              this.tujuanpembiayaan = tujuanPem.result;
+            });
+          }, 20);
           setTimeout(() => {
             this.dataEntryService.getFetchProgramByKode(this.strukturModel.kode_fasilitas).subscribe(fasilitas => {
               this.kodeprogram = fasilitas.result;
@@ -325,14 +324,14 @@ export class StrukturPembiayaanComponent implements OnInit {
 
   onchangefasilitas(kodefasilitasnya: any): void {
     this.getLoading(true);
-    if (kodefasilitasnya == 'U') {
+    if (kodefasilitasnya[0] == 'U') {
       $('#uang_muka').attr('hidden', 'hidden');
       $('#siapsiap').attr('hidden', 'hidden');
     } else {
       $('#siapsiap').removeAttr('hidden');
       $('#uang_muka').removeAttr('hidden');
     }
-    this.dataEntryService.getFetchProgramByKode(kodefasilitasnya).subscribe({
+    this.dataEntryService.getFetchProgramByKode(kodefasilitasnya[0]).subscribe({
       next: data => {
         this.getLoading(false);
         this.kodeprogram = data.result;
@@ -340,6 +339,10 @@ export class StrukturPembiayaanComponent implements OnInit {
       error: () => {
         this.getLoading(false);
       },
+    });
+
+    this.dataEntryService.getFetchTujuanPembiayaan(kodefasilitasnya[1]).subscribe(tujuanPem => {
+      this.tujuanpembiayaan = tujuanPem.result;
     });
   }
 

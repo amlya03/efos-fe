@@ -303,49 +303,91 @@ export class CallReportComponent implements OnInit {
           Validasikondisi_pandemi_perusahaan_pasangan.setValidators(null);
           Validasino_kontak_hr_pasangan.setValidators(null);
         } else {
-          ValidasiStatusAgunan.setValidators([Validators.required]);
-          ValidasiDokumenAgunan.setValidators([Validators.required]);
-          ValidasiPosisiDokumen.setValidators([Validators.required]);
-          Validasitipe_pekerjaan_pasangan.setValidators([Validators.required]);
-          Validasistatus_pekerjaan_pasangan.setValidators([Validators.required]);
-          Validasilama_bekerja_bulan_pasangan.setValidators([Validators.required]);
-          Validasilama_bekerja_tahun_pasangan.setValidators([Validators.required]);
-          Validasijabatan_terakhir_pasangan.setValidators([Validators.required]);
-          Validasinama_perusahaan_pasangan.setValidators([Validators.required]);
-          Validasibidang_usaha_pasangan.setValidators([Validators.required]);
-          Validasiskala_perusahaan_pasangan.setValidators([Validators.required]);
-          Validasitahun_berdiri_perusahaan_pasangan.setValidators([Validators.required]);
-          Validasialamat_perusahaan_pasangan.setValidators([Validators.required]);
-          Validasijumlah_karyawan_perusahaan_pasangan.setValidators([Validators.required]);
-          Validasikondisi_pandemi_perusahaan_pasangan.setValidators([Validators.required]);
-          Validasino_kontak_hr_pasangan.setValidators([Validators.required]);
-        }
-        if (this.daWa1.kategori_pekerjaan === 'Fix Income') {
-          ValidasiTipePekerjaan.setValidators([Validators.required]);
-          ValidasiStatusPekerjaan.setValidators([Validators.required]);
-          ValidasiLamaBekerjaTahun.setValidators([Validators.required]);
-          ValidasiLamaBekerjaBulan.setValidators([Validators.required]);
-          ValidasiJabatanTerakhir.setValidators([Validators.required]);
-          ValidasiNamaPerusahaan.setValidators([Validators.required]);
-          ValidasiBidangUsaha.setValidators([Validators.required]);
-          ValidasiSkalaPerusahaan.setValidators([Validators.required]);
-          ValidasiJumlahKaryawan.setValidators([Validators.required]);
-          ValidasiKondisiPandemi.setValidators([Validators.required]);
-          ValidasiNoKontakHr.setValidators([Validators.required]);
-          ValidasiTakeHomePay.setValidators([Validators.required]);
-        } else {
-          ValidasiTipePekerjaan.setValidators(null);
-          ValidasiStatusPekerjaan.setValidators(null);
-          ValidasiLamaBekerjaTahun.setValidators(null);
-          ValidasiLamaBekerjaBulan.setValidators(null);
-          ValidasiJabatanTerakhir.setValidators(null);
-          ValidasiNamaPerusahaan.setValidators(null);
-          ValidasiBidangUsaha.setValidators(null);
-          ValidasiSkalaPerusahaan.setValidators(null);
-          ValidasiJumlahKaryawan.setValidators(null);
-          ValidasiKondisiPandemi.setValidators(null);
-          ValidasiNoKontakHr.setValidators(null);
-          ValidasiTakeHomePay.setValidators(null);
+          if (this.daWa1.kategori_pekerjaan === 'Fix Income') {
+            ValidasiTipePekerjaan.setValidators([Validators.required]);
+            ValidasiStatusPekerjaan.setValidators([Validators.required]);
+            ValidasiLamaBekerjaTahun.setValidators([Validators.required]);
+            ValidasiLamaBekerjaBulan.setValidators([Validators.required]);
+            ValidasiJabatanTerakhir.setValidators([Validators.required]);
+            ValidasiNamaPerusahaan.setValidators([Validators.required]);
+            ValidasiBidangUsaha.setValidators([Validators.required]);
+            ValidasiSkalaPerusahaan.setValidators([Validators.required]);
+            ValidasiJumlahKaryawan.setValidators([Validators.required]);
+            ValidasiKondisiPandemi.setValidators([Validators.required]);
+            ValidasiNoKontakHr.setValidators([Validators.required]);
+            ValidasiTakeHomePay.setValidators([Validators.required]);
+            if (this.daWa1.joint_income == 1) {
+              Validasitipe_pekerjaan_pasangan.setValidators([Validators.required]);
+              Validasistatus_pekerjaan_pasangan.setValidators([Validators.required]);
+              Validasilama_bekerja_bulan_pasangan.setValidators([Validators.required]);
+              Validasilama_bekerja_tahun_pasangan.setValidators([Validators.required]);
+              Validasijabatan_terakhir_pasangan.setValidators([Validators.required]);
+              Validasinama_perusahaan_pasangan.setValidators([Validators.required]);
+              Validasibidang_usaha_pasangan.setValidators([Validators.required]);
+              Validasiskala_perusahaan_pasangan.setValidators([Validators.required]);
+              Validasitahun_berdiri_perusahaan_pasangan.setValidators([Validators.required]);
+              Validasialamat_perusahaan_pasangan.setValidators([Validators.required]);
+              Validasijumlah_karyawan_perusahaan_pasangan.setValidators([Validators.required]);
+              Validasikondisi_pandemi_perusahaan_pasangan.setValidators([Validators.required]);
+              Validasino_kontak_hr_pasangan.setValidators([Validators.required]);
+            } else {
+              Validasitipe_pekerjaan_pasangan.setValidators(null);
+              Validasistatus_pekerjaan_pasangan.setValidators(null);
+              Validasilama_bekerja_bulan_pasangan.setValidators(null);
+              Validasilama_bekerja_tahun_pasangan.setValidators(null);
+              Validasijabatan_terakhir_pasangan.setValidators(null);
+              Validasinama_perusahaan_pasangan.setValidators(null);
+              Validasibidang_usaha_pasangan.setValidators(null);
+              Validasiskala_perusahaan_pasangan.setValidators(null);
+              Validasitahun_berdiri_perusahaan_pasangan.setValidators(null);
+              Validasialamat_perusahaan_pasangan.setValidators(null);
+              Validasijumlah_karyawan_perusahaan_pasangan.setValidators(null);
+              Validasikondisi_pandemi_perusahaan_pasangan.setValidators(null);
+              Validasino_kontak_hr_pasangan.setValidators(null);
+            }
+          } else {
+            ValidasiTipePekerjaan.setValidators(null);
+            ValidasiStatusPekerjaan.setValidators(null);
+            ValidasiLamaBekerjaTahun.setValidators(null);
+            ValidasiLamaBekerjaBulan.setValidators(null);
+            ValidasiJabatanTerakhir.setValidators(null);
+            ValidasiNamaPerusahaan.setValidators(null);
+            ValidasiBidangUsaha.setValidators(null);
+            ValidasiSkalaPerusahaan.setValidators(null);
+            ValidasiJumlahKaryawan.setValidators(null);
+            ValidasiKondisiPandemi.setValidators(null);
+            ValidasiNoKontakHr.setValidators(null);
+            ValidasiTakeHomePay.setValidators(null);
+            if (this.daWa1.joint_income == 1) {
+              Validasitipe_pekerjaan_pasangan.setValidators([Validators.required]);
+              Validasistatus_pekerjaan_pasangan.setValidators([Validators.required]);
+              Validasilama_bekerja_bulan_pasangan.setValidators([Validators.required]);
+              Validasilama_bekerja_tahun_pasangan.setValidators([Validators.required]);
+              Validasijabatan_terakhir_pasangan.setValidators([Validators.required]);
+              Validasinama_perusahaan_pasangan.setValidators([Validators.required]);
+              Validasibidang_usaha_pasangan.setValidators([Validators.required]);
+              Validasiskala_perusahaan_pasangan.setValidators([Validators.required]);
+              Validasitahun_berdiri_perusahaan_pasangan.setValidators([Validators.required]);
+              Validasialamat_perusahaan_pasangan.setValidators([Validators.required]);
+              Validasijumlah_karyawan_perusahaan_pasangan.setValidators([Validators.required]);
+              Validasikondisi_pandemi_perusahaan_pasangan.setValidators([Validators.required]);
+              Validasino_kontak_hr_pasangan.setValidators([Validators.required]);
+            } else {
+              Validasitipe_pekerjaan_pasangan.setValidators(null);
+              Validasistatus_pekerjaan_pasangan.setValidators(null);
+              Validasilama_bekerja_bulan_pasangan.setValidators(null);
+              Validasilama_bekerja_tahun_pasangan.setValidators(null);
+              Validasijabatan_terakhir_pasangan.setValidators(null);
+              Validasinama_perusahaan_pasangan.setValidators(null);
+              Validasibidang_usaha_pasangan.setValidators(null);
+              Validasiskala_perusahaan_pasangan.setValidators(null);
+              Validasitahun_berdiri_perusahaan_pasangan.setValidators(null);
+              Validasialamat_perusahaan_pasangan.setValidators(null);
+              Validasijumlah_karyawan_perusahaan_pasangan.setValidators(null);
+              Validasikondisi_pandemi_perusahaan_pasangan.setValidators(null);
+              Validasino_kontak_hr_pasangan.setValidators(null);
+            }
+          }
         }
         setTimeout(() => {
           ValidasiAlamatTinggal.updateValueAndValidity();
@@ -357,6 +399,22 @@ export class CallReportComponent implements OnInit {
           ValidasiTanggalAppraisal.updateValueAndValidity();
           ValidasiValidasiRekening.updateValueAndValidity();
           ValidasiEstimasiAngsuran.updateValueAndValidity();
+          ValidasiStatusAgunan.updateValueAndValidity();
+          ValidasiDokumenAgunan.updateValueAndValidity();
+          ValidasiPosisiDokumen.updateValueAndValidity();
+          Validasitipe_pekerjaan_pasangan.updateValueAndValidity();
+          Validasistatus_pekerjaan_pasangan.updateValueAndValidity();
+          Validasilama_bekerja_bulan_pasangan.updateValueAndValidity();
+          Validasilama_bekerja_tahun_pasangan.updateValueAndValidity();
+          Validasijabatan_terakhir_pasangan.updateValueAndValidity();
+          Validasinama_perusahaan_pasangan.updateValueAndValidity();
+          Validasibidang_usaha_pasangan.updateValueAndValidity();
+          Validasiskala_perusahaan_pasangan.updateValueAndValidity();
+          Validasitahun_berdiri_perusahaan_pasangan.updateValueAndValidity();
+          Validasialamat_perusahaan_pasangan.updateValueAndValidity();
+          Validasijumlah_karyawan_perusahaan_pasangan.updateValueAndValidity();
+          Validasikondisi_pandemi_perusahaan_pasangan.updateValueAndValidity();
+          Validasino_kontak_hr_pasangan.updateValueAndValidity();
           ValidasiTipePekerjaan.updateValueAndValidity();
           ValidasiStatusPekerjaan.updateValueAndValidity();
           ValidasiLamaBekerjaTahun.updateValueAndValidity();

@@ -11,6 +11,7 @@ import { ServiceVerificationService } from 'app/verification/service/service-ver
 import { environment } from 'environments/environment';
 import { SessionStorageService } from 'ngx-webstorage';
 import Swal from 'sweetalert2';
+import { refJenisPekerjaan } from '../../../data-entry/services/config/refJenisPekerjaan.model';
 
 @Component({
   selector: 'jhi-mapis',
@@ -23,6 +24,8 @@ export class MapisComponent implements OnInit {
   app_noDe: any;
   mapisModel: getMapis = new getMapis();
   dataEntry: fetchAllDe = new fetchAllDe();
+  imbModel: refJenisPekerjaan[] = [];
+  marketabilitasModel: refJenisPekerjaan[] = [];
   listagunan: listAgunan[] = [];
   betaFTV: any;
   cekResuklt = 0;
@@ -62,6 +65,16 @@ export class MapisComponent implements OnInit {
   }
 
   load(): void {
+    this.verificationService.getlistMarketabilitasAppraisal().subscribe({
+      next: marketabilitasResponse => {
+        this.marketabilitasModel = marketabilitasResponse.result;
+      },
+    });
+    this.verificationService.getlistImbAppraisal().subscribe({
+      next: imb => {
+        this.imbModel = imb.result;
+      },
+    });
     // ambil semua data DE
     this.dataEntryService.getFetchSemuaDataDE(this.app_noDe).subscribe(data => {
       this.dataEntry = data.result;

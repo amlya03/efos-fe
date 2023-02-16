@@ -113,7 +113,7 @@ export class InputScoringComponent implements OnInit {
     }, 9);
 
     setTimeout(() => {
-      this.dataEntryService.getFetchTujuanPembiayaan().subscribe(tujuan => {
+      this.dataEntryService.getFetchTujuanPembiayaan('PPR').subscribe(tujuan => {
         this.modelTujuanPembiayaan = tujuan.result;
       });
     }, 12);

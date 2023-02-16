@@ -31,7 +31,7 @@
           <div class="form-group">
             <select
               class="form-control"
-              (change)="onchangefasilitas(this.strukturForm.get('kode_fasilitas')?.value.split('|')[0])"
+              (change)="onchangefasilitas(this.strukturForm.get('kode_fasilitas')?.value.split('|'))"
               formControlName="kode_fasilitas"
               id="kode_fasilitas"
             >
