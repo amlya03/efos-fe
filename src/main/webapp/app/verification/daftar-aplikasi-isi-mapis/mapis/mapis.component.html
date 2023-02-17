@@ -13,7 +13,7 @@
             type="text"
             class="form-control"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.' }"
             formControlName="harga_transaksi"
           />
         </div>
@@ -28,7 +28,7 @@
             id="nilai_market"
             formControlName="nilai_market"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.' }"
           />
           <br />
         </div>
@@ -64,7 +64,7 @@
             id="nilai_imb"
             formControlName="nilai_imb"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.' }"
           />
         </div>
       </div>
@@ -122,7 +122,7 @@
             class="form-control"
             id="ftv"
             name="ftv"
-            value="{{ this.dataEntry.uang_muka | currency: 'Rp ' }}"
+            value="{{ this.dataEntry.uang_muka | currency: 'Rp. ' }}"
             currencyMask
           />
         </div>

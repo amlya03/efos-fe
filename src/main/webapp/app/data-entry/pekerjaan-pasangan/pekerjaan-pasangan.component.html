@@ -345,25 +345,11 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Jumlah karyawan</label>
           <div class="col-sm-9">
-            <select
-              formControlName="jumlah_karyawan"
-              *ngIf="this.formPekerjaanPasangan.get('kategori_pekerjaan')?.value == '2'"
-              class="form-control"
-            >
+            <select formControlName="jumlah_karyawan" class="form-control">
               <option *ngFor="let ListJumlahKaryawan of ListJumlahKaryawan" value="{{ ListJumlahKaryawan.deskripsi }}">
                 {{ ListJumlahKaryawan.deskripsi }}
               </option>
             </select>
-            <input
-              [hidden]="this.formPekerjaanPasangan.get('kategori_pekerjaan')?.value == '2'"
-              type="tel"
-              class="form-control"
-              formControlName="jumlah_karyawan"
-              id="jumlah_karyawan"
-              name="jumlah_karyawan"
-              maxlength="255"
-              (keypress)="keyPressNumbers($event)"
-            />
             <span
               [hidden]="
                 formPekerjaanPasangan.controls.jumlah_karyawan.valid ||

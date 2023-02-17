@@ -48,7 +48,7 @@ export class DataRumahComponent implements OnInit {
   // Role
   untukSessionRole: any;
   untukSessionUsername: any;
-  // Total Plafound
+  // Total Plafoud
   plafond: any;
   totalPlafonSlik: any;
   // Total Outstanding
@@ -208,7 +208,7 @@ export class DataRumahComponent implements OnInit {
             // this.struktur = ('Rp 10000').toLocaleString();
             // this.struktur = 'Rp 10000'.replace('Rp', '');
             // const cekkk = 'Rp 10,000'.replace(/,/g, '');
-            // const cuukkk = cekkk.replace('Rp ', '');
+            // const cuukkk = cekkk.replace('Rp. ', '');
             // alert(this.struktur)
             // alert(cuukkk)
 

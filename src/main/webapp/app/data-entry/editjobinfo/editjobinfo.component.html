@@ -437,16 +437,17 @@
           <div id="jumlahKaryawanFix" class="form-group row">
             <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
             <div class="col-sm-9">
-              <input
+              <select
                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-                type="tel"
-                (keypress)="keyPressNumbers($event)"
                 maxlength="13"
                 class="form-control"
-                placeholder="Jumlah Karyawan"
                 id="jumlah_karyawan"
                 formControlName="jumlah_karyawan"
-              />
+              >
+                <option *ngFor="let ListJumlahKaryawan of ListJumlahKaryawan" value="{{ ListJumlahKaryawan.deskripsi }}">
+                  {{ ListJumlahKaryawan.deskripsi }}
+                </option>
+              </select>
               <span
                 [hidden]="
                   editJobForm.controls.jumlah_karyawan.valid ||

@@ -66,7 +66,7 @@
             placeholder="Platform Pengajuan"
             id="platform"
             name="platform"
-            value="{{ daWa1.nilai_pembiayaan | currency: 'Rp ' }}"
+            value="{{ daWa1.nilai_pembiayaan | currency: 'Rp. ' }}"
             disabled
           />
         </div>
@@ -1205,7 +1205,7 @@
             id="takeHomepay"
             formControlName="take_home_pay"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           />
           <span
             [hidden]="

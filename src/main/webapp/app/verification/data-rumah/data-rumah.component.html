@@ -299,7 +299,7 @@
             name="gaji_kotor_pemohon"
             (keypress)="keyPressNumbers($event)"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           />
         </div>
       </div>
@@ -315,7 +315,7 @@
           name="gaji_kotor_pasangan"
           (keypress)="keyPressNumbers($event)"
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
       </div>
     </div>
@@ -354,7 +354,7 @@
             (keypress)="keyPressNumbers($event)"
             #tunjangan1
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           />
         </div>
       </div>
@@ -370,7 +370,7 @@
           (keypress)="keyPressNumbers($event)"
           #tunjangan_pasangan1
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
       </div>
     </div>
@@ -385,7 +385,7 @@
           readonly
           (keypress)="keyPressNumbers($event)"
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           value="{{
             +this.analisaKeuanganForm.get('tunjangan')?.value + +this.analisaKeuanganForm.get('tunjangan_pasangan')?.value
               | currency: 'Rp. ':'symbol':'1.0-0'
@@ -409,7 +409,7 @@
             (keypress)="keyPressNumbers($event)"
             #pendapatan_kantor_lainnya1
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           />
         </div>
       </div>
@@ -425,7 +425,7 @@
           (keypress)="keyPressNumbers($event)"
           #pendapatan_kantor_lainnya_pasangan1
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
       </div>
     </div>
@@ -440,7 +440,7 @@
           (keypress)="keyPressNumbers($event)"
           readonly
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           value="{{
             +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya')?.value +
               +this.analisaKeuanganForm.get('pendapatan_kantor_lainnya_pasangan')?.value | currency: 'Rp. ':'symbol':'1.0-0'
@@ -555,7 +555,7 @@
             formControlName="angsuran_kewajiban_kantor"
             #angsuran_kewajiban_kantor1
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           />
         </div>
       </div>
@@ -570,7 +570,7 @@
           formControlName="angsuran_kewajiban_kantor_pasangan"
           #angsuran_kewajiban_kantor_pasangan1
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
       </div>
     </div>
@@ -711,7 +711,7 @@
             (keypress)="keyPressNumbers($event)"
             #pendapatan_usaha1
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           />
         </div>
       </div>
@@ -727,7 +727,7 @@
           (keypress)="keyPressNumbers($event)"
           #pendapatan_usaha_pasangan1
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
       </div>
     </div>
@@ -773,7 +773,7 @@
             formControlName="pendapatan_profesional"
             #pendapatan_profesional1
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           />
         </div>
       </div>
@@ -789,7 +789,7 @@
           formControlName="pendapatan_profesional_pasangan"
           #pendapatan_profesional_pasangan1
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
       </div>
     </div>
@@ -844,7 +844,7 @@
           formControlName="total_penghasilan_kotor"
           #total_penghasilan_kotor1
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           value="{{
             +this.analisaKeuanganForm.get('gaji_kotor')?.value +
               +this.analisaKeuanganForm.get('tunjangan')?.value +
@@ -883,7 +883,7 @@
           (keypress)="keyPressNumbers($event)"
           formControlName="total_penghasilan_kotor_pasangan"
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           value="{{
             +this.analisaKeuanganForm.get('gaji_kotor_pasangan')?.value +
               +this.analisaKeuanganForm.get('tunjangan_pasangan')?.value +
@@ -957,7 +957,7 @@
           formControlName="total_angsuran_nasabah"
           #kewajiban_bank1
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
       </div>
     </div>
@@ -974,7 +974,7 @@
           formControlName="total_angsuran_pasangan"
           #kewajiban_bank_pasangan1
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
       </div>
     </div>
@@ -1016,7 +1016,7 @@
           (keypress)="keyPressNumbers($event)"
           #kewajiban_lainnya1
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
       </div>
     </div>
@@ -1033,7 +1033,7 @@
           (keypress)="keyPressNumbers($event)"
           #kewajiban_lainnya_pasangan1
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
       </div>
     </div>
@@ -1048,7 +1048,7 @@
         id="kewajiban_lainnya_total"
         name="kewajiban_lainnya_total"
         currencyMask
-        [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+        [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         value="{{
           +this.analisaKeuanganForm.get('kewajiban_lainnya')?.value + +this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value
             | currency: 'Rp. ':'symbol':'1.0-0'
@@ -1160,7 +1160,7 @@
         name="total_penghasilan_bersih_akumulasi"
         formControlName="total_penghasilan_bersih_akumulasi"
         currencyMask
-        [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+        [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         value="{{
           +this.analisaKeuanganForm.get('gaji_kotor')?.value +
             +this.analisaKeuanganForm.get('tunjangan')?.value +

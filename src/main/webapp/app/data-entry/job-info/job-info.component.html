@@ -37,6 +37,7 @@
               formControlName="tipe_pekerjaan"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
+              <option value="">Pilih Tipe Pekerjaan</option>
               <option *ngFor="let listTipePekerjaan of listTipePekerjaan" value="{{ listTipePekerjaan.job_type_id }}">
                 {{ listTipePekerjaan.job_desc }}
               </option>
@@ -140,6 +141,18 @@
             >Field Wajib Diisi
           </span>
         </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Lama Beroperasi</label>
+        <div class="col-sm-5">
+          <input
+            type="number"
+            class="form-control"
+            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+          />
+        </div>
+        <label class="col-sm-2">Tahun</label>
       </div>
       <br />
       <div class="form-group row">
@@ -502,53 +515,24 @@
         <div class="col">Bulan</div>
       </div>
       <br />
-
-      <div *ngIf="dataEntry.kategori_pekerjaan === 'Fix Income'">
-        <div id="jumlahKaryawanFix">
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
-            <div class="col-sm-9">
-              <input
-                [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-                type="tel"
-                (keypress)="keyPressNumbers($event)"
-                maxlength="13"
-                class="form-control"
-                placeholder="Jumlah Karyawan"
-                id="jumlah_karyawan"
-                formControlName="jumlah_karyawan"
-              />
-            </div>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <select
+              class="form-control"
+              formControlName="jumlah_karyawan"
+              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            >
+              <option value="">Pilih Jumlah Karyawan</option>
+              <option *ngFor="let getjumlahkaryawandariapi of getjumlahkaryawandariapi" value="{{ getjumlahkaryawandariapi.deskripsi }}">
+                {{ getjumlahkaryawandariapi.deskripsi }}
+              </option>
+            </select>
           </div>
         </div>
-        <br />
       </div>
-      <div *ngIf="dataEntry.kategori_pekerjaan === 'Non Fix Income'">
-        <div id="jumlahKaryawanNon" class="hidden_jumlahKaryawanNon">
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select
-                  class="form-control"
-                  id="jumlah_karyawan"
-                  formControlName="jumlah_karyawan"
-                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-                >
-                  <option
-                    *ngFor="let getjumlahkaryawandariapi of getjumlahkaryawandariapi"
-                    value="{{ getjumlahkaryawandariapi.deskripsi }}"
-                  >
-                    {{ getjumlahkaryawandariapi.deskripsi }}
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br />
-      </div>
-
+      <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Pendapatan</label>
         <div class="col-sm-9">
@@ -684,7 +668,7 @@
               formControlName="tipe_kepegawaian"
               [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
-              <option value="">Pilih Tipe Pekerjaan</option>
+              <option value="">Pilih Tipe Kepegawaian</option>
               <option value="1">Pegawai tetap</option>
               <option value="2">Pegawai kontrak</option>
             </select>
@@ -1104,39 +1088,21 @@
         <div class="col">Bulan</div>
       </div>
       <br />
-      <div *ngIf="this.datajobsebelum.get('tipe_pekerjaan_sebelum')?.value === '1|Fix Income'">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
-          <div class="col-sm-8">
-            <input
-              type="tel"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-              (keypress)="keyPressNumbers($event)"
-              maxlength="13"
-              class="form-control"
-              placeholder="Jumlah Karyawan"
-              formControlName="jumlah_karyawan_sebelum"
-            />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <select class="form-control" formControlName="jumlah_karyawan_sebelum">
+              <option value="">Pilih Data</option>
+              <option *ngFor="let jumlahKaryawanSebelum of jumlahKaryawanSebelum" value="{{ jumlahKaryawanSebelum.deskripsi }}">
+                {{ jumlahKaryawanSebelum.deskripsi }}
+              </option>
+            </select>
           </div>
         </div>
-        <br />
       </div>
-      <div *ngIf="this.datajobsebelum.get('tipe_pekerjaan_sebelum')?.value === '1|Fix Income'">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
-          <div class="col-sm-8">
-            <div class="form-group">
-              <select class="form-control" formControlName="jumlah_karyawan_sebelum">
-                <option value="">Pilih Data</option>
-                <option *ngFor="let jumlahKaryawanSebelum of jumlahKaryawanSebelum" value="{{ jumlahKaryawanSebelum.deskripsi }}">
-                  {{ jumlahKaryawanSebelum.deskripsi }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <br />
-      </div>
+      <br />
+      <div *ngIf="this.datajobsebelum.get('tipe_pekerjaan_sebelum')?.value === '1|Fix Income'"></div>
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tipe Perusahaan</label>
         <div class="col-sm-8">

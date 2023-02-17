@@ -502,7 +502,7 @@ export class DetailKomiteComponent implements OnInit {
 
   approve(): void {
     // /////////////////////// Create Approval /////////////////////////////
-    // contooohhhhh// this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value.replace(/,/g, '').replace('Rp ', '').split('.')[0]
+    // contooohhhhh// this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value.replace(/,/g, '').replace('Rp. ', '').split('.')[0]
     const skemaFull = this.keputusanPembiayaanForm.get('skema')?.value.split('|');
     const totalPendapatanFull = this.jobByCurefDE.total_pendapatan;
     const angsuranfix = this.komiteFasilitasYangDimintaForm.get('angsuran')?.value.replace('Angsuran = ', '');
@@ -731,7 +731,7 @@ export class DetailKomiteComponent implements OnInit {
 
   reject(): void {
     // /////////////////////// Create Approval /////////////////////////////
-    // contooohhhhh// this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value.replace(/,/g, '').replace('Rp ', '').split('.')[0]
+    // contooohhhhh// this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value.replace(/,/g, '').replace('Rp. ', '').split('.')[0]
     const skemaFull = this.keputusanPembiayaanForm.get('skema')?.value.split('|');
     const totalPendapatanFull = this.jobByCurefDE.total_pendapatan;
     const angsuranfix = this.komiteFasilitasYangDimintaForm.get('angsuran')?.value.replace('Angsuran = ', '');

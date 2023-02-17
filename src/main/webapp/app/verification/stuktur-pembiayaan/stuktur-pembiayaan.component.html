@@ -219,7 +219,7 @@
           id="total_kewajiban_bank_pemohon"
           formControlName="total_kewajiban_bank_pemohon"
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
       </div>
     </div>
@@ -233,13 +233,13 @@
           formControlName="total_outstanding"
           class="form-control"
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
       </div>
     </div>
     <p></p>
     <div class="form-group row" [formGroup]="slikForm">
-      <label class="col-sm-4 col-form-label">Total Plafound</label>
+      <label class="col-sm-4 col-form-label">Total Plafond</label>
       <div class="col-sm-8">
         <input
           type="text"
@@ -247,7 +247,7 @@
           formControlName="total_plafon"
           class="form-control"
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
       </div>
     </div>
@@ -301,7 +301,7 @@
             formControlName="harga_permintaan"
             (blur)="hitungAngsuran(this.strukturForm.get('skema')?.value)"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           />
         </div>
       </div>
@@ -316,7 +316,7 @@
             id="analisa_nilai_pembiayaan"
             formControlName="nilai_pembiayaan"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           />
         </div>
       </div>
@@ -330,7 +330,7 @@
             formControlName="down_payment"
             (blur)="hitungAngsuran(this.strukturForm.get('skema')?.value)"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           />
         </div>
         <div class="col-sm-3" [hidden]="dataEntry.kode_fasilitas_name === 'PTA'">
@@ -348,7 +348,7 @@
             id="analisa_angsuran"
             formControlName="angsuran"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           />
         </div>
       </div>
@@ -404,7 +404,7 @@
             id="maximal_angsuran"
             formControlName="max_angsuran"
             currencyMask
-            [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
           />
         </div>
       </div>
@@ -439,7 +439,7 @@
           id="nilai_market"
           formControlName="nilai_market"
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
       </div>
     </div>
@@ -454,7 +454,7 @@
           id="nilai_imb"
           formControlName="nilai_imb"
           currencyMask
-          [options]="{ prefix: 'Rp ', thousands: ',', decimal: '.', precision: 0 }"
+          [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
       </div>
     </div>
