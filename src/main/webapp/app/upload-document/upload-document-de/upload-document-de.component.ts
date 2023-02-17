@@ -173,21 +173,33 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
       } else {
         this.totalVal -= 1;
         if (this.totalVal == 0) {
-          this.http
-            .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
-              app_no_de: this.app_no_de,
-              created_by: this.sessionStorageService.retrieve('sessionUserName'),
-              status_aplikasi: this.dataEntry.status_aplikasi,
-            })
-            .subscribe({
-              next: () => {
-                alert('Data Berhasil Di Updated');
-                this.router.navigate(['/data-entry']);
-              },
-              error(error) {
-                alert(error.error.messages);
-              },
-            });
+          Swal.fire({
+            title: 'Apakah yakin ingin Memproses Data ini?',
+            text: 'Data harus sudah lengkap',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Data Sudah Lengkap dan Valid!',
+          }).then(result => {
+            if (result.isConfirmed) {
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+                  app_no_de: this.app_no_de,
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                  status_aplikasi: this.dataEntry.status_aplikasi,
+                })
+                .subscribe({
+                  next: () => {
+                    alert('Data Berhasil Di Updated');
+                    this.router.navigate(['/data-entry']);
+                  },
+                  error(error) {
+                    alert(error.error.messages);
+                  },
+                });
+            }
+          });
         }
       }
     }
