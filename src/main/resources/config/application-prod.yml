@@ -33,9 +33,9 @@ spring:
       enabled: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/db_new_efos
+    url: jdbc:postgresql:10.20.82.15:5432/db_new_efos
     username: postgres
-    password: postgres
+    password: p0stgr35BMS2022
     hikari:
       poolName: Hikari
       auto-commit: false
