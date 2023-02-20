@@ -1518,6 +1518,7 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   gotodaftaraplikasiide(): void {
+    this.getLoading(true);
     const kirimPro = this.ideForm.get('provinsi')?.value.split('|');
     const kirimKota = this.ideForm.get('kabkota')?.value.split('|');
     const kirimKec = this.ideForm.get('kecamatan')?.value.split('|');
@@ -2652,6 +2653,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       //   this.ideFixServices.getUploadSlik(data.result.app_no_de, data.result.doc_id).subscribe({})
       // }
     });
+    this.getLoading(false);
   }
   download() {
     const buatPdf = this.isiUpload[0].nama_dokumen.split('.').pop();
