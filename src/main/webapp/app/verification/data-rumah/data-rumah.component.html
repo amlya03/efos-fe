@@ -192,7 +192,16 @@
   </div>
 </div>
 <p></p>
-<button class="btn btn-info" type="button" (click)="printLajang(listLajangSlik[0].id_number)">Lihat Slik</button>
+<table id="downloadSlikOJK">
+  <tr>
+    <th></th>
+  </tr>
+  <tr *ngFor="let room of this.downloadSlik; let i = index">
+    <td>
+      <button class="btn btn-info" (click)="printLajang(room.id_number)">Download Slik - {{ room.id_number }}</button>
+    </td>
+  </tr>
+</table>
 <p></p>
 <div [hidden]="this.dataEntry.joint_income == 0">
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">

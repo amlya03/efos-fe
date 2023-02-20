@@ -15,4 +15,6 @@ export class getMapis {
   updated_date?: string;
   note: string | number | undefined | null;
   harga_transaksi: string | number | undefined | null;
+  marketabilitas: string | number | undefined | null;
+  status_imb: string | number | undefined | null;
 }

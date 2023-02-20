@@ -110,6 +110,7 @@ export class StukturPembiayaanComponent implements OnInit {
       total_angsuran: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       max_angsuran: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       dsr: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      akad: { value: '', disabled: true },
     });
 
     this.mapisForm = this.formBuilder.group({
@@ -210,6 +211,7 @@ export class StukturPembiayaanComponent implements OnInit {
             total_angsuran: '',
             max_angsuran: '',
             dsr: '',
+            akad: '',
           };
           this.strukturForm.setValue(retrivestrukturForm);
         }, 100);
@@ -243,6 +245,7 @@ export class StukturPembiayaanComponent implements OnInit {
             total_angsuran: this.strukturPembiayaan.total_angsuran,
             max_angsuran: this.strukturPembiayaan.max_angsuran,
             dsr: this.strukturPembiayaan.dsr,
+            akad: this.strukturPembiayaan.akad,
           };
           this.strukturForm.setValue(retrivestrukturForm);
         }, 100);
@@ -309,6 +312,7 @@ export class StukturPembiayaanComponent implements OnInit {
         this.tenor = Non.result;
       });
     }
+    this.strukturForm.get('akad')?.setValue(skemaidName[3]);
   }
 
   // Hitung Angsuran
@@ -327,6 +331,7 @@ export class StukturPembiayaanComponent implements OnInit {
         skema_id: skemaidName[0],
         skema_master: skemaidName[1],
         tenor: this.dataEntry.jangka_waktu,
+        akad: this.dataEntry.akad,
       })
       .subscribe({
         next: data => {
@@ -358,6 +363,12 @@ export class StukturPembiayaanComponent implements OnInit {
                       .post<any>(this.baseUrl + 'v1/efos-verif/getHitungScoring', {
                         dsr: dsrnya,
                         app_no_de: this.dataEntry.app_no_de,
+                        uang_muka: this.strukturForm.get('down_payment')?.value,
+                        angsuran: this.strukturForm.get('angsuran')?.value,
+                        akad: this.strukturForm.get('akad')?.value,
+                        kode_program: this.dataEntry.produk,
+                        ftv: this.betaFTV,
+                        tenor: this.strukturForm.get('tenor')?.value,
                       })
                       .subscribe({
                         next: scoring => {
@@ -418,6 +429,7 @@ export class StukturPembiayaanComponent implements OnInit {
           total_angsuran: this.strukturForm.get('total_angsuran')?.value,
           skema_code: Skemanya[0],
           skema_master: Skemanya[1],
+          akad: this.strukturForm.get('akad')?.value,
         })
         .subscribe({
           next: () => {
@@ -447,6 +459,7 @@ export class StukturPembiayaanComponent implements OnInit {
           total_angsuran: this.strukturForm.get('total_angsuran')?.value,
           skema_code: Skemanya[0],
           skema_master: Skemanya[1],
+          akad: this.strukturForm.get('akad')?.value,
         })
         .subscribe({
           next: () => {

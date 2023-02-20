@@ -94,16 +94,7 @@
     this.mutasiForm.get('kredit')?.setValue('');
     this.mutasiForm.get('saldo')?.setValue('');
     hubunganDenganBank.style.display = 'block';
-    this.mutasiForm.get('nama_bank')?.enable();
-    this.mutasiForm.get('no_rekening')?.enable();
-    this.mutasiForm.get('tahun')?.enable();
-    this.mutasiForm.get('bulan')?.enable();
-    this.mutasiForm.get('debet')?.enable();
-    this.mutasiForm.get('kredit')?.enable();
-    this.mutasiForm.get('saldo')?.enable();
-    this.mutasiForm.get('kepemilikan_tabungan')?.enable();
-    this.mutasiForm.get('kepemilikan_giro')?.enable();
-    this.mutasiForm.get('kepemilikan_deposito')?.enable()
+    this.mutasiForm.enable()
   "
   class="btn btn-info"
   style="float: right"
@@ -146,16 +137,7 @@
               this.tambahTableMutasi = 1;
               this.lihatTableMutasi = 1;
               hubunganDenganBank.style.display = 'block';
-              this.mutasiForm.get('nama_bank')?.disable();
-              this.mutasiForm.get('no_rekening')?.disable();
-              this.mutasiForm.get('tahun')?.disable();
-              this.mutasiForm.get('bulan')?.disable();
-              this.mutasiForm.get('debet')?.disable();
-              this.mutasiForm.get('kredit')?.disable();
-              this.mutasiForm.get('saldo')?.disable();
-              this.mutasiForm.get('kepemilikan_tabungan')?.disable();
-              this.mutasiForm.get('kepemilikan_giro')?.disable();
-              this.mutasiForm.get('kepemilikan_deposito')?.disable()
+              this.mutasiForm.disable()
             "
             ><fa-icon icon="ellipsis"></fa-icon><br />View</a
           >
@@ -168,16 +150,7 @@
               editMutasi(mutasiRekening.id);
               this.tambahTableMutasi = 1;
               hubunganDenganBank.style.display = 'block';
-              this.mutasiForm.get('nama_bank')?.enable();
-              this.mutasiForm.get('no_rekening')?.enable();
-              this.mutasiForm.get('tahun')?.enable();
-              this.mutasiForm.get('bulan')?.enable();
-              this.mutasiForm.get('debet')?.enable();
-              this.mutasiForm.get('kredit')?.enable();
-              this.mutasiForm.get('saldo')?.enable();
-              this.mutasiForm.get('kepemilikan_tabungan')?.enable();
-              this.mutasiForm.get('kepemilikan_giro')?.enable();
-              this.mutasiForm.get('kepemilikan_deposito')?.enable()
+              this.mutasiForm.enable()
             "
             ><fa-icon icon="pencil-square"></fa-icon><br />Edit</a
           >

@@ -79,19 +79,19 @@ export class InputScoringService {
 
   // ////////////////////// get listparameterscoring \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   getmainparameterscoringbyid(id: string | null | undefined): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>((this.reffgetmainparamterscoringbyid += id));
+    return this.http.get<ApiResponse>(this.reffgetmainparamterscoringbyid + id);
   }
   // ////////////////////// List getdatascoringdetail \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// get listparameterscoring \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   getdatascoringdetailbyid(id: string | null | undefined): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>((this.reffgetdatascoringbyid += id));
+    return this.http.get<ApiResponse>(this.reffgetdatascoringbyid + id);
   }
   // ////////////////////// List getdatascoringdetail\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// get Sub Parameter Scoring BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   getParameterScoring(id: string | null | undefined): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>((this.getParameterScoringUrl += id));
+    return this.http.get<ApiResponse>(this.getParameterScoringUrl + id);
   }
   // ////////////////////// get Sub Parameter Scoring BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 }

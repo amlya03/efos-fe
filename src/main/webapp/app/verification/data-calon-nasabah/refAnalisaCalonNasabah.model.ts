@@ -54,4 +54,6 @@ export class refAnalisaCalonNasabah {
   updated_date?: string;
   created_by?: string;
   updated_by?: string;
+  note_verif_thp?: string;
+  verif_thp?: string;
 }

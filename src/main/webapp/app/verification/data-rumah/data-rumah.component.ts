@@ -20,6 +20,7 @@ import { Subject } from 'rxjs';
 import { ServiceVerificationService } from '../service/service-verification.service';
 import { refAnalisaKeuangan } from './refAnalisaKeuangan.model';
 import { environment } from 'environments/environment';
+import { InitialDataEntryService } from '../../initial-data-entry/services/initial-data-entry.service';
 
 @Component({
   selector: 'jhi-data-rumah',
@@ -54,6 +55,7 @@ export class DataRumahComponent implements OnInit {
   // Total Outstanding
   outstanding: any;
   totalOutstandingSlik: any;
+  downloadSlik: any;
 
   // Table Slik
   totalOutNas: any;
@@ -84,7 +86,8 @@ export class DataRumahComponent implements OnInit {
     protected applicationConfigService: ApplicationConfigService,
     private formBuilder: FormBuilder,
     protected dataEntryService: DataEntryService,
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
+    protected initalDataEntry: InitialDataEntryService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -170,10 +173,17 @@ export class DataRumahComponent implements OnInit {
     setTimeout(() => {
       this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
         this.dataEntry = data.result;
-        // alert(this.dataEntry.joint_income)
+        // console.warn(data)
+        // alert(data.result.app_no_ide)
         // ambil semua data Slik
-        setTimeout(() => {
-          this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe(slikRes => {
+        // setTimeout(() => {
+        this.dataRumah.fetchSlik(data.result.app_no_ide).subscribe({
+          next: slikRes => {
+            this.initalDataEntry.getDownloadSlik(data.result.app_no_ide).subscribe(download => {
+              this.downloadSlik = download.result;
+              // this.dtTrigger.next(download.result)
+              // $('#downloadSlikOJK').DataTable().rows.add(download.result).draw();
+            });
             this.getLoading(false);
             this.slikTotal = slikRes.result;
             const retSlik = {
@@ -229,8 +239,8 @@ export class DataRumahComponent implements OnInit {
             this.totalPlafonSlik = plafonNasabah + plafonPasangan;
             this.totalOutstandingSlik = outstandingNasabah + outstandingPasangan;
             // alert(this.totalPlafonSlik)
-          });
-        }, 20);
+          },
+        });
       });
     }, 1);
 

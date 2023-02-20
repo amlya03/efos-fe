@@ -18,4 +18,5 @@ export class refStrukturPembiayaan {
   created_by?: string;
   updated_date?: string;
   updated_by?: string;
+  akad: string | null | undefined | number;
 }

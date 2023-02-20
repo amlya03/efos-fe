@@ -13,7 +13,7 @@
             type="text"
             class="form-control"
             currencyMask
-            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
             formControlName="harga_transaksi"
           />
         </div>
@@ -28,7 +28,7 @@
             id="nilai_market"
             formControlName="nilai_market"
             currencyMask
-            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.' }"
+            [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
           <br />
         </div>
@@ -36,19 +36,21 @@
       <div class="form-group row" *ngIf="dataEntry.kode_fasilitas_name === 'PPK'">
         <label class="col-sm-4 col-form-label">Marketabilitas</label>
         <div class="col-sm-8">
-          <select class="form-control" id="marketabilitas">
+          <select class="form-control" formControlName="marketabilitas">
             <option value="">Pilih Data</option>
-            <option *ngFor="let imb of imbModel" value="{{ imb.deskripsi }}">{{ imb.deskripsi }}</option>
+            <option *ngFor="let marketabilitas of marketabilitasModel" value="{{ marketabilitas.deskripsi }}">
+              {{ marketabilitas.deskripsi }}
+            </option>
           </select>
         </div>
       </div>
       <div class="form-group row" [hidden]="dataEntry.kode_fasilitas_name === 'PPK'">
         <label class="col-sm-4 col-form-label">IMB / PBG</label>
         <div class="col-sm-8">
-          <select class="form-control" id="imb_pbg">
+          <select class="form-control" formControlName="status_imb">
             <option value=""></option>
-            <option *ngFor="let marketabilitas of marketabilitasModel" value="{{ marketabilitas.deskripsi }}">
-              {{ marketabilitas.deskripsi }}
+            <option *ngFor="let imb of imbModel" value="{{ imb.deskripsi }}">
+              {{ imb.deskripsi }}
             </option>
           </select>
           <br />

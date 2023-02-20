@@ -59,6 +59,8 @@ export class MapisComponent implements OnInit {
         nilai_market: '',
         note: '',
         harga_transaksi: '',
+        marketabilitas: '',
+        status_imb: '',
       });
     }
     this.load();
@@ -115,6 +117,8 @@ export class MapisComponent implements OnInit {
           nilai_market: '',
           note: '',
           harga_transaksi: '',
+          marketabilitas: '',
+          status_imb: '',
         };
         this.mapisForm.setValue(retriveForm);
       } else {
@@ -126,6 +130,8 @@ export class MapisComponent implements OnInit {
           nilai_market: this.mapisModel.nilai_market,
           note: this.mapisModel.note,
           harga_transaksi: this.mapisModel.harga_transaksi,
+          marketabilitas: this.mapisModel.marketabilitas,
+          status_imb: this.mapisModel.status_imb,
         };
         this.mapisForm.setValue(retriveForm);
       }
@@ -159,6 +165,8 @@ export class MapisComponent implements OnInit {
                 tipe_agunan: this.retTipeAg,
                 note: this.mapisForm.get('note')?.value,
                 harga_transaksi: this.mapisForm.get('harga_transaksi')?.value,
+                marketabilitas: this.mapisForm.get('marketabilitas')?.value,
+                status_imb: this.mapisForm.get('status_imb')?.value,
                 // "updated_date": null,
                 // "updated_by": null
               })
@@ -198,6 +206,8 @@ export class MapisComponent implements OnInit {
                 harga_transaksi: this.mapisForm.get('harga_transaksi')?.value,
                 updated_date: '',
                 updated_by: this.sessionStorageService.retrieve('sessionUserName'),
+                marketabilitas: this.mapisForm.get('marketabilitas')?.value,
+                status_imb: this.mapisForm.get('status_imb')?.value,
               })
               .subscribe({
                 next: () => {
@@ -237,6 +247,8 @@ export class MapisComponent implements OnInit {
                 tipe_agunan: this.retTipeAg,
                 note: this.mapisForm.get('note')?.value,
                 harga_transaksi: this.mapisForm.get('harga_transaksi')?.value,
+                marketabilitas: this.mapisForm.get('marketabilitas')?.value,
+                status_imb: this.mapisForm.get('status_imb')?.value,
                 // "updated_date": null,
                 // "updated_by": null
               })
@@ -266,6 +278,8 @@ export class MapisComponent implements OnInit {
                 harga_transaksi: this.mapisForm.get('harga_transaksi')?.value,
                 updated_date: '',
                 updated_by: this.sessionStorageService.retrieve('sessionUserName'),
+                marketabilitas: this.mapisForm.get('marketabilitas')?.value,
+                status_imb: this.mapisForm.get('status_imb')?.value,
               })
               .subscribe({
                 next() {

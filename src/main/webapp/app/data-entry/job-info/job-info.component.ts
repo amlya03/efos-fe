@@ -229,11 +229,11 @@ export class JobInfoComponent implements OnInit {
       // ambil semua data DE
       this.datEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
         this.dataEntry = data.result;
-
+        // console.warn(data.result)
         // untuk list job
-        if (this.dataEntry.kategori_pekerjaan == 'Fix Income') {
+        if (data.result.kategori_pekerjaan == 'Fix Income') {
           this.untukListJob = 1;
-        } else if (this.dataEntry.kategori_pekerjaan == 'Non Fix Income') {
+        } else if (data.result.kategori_pekerjaan == 'Non Fix Income') {
           this.untukListJob = 2;
         }
 
@@ -366,7 +366,8 @@ export class JobInfoComponent implements OnInit {
         this.tampunganid = job.result;
 
         setTimeout(() => {
-          if (job.result.kategori_pekerjaan_sebelum == null) {
+          // console.warn(job.result)
+          if (job.result == null) {
             // alert('inijalan');
             const retrivejobsebelum = {
               kategori_pekerjaan_sebelum: '',
@@ -427,7 +428,11 @@ export class JobInfoComponent implements OnInit {
                 this.dataretrivejenisbidangsebelum = this.tampunganid.jenis_bidang_sebelum;
               }, 5);
               setTimeout(() => {
-                this.carimenggunakankodepostsebelum(this.tampunganid.kode_pos_sebelum);
+                if (this.tampunganid.kode_pos_sebelum === null) {
+                  //
+                } else {
+                  this.carimenggunakankodepostsebelum(this.tampunganid.kode_pos_sebelum);
+                }
               }, 10);
               setTimeout(() => {
                 this.katagoripekerjaanselect(this.nampungsebelum + '|' + this.tampunganid.kategori_pekerjaan_sebelum);
@@ -459,12 +464,6 @@ export class JobInfoComponent implements OnInit {
         this.getdatasektorekonomi = data.result;
       },
     });
-  }
-
-  transformAmount(element: any): void {
-    this.formattedAmount = this.currencyPipe.transform(this.formattedAmount, 'Rp');
-
-    element.target.value = this.formattedAmount;
   }
 
   katagoripekerjaanselect(value: any): void {
@@ -855,6 +854,7 @@ export class JobInfoComponent implements OnInit {
             }
           });
         }
+
         this.dataretriveprovinsisebelum = data.result.provKec.nm_prov;
         this.dataretrivekabkotasebelum = data.result.provKec.nm_kota;
         this.dataretrivekecamatansebelum = data.result.provKec.nm_kec;

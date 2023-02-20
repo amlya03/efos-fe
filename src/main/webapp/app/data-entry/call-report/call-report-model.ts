@@ -1,4 +1,4 @@
-export interface callreport {
+export class callreport {
   id: any;
   curef: any;
   app_no_de: any;

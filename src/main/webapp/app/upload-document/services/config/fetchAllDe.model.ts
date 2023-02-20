@@ -86,4 +86,5 @@ export class fetchAllDe {
   fasilitas_ke?: number;
   joint_income?: number | string | undefined | null;
   jenis_pekerjaan_pasangan_desc?: string;
+  akad: number | string | undefined | null;
 }
