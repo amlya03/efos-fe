@@ -1711,6 +1711,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                 });
             },
             error: error => {
+              this.getLoading(false);
               // if (error.error.code == 400) {
               alert('Gagal Menyimpan Data');
               alert(error.error.message);
@@ -1961,6 +1962,7 @@ export class InitialDataEntryFixComponent implements OnInit {
               }
             },
             error: error => {
+              this.getLoading(false);
               if (error.error.code == 400) {
                 alert('Gagal Menyimpan Data');
                 alert(error.error.message);
