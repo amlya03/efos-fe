@@ -194,7 +194,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       status_perkawinan: ['', Validators.required],
       agama: ['', Validators.required],
       pendidikan: ['', Validators.required],
-      kewarganegaraan: ['WNI', Validators.required],
+      kewarganegaraan: [{ value: 'WNI', disabled: true }, Validators.required],
       nama_ibu_kandung: ['', Validators.required],
       npwp: '',
       alamat_ktp: ['', Validators.required],

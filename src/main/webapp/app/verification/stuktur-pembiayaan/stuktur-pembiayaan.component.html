@@ -656,9 +656,10 @@
       <div class="col-sm-3">
         <input type="text" readonly class="form-control" id="hasil_scoring" name="hasil_scoring" [value]="this.hasilScoring" />
       </div>
-      <div class="col-sm-3">
-        <h5 [hidden]="this.hasilStatus !== 'BAD'" style="color: red">{{ this.hasilStatus }}</h5>
-        <h5 [hidden]="this.hasilStatus === 'BAD'" style="color: green">{{ this.hasilStatus }}</h5>
+      <div class="col-sm-4">
+        <h5 *ngIf="this.hasilStatus === 'DISETUJUI'" style="color: green">{{ this.hasilStatus }}</h5>
+        <h5 *ngIf="this.hasilStatus === 'DITOLAK'" style="color: red">{{ this.hasilStatus }}</h5>
+        <h5 *ngIf="hasilStatus === 'DIPERTIMBANGKAN'" style="color: orange">{{ this.hasilStatus }}</h5>
       </div>
     </div>
   </div>

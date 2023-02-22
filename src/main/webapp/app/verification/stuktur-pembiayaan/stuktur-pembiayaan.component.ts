@@ -366,7 +366,7 @@ export class StukturPembiayaanComponent implements OnInit {
                         uang_muka: this.strukturForm.get('down_payment')?.value,
                         angsuran: this.strukturForm.get('angsuran')?.value,
                         akad: this.strukturForm.get('akad')?.value,
-                        kode_program: this.dataEntry.produk,
+                        kode_produk: this.dataEntry.produk,
                         ftv: this.betaFTV,
                         tenor: this.strukturForm.get('tenor')?.value,
                       })

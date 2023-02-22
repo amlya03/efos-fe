@@ -493,7 +493,6 @@
           <label class="col-sm-4 col-form-label">Tahun Berdiri</label>
           <div class="col-sm-8">
             <input
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               type="tel"
               onkeypress="return onlyNumberKey(event)"
               class="form-control"
@@ -575,7 +574,6 @@
           <label class="col-sm-4 col-form-label">No Kontak HR</label>
           <div class="col-sm-8">
             <input
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
               type="tel"
               pattern="^(\+62|62|0)(8|[2-7])[1-9][0-9]{6,9}$"
               class="form-control"
@@ -1245,14 +1243,7 @@
       <div class="form-group row" *ngIf="this.daWa1.kategori_pekerjaan == 'Fix Income'">
         <label class="col-sm-4 col-form-label">Keterangan</label>
         <div class="col-sm-8">
-          <textarea
-            formControlName="keterangan"
-            id="keterangan"
-            class="form-control"
-            cols="100"
-            rows="6"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-          ></textarea>
+          <textarea formControlName="keterangan" id="keterangan" class="form-control" cols="100" rows="6"></textarea>
           <span
             [hidden]="
               callReportForm.controls.keterangan.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'

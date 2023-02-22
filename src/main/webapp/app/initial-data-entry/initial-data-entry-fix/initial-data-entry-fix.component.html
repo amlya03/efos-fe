@@ -28,7 +28,7 @@
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Nama Lengkap</label>
+      <label class="col-sm-4 col-form-label">Nama Lengkap Sesuai KTP</label>
       <div class="col-sm-8">
         <input type="name" id="nama" formControlName="nama" name="nama" class="form-control" placeholder="Nama Lengkap" />
       </div>
@@ -139,11 +139,7 @@
       <label class="col-sm-4 col-form-label">Kewarganegaraan</label>
       <div class="col-sm-8">
         <div class="form-group">
-          <select class="form-control" id="kewarganegaraan" formControlName="kewarganegaraan" name="kewarganegaraan">
-            <option value="">Pilih Kewarganegaraan</option>
-            <option value="WNI">WNI</option>
-            <option value="WNA">WNA</option>
-          </select>
+          <input class="form-control" id="kewarganegaraan" formControlName="kewarganegaraan" name="kewarganegaraan" />
         </div>
       </div>
       <br />
@@ -366,6 +362,12 @@
       </div>
     </div>
     <br />
+    <div class="form-group row" *ngIf="this.ideForm.get('status_perkawinan')?.value === 'Menikah'">
+      <label class="col-sm-4 col-form-label">Terdapat Penjanjian Harta Gono Gini</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" />
+      </div>
+    </div>
   </div>
 </div>
 <br />

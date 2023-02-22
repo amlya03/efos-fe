@@ -8,4 +8,5 @@ export class mainparameterscoring {
   id_ref_main_parameter_scoring?: string;
   parameter_type?: string;
   main_parameter_scoring_desc?: string;
+  fasilitas?: string;
 }

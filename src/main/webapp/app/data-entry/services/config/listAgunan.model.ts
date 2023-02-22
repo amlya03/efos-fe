@@ -23,7 +23,7 @@ export class listAgunan {
   kabkota_agunan?: string;
   kecamatan_agunan?: string;
   kelurahan_agunan?: string;
-  kode_pos_agunan?: number;
+  kode_pos_agunan: string | number | null | undefined;
   luas_bangunan?: number;
   luas_tanah?: number;
   harga_objek?: string | number | null | undefined;
@@ -32,7 +32,7 @@ export class listAgunan {
   kabkota_sesuai_sertifikat?: string;
   kelurahan_sesuai_sertifikat?: string;
   kecamatan_sesuai_sertifikat?: string;
-  kode_pos_sesuai_sertifikat?: number;
+  kode_pos_sesuai_sertifikat: string | number | null | undefined;
   tipe_kendaraan?: string;
   merk?: string;
   model?: string;

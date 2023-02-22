@@ -43,7 +43,6 @@
               (change)="onChange(this.emergencyForm.get('provinsi')?.value)"
               id="provinsi_cabang"
               formControlName="provinsi"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
               <option *ngFor="let daWaprof of daWaprof" value="{{ daWaprof.kdWilayah }}|{{ daWaprof.namaWilayah }}">
                 {{ daWaprof.namaWilayah }}
@@ -69,7 +68,6 @@
               (change)="onChangekota(this.emergencyForm.get('kabkota')?.value)"
               id="kabkota_cabang"
               formControlName="kabkota"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
               <option *ngFor="let daWakota of daWakota" value="{{ daWakota.kdWilayah }}|{{ daWakota.namaWilayah }}">
                 {{ daWakota.namaWilayah }}
@@ -95,7 +93,6 @@
               (change)="onChangekecamatan(this.emergencyForm.get('kecamatan')?.value)"
               id="kecamatan"
               formControlName="kecamatan"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
               <option *ngFor="let daWakecamatan of kecamatan" value="{{ daWakecamatan.kdWilayah }}|{{ daWakecamatan.namaWilayah }}">
                 {{ daWakecamatan.namaWilayah }}
@@ -121,7 +118,6 @@
               (change)="onChangekelurahan(this.emergencyForm.get('kelurahan')?.value)"
               id="kelurahan"
               formControlName="kelurahan"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             >
               <option *ngFor="let daWakelurahan of kelurahan" value="{{ daWakelurahan.kdPos }}|{{ daWakelurahan.namaWilayah }}">
                 {{ daWakelurahan.namaWilayah }}
@@ -177,7 +173,6 @@
         <label class="col-sm-4 col-form-label">RT / RW</label>
         <div class="col">
           <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             type="tel"
             (keypress)="keyPressNumbers($event)"
             class="form-control"
@@ -195,7 +190,6 @@
         <div class="col">RT</div>
         <div class="col">
           <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             type="tel"
             (keypress)="keyPressNumbers($event)"
             class="form-control"
@@ -217,7 +211,6 @@
         <label class="col-sm-4 col-form-label">Nomor Telepon</label>
         <div class="col-sm-8">
           <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
             type="tel"
             (keypress)="keyPressNumbers($event)"
             class="form-control"
@@ -241,12 +234,7 @@
         <label class="col-sm-4 col-form-label">Hubungan</label>
         <div class="col-sm-8">
           <div class="form-group">
-            <select
-              class="form-control"
-              id="hubungan"
-              formControlName="hubungan"
-              [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-            >
+            <select class="form-control" id="hubungan" formControlName="hubungan">
               <option *ngFor="let gethubunganemergency1 of gethubunganemergency1" value="{{ gethubunganemergency1.deskripsi }}">
                 {{ gethubunganemergency1.deskripsi }}
               </option>
@@ -265,14 +253,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Email</label>
         <div class="col-sm-8">
-          <input
-            type="email"
-            class="form-control"
-            placeholder="Email"
-            id="email"
-            formControlName="email"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-          />
+          <input type="email" class="form-control" placeholder="Email" id="email" formControlName="email" />
           <span
             [hidden]="
               emergencyForm.controls.email.valid || this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'

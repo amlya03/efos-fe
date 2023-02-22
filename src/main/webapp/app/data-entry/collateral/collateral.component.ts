@@ -41,7 +41,6 @@ export class CollateralComponent implements OnInit {
   app_no_de: any;
   curef: any;
   daWa: any;
-  tampungantipeagunan: any;
   tambahatautidak: any;
   daWaprof: any;
   daWakota: any;
@@ -405,12 +404,6 @@ export class CollateralComponent implements OnInit {
     const datakodepos = value.split('|');
     this.daWakodepos = datakodepos[0];
     this.collateralForm.get('kode_pos_sesuai_sertifikat')?.setValue(this.daWakodepos);
-  }
-
-  changefom(): void {
-    const pilihantipeagunan = document.getElementById('tipe_anggunan') as HTMLInputElement | any;
-
-    this.tampungantipeagunan = pilihantipeagunan.value;
   }
 
   tambahcollateral(): void {

@@ -506,8 +506,12 @@ export class CollateralEditComponent implements OnInit {
 
         setTimeout(() => {
           this.getLoading(false);
-          this.carimenggunakankodeposagunan(this.tableAgunan.kode_pos_agunan);
-          this.carimenggunakankodepossertifikat(this.tableAgunan.kode_pos_sesuai_sertifikat);
+          if (this.tableAgunan.kode_pos_agunan === '') {
+            //
+          } else {
+            this.carimenggunakankodeposagunan(this.tableAgunan.kode_pos_agunan);
+            this.carimenggunakankodepossertifikat(this.tableAgunan.kode_pos_sesuai_sertifikat);
+          }
         }, 300);
       });
     }, 80);

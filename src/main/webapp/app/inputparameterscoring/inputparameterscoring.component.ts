@@ -15,6 +15,7 @@ import { environment } from 'environments/environment';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { mainparameterscoring } from 'app/input-scoring/mainparameterscoring.model';
 import { InputScoringService } from 'app/input-scoring/input-scoring.service';
+import { getListFasilitasModel } from 'app/data-entry/services/config/getListFasilitasModel.model';
 
 @Component({
   selector: 'jhi-inputparameterscoring',
@@ -41,6 +42,7 @@ export class InputparameterscoringComponent implements OnInit {
   subActive: any;
   subTipeData: any;
   subParameterSlice: any;
+  modelFasiltas: getListFasilitasModel[] = [];
 
   constructor(
     protected http: HttpClient,
@@ -65,6 +67,13 @@ export class InputparameterscoringComponent implements OnInit {
   }
   load(): void {
     this.getLoading(true);
+    this.datEntryService.getFetchKodeFasilitas().subscribe({
+      next: responseFasilitas => {
+        // console.warn(responseFasilitas.result);
+        this.modelFasiltas = responseFasilitas.result;
+      },
+    });
+
     this.scoringServices.listmainparameterscoring().subscribe(data => {
       this.listmainparameterscoring = data.result;
       this.dtTriggerMain.next(data.result);
@@ -97,6 +106,13 @@ export class InputparameterscoringComponent implements OnInit {
   }
 
   simpanDataparameterscoring(): void {
+    const listFasilitas = this.modelFasiltas.map((listFasilitasResponse: getListFasilitasModel) => {
+      return `
+        <option value="${listFasilitasResponse.fasilitas}">
+            ${listFasilitasResponse.fasilitas}
+        </option>
+      `;
+    });
     $(document).ready(function () {
       $('#parameter').change(function () {
         const parameterValue = $(this).val();
@@ -114,8 +130,13 @@ export class InputparameterscoringComponent implements OnInit {
       title: 'Main Parameter Scoring',
       html:
         '<br/><div class="row" style="width: 100%;">' +
+        '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Fasilitas</label>' +
+        '<div class="col-sm-9"><select id="list_fasilitas" class="form-control"><option value="">Pilih Fasilitas</option><option value="">ALL</option>' +
+        `${listFasilitas}` +
+        '</select>' +
+        '</div></div><p></p>' +
         '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Status aktif</label>' +
-        '<div class="col-sm-9"><select id="status_aktif" class="form-control"><option value="">Pilih Status</option><option value="1">active</option><option value="0">Tidak</option></select>' +
+        '<div class="col-sm-9"><select id="status_aktif" class="form-control"><option value="">Pilih Status</option><option value="1">Active</option><option value="0">Tidak</option></select>' +
         '</div></div><p></p>' +
         '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Deskripsi</label>' +
         '<div class="col-sm-9"><input type="text" class="form-control" id="parameter_deskripsi"/>' +
@@ -131,6 +152,7 @@ export class InputparameterscoringComponent implements OnInit {
       focusConfirm: false,
       allowOutsideClick: false,
     }).then(result => {
+      const list_fasilitas = $('#list_fasilitas').val();
       const status_aktif = $('#status_aktif').val();
       const parameter_deskripsi = $('#parameter_deskripsi').val();
       const bobot1 = $('#bobot').val();
@@ -149,6 +171,7 @@ export class InputparameterscoringComponent implements OnInit {
             active: this.kirimanstatus,
             parameter_description: parameter_deskripsi,
             bobot: bobot1,
+            fasilitas: list_fasilitas,
           })
           .subscribe({
             next() {
@@ -176,7 +199,7 @@ export class InputparameterscoringComponent implements OnInit {
       html:
         '<br/><div class="row" style="width: 100%;">' +
         '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Status aktif</label>' +
-        '<div class="col-sm-9"><select id="status_aktif" class="form-control"><option value="">Pilih Status</option><option value="1">active</option><option value="0">Tidak</option></select>' +
+        '<div class="col-sm-9"><select id="status_aktif" class="form-control"><option value="">Pilih Status</option><option value="1">Active</option><option value="0">Tidak</option></select>' +
         '</div></div><p></p>' +
         '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Parameter</label>' +
         '<div class="col-sm-9"><select class="form-control" id="parameter"><option value="">Pilih Parameter</option>' +
@@ -241,6 +264,14 @@ export class InputparameterscoringComponent implements OnInit {
   }
 
   viewdetailmainparameter(idParam: any): void {
+    const listFasilitasGet = this.modelFasiltas.map((listFasilitasResponseGet: getListFasilitasModel) => {
+      return `
+        <option value="${listFasilitasResponseGet.fasilitas}">
+            ${listFasilitasResponseGet.fasilitas}
+        </option>
+      `;
+    });
+
     this.scoringServices.getmainparameterscoringbyid(idParam).subscribe(data => {
       this.mainparameterscoringbyid = data.result;
       if ((this.mainparameterscoringbyid.active = '1')) {
@@ -248,12 +279,23 @@ export class InputparameterscoringComponent implements OnInit {
       } else {
         this.hasilget = 'tidak';
       }
-
+      // console.warn(data)
       setTimeout(() => {
         Swal.fire({
           title: 'Main Parameter Scoring',
           html:
             '<br /><div class="row" style="width: 100%;">' +
+            '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Fasilitas</label>' +
+            '<div class="col-sm-9"><select id="list_fasilitas" class="form-control">' +
+            '<option value="' +
+            this.mainparameterscoringbyid.fasilitas +
+            '">' +
+            this.mainparameterscoringbyid.fasilitas +
+            '</option>' +
+            '<option value="">ALL</option>' +
+            `${listFasilitasGet}` +
+            '</select>' +
+            '</div></div><p></p>' +
             '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Status aktif</label>' +
             '<div class="col-sm-9"><select id="status_aktif" class="form-control">' +
             '<option value="' +
@@ -261,7 +303,7 @@ export class InputparameterscoringComponent implements OnInit {
             '">' +
             this.hasilget +
             '</option>' +
-            '<option value="1">active</option><option value="0">Tidak</option></select>' +
+            '<option value="1">Active</option><option value="0">Tidak</option></select>' +
             '</div></div><p></p>' +
             '<div class="form-group row"><label class="col-sm-3 col-form-label" style="font-size: medium;">Deskripsi</label>' +
             '<div class="col-sm-9"><input type="text" class="form-control" id="parameter_deskripsi" value="' +
@@ -281,6 +323,7 @@ export class InputparameterscoringComponent implements OnInit {
           focusConfirm: false,
           allowOutsideClick: false,
         }).then(result => {
+          const list_fasilitas = $('#list_fasilitas').val();
           const status_aktif = $('#status_aktif').val();
           const parameter_deskripsi = $('#parameter_deskripsi').val();
           const bobot3 = $('#bobot').val();
@@ -302,6 +345,7 @@ export class InputparameterscoringComponent implements OnInit {
                 bobot: bobot3,
                 updated_by: this.sessionStorageService.retrieve('sessionUserName'),
                 updated_date: '',
+                fasilitas: list_fasilitas,
               })
               .subscribe({
                 next() {
