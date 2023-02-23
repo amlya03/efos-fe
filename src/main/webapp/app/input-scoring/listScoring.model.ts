@@ -9,4 +9,9 @@ export class listScoring {
   score?: number;
   created_date?: string;
   created_by?: string;
+  kode_program?: string;
+  kode_fasilitas?: string;
+  deskripsi_program?: string;
+  updated_date?: string;
+  updated_by?: string;
 }

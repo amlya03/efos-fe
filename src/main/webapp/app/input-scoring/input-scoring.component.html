@@ -56,8 +56,8 @@
   <thead>
     <tr class="table-dark">
       <th style="text-align: center">No</th>
-      <th style="text-align: center">Produk</th>
-      <th style="text-align: center">Joint</th>
+      <th style="text-align: center">Fasilitas</th>
+      <th style="text-align: center">Program</th>
       <th style="text-align: center">Parameter</th>
       <th style="text-align: center">Data Value</th>
       <th style="text-align: center">Min</th>
@@ -70,7 +70,7 @@
     <tr *ngFor="let daWa of listScoring; index as i">
       <td style="text-align: center">{{ i + 1 }}</td>
       <td style="text-align: center">{{ daWa.produk }}</td>
-      <td style="text-align: center">{{ daWa.joint_income != 0 ? 'Ya' : 'Tidak' }}</td>
+      <td style="text-align: center">{{ daWa.deskripsi_program }}</td>
       <td style="text-align: center">{{ daWa.parameter }}</td>
       <td style="text-align: center">{{ daWa.data_value }}</td>
       <td style="text-align: center">{{ daWa.min_value }}</td>

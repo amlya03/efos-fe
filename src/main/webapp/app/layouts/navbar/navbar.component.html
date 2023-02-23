@@ -1,416 +1,402 @@
 <nav data-cy="navbar" class="navbar navbar-light navbar-expand-md bg-light" *ngIf="this.sudahLogin">
-  <div class="container-fluid">
-    <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
-      <span class="logo-img"></span>
-    </a>
-    <a
-      class="navbar-toggler d-lg-none"
-      href="javascript:void(0);"
-      data-toggle="collapse"
-      data-target="#navbarResponsive"
-      aria-controls="navbarResponsive"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-      (click)="toggleNavbar()"
-    >
-      <fa-icon icon="bars"></fa-icon>
-    </a>
-    <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
-      <ul class="navbar-nav">
-        <div *ngFor="let navbar of navbarParameterize">
-          <li class="row nav-item">
+  <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
+    <span class="logo-img"></span>
+  </a>
+  <a
+    class="navbar-toggler d-lg-none"
+    href="javascript:void(0);"
+    data-toggle="collapse"
+    data-target="#navbarResponsive"
+    aria-controls="navbarResponsive"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    (click)="toggleNavbar()"
+  >
+    <fa-icon icon="bars"></fa-icon>
+  </a>
+  <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
+    <ul class="navbar-nav">
+      <div *ngFor="let navbar of navbarParameterize">
+        <li class="row nav-item">
+          <a
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="col nav-link"
+            style="text-align: center"
+            routerLink="{{ navbar.menu_url }}"
+          >
+            <fa-icon [icon]="navbar.menu_icon"></fa-icon>
+            <p>{{ navbar.menu_name }}</p>
+            <div *ngIf="navbar.menu_name === 'IDE'">
+              <span routerLink="/initial-data-entryfix" hidden [queryParams]="{ kategori: this.kategori, id: this.paramId }"></span>
+              <span routerLink="/hasilprescreening" [queryParams]="{ kategori: this.kategori, id: this.paramId }" hidden></span>
+            </div>
+            <div *ngIf="navbar.menu_name === 'Data Entry'">
+              <span
+                class="col nav-link"
+                [routerLink]="['/data-entry/memo']"
+                [queryParams]="{
+                  curef: this.curef,
+
+                  app_no_de: this.app_no_de
+                }"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                [routerLink]="['/data-entry/personalinfo']"
+                [queryParams]="{
+                  curef: this.curef,
+
+                  app_no_de: this.app_no_de
+                }"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                [routerLink]="['/data-entry/job-info']"
+                [queryParams]="{
+                  curef: this.curef,
+
+                  app_no_de: this.app_no_de
+                }"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                [routerLink]="['/data-entry/editjobinfo']"
+                [queryParams]="{
+                  datakirimanid: this.datakirimanid,
+                  curef: this.curef,
+
+                  app_no_de: this.app_no_de
+                }"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                [queryParams]="{
+                  curef: this.curef,
+
+                  app_no_de: this.app_no_de
+                }"
+                routerLink="data-entry/data-pasangan"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                [queryParams]="{
+                  curef: this.curef,
+
+                  app_no_de: this.app_no_de
+                }"
+                routerLink="data-entry/pekerjaan-pasangan"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                [queryParams]="{
+                  curef: this.curef,
+
+                  app_no_de: this.app_no_de
+                }"
+                routerLink="data-entry/collateral"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                [queryParams]="{
+                  curef: this.curef,
+
+                  app_no_de: this.app_no_de,
+                  datakirimanid: this.datakirimanid
+                }"
+                routerLink="data-entry/editcollateral"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                [queryParams]="{
+                  curef: this.curef,
+
+                  app_no_de: this.app_no_de
+                }"
+                routerLink="data-entry/struktur-pembiayaan"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                [queryParams]="{
+                  curef: this.curef,
+
+                  app_no_de: this.app_no_de
+                }"
+                routerLink="data-entry/emergency-contact"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                routerLink="data-entry/call-report"
+                [queryParams]="{
+                  curef: this.curef,
+
+                  app_no_de: this.app_no_de
+                }"
+                hidden
+              >
+              </span>
+              <span
+                class="col nav-link"
+                routerLink="data-entry/call-report-non"
+                [queryParams]="{
+                  curef: this.curef,
+
+                  app_no_de: this.app_no_de
+                }"
+                hidden
+              ></span>
+            </div>
+            <div *ngIf="navbar.menu_name === 'Upload Document'">
+              <span
+                class="col nav-link"
+                [routerLink]="['/upload_document/upload_document_de']"
+                [queryParams]="{
+                  curef: this.curef,
+
+                  app_no_de: this.app_no_de
+                }"
+                hidden
+              ></span>
+              <span
+                class="col nav-link"
+                [routerLink]="['/upload_document/upload_document_agunan']"
+                [queryParams]="{
+                  curef: this.curef,
+
+                  app_no_de: this.app_no_de
+                }"
+                hidden
+              ></span>
+            </div>
+            <div *ngIf="navbar.menu_name === 'Verification' && untukSessionRole === 'VER_PRE_SPV'">
+              <span class="col nav-link" routerLink="daftar-aplikasi-waiting-assigment" hidden></span>
+              <span class="col nav-link" routerLink="daftar-aplikasi-on-process" hidden></span>
+              <span class="col nav-link" routerLink="daftar-review-spv1" hidden></span>
+              <span class="col nav-link" routerLink="daftar-review-spv2" hidden></span>
+              <span routerLink="/analisa-keuangan" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+              <span routerLink="/data-calon-nasabah" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+              <span routerLink="/data-kantor" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+              <span routerLink="/mutasi-rekening" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/sturktur-pembiayaan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/checklist-document" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/syarat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/kesimpulan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/verification/memo" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+            </div>
+            <div *ngIf="navbar.menu_name === 'Appraisal'">
+              <span routerLink="/mapis" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
+            </div>
+            <div *ngIf="navbar.menu_name === 'Verification' && untukSessionRole === 'VER_PRESCR'">
+              <span routerLink="/analisa-keuangan" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+              <span routerLink="/data-calon-nasabah" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+              <span routerLink="/data-kantor" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+              <span routerLink="/mutasi-rekening" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/sturktur-pembiayaan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/checklist-document" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/syarat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/kesimpulan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+              <span routerLink="/verification/memo" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
+            </div>
+            <div *ngIf="navbar.menu_name === 'APPROVAL'">
+              <span routerLink="/komite/detail-komite" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
+            </div>
+            <div *ngFor="let child of childNavbar">
+              <span [routerLink]="child.link" hidden></span>
+            </div>
+          </a>
+        </li>
+      </div>
+      <!-- <li
+        ngbDropdown
+        class="nav-item dropdown pointer"
+        display="dynamic"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
+          <span>
+            <fa-icon icon="users-gear"></fa-icon>
+            <span>Parameterize</span>
+          </span>
+        </a>
+        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
+          <li *ngFor="let language of languages">
             <a
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="col nav-link"
-              style="text-align: center"
-              routerLink="{{ navbar.menu_url }}"
+              class="dropdown-item"
+              [jhiActiveMenu]="language"
+              href="javascript:void(0);"
+              (click)="changeLanguage(language); collapseNavbar()"
+              >{{ language | findLanguageFromKey }}</a
             >
-              <fa-icon [icon]="navbar.menu_icon"></fa-icon>
-              <p>{{ navbar.menu_name }}</p>
-              <div *ngIf="navbar.menu_name === 'IDE'">
-                <span routerLink="/initial-data-entryfix" hidden [queryParams]="{ kategori: this.kategori, id: this.paramId }"></span>
-                <span routerLink="/hasilprescreening" [queryParams]="{ kategori: this.kategori, id: this.paramId }" hidden></span>
-              </div>
-              <div *ngIf="navbar.menu_name === 'Data Entry'">
-                <span
-                  class="col nav-link"
-                  [routerLink]="['/data-entry/memo']"
-                  [queryParams]="{
-                    curef: this.curef,
-
-                    app_no_de: this.app_no_de
-                  }"
-                  hidden
-                ></span>
-                <span
-                  class="col nav-link"
-                  [routerLink]="['/data-entry/personalinfo']"
-                  [queryParams]="{
-                    curef: this.curef,
-
-                    app_no_de: this.app_no_de
-                  }"
-                  hidden
-                ></span>
-                <span
-                  class="col nav-link"
-                  [routerLink]="['/data-entry/job-info']"
-                  [queryParams]="{
-                    curef: this.curef,
-
-                    app_no_de: this.app_no_de
-                  }"
-                  hidden
-                ></span>
-                <span
-                  class="col nav-link"
-                  [routerLink]="['/data-entry/editjobinfo']"
-                  [queryParams]="{
-                    datakirimanid: this.datakirimanid,
-                    curef: this.curef,
-
-                    app_no_de: this.app_no_de
-                  }"
-                  hidden
-                ></span>
-                <span
-                  class="col nav-link"
-                  [queryParams]="{
-                    curef: this.curef,
-
-                    app_no_de: this.app_no_de
-                  }"
-                  routerLink="data-entry/data-pasangan"
-                  hidden
-                ></span>
-                <span
-                  class="col nav-link"
-                  [queryParams]="{
-                    curef: this.curef,
-
-                    app_no_de: this.app_no_de
-                  }"
-                  routerLink="data-entry/pekerjaan-pasangan"
-                  hidden
-                ></span>
-                <span
-                  class="col nav-link"
-                  [queryParams]="{
-                    curef: this.curef,
-
-                    app_no_de: this.app_no_de
-                  }"
-                  routerLink="data-entry/collateral"
-                  hidden
-                ></span>
-                <span
-                  class="col nav-link"
-                  [queryParams]="{
-                    curef: this.curef,
-
-                    app_no_de: this.app_no_de,
-                    datakirimanid: this.datakirimanid
-                  }"
-                  routerLink="data-entry/editcollateral"
-                  hidden
-                ></span>
-                <span
-                  class="col nav-link"
-                  [queryParams]="{
-                    curef: this.curef,
-
-                    app_no_de: this.app_no_de
-                  }"
-                  routerLink="data-entry/struktur-pembiayaan"
-                  hidden
-                ></span>
-                <span
-                  class="col nav-link"
-                  [queryParams]="{
-                    curef: this.curef,
-
-                    app_no_de: this.app_no_de
-                  }"
-                  routerLink="data-entry/emergency-contact"
-                  hidden
-                ></span>
-                <span
-                  class="col nav-link"
-                  routerLink="data-entry/call-report"
-                  [queryParams]="{
-                    curef: this.curef,
-
-                    app_no_de: this.app_no_de
-                  }"
-                  hidden
-                >
-                </span>
-                <span
-                  class="col nav-link"
-                  routerLink="data-entry/call-report-non"
-                  [queryParams]="{
-                    curef: this.curef,
-
-                    app_no_de: this.app_no_de
-                  }"
-                  hidden
-                ></span>
-              </div>
-              <div *ngIf="navbar.menu_name === 'Upload Document'">
-                <span
-                  class="col nav-link"
-                  [routerLink]="['/upload_document/upload_document_de']"
-                  [queryParams]="{
-                    curef: this.curef,
-
-                    app_no_de: this.app_no_de
-                  }"
-                  hidden
-                ></span>
-                <span
-                  class="col nav-link"
-                  [routerLink]="['/upload_document/upload_document_agunan']"
-                  [queryParams]="{
-                    curef: this.curef,
-
-                    app_no_de: this.app_no_de
-                  }"
-                  hidden
-                ></span>
-              </div>
-              <div *ngIf="navbar.menu_name === 'Verification' && untukSessionRole === 'VER_PRE_SPV'">
-                <span class="col nav-link" routerLink="daftar-aplikasi-waiting-assigment" hidden></span>
-                <span class="col nav-link" routerLink="daftar-aplikasi-on-process" hidden></span>
-                <span class="col nav-link" routerLink="daftar-review-spv1" hidden></span>
-                <span class="col nav-link" routerLink="daftar-review-spv2" hidden></span>
-                <span routerLink="/analisa-keuangan" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
-                <span routerLink="/data-calon-nasabah" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
-                <span routerLink="/data-kantor" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
-                <span routerLink="/mutasi-rekening" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-                <span routerLink="/sturktur-pembiayaan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-                <span routerLink="/checklist-document" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-                <span routerLink="/syarat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-                <span routerLink="/kesimpulan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-                <span routerLink="/verification/memo" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-              </div>
-              <div *ngIf="navbar.menu_name === 'Appraisal'">
-                <span routerLink="/mapis" hidden [queryParams]="{ app_no_de: this.app_no_de }"></span>
-              </div>
-              <div *ngIf="navbar.menu_name === 'Verification' && untukSessionRole === 'VER_PRESCR'">
-                <span routerLink="/analisa-keuangan" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
-                <span routerLink="/data-calon-nasabah" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
-                <span routerLink="/data-kantor" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
-                <span routerLink="/mutasi-rekening" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-                <span routerLink="/sturktur-pembiayaan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-                <span routerLink="/checklist-document" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-                <span routerLink="/syarat-persetujuan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-                <span routerLink="/kesimpulan" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-                <span routerLink="/verification/memo" hidden [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"></span>
-              </div>
-              <div *ngIf="navbar.menu_name === 'APPROVAL'">
-                <span routerLink="/komite/detail-komite" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
-              </div>
-              <div *ngFor="let child of childNavbar">
-                <span [routerLink]="child.link" hidden></span>
-              </div>
+          </li>
+        </ul>
+      </li> -->
+      <li
+        *jhiHasAnyAuthority="'ROLE_ADMIN'"
+        ngbDropdown
+        class="nav-item dropdown pointer"
+        display="dynamic"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
+          <span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="users-cog"></fa-icon>
+            <p jhiTranslate="global.menu.admin.main">Administration</p>
+          </span>
+        </a>
+        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
+          <li>
+            <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
+              <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.admin.userManagement">User management</span>
             </a>
           </li>
-        </div>
-        <!-- <li
-          ngbDropdown
-          class="nav-item dropdown pointer"
-          display="dynamic"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
+          <li>
+            <a class="dropdown-item" routerLink="admin/tracker" routerLinkActive="active" (click)="collapseNavbar()">
+              <fa-icon icon="eye" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.admin.tracker">User tracker</span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
+              <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.admin.metrics">Metrics</span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="admin/health" routerLinkActive="active" (click)="collapseNavbar()">
+              <fa-icon icon="heart" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.admin.health">Health</span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="admin/configuration" routerLinkActive="active" (click)="collapseNavbar()">
+              <fa-icon icon="cogs" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.admin.configuration">Configuration</span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="admin/logs" routerLinkActive="active" (click)="collapseNavbar()">
+              <fa-icon icon="tasks" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.admin.logs">Logs</span>
+            </a>
+          </li>
+          <li *ngIf="openAPIEnabled">
+            <a class="dropdown-item" routerLink="admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
+              <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.admin.apidocs">API</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1" hidden>
+        <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
+          <span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="flag"></fa-icon>
+            <p jhiTranslate="global.menu.language">Language</p>
+          </span>
+        </a>
+        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
+          <li *ngFor="let language of languages">
+            <a
+              class="dropdown-item"
+              [jhiActiveMenu]="language"
+              href="javascript:void(0);"
+              (click)="changeLanguage(language); collapseNavbar()"
+              >{{ language | findLanguageFromKey }}</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li
+        hidden
+        ngbDropdown
+        class="nav-item dropdown pointer"
+        display="dynamic"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a
+          class="nav-link dropdown-toggle"
+          [routerLink]="'login'"
+          ngbDropdownToggle
+          href="javascript:void(0);"
+          id="account-menu"
+          data-cy="accountMenu"
         >
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
-            <span>
-              <fa-icon icon="users-gear"></fa-icon>
-              <span>Parameterize</span>
-            </span>
-          </a>
-          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-            <li *ngFor="let language of languages">
-              <a
-                class="dropdown-item"
-                [jhiActiveMenu]="language"
-                href="javascript:void(0);"
-                (click)="changeLanguage(language); collapseNavbar()"
-                >{{ language | findLanguageFromKey }}</a
-              >
-            </li>
-          </ul>
-        </li> -->
-        <li
-          *jhiHasAnyAuthority="'ROLE_ADMIN'"
-          ngbDropdown
-          class="nav-item dropdown pointer"
-          display="dynamic"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
-            <span>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="users-cog"></fa-icon>
-              <p jhiTranslate="global.menu.admin.main">Administration</p>
-            </span>
-          </a>
-          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
-            <li>
-              <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.admin.userManagement">User management</span>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="admin/tracker" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="eye" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.admin.tracker">User tracker</span>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.admin.metrics">Metrics</span>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="admin/health" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="heart" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.admin.health">Health</span>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="admin/configuration" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="cogs" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.admin.configuration">Configuration</span>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="admin/logs" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="tasks" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.admin.logs">Logs</span>
-              </a>
-            </li>
-            <li *ngIf="openAPIEnabled">
-              <a class="dropdown-item" routerLink="admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.admin.apidocs">API</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1" hidden>
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
-            <span>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fa-icon icon="flag"></fa-icon>
-              <p jhiTranslate="global.menu.language">Language</p>
-            </span>
-          </a>
-          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
-            <li *ngFor="let language of languages">
-              <a
-                class="dropdown-item"
-                [jhiActiveMenu]="language"
-                href="javascript:void(0);"
-                (click)="changeLanguage(language); collapseNavbar()"
-                >{{ language | findLanguageFromKey }}</a
-              >
-            </li>
-          </ul>
-        </li>
-        <li
-          hidden
-          ngbDropdown
-          class="nav-item dropdown pointer"
-          display="dynamic"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          <a
-            class="nav-link dropdown-toggle"
-            [routerLink]="'login'"
-            ngbDropdownToggle
-            href="javascript:void(0);"
-            id="account-menu"
-            data-cy="accountMenu"
-          >
-            <span *ngIf="!account?.imageUrl">
-              <fa-icon icon="user"></fa-icon>
-              <span jhiTranslate="global.menu.account.main">Account</span>
-            </span>
-            <span *ngIf="account?.imageUrl">
-              <img [src]="account!.imageUrl" class="profile-image rounded-circle" alt="Avatar" />
-            </span>
-          </a>
-          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
-            <li *ngSwitchCase="true">
-              <a
-                class="dropdown-item"
-                routerLink="account/settings"
-                routerLinkActive="active"
-                (click)="collapseNavbar()"
-                data-cy="settings"
-              >
-                <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.account.settings">Settings</span>
-              </a>
-            </li>
-            <li *ngSwitchCase="true">
-              <a
-                class="dropdown-item"
-                routerLink="account/password"
-                routerLinkActive="active"
-                (click)="collapseNavbar()"
-                data-cy="passwordItem"
-              >
-                <fa-icon icon="lock" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.account.password">Password</span>
-              </a>
-            </li>
-            <li *ngSwitchCase="false">
-              <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
-                <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.account.logout">Sign out</span>
-              </a>
-            </li>
-            <li *ngSwitchCase="true">
-              <a class="dropdown-item" (click)="login()" id="login" data-cy="login">
-                <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.account.login">Sign in</span>
-              </a>
-            </li>
-            <li *ngSwitchCase="true">
-              <a
-                class="dropdown-item"
-                routerLink="account/register"
-                routerLinkActive="active"
-                (click)="collapseNavbar()"
-                data-cy="register"
-              >
-                <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.account.register">Register</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Parameterize ADMINISTRATOR -->
-
-    <!-- END of Parameterize ADMINISTRATOR -->
-
-    <a class="nav-link" (click)="logout()" routerLinkActive="active">
-      <div class="row" *ngIf="!account?.imageUrl">
-        <div class="col" style="text-align: center">
-          <fa-icon icon="user"></fa-icon>
-          <p>{{ untukSessionUserName }} / {{ untukSessionRole }}</p>
-        </div>
-      </div>
-    </a>
+          <span *ngIf="!account?.imageUrl">
+            <fa-icon icon="user"></fa-icon>
+            <span jhiTranslate="global.menu.account.main">Account</span>
+          </span>
+          <span *ngIf="account?.imageUrl">
+            <img [src]="account!.imageUrl" class="profile-image rounded-circle" alt="Avatar" />
+          </span>
+        </a>
+        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
+          <li *ngSwitchCase="true">
+            <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
+              <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.account.settings">Settings</span>
+            </a>
+          </li>
+          <li *ngSwitchCase="true">
+            <a
+              class="dropdown-item"
+              routerLink="account/password"
+              routerLinkActive="active"
+              (click)="collapseNavbar()"
+              data-cy="passwordItem"
+            >
+              <fa-icon icon="lock" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.account.password">Password</span>
+            </a>
+          </li>
+          <li *ngSwitchCase="false">
+            <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
+              <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.account.logout">Sign out</span>
+            </a>
+          </li>
+          <li *ngSwitchCase="true">
+            <a class="dropdown-item" (click)="login()" id="login" data-cy="login">
+              <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.account.login">Sign in</span>
+            </a>
+          </li>
+          <li *ngSwitchCase="true">
+            <a class="dropdown-item" routerLink="account/register" routerLinkActive="active" (click)="collapseNavbar()" data-cy="register">
+              <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.account.register">Register</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
   </div>
+
+  <!-- Parameterize ADMINISTRATOR -->
+
+  <!-- END of Parameterize ADMINISTRATOR -->
+
+  <a class="nav-link" (click)="logout()" routerLinkActive="active">
+    <div class="row" *ngIf="!account?.imageUrl">
+      <div class="col" style="text-align: center">
+        <fa-icon icon="user"></fa-icon>
+        <p>{{ untukSessionUserName }} / {{ untukSessionRole }}</p>
+      </div>
+    </div>
+  </a>
 </nav>
 <nav [ngSwitch]="untukSessionRole" class="nav nav-pills nav-justified" id="nk-sidebar">
   <div *ngFor="let child of childNavbar">
@@ -882,6 +868,26 @@
       *ngSwitchCase="'KOMITE'"
     >
       <h6>Detail Approval</h6>
+    </a>
+  </div>
+  <div *ngIf="router.url === '/main-parameter-scoring' || router.url === '/input-scoring-manual'">
+    <a
+      class="nav-item nav-link"
+      routerLink="main-parameter-scoring"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'MAN_RISK'"
+    >
+      <h6>Group Parameter Scoring</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="input-scoring-manual"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'MAN_RISK'"
+    >
+      <h6>Parameter Scoring</h6>
     </a>
   </div>
 </nav>
