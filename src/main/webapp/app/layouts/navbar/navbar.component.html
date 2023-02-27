@@ -685,7 +685,7 @@
       <h6>Job Info</h6>
     </a>
     <a
-      [hidden]="statusPerkawinan === 'Lajang' || statusPerkawinan === 'Cerai Mati' || statusPerkawinan === 'Cerai Hidup'"
+      [hidden]="statusPerkawinan === 'BELUM KAWIN' || statusPerkawinan === 'CERAI MATI' || statusPerkawinan === 'CERAI HIDUP'"
       class="nav-item nav-link"
       [queryParams]="{
         curef: this.curef,
@@ -700,7 +700,7 @@
       <h6>Data Pasangan</h6>
     </a>
     <a
-      [hidden]="statusPerkawinan === 'Lajang' || statusPerkawinan === 'Cerai Mati' || statusPerkawinan === 'Cerai Hidup'"
+      [hidden]="statusPerkawinan === 'BELUM KAWIN' || statusPerkawinan === 'CERAI MATI' || statusPerkawinan === 'CERAI HIDUP'"
       class="nav-item nav-link"
       [queryParams]="{
         curef: this.curef,

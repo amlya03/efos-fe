@@ -301,7 +301,7 @@ export class InputScoringComponent implements OnInit {
             $('#dataValueDiv').hide();
           }
 
-          if (parameterValue[1] === 'Tingkat Pendidikan') {
+          if (parameterValue[1] === 'Pendidikan') {
             $('#keyInDiv').hide();
             $('#pendidikanDiv').show();
             $('#jenisPerusahaanDiv').hide();
@@ -689,8 +689,8 @@ export class InputScoringComponent implements OnInit {
               $('#minMaxDiv').show();
               $('#dataValueDiv').hide();
             }
-
-            if (getByIdParameterDesc === 'Tingkat Pendidikan') {
+            // alert(getByIdParameterDesc)
+            if (getByIdParameterDesc === 'Pendidikan') {
               $('#keyInDiv').hide();
               $('#pendidikanDiv').show();
               $('#jenisPerusahaanDiv').hide();
@@ -803,7 +803,7 @@ export class InputScoringComponent implements OnInit {
                 $('#data_value').val('');
               }
 
-              if (parameterValue[1] === 'Tingkat Pendidikan') {
+              if (parameterValue[1] === 'Pendidikan') {
                 $('#keyInDiv').hide();
                 $('#pendidikanDiv').show();
                 $('#jenisPerusahaanDiv').hide();
@@ -956,7 +956,7 @@ export class InputScoringComponent implements OnInit {
               '</select>' +
               '</div></div><p></p>' +
               '<div class="form-group row" id="dataValueDiv" style="display: none;"><label class="col-sm-3 col-form-label" style="font-size: medium;">Data Value</label>' +
-              '<div class="col-sm-9"><input type="text" class="form-control" id="data_value" value="' +
+              '<div class="col-sm-9" id="keyInDiv"><input type="text" class="form-control" id="data_value" value="' +
               this.datascoringbyid.data_value +
               '"/></div>' +
               '<div class="col-sm-9" id="pendidikanDiv" style="display: none;"><select class="form-control" id="data_value"><option value="' +

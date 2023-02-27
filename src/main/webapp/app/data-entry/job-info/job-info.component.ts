@@ -572,7 +572,7 @@ export class JobInfoComponent implements OnInit {
   goto(): void {
     this.sessionStorageService.store('jobInfo', 1);
     // this.onResponseSuccess(res);
-    if (this.dataEntry.status_perkawinan === 'Menikah') {
+    if (this.dataEntry.status_perkawinan === 'KAWIN') {
       this.router.navigate(['/data-entry/data-pasangan'], {
         queryParams: {
           curef: this.curef,
@@ -770,7 +770,7 @@ export class JobInfoComponent implements OnInit {
 
         .subscribe({
           next: () => {
-            if (this.dataEntry.status_perkawinan === 'Menikah') {
+            if (this.dataEntry.status_perkawinan === 'KAWIN') {
               alert('Berhasil Menyimpan Data');
               this.router.navigate(['/data-entry/data-pasangan'], {
                 queryParams: {

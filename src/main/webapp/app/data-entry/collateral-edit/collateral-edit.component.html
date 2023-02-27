@@ -187,13 +187,11 @@
       </div>
       <div
         class="form-group row"
-        [hidden]="
-          this.editCollateralForm.get('tipe_agunan')?.value == 'C01' ||
-          this.editCollateralForm.get('tipe_agunan')?.value == 'H01' ||
-          this.editCollateralForm.get('status_developer')?.value == 'perorangan'
-        "
+        [hidden]="this.editCollateralForm.get('tipe_agunan')?.value == 'C01' || this.editCollateralForm.get('tipe_agunan')?.value == 'H01'"
       >
-        <label class="col-sm-4 col-form-label">Developer</label>
+        <label class="col-sm-4 col-form-label">{{
+          this.editCollateralForm.get('tipe_agunan')?.value == 'C01' ? 'Penjual' : 'Developer'
+        }}</label>
         <div class="col-sm-8">
           <div class="form-group">
             <select
@@ -207,7 +205,10 @@
               </option>
             </select>
             <input
-              *ngIf="this.editCollateralForm.get('status_developer')?.value == 'non pks'"
+              *ngIf="
+                this.editCollateralForm.get('status_developer')?.value == 'non pks' ||
+                this.editCollateralForm.get('status_developer')?.value == 'perorangan'
+              "
               type="text"
               class="form-control"
               formControlName="developer"

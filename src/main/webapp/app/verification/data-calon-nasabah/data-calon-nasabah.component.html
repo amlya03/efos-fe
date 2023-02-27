@@ -7,27 +7,6 @@
     <!-- ////Colom ke 1\\\\\ -->
     <div class="col">
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nomor Customer</label>
-        <div class="col-sm-8">
-          <input value="{{ this.dataEntry.curef }}" class="form-control" type="text" id="no_customer" name="no_customer" readonly />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Nomor Aplikasi</label>
-        <div class="col-sm-8">
-          <input
-            value="{{ this.dataEntry.app_no_de }}"
-            class="form-control"
-            type="text"
-            id="nomor_aplikasi"
-            name="nomor_aplikasi"
-            readonly
-          />
-        </div>
-      </div>
-      <br />
-      <div class="form-group row">
         <label class="col-sm-4 col-form-label">Nama</label>
         <div class="col-sm-8">
           <input value="{{ this.dataEntry.nama }}" class="form-control" type="text" id="nama" name="nama" readonly />
@@ -614,7 +593,7 @@
   </div> -->
   <br />
   <div [ngSwitch]="status_perkawinan.value">
-    <div *ngSwitchCase="'Menikah'">
+    <div *ngSwitchCase="'KAWIN'">
       <div class="row form-material">
         <div class="col">
           <div class="form-group row">

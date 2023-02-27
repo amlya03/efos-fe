@@ -260,7 +260,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     this.validasiNo_handphone_pasangan = <FormControl>this.ideForm.get('no_handphone_pasangan');
 
     this.subscription = validasiStatusPerkawinan.valueChanges.subscribe(value => {
-      if (value === 'Menikah') {
+      if (value === 'KAWIN') {
         this.validasiNamaPasangan.setValidators([Validators.required]);
         this.validasiJenis_kelamin_pasangan.setValidators([Validators.required]);
         this.validasiTanggal_lahir_pasangan.setValidators([Validators.required]);
@@ -733,7 +733,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     const kirimKec = this.ideForm.get('kecamatan')?.value.split('|');
     const kirimKel = this.ideForm.get('kelurahan')?.value.split('|');
     // ////////////////////pasangan//////////////////////////////////
-    if (this.ideForm.get('status_perkawinan')?.value === 'Menikah') {
+    if (this.ideForm.get('status_perkawinan')?.value === 'KAWIN') {
       this.kirimProPas = this.ideForm.get('provinsi_pasangan')?.value.split('|');
       this.kirimKotaPas = this.ideForm.get('kabkota_pasangan')?.value.split('|');
       this.kirimKecPas = this.ideForm.get('kecamatan_pasangan')?.value.split('|');
@@ -1016,7 +1016,7 @@ export class InitialDataEntryFixComponent implements OnInit {
               })
               .subscribe({
                 next: () => {
-                  if (this.ideForm.get('status_perkawinan')?.value === 'Menikah') {
+                  if (this.ideForm.get('status_perkawinan')?.value === 'KAWIN') {
                     this.http
                       .post<any>(this.baseUrl + 'v1/efos-ide/update_app_ide', {
                         agama: this.ideForm.get('agama')?.value,
@@ -1302,7 +1302,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             //       },
             //     });
             // } else {
-            if (this.ideForm.get('status_perkawinan')?.value === 'Menikah') {
+            if (this.ideForm.get('status_perkawinan')?.value === 'KAWIN') {
               this.http
                 .post<any>(this.baseUrl + 'v1/efos-ide/update_app_ide', {
                   agama: this.ideForm.get('agama')?.value,
@@ -1500,7 +1500,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     const kirimKec = this.ideForm.get('kecamatan')?.value.split('|');
     const kirimKel = this.ideForm.get('kelurahan')?.value.split('|');
     // ////////////////////pasangan//////////////////////////////////
-    if (this.ideForm.get('status_perkawinan')?.value === 'Menikah') {
+    if (this.ideForm.get('status_perkawinan')?.value === 'KAWIN') {
       this.kirimProPas = this.ideForm.get('provinsi_pasangan')?.value.split('|');
       this.kirimKotaPas = this.ideForm.get('kabkota_pasangan')?.value.split('|');
       this.kirimKecPas = this.ideForm.get('kecamatan_pasangan')?.value.split('|');
@@ -1764,7 +1764,7 @@ export class InitialDataEntryFixComponent implements OnInit {
           })
           .subscribe({
             next: () => {
-              if (this.ideForm.get('status_perkawinan')?.value === 'Menikah') {
+              if (this.ideForm.get('status_perkawinan')?.value === 'KAWIN') {
                 this.http
                   .post<any>(this.baseUrl + 'v1/efos-ide/update_app_ide_temp', {
                     agama: this.ideForm.get('agama')?.value,
@@ -2031,7 +2031,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             },
           });
       } else {
-        if (this.ideForm.get('status_perkawinan')?.value === 'Menikah') {
+        if (this.ideForm.get('status_perkawinan')?.value === 'KAWIN') {
           this.http
             .post<any>(this.baseUrl + 'v1/efos-ide/update_app_ide_temp', {
               agama: this.ideForm.get('agama')?.value,
@@ -2400,11 +2400,11 @@ export class InitialDataEntryFixComponent implements OnInit {
 
     setTimeout(() => {
       if (
-        (this.ideForm.get('status_perkawinan')?.value === 'Lajang' && this.ideForm.get('usia')?.value < 21) ||
+        (this.ideForm.get('status_perkawinan')?.value === 'BELUM KAWIN' && this.ideForm.get('usia')?.value < 21) ||
         (this.ideForm.get('status_perkawinan')?.value === '' && this.ideForm.get('usia')?.value < 21)
       ) {
         alert('Usia Minimal 21 Tahun');
-      } else if (this.ideForm.get('status_perkawinan')?.value === 'Menikah' && this.ideForm.get('usia')?.value < 18) {
+      } else if (this.ideForm.get('status_perkawinan')?.value === 'KAWIN' && this.ideForm.get('usia')?.value < 18) {
         alert('Usia Minimal 18 Tahun');
       }
     }, 100);
@@ -2418,7 +2418,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     this.ideForm.get('usia_pasangan')?.setValue(Q4A);
 
     setTimeout(() => {
-      if (this.ideForm.get('status_perkawinan')?.value === 'Menikah' && this.ideForm.get('usia_pasangan')?.value < 18) {
+      if (this.ideForm.get('status_perkawinan')?.value === 'KAWIN' && this.ideForm.get('usia_pasangan')?.value < 18) {
         alert('Usia Minimal 18 Tahun');
       }
     }, 100);

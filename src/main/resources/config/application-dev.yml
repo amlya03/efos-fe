@@ -35,9 +35,9 @@ spring:
     #    url: jdbc:postgresql://10.20.34.110:5432/db_newEfos
     #    username: postgres
     #    password: Pa$5w0rD
-    url: jdbc:postgresql://localhost:5432/db_new_efos
+    url: jdbc:postgresql://10.20.34.110:5432/db_new_efos
     username: postgres
-    password: postgres
+    password: Pa$5w0rD
     hikari:
       poolName: Hikari
       auto-commit: false

@@ -377,16 +377,6 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     const milisecon = today.getMilliseconds();
     const reffnumbernya = yyyy + mm + dd + hour + menit + secon + milisecon;
 
-    if (this.dataEntry.status_perkawinan === 'Menikah') {
-      this.statusnikah = 'KAWIN';
-    } else if (this.dataEntry.status_perkawinan === 'Lajang') {
-      this.statusnikah = 'BELUM KAWIN';
-    } else if (this.dataEntry.status_perkawinan === 'Cerai Hidup') {
-      this.statusnikah = 'CERAI HIDUP';
-    } else if (this.dataEntry.status_perkawinan === 'Cerai Mati') {
-      this.statusnikah = 'CERAI MATI';
-    }
-
     // setTimeout(() => {
     if (this.dataEntry.jenis_kelamin === 'Laki-laki') {
       this.jenisKelaminHps = 'M';
@@ -402,14 +392,14 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     }
     // }, 20);
     // setTimeout(() => {
-    if (this.dataEntry.status_perkawinan === 'Lajang') {
-      this.statusMenikahHps = '0';
-    } else {
+    if (this.dataEntry.status_perkawinan === 'KAWIN') {
       this.statusMenikahHps = '1';
+    } else {
+      this.statusMenikahHps = '0';
     }
     // }, 30);
 
-    if (this.dataEntry.status_perkawinan === 'Menikah') {
+    if (this.dataEntry.status_perkawinan === 'KAWIN') {
       setTimeout(() => {
         this.http
           .post<any>(this.baseUrl + 'v1/efos-ide/dukcapil_verify', {
@@ -428,7 +418,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
             appNoIde: this.dataEntry.app_no_ide,
             pendidikan: this.dataEntry.pendidikan,
             pekerjaan: '',
-            statusPerkawinan: this.statusnikah,
+            statusPerkawinan: this.dataEntry.status_perkawinan,
             namaIbuKandung: this.dataEntry.nama_ibu_kandung,
             statusHubKeluarga: '',
             alamat: this.dataEntry.alamat_ktp,
@@ -497,7 +487,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
                       appNoIde: this.dataEntry.app_no_ide,
                       pendidikan: '',
                       pekerjaan: '',
-                      statusPerkawinan: this.statusnikah,
+                      statusPerkawinan: this.dataEntry.status_perkawinan,
                       namaIbuKandung: this.dataEntry.nama_ibu_kandung_pasangan,
                       statusHubKeluarga: '',
                       alamat: this.dataEntry.alamat_ktp_pasangan,
@@ -770,7 +760,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
           appNoIde: this.dataEntry.app_no_ide,
           pendidikan: '',
           pekerjaan: '',
-          statusPerkawinan: this.statusnikah,
+          statusPerkawinan: this.dataEntry.status_perkawinan,
           namaIbuKandung: this.dataEntry.nama_ibu_kandung,
           statusHubKeluarga: '',
           alamat: this.dataEntry.alamat_ktp,

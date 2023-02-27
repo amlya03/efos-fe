@@ -111,7 +111,7 @@ export class NavbarComponent implements OnInit {
     this.dataEntryServices.getFetchSemuaDataDE(this.app_no_de).subscribe(de => {
       this.dataEntry = de.result;
       if (de.result == null) {
-        this.statusPerkawinan = 'Lajang';
+        this.statusPerkawinan = 'BELUM KAWIN';
         this.getLoading(false);
       } else {
         this.statusPerkawinan = this.dataEntry.status_perkawinan;
