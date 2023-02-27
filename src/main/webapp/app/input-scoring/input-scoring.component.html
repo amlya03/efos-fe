@@ -63,7 +63,8 @@
       <th style="text-align: center">Min</th>
       <th style="text-align: center">Max</th>
       <th style="text-align: center">Score</th>
-      <th style="text-align: center">Detail</th>
+      <th style="text-align: center"></th>
+      <th style="text-align: center"></th>
     </tr>
   </thead>
   <tbody>
@@ -80,6 +81,12 @@
         <a type="button" (click)="viewdetaildatascoring(daWa.id)">
           <fa-icon icon="eye"></fa-icon>
           <br />Detail
+        </a>
+      </td>
+      <td style="text-align: center">
+        <a type="button" (click)="deleteData(daWa.id)">
+          <fa-icon icon="trash"></fa-icon>
+          <br />Delete
         </a>
       </td>
     </tr>

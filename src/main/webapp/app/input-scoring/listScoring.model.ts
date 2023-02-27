@@ -14,4 +14,5 @@ export class listScoring {
   deskripsi_program?: string;
   updated_date?: string;
   updated_by?: string;
+  parameter_type?: string;
 }

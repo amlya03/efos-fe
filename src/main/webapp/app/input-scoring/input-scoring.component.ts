@@ -1089,6 +1089,58 @@ export class InputScoringComponent implements OnInit {
       });
     }, 17);
   }
+
+  deleteData(idScore: any): void {
+    setTimeout(() => {
+      this.scoringServices.getdatascoringdetailbyid(idScore).subscribe({
+        next: data => {
+          this.datascoringbyid = data.result;
+          Swal.fire({
+            title: 'Apakah anda Yakin ingin menghapus data ini?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Menghapus data!',
+            denyButtonText: `Tidak, Tetap simpan data!`,
+          }).then(result => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-ref/create_data_scoring', {
+                  id: idScore,
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                  created_date: '',
+                  data_value: this.datascoringbyid.data_value,
+                  joint_income: this.datascoringbyid.joint_income,
+                  max_value: this.datascoringbyid.max_value,
+                  min_value: this.datascoringbyid.min_value,
+                  parameter_type: this.datascoringbyid.parameter_type,
+                  parameter: this.datascoringbyid.parameter,
+                  kode_fasilitas: this.datascoringbyid.kode_fasilitas,
+                  produk: this.datascoringbyid.produk,
+                  score: this.datascoringbyid.score,
+                  kode_program: this.datascoringbyid.kode_program,
+                  deskripsi_program: this.datascoringbyid.deskripsi_program,
+                  updated_by: this.sessionStorageService.retrieve('sessionUserName'),
+                  updated_date: '',
+                  active: '0',
+                })
+                .subscribe({
+                  next() {
+                    Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
+                      window.location.reload();
+                    });
+                  },
+                });
+            }
+            // else if (result.isDenied) {
+            //   Swal.fire('Changes are not saved', '', 'info')
+            // }
+          });
+        },
+      });
+    }, 17);
+  }
+
   public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
