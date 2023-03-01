@@ -46,6 +46,18 @@ export class InputScoringService {
   protected listAkadUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_akad');
   // /////////////////////////// Reff List Akad ////////////////////////////////////////////
 
+  // /////////////////////////// Reff list Ftv Scoring ////////////////////////////////////////////
+  protected listFtvScoringUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_ftv_scoring');
+  // /////////////////////////// Reff list Ftv Scoring ////////////////////////////////////////////
+
+  // /////////////////////////// Get Ftv Scoring ////////////////////////////////////////////
+  protected listFtvDpDetail = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_ftv_dp_detail?ss=');
+  // /////////////////////////// Get Ftv Scoring ////////////////////////////////////////////
+
+  // /////////////////////////// Get Ftv Scoring ////////////////////////////////////////////
+  protected getFtvScoringUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/getFtvScoring?si=');
+  // /////////////////////////// Get Ftv Scoring ////////////////////////////////////////////
+
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   // /////////////////////////// Reff List Akad ////////////////////////////////////////////
@@ -95,4 +107,20 @@ export class InputScoringService {
     return this.http.get<ApiResponse>(this.getParameterScoringUrl + id);
   }
   // ////////////////////// get Sub Parameter Scoring BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // /////////////////////////// Reff list Ftv Scoring ////////////////////////////////////////////
+  listFtvScoring(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.listFtvScoringUrl);
+  }
+  // /////////////////////////// Reff list Ftv Scoring ////////////////////////////////////////////
+
+  // /////////////////////////// Get Ftv Scoring ////////////////////////////////////////////
+  getListFtvDpDetail(id: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.listFtvDpDetail + id);
+  }
+
+  getFtvScoring(id: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getFtvScoringUrl + id);
+  }
+  // /////////////////////////// Get Ftv Scoring ////////////////////////////////////////////
 }

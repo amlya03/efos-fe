@@ -15,4 +15,18 @@ export class listScoring {
   updated_date?: string;
   updated_by?: string;
   parameter_type?: string;
+  id_score?: string;
+  fasilitas?: number;
+  tipe_properti_deskripsi?: string;
+  min?: number;
+  max?: number;
+  ftv?: number;
+  dp?: number;
+  score_ftv_less: number | string | undefined | null;
+  score_ftv_equal: number | string | undefined | null;
+  kode_produk?: string;
+  nama_produk?: string;
+  id_detail?: number;
+  program?: string;
+  id_ftv_dp_detail?: number;
 }

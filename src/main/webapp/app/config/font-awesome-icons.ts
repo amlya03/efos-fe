@@ -55,6 +55,8 @@ import {
   faXmarkCircle,
   faUsersGear,
   faUserShield,
+  faFolderPlus,
+  faFileCircleXmark,
   // jhipster-needle-add-icon-import
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -116,5 +118,7 @@ export const fontAwesomeIcons = [
   faXmarkCircle,
   faUsersGear,
   faUserShield,
+  faFolderPlus,
+  faFileCircleXmark,
   // jhipster-needle-add-icon-import
 ];
