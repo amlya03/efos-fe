@@ -213,17 +213,19 @@ export class StrukturPembiayaanComponent implements OnInit {
               });
             }
           }, 120);
-
+          let marginStep: any;
           setTimeout(() => {
             if (this.strukturModel.skema_master == 1) {
               this.showMargin = 'Margin = ' + this.strukturModel.margin;
             } else {
               this.dataEntryService.getFetchMarginStepUp(this.strukturModel.skema).subscribe(data => {
-                let marginStep = data.result;
+                marginStep = data.result;
                 // for (let i = 0; i < data.result.length; i++) {
                 //   this.showMargin
                 // });
-                this.showMargin = 'Margin Tahun Ke 1 = ' + marginStep[0] + '; ' + 'Margin Tahun Ke 2 = ' + marginStep[1];
+                this.showMargin = marginStep.map((element: any, i: any) => {
+                  return ` Margin Ke ${i + 1} = ${element}`;
+                });
               });
             }
           }, 200);
@@ -392,6 +394,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   onchangejangkawaktu(jangkaWaktu: any, skema: any) {
     const pemisahfixr = jangkaWaktu.split('|');
     const pemisahskemamaster = skema.split('|');
+    let marginStep: any;
 
     if (pemisahskemamaster[1] == 1) {
       let margin = pemisahfixr[1];
@@ -399,9 +402,11 @@ export class StrukturPembiayaanComponent implements OnInit {
       this.strukturForm.get('margin')?.setValue(margin);
     } else {
       this.dataEntryService.getFetchMarginStepUp(pemisahskemamaster[0]).subscribe(data => {
-        let marginStep = data.result;
-        this.showMargin = 'Margin Tahun Ke 1 = ' + marginStep[0] + '; ' + 'Margin Tahun Ke 2 = ' + marginStep[1];
-        this.strukturForm.get('margin')?.setValue(pemisahfixr[1]);
+        marginStep = data.result;
+        this.showMargin = marginStep.map((element: any, i: any) => {
+          return ` Margin Ke ${i + 1} = ${element}`;
+        });
+        this.strukturForm.get('margin')?.setValue(marginStep[marginStep.length - 1]);
       });
     }
   }
