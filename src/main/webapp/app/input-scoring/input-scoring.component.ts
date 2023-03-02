@@ -153,6 +153,7 @@ export class InputScoringComponent implements OnInit {
       this.scoringServices.listFtvScoring().subscribe({
         next: ftvResponse => {
           this.modelFtvScore = ftvResponse.result;
+          // console.warn(ftvResponse)
         },
       });
     }, 27);
@@ -314,6 +315,7 @@ export class InputScoringComponent implements OnInit {
           }
 
           if (parameterValue[1] === 'Pendidikan') {
+            $('#kepemilikanRekeningDiv').hide();
             $('#keyInDiv').hide();
             $('#valueYaTidak').hide();
             $('#pendidikanDiv').show();
@@ -323,6 +325,7 @@ export class InputScoringComponent implements OnInit {
             $('#statusPerkawinanDiv').hide();
             $('#tujuanPembiayaanDiv').hide();
           } else if (parameterValue[1] === 'Tujuan Pembiayaan') {
+            $('#kepemilikanRekeningDiv').hide();
             $('#keyInDiv').hide();
             $('#valueYaTidak').hide();
             $('#tujuanPembiayaanDiv').show();
@@ -332,6 +335,7 @@ export class InputScoringComponent implements OnInit {
             $('#statusPerkawinanDiv').hide();
             $('#pendidikanDiv').hide();
           } else if (parameterValue[1] === 'Status Perkawinan') {
+            $('#kepemilikanRekeningDiv').hide();
             $('#keyInDiv').hide();
             $('#valueYaTidak').hide();
             $('#statusPerkawinanDiv').show();
@@ -341,6 +345,7 @@ export class InputScoringComponent implements OnInit {
             $('#tujuanPembiayaanDiv').hide();
             $('#pendidikanDiv').hide();
           } else if (parameterValue[1] === 'Tingkat Jabatan') {
+            $('#kepemilikanRekeningDiv').hide();
             $('#keyInDiv').hide();
             $('#valueYaTidak').hide();
             $('#jenisPekerjaanDiv').show();
@@ -350,6 +355,7 @@ export class InputScoringComponent implements OnInit {
             $('#jenisPerusahaanDiv').hide();
             $('#kepemilikanRumahDiv').hide();
           } else if (parameterValue[1] === 'Kepemilikan Tempat Tinggal') {
+            $('#kepemilikanRekeningDiv').hide();
             $('#keyInDiv').hide();
             $('#valueYaTidak').hide();
             $('#kepemilikanRumahDiv').show();
@@ -359,6 +365,7 @@ export class InputScoringComponent implements OnInit {
             $('#pendidikanDiv').hide();
             $('#jenisPerusahaanDiv').hide();
           } else if (parameterValue[1] === 'Jenis Perusahaan') {
+            $('#kepemilikanRekeningDiv').hide();
             $('#keyInDiv').hide();
             $('#valueYaTidak').hide();
             $('#jenisPerusahaanDiv').show();
@@ -368,6 +375,7 @@ export class InputScoringComponent implements OnInit {
             $('#tujuanPembiayaanDiv').hide();
             $('#pendidikanDiv').hide();
           } else if (parameterValue[1] === 'Verifikasi Alamat Tinggal' || parameterValue[1] === 'Verifikasi THP') {
+            $('#kepemilikanRekeningDiv').hide();
             $('#keyInDiv').hide();
             $('#valueYaTidak').show();
             $('#jenisPerusahaanDiv').hide();
@@ -376,7 +384,18 @@ export class InputScoringComponent implements OnInit {
             $('#statusPerkawinanDiv').hide();
             $('#tujuanPembiayaanDiv').hide();
             $('#pendidikanDiv').hide();
+          } else if (parameterValue[1] === 'Kepemilikan Rekening') {
+            $('#kepemilikanRekeningDiv').show();
+            $('#keyInDiv').hide();
+            $('#valueYaTidak').hide();
+            $('#jenisPerusahaanDiv').hide();
+            $('#kepemilikanRumahDiv').hide();
+            $('#jenisPekerjaanDiv').hide();
+            $('#statusPerkawinanDiv').hide();
+            $('#tujuanPembiayaanDiv').hide();
+            $('#pendidikanDiv').hide();
           } else {
+            $('#kepemilikanRekeningDiv').hide();
             $('#keyInDiv').show();
             $('#valueYaTidak').hide();
             $('#jenisPerusahaanDiv').hide();
@@ -498,6 +517,9 @@ export class InputScoringComponent implements OnInit {
           '</select></div>' +
           '<div class="col-sm-9" id="jenisPerusahaanDiv" style="display: none;"><select class="form-control" id="data_value" name="yaDanTidak"><option value="">Pilih Data</option>' +
           `${jenisPerusahaan}` +
+          '</select></div>' +
+          '<div class="col-sm-9" id="kepemilikanRekeningDiv" style="display: none;"><select class="form-control" id="data_value" name="yaDanTidak"><option value="">Pilih Data</option>' +
+          '<option value="Tabungan">Tabungan</option><option value="Giro">Giro</option><option value="Deposito">Deposito</option>' +
           '</select></div>' +
           '</div><p></p>' +
           '<div class="form-group row" id="minMaxDiv"><label class="col-sm-3 col-form-label" style="font-size: medium;">Min / Max</label>' +
@@ -795,6 +817,7 @@ export class InputScoringComponent implements OnInit {
               $('#tujuanPembiayaanDiv').hide();
               $('#pendidikanDiv').hide();
             } else {
+              /* (parameterValue[1] === 'Kepemilikan Rekening') */
               $('#keyInDiv').show();
               $('#valueYaTidak').hide();
               $('#jenisPerusahaanDiv').hide();
@@ -861,6 +884,7 @@ export class InputScoringComponent implements OnInit {
               }
 
               if (parameterValue[1] === 'Pendidikan') {
+                $('#kepemilikanRekeningDiv').hide();
                 $('#keyInDiv').hide();
                 $('#valueYaTidak').hide();
                 $('#pendidikanDiv').show();
@@ -870,6 +894,7 @@ export class InputScoringComponent implements OnInit {
                 $('#statusPerkawinanDiv').hide();
                 $('#tujuanPembiayaanDiv').hide();
               } else if (parameterValue[1] === 'Tujuan Pembiayaan') {
+                $('#kepemilikanRekeningDiv').hide();
                 $('#keyInDiv').hide();
                 $('#valueYaTidak').hide();
                 $('#tujuanPembiayaanDiv').show();
@@ -879,6 +904,7 @@ export class InputScoringComponent implements OnInit {
                 $('#statusPerkawinanDiv').hide();
                 $('#pendidikanDiv').hide();
               } else if (parameterValue[1] === 'Status Perkawinan') {
+                $('#kepemilikanRekeningDiv').hide();
                 $('#keyInDiv').hide();
                 $('#valueYaTidak').hide();
                 $('#statusPerkawinanDiv').show();
@@ -888,6 +914,7 @@ export class InputScoringComponent implements OnInit {
                 $('#tujuanPembiayaanDiv').hide();
                 $('#pendidikanDiv').hide();
               } else if (parameterValue[1] === 'Tingkat Jabatan') {
+                $('#kepemilikanRekeningDiv').hide();
                 $('#keyInDiv').hide();
                 $('#valueYaTidak').hide();
                 $('#jenisPekerjaanDiv').show();
@@ -897,6 +924,7 @@ export class InputScoringComponent implements OnInit {
                 $('#jenisPerusahaanDiv').hide();
                 $('#kepemilikanRumahDiv').hide();
               } else if (parameterValue[1] === 'Kepemilikan Tempat Tinggal') {
+                $('#kepemilikanRekeningDiv').hide();
                 $('#keyInDiv').hide();
                 $('#valueYaTidak').hide();
                 $('#kepemilikanRumahDiv').show();
@@ -906,6 +934,7 @@ export class InputScoringComponent implements OnInit {
                 $('#pendidikanDiv').hide();
                 $('#jenisPerusahaanDiv').hide();
               } else if (parameterValue[1] === 'Jenis Perusahaan') {
+                $('#kepemilikanRekeningDiv').hide();
                 $('#keyInDiv').hide();
                 $('#valueYaTidak').hide();
                 $('#jenisPerusahaanDiv').show();
@@ -915,6 +944,7 @@ export class InputScoringComponent implements OnInit {
                 $('#tujuanPembiayaanDiv').hide();
                 $('#pendidikanDiv').hide();
               } else if (parameterValue[1] === 'Verifikasi Alamat Tinggal' || parameterValue[1] === 'Verifikasi THP') {
+                $('#kepemilikanRekeningDiv').hide();
                 $('#keyInDiv').hide();
                 $('#valueYaTidak').show();
                 $('#jenisPerusahaanDiv').hide();
@@ -923,7 +953,18 @@ export class InputScoringComponent implements OnInit {
                 $('#statusPerkawinanDiv').hide();
                 $('#tujuanPembiayaanDiv').hide();
                 $('#pendidikanDiv').hide();
+              } else if (parameterValue[1] === 'Kepemilikan Rekening') {
+                $('#kepemilikanRekeningDiv').show();
+                $('#keyInDiv').hide();
+                $('#valueYaTidak').hide();
+                $('#jenisPerusahaanDiv').hide();
+                $('#kepemilikanRumahDiv').hide();
+                $('#jenisPekerjaanDiv').hide();
+                $('#statusPerkawinanDiv').hide();
+                $('#tujuanPembiayaanDiv').hide();
+                $('#pendidikanDiv').hide();
               } else {
+                $('#kepemilikanRekeningDiv').hide();
                 $('#keyInDiv').show();
                 $('#valueYaTidak').hide();
                 $('#jenisPerusahaanDiv').hide();
@@ -1082,6 +1123,13 @@ export class InputScoringComponent implements OnInit {
               this.datascoringbyid.data_value +
               '</option>' +
               `${kepemilikanRumah}` +
+              '</select></div>' +
+              '<div class="col-sm-9" id="kepemilikanRekeningDiv" style="display: none;"><select class="form-control" id="data_value" name="valueSelect"><option value="' +
+              this.datascoringbyid.data_value +
+              '">' +
+              this.datascoringbyid.data_value +
+              '</option>' +
+              '<option value="Tabungan">Tabungan</option><option value="Giro">Giro</option><option value="Deposito">Deposito</option>' +
               '</select></div>' +
               '<div class="col-sm-9" id="jenisPerusahaanDiv" style="display: none;"><select class="form-control" id="data_value" name="valueSelect"><option value="' +
               this.datascoringbyid.data_value +
