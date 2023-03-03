@@ -519,7 +519,7 @@ export class InputScoringComponent implements OnInit {
           `${jenisPerusahaan}` +
           '</select></div>' +
           '<div class="col-sm-9" id="kepemilikanRekeningDiv" style="display: none;"><select class="form-control" id="data_value" name="yaDanTidak"><option value="">Pilih Data</option>' +
-          '<option value="Tabungan">Tabungan</option><option value="Giro">Giro</option><option value="Deposito">Deposito</option>' +
+          '<option value="Tabungan, Giro dan Deposito">Tabungan, Giro dan Deposito</option><option value="Tabungan, Giro/Deposito">Tabungan, Giro/Deposito</option><option value="Tabungan">Tabungan</option>' +
           '</select></div>' +
           '</div><p></p>' +
           '<div class="form-group row" id="minMaxDiv"><label class="col-sm-3 col-form-label" style="font-size: medium;">Min / Max</label>' +
@@ -1129,7 +1129,7 @@ export class InputScoringComponent implements OnInit {
               '">' +
               this.datascoringbyid.data_value +
               '</option>' +
-              '<option value="Tabungan">Tabungan</option><option value="Giro">Giro</option><option value="Deposito">Deposito</option>' +
+              '<option value="Tabungan, Giro dan Deposito">Tabungan, Giro dan Deposito</option><option value="Tabungan, Giro/Deposito">Tabungan, Giro/Deposito</option><option value="Tabungan">Tabungan</option>' +
               '</select></div>' +
               '<div class="col-sm-9" id="jenisPerusahaanDiv" style="display: none;"><select class="form-control" id="data_value" name="valueSelect"><option value="' +
               this.datascoringbyid.data_value +
