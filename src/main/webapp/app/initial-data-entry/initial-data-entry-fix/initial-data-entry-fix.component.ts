@@ -160,6 +160,8 @@ export class InitialDataEntryFixComponent implements OnInit {
   validasiNo_ktp_pasangan: any;
   validasiTanggal_terbit_ktp_pasangan: any;
   validasiNo_handphone_pasangan: any;
+  kode_fasilitas: any;
+  fasilitas: any;
   // ////////////////////////////////////////////
   constructor(
     protected dataCalonNasabah: ServiceVerificationService,
@@ -177,6 +179,8 @@ export class InitialDataEntryFixComponent implements OnInit {
       this.paramCuref = params.curef;
       this.paramId = params.id;
       this.kategori = params.kategori;
+      this.kode_fasilitas = params.kode_fasilitas;
+      this.fasilitas = params.fasilitas;
     });
   }
 
@@ -236,6 +240,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       tanggal_exp_ktp_pasangan: '',
       status_ktp_pasangan: '1',
       no_handphone_pasangan: '',
+      status_harta_gono_gini: '0',
     });
 
     const validasiStatusPerkawinan = <FormControl>this.ideForm.get('status_perkawinan');
@@ -570,6 +575,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             tanggal_exp_ktp_pasangan: this.modelIde.tanggal_exp_ktp_pasangan,
             status_ktp_pasangan: this.modelIde.status_ktp_pasangan,
             no_handphone_pasangan: this.modelIde.no_handphone_pasangan,
+            status_harta_gono_gini: this.modelIde.status_harta_gono_gini,
           };
           this.ideForm.setValue(retriveIde);
 
@@ -1092,6 +1098,9 @@ export class InitialDataEntryFixComponent implements OnInit {
                         usia_pasangan: this.ideForm.get('usia_pasangan')?.value,
                         tempat_lahir: this.ideForm.get('tempat_lahir')?.value,
                         tempat_lahir_pasangan: this.ideForm.get('tempat_lahir_pasangan')?.value,
+                        kode_fasilitas: this.modelIde.kode_fasilitas,
+                        fasilitas_name: this.modelIde.fasilitas_name,
+                        status_harta_gono_gini: this.ideForm.get('status_harta_gono_gini')?.value,
                       })
                       .subscribe({
                         next: data => {
@@ -1183,6 +1192,9 @@ export class InitialDataEntryFixComponent implements OnInit {
                         usia_pasangan: '',
                         tempat_lahir: this.ideForm.get('tempat_lahir')?.value,
                         tempat_lahir_pasangan: '',
+                        kode_fasilitas: this.modelIde.kode_fasilitas,
+                        fasilitas_name: this.modelIde.fasilitas_name,
+                        status_harta_gono_gini: this.ideForm.get('status_harta_gono_gini')?.value,
                       })
                       .subscribe({
                         next: data => {
@@ -1378,6 +1390,9 @@ export class InitialDataEntryFixComponent implements OnInit {
                   usia_pasangan: this.ideForm.get('usia_pasangan')?.value,
                   tempat_lahir: this.ideForm.get('tempat_lahir')?.value,
                   tempat_lahir_pasangan: this.ideForm.get('tempat_lahir_pasangan')?.value,
+                  kode_fasilitas: this.modelIde.kode_fasilitas,
+                  fasilitas_name: this.modelIde.fasilitas_name,
+                  status_harta_gono_gini: this.ideForm.get('status_harta_gono_gini')?.value,
                 })
                 .subscribe({
                   next: data => {
@@ -1470,6 +1485,9 @@ export class InitialDataEntryFixComponent implements OnInit {
                   usia_pasangan: '',
                   tempat_lahir: this.ideForm.get('tempat_lahir')?.value,
                   tempat_lahir_pasangan: '',
+                  kode_fasilitas: this.modelIde.kode_fasilitas,
+                  fasilitas_name: this.modelIde.fasilitas_name,
+                  status_harta_gono_gini: this.ideForm.get('status_harta_gono_gini')?.value,
                 })
                 .subscribe({
                   next: data => {
@@ -1673,9 +1691,12 @@ export class InitialDataEntryFixComponent implements OnInit {
                   no_handphone: this.ideForm.get('no_handphone')?.value,
                   no_handphone_pasangan: this.ideForm.get('no_handphone_pasangan')?.value,
                   no_telepon: '',
+                  kode_fasilitas: this.kode_fasilitas,
+                  fasilitas_name: this.fasilitas,
                   // updated_by: '',
                   // updated_date: '',
                   usia_pasangan: this.ideForm.get('usia_pasangan')?.value,
+                  status_harta_gono_gini: this.ideForm.get('status_harta_gono_gini')?.value,
                 })
                 .subscribe({
                   next: goDe => {
@@ -1840,6 +1861,9 @@ export class InitialDataEntryFixComponent implements OnInit {
                     usia_pasangan: this.ideForm.get('usia_pasangan')?.value,
                     tempat_lahir: this.ideForm.get('tempat_lahir')?.value,
                     tempat_lahir_pasangan: this.ideForm.get('tempat_lahir_pasangan')?.value,
+                    kode_fasilitas: this.modelIde.kode_fasilitas,
+                    fasilitas_name: this.modelIde.fasilitas_name,
+                    status_harta_gono_gini: this.ideForm.get('status_harta_gono_gini')?.value,
                   })
                   .subscribe({
                     next: dataDe => {
@@ -1925,6 +1949,9 @@ export class InitialDataEntryFixComponent implements OnInit {
                     usia_pasangan: '',
                     tempat_lahir: this.ideForm.get('tempat_lahir')?.value,
                     tempat_lahir_pasangan: '',
+                    kode_fasilitas: this.modelIde.kode_fasilitas,
+                    fasilitas_name: this.modelIde.fasilitas_name,
+                    status_harta_gono_gini: this.ideForm.get('status_harta_gono_gini')?.value,
                   })
                   .subscribe({
                     next: dataSukses => {
@@ -2018,9 +2045,12 @@ export class InitialDataEntryFixComponent implements OnInit {
             no_handphone: this.ideForm.get('no_handphone')?.value,
             no_handphone_pasangan: this.ideForm.get('no_handphone_pasangan')?.value,
             no_telepon: '',
+            kode_fasilitas: this.kode_fasilitas,
+            fasilitas_name: this.fasilitas,
             // updated_by: '',
             // updated_date: '',
             usia_pasangan: this.ideForm.get('usia_pasangan')?.value,
+            status_harta_gono_gini: this.ideForm.get('status_harta_gono_gini')?.value,
           })
           .subscribe({
             next: data => {
@@ -2107,6 +2137,9 @@ export class InitialDataEntryFixComponent implements OnInit {
               usia_pasangan: this.ideForm.get('usia_pasangan')?.value,
               tempat_lahir: this.ideForm.get('tempat_lahir')?.value,
               tempat_lahir_pasangan: this.ideForm.get('tempat_lahir_pasangan')?.value,
+              kode_fasilitas: this.modelIde.kode_fasilitas,
+              fasilitas_name: this.modelIde.fasilitas_name,
+              status_harta_gono_gini: this.ideForm.get('status_harta_gono_gini')?.value,
             })
             .subscribe({
               next: data => {
@@ -2192,6 +2225,9 @@ export class InitialDataEntryFixComponent implements OnInit {
               usia_pasangan: '',
               tempat_lahir: this.ideForm.get('tempat_lahir')?.value,
               tempat_lahir_pasangan: '',
+              kode_fasilitas: this.modelIde.kode_fasilitas,
+              fasilitas_name: this.modelIde.fasilitas_name,
+              status_harta_gono_gini: this.ideForm.get('status_harta_gono_gini')?.value,
             })
             .subscribe({
               next: data => {

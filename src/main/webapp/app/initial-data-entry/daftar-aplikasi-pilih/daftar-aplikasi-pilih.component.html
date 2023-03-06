@@ -4,26 +4,51 @@
     <p></p>
     <span class="fixLogo"></span>
     <br />
-    <p>Fasilitas : PPR</p>
-    <p>Fasilitas : PTA</p>
-    <p>Fasilitas : PKM</p>
-    <p>Fasilitas : PPK</p>
+    <br />
+    <div class="row" style="justify-content: center" [formGroup]="pilihProgramFixForm">
+      <div class="col-md-3">
+        <label style="float: left"><h6>Fasilitas :</h6></label>
+        <select formControlName="fasilitas_name" class="form-control">
+          <option value="">Pilih Fasilitas</option>
+          <option
+            *ngFor="let listFasilitas of modelFasilitas; index as i"
+            [value]="listFasilitas.kode_fasilitas + '|' + listFasilitas.fasilitas"
+          >
+            {{ listFasilitas.fasilitas }}
+          </option>
+        </select>
+      </div>
+    </div>
   </div>
   <div class="col" style="text-align: center">
     <h5 text-align="center">Non Fix Income</h5>
     <p></p>
     <span class="nonLogo"></span>
     <br />
-    <p>Fasilitas : PPR</p>
-    <p>Fasilitas : PKM</p>
-    <p>Plafond > 500 Juta</p>
+    <br />
+    <div class="row" style="justify-content: center" [formGroup]="pilihProgramNonForm">
+      <div class="col-md-3">
+        <label style="float: left"><h6>Fasilitas :</h6></label>
+        <select formControlName="fasilitas_name" class="form-control">
+          <option value="">Pilih Fasilitas</option>
+          <option
+            *ngFor="let listFasilitas of modelFasilitas; index as i"
+            [value]="listFasilitas.kode_fasilitas + '|' + listFasilitas.fasilitas"
+            [hidden]="listFasilitas.fasilitas === 'PTA'"
+          >
+            {{ listFasilitas.fasilitas }}
+          </option>
+        </select>
+      </div>
+    </div>
   </div>
 </div>
+<p></p>
 <div class="row">
   <div class="col" style="text-align: center">
-    <input class="btn btn-dark" (click)="gotofix('1')" type="button" value="Pilih" />
+    <button class="btn btn-dark" (click)="gotofix('1')" type="button">Pilih</button>
   </div>
   <div class="col" style="text-align: center">
-    <input class="btn btn-dark" (click)="gotonon('2')" type="button" value="Pilih" />
+    <button class="btn btn-dark" (click)="gotonon('2')" type="button">Pilih</button>
   </div>
 </div>

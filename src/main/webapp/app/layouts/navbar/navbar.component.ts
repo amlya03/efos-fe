@@ -22,6 +22,7 @@ import { navbarModel } from './navbarModel.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { environment } from 'environments/environment';
+import { modelCustomer } from 'app/initial-data-entry/services/config/modelCustomer.model';
 
 @Component({
   selector: 'jhi-navbar',
@@ -58,9 +59,12 @@ export class NavbarComponent implements OnInit {
   datakirimanidcustomer: any;
   paramId: any;
   kategori: any;
+  kode_fasilitas: any;
+  fasilitas: any;
   navbarParameterize: navbarModel[] = [];
   childNavbar: navbarModel[] = [];
   statusPerkawinan: any;
+  modelIde: modelCustomer = new modelCustomer();
 
   constructor(
     protected http: HttpClient,
@@ -87,6 +91,8 @@ export class NavbarComponent implements OnInit {
       this.datakirimanidcustomer = params.datakirimanidcustomer;
       this.paramId = params.id;
       this.kategori = params.kategori;
+      this.kode_fasilitas = params.kode_fasilitas;
+      this.fasilitas = params.fasilitas;
       // ///////////////// Data Entry //////////////////////////////////
       this.curef = params.curef;
       this.app_no_de = params.app_no_de;
@@ -117,7 +123,11 @@ export class NavbarComponent implements OnInit {
         this.statusPerkawinan = this.dataEntry.status_perkawinan;
         this.getLoading(false);
       }
+      this.dataEntryServices.getCustomerByCuref(this.dataEntry.curef).subscribe(customer => {
+        this.modelIde = customer.result;
+      });
     });
+
     // }, 5);
 
     this.entitiesNavbarItems = EntityNavbarItems;

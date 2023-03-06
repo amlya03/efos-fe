@@ -57,4 +57,10 @@ export class listAgunan {
   usia_bangunan?: string;
   negara_produsen?: string;
   berwawasan_lingkungan?: string;
+  nilai_agunan: string | number | null | undefined;
+  nilai_indikasi: string | number | null | undefined;
+  nilai_likuidasi: string | number | null | undefined;
+  nilai_pasar: string | number | null | undefined;
+  no_faktur: string | number | null | undefined;
+  no_spk: string | number | null | undefined;
 }

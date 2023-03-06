@@ -28,8 +28,26 @@
             <fa-icon [icon]="navbar.menu_icon"></fa-icon>
             <p>{{ navbar.menu_name }}</p>
             <div *ngIf="navbar.menu_name === 'IDE'">
-              <span routerLink="/initial-data-entryfix" hidden [queryParams]="{ kategori: this.kategori, id: this.paramId }"></span>
-              <span routerLink="/hasilprescreening" [queryParams]="{ kategori: this.kategori, id: this.paramId }" hidden></span>
+              <span
+                routerLink="/initial-data-entryfix"
+                hidden
+                [queryParams]="{
+                  kategori: this.kategori,
+                  id: this.paramId,
+                  kode_fasilitas: this.kode_fasilitas,
+                  fasilitas: this.fasilitas
+                }"
+              ></span>
+              <span
+                routerLink="/hasilprescreening"
+                [queryParams]="{
+                  kategori: this.kategori,
+                  id: this.paramId,
+                  kode_fasilitas: this.kode_fasilitas,
+                  fasilitas: this.fasilitas
+                }"
+                hidden
+              ></span>
             </div>
             <div *ngIf="navbar.menu_name === 'Data Entry'">
               <span
@@ -572,7 +590,8 @@
   </div>
   <div
     *ngIf="
-      router.url === '/initial-data-entryfix?kategori=' + this.kategori ||
+      router.url ===
+        '/initial-data-entryfix?kategori=' + this.kategori + '&kode_fasilitas=' + this.kode_fasilitas + '&fasilitas=' + this.fasilitas ||
       router.url === '/initial-data-entryfix?kategori=' + this.kategori + '&id=' + this.paramId ||
       router.url === '/hasilprescreening?kategori=' + this.kategori + '&id=' + this.paramId
     "
@@ -585,7 +604,9 @@
       *ngSwitchCase="'AO'"
       [queryParams]="{
         kategori: this.kategori,
-        id: this.paramId
+        id: this.paramId,
+        kode_fasilitas: this.kode_fasilitas,
+        fasilitas: this.fasilitas
       }"
     >
       <h6>Initial Data Entry</h6>
@@ -594,7 +615,9 @@
       class="nav-item nav-link"
       [queryParams]="{
         kategori: this.kategori,
-        id: this.paramId
+        id: this.paramId,
+        kode_fasilitas: this.kode_fasilitas,
+        fasilitas: this.fasilitas
       }"
       routerLink="/hasilprescreening"
       [routerLinkActive]="'active'"
@@ -604,8 +627,6 @@
       <h6>Hasil Pre Screening</h6>
     </a>
   </div>
-  <!-- <input type="text" #buatCek value="dsgs"/> -->
-  <!-- <input type="text" [value]="'/data-entry/job-info?datakiriman='+this.datakiriman+'&statusPerkawinan='+this.statusPerkawinan+'&app_no_de='+this.app_no_de+'&datakirimanakategoripekerjaan='+this.datakirimanakategoripekerjaan"> -->
   <div
     *ngIf="
       router.url === '/data-entry/personalinfo' ||
@@ -685,11 +706,15 @@
       <h6>Job Info</h6>
     </a>
     <a
-      [hidden]="statusPerkawinan === 'BELUM KAWIN' || statusPerkawinan === 'CERAI MATI' || statusPerkawinan === 'CERAI HIDUP'"
+      [hidden]="
+        statusPerkawinan === 'BELUM KAWIN' ||
+        statusPerkawinan === 'CERAI MATI' ||
+        statusPerkawinan === 'CERAI HIDUP' ||
+        (statusPerkawinan === 'KAWIN' && this.modelIde.fasilitas_name === 'PTA')
+      "
       class="nav-item nav-link"
       [queryParams]="{
         curef: this.curef,
-
         app_no_de: this.app_no_de
       }"
       routerLink="data-entry/data-pasangan"
@@ -700,11 +725,15 @@
       <h6>Data Pasangan</h6>
     </a>
     <a
-      [hidden]="statusPerkawinan === 'BELUM KAWIN' || statusPerkawinan === 'CERAI MATI' || statusPerkawinan === 'CERAI HIDUP'"
+      [hidden]="
+        statusPerkawinan === 'BELUM KAWIN' ||
+        statusPerkawinan === 'CERAI MATI' ||
+        statusPerkawinan === 'CERAI HIDUP' ||
+        (statusPerkawinan === 'KAWIN' && this.modelIde.fasilitas_name === 'PTA')
+      "
       class="nav-item nav-link"
       [queryParams]="{
         curef: this.curef,
-
         app_no_de: this.app_no_de
       }"
       routerLink="data-entry/pekerjaan-pasangan"
@@ -718,13 +747,13 @@
       class="nav-item nav-link"
       [queryParams]="{
         curef: this.curef,
-
         app_no_de: this.app_no_de
       }"
       routerLink="data-entry/collateral"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
+      [hidden]="this.modelIde.fasilitas_name === 'PTA'"
     >
       <span
         class="col nav-link"

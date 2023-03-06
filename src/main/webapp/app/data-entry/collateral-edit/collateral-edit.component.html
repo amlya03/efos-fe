@@ -75,7 +75,11 @@
           <br />
         </div>
       </div>
-      <div class="form-group row" *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'">
+      <div
+        class="form-group row"
+        *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'"
+        [hidden]="this.editCollateralForm.get('status_agunan')?.value == 'baru'"
+      >
         <label class="col-sm-4 col-form-label">No BPKB</label>
         <div class="col-sm-8">
           <input type="tel" class="form-control" placeholder="No BPKB" formControlName="nomor_bpkb" id="nomor_bpkb2" />
@@ -169,7 +173,9 @@
         class="form-group row"
         [hidden]="this.editCollateralForm.get('tipe_agunan')?.value == 'C01' || this.editCollateralForm.get('tipe_agunan')?.value == 'H01'"
       >
-        <label class="col-sm-4 col-form-label">Developer</label>
+        <label class="col-sm-4 col-form-label">{{
+          this.editCollateralForm.get('tipe_agunan')?.value == 'C01' ? 'Penjual' : 'Rekanan Kerja Sama'
+        }}</label>
         <div class="col">
           <input
             type="radio"
@@ -222,20 +228,20 @@
         class="form-group row"
         [hidden]="this.editCollateralForm.get('tipe_agunan')?.value == 'C01' || this.editCollateralForm.get('tipe_agunan')?.value == 'H01'"
       >
-        <label class="col-sm-4 col-form-label">Sama Dengan Jaminan Sebelumnya</label>
+        <label class="col-sm-4 col-form-label">Hak Tanggungan</label>
         <div class="col">
-          <label>Ya</label>
+          <label>Ada</label>
           <input type="radio" formControlName="status_jaminan_sebelumnya" value="1" />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <input type="radio" formControlName="status_jaminan_sebelumnya" value="0" />
-          <label>Tidak</label>
+          <label>Tidak Ada</label>
         </div>
         <br />
       </div>
     </div>
     <div class="col">
       <!-- CR Manrisk -->
-      <div class="form-group row" *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'">
+      <div class="form-group row" [hidden]="this.editCollateralForm.get('tipe_agunan')?.value == 'H01'">
         <label class="col-sm-4 col-form-label">Tahun dibangun (YYYY)</label>
         <div class="col-sm-8">
           <input
@@ -262,55 +268,87 @@
         </div>
       </div>
       <!-- CR Manrisk -->
-      <div class="form-group row" *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'">
+      <!-- BRD Baru -->
+      <div
+        class="form-group row"
+        *ngIf="this.editCollateralForm.get('tipe_agunan')?.value === 'C01'"
+        [hidden]="this.editCollateralForm.get('status_agunan')?.value === 'second'"
+      >
+        <label class="col-sm-4 col-form-label">Nomor Surat Pemesanan Kendaraan (SPK)</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <input type="text" class="form-control" formControlName="no_spk" />
+          </div>
+          <br />
+        </div>
+      </div>
+      <br />
+      <div
+        class="form-group row"
+        *ngIf="this.editCollateralForm.get('tipe_agunan')?.value === 'C01'"
+        [hidden]="this.editCollateralForm.get('status_agunan')?.value === 'second'"
+      >
+        <label class="col-sm-4 col-form-label">Nomor Faktur</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <input type="text" class="form-control" formControlName="no_faktur" />
+          </div>
+          <br />
+        </div>
+      </div>
+      <!-- BRD Baru -->
+      <div
+        class="form-group row"
+        *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'"
+        [hidden]="this.editCollateralForm.get('status_agunan')?.value == 'baru'"
+      >
         <label class="col-sm-4 col-form-label">No Plat</label>
         <div class="col-sm-8">
           <input type="tel" class="form-control" placeholder="No Plat" formControlName="no_plat" id="no_plat" />
           <br />
         </div>
       </div>
-      <div class="form-group row" *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'">
+      <div
+        class="form-group row"
+        *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'"
+        [hidden]="this.editCollateralForm.get('status_agunan')?.value == 'baru'"
+      >
         <label class="col-sm-4 col-form-label">Warna</label>
         <div class="col-sm-8">
           <input type="text" class="form-control" placeholder="Warna" formControlName="warna" id="warna" />
           <br />
         </div>
       </div>
-      <div class="form-group row" *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'">
+      <div
+        class="form-group row"
+        *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'"
+        [hidden]="this.editCollateralForm.get('status_agunan')?.value == 'baru'"
+      >
         <label class="col-sm-4 col-form-label">No Mesin</label>
         <div class="col-sm-8">
           <input type="tel" class="form-control" placeholder="No Mesin" formControlName="no_mesin" id="no_mesin" />
           <br />
         </div>
       </div>
-      <div class="form-group row" *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'">
+      <div
+        class="form-group row"
+        *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'"
+        [hidden]="this.editCollateralForm.get('status_agunan')?.value == 'baru'"
+      >
         <label class="col-sm-4 col-form-label">No Rangka</label>
         <div class="col-sm-8">
           <input type="tel" class="form-control" placeholder="No Rangka" formControlName="no_rangka" id="no_rangka" />
           <br />
         </div>
       </div>
-      <div class="form-group row" *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'">
+      <div
+        class="form-group row"
+        *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'"
+        [hidden]="this.editCollateralForm.get('status_agunan')?.value == 'baru'"
+      >
         <label class="col-sm-4 col-form-label">Nama BPKB</label>
         <div class="col-sm-8">
           <input type="text" class="form-control" placeholder="Nama BPKB" formControlName="nama_bpkb" id="nama_bpkb" />
-          <br />
-        </div>
-      </div>
-      <div
-        class="form-group row"
-        [hidden]="this.editCollateralForm.get('tipe_agunan')?.value == 'C01' || this.editCollateralForm.get('tipe_agunan')?.value == 'H01'"
-      >
-        <label class="col-sm-4 col-form-label">Tahun dibuat (YYYY)</label>
-        <div class="col-sm-8">
-          <input
-            class="form-control"
-            type="text"
-            formControlName="tahun_dibuat"
-            minlength="4"
-            maxlength="4"
-            (input)="hitungUsiaBangunan(this.editCollateralForm.get('tahun_dibuat')?.value)"
-          />
           <br />
         </div>
       </div>
@@ -379,14 +417,19 @@
           <br />
         </div>
       </div>
-      <div class="form-group row">
+      <div class="form-group row" [hidden]="this.editCollateralForm.get('status_sertifikat')?.value === 'SHGB'">
         <label class="col-sm-4 col-form-label">Tanggal Terbit</label>
         <div class="col-sm-8">
           <input class="form-control" type="date" id="tanggal_terbit" formControlName="tanggal_terbit" />
           <br />
         </div>
       </div>
-      <div class="form-group row" [hidden]="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'">
+      <div
+        class="form-group row"
+        [hidden]="
+          this.editCollateralForm.get('tipe_agunan')?.value === 'C01' || this.editCollateralForm.get('status_sertifikat')?.value === 'SHM'
+        "
+      >
         <label class="col-sm-4 col-form-label">Tanggal Expired</label>
         <div class="col-sm-8">
           <div class="form-group">
@@ -398,7 +441,7 @@
     </div>
   </div>
 
-  <div [hidden]="this.editCollateralForm.get('tipe_agunan')?.value == 'C01'">
+  <div [hidden]="this.editCollateralForm.get('tipe_agunan')?.value === 'C01'">
     <br />
     <br />
     <br />
@@ -573,21 +616,118 @@
           <div class="col">M2</div>
         </div>
         <br />
+        <!-- BRD Baru -->
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Harga Objek</label>
+          <label class="col-sm-3 col-form-label">Nilai Indikasi</label>
           <div class="col-sm-9">
             <input
               type="tel"
-              oninput="this.value = this.value.replace(/^0/g, '');"
               class="form-control"
-              placeholder=""
-              formControlName="harga_objek"
-              id="harga_objek"
               currencyMask
               [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+              formControlName="nilai_indikasi"
             />
           </div>
         </div>
+        <br />
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Nilai Agunan</label>
+          <div class="col-sm-9">
+            <div class="form-group">
+              <select class="form-control" formControlName="nilai_agunan">
+                <option value="">Pilih Data</option>
+                <option value="IMB">IMB</option>
+                <option value="Fisik">Fisik</option>
+                <option value="Pricelist Developer">Pricelist Developer</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="form-group row" *ngIf="this.editCollateralForm.get('nilai_agunan')?.value === 'IMB'">
+          <label class="col-sm-3 col-form-label">Nilai Pasar IMB</label>
+          <div class="col-sm-9">
+            <div class="form-group">
+              <input
+                type="tel"
+                class="form-control"
+                currencyMask
+                [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+                formControlName="nilai_pasar"
+              />
+            </div>
+            <br />
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="this.editCollateralForm.get('nilai_agunan')?.value === 'IMB'">
+          <label class="col-sm-3 col-form-label">Nilai Likuidasi IMB</label>
+          <div class="col-sm-9">
+            <div class="form-group">
+              <input
+                type="tel"
+                class="form-control"
+                formControlName="nilai_likuidasi"
+                currencyMask
+                [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+              />
+            </div>
+            <br />
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="this.editCollateralForm.get('nilai_agunan')?.value === 'Fisik'">
+          <label class="col-sm-3 col-form-label">Nilai Pasar Fisik</label>
+          <div class="col-sm-9">
+            <div class="form-group">
+              <input
+                type="tel"
+                class="form-control"
+                formControlName="nilai_pasar"
+                currencyMask
+                [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+              />
+            </div>
+            <br />
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="this.editCollateralForm.get('nilai_agunan')?.value === 'Fisik'">
+          <label class="col-sm-3 col-form-label">Nilai Likuidasi Fisik</label>
+          <div class="col-sm-9">
+            <div class="form-group">
+              <input
+                type="tel"
+                class="form-control"
+                formControlName="nilai_likuidasi"
+                currencyMask
+                [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+              />
+            </div>
+            <br />
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="this.editCollateralForm.get('nilai_agunan')?.value === 'Pricelist Developer'">
+          <label class="col-sm-3 col-form-label">Harga Transaksi (Bila lebih rendah dari LPA)</label>
+          <div class="col-sm-9">
+            <div class="form-group">
+              <input
+                type="tel"
+                class="form-control"
+                formControlName="harga_objek"
+                currencyMask
+                [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+              />
+              <span
+                [hidden]="
+                  editCollateralForm.controls.harga_objek.valid ||
+                  this.untukSessionRole == 'BRANCHMANAGER' ||
+                  this.untukSessionRole == 'VER_PRE_SPV'
+                "
+                class="text-danger"
+                >Field Wajib Diisi
+              </span>
+            </div>
+          </div>
+        </div>
+        <!-- BRD Baru -->
       </div>
       <!-- batas colom 1 dan 2 -->
 

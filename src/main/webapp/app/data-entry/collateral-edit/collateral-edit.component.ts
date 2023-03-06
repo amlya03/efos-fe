@@ -257,6 +257,30 @@ export class CollateralEditComponent implements OnInit {
         value: '',
         disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
       },
+      nilai_agunan: {
+        value: '',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
+      nilai_indikasi: {
+        value: '',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
+      no_spk: {
+        value: '',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
+      no_faktur: {
+        value: '',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
+      nilai_pasar: {
+        value: '0',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
+      nilai_likuidasi: {
+        value: '0',
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
+      },
     });
   }
 
@@ -501,6 +525,12 @@ export class CollateralEditComponent implements OnInit {
           nomor_rumah: this.tableAgunan.nomor_rumah,
           tanggal_terbit: this.tableAgunan.tanggal_terbit,
           tanggal_expired: this.tableAgunan.tanggal_expired,
+          nilai_agunan: this.tableAgunan.nilai_agunan,
+          nilai_indikasi: this.tableAgunan.nilai_indikasi,
+          no_spk: this.tableAgunan.no_spk,
+          no_faktur: this.tableAgunan.no_faktur,
+          nilai_pasar: this.tableAgunan.nilai_pasar,
+          nilai_likuidasi: this.tableAgunan.nilai_likuidasi,
         };
         this.editCollateralForm.setValue(retriveAgunan);
 
@@ -699,6 +729,12 @@ export class CollateralEditComponent implements OnInit {
         tanggal_expired: this.editCollateralForm.get('tanggal_expired')?.value,
         negara_produsen: this.editCollateralForm.get('negara_produsen')?.value,
         berwawasan_lingkungan: this.editCollateralForm.get('berwawasan_lingkungan')?.value,
+        nilai_agunan: this.editCollateralForm.get('nilai_agunan')?.value,
+        nilai_indikasi: this.editCollateralForm.get('nilai_indikasi')?.value,
+        no_spk: this.editCollateralForm.get('no_spk')?.value,
+        no_faktur: this.editCollateralForm.get('no_faktur')?.value,
+        nilai_pasar: this.editCollateralForm.get('nilai_pasar')?.value,
+        nilai_likuidasi: this.editCollateralForm.get('nilai_likuidasi')?.value,
 
         // / provinsiiiaanann
         provinsi_agunan: provinsiSplit[1],

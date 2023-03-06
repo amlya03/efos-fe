@@ -288,6 +288,30 @@ export class CollateralComponent implements OnInit {
         { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
+      nilai_agunan: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      nilai_indikasi: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      no_spk: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      no_faktur: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      nilai_pasar: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      nilai_likuidasi: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
     });
   }
 
@@ -540,7 +564,6 @@ export class CollateralComponent implements OnInit {
         tanggal_expired: this.collateralForm.get('tanggal_expired')?.value,
         negara_produsen: this.collateralForm.get('negara_produsen')?.value,
         berwawasan_lingkungan: this.collateralForm.get('berwawasan_lingkungan')?.value,
-
         provinsi_agunan: kirimanprovinsi_agunan[1],
         provinsi_sesuai_sertifikat: kirimanprovinsi_sesuai_sertifikat[1],
         kabkota_agunan: kirimankabkota_agunan[1],
@@ -553,12 +576,18 @@ export class CollateralComponent implements OnInit {
         id_collateral: '',
         id_collateral_detail: 0,
         nama_perumahan: '',
+        nilai_agunan: this.collateralForm.get('nilai_agunan')?.value,
+        nilai_indikasi: this.collateralForm.get('nilai_indikasi')?.value,
+        no_spk: this.collateralForm.get('no_spk')?.value,
+        no_faktur: this.collateralForm.get('no_faktur')?.value,
+        nilai_pasar: this.collateralForm.get('nilai_pasar')?.value,
+        nilai_likuidasi: this.collateralForm.get('nilai_likuidasi')?.value,
       })
       .subscribe({
         next() {
           // console.warn(bawaan);
           alert('Berhasil Menyimpan Data');
-          window.location.reload();
+          // window.location.reload();
         },
       });
   }

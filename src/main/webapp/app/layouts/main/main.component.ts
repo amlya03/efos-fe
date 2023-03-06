@@ -68,7 +68,7 @@ export class MainComponent implements OnInit {
           });
         },
       });
-    }, 6 * 1000);
+    }, 60 * 1000);
   }
 
   private getPageTitle(routeSnapshot: ActivatedRouteSnapshot): string {

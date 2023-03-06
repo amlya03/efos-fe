@@ -18,6 +18,7 @@ import { getProgramModel } from '../services/config/getProgramModel.model';
 import { getProduk } from '../services/config/getProduk.model';
 import { getListFasilitasModel } from '../services/config/getListFasilitasModel.model';
 import { environment } from 'environments/environment';
+import { modelCustomer } from 'app/initial-data-entry/services/config/modelCustomer.model';
 
 export type EntityResponseDaWa = HttpResponse<strukturpembiayaanmodel>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -35,6 +36,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   tenor: refTenorFix[] = [];
   kodeskema: refSkema[] = [];
   strukturModel: getStrukturPembiayaan = new getStrukturPembiayaan();
+  modelIde: modelCustomer = new modelCustomer();
   kodeFasilitasRet: any;
   kodeProgramRet: any;
   kodeProdukRet: any;
@@ -92,10 +94,7 @@ export class StrukturPembiayaanComponent implements OnInit {
         { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
-      kode_fasilitas: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      kode_fasilitas: [{ value: '' || null, disabled: true }, Validators.required],
       program: [
         { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
@@ -166,20 +165,37 @@ export class StrukturPembiayaanComponent implements OnInit {
       this.dataEntryService.getFetchKodeFasilitas().subscribe(data => {
         this.Kodefasilitas = data.result;
       });
+    }, 15);
+
+    let modelCode: any;
+    setTimeout(() => {
+      this.dataEntryService.getCustomerByCuref(this.curef).subscribe(data => {
+        this.modelIde = data.result;
+        modelCode = data.code;
+        this.kodeFasilitasRet = this.modelIde.kode_fasilitas + '|' + this.modelIde.fasilitas_name;
+        this.strukturForm.get('kode_fasilitas')?.setValue(this.kodeFasilitasRet);
+        this.onchangefasilitas(this.kodeFasilitasRet.split('|'));
+        if (
+          this.modelIde.status_perkawinan !== 'KAWIN' ||
+          (this.modelIde.status_perkawinan === 'KAWIN' && this.modelIde.fasilitas_name === 'PTA')
+        ) {
+          this.strukturForm.get('joint_income')?.setValue('0');
+        } else {
+          this.strukturForm.get('joint_income')?.setValue('1');
+        }
+      });
     }, 20);
 
     setTimeout(() => {
       this.dataEntryService.getFetchStrukturDE(this.app_no_de, this.curef).subscribe(data => {
         this.strukturModel = data.result;
         if (data.result == null || data.result == '') {
-          this.kodeFasilitasRet = '';
           this.kodeProgramRet = '';
           this.kodeProdukRet = '';
           this.skemaRet = '';
           this.jangkaWaktuRet = '';
           this.getLoading(false);
         } else {
-          this.kodeFasilitasRet = this.strukturModel.kode_fasilitas + '|' + this.strukturModel.kode_fasilitas_name;
           this.kodeProgramRet = this.strukturModel.program + '|' + this.strukturModel.program_name;
           this.kodeProdukRet = this.strukturModel.produk + '|' + this.strukturModel.produk_name;
           this.skemaRet =
@@ -305,7 +321,7 @@ export class StrukturPembiayaanComponent implements OnInit {
           }, 1000);
         }
       });
-    }, 50);
+    }, modelCode / 4);
 
     // setTimeout(() => {
     //   alert(this.strukturModel.margin)

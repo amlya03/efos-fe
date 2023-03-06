@@ -118,17 +118,8 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">FTV</label>
         <div class="col-sm-6">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="ftv"
-            name="ftv"
-            value="{{ this.dataEntry.uang_muka | currency: 'Rp. ' }}"
-            currencyMask
-          />
+          <h6>{{ this.betaFTV | number }} %</h6>
         </div>
-        <div class="col-sm-2">{{ this.betaFTV | number }} %</div>
       </div>
       <br />
       <div class="form-group row">

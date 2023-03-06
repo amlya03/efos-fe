@@ -72,4 +72,7 @@ export class modelCustomer {
   updated_date: number | string | null | undefined;
   created_by: number | string | null | undefined;
   updated_by: number | string | null | undefined;
+  kode_fasilitas: number | string | null | undefined;
+  fasilitas_name: number | string | null | undefined;
+  status_harta_gono_gini: number | string | null | undefined;
 }

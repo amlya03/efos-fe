@@ -40,15 +40,6 @@
               </option>
             </select>
           </div>
-          <span
-            [hidden]="
-              strukturForm.controls.kode_fasilitas.valid ||
-              this.untukSessionRole == 'BRANCHMANAGER' ||
-              this.untukSessionRole == 'VER_PRE_SPV'
-            "
-            class="text-danger"
-            >Field Wajib Diisi
-          </span>
         </div>
       </div>
       <br />
@@ -179,15 +170,6 @@
               </option>
             </select>
           </div>
-          <span
-            [hidden]="
-              strukturForm.controls.tujuan_pembiayaan.valid ||
-              this.untukSessionRole == 'BRANCHMANAGER' ||
-              this.untukSessionRole == 'VER_PRE_SPV'
-            "
-            class="text-danger"
-            >Field Wajib Diisi
-          </span>
         </div>
       </div>
       <br />
