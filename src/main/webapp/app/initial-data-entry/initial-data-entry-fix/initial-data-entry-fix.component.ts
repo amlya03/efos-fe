@@ -1115,6 +1115,17 @@ export class InitialDataEntryFixComponent implements OnInit {
                             },
                           });
                         },
+                        error: errKawin => {
+                          Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: errKawin.error.message,
+                            showConfirmButton: false,
+                          }).then(() => {
+                            this.router.navigate(['/daftaraplikasiide']);
+                          });
+                          this.getLoading(false);
+                        },
                       });
                   } else {
                     this.http
@@ -1208,6 +1219,16 @@ export class InitialDataEntryFixComponent implements OnInit {
                               id: this.paramId,
                             },
                           });
+                        },
+                        error: errLaj => {
+                          Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: errLaj.error.message,
+                          }).then(() => {
+                            this.router.navigate(['/daftaraplikasiide']);
+                          });
+                          this.getLoading(false);
                         },
                       });
                   }
@@ -1408,6 +1429,16 @@ export class InitialDataEntryFixComponent implements OnInit {
                       },
                     });
                   },
+                  error: errKaw => {
+                    Swal.fire({
+                      position: 'center',
+                      icon: 'error',
+                      title: errKaw.error.message,
+                    }).then(() => {
+                      this.router.navigate(['/daftaraplikasiide']);
+                    });
+                    this.getLoading(false);
+                  },
                 });
             } else {
               this.http
@@ -1502,6 +1533,16 @@ export class InitialDataEntryFixComponent implements OnInit {
                         id: this.paramId,
                       },
                     });
+                  },
+                  error: errLajang => {
+                    Swal.fire({
+                      position: 'center',
+                      icon: 'error',
+                      title: errLajang.error.message,
+                    }).then(() => {
+                      this.router.navigate(['/daftaraplikasiide']);
+                    });
+                    this.getLoading(false);
                   },
                 });
             }

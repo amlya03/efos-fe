@@ -11,7 +11,7 @@ export class listAgunan {
   status_jaminan_sebelumnya?: string;
   hubungan_pemegang_hak?: string;
   tahun_dibuat?: number;
-  status_sertifikat?: string;
+  status_sertifikat: any;
   no_sertifikat?: string;
   nama_pemegang_hak?: string;
   no_handphone_cp?: number;
@@ -63,4 +63,6 @@ export class listAgunan {
   nilai_pasar: string | number | null | undefined;
   no_faktur: string | number | null | undefined;
   no_spk: string | number | null | undefined;
+  no_imb: string | number | null | undefined;
+  tanggal_imb: string | number | null | undefined;
 }

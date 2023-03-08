@@ -182,6 +182,10 @@ export class CollateralComponent implements OnInit {
         { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
+      status_sertifikat_input: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
       no_sertifikat: [
         { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
@@ -309,6 +313,14 @@ export class CollateralComponent implements OnInit {
         Validators.required,
       ],
       nilai_likuidasi: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      no_imb: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      tanggal_imb: [
         { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
@@ -513,7 +525,11 @@ export class CollateralComponent implements OnInit {
     } else {
       kirimhubunganpemeganghak = this.collateralForm.get('hubungan_pemegang_hak')?.value;
     }
-
+    if (this.collateralForm.get('status_sertifikat')?.value === 'Lainnya') {
+      this.collateralForm.get('status_sertifikat')?.setValue(this.collateralForm.get('status_sertifikat_input')?.value);
+    } else {
+      this.collateralForm.get('status_sertifikat')?.setValue(this.collateralForm.get('status_sertifikat')?.value);
+    }
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/create_collateral', {
         tipe_agunan: tipeAgunan,
@@ -582,12 +598,14 @@ export class CollateralComponent implements OnInit {
         no_faktur: this.collateralForm.get('no_faktur')?.value,
         nilai_pasar: this.collateralForm.get('nilai_pasar')?.value,
         nilai_likuidasi: this.collateralForm.get('nilai_likuidasi')?.value,
+        no_imb: this.collateralForm.get('no_imb')?.value,
+        tanggal_imb: this.collateralForm.get('tanggal_imb')?.value,
       })
       .subscribe({
         next() {
           // console.warn(bawaan);
           alert('Berhasil Menyimpan Data');
-          // window.location.reload();
+          window.location.reload();
         },
       });
   }

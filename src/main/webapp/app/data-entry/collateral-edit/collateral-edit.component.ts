@@ -126,7 +126,8 @@ export class CollateralEditComponent implements OnInit {
   kirimantipe_agunan: any;
   kirimantipekendaraan: any;
   kirimantipe_properti: any;
-  kirimanwarna: any;
+  sertifInput: any;
+  sertifTrue: any;
 
   untukProvinsiSertif: any;
   untukKobkotaSertif: any;
@@ -281,6 +282,9 @@ export class CollateralEditComponent implements OnInit {
         value: '0',
         disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
       },
+      no_imb: { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+      tanggal_imb: { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+      status_sertifikat_input: { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
     });
   }
 
@@ -349,10 +353,11 @@ export class CollateralEditComponent implements OnInit {
         }
 
         if (
-          table.result.hubungan_pemegang_hak === 'Diri Sendiri' ||
-          table.result.hubungan_pemegang_hak === 'Orang Tua' ||
-          table.result.hubungan_pemegang_hak === 'Anak' ||
-          table.result.hubungan_pemegang_hak === 'Lainya'
+          this.pemegangHak.find((value: refListJumlahKaryawan) => value.deskripsi == this.tableAgunan.hubungan_pemegang_hak)
+          // table.result.hubungan_pemegang_hak === 'Diri Sendiri' ||
+          // table.result.hubungan_pemegang_hak === 'Orang Tua' ||
+          // table.result.hubungan_pemegang_hak === 'Anak' ||
+          // table.result.hubungan_pemegang_hak === 'Lainya'
         ) {
           // alert("ini if");
           // alert(table.result.hubungan_pemegang_hak =='Anak');
@@ -362,6 +367,15 @@ export class CollateralEditComponent implements OnInit {
           // alert("ini else");
           this.kirimanhubungan1 = 'Lainya';
           this.kirimanhubungan1lainya = table.result.hubungan_pemegang_hak;
+        }
+        // console.warn(this.pemegangHak.find((value: refListJumlahKaryawan) => value.deskripsi == this.tableAgunan.hubungan_pemegang_hak))
+
+        if (this.listSertif.find((value: refStatusSertifikat) => value.sertifikat_deskripsi == this.tableAgunan.status_sertifikat)) {
+          this.sertifTrue = this.tableAgunan.status_sertifikat;
+          this.sertifInput = '';
+        } else {
+          this.sertifTrue = 'Lainnya';
+          this.sertifInput = this.tableAgunan.status_sertifikat;
         }
 
         const ValidasiTipeAgunan = <FormControl>this.editCollateralForm.get('tipe_agunan');
@@ -490,7 +504,7 @@ export class CollateralEditComponent implements OnInit {
           status_jaminan_sebelumnya: this.tableAgunan.status_jaminan_sebelumnya,
           tahun_dibuat: this.tableAgunan.tahun_dibuat,
           usia_bangunan: this.tableAgunan.usia_bangunan,
-          status_sertifikat: this.tableAgunan.status_sertifikat,
+          status_sertifikat: this.sertifTrue,
           no_sertifikat: this.tableAgunan.no_sertifikat,
           nama_pemegang_hak: this.tableAgunan.nama_pemegang_hak,
           no_handphone_cp: this.tableAgunan.no_handphone_cp,
@@ -531,6 +545,9 @@ export class CollateralEditComponent implements OnInit {
           no_faktur: this.tableAgunan.no_faktur,
           nilai_pasar: this.tableAgunan.nilai_pasar,
           nilai_likuidasi: this.tableAgunan.nilai_likuidasi,
+          no_imb: this.tableAgunan.no_imb,
+          tanggal_imb: this.tableAgunan.tanggal_imb,
+          status_sertifikat_input: this.sertifInput,
         };
         this.editCollateralForm.setValue(retriveAgunan);
 
@@ -661,6 +678,7 @@ export class CollateralEditComponent implements OnInit {
 
     let tipeAgunan: any;
     let kirimhubunganpemeganghak: any;
+    let kirimStatusSertif: any;
     if (this.editCollateralForm.get('tipe_agunan')?.value === 'C01') {
       tipeAgunan = 'Kendaraan';
     } else if (this.editCollateralForm.get('tipe_agunan')?.value === 'E01') {
@@ -677,6 +695,12 @@ export class CollateralEditComponent implements OnInit {
       kirimhubunganpemeganghak = this.editCollateralForm.get('hubungan_pemegang_hak_lainya')?.value;
     } else {
       kirimhubunganpemeganghak = this.editCollateralForm.get('hubungan_pemegang_hak')?.value;
+    }
+
+    if (this.editCollateralForm.get('status_sertifikat')?.value === 'Lainnya') {
+      kirimStatusSertif = this.editCollateralForm.get('status_sertifikat_input')?.value;
+    } else {
+      kirimStatusSertif = this.editCollateralForm.get('status_sertifikat')?.value;
     }
 
     this.http
@@ -701,7 +725,7 @@ export class CollateralEditComponent implements OnInit {
         status_jaminan_sebelumnya: this.editCollateralForm.get('status_jaminan_sebelumnya')?.value,
         tahun_dibuat: this.editCollateralForm.get('tahun_dibuat')?.value,
         usia_bangunan: this.editCollateralForm.get('usia_bangunan')?.value,
-        status_sertifikat: this.editCollateralForm.get('status_sertifikat')?.value,
+        status_sertifikat: kirimStatusSertif,
         no_sertifikat: this.editCollateralForm.get('no_sertifikat')?.value,
         nama_pemegang_hak: this.editCollateralForm.get('nama_pemegang_hak')?.value,
         no_handphone_cp: this.editCollateralForm.get('no_handphone_cp')?.value,
@@ -735,6 +759,8 @@ export class CollateralEditComponent implements OnInit {
         no_faktur: this.editCollateralForm.get('no_faktur')?.value,
         nilai_pasar: this.editCollateralForm.get('nilai_pasar')?.value,
         nilai_likuidasi: this.editCollateralForm.get('nilai_likuidasi')?.value,
+        no_imb: this.editCollateralForm.get('no_imb')?.value,
+        tanggal_imb: this.editCollateralForm.get('tanggal_imb')?.value,
 
         // / provinsiiiaanann
         provinsi_agunan: provinsiSplit[1],

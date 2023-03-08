@@ -236,8 +236,26 @@
           <input type="radio" formControlName="status_jaminan_sebelumnya" value="0" />
           <label>Tidak Ada</label>
         </div>
-        <br />
       </div>
+      <br />
+      <!-- BRD Baru -->
+      <div class="form-group row" *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'H03'">
+        <label class="col-sm-4 col-form-label">No IMB / No PBG</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <input type="number" class="form-control" formControlName="no_imb" />
+          </div>
+          <br />
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="this.editCollateralForm.get('tipe_agunan')?.value == 'H03'">
+        <label class="col-sm-4 col-form-label">Tanggal IMB / Tanggal PBG</label>
+        <div class="col-sm-8">
+          <input class="form-control" type="date" formControlName="tanggal_imb" />
+          <br />
+        </div>
+      </div>
+      <!-- BRD Baru -->
     </div>
     <div class="col">
       <!-- CR Manrisk -->
@@ -377,6 +395,13 @@
                 {{ listSertif.sertifikat_deskripsi }}
               </option>
             </select>
+            <br />
+            <input
+              type="text"
+              class="form-control"
+              formControlName="status_sertifikat_input"
+              *ngIf="this.editCollateralForm.get('status_sertifikat')?.value === 'Lainnya'"
+            />
           </div>
           <br />
         </div>

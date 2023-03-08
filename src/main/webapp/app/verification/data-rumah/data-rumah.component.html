@@ -1,5 +1,5 @@
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Analisa Keuangan</h3>
+  <h3 style="color: #fff; text-align: center">Identitas Pemohon dan Pasangan</h3>
 </div>
 <br />
 <div class="row form-material" [formGroup]="analisaKeuanganForm">
@@ -964,7 +964,6 @@
           id="kewajiban_bank"
           name="kewajiban_bank"
           formControlName="total_angsuran_nasabah"
-          #kewajiban_bank1
           currencyMask
           [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
@@ -981,7 +980,6 @@
           id="kewajiban_bank_pasangan"
           name="kewajiban_bank_pasangan"
           formControlName="total_angsuran_pasangan"
-          #kewajiban_bank_pasangan1
           currencyMask
           [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
         />
@@ -1061,6 +1059,65 @@
         value="{{
           +this.analisaKeuanganForm.get('kewajiban_lainnya')?.value + +this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value
             | currency: 'Rp. ':'symbol':'1.0-0'
+        }}"
+      />
+    </div>
+  </div>
+</div>
+<p></p>
+<p></p>
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Total Kewajiban Bank</h3>
+</div>
+<p></p>
+<div class="row form-material">
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-5 col-form-label" style="color: #fff">KL</label>
+      <div class="col-sm-7">
+        <input
+          type="text"
+          class="form-control"
+          readonly
+          (keypress)="keyPressNumbers($event)"
+          currencyMask
+          value="{{
+            +this.slikForm.get('total_angsuran_nasabah')?.value + +this.analisaKeuanganForm.get('kewajiban_lainnya')?.value
+              | currency: 'Rp. ':'symbol':'1.0-0'
+          }}"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col" [hidden]="this.dataEntry.joint_income == 0">
+    <div class="form-group row">
+      <div class="col">
+        <input
+          type="text"
+          class="form-control"
+          (keypress)="keyPressNumbers($event)"
+          readonly
+          currencyMask
+          value="{{
+            (this.dataEntry.joint_income == 0 ? 0 : +this.slikForm.get('total_angsuran_pasangan')?.value) +
+              +this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value | currency: 'Rp. ':'symbol':'1.0-0'
+          }}"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-group row">
+      <input
+        type="text"
+        readonly
+        class="form-control"
+        currencyMask
+        value="{{
+          +this.slikForm.get('total_angsuran_nasabah')?.value +
+            (this.dataEntry.joint_income == 0 ? 0 : +this.slikForm.get('total_angsuran_pasangan')?.value) +
+            +this.analisaKeuanganForm.get('kewajiban_lainnya')?.value +
+            +this.analisaKeuanganForm.get('kewajiban_lainnya_pasangan')?.value | currency: 'Rp. ':'symbol':'1.0-0'
         }}"
       />
     </div>

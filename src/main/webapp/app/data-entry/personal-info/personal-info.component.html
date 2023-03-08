@@ -323,7 +323,7 @@
         </div>
       </div>
       <br />
-      <div class="form-group row" *ngIf="tipe_kendaraan == 1">
+      <div class="form-group row" *ngIf="personalInfoForm.get('status_kendaraan')?.value === '1'">
         <label class="col-sm-3 col-form-label">Tipe Kendaraan</label>
         <div class="col-sm-9">
           <div class="form-group">

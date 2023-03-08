@@ -44,6 +44,8 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
 
   // Role
   untukSessionRole: any;
+  untukSessionFullName: any;
+  untukSessionKdCabang: any;
 
   // ////// check ///////
   postKepemilikanTabungan: any;
@@ -80,6 +82,8 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getLoading(true);
     this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
+    this.untukSessionFullName = this.sessionStorageService.retrieve('sessionFullName');
+    this.untukSessionKdCabang = this.sessionStorageService.retrieve('sessionKdCabang');
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,

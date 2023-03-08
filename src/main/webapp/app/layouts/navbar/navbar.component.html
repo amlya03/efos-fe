@@ -706,12 +706,7 @@
       <h6>Job Info</h6>
     </a>
     <a
-      [hidden]="
-        statusPerkawinan === 'BELUM KAWIN' ||
-        statusPerkawinan === 'CERAI MATI' ||
-        statusPerkawinan === 'CERAI HIDUP' ||
-        (statusPerkawinan === 'KAWIN' && this.modelIde.fasilitas_name === 'PTA')
-      "
+      [hidden]="statusPerkawinan === 'BELUM KAWIN' || statusPerkawinan === 'CERAI MATI' || statusPerkawinan === 'CERAI HIDUP'"
       class="nav-item nav-link"
       [queryParams]="{
         curef: this.curef,
@@ -725,12 +720,7 @@
       <h6>Data Pasangan</h6>
     </a>
     <a
-      [hidden]="
-        statusPerkawinan === 'BELUM KAWIN' ||
-        statusPerkawinan === 'CERAI MATI' ||
-        statusPerkawinan === 'CERAI HIDUP' ||
-        (statusPerkawinan === 'KAWIN' && this.modelIde.fasilitas_name === 'PTA')
-      "
+      [hidden]="statusPerkawinan === 'BELUM KAWIN' || statusPerkawinan === 'CERAI MATI' || statusPerkawinan === 'CERAI HIDUP'"
       class="nav-item nav-link"
       [queryParams]="{
         curef: this.curef,

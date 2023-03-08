@@ -49,7 +49,10 @@
       <tbody>
         <tr *ngFor="let uploadDocument of uploadDocument; index as i">
           <td style="text-align: center">{{ i + 1 }}</td>
-          <td style="text-align: center">{{ uploadDocument.doc_description }}</td>
+          <td style="text-align: center">
+            {{ uploadDocument.doc_description }}<br />
+            “copy sesuai asli”
+          </td>
           <td style="text-align: center">{{ uploadDocument.nama_dokumen }}</td>
           <td style="text-align: center">{{ uploadDocument.status != null ? 'Sudah Upload' : 'Belum Upload' }}</td>
           <td style="text-align: center">{{ uploadDocument.created_date }}</td>
