@@ -26,7 +26,7 @@ export class listAgunan {
   kode_pos_agunan: string | number | null | undefined;
   luas_bangunan?: number;
   luas_tanah?: number;
-  harga_objek?: string | number | null | undefined;
+  harga_objek: string | number | null | undefined;
   alamat_sesuai_sertifikat?: string;
   provinsi_sesuai_sertifikat?: string;
   kabkota_sesuai_sertifikat?: string;
@@ -65,4 +65,6 @@ export class listAgunan {
   no_spk: string | number | null | undefined;
   no_imb: string | number | null | undefined;
   tanggal_imb: string | number | null | undefined;
+  harga_transaksi: string | number | null | undefined;
+  nilai_pks: string | number | null | undefined;
 }

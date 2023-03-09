@@ -134,7 +134,7 @@ export class JobInfoComponent implements OnInit {
       umur_pensiun: '',
       lama_bekerja_tahun: '',
       lama_bekerja_bulan: '',
-      jumlah_karyawan: '',
+      jumlah_karyawan: '0',
       pendapatan: '',
       pendapatan_lain: '0',
       tunjangan: '',
@@ -164,8 +164,7 @@ export class JobInfoComponent implements OnInit {
       sektor_ekonomi_sebelum: '',
       lama_bekerja_tahun_sebelum: '',
       lama_bekerja_bulan_sebelum: '',
-      jumlah_karyawan_sebelum: '',
-      // jumlah_karyawan_sebelumnya: '',
+      jumlah_karyawan_sebelum: '0',
       tipe_perusahaan_sebelum: '',
       tipe_kepegawaian_sebelum: '',
     });
@@ -266,9 +265,9 @@ export class JobInfoComponent implements OnInit {
         const validasiBekTahun = <FormControl>this.jobInfoForm.get('lama_bekerja_tahun');
         const validasiBekBulan = <FormControl>this.jobInfoForm.get('lama_bekerja_bulan');
         // const validasiJumKar = <FormControl>this.jobInfoForm.get('jumlah_karyawan');
-        const validasiPendapatan = <FormControl>this.jobInfoForm.get('pendapatan');
-        const validasiPendapatanLain = <FormControl>this.jobInfoForm.get('pendapatan_lain');
-        const validasiTunjangan = <FormControl>this.jobInfoForm.get('tunjangan');
+        // const validasiPendapatan = <FormControl>this.jobInfoForm.get('pendapatan');
+        // const validasiPendapatanLain = <FormControl>this.jobInfoForm.get('pendapatan_lain');
+        // const validasiTunjangan = <FormControl>this.jobInfoForm.get('tunjangan');
         const validasiTipePerusahaan = <FormControl>this.jobInfoForm.get('tipe_perusahaan');
         const validasiTipeKepegawaian = <FormControl>this.jobInfoForm.get('tipe_kepegawaian');
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -290,9 +289,9 @@ export class JobInfoComponent implements OnInit {
           validasiBekTahun.setValidators([Validators.required]);
           validasiBekBulan.setValidators([Validators.required]);
           // validasiJumKar.setValidators([Validators.required]);
-          validasiPendapatan.setValidators([Validators.required]);
-          validasiPendapatanLain.setValidators([Validators.required]);
-          validasiTunjangan.setValidators([Validators.required]);
+          // validasiPendapatan.setValidators([Validators.required]);
+          // validasiPendapatanLain.setValidators([Validators.required]);
+          // validasiTunjangan.setValidators([Validators.required]);
           validasiTipePerusahaan.setValidators([Validators.required]);
           validasiTipeKepegawaian.setValidators([Validators.required]);
         } else {
@@ -313,9 +312,9 @@ export class JobInfoComponent implements OnInit {
           validasiBekTahun.setValidators(null);
           validasiBekBulan.setValidators(null);
           // validasiJumKar.setValidators(null);
-          validasiPendapatan.setValidators(null);
-          validasiPendapatanLain.setValidators(null);
-          validasiTunjangan.setValidators(null);
+          // validasiPendapatan.setValidators(null);
+          // validasiPendapatanLain.setValidators(null);
+          // validasiTunjangan.setValidators(null);
           validasiTipePerusahaan.setValidators(null);
           validasiTipeKepegawaian.setValidators(null);
         }
@@ -336,9 +335,9 @@ export class JobInfoComponent implements OnInit {
         validasiBekTahun.updateValueAndValidity();
         validasiBekBulan.updateValueAndValidity();
         // validasiJumKar.updateValueAndValidity();
-        validasiPendapatan.updateValueAndValidity();
-        validasiPendapatanLain.updateValueAndValidity();
-        validasiTunjangan.updateValueAndValidity();
+        // validasiPendapatan.updateValueAndValidity();
+        // validasiPendapatanLain.updateValueAndValidity();
+        // validasiTunjangan.updateValueAndValidity();
         validasiTipePerusahaan.updateValueAndValidity();
         validasiTipeKepegawaian.updateValueAndValidity();
       });
@@ -389,8 +388,7 @@ export class JobInfoComponent implements OnInit {
               sektor_ekonomi_sebelum: '',
               lama_bekerja_tahun_sebelum: '',
               lama_bekerja_bulan_sebelum: '',
-              jumlah_karyawan_sebelum: '',
-              // jumlah_karyawan_sebelumnya: this.tampunganid.jumlah_karyawan_sebelumnya,
+              jumlah_karyawan_sebelum: '0',
               tipe_perusahaan_sebelum: '',
               tipe_kepegawaian_sebelum: '',
             };
@@ -417,7 +415,6 @@ export class JobInfoComponent implements OnInit {
               lama_bekerja_tahun_sebelum: this.tampunganid.lama_bekerja_tahun_sebelum,
               lama_bekerja_bulan_sebelum: this.tampunganid.lama_bekerja_bulan_sebelum,
               jumlah_karyawan_sebelum: this.tampunganid.jumlah_karyawan_sebelum,
-              // jumlah_karyawan_sebelumnya: this.tampunganid.jumlah_karyawan_sebelumnya,
               tipe_perusahaan_sebelum: this.tampunganid.tipe_perusahaan_sebelum,
               tipe_kepegawaian_sebelum: this.tampunganid.tipe_kepegawaian_sebelum,
             };
@@ -679,6 +676,11 @@ export class JobInfoComponent implements OnInit {
   }
 
   updatejobsebelum(): void {
+    let kirimanprovinsi: any;
+    let kirimankabkota: any;
+    let kirimankecamatan: any;
+    let kirimankelurahan: any;
+    let kirimanjenisbidang: any;
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (this.ideJob == null) {
       alert('Perkerjaan Belum Ada');
@@ -686,39 +688,30 @@ export class JobInfoComponent implements OnInit {
     } else {
       const kirimKatePeker = this.datajobsebelum.get('kategori_pekerjaan_sebelum')?.value.split('|');
 
-      const potonganPro = this.datajobsebelum.get('provinsi_sebelum')?.value.split('|');
-      let kirimanprovinsi: any;
-      if (this.datajobsebelum.get('provinsi_sebelum')?.value.indexOf('|') !== -1) {
-        kirimanprovinsi = potonganPro[1];
+      if (this.datajobsebelum.get('provinsi_sebelum')?.value) {
+        kirimanprovinsi = this.datajobsebelum.get('provinsi_sebelum')?.value.split('|')[1];
       } else {
         kirimanprovinsi = this.datajobsebelum.get('provinsi_sebelum')?.value;
       }
 
-      const potonganKot = this.datajobsebelum.get('kabkota_sebelum')?.value.split('|');
-      let kirimankabkota: any;
-      if (this.datajobsebelum.get('kabkota_sebelum')?.value.indexOf('|') !== -1) {
-        kirimankabkota = potonganKot[1];
+      if (this.datajobsebelum.get('kabkota_sebelum')?.value) {
+        kirimankabkota = this.datajobsebelum.get('kabkota_sebelum')?.value.split('|')[1];
       } else {
         kirimankabkota = this.datajobsebelum.get('kabkota_sebelum')?.value;
       }
 
-      const potonganKec = this.datajobsebelum.get('kecamatan_sebelum')?.value.split('|');
-      let kirimankecamatan: any;
-      if (this.datajobsebelum.get('kecamatan_sebelum')?.value.indexOf('|') !== -1) {
-        kirimankecamatan = potonganKec[1];
+      if (this.datajobsebelum.get('kecamatan_sebelum')?.value) {
+        kirimankecamatan = this.datajobsebelum.get('kecamatan_sebelum')?.value.split('|')[1];
       } else {
         kirimankecamatan = this.datajobsebelum.get('kecamatan_sebelum')?.value;
       }
 
-      const potonganKel = this.datajobsebelum.get('kelurahan_sebelum')?.value.split('|');
-      let kirimankelurahan: any;
-      if (this.datajobsebelum.get('kelurahan_sebelum')?.value.indexOf('|') !== -1) {
-        kirimankelurahan = potonganKel[1];
+      if (this.datajobsebelum.get('kelurahan_sebelum')?.value) {
+        kirimankelurahan = this.datajobsebelum.get('kelurahan_sebelum')?.value.split('|')[1];
       } else {
         kirimankelurahan = this.datajobsebelum.get('kelurahan_sebelum')?.value;
       }
 
-      let kirimanjenisbidang: any;
       if (this.datajobsebelum.get('jenis_bidang_sebelum')?.value.indexOf('|') !== -1) {
         const potonganjenisbidang = this.datajobsebelum.get('jenis_bidang_sebelum')?.value.split('|');
         kirimanjenisbidang = potonganjenisbidang[1];

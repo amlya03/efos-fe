@@ -220,7 +220,7 @@ export class DetailKomiteComponent implements OnInit {
     }, 40);
     setTimeout(() => {
       // ambil agunan by curef
-      this.dataEntryService.getfetchlistagunan(this.curef).subscribe(agunan => {
+      this.dataEntryService.getCollateralByCuref(this.curef).subscribe(agunan => {
         this.agunanModel = agunan.result[0];
       });
     }, 45);

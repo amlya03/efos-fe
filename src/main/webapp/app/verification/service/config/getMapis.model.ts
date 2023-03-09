@@ -17,4 +17,8 @@ export class getMapis {
   harga_transaksi: string | number | undefined | null;
   marketabilitas: string | number | undefined | null;
   status_imb: string | number | undefined | null;
+  nilai_indikasi: string | number | undefined | null;
+  nilai_likuidasi: string | number | undefined | null;
+  nilai_pasar: string | number | undefined | null;
+  nilai_pks: string | number | undefined | null;
 }

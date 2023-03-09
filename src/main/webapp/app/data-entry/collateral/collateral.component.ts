@@ -352,7 +352,7 @@ export class CollateralComponent implements OnInit {
       this.daWaprof = res.result;
     });
 
-    this.datEntryService.getfetchlistagunan(this.curef).subscribe(table => {
+    this.datEntryService.getCollateralByCuref(this.curef).subscribe(table => {
       this.tableAgunan = table.result;
     });
 

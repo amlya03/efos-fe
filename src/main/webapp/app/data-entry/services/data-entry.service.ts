@@ -210,7 +210,7 @@ export class DataEntryService {
   // ///////////////////////////// Get api list_lokasi_rumah \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ///////////////////////////// Get ai listagunan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  protected fetchgetlistaguunan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getCollateralByCuref?sc=');
+  protected collateralByCuref = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getCollateralByCuref?sc=');
   // ///////////////////////////// Get api listagunan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ///////////////////////////// Get ai List Agunan BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -330,8 +330,8 @@ export class DataEntryService {
   // /////////////////////////// list_lokasi_rumah ////////////////////////////////////////////
 
   // /////////////////////////// listagunan ////////////////////////////////////////////
-  getfetchlistagunan(curef: string | null | undefined): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.fetchgetlistaguunan + curef);
+  getCollateralByCuref(curef: string | null | undefined): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.collateralByCuref + curef);
   }
   // /////////////////////////// listagunan ////////////////////////////////////////////
 
@@ -465,7 +465,7 @@ export class DataEntryService {
   // //////////////////////////// REF Tujuan Pembiayaan //////////////////////////////////////////////////
 
   // ///////////////////////////// Get api List Agunan BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getFetchListAgunanById(id: number | null): Observable<ApiResponse> {
+  getCollateralByCurefById(id: number | null): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getListAgunanById + id);
   }
   // ///////////////////////////// Get api List Agunan BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

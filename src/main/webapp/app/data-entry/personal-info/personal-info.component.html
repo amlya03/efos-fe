@@ -444,7 +444,6 @@
             <div class="input-group-append">
               <button
                 disabled
-                onclick="buatisi()"
                 class="btn btn-outline-dark"
                 type="button"
                 (click)="kodePosApi(this.personalInfoForm.get('kode_pos')?.value)"
@@ -489,19 +488,15 @@
         <div class="col-sm-9">
           <input
             type="radio"
-            name="testtt"
             value="0"
-            [disabled]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'"
-            (change)="onItemChange($event.target)"
-            [checked]="this.personalInfoForm.get('alamat_ktp')?.value != this.personalInfoForm.get('alamat_domisili')?.value"
+            formControlName="status_alamat"
+            (change)="onItemChange(personalInfoForm.get('status_alamat')?.value)"
           />Tidak Sama &emsp;&emsp;&emsp;
           <input
             type="radio"
-            name="testtt"
             value="1"
-            [disabled]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER'"
-            (change)="onItemChange($event.target)"
-            [checked]="this.personalInfoForm.get('alamat_ktp')?.value == this.personalInfoForm.get('alamat_domisili')?.value"
+            formControlName="status_alamat"
+            (change)="onItemChange(personalInfoForm.get('status_alamat')?.value)"
           />Sama
         </div>
       </div>
@@ -609,7 +604,6 @@
               #kodeposdomisili
               (keypress)="keyPressNumbers($event)"
               type="tel"
-              onkeypress="return onlyNumberKey(event)"
               maxlength="8"
               class="form-control"
               id="kode_pos_domisili"
@@ -618,7 +612,6 @@
             <div class="input-group-append">
               <button
                 [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-                onclick="buatisidomisili()"
                 class="btn btn-outline-dark"
                 id="kode_pos_domisilihilang"
                 type="button"

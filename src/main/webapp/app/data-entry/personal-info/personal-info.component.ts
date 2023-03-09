@@ -89,7 +89,7 @@ export class PersonalInfoComponent implements OnInit {
   // ///////////////////
   clickKdPostDomisili = 0;
   responseKelsDomisili: refJenisPekerjaan[] = [];
-  responseNamaWilayahDomisili: refJenisPekerjaan[] = [];
+  responseNamaWilayahDomisili: any;
   // //////////////////
 
   constructor(
@@ -201,6 +201,7 @@ export class PersonalInfoComponent implements OnInit {
         { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
+      status_alamat: { value: '0', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
     });
   }
 
@@ -235,12 +236,18 @@ export class PersonalInfoComponent implements OnInit {
       });
     }, 40);
 
+    let alamatSamaKTP: any;
     setTimeout(() => {
       this.datEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
         this.personalInfoModel = data.result;
         this.curefGetDE = this.personalInfoModel.curef;
         this.statusKawin = this.personalInfoModel.status_perkawinan;
         // alert(this.personalInfoModel.jenis_kelamin)
+        if (alamatSamaKTP == null) {
+          alamatSamaKTP = '0';
+        } else {
+          alamatSamaKTP = this.personalInfoModel.status_alamat;
+        }
         // ///////////////////////////////////////////////////////////////////////////
         const retrivePersonalInfo = {
           nama: this.personalInfoModel.nama,
@@ -266,6 +273,7 @@ export class PersonalInfoComponent implements OnInit {
           status_kendaraan: this.personalInfoModel.status_kendaraan,
           tipe_kendaraan: this.personalInfoModel.tipe_kendaraan,
           alamat_ktp: this.personalInfoModel.alamat_ktp,
+          status_alamat: alamatSamaKTP,
           // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           provinsi: '',
           kabkota: '',
@@ -495,14 +503,15 @@ export class PersonalInfoComponent implements OnInit {
     //   this.personalInfoModel.kelurahan_domisili = '';
     // }
 
-    if (event.value == 1) {
-      this.clickKdPostDomisili = 1;
+    if (event == 1) {
+      // this.clickKdPostDomisili = 1;
       this.personalInfoForm.get('alamat_domisili')?.setValue(this.personalInfoForm.get('alamat_ktp')?.value);
       this.personalInfoForm.get('kode_pos_domisili')?.setValue(this.personalInfoForm.get('kode_pos')?.value);
       this.kodePosApiDomisili(this.personalInfoForm.get('kode_pos')?.value);
       this.personalInfoForm.get('rt_domisili')?.setValue(this.personalInfoForm.get('rt')?.value);
       this.personalInfoForm.get('rw_domisili')?.setValue(this.personalInfoForm.get('rw')?.value);
     } else {
+      this.clickKdPostDomisili = 0;
       this.personalInfoForm.get('alamat_domisili')?.setValue('');
       this.personalInfoForm.get('provinsi_domisili')?.setValue('');
       this.personalInfoForm.get('kabkota_domisili')?.setValue('');
@@ -536,6 +545,7 @@ export class PersonalInfoComponent implements OnInit {
 
   // //// domisili
   kodePosApiDomisili(kodepost: any): void {
+    const namaWIl: refJenisPekerjaan[] = [];
     this.datEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
         if (this.clickKdPostDomisili == 1) {
@@ -543,8 +553,9 @@ export class PersonalInfoComponent implements OnInit {
           this.responseKelsDomisili.forEach(element => {
             this.responseKelsDomisili.push(element);
             if (element.kdPos == kodepost) {
-              const namaWIl = element.namaWilayah;
-              this.responseNamaWilayahDomisili.push(namaWIl);
+              namaWIl.push(element.namaWilayah);
+              const hasil = namaWIl.find(value => value);
+              this.responseNamaWilayahDomisili = hasil;
             }
           });
         }
@@ -563,7 +574,7 @@ export class PersonalInfoComponent implements OnInit {
               this.onChangekelurahanD(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
             } else if (sukses.result.provKec.kd_kel == null) {
               this.untukKodeKelurahanD = kodepost;
-              this.untukkelurahanD = this.responseNamaWilayahDomisili[this.responseNamaWilayahDomisili.length - 1];
+              this.untukkelurahanD = this.responseNamaWilayahDomisili;
               this.onChangekelurahanD(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
             } else {
               this.untukKodeKelurahanD = kodepost;
@@ -571,9 +582,15 @@ export class PersonalInfoComponent implements OnInit {
               this.onChangekelurahanD(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
             }
           } else {
-            this.untukKodeKelurahanD = kodepost;
-            this.untukkelurahanD = this.personalInfoModel.kelurahan_domisili;
-            this.onChangekelurahanD(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
+            if (this.personalInfoForm.get('status_alamat')?.value === '1') {
+              this.untukKodeKelurahanD = kodepost;
+              this.untukkelurahanD = this.personalInfoModel.kelurahan;
+              this.onChangekelurahanD(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
+            } else {
+              this.untukKodeKelurahanD = kodepost;
+              this.untukkelurahanD = this.personalInfoModel.kelurahan_domisili;
+              this.onChangekelurahanD(this.untukKodeKelurahanD + '|' + this.untukkelurahanD);
+            }
           }
         }, 10);
         this.personalInfoForm.get('provinsi_domisili')?.setValue(this.untukKodeProvinsiD + '|' + this.untukprovinsiD);

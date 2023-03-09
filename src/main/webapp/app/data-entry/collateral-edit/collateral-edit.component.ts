@@ -208,7 +208,7 @@ export class CollateralEditComponent implements OnInit {
       },
       alamat_agunan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
       negara_produsen: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-      berwawasan_lingkungan: '',
+      berwawasan_lingkungan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
       //
       provinsi_agunan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
       kabkota_agunan: { value: '', disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
@@ -337,7 +337,7 @@ export class CollateralEditComponent implements OnInit {
 
     let tipeAgunan: any;
     setTimeout(() => {
-      this.datEntryService.getFetchListAgunanById(this.datakirimanid).subscribe(table => {
+      this.datEntryService.getCollateralByCurefById(this.datakirimanid).subscribe(table => {
         this.tableAgunan = table.result;
         // alert(this.tableAgunan.provinsi_agunan)
         if (this.tableAgunan.tipe_agunan === 'Kendaraan') {

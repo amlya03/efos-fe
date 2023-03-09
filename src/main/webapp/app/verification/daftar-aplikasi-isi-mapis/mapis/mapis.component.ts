@@ -29,6 +29,8 @@ export class MapisComponent implements OnInit {
   listagunan: listAgunan[] = [];
   betaFTV: any;
   cekResuklt = 0;
+  responseCollateral: any;
+  modelCollateral: listAgunan = new listAgunan();
 
   // Ret ///
   retTipeKen: any;
@@ -61,6 +63,11 @@ export class MapisComponent implements OnInit {
         harga_transaksi: '',
         marketabilitas: '',
         status_imb: '',
+
+        nilai_indikasi: '',
+        nilai_likuidasi: '',
+        nilai_pasar: '',
+        nilai_pks: '',
       });
     }
     this.load();
@@ -81,9 +88,30 @@ export class MapisComponent implements OnInit {
     this.dataEntryService.getFetchSemuaDataDE(this.app_noDe).subscribe(data => {
       this.dataEntry = data.result;
 
+      setTimeout(() => {
+        this.dataEntryService.getCollateralByCuref(this.dataEntry.curef).subscribe(coll => {
+          this.responseCollateral = coll.result;
+          if (this.responseCollateral.find((value: listAgunan) => value.jenis_objek == 3)) {
+            if (this.responseCollateral.find((value: listAgunan) => value.nilai_pasar)) {
+              this.modelCollateral = this.responseCollateral.find((value: listAgunan) => value.nilai_pasar);
+              // this.strukturForm.get('harga_objek_pembiayaan')?.setValue(this.modelCollateral.nilai_pasar)
+              // console.warn('pasar',this.modelCollateral)
+              this.mapisForm.get('nilai_indikasi')?.setValue(this.modelCollateral.nilai_indikasi);
+              this.mapisForm.get('nilai_likuidasi')?.setValue(this.modelCollateral.nilai_likuidasi);
+              this.mapisForm.get('nilai_pasar')?.setValue(this.modelCollateral.nilai_pasar);
+            } else {
+              this.modelCollateral = this.responseCollateral.find((value: listAgunan) => value.harga_objek);
+              // this.strukturForm.get('harga_objek_pembiayaan')?.setValue(this.modelCollateral.harga_objek)
+              // console.warn('objek',this.modelCollateral)
+              this.mapisForm.get('nilai_indikasi')?.setValue(this.modelCollateral.nilai_indikasi);
+              this.mapisForm.get('harga_transaksi')?.setValue(this.modelCollateral.harga_objek);
+            }
+          }
+        });
+      }, 5);
       // ambil semua data Job by Curef
       setTimeout(() => {
-        this.dataEntryService.getfetchlistagunan(this.dataEntry.curef).subscribe(list => {
+        this.dataEntryService.getCollateralByCuref(this.dataEntry.curef).subscribe(list => {
           this.listagunan = list.result;
           // console.warn('listagunan ', list)
           if (list.result != '') {
@@ -119,6 +147,11 @@ export class MapisComponent implements OnInit {
           harga_transaksi: '',
           marketabilitas: '',
           status_imb: '',
+
+          nilai_indikasi: '',
+          nilai_likuidasi: '',
+          nilai_pasar: '',
+          nilai_pks: '',
         };
         this.mapisForm.setValue(retriveForm);
       } else {
@@ -132,6 +165,11 @@ export class MapisComponent implements OnInit {
           harga_transaksi: this.mapisModel.harga_transaksi,
           marketabilitas: this.mapisModel.marketabilitas,
           status_imb: this.mapisModel.status_imb,
+
+          nilai_indikasi: this.mapisModel.nilai_indikasi,
+          nilai_likuidasi: this.mapisModel.nilai_likuidasi,
+          nilai_pasar: this.mapisModel.nilai_pasar,
+          nilai_pks: this.mapisModel.nilai_pks,
         };
         this.mapisForm.setValue(retriveForm);
       }
@@ -167,6 +205,11 @@ export class MapisComponent implements OnInit {
                 harga_transaksi: this.mapisForm.get('harga_transaksi')?.value,
                 marketabilitas: this.mapisForm.get('marketabilitas')?.value,
                 status_imb: this.mapisForm.get('status_imb')?.value,
+
+                nilai_indikasi: this.mapisForm.get('nilai_indikasi')?.value,
+                nilai_likuidasi: this.mapisForm.get('nilai_likuidasi')?.value,
+                nilai_pasar: this.mapisForm.get('nilai_pasar')?.value,
+                nilai_pks: this.mapisForm.get('nilai_pks')?.value,
                 // "updated_date": null,
                 // "updated_by": null
               })
@@ -208,6 +251,11 @@ export class MapisComponent implements OnInit {
                 updated_by: this.sessionStorageService.retrieve('sessionUserName'),
                 marketabilitas: this.mapisForm.get('marketabilitas')?.value,
                 status_imb: this.mapisForm.get('status_imb')?.value,
+
+                nilai_indikasi: this.mapisForm.get('nilai_indikasi')?.value,
+                nilai_likuidasi: this.mapisForm.get('nilai_likuidasi')?.value,
+                nilai_pasar: this.mapisForm.get('nilai_pasar')?.value,
+                nilai_pks: this.mapisForm.get('nilai_pks')?.value,
               })
               .subscribe({
                 next: () => {
@@ -249,6 +297,11 @@ export class MapisComponent implements OnInit {
                 harga_transaksi: this.mapisForm.get('harga_transaksi')?.value,
                 marketabilitas: this.mapisForm.get('marketabilitas')?.value,
                 status_imb: this.mapisForm.get('status_imb')?.value,
+
+                nilai_indikasi: this.mapisForm.get('nilai_indikasi')?.value,
+                nilai_likuidasi: this.mapisForm.get('nilai_likuidasi')?.value,
+                nilai_pasar: this.mapisForm.get('nilai_pasar')?.value,
+                nilai_pks: this.mapisForm.get('nilai_pks')?.value,
                 // "updated_date": null,
                 // "updated_by": null
               })
@@ -280,6 +333,11 @@ export class MapisComponent implements OnInit {
                 updated_by: this.sessionStorageService.retrieve('sessionUserName'),
                 marketabilitas: this.mapisForm.get('marketabilitas')?.value,
                 status_imb: this.mapisForm.get('status_imb')?.value,
+
+                nilai_indikasi: this.mapisForm.get('nilai_indikasi')?.value,
+                nilai_likuidasi: this.mapisForm.get('nilai_likuidasi')?.value,
+                nilai_pasar: this.mapisForm.get('nilai_pasar')?.value,
+                nilai_pks: this.mapisForm.get('nilai_pks')?.value,
               })
               .subscribe({
                 next() {

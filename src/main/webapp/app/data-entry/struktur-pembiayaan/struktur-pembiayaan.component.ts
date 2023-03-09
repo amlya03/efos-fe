@@ -19,6 +19,7 @@ import { getProduk } from '../services/config/getProduk.model';
 import { getListFasilitasModel } from '../services/config/getListFasilitasModel.model';
 import { environment } from 'environments/environment';
 import { modelCustomer } from 'app/initial-data-entry/services/config/modelCustomer.model';
+import { listAgunan } from '../services/config/listAgunan.model';
 
 export type EntityResponseDaWa = HttpResponse<strukturpembiayaanmodel>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -37,6 +38,8 @@ export class StrukturPembiayaanComponent implements OnInit {
   kodeskema: refSkema[] = [];
   strukturModel: getStrukturPembiayaan = new getStrukturPembiayaan();
   modelIde: modelCustomer = new modelCustomer();
+  responseCollateral: any;
+  modelCollateral: listAgunan = new listAgunan();
   kodeFasilitasRet: any;
   kodeProgramRet: any;
   kodeProdukRet: any;
@@ -121,10 +124,7 @@ export class StrukturPembiayaanComponent implements OnInit {
         { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
-      harga_objek_pembiayaan: [
-        { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      harga_objek_pembiayaan: { value: '' || null, disabled: true },
       fee_based: [
         { value: '0' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
@@ -154,6 +154,23 @@ export class StrukturPembiayaanComponent implements OnInit {
 
   load(): void {
     this.getLoading(true);
+
+    setTimeout(() => {
+      this.dataEntryService.getCollateralByCuref(this.curef).subscribe(coll => {
+        this.responseCollateral = coll.result;
+        if (this.responseCollateral.find((value: listAgunan) => value.jenis_objek == 3)) {
+          if (this.responseCollateral.find((value: listAgunan) => value.nilai_pasar)) {
+            this.modelCollateral = this.responseCollateral.find((value: listAgunan) => value.nilai_pasar);
+            this.strukturForm.get('harga_objek_pembiayaan')?.setValue(this.modelCollateral.nilai_pasar);
+            // console.warn('p',this.modelCollateral)
+          } else {
+            this.modelCollateral = this.responseCollateral.find((value: listAgunan) => value.harga_objek);
+            this.strukturForm.get('harga_objek_pembiayaan')?.setValue(this.modelCollateral.harga_objek);
+            // console.warn('h',this.modelCollateral)
+          }
+        }
+      });
+    }, 5);
 
     setTimeout(() => {
       this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
@@ -444,6 +461,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     const kirimanproduk = this.strukturForm.get('produk')?.value.split('|');
     const kirimanskema = this.strukturForm.get('skema')?.value.split('|');
     const kirimanjangkawaktu = this.strukturForm.get('jangka_waktu')?.value.split('|');
+    let responseStrukturColl: any;
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
         // headers: headers,
@@ -486,6 +504,11 @@ export class StrukturPembiayaanComponent implements OnInit {
           this.getLoading(false);
           if (err.error.code == 400) {
             alert(err.error.message);
+          } else {
+            responseStrukturColl = err.error.message;
+            if (responseStrukturColl.includes('query did not return a unique result: 2')) {
+              alert('Hanya Boleh 1 Objek yang dibiayai/dibeli sekaligus yang dijaminkan pada Collateral');
+            }
           }
         },
       });

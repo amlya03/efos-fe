@@ -112,6 +112,8 @@
             type="number"
             class="form-control"
             [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
+            min="0"
+            oninput="this.value = Math.abs(this.value)"
           />
         </div>
         <label class="col-sm-2">Tahun</label>
@@ -457,12 +459,13 @@
         <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <select class="form-control" formControlName="jumlah_karyawan">
+            <input type="text" (keypress)="keyPressNumbers($event)" class="form-control" formControlName="jumlah_karyawan" />
+            <!-- <select class="form-control" formControlName="jumlah_karyawan">
               <option value="">Pilih Jumlah Karyawan</option>
               <option *ngFor="let getjumlahkaryawandariapi of getjumlahkaryawandariapi" value="{{ getjumlahkaryawandariapi.deskripsi }}">
                 {{ getjumlahkaryawandariapi.deskripsi }}
               </option>
-            </select>
+            </select> -->
           </div>
         </div>
       </div>
@@ -988,12 +991,13 @@
         <label class="col-sm-4 col-form-label">Jumlah Karyawan</label>
         <div class="col-sm-8">
           <div class="form-group">
-            <select class="form-control" formControlName="jumlah_karyawan_sebelum">
+            <input type="text" (keypress)="keyPressNumbers($event)" class="form-control" formControlName="jumlah_karyawan_sebelum" />
+            <!-- <select class="form-control" formControlName="jumlah_karyawan_sebelum">
               <option value="">Pilih Data</option>
               <option *ngFor="let jumlahKaryawanSebelum of jumlahKaryawanSebelum" value="{{ jumlahKaryawanSebelum.deskripsi }}">
                 {{ jumlahKaryawanSebelum.deskripsi }}
               </option>
-            </select>
+            </select> -->
           </div>
         </div>
       </div>

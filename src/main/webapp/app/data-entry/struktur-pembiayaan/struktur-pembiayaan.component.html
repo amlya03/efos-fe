@@ -229,15 +229,6 @@
             currencyMask
             [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
-          <span
-            [hidden]="
-              strukturForm.controls.harga_objek_pembiayaan.valid ||
-              this.untukSessionRole == 'BRANCHMANAGER' ||
-              this.untukSessionRole == 'VER_PRE_SPV'
-            "
-            class="text-danger"
-            >Field Wajib Diisi
-          </span>
         </div>
       </div>
       <br />

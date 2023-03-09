@@ -36,6 +36,8 @@ export class StukturPembiayaanComponent implements OnInit {
   strukturPembiayaan: refStrukturPembiayaan = new refStrukturPembiayaan();
   curef: any;
   listagunan: listAgunan[] = [];
+  responseCollateral: any;
+  modelCollateral: listAgunan = new listAgunan();
 
   nilaiPembiayaan: any;
   angsuranPalingTinggi: any;
@@ -289,7 +291,7 @@ export class StukturPembiayaanComponent implements OnInit {
       // }
     });
 
-    this.dataEntryService.getfetchlistagunan(this.curef).subscribe(data => {
+    this.dataEntryService.getCollateralByCuref(this.curef).subscribe(data => {
       this.listagunan = data.result;
       // console.log(this.listagunan)
       // eslint-disable-next-line eqeqeq
@@ -297,6 +299,20 @@ export class StukturPembiayaanComponent implements OnInit {
         this.betaFTV = 0;
       } else {
         this.betaFTV = Number(this.listagunan[0].harga_objek) / Number(this.dataEntry.uang_muka);
+      }
+
+      this.responseCollateral = data.result;
+      // eslint-disable-next-line eqeqeq
+      if (this.responseCollateral.find((value: listAgunan) => value.jenis_objek == 3)) {
+        if (this.responseCollateral.find((value: listAgunan) => value.nilai_pasar)) {
+          this.modelCollateral = this.responseCollateral.find((value: listAgunan) => value.nilai_pasar);
+          // this.strukturForm.get('harga_objek_pembiayaan')?.setValue(this.modelCollateral.nilai_pasar)
+          // console.warn('p',this.modelCollateral)
+        } else {
+          this.modelCollateral = this.responseCollateral.find((value: listAgunan) => value.harga_objek);
+          // this.strukturForm.get('harga_objek_pembiayaan')?.setValue(this.modelCollateral.harga_objek)
+          // console.warn('h',this.modelCollateral)
+        }
       }
     });
   }
