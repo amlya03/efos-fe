@@ -56,4 +56,6 @@ export class refAnalisaCalonNasabah {
   updated_by?: string;
   note_verif_thp?: string;
   verif_thp?: string;
+  verif_fasilitas_pembiayaan?: number;
+  note_verif_fasilitas_pembiayaan?: string;
 }

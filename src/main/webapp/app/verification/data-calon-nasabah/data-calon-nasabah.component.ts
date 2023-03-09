@@ -167,6 +167,8 @@ export class DataCalonNasabahComponent implements OnInit {
       kondisi_kendaraan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       note_verif_thp: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       verif_thp: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      verif_fasilitas_pembiayaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      note_verif_fasilitas_pembiayaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       // created_date: "",
       // updated_date: "",
       // created_by: "",
@@ -266,6 +268,8 @@ export class DataCalonNasabahComponent implements OnInit {
           verif_tanggal_lahir: this.dataCalonNasabahForm.get('verif_tanggal_lahir')?.value,
           note_verif_thp: this.dataCalonNasabahForm.get('note_verif_thp')?.value,
           verif_thp: this.dataCalonNasabahForm.get('verif_thp')?.value,
+          verif_fasilitas_pembiayaan: this.dataCalonNasabahForm.get('verif_fasilitas_pembiayaan')?.value,
+          note_verif_fasilitas_pembiayaan: this.dataCalonNasabahForm.get('note_verif_fasilitas_pembiayaan')?.value,
         })
         .subscribe({});
       this.router.navigate(['/data-kantor'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
@@ -346,6 +350,8 @@ export class DataCalonNasabahComponent implements OnInit {
         verif_tanggal_lahir: this.dataCalonNasabahForm.get('verif_tanggal_lahir')?.value,
         note_verif_thp: this.dataCalonNasabahForm.get('note_verif_thp')?.value,
         verif_thp: this.dataCalonNasabahForm.get('verif_thp')?.value,
+        verif_fasilitas_pembiayaan: this.dataCalonNasabahForm.get('verif_fasilitas_pembiayaan')?.value,
+        note_verif_fasilitas_pembiayaan: this.dataCalonNasabahForm.get('note_verif_fasilitas_pembiayaan')?.value,
       })
       .subscribe({});
     this.router.navigate(['/data-kantor'], { queryParams: { app_no_de: this.app_no_de, curef: this.curef } });
@@ -510,6 +516,8 @@ export class DataCalonNasabahComponent implements OnInit {
             kondisi_kendaraan: '',
             note_verif_thp: '',
             verif_thp: '',
+            verif_fasilitas_pembiayaan: '',
+            note_verif_fasilitas_pembiayaan: '',
             // created_date: this.dataCalonNasabahMap ,
             // updated_date: this.dataCalonNasabahMap ,
             // created_by: this.dataCalonNasabahMap ,
@@ -569,6 +577,8 @@ export class DataCalonNasabahComponent implements OnInit {
             kondisi_kendaraan: this.dataCalonNasabahMap.kondisi_kendaraan,
             note_verif_thp: this.dataCalonNasabahMap.note_verif_thp,
             verif_thp: this.dataCalonNasabahMap.verif_thp,
+            verif_fasilitas_pembiayaan: this.dataCalonNasabahMap.verif_fasilitas_pembiayaan,
+            note_verif_fasilitas_pembiayaan: this.dataCalonNasabahMap.note_verif_fasilitas_pembiayaan,
             // created_date: this.dataCalonNasabahMap ,
             // updated_date: this.dataCalonNasabahMap ,
             // created_by: this.dataCalonNasabahMap ,
