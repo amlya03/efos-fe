@@ -9,6 +9,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model';
+import { listskemafix } from 'app/data-entry/services/config/listskemafix';
+import { listskemastepup } from 'app/data-entry/services/config/listskemastepup';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { InputScoringService } from 'app/input-scoring/input-scoring.service';
 import { environment } from 'environments/environment';
@@ -57,6 +59,8 @@ export class ParameterizedComponent implements OnInit {
   tampunganidviewdetail: any;
   tableftvdpdetail: any;
   tableAgunanlisttipeagunan: any;
+  listskemafix: listskemafix[] = [];
+  listskemastepup: listskemastepup[] = [];
   constructor(
     private formBuilder: FormBuilder,
     protected datEntryService: DataEntryService,
@@ -147,8 +151,23 @@ export class ParameterizedComponent implements OnInit {
     // //////////// List Akad //////////////////
     this.scoringServices.getListAkad().subscribe(akad => {
       this.modelListAkad = akad.result;
+      console.log('ini fix' + this.modelListAkad);
     });
     // //////////// List Akad //////////////////
+
+    // //////////// skema fix //////////////////
+    this.datEntryService.getskemafix().subscribe(skema => {
+      this.listskemafix = skema.result;
+      console.log('ini fix' + this.listskemafix);
+    });
+    // //////////// skema fix //////////////////
+
+    // //////////// skema fix //////////////////
+    this.datEntryService.getskemastepup().subscribe(skema => {
+      this.listskemastepup = skema.result;
+      console.log('ini stepup' + this.listskemastepup);
+    });
+    // //////////// skema fix //////////////////
   }
 
   // 1
@@ -2183,10 +2202,10 @@ export class ParameterizedComponent implements OnInit {
   }
   // 18
   createstenormarginfix(): void {
-    const options = this.inputScoring.map((option: any) => {
+    const options = this.listskemafix.map((option: listskemafix) => {
       return `
-        <option key="${option}" value="${option.kode_fasilitas}">
-            ${option.fasilitas}
+        <option key="${option}" value="${option.skema}">
+            ${option.skema_deskripsi}
         </option>
       `;
     });
@@ -2213,12 +2232,12 @@ export class ParameterizedComponent implements OnInit {
             '</select>' +
             '</div></div>' +
             '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Margin</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="margin"/> ' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">tenor</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="tenor"/> ' +
             '</div></div>' +
             '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">tn code</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="tn_code"/> ' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Margin</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="margin"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -2248,15 +2267,17 @@ export class ParameterizedComponent implements OnInit {
               //  }
 
               const body = {
-                skema_fasilitas: skema_fasilitas,
-                margin: margin,
-                tn_code: tn_code,
+                margin: $('#margin').val(),
+                skema_id: $('#skema_fasilitas').val() + '_fas0',
+                tenor: $('#tenor').val(),
+                tenor_tier: '',
+                tier: '',
               };
               const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_program+++', body, { headers }).subscribe({
+              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_tenor_margin_fix', body, { headers }).subscribe({
                 next: () => {
                   // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -2302,10 +2323,10 @@ export class ParameterizedComponent implements OnInit {
   }
   // 19
   createstenormarginstepup(): void {
-    const options = this.inputScoring.map((option: any) => {
+    const options = this.listskemastepup.map((option: listskemastepup) => {
       return `
-        <option key="${option}" value="${option.kode_fasilitas}">
-            ${option.fasilitas}
+        <option key="${option}" value="${option.skema}">
+            ${option.skema_deskripsi}
         </option>
       `;
     });
@@ -2333,6 +2354,9 @@ export class ParameterizedComponent implements OnInit {
               // $('#tenor2_id').removeAttr('hidden');
               $('#tenor_tier1_id').removeAttr('hidden');
               $('#tenor_tier2_id').removeAttr('hidden');
+
+              $('#margin_3_id').attr('hidden', 'true');
+              $('#tenor_tier3_id').attr('hidden', 'true');
             } else if ($('#tier_id').val() === '3') {
               $('#margin_1_id').removeAttr('hidden');
               $('#margin_2_id').removeAttr('hidden');
@@ -2374,19 +2398,19 @@ export class ParameterizedComponent implements OnInit {
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="tenor1_id" ><label class="col-sm-4 col-form-label">tenor </label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="tenor1"/> ' +
+            '<div class="col-sm-8"><input type="number" class="form-control" id="tenor1"/> ' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="margin_1_id" hidden><label class="col-sm-4 col-form-label">Margin 1</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="margin_1"/> ' +
+            '<div class="col-sm-8"><input type="number" class="form-control" id="margin_1"/> ' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="margin_2_id" hidden><label class="col-sm-4 col-form-label">Margin 2</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="margin_2"/> ' +
+            '<div class="col-sm-8"><input type="number" class="form-control" id="margin_2"/> ' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="margin_3_id" hidden><label class="col-sm-4 col-form-label">Margin 3</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="margin_3"/> ' +
+            '<div class="col-sm-8"><input type="number" class="form-control" id="margin_3"/> ' +
             '</div></div>' +
             // '<br />' +
             // '<div class="form-lable row" id="tenor2_id" hidden><label class="col-sm-4 col-form-label">tenor 2</label>' +
@@ -2398,15 +2422,15 @@ export class ParameterizedComponent implements OnInit {
             // '</div></div>'+
             '<br />' +
             '<div class="form-lable row" id="tenor_tier1_id" hidden><label class="col-sm-4 col-form-label">tenor_tier 1</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="tenor_tier1"/> ' +
+            '<div class="col-sm-8"><input type="number" class="form-control" id="tenor_tier1"/> ' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="tenor_tier2_id" hidden><label class="col-sm-4 col-form-label">teno_tier 2</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="tenor_tier2"/> ' +
+            '<div class="col-sm-8"><input type="number" class="form-control" id="tenor_tier2"/> ' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="tenor_tier3_id" hidden><label class="col-sm-4 col-form-label">tenor_tier 3</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="tenor_tier3"/> ' +
+            '<div class="col-sm-8"><input type="number" class="form-control" id="tenor_tier3"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -2457,19 +2481,23 @@ export class ParameterizedComponent implements OnInit {
                 alert('Tenor tier 2 harus di isi');
                 return;
               }
-              // const iNum = parseInt(tenor_tier2);
-              let tear2: any = tenor_tier2;
-              let tear3: any = tenor_tier3;
-              let tier: any = tenor1;
-
-              if (tear2 > tier) {
+              // let iNum = parseInt(tenor_tier2);
+              let tear2: number = Number(tenor_tier2);
+              // let tear3: any = tenor_tier3;
+              let tier: number = Number(tenor1);
+              // let x=tier;
+              // let y=tear2;
+              if (tear2 >= tier) {
                 alert('tenor 2 tier tidak boleh melebihi tenor');
-                alert(tear2);
-                alert(tier);
+                // alert(tier+">"+tear2);
+                // alert(tear2 > tier);
+                // alert(x > y);
                 return;
               } else {
                 alert('initenortier2');
+                // alert(tier+">"+tear2);
                 this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2;
+                return;
               }
             } else if (tier === '3') {
               alert('ini jalan ?');
@@ -2495,27 +2523,31 @@ export class ParameterizedComponent implements OnInit {
                 return;
               }
 
-              let tear2: any = tenor_tier2;
-              let tear3: any = tenor_tier3;
-              let tier: any = tenor1;
-              if (tier > tear2) {
+              let tear2: number = Number(tenor_tier2);
+              let tear3: number = Number(tenor_tier3);
+              let tier: number = Number(tenor1);
+
+              var a: number = Number(tear2);
+              var b: number = Number(tier);
+              if (tear2 >= tier) {
+                // alert(tear2 > tier);
+                // alert(tear3 > tier);
+                // alert(a > b);
                 alert('tenor 2 tier tidak boleh melebihi tenor11111');
                 return;
-              } else if (tier > tear3) {
-                //   alert(tear2);
-                //   alert(tear3);
-                //   alert(tier);
+              } else if (tear3 >= tier) {
                 alert('tenor tier 3 tidak boleh melebihi tenor');
                 return;
               } else {
-                alert(tier > tear2);
-                alert(tier > tear3);
+                // alert(tier > tear2);
+                // alert(tier > tear3);
                 alert('ini tenor 3');
                 this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2 + '-' + tenor_tier3;
+                return;
               }
             }
             this.kirimantenor = $('#tenor1').val();
-            this.kirimanskemafasilitas = $('#skema_fasilitas').val();
+            this.kirimanskemafasilitas = $('#skema_fasilitas').val() + '_fas0';
             this.kirimantier = $('#tier_id').val();
             const body = {
               margin: this.kirimanmargin,

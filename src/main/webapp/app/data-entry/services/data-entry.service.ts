@@ -248,6 +248,16 @@ export class DataEntryService {
   protected fetchlistftvdpdetail = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_ftv_dp_detail?ss=');
   // /////////////////////////////  Ref List FTVDP detail \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // /////////////////////////////  Ref List Skema Fix \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchlistskemafix = this.applicationConfigService.getEndpointFor('http://10.20.34.178:8805/api/v1/efos-ref/list_skema_fix');
+  // /////////////////////////////  Ref List Skema Fix \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // /////////////////////////////  Ref List Skema Stepup \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchlistskemastepup = this.applicationConfigService.getEndpointFor(
+    'http://10.20.34.178:8805/api/v1/efos-ref/list_skema_stepup'
+  );
+  // /////////////////////////////  Ref List Skema Stepup \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
     if (this.untukSessionRole === 'BRANCHMANAGER') {
@@ -597,4 +607,16 @@ export class DataEntryService {
     return this.http.get<ApiResponse>(this.getCustomerByCurefUrl + curef);
   }
   // //////////////////////////// GET Customer By Curef //////////////////////////////////////////////////
+
+  // //////////////////////////// GET Skema Fix //////////////////////////////////////////////////
+  getskemafix(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchlistskemafix);
+  }
+  // //////////////////////////// GET Skema Fix //////////////////////////////////////////////////
+
+  // //////////////////////////// GET Skema Stepup //////////////////////////////////////////////////
+  getskemastepup(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchlistskemastepup);
+  }
+  // //////////////////////////// GET Skema Stepup //////////////////////////////////////////////////
 }
