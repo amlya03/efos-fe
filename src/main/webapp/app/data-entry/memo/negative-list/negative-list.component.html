@@ -1,0 +1,204 @@
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Pengecekan Negative List</h3>
+</div>
+<br />
+<form [formGroup]="negativeForm">
+  <div class="row">
+    <div class="col">
+      <h6 style="text-align: center">Hasil Input AO</h6>
+    </div>
+    <div class="col" style="text-align: center">
+      <h6 style="text-align: center">Terdapat Negatif List</h6>
+    </div>
+  </div>
+  <div class="row" *ngIf="dataEntryModel.kategori_pekerjaan === 'Fix Income'">
+    <div class="col">
+      <br />
+      <p></p>
+      <div class="form-group row">
+        <strong class="col-sm-4 col-form-label">Jenis Pekerjaan</strong>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" [value]="jobModel.posisi" readonly />
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <div class="toggler">
+        <input
+          id="toggler-1"
+          formControlName="checkPekerjaan"
+          type="checkbox"
+          (change)="checkPekerjaan(negativeForm.get('checkPekerjaan')?.value)"
+        />
+        <label for="toggler-1">
+          <svg class="toggler-on" version="1.1" viewBox="0 0 130.2 130.2">
+            <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+          </svg>
+          <svg class="toggler-off" version="1.1" viewBox="0 0 130.2 130.2">
+            <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+            <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="dataEntryModel.kategori_pekerjaan === 'Non Fix Income'">
+    <div class="col">
+      <br />
+      <p></p>
+      <div class="form-group row">
+        <strong class="col-sm-4 col-form-label">Jenis Instansi / Lembaga</strong>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" [value]="jobModel.posisi" readonly />
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <div class="toggler">
+        <input
+          id="toggler-2"
+          formControlName="checkJenisInstansi"
+          type="checkbox"
+          (change)="checkPekerjaan(negativeForm.get('checkJenisInstansi')?.value)"
+        />
+        <label for="toggler-2">
+          <svg class="toggler-on" version="1.1" viewBox="0 0 130.2 130.2">
+            <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+          </svg>
+          <svg class="toggler-off" version="1.1" viewBox="0 0 130.2 130.2">
+            <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+            <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="dataEntryModel.kategori_pekerjaan === 'Non Fix Income'">
+    <div class="col">
+      <br />
+      <p></p>
+      <div class="form-group row">
+        <strong class="col-sm-4 col-form-label">Bidang Usaha</strong>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" [value]="jobModel.posisi" readonly />
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <div class="toggler">
+        <input
+          id="toggler-3"
+          formControlName="checkBidangUsaha"
+          type="checkbox"
+          (change)="checkPekerjaan(negativeForm.get('checkBidangUsaha')?.value)"
+        />
+        <label for="toggler-3">
+          <svg class="toggler-on" version="1.1" viewBox="0 0 130.2 130.2">
+            <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+          </svg>
+          <svg class="toggler-off" version="1.1" viewBox="0 0 130.2 130.2">
+            <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+            <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <br />
+      <p></p>
+      <div class="form-group row">
+        <strong class="col-sm-4 col-form-label">Lama Bekerja</strong>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" value="{{ jobModel.lama_bekerja_tahun }}" readonly />
+        </div>
+        <strong class="col-sm-4 col-form-label">Bulan</strong>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <div class="toggler">
+        <input
+          id="toggler-3"
+          formControlName="checkBidangUsaha"
+          type="checkbox"
+          (change)="checkPekerjaan(negativeForm.get('checkBidangUsaha')?.value)"
+        />
+        <label for="toggler-3">
+          <svg class="toggler-on" version="1.1" viewBox="0 0 130.2 130.2">
+            <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+          </svg>
+          <svg class="toggler-off" version="1.1" viewBox="0 0 130.2 130.2">
+            <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+            <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <br />
+      <p></p>
+      <div class="form-group row">
+        <strong class="col-sm-4 col-form-label">Lama Beroperasi</strong>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" value="{{ jobModel.lama_bekerja_tahun }}" readonly />
+        </div>
+        <strong class="col-sm-4 col-form-label">Bulan</strong>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <div class="toggler">
+        <input
+          id="toggler-3"
+          formControlName="checkBidangUsaha"
+          type="checkbox"
+          (change)="checkPekerjaan(negativeForm.get('checkBidangUsaha')?.value)"
+        />
+        <label for="toggler-3">
+          <svg class="toggler-on" version="1.1" viewBox="0 0 130.2 130.2">
+            <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+          </svg>
+          <svg class="toggler-off" version="1.1" viewBox="0 0 130.2 130.2">
+            <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+            <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <br />
+      <p></p>
+      <div class="form-group row">
+        <strong class="col-sm-4 col-form-label">Perusahaan </strong>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" value="{{ jobModel.lama_bekerja_tahun }}" readonly />
+        </div>
+        <strong class="col-sm-4 col-form-label">Bulan</strong>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <div class="toggler">
+        <input
+          id="toggler-3"
+          formControlName="checkBidangUsaha"
+          type="checkbox"
+          (change)="checkPekerjaan(negativeForm.get('checkBidangUsaha')?.value)"
+        />
+        <label for="toggler-3">
+          <svg class="toggler-on" version="1.1" viewBox="0 0 130.2 130.2">
+            <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+          </svg>
+          <svg class="toggler-off" version="1.1" viewBox="0 0 130.2 130.2">
+            <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+            <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+</form>

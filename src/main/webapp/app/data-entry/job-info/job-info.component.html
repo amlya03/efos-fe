@@ -459,7 +459,13 @@
         <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
         <div class="col-sm-9">
           <div class="form-group">
-            <input type="text" (keypress)="keyPressNumbers($event)" class="form-control" formControlName="jumlah_karyawan" />
+            <input
+              type="text"
+              (keypress)="keyPressNumbers($event)"
+              class="form-control"
+              formControlName="jumlah_karyawan"
+              oninput="this.value = Math.abs(this.value)"
+            />
             <!-- <select class="form-control" formControlName="jumlah_karyawan">
               <option value="">Pilih Jumlah Karyawan</option>
               <option *ngFor="let getjumlahkaryawandariapi of getjumlahkaryawandariapi" value="{{ getjumlahkaryawandariapi.deskripsi }}">

@@ -372,4 +372,10 @@ export class MemoComponent implements OnInit {
     this.isLoading = loading;
     this.isSpin = loading;
   }
+
+  updatedBm(): void {
+    this.router.navigate(['/negative-list'], {
+      queryParams: { app_no_de: this.app_no_de },
+    });
+  }
 }

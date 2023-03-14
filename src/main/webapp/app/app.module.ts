@@ -72,6 +72,7 @@ import { DetailKomiteComponent } from './komite/detail-komite/detail-komite.comp
 import { LoadingScreenComponent } from './layouts/loading-screen/loading-screen.component';
 import { ParameterizedComponent } from './parameterized/parameterized.component';
 import { InputparameterscoringComponent } from './inputparameterscoring/inputparameterscoring.component';
+import { NegativeListComponent } from './data-entry/memo/negative-list/negative-list.component';
 
 @NgModule({
   imports: [
@@ -150,6 +151,7 @@ import { InputparameterscoringComponent } from './inputparameterscoring/inputpar
     LoadingScreenComponent,
     ParameterizedComponent,
     InputparameterscoringComponent,
+    NegativeListComponent,
   ],
   bootstrap: [MainComponent],
 })
