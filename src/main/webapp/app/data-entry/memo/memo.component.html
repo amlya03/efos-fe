@@ -51,7 +51,7 @@
     <div class="form-group row" [hidden]="tampilanfixornon === 'Fix Income'">
       <label id="changeLabelUpload" class="col-sm-4 col-form-label">Upload</label>
       <div class="col-sm-8">
-        <div id="hideFileUploadJikaViewShow" class="input-group" *ngIf="this.resultGetMemoUpload == 0">
+        <div id="hideFileUploadJikaViewShow" class="input-group" *ngIf="this.resultGetMemoUpload == 1">
           <div class="custom-file">
             <input
               class="custom-file-input"
@@ -71,7 +71,7 @@
           class="btn mb-1 btn-rounded btn-secondary"
           id="testButton"
           (click)="download()"
-          [hidden]="this.resultGetMemoUpload == 0 || this.untukSessionRole === 'AO'"
+          *ngIf="this.resultGetMemoUpload == 0"
         >
           <span class="btn-icon-left"><i class="fa fa-download color-warning"></i></span>View
         </button>
@@ -83,13 +83,7 @@
 <div class="form-group row" [formGroup]="memoForm">
   <label class="col-sm-2 col-form-label">Isi Memo</label>
   <div class="col-sm-10">
-    <textarea
-      [disabled]="this.untukSessionRole === 'BRANCHMANAGER' || this.untukSessionRole === 'VER_PRE_SPV'"
-      class="form-control"
-      rows="6"
-      id="keterangan"
-      formControlName="keterangan"
-    ></textarea>
+    <textarea class="form-control" rows="6" id="keterangan" formControlName="keterangan"></textarea>
   </div>
 </div>
 <br />

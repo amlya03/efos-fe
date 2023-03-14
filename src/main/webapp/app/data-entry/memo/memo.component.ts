@@ -87,7 +87,7 @@ export class MemoComponent implements OnInit {
     setTimeout(() => {
       this.fileUploadService.getMemoUpload(this.curef, this.app_no_de).subscribe(data => {
         this.getMemoUpload = data.result;
-        // alert(data.result == '')
+        // console.warn(this.getMemoUpload)
         if (data.result == null) {
           this.resultGetMemoUpload = 1;
           this.getLoading(false);
@@ -104,7 +104,7 @@ export class MemoComponent implements OnInit {
           this.tampilanfixornon = data.result.kategori_pekerjaan;
           if (this.untukSessionRole === 'BRANCHMANAGER') {
             if (this.dataEntryModel.status_perkawinan === 'Lajang') {
-              if (this.dataEntryModel.kode_fasilitas_name === 'PTA') {
+              if (this.dataEntryModel.joint_income === '0' || this.dataEntryModel.kode_fasilitas_name === 'PTA') {
                 if (personalInfo == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Personal Info!', 'error');
                 } else if (jobInfo == 0) {
@@ -138,7 +138,7 @@ export class MemoComponent implements OnInit {
                 }
               }
             } else {
-              if (this.dataEntryModel.kode_fasilitas_name === 'PTA') {
+              if (this.dataEntryModel.joint_income === '0' || this.dataEntryModel.kode_fasilitas_name === 'PTA') {
                 if (personalInfo == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Personal Info!', 'error');
                 } else if (jobInfo == 0) {
@@ -191,25 +191,19 @@ export class MemoComponent implements OnInit {
 
         this.memoModel = data.result;
         setTimeout(() => {
-          for (let i = 0; i < this.memoModel.length; i++) {
-            setTimeout(() => {
-              if (this.memoModel[i].role === 'BRANCHMANAGER') {
-                this.valBM = 0;
-              } else {
-                this.valBM = 1;
-                // alert(this.valBM)
-              }
-            }, 10);
-            setTimeout(() => {
-              if (this.memoModel[i].role === 'AO') {
-                this.modelResultmemo = 0;
-                // alert(this.modelResultmemo)
-              } else {
-                this.modelResultmemo = 1;
-              }
-            }, 30);
+          if (this.memoModel.find((value: memomodel) => value.role === 'BRANCHMANAGER')) {
+            this.valBM = 0;
+          } else {
+            this.valBM = 1;
           }
         }, 10);
+        setTimeout(() => {
+          if (this.memoModel.find((value: memomodel) => value.role === 'AO')) {
+            this.modelResultmemo = 0;
+          } else {
+            this.modelResultmemo = 1;
+          }
+        }, 30);
       });
     }, 20);
   }
@@ -309,6 +303,8 @@ export class MemoComponent implements OnInit {
   }
   download() {
     const buatPdf = this.getMemoUpload.nama_dokumen?.split('.').pop();
+    alert(buatPdf);
+    return;
     if (buatPdf == 'pdf') {
       window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + this.getMemoUpload.nama_dokumen + '');
     } else {

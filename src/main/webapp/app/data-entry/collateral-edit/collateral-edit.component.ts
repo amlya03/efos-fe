@@ -710,11 +710,13 @@ export class CollateralEditComponent implements OnInit {
       next: sukses => {
         if (this.clickKdPost == 1) {
           this.responseKels = sukses.result.kels;
+          // console.warn(this.responseKels)
           this.responseKels.forEach(element => {
             this.responseKels.push(element);
             if (element.kdPos == kodepost) {
               let namaWIl = element.namaWilayah;
-              this.responseNamaWilayah.push(namaWIl);
+              const hasil = namaWIl.find((value: any) => value);
+              this.responseNamaWilayah = hasil;
             }
           });
         }
@@ -733,7 +735,7 @@ export class CollateralEditComponent implements OnInit {
               this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
             } else if (sukses.result.provKec.kd_kel == null) {
               this.untukKodeKelurahanAgunan = kodepost;
-              this.untukkelurahanagunan = this.responseNamaWilayah[this.responseNamaWilayah.length - 1];
+              this.untukkelurahanagunan = this.responseNamaWilayah;
               this.kelurahanChange(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan);
               // alert(this.untukKodeKelurahanAgunan + '|' + this.untukkelurahanagunan)
             } else {

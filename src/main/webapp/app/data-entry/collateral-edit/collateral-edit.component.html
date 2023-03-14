@@ -210,19 +210,9 @@
         <label class="col-sm-4 col-form-label">Sama Dengan Jaminan Sebelumnya</label>
         <div class="col">
           <label>Ya</label>
-          <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-            type="radio"
-            formControlName="status_jaminan_sebelumnya"
-            value="1"
-          />
+          <input type="radio" formControlName="status_jaminan_sebelumnya" value="1" />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <input
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-            type="radio"
-            formControlName="status_jaminan_sebelumnya"
-            value="0"
-          />
+          <input type="radio" formControlName="status_jaminan_sebelumnya" value="0" />
           <label>Tidak</label>
         </div>
         <br />
@@ -489,7 +479,6 @@
               <input type="tel" maxlength="8" class="form-control" id="kode_pos_agunan" formControlName="kode_pos_agunan" />
               <div class="input-group-append">
                 <button
-                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
                   class="btn btn-outline-dark"
                   (click)="carimenggunakankodeposagunan(this.editCollateralForm.get('kode_pos_agunan')?.value); clickKdPost = 1"
                   type="button"
