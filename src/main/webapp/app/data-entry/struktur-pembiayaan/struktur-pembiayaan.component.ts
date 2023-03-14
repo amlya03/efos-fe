@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable eqeqeq */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
@@ -56,7 +57,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   kodetenor: any;
   merginstepup: any;
   databawaan: any;
-  postId: any;
+  postId: getProduk[] = [];
   errorMessage: any;
   untukSessionRole: any;
   tujuanpembiayaan: any;
@@ -257,16 +258,17 @@ export class StrukturPembiayaanComponent implements OnInit {
             }
           }, 120);
 
+          let marginStep: any;
+          let anguranStep: any;
           setTimeout(() => {
             if (this.strukturModel.skema_master == 1) {
               this.showMargin = 'Margin = ' + this.strukturModel.margin;
             } else {
               this.dataEntryService.getFetchMarginStepUp(this.strukturModel.skema).subscribe(margin => {
-                const marginStep = margin.result;
-                // for (let i = 0; i < data.result.length; i++) {
-                //   this.showMargin
-                // });
-                this.showMargin = 'Margin Tahun Ke 1 = ' + marginStep[0] + '; ' + 'Margin Tahun Ke 2 = ' + marginStep[1];
+                marginStep = margin.result;
+
+                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                this.showMargin = marginStep.map((element: any, i: any) => ` Margin Ke ${i + 1} = ${element}`);
               });
             }
           }, 200);
@@ -287,20 +289,16 @@ export class StrukturPembiayaanComponent implements OnInit {
               })
               .subscribe({
                 next: anguran => {
-                  const anguran1 = anguran.result.angsuran[0];
-                  const anguran2 = anguran.result.angsuran[1];
-
-                  if (anguran2 == null) {
-                    this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ');
-                    this.showAngsuran = 'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                  this.postId = anguran.result.angsuran;
+                  // console.warn(this.postId)
+                  if (this.postId[0]) {
+                    this.showAngsuran = this.postId.map(
+                      (value: any, i: any) =>
+                        ` Angsuran Ke ${i + 1} = ${value.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
+                    );
                   } else {
-                    this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ' + anguran2);
-                    this.showAngsuran =
-                      'Angsuran Tahun Ke 1 = ' +
-                      Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) +
-                      '; ' +
-                      'Angsuran Tahun Ke 2 = ' +
-                      Number(anguran2).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                    anguranStep = this.postId.shift();
+                    this.showAngsuran = 'Angsuran = ' + Number(anguranStep).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
                   }
                 },
                 error(err) {
@@ -461,7 +459,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     const kirimanproduk = this.strukturForm.get('produk')?.value.split('|');
     const kirimanskema = this.strukturForm.get('skema')?.value.split('|');
     const kirimanjangkawaktu = this.strukturForm.get('jangka_waktu')?.value.split('|');
-    let responseStrukturColl: any;
+    let anguranStep: any;
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
         // headers: headers,
@@ -478,37 +476,26 @@ export class StrukturPembiayaanComponent implements OnInit {
       })
       .subscribe({
         next: data => {
-          this.postId = data.result;
-
-          const anguran1 = data.result.angsuran[0];
-          const anguran2 = data.result.angsuran[1];
+          this.postId = data.result.angsuran;
+          anguranStep = this.postId.unshift();
           const nilai = data.result.nilai_pembiayaan;
-
-          if (anguran2 == null) {
-            this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ');
-            this.showAngsuran = 'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-            this.getLoading(false);
+          console.warn(this.postId);
+          // console.warn(anguranStep)
+          if (this.postId[0]) {
+            this.showAngsuran = this.postId.map(
+              (value: any, i: any) => ` Angsuran Ke ${i + 1} = ${value.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
+            );
           } else {
-            this.strukturForm.get('angsuran')?.setValue(anguran1 + '; ' + anguran2);
-            this.showAngsuran =
-              'Angsuran Tahun Ke 1 = ' +
-              Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) +
-              '; ' +
-              'Angsuran Tahun Ke 2 = ' +
-              Number(anguran2).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-            this.getLoading(false);
+            this.showAngsuran = 'Angsuran = ' + Number(this.postId).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
           }
+          this.strukturForm.get('angsuran')?.setValue(anguranStep);
           this.strukturForm.get('nilai_pembiayaan')?.setValue(nilai);
+          this.getLoading(false);
         },
         error: err => {
           this.getLoading(false);
           if (err.error.code == 400) {
             alert(err.error.message);
-          } else {
-            responseStrukturColl = err.error.message;
-            if (responseStrukturColl.includes('query did not return a unique result: 2')) {
-              alert('Hanya Boleh 1 Objek yang dibiayai/dibeli sekaligus yang dijaminkan pada Collateral');
-            }
           }
         },
       });

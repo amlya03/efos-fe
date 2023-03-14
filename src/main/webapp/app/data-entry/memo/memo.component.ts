@@ -194,25 +194,19 @@ export class MemoComponent implements OnInit {
 
         this.memoModel = data.result;
         setTimeout(() => {
-          for (let i = 0; i < this.memoModel.length; i++) {
-            setTimeout(() => {
-              if (this.memoModel[i].role === 'BRANCHMANAGER') {
-                this.valBM = 0;
-              } else {
-                this.valBM = 1;
-                // alert(this.valBM)
-              }
-            }, 10);
-            setTimeout(() => {
-              if (this.memoModel[i].role === 'AO') {
-                this.modelResultmemo = 0;
-                // alert(this.modelResultmemo)
-              } else {
-                this.modelResultmemo = 1;
-              }
-            }, 30);
+          if (this.memoModel.find((value: memomodel) => value.role === 'BRANCHMANAGER')) {
+            this.valBM = 0;
+          } else {
+            this.valBM = 1;
           }
         }, 10);
+        setTimeout(() => {
+          if (this.memoModel.find((value: memomodel) => value.role === 'AO')) {
+            this.modelResultmemo = 0;
+          } else {
+            this.modelResultmemo = 1;
+          }
+        }, 30);
       });
     }, 20);
   }

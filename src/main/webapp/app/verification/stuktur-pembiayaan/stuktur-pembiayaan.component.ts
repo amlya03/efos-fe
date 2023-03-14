@@ -138,9 +138,9 @@ export class StukturPembiayaanComponent implements OnInit {
 
     // Analisa Keuangan
     setTimeout(() => {
-      this.verifikasiServices.fetchAnalisaKeuangan(this.app_no_de).subscribe(analisa => {
+      this.verifikasiServices.fetchAnalisaPembiayaan(this.app_no_de).subscribe(analisa => {
         this.analisaPembiayaan = analisa.result;
-        console.warn(analisa.result);
+        // console.warn(analisa.result);
         const retSLik = {
           total_kewajiban_bank_pemohon: this.analisaPembiayaan.kewajiban_bank_total,
           total_outstanding: this.analisaPembiayaan.total_outstanding,
@@ -385,6 +385,7 @@ export class StukturPembiayaanComponent implements OnInit {
                         kode_produk: this.dataEntry.produk,
                         ftv: this.betaFTV,
                         tenor: this.strukturForm.get('tenor')?.value,
+                        skema_id: skemaidName[0],
                       })
                       .subscribe({
                         next: scoring => {
