@@ -106,7 +106,11 @@ export class MemoComponent implements OnInit {
           this.dataEntryModel = data.result;
           this.tampilanfixornon = data.result.kategori_pekerjaan;
           if (this.untukSessionRole === 'BRANCHMANAGER') {
-            if (this.dataEntryModel.status_perkawinan === 'BELUM KAWIN') {
+            if (
+              this.dataEntryModel.status_perkawinan === 'BELUM KAWIN' ||
+              this.dataEntryModel.status_perkawinan === 'CERAI MATI' ||
+              this.dataEntryModel.status_perkawinan === 'CERAI HIDUP'
+            ) {
               if (this.dataEntryModel.kode_fasilitas_name === 'PTA') {
                 if (personalInfo == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Personal Info!', 'error');
@@ -146,6 +150,8 @@ export class MemoComponent implements OnInit {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Personal Info!', 'error');
                 } else if (jobInfo == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Job Info!', 'error');
+                } else if (dataPas == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Data Pasangan!', 'error');
                 } else if (strukturPemb == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Struktur Pembiayaan!', 'error');
                 } else if (callReport == 0) {

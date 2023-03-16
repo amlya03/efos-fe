@@ -36,6 +36,20 @@ export class DataEntryService {
     this.untukSessionFullName = this.sessionStorageService.retrieve('sessionFullName');
     this.untukSessionKodeCabang = this.sessionStorageService.retrieve('sessionKdCabang');
   }
+  // //////////////////////////// Ref Negative List instansi ////////////////////////////////////////////
+  protected list_negative_instansiUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_negative_instansi');
+  // //////////////////////////// Ref Negative List instansi ////////////////////////////////////////////
+
+  // //////////////////////////// Ref Negative List Bidang Usaha ////////////////////////////////////////////
+  protected list_negative_bidangusahaUrl = this.applicationConfigService.getEndpointFor(
+    this.baseUrl + 'v1/efos-ref/list_negative_bidangusaha'
+  );
+  // //////////////////////////// Ref Negative List Bidang Usaha ////////////////////////////////////////////
+
+  // //////////////////////////// Ref Negative List Pekerjaan ////////////////////////////////////////////
+  protected list_negative_pekerjaanUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_negative_pekerjaan');
+  // //////////////////////////// Ref Negative List Pekerjaan ////////////////////////////////////////////
+
   // //////////////////////////// GET Customer By Curef //////////////////////////////////////////////////
   protected getCustomerByCurefUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getCustomerByCuref?sc=');
   // //////////////////////////// GET Customer By Curef //////////////////////////////////////////////////
@@ -597,4 +611,20 @@ export class DataEntryService {
     return this.http.get<ApiResponse>(this.getCustomerByCurefUrl + curef);
   }
   // //////////////////////////// GET Customer By Curef //////////////////////////////////////////////////
+
+  // //////////////////////////// Ref Negative List Pekerjaan ////////////////////////////////////////////
+  getListNegativePekerjaan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.list_negative_pekerjaanUrl);
+  }
+  // //////////////////////////// Ref Negative List Pekerjaan ////////////////////////////////////////////
+
+  // //////////////////////////// Ref Negative List Bidang Usaha ////////////////////////////////////////////
+  getListNegativeBidangUsaha(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.list_negative_bidangusahaUrl);
+  }
+  // //////////////////////////// Ref Negative List instansi ////////////////////////////////////////////
+  getListNegativeInstansi(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.list_negative_instansiUrl);
+  }
+  // //////////////////////////// Ref Negative List instansi ////////////////////////////////////////////
 }

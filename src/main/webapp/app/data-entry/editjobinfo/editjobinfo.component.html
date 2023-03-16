@@ -376,57 +376,20 @@
         <div class="col">Bulan</div>
       </div>
       <br />
-      <div [ngSwitch]="nampungdatakatagoripekerjaan">
-        <div *ngSwitchCase="'Fix Income'">
-          <div id="jumlahKaryawanFix" class="form-group row">
-            <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
-            <div class="col-sm-9">
-              <select maxlength="13" class="form-control" id="jumlah_karyawan" formControlName="jumlah_karyawan">
-                <option *ngFor="let ListJumlahKaryawan of ListJumlahKaryawan" value="{{ ListJumlahKaryawan.deskripsi }}">
-                  {{ ListJumlahKaryawan.deskripsi }}
-                </option>
-              </select>
-              <span
-                [hidden]="
-                  editJobForm.controls.jumlah_karyawan.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Jumlah Karyawan Harus Diisi
-              </span>
-            </div>
-          </div>
-        </div>
-        <div *ngSwitchCase="'Non Fix Income'">
-          <div id="jumlahKaryawanNon" class="form-group row">
-            <label class="col-sm-3 col-form-label">Jumlah Karyawan<span class="text-danger">*</span></label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <select
-                  class="form-control"
-                  id="jumlah_karyawan2"
-                  formControlName="jumlah_karyawan"
-                  [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-                >
-                  <option *ngFor="let ListJumlahKaryawan of ListJumlahKaryawan" value="{{ ListJumlahKaryawan.deskripsi }}">
-                    {{ ListJumlahKaryawan.deskripsi }}
-                  </option>
-                </select>
-              </div>
-              <span
-                [hidden]="
-                  editJobForm.controls.jumlah_karyawan.valid ||
-                  this.untukSessionRole == 'VER_PRE_SPV' ||
-                  this.untukSessionRole == 'BRANCHMANAGER'
-                "
-                class="text-danger"
-              >
-                Jumlah Karyawan Harus Diisi
-              </span>
-            </div>
-          </div>
+      <div id="jumlahKaryawanFix" class="form-group row">
+        <label class="col-sm-3 col-form-label">Jumlah Karyawan</label>
+        <div class="col-sm-9">
+          <input maxlength="13" class="form-control" id="jumlah_karyawan" formControlName="jumlah_karyawan" />
+          <span
+            [hidden]="
+              editJobForm.controls.jumlah_karyawan.valid ||
+              this.untukSessionRole == 'VER_PRE_SPV' ||
+              this.untukSessionRole == 'BRANCHMANAGER'
+            "
+            class="text-danger"
+          >
+            Jumlah Karyawan Harus Diisi
+          </span>
         </div>
       </div>
       <br />
@@ -573,6 +536,7 @@
         name="updatedata"
         value="updatedata"
         class="btn btn-dark"
+        [disabled]="editJobForm.controls.jumlah_karyawan.invalid"
       >
         Update Data
       </button>

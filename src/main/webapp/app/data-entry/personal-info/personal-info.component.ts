@@ -15,6 +15,7 @@ import { ServiceVerificationService } from 'app/verification/service/service-ver
 import { refListTipeKendaraan } from '../services/config/refListTipeKendaraan.model';
 import { environment } from 'environments/environment';
 import { refJenisPekerjaan } from '../services/config/refJenisPekerjaan.model';
+import { modelCustomer } from 'app/initial-data-entry/services/config/modelCustomer.model';
 
 @Component({
   selector: 'jhi-personal-info',
@@ -38,6 +39,7 @@ export class PersonalInfoComponent implements OnInit {
   ref_status_rumah: refStatusRumah[] = [];
   ref_list_tipe_kendaraan: refListTipeKendaraan[] = [];
   pendidikanModel: refJenisPekerjaan[] = [];
+  customerModel: modelCustomer = new modelCustomer();
   // Retrive Radio BUtoon dan select Option Kondisi
   tipe_kendaraan: any;
 
@@ -235,6 +237,11 @@ export class PersonalInfoComponent implements OnInit {
         this.ref_list_tipe_kendaraan = data.result;
       });
     }, 40);
+    setTimeout(() => {
+      this.datEntryService.getCustomerByCuref(this.curef).subscribe(customer => {
+        this.customerModel = customer.result;
+      });
+    }, 50);
 
     let alamatSamaKTP: any;
     setTimeout(() => {
@@ -387,6 +394,9 @@ export class PersonalInfoComponent implements OnInit {
         no_telepon: this.personalInfoForm.get('no_telepon')?.value,
         updated_by: this.sessionStorageService.retrieve('sessionUserName'),
         tipe_kendaraan: this.personalInfoForm.get('tipe_kendaraan')?.value,
+        fasilitas_name: this.customerModel.fasilitas_name,
+        kode_fasilitas: this.customerModel.kode_fasilitas,
+        status_harta_gono_gini: this.customerModel.status_harta_gono_gini,
         // updated_date: '1 ',
       })
 

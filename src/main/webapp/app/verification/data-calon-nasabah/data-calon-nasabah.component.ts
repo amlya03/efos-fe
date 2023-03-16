@@ -167,7 +167,7 @@ export class DataCalonNasabahComponent implements OnInit {
       kondisi_kendaraan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       note_verif_thp: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       verif_thp: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_fasilitas_pembiayaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      verif_fasilitas_pembiayaan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       note_verif_fasilitas_pembiayaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
       // created_date: "",
       // updated_date: "",
@@ -454,6 +454,7 @@ export class DataCalonNasabahComponent implements OnInit {
 
     setTimeout(() => {
       this.dataCalonNasabah.fetchDataNasabah(this.app_no_de).subscribe(data => {
+        this.dataCalonNasabahMap = data.result;
         if (data.result === null) {
           this.getLoading(false);
           this.cekResult = 0;
@@ -461,8 +462,8 @@ export class DataCalonNasabahComponent implements OnInit {
           this.getLoading(false);
           this.cekResult = 1;
         }
-        this.dataCalonNasabahMap = data.result;
-        // console.warn(data)
+        // console.warn(data.result === null)
+        alert(this.dataCalonNasabahMap.verif_fasilitas_pembiayaan);
         if (data.result === null) {
           const retriveCalonNasabah = {
             tanggal_verifikasi: '',
@@ -516,7 +517,7 @@ export class DataCalonNasabahComponent implements OnInit {
             kondisi_kendaraan: '',
             note_verif_thp: '',
             verif_thp: '',
-            verif_fasilitas_pembiayaan: '',
+            verif_fasilitas_pembiayaan: '0',
             note_verif_fasilitas_pembiayaan: '',
             // created_date: this.dataCalonNasabahMap ,
             // updated_date: this.dataCalonNasabahMap ,

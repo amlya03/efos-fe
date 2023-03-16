@@ -51,13 +51,16 @@
       <br />
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Usia</label>
-        <div class="col-sm-9">
+        <div [class]="personalInfoForm.get('usia')?.value > 55 ? 'col-sm-4' : 'col-sm-9'">
           <div class="input-group mb-3">
             <input type="tel" maxlength="2" class="form-control" placeholder="Usia" id="usia" formControlName="usia" readonly />
             <div class="input-group-append">
               <span class="input-group-text" id="basic-addon2">Tahun</span>
             </div>
           </div>
+        </div>
+        <div class="col-sm-4" *ngIf="personalInfoForm.get('usia')?.value > 55">
+          <strong style="color: red">* Nasabah Akan dilakukan Penutupan Asuransi</strong>
         </div>
       </div>
       <br />

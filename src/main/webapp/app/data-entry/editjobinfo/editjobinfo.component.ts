@@ -124,7 +124,7 @@ export class EditjobinfoComponent implements OnInit {
       umur_pensiun: ['', Validators.required],
       lama_bekerja_tahun: ['', Validators.required],
       lama_bekerja_bulan: ['', Validators.required],
-      jumlah_karyawan: ['', Validators.required],
+      jumlah_karyawan: ['', [Validators.min(25), Validators.required]],
       pendapatan: ['', Validators.required],
       pendapatan_lain: ['', Validators.required],
       tunjangan: ['', Validators.required],

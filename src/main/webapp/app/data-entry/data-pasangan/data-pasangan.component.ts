@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { environment } from 'environments/environment';
 import { refJenisPekerjaan } from '../services/config/refJenisPekerjaan.model';
+import { modelCustomer } from 'app/initial-data-entry/services/config/modelCustomer.model';
 
 export type EntityResponseDaWa = HttpResponse<datapasangamodel>;
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -48,6 +49,7 @@ export class DataPasanganComponent implements OnInit {
   retriveKodeKecamatan: any;
   retriveKodeKelurahan: any;
   pendidikanModel: refJenisPekerjaan[] = [];
+  customerModel: modelCustomer = new modelCustomer();
 
   constructor(
     protected datEntryService: DataEntryService,
@@ -117,52 +119,62 @@ export class DataPasanganComponent implements OnInit {
           this.pendidikanModel = data.result;
         },
       });
+    }, 2);
+
+    setTimeout(() => {
+      this.datEntryService.getCustomerByCuref(this.curef).subscribe(customer => {
+        this.customerModel = customer.result;
+      });
+    }, 5);
+
+    setTimeout(() => {
+      this.datEntryService.getprovinsi().subscribe(res => {
+        this.daWaprof = res.result;
+      });
+    }, 7);
+
+    setTimeout(() => {
+      this.datEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
+        this.dataEntry = data.result;
+        this.retriveprovinsi = data.result.provinsi_pasangan;
+        this.retrivekabkota = data.result.kabkota_pasangan;
+        this.retrivekecamatan = data.result.kecamatan_pasangan;
+        this.retrivekelurahan = data.result.kelurahan_pasangan;
+
+        const retriveDataPasangan = {
+          tanggal_lahir_pasangan: this.dataEntry.tanggal_lahir_pasangan,
+          usia_pasangan: this.dataEntry.usia_pasangan,
+          nama_pasangan: this.dataEntry.nama_pasangan,
+          jenis_kelamin_pasangan: this.dataEntry.jenis_kelamin_pasangan,
+          alamat_ktp_pasangan: this.dataEntry.alamat_ktp_pasangan,
+          // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          provinsi_pasangan: '',
+          kabkota_pasangan: '',
+          kecamatan_pasangan: '',
+          kelurahan_pasangan: '',
+          kode_pos_pasangan: this.dataEntry.kode_pos_pasangan,
+          // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          rt_pasangan: this.dataEntry.rt_pasangan,
+          rw_pasangan: this.dataEntry.rw_pasangan,
+          kewarganegaraan_pasangan: this.dataEntry.kewarganegaraan_pasangan,
+          pendidikan_pasangan: this.dataEntry.pendidikan_pasangan,
+          email_pasangan: this.dataEntry.email_pasangan,
+          no_handphone_pasangan: this.dataEntry.no_handphone_pasangan,
+          no_ktp_pasangan: this.dataEntry.no_ktp_pasangan,
+          tanggal_terbit_ktp_pasangan: this.dataEntry.tanggal_terbit_ktp_pasangan,
+          status_ktp_pasangan: this.dataEntry.status_ktp_pasangan,
+          tanggal_exp_ktp_pasangan: this.dataEntry.tanggal_exp_ktp_pasangan,
+          npwp_pasangan: this.dataEntry.npwp_pasangan,
+        };
+        this.dataPasanganForm.setValue(retriveDataPasangan);
+
+        setTimeout(() => {
+          this.hitungUsia(this.dataEntry.tanggal_lahir_pasangan);
+          this.carimenggunakankodepos(this.dataEntry.kode_pos_pasangan);
+          this.getLoading(false);
+        }, 200);
+      });
     }, 10);
-
-    this.datEntryService.getprovinsi().subscribe(res => {
-      this.daWaprof = res.result;
-    });
-
-    this.datEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
-      this.dataEntry = data.result;
-      this.retriveprovinsi = data.result.provinsi_pasangan;
-      this.retrivekabkota = data.result.kabkota_pasangan;
-      this.retrivekecamatan = data.result.kecamatan_pasangan;
-      this.retrivekelurahan = data.result.kelurahan_pasangan;
-
-      const retriveDataPasangan = {
-        tanggal_lahir_pasangan: this.dataEntry.tanggal_lahir_pasangan,
-        usia_pasangan: this.dataEntry.usia_pasangan,
-        nama_pasangan: this.dataEntry.nama_pasangan,
-        jenis_kelamin_pasangan: this.dataEntry.jenis_kelamin_pasangan,
-        alamat_ktp_pasangan: this.dataEntry.alamat_ktp_pasangan,
-        // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        provinsi_pasangan: '',
-        kabkota_pasangan: '',
-        kecamatan_pasangan: '',
-        kelurahan_pasangan: '',
-        kode_pos_pasangan: this.dataEntry.kode_pos_pasangan,
-        // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        rt_pasangan: this.dataEntry.rt_pasangan,
-        rw_pasangan: this.dataEntry.rw_pasangan,
-        kewarganegaraan_pasangan: this.dataEntry.kewarganegaraan_pasangan,
-        pendidikan_pasangan: this.dataEntry.pendidikan_pasangan,
-        email_pasangan: this.dataEntry.email_pasangan,
-        no_handphone_pasangan: this.dataEntry.no_handphone_pasangan,
-        no_ktp_pasangan: this.dataEntry.no_ktp_pasangan,
-        tanggal_terbit_ktp_pasangan: this.dataEntry.tanggal_terbit_ktp_pasangan,
-        status_ktp_pasangan: this.dataEntry.status_ktp_pasangan,
-        tanggal_exp_ktp_pasangan: this.dataEntry.tanggal_exp_ktp_pasangan,
-        npwp_pasangan: this.dataEntry.npwp_pasangan,
-      };
-      this.dataPasanganForm.setValue(retriveDataPasangan);
-
-      setTimeout(() => {
-        this.hitungUsia(this.dataEntry.tanggal_lahir_pasangan);
-        this.carimenggunakankodepos(this.dataEntry.kode_pos_pasangan);
-        this.getLoading(false);
-      }, 300);
-    });
   }
 
   hitungUsia(tgl: any): void {
@@ -208,16 +220,40 @@ export class DataPasanganComponent implements OnInit {
 
   goto(): void {
     this.sessionStorageService.store('dataPas', 1);
-    // this.onResponseSuccess(res);
-    // alert(contohtampungancuref);
-    // alert(this.app_no_de);
-    // alert(this.curef);
-    this.router.navigate(['/data-entry/pekerjaan-pasangan'], {
-      queryParams: {
-        curef: this.curef,
-        app_no_de: this.app_no_de,
-      },
-    });
+    if (this.customerModel.fasilitas_name === 'PTA') {
+      if (this.dataEntry.status_perkawinan === 'KAWIN') {
+        this.router.navigate(['/data-entry/struktur-pembiayaan'], {
+          queryParams: {
+            curef: this.curef,
+            app_no_de: this.app_no_de,
+          },
+        });
+        // console.warn(this.curef);
+      } else {
+        this.router.navigate(['/data-entry/struktur-pembiayaan'], {
+          queryParams: {
+            curef: this.curef,
+            app_no_de: this.app_no_de,
+          },
+        });
+      }
+    } else {
+      if (this.dataEntry.status_perkawinan === 'KAWIN') {
+        this.router.navigate(['/data-entry/pekerjaan-pasangan'], {
+          queryParams: {
+            curef: this.curef,
+            app_no_de: this.app_no_de,
+          },
+        });
+      } else {
+        this.router.navigate(['/data-entry/collateral'], {
+          queryParams: {
+            curef: this.curef,
+            app_no_de: this.app_no_de,
+          },
+        });
+      }
+    }
   }
 
   updatedatapasngan(): void {
@@ -254,16 +290,47 @@ export class DataPasanganComponent implements OnInit {
         tanggal_lahir_pasangan: this.dataPasanganForm.get('tanggal_lahir_pasangan')?.value,
         tanggal_terbit_ktp_pasangan: this.dataPasanganForm.get('tanggal_terbit_ktp_pasangan')?.value,
         usia_pasangan: this.dataPasanganForm.get('usia_pasangan')?.value,
+        fasilitas_name: this.customerModel.fasilitas_name,
+        kode_fasilitas: this.customerModel.kode_fasilitas,
+        status_harta_gono_gini: this.customerModel.status_harta_gono_gini,
       })
       .subscribe({
         next: () => {
           alert('Berhasil Menyimpan Data');
-          this.router.navigate(['/data-entry/pekerjaan-pasangan'], {
-            queryParams: {
-              curef: this.curef,
-              app_no_de: this.app_no_de,
-            },
-          });
+          if (this.customerModel.fasilitas_name === 'PTA') {
+            if (this.dataEntry.status_perkawinan === 'KAWIN') {
+              this.router.navigate(['/data-entry/struktur-pembiayaan'], {
+                queryParams: {
+                  curef: this.curef,
+                  app_no_de: this.app_no_de,
+                },
+              });
+              // console.warn(this.curef);
+            } else {
+              this.router.navigate(['/data-entry/struktur-pembiayaan'], {
+                queryParams: {
+                  curef: this.curef,
+                  app_no_de: this.app_no_de,
+                },
+              });
+            }
+          } else {
+            if (this.dataEntry.status_perkawinan === 'KAWIN') {
+              this.router.navigate(['/data-entry/pekerjaan-pasangan'], {
+                queryParams: {
+                  curef: this.curef,
+                  app_no_de: this.app_no_de,
+                },
+              });
+            } else {
+              this.router.navigate(['/data-entry/collateral'], {
+                queryParams: {
+                  curef: this.curef,
+                  app_no_de: this.app_no_de,
+                },
+              });
+            }
+          }
         },
         error() {
           alert('Gagal Menyimpan Data');

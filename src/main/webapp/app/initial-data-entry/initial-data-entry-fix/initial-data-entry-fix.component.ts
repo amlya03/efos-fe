@@ -1732,11 +1732,9 @@ export class InitialDataEntryFixComponent implements OnInit {
                   no_handphone: this.ideForm.get('no_handphone')?.value,
                   no_handphone_pasangan: this.ideForm.get('no_handphone_pasangan')?.value,
                   no_telepon: '',
+                  usia_pasangan: this.ideForm.get('usia_pasangan')?.value,
                   kode_fasilitas: this.kode_fasilitas,
                   fasilitas_name: this.fasilitas,
-                  // updated_by: '',
-                  // updated_date: '',
-                  usia_pasangan: this.ideForm.get('usia_pasangan')?.value,
                   status_harta_gono_gini: this.ideForm.get('status_harta_gono_gini')?.value,
                 })
                 .subscribe({

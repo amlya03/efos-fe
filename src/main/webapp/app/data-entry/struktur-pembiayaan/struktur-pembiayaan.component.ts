@@ -479,7 +479,7 @@ export class StrukturPembiayaanComponent implements OnInit {
           this.postId = data.result.angsuran;
           anguranStep = this.postId.unshift();
           const nilai = data.result.nilai_pembiayaan;
-          console.warn(this.postId);
+          // console.warn(this.postId);
           // console.warn(anguranStep)
           if (this.postId[0]) {
             this.showAngsuran = this.postId.map(
@@ -507,15 +507,10 @@ export class StrukturPembiayaanComponent implements OnInit {
     const kirimanpotongprogram = this.strukturForm.get('program')?.value.split('|');
     const kirimanpotongskema = this.strukturForm.get('skema')?.value.split('|');
     const kirimanjangwaktunya = this.strukturForm.get('jangka_waktu')?.value.split('|');
-    // let marginfix = this.strukturForm.get('margin')?.value.replace('Margin = ', '');
-    // let marginNon1 = marginfix.replace('Margin Tahun Ke 1 = ', '');
-    // let marginNon2 = marginNon1.replace('Margin Tahun Ke 2 = ', '');
-    // let marginnya = marginNon2.split('; ');
-    const angsurannya = this.strukturForm.get('angsuran')?.value.split('; ');
     if (this.strukturModel == null) {
       this.http
         .post<any>(this.baseUrl + 'v1/efos-de/create_struktur_pembiayaan', {
-          angsuran: angsurannya[0],
+          angsuran: this.strukturForm.get('angsuran')?.value,
           app_no_de: this.app_no_de,
           created_by: this.sessionStorageService.retrieve('sessionUserName'),
           created_date: '',
@@ -563,7 +558,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     } else {
       this.http
         .post<any>(this.baseUrl + 'v1/efos-de/update_struktur_pembiayaan', {
-          angsuran: angsurannya[0],
+          angsuran: this.strukturForm.get('angsuran')?.value,
           app_no_de: this.app_no_de,
           updated_by: this.sessionStorageService.retrieve('sessionUserName'),
           updated_date: '',
