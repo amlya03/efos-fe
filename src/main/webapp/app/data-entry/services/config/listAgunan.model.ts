@@ -3,7 +3,7 @@ export class listAgunan {
   id_collateral?: number;
   app_no_de?: string;
   curef?: string;
-  tipe_agunan?: string;
+  tipe_agunan: string | number | undefined | null;
   tipe_properti?: string;
   status_agunan?: string;
   developer?: string;

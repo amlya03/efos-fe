@@ -16,6 +16,7 @@ import { refListJumlahKaryawan } from '../services/config/refListJumlahKaryawan.
 import { refStatusSertifikat } from '../services/config/refStatusSertifikat.model';
 import { environment } from 'environments/environment';
 import { refJenisPekerjaan } from '../services/config/refJenisPekerjaan.model';
+import { modelCustomer } from 'app/initial-data-entry/services/config/modelCustomer.model';
 
 @Component({
   selector: 'jhi-call-report',
@@ -58,6 +59,7 @@ export class CallReportComponent implements OnInit {
   legalitasUsaha: any;
   cekSimpanData = 0;
   tanggalWawancara: any;
+  customerModel: modelCustomer = new modelCustomer();
 
   constructor(
     private route: ActivatedRoute,
@@ -181,6 +183,11 @@ export class CallReportComponent implements OnInit {
   load(): void {
     // /////////////////////////Ref////////////////////////////////////
     setTimeout(() => {
+      this.dataEntryService.getCustomerByCuref(this.curef).subscribe(customer => {
+        this.customerModel = customer.result;
+      });
+    }, 2);
+    setTimeout(() => {
       setTimeout(() => {
         this.dataEntryService.getListKepemilikanAgunan().subscribe(kep => {
           this.kepemilikanAgunan = kep.result;
@@ -285,7 +292,7 @@ export class CallReportComponent implements OnInit {
         ValidasiValidasiRekening.setValidators([Validators.required]);
         ValidasiEstimasiAngsuran.setValidators([Validators.required]);
 
-        if (this.daWa1.kode_fasilitas_name === 'PTA') {
+        if (this.customerModel.fasilitas_name === 'PTA') {
           ValidasiStatusAgunan.setValidators(null);
           ValidasiDokumenAgunan.setValidators(null);
           ValidasiPosisiDokumen.setValidators(null);
@@ -316,6 +323,7 @@ export class CallReportComponent implements OnInit {
             ValidasiKondisiPandemi.setValidators([Validators.required]);
             ValidasiNoKontakHr.setValidators([Validators.required]);
             ValidasiTakeHomePay.setValidators([Validators.required]);
+            // eslint-disable-next-line eqeqeq
             if (this.daWa1.joint_income == 1) {
               Validasitipe_pekerjaan_pasangan.setValidators([Validators.required]);
               Validasistatus_pekerjaan_pasangan.setValidators([Validators.required]);
@@ -358,6 +366,7 @@ export class CallReportComponent implements OnInit {
             ValidasiKondisiPandemi.setValidators(null);
             ValidasiNoKontakHr.setValidators(null);
             ValidasiTakeHomePay.setValidators(null);
+            // eslint-disable-next-line eqeqeq
             if (this.daWa1.joint_income == 1) {
               Validasitipe_pekerjaan_pasangan.setValidators([Validators.required]);
               Validasistatus_pekerjaan_pasangan.setValidators([Validators.required]);
@@ -436,6 +445,117 @@ export class CallReportComponent implements OnInit {
         this.daWa = call.result;
         if (call.result == null) {
           this.getLoading(false);
+          const retriveCallReport = {
+            alamat_tinggal: '',
+            tanggal_lahir: '',
+            status_kawin: '',
+            pendidikan: '',
+            kendaraan: '',
+            status_agunan: '',
+            catatan_status_agunan: '',
+            dokumen_agunan: '',
+            catatan_dokumen_agunan: '',
+            posisi_dokumen: '',
+            catatan_posisi_dokumen: '',
+            jenis_usaha: '',
+            lama_usaha: '',
+            tipe_pekerjaan: '',
+            status_pekerjaan: '',
+            lama_bekerja_tahun: '',
+            lama_bekerja_bulan: '',
+            jabatan_terakhir: '',
+            nama_perusahaan: '',
+            bidang_usaha: '',
+            jenis_produk: '',
+            skala_perusahaan: '',
+            tahun_berdiri_perusahaan: '',
+            alamat_perusahaan: '',
+            jumlah_karyawan: '',
+            kondisi_pandemi: '',
+            kepemilikan_usaha: '',
+            no_kontak_hr: '',
+            tipe_pekerjaan_pasangan: '',
+            status_pekerjaan_pasangan: '',
+            lama_bekerja_bulan_pasangan: '',
+            lama_bekerja_tahun_pasangan: '',
+            jabatan_terakhir_pasangan: '',
+            nama_perusahaan_pasangan: '',
+            bidang_usaha_pasangan: '',
+            skala_perusahaan_pasangan: '',
+            tahun_berdiri_perusahaan_pasangan: '',
+            alamat_perusahaan_pasangan: '',
+            jumlah_karyawan_perusahaan_pasangan: '',
+            kondisi_pandemi_perusahaan_pasangan: '',
+            no_kontak_hr_pasangan: '',
+            laba_periode_1: '',
+            laba_periode_2: '',
+            laba_periode_3: '',
+            laba_periode_4: '',
+            rata_rata_laba: '',
+            estimasi_angsuran: '',
+            validasi_rekening: '',
+            tanggal_wawancara: '',
+            take_home_pay: '',
+            keterangan: '',
+            tanggal_appraisal: '',
+          };
+          this.callReportForm.setValue(retriveCallReport);
+        } else {
+          const retriveCallReport = {
+            alamat_tinggal: this.daWa.alamat_tinggal,
+            tanggal_lahir: this.daWa.tanggal_lahir,
+            status_kawin: this.daWa.status_kawin,
+            pendidikan: this.daWa.pendidikan,
+            kendaraan: this.daWa.kendaraan,
+            status_agunan: this.daWa.status_agunan,
+            catatan_status_agunan: this.daWa.catatan_status_agunan,
+            dokumen_agunan: this.daWa.dokumen_agunan,
+            catatan_dokumen_agunan: this.daWa.catatan_dokumen_agunan,
+            posisi_dokumen: this.daWa.posisi_dokumen,
+            catatan_posisi_dokumen: this.daWa.catatan_posisi_dokumen,
+            jenis_usaha: this.daWa.jenis_usaha,
+            lama_usaha: this.daWa.lama_usaha,
+            tipe_pekerjaan: this.daWa.tipe_pekerjaan,
+            status_pekerjaan: this.daWa.status_pekerjaan,
+            lama_bekerja_tahun: this.daWa.lama_bekerja_tahun,
+            lama_bekerja_bulan: this.daWa.lama_bekerja_bulan,
+            jabatan_terakhir: this.daWa.jabatan_terakhir,
+            nama_perusahaan: this.daWa.nama_perusahaan,
+            bidang_usaha: this.daWa.bidang_usaha,
+            jenis_produk: this.daWa.jenis_produk,
+            skala_perusahaan: this.daWa.skala_perusahaan,
+            tahun_berdiri_perusahaan: this.daWa.tahun_berdiri_perusahaan,
+            alamat_perusahaan: this.daWa.alamat_perusahaan,
+            jumlah_karyawan: this.daWa.jumlah_karyawan,
+            kondisi_pandemi: this.daWa.kondisi_pandemi,
+            kepemilikan_usaha: this.daWa.kepemilikan_usaha,
+            no_kontak_hr: this.daWa.no_kontak_hr,
+            tipe_pekerjaan_pasangan: this.daWa.tipe_pekerjaan_pasangan,
+            status_pekerjaan_pasangan: this.daWa.status_pekerjaan_pasangan,
+            lama_bekerja_bulan_pasangan: this.daWa.lama_bekerja_bulan_pasangan,
+            lama_bekerja_tahun_pasangan: this.daWa.lama_bekerja_tahun_pasangan,
+            jabatan_terakhir_pasangan: this.daWa.jabatan_terakhir_pasangan,
+            nama_perusahaan_pasangan: this.daWa.nama_perusahaan_pasangan,
+            bidang_usaha_pasangan: this.daWa.bidang_usaha_pasangan,
+            skala_perusahaan_pasangan: this.daWa.skala_perusahaan_pasangan,
+            tahun_berdiri_perusahaan_pasangan: this.daWa.tahun_berdiri_perusahaan_pasangan,
+            alamat_perusahaan_pasangan: this.daWa.alamat_perusahaan_pasangan,
+            jumlah_karyawan_perusahaan_pasangan: this.daWa.jumlah_karyawan_perusahaan_pasangan,
+            kondisi_pandemi_perusahaan_pasangan: this.daWa.kondisi_pandemi_perusahaan_pasangan,
+            no_kontak_hr_pasangan: this.daWa.no_kontak_hr_pasangan,
+            laba_periode_1: this.daWa.laba_periode_1,
+            laba_periode_2: this.daWa.laba_periode_2,
+            laba_periode_3: this.daWa.laba_periode_3,
+            laba_periode_4: this.daWa.laba_periode_4,
+            rata_rata_laba: this.daWa.rata_rata_laba,
+            estimasi_angsuran: this.daWa.estimasi_angsuran,
+            validasi_rekening: this.daWa.validasi_rekening,
+            tanggal_wawancara: this.daWa.tanggal_wawancara,
+            take_home_pay: this.daWa.take_home_pay,
+            keterangan: this.daWa.keterangan,
+            tanggal_appraisal: this.daWa.tanggal_appraisal,
+          };
+          this.callReportForm.setValue(retriveCallReport);
         }
         setTimeout(() => {
           if (this.daWa1.kode_fasilitas_name === 'PTA') {
@@ -475,62 +595,6 @@ export class CallReportComponent implements OnInit {
             });
           }
         }, 80);
-
-        const retriveCallReport = {
-          alamat_tinggal: this.daWa.alamat_tinggal,
-          tanggal_lahir: this.daWa.tanggal_lahir,
-          status_kawin: this.daWa.status_kawin,
-          pendidikan: this.daWa.pendidikan,
-          kendaraan: this.daWa.kendaraan,
-          status_agunan: this.daWa.status_agunan,
-          catatan_status_agunan: this.daWa.catatan_status_agunan,
-          dokumen_agunan: this.daWa.dokumen_agunan,
-          catatan_dokumen_agunan: this.daWa.catatan_dokumen_agunan,
-          posisi_dokumen: this.daWa.posisi_dokumen,
-          catatan_posisi_dokumen: this.daWa.catatan_posisi_dokumen,
-          jenis_usaha: this.daWa.jenis_usaha,
-          lama_usaha: this.daWa.lama_usaha,
-          tipe_pekerjaan: this.daWa.tipe_pekerjaan,
-          status_pekerjaan: this.daWa.status_pekerjaan,
-          lama_bekerja_tahun: this.daWa.lama_bekerja_tahun,
-          lama_bekerja_bulan: this.daWa.lama_bekerja_bulan,
-          jabatan_terakhir: this.daWa.jabatan_terakhir,
-          nama_perusahaan: this.daWa.nama_perusahaan,
-          bidang_usaha: this.daWa.bidang_usaha,
-          jenis_produk: this.daWa.jenis_produk,
-          skala_perusahaan: this.daWa.skala_perusahaan,
-          tahun_berdiri_perusahaan: this.daWa.tahun_berdiri_perusahaan,
-          alamat_perusahaan: this.daWa.alamat_perusahaan,
-          jumlah_karyawan: this.daWa.jumlah_karyawan,
-          kondisi_pandemi: this.daWa.kondisi_pandemi,
-          kepemilikan_usaha: this.daWa.kepemilikan_usaha,
-          no_kontak_hr: this.daWa.no_kontak_hr,
-          tipe_pekerjaan_pasangan: this.daWa.tipe_pekerjaan_pasangan,
-          status_pekerjaan_pasangan: this.daWa.status_pekerjaan_pasangan,
-          lama_bekerja_bulan_pasangan: this.daWa.lama_bekerja_bulan_pasangan,
-          lama_bekerja_tahun_pasangan: this.daWa.lama_bekerja_tahun_pasangan,
-          jabatan_terakhir_pasangan: this.daWa.jabatan_terakhir_pasangan,
-          nama_perusahaan_pasangan: this.daWa.nama_perusahaan_pasangan,
-          bidang_usaha_pasangan: this.daWa.bidang_usaha_pasangan,
-          skala_perusahaan_pasangan: this.daWa.skala_perusahaan_pasangan,
-          tahun_berdiri_perusahaan_pasangan: this.daWa.tahun_berdiri_perusahaan_pasangan,
-          alamat_perusahaan_pasangan: this.daWa.alamat_perusahaan_pasangan,
-          jumlah_karyawan_perusahaan_pasangan: this.daWa.jumlah_karyawan_perusahaan_pasangan,
-          kondisi_pandemi_perusahaan_pasangan: this.daWa.kondisi_pandemi_perusahaan_pasangan,
-          no_kontak_hr_pasangan: this.daWa.no_kontak_hr_pasangan,
-          laba_periode_1: this.daWa.laba_periode_1,
-          laba_periode_2: this.daWa.laba_periode_2,
-          laba_periode_3: this.daWa.laba_periode_3,
-          laba_periode_4: this.daWa.laba_periode_4,
-          rata_rata_laba: this.daWa.rata_rata_laba,
-          estimasi_angsuran: this.daWa.estimasi_angsuran,
-          validasi_rekening: this.daWa.validasi_rekening,
-          tanggal_wawancara: this.daWa.tanggal_wawancara,
-          take_home_pay: this.daWa.take_home_pay,
-          keterangan: this.daWa.keterangan,
-          tanggal_appraisal: this.daWa.tanggal_appraisal,
-        };
-        this.callReportForm.setValue(retriveCallReport);
 
         setTimeout(() => {
           this.getLoading(false);

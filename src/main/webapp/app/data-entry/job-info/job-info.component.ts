@@ -22,6 +22,7 @@ import { refSektor } from 'app/initial-data-entry/services/config/refSektor.mode
 import { refJabatan } from 'app/verification/service/config/refJabatan.model';
 import { refJumlahKaryawan } from 'app/verification/service/config/refJumlahKaryawan.model';
 import { modelJobIde } from 'app/initial-data-entry/services/config/modelJobIde.model';
+import { modelCustomer } from 'app/initial-data-entry/services/config/modelCustomer.model';
 
 @Component({
   selector: 'jhi-job-info',
@@ -41,6 +42,7 @@ export class JobInfoComponent implements OnInit {
   app_no_de!: string;
   nampungsebelum: any;
   tampunganid: modelJobIde = new modelJobIde();
+  customerModel: modelCustomer = new modelCustomer();
   nampungdatakatagoripekerjaan: any;
   gettipeperusahaandariapi: refTipePerusahaan[] = [];
   getjenisbidangdariapi: refBidang[] = [];
@@ -173,6 +175,12 @@ export class JobInfoComponent implements OnInit {
 
   load(): void {
     setTimeout(() => {
+      this.datEntryService.getCustomerByCuref(this.curef).subscribe(customer => {
+        this.customerModel = customer.result;
+      });
+    }, 5);
+
+    setTimeout(() => {
       if (this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'BRANCHMANAGER') {
         this.jobInfoForm.disable();
         this.datajobsebelum.disable();
@@ -264,7 +272,7 @@ export class JobInfoComponent implements OnInit {
         const validasiUmurPen = <FormControl>this.jobInfoForm.get('umur_pensiun');
         const validasiBekTahun = <FormControl>this.jobInfoForm.get('lama_bekerja_tahun');
         const validasiBekBulan = <FormControl>this.jobInfoForm.get('lama_bekerja_bulan');
-        // const validasiJumKar = <FormControl>this.jobInfoForm.get('jumlah_karyawan');
+        const validasiJumKar = <FormControl>this.jobInfoForm.get('jumlah_karyawan');
         // const validasiPendapatan = <FormControl>this.jobInfoForm.get('pendapatan');
         // const validasiPendapatanLain = <FormControl>this.jobInfoForm.get('pendapatan_lain');
         // const validasiTunjangan = <FormControl>this.jobInfoForm.get('tunjangan');
@@ -288,7 +296,7 @@ export class JobInfoComponent implements OnInit {
           validasiUmurPen.setValidators([Validators.required]);
           validasiBekTahun.setValidators([Validators.required]);
           validasiBekBulan.setValidators([Validators.required]);
-          // validasiJumKar.setValidators([Validators.required]);
+          validasiJumKar.setValidators([Validators.min(5), Validators.required]);
           // validasiPendapatan.setValidators([Validators.required]);
           // validasiPendapatanLain.setValidators([Validators.required]);
           // validasiTunjangan.setValidators([Validators.required]);
@@ -311,7 +319,7 @@ export class JobInfoComponent implements OnInit {
           validasiUmurPen.setValidators(null);
           validasiBekTahun.setValidators(null);
           validasiBekBulan.setValidators(null);
-          // validasiJumKar.setValidators(null);
+          validasiJumKar.setValidators(null);
           // validasiPendapatan.setValidators(null);
           // validasiPendapatanLain.setValidators(null);
           // validasiTunjangan.setValidators(null);
@@ -334,7 +342,7 @@ export class JobInfoComponent implements OnInit {
         validasiUmurPen.updateValueAndValidity();
         validasiBekTahun.updateValueAndValidity();
         validasiBekBulan.updateValueAndValidity();
-        // validasiJumKar.updateValueAndValidity();
+        validasiJumKar.updateValueAndValidity();
         // validasiPendapatan.updateValueAndValidity();
         // validasiPendapatanLain.updateValueAndValidity();
         // validasiTunjangan.updateValueAndValidity();
@@ -569,22 +577,42 @@ export class JobInfoComponent implements OnInit {
   goto(): void {
     this.sessionStorageService.store('jobInfo', 1);
     // this.onResponseSuccess(res);
-    if (this.dataEntry.status_perkawinan === 'KAWIN') {
-      this.router.navigate(['/data-entry/data-pasangan'], {
-        queryParams: {
-          curef: this.curef,
-          app_no_de: this.app_no_de,
-        },
-      });
+    if (this.customerModel.fasilitas_name === 'PTA') {
+      if (this.dataEntry.status_perkawinan === 'KAWIN') {
+        this.router.navigate(['/data-entry/data-pasangan'], {
+          queryParams: {
+            curef: this.curef,
+            app_no_de: this.app_no_de,
+          },
+        });
 
-      // console.warn(this.curef);
+        // console.warn(this.curef);
+      } else {
+        this.router.navigate(['/data-entry/struktur-pembiayaan'], {
+          queryParams: {
+            curef: this.curef,
+            app_no_de: this.app_no_de,
+          },
+        });
+      }
     } else {
-      this.router.navigate(['/data-entry/collateral'], {
-        queryParams: {
-          curef: this.curef,
-          app_no_de: this.app_no_de,
-        },
-      });
+      if (this.dataEntry.status_perkawinan === 'KAWIN') {
+        this.router.navigate(['/data-entry/data-pasangan'], {
+          queryParams: {
+            curef: this.curef,
+            app_no_de: this.app_no_de,
+          },
+        });
+
+        // console.warn(this.curef);
+      } else {
+        this.router.navigate(['/data-entry/collateral'], {
+          queryParams: {
+            curef: this.curef,
+            app_no_de: this.app_no_de,
+          },
+        });
+      }
     }
   }
 

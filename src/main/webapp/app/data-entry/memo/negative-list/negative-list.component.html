@@ -1,0 +1,692 @@
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Pengecekan Negative List</h3>
+</div>
+<br />
+<form [formGroup]="negativeForm">
+  <div class="row">
+    <div class="col">
+      <h6 style="text-align: center">Hasil Input AO</h6>
+    </div>
+    <div class="col" style="text-align: center">
+      <h6 style="text-align: center">Terdapat Negatif List</h6>
+    </div>
+  </div>
+  <div class="row" *ngIf="contUsia > 55">
+    <div class="col">
+      <br />
+      <p></p>
+      <div class="form-group row">
+        <strong class="col-sm-4 col-form-label">Usia Pensiun Nasabah</strong>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" value="{{ jobModel.umur_pensiun }}" readonly />
+        </div>
+        <strong class="col-sm-2 col-form-label">Tahun</strong>
+        <div class="col-sm-4">
+          <button class="btn btn-info" (click)="viewData()">Lihat Data</button>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <div class="toggler">
+        <input
+          id="toggler-1"
+          formControlName="checkUsiaPensiun"
+          type="checkbox"
+          (change)="checkUsiaPensiun(negativeForm.get('checkUsiaPensiun')?.value)"
+        />
+        <label for="toggler-1">
+          <svg class="toggler-on" version="1.1" viewBox="0 0 130.2 130.2">
+            <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+          </svg>
+          <svg class="toggler-off" version="1.1" viewBox="0 0 130.2 130.2">
+            <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+            <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <br />
+      <p></p>
+      <div class="form-group row">
+        <strong class="col-sm-4 col-form-label">Hasil Slik Checking Sesuai Ketentuan</strong>
+        <div class="col-sm-8">
+          <button type="button" class="btn btn-info" (click)="openSlikContent(slikContent)">Lihat Data</button>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <div class="toggler">
+        <input id="toggler-2" formControlName="checkSlik" type="checkbox" (change)="checkSlik(negativeForm.get('checkSlik')?.value)" />
+        <label for="toggler-2">
+          <svg class="toggler-on" version="1.1" viewBox="0 0 130.2 130.2">
+            <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+          </svg>
+          <svg class="toggler-off" version="1.1" viewBox="0 0 130.2 130.2">
+            <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+            <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <br />
+      <p></p>
+      <div class="form-group row">
+        <strong class="col-sm-4 col-form-label">Hasil Dukcapil Sesuai Ketentuan</strong>
+        <div class="col-sm-5">
+          <button type="button" class="btn btn-info" (click)="openDukcapilContent(dukcapilContent)">Lihat Data</button>
+        </div>
+        <div class="col-sm-3"></div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <div class="toggler">
+        <input
+          id="toggler-3"
+          formControlName="checkDukcapil"
+          type="checkbox"
+          (change)="checkDukcapil(negativeForm.get('checkDukcapil')?.value)"
+        />
+        <label for="toggler-3">
+          <svg class="toggler-on" version="1.1" viewBox="0 0 130.2 130.2">
+            <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+          </svg>
+          <svg class="toggler-off" version="1.1" viewBox="0 0 130.2 130.2">
+            <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+            <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <br />
+      <p></p>
+      <div class="form-group row">
+        <strong class="col-sm-4 col-form-label">
+          Pekerjaan
+          <br />
+          <br />
+          <p></p>
+          Tempat Bekerja</strong
+        >
+        <div class="col-sm-5">
+          <textarea class="form-control" cols="10" rows="1" value="{{ jobModel.posisi }}" readonly></textarea>
+          <br />
+          <textarea class="form-control" cols="10" rows="1" value="{{ jobModel.nama_perusahaan }}" readonly></textarea>
+        </div>
+        <div class="col-sm-3">
+          <select class="form-control">
+            <option value="">List Negatif</option>
+            <option *ngFor="let negativeList of negativeListPekerjaan" value="{{ negativeList.deskripsi }}">
+              {{ negativeList.deskripsi }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <div class="toggler">
+        <input
+          id="toggler-4"
+          formControlName="checkPekerjaan"
+          type="checkbox"
+          (change)="checkPekerjaan(negativeForm.get('checkPekerjaan')?.value)"
+        />
+        <label for="toggler-4">
+          <svg class="toggler-on" version="1.1" viewBox="0 0 130.2 130.2">
+            <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+          </svg>
+          <svg class="toggler-off" version="1.1" viewBox="0 0 130.2 130.2">
+            <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+            <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <br />
+      <p></p>
+      <div class="form-group row">
+        <strong class="col-sm-4 col-form-label">Lama Bekerja</strong>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" value="{{ contLamaBekerja }}" readonly />
+        </div>
+        <strong class="col-sm-4 col-form-label">Bulan</strong>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <div class="toggler">
+        <input
+          id="toggler-5"
+          formControlName="checkLamaBekerja"
+          type="checkbox"
+          (change)="checkLamaBekerja(negativeForm.get('checkLamaBekerja')?.value)"
+        />
+        <label for="toggler-5">
+          <svg class="toggler-on" version="1.1" viewBox="0 0 130.2 130.2">
+            <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+          </svg>
+          <svg class="toggler-off" version="1.1" viewBox="0 0 130.2 130.2">
+            <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+            <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <br />
+      <p></p>
+      <div class="form-group row">
+        <strong class="col-sm-4 col-form-label">Kategori Tempat Bekerja / Instansi</strong>
+        <div class="col-sm-4">
+          <textarea class="form-control" cols="10" rows="1" value="{{ lembagaResponse }}" readonly></textarea>
+        </div>
+        <div class="col-sm-3">
+          <select class="form-control">
+            <option value="">List Negatif</option>
+            <option *ngFor="let negativeList of negativeListInstansi" value="{{ negativeList.deskripsi }}">
+              {{ negativeList.deskripsi }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <div class="toggler">
+        <input
+          id="toggler-6"
+          formControlName="checkInstansi"
+          type="checkbox"
+          (change)="checkInstansi(negativeForm.get('checkInstansi')?.value)"
+        />
+        <label for="toggler-6">
+          <svg class="toggler-on" version="1.1" viewBox="0 0 130.2 130.2">
+            <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+          </svg>
+          <svg class="toggler-off" version="1.1" viewBox="0 0 130.2 130.2">
+            <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+            <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <br />
+      <p></p>
+      <div class="form-group row">
+        <strong class="col-sm-4 col-form-label">Terdapat Isu Negatif Baik Terkait Perusahaan dan manajemen Tempat Bekerja</strong>
+        <div class="col-sm-8">
+          <textarea class="form-control" cols="10" rows="1" value="{{ jobModel.nama_perusahaan }}" readonly></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <div class="toggler">
+        <input id="toggler-7" formControlName="checkIsu" type="checkbox" (change)="checkIsu(negativeForm.get('checkIsu')?.value)" />
+        <label for="toggler-7">
+          <svg class="toggler-on" version="1.1" viewBox="0 0 130.2 130.2">
+            <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+          </svg>
+          <svg class="toggler-off" version="1.1" viewBox="0 0 130.2 130.2">
+            <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+            <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <br />
+      <p></p>
+      <div class="form-group row">
+        <strong class="col-sm-4 col-form-label">Seluruh Dokumen Nasabah telah diverifikasi dan distempel "Copy Sesuai Asli"</strong>
+        <div class="col-sm-8">
+          <button type="button" class="btn btn-info" (click)="openUploadDokumen()">Lihat data dimenu Upload Dokumen</button>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <div class="toggler">
+        <input
+          id="toggler-8"
+          formControlName="checkDataCopy"
+          type="checkbox"
+          (change)="checkDataCopy(negativeForm.get('checkDataCopy')?.value)"
+        />
+        <label for="toggler-8">
+          <svg class="toggler-on" version="1.1" viewBox="0 0 130.2 130.2">
+            <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+          </svg>
+          <svg class="toggler-off" version="1.1" viewBox="0 0 130.2 130.2">
+            <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+            <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <br />
+      <p></p>
+      <div class="form-group row">
+        <strong class="col-sm-4 col-form-label">Terdapat "Call Report"</strong>
+        <div class="col-sm-8">
+          <button class="btn btn-info" (click)="openCallReport()">Lihat data Call Report</button>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="text-align: center">
+      <div class="toggler">
+        <input
+          id="toggler-9"
+          formControlName="checkCallReport"
+          type="checkbox"
+          (change)="checkCallReport(negativeForm.get('checkCallReport')?.value)"
+        />
+        <label for="toggler-9">
+          <svg class="toggler-on" version="1.1" viewBox="0 0 130.2 130.2">
+            <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+          </svg>
+          <svg class="toggler-off" version="1.1" viewBox="0 0 130.2 130.2">
+            <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+            <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="d-flex justify-content-center">
+    <button type="button" class="btn btn-warning" (click)="updateStatus()">Updated Status</button>
+  </div>
+</form>
+
+<!-- Modal Untuk SLik -->
+<ng-template #slikContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Hasil Slik Nasabah</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="table-responsive">
+        <table class="table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+          <thead>
+            <tr class="table-dark">
+              <th scope="col" style="text-align: center">#</th>
+              <th scope="col" style="text-align: center">NIK</th>
+              <th scope="col" style="text-align: center">Nama Bank</th>
+              <th scope="col" style="text-align: center">Jenis Fasilitas</th>
+              <th scope="col" style="text-align: center">Sektor Ekonomi</th>
+              <th scope="col" style="text-align: center">Kol</th>
+              <th scope="col" style="text-align: center">Keterangan</th>
+              <th scope="col" style="text-align: center">Outstanding</th>
+              <th scope="col" style="text-align: center">Plafond</th>
+              <th scope="col" style="text-align: center">Angsuran</th>
+              <th scope="col" style="text-align: center">Suku Bunga</th>
+              <th scope="col" style="text-align: center">Tanggal Mulai</th>
+              <th scope="col" style="text-align: center">Tanggal Berakhir</th>
+              <th scope="col" style="text-align: center">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let slik of slikModel; index as i">
+              <th scope="row" style="text-align: center">{{ i + 1 }}</th>
+              <td style="text-align: center">{{ slik.id_number }}</td>
+              <td style="text-align: center">{{ slik.ljk_ket }}</td>
+              <td style="text-align: center">
+                {{ slik.jenis_kredit_pembiayaan_ket }}
+              </td>
+              <td style="text-align: center">
+                {{ slik.sektor_ekonomi_ket }}
+              </td>
+              <td style="text-align: center">
+                {{ slik.kualitas }}
+              </td>
+              <td style="text-align: center">
+                {{ slik.jenis_penggunaan_ket }}
+              </td>
+              <td style="text-align: center">
+                {{ slik.baki_debet | currency: 'Rp. ':'symbol':'1.0-0' }}
+              </td>
+              <td style="text-align: center">
+                {{ slik.plafon | currency: 'Rp. ':'symbol':'1.0-0' }}
+              </td>
+              <td style="text-align: center">
+                {{ slik.angsuran | currency: 'Rp. ':'symbol':'1.0-0' }}
+              </td>
+              <td style="text-align: center">{{ slik.suku_bunga_imbalan }}%</td>
+              <td style="text-align: center">
+                {{ joinTanggalMulai }}
+              </td>
+              <td style="text-align: center">
+                {{ this.joinJatuhTempoMulai }}
+              </td>
+              <td style="text-align: center">
+                {{ slik.kondisi_ket }}
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr style="background-color: #ffd966">
+              <th style="text-align: center" colspan="7">Total</th>
+              <th style="text-align: center">{{ this.totalOutNas | currency: 'Rp. ':'symbol':'1.0-0' }}</th>
+              <th style="text-align: center">{{ this.totalPlaNas | currency: 'Rp. ':'symbol':'1.0-0' }}</th>
+              <th style="text-align: center">{{ this.totalAngNas | currency: 'Rp. ':'symbol':'1.0-0' }}</th>
+              <th colspan="4"></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+<!-- Modal Untuk Dukcapil -->
+<ng-template #dukcapilContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Hasil Kesesuaian data Dukcapil</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Nama Lengkap</label>
+          <div class="col-sm-8">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Nama Lengkap"
+              id="nama1"
+              name="nama1"
+              value="{{ dataEntryModel.nama }}"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <fa-icon
+          [icon]="dukcapilModel.nama_lengkap.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+          [ngStyle]="{ color: dukcapilModel.nama_lengkap.includes('Tidak Sesuai') ? 'red' : 'green' }"
+        ></fa-icon>
+        <br />
+        <h6 [ngStyle]="{ color: dukcapilModel.nama_lengkap.includes('Tidak Sesuai') ? 'red' : 'green' }">
+          {{ dukcapilModel.nama_lengkap }}
+        </h6>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
+          <div class="col-sm-8">
+            <div class="form-row">
+              <input
+                class="form-control"
+                type="date"
+                id="tanggal_lahir"
+                name="tanggal_lahir"
+                value="{{ dataEntryModel.tanggal_lahir }}"
+                readonly
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <fa-icon
+          [icon]="dukcapilModel.tanggal_lahir.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+          [ngStyle]="{ color: dukcapilModel.tanggal_lahir.includes('Tidak Sesuai') ? 'red' : 'green' }"
+        ></fa-icon>
+        <br />
+        <h6 [ngStyle]="{ color: dukcapilModel.tanggal_lahir.includes('Tidak Sesuai') ? 'red' : 'green' }">
+          {{ dukcapilModel.tanggal_lahir }}
+        </h6>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Status Perkawinan</label>
+          <div class="col-sm-8">
+            <div class="form-group">
+              <input
+                class="form-control"
+                id="status_perkawinan"
+                name="status_perkawinan"
+                value="{{ dataEntryModel.status_perkawinan }}"
+                readonly
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <fa-icon
+          [icon]="dukcapilModel.status_kawin.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+          [ngStyle]="{ color: dukcapilModel.status_kawin.includes('Tidak Sesuai') ? 'red' : 'green' }"
+        ></fa-icon>
+        <br />
+        <h6 [ngStyle]="{ color: dukcapilModel.status_kawin.includes('Tidak Sesuai') ? 'red' : 'green' }">
+          {{ dukcapilModel.status_kawin }}
+        </h6>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Alamat KTP</label>
+          <div class="col-sm-8">
+            <textarea
+              class="form-control h-150px"
+              rows="6"
+              id="alamat_ktp"
+              name="alamat_ktp"
+              value="{{ dataEntryModel.alamat_ktp }}"
+              readonly
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <fa-icon
+          [icon]="dukcapilModel.alamat_ktp.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+          [ngStyle]="{ color: dukcapilModel.alamat_ktp.includes('Tidak Sesuai') ? 'red' : 'green' }"
+        ></fa-icon>
+        <br />
+        <h6 [ngStyle]="{ color: dukcapilModel.alamat_ktp.includes('Tidak Sesuai') ? 'red' : 'green' }">{{ dukcapilModel.alamat_ktp }}</h6>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Provinsi</label>
+          <div class="col-sm-8">
+            <div class="form-group">
+              <input class="form-control" id="provinsi_cabang" name="provinsi" value="{{ dataEntryModel.provinsi }}" readonly />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <fa-icon
+          [icon]="dukcapilModel.provinsi.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+          [ngStyle]="{ color: dukcapilModel.provinsi.includes('Tidak Sesuai') ? 'red' : 'green' }"
+        ></fa-icon>
+        <br />
+        <h6 [ngStyle]="{ color: dukcapilModel.provinsi.includes('Tidak Sesuai') ? 'red' : 'green' }">
+          {{ dukcapilModel.provinsi }}
+        </h6>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Kota</label>
+          <div class="col-sm-8">
+            <div class="form-group">
+              <input class="form-control" id="kabkota_cabang" name="kabkota" value="{{ dataEntryModel.kabkota }}" readonly />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <fa-icon
+          [icon]="dukcapilModel.kota.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+          [ngStyle]="{ color: dukcapilModel.kota.includes('Tidak Sesuai') ? 'red' : 'green' }"
+        ></fa-icon>
+        <br />
+        <h6 [ngStyle]="{ color: dukcapilModel.kota.includes('Tidak Sesuai') ? 'red' : 'green' }">
+          {{ dukcapilModel.kota }}
+        </h6>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Kecamatan</label>
+          <div class="col-sm-8">
+            <div class="form-group">
+              <input class="form-control" id="kecamatan" name="kecamatan" value="{{ dataEntryModel.kecamatan }}" readonly />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <fa-icon
+          [icon]="dukcapilModel.kecamatan.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+          [ngStyle]="{ color: dukcapilModel.kecamatan.includes('Tidak Sesuai') ? 'red' : 'green' }"
+        ></fa-icon>
+        <br />
+        <h6 [ngStyle]="{ color: dukcapilModel.kecamatan.includes('Tidak Sesuai') ? 'red' : 'green' }">
+          {{ dukcapilModel.kecamatan }}
+        </h6>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Kelurahan</label>
+          <div class="col-sm-8">
+            <div class="form-group">
+              <input class="form-control" id="kelurahan" name="kelurahan" value="{{ dataEntryModel.kelurahan }}" readonly />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <fa-icon
+          [icon]="dukcapilModel.kecamatan.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+          [ngStyle]="{ color: dukcapilModel.kecamatan.includes('Tidak Sesuai') ? 'red' : 'green' }"
+        ></fa-icon>
+        <br />
+        <h6 [ngStyle]="{ color: dukcapilModel.kecamatan.includes('Tidak Sesuai') ? 'red' : 'green' }">
+          {{ dukcapilModel.kecamatan }}
+        </h6>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">RT / RW</label>
+          <div class="col">
+            <input type="text" class="form-control" placeholder="RT" id="rt" name="rt" value="{{ dataEntryModel.rt }}" readonly />
+          </div>
+          <div class="col">RT</div>
+          <div class="col">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="RW"
+              maxlength="3"
+              id="rw"
+              name="rw"
+              value="{{ dataEntryModel.rw }}"
+              readonly
+            />
+          </div>
+          <div class="col">RW</div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <div class="row">
+          <div class="col" style="text-align: center">
+            <fa-icon
+              [icon]="dukcapilModel.rt.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+              [ngStyle]="{ color: dukcapilModel.rt.includes('Tidak Sesuai') ? 'red' : 'green' }"
+            ></fa-icon>
+            <br />
+            <h6 [ngStyle]="{ color: dukcapilModel.rt.includes('Tidak Sesuai') ? 'red' : 'green' }">
+              {{ dukcapilModel.rt }}
+            </h6>
+          </div>
+          <div class="col" style="text-align: center">
+            <fa-icon
+              [icon]="dukcapilModel.rw.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+              [ngStyle]="{ color: dukcapilModel.rw.includes('Tidak Sesuai') ? 'red' : 'green' }"
+            ></fa-icon>
+            <br />
+            <h6 [ngStyle]="{ color: dukcapilModel.rw.includes('Tidak Sesuai') ? 'red' : 'green' }">
+              {{ dukcapilModel.rw }}
+            </h6>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row form-material">
+      <div class="col">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
+          <div class="col-sm-8">
+            <div class="form-group">
+              <input class="form-control" id="jenis_kelamin" name="jenis_kelamin" value="{{ dataEntryModel.jenis_kelamin }}" readonly />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="text-align: center">
+        <fa-icon
+          [icon]="dukcapilModel.jenis_kelamin.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+          [ngStyle]="{ color: dukcapilModel.jenis_kelamin.includes('Tidak Sesuai') ? 'red' : 'green' }"
+        ></fa-icon>
+        <br />
+        <h6 [ngStyle]="{ color: dukcapilModel.jenis_kelamin.includes('Tidak Sesuai') ? 'red' : 'green' }">
+          {{ dukcapilModel.jenis_kelamin }}
+        </h6>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>

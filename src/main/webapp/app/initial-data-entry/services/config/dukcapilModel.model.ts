@@ -28,4 +28,18 @@ export class dukcapilModel {
   namaKelurahan: any;
   noRW: any;
   noRT: any;
+
+  // DUkcapil Manual
+  nama_lengkap: any;
+  status_kawin: any;
+  alamat_ktp: any;
+  provinsi: any;
+  kota: any;
+  jenis_kelamin: any;
+  kecamatan: any;
+  kelurahan: any;
+  nik: any;
+  ref_number: any;
+  rt: any;
+  rw: any;
 }

@@ -31,10 +31,6 @@ spring:
     serialization:
       indent-output: true
   datasource:
-    #    type: com.zaxxer.hikari.HikariDataSource
-    #    url: jdbc:postgresql://10.20.34.110:5432/db_newEfos
-    #    username: postgres
-    #    password: Pa$5w0rD
     url: jdbc:postgresql://10.20.34.110:5432/db_new_efos
     username: postgres
     password: Pa$5w0rD
@@ -69,6 +65,11 @@ server:
   # session:
   #   cookie:
   #     http-only: true
+  # shutdown: graceful # see https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-graceful-shutdown
+  # compression:
+  #   enabled: true
+  #   mime-types: text/html,text/xml,text/plain,text/css,application/javascript,application/json,image/svg+xml
+  #   min-response-size: 1024
 
 # ===================================================================
 # JHipster specific properties

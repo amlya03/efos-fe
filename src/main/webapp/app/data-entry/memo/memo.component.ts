@@ -106,7 +106,11 @@ export class MemoComponent implements OnInit {
           this.dataEntryModel = data.result;
           this.tampilanfixornon = data.result.kategori_pekerjaan;
           if (this.untukSessionRole === 'BRANCHMANAGER') {
-            if (this.dataEntryModel.status_perkawinan === 'BELUM KAWIN') {
+            if (
+              this.dataEntryModel.status_perkawinan === 'BELUM KAWIN' ||
+              this.dataEntryModel.status_perkawinan === 'CERAI MATI' ||
+              this.dataEntryModel.status_perkawinan === 'CERAI HIDUP'
+            ) {
               if (this.dataEntryModel.kode_fasilitas_name === 'PTA') {
                 if (personalInfo == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Personal Info!', 'error');
@@ -146,6 +150,8 @@ export class MemoComponent implements OnInit {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Personal Info!', 'error');
                 } else if (jobInfo == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Job Info!', 'error');
+                } else if (dataPas == 0) {
+                  Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Data Pasangan!', 'error');
                 } else if (strukturPemb == 0) {
                   Swal.fire('Error!', 'Mohon Cek dan Click Selanjutnya pada Struktur Pembiayaan!', 'error');
                 } else if (callReport == 0) {
@@ -194,25 +200,19 @@ export class MemoComponent implements OnInit {
 
         this.memoModel = data.result;
         setTimeout(() => {
-          for (let i = 0; i < this.memoModel.length; i++) {
-            setTimeout(() => {
-              if (this.memoModel[i].role === 'BRANCHMANAGER') {
-                this.valBM = 0;
-              } else {
-                this.valBM = 1;
-                // alert(this.valBM)
-              }
-            }, 10);
-            setTimeout(() => {
-              if (this.memoModel[i].role === 'AO') {
-                this.modelResultmemo = 0;
-                // alert(this.modelResultmemo)
-              } else {
-                this.modelResultmemo = 1;
-              }
-            }, 30);
+          if (this.memoModel.find((value: memomodel) => value.role === 'BRANCHMANAGER')) {
+            this.valBM = 0;
+          } else {
+            this.valBM = 1;
           }
         }, 10);
+        setTimeout(() => {
+          if (this.memoModel.find((value: memomodel) => value.role === 'AO')) {
+            this.modelResultmemo = 0;
+          } else {
+            this.modelResultmemo = 1;
+          }
+        }, 30);
       });
     }, 20);
   }
@@ -377,5 +377,11 @@ export class MemoComponent implements OnInit {
   public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
+  }
+
+  updatedBm(): void {
+    this.router.navigate(['/negative-list'], {
+      queryParams: { app_no_de: this.app_no_de },
+    });
   }
 }

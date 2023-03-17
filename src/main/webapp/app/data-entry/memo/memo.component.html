@@ -110,11 +110,7 @@
   </button>
   <button
     type="button"
-    *ngIf="
-      (this.untukSessionRole === 'AO' && this.modelResultmemo == 0) ||
-      (this.untukSessionRole === 'BRANCHMANAGER' && this.valBM == 0 && this.checkBM == 0) ||
-      (this.untukSessionRole === 'VER_PRE_SPV' && this.valBM == 0 && this.checkBM == 0)
-    "
+    *ngIf="this.untukSessionRole === 'AO' && this.modelResultmemo == 0"
     (click)="updatekeupload()"
     id="simpan_memo"
     name="simpan_memo"
@@ -123,6 +119,19 @@
   >
     Update Status
   </button>
+  <button
+    type="button"
+    *ngIf="
+      (this.untukSessionRole === 'BRANCHMANAGER' && this.valBM == 0 && this.checkBM == 0) ||
+      (this.untukSessionRole === 'VER_PRE_SPV' && this.valBM == 0 && this.checkBM == 0)
+    "
+    (click)="updatedBm()"
+    class="btn mb-1 btn-warning"
+  >
+    Update Status
+  </button>
+  <!-- (this.untukSessionRole === 'BRANCHMANAGER' && this.valBM == 0 && this.checkBM == 0) ||
+      (this.untukSessionRole === 'VER_PRE_SPV' && this.valBM == 0 && this.checkBM == 0) -->
   <button
     (click)="kembalikede()"
     *ngIf="

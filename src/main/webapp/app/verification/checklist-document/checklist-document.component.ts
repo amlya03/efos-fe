@@ -14,6 +14,8 @@ import { ServicesUploadDocumentService } from 'app/upload-document/services/serv
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { environment } from 'environments/environment';
 import Swal from 'sweetalert2';
+import { userModel } from 'app/komite/services/config/userModel.model';
+import { KomiteService } from 'app/komite/services/komite.service';
 
 @Component({
   selector: 'jhi-checklist-document',
@@ -53,6 +55,7 @@ export class ChecklistDocumentComponent implements OnInit {
   untukSessionRole: any;
   untukSessionFullName: any;
   untukSessionCabang: any;
+  userNya: userModel = new userModel();
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -68,7 +71,8 @@ export class ChecklistDocumentComponent implements OnInit {
     public router: Router,
     protected sessionStorageService: SessionStorageService,
     protected dataEntryService: DataEntryService,
-    protected uploadService: ServicesUploadDocumentService
+    protected uploadService: ServicesUploadDocumentService,
+    protected komiteServices: KomiteService
   ) {
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     this.activatedRoute.queryParams.subscribe(params => {
@@ -115,6 +119,15 @@ export class ChecklistDocumentComponent implements OnInit {
       next: data => {
         // console.warn('meeting head ', data.result);
         this.uploadAgunan = data.result;
+        this.getLoading(false);
+      },
+    });
+
+    // Users
+    this.komiteServices.getDataUsers(this.app_no_de).subscribe({
+      next: data => {
+        // console.warn('meeting head ', data.result);
+        this.userNya = data.result;
         this.getLoading(false);
       },
     });

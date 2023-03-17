@@ -224,11 +224,14 @@
   </div>
   <br />
   <!-- Angunan -->
-  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <div
+    [hidden]="customerModel.fasilitas_name === 'PTA'"
+    style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)"
+  >
     <h3 style="color: #fff; text-align: center">Agunan</h3>
   </div>
   <br />
-  <div class="row form-material">
+  <div class="row form-material" [hidden]="customerModel.fasilitas_name === 'PTA'">
     <div class="col">
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Status Kepemilikan Agunan</label>

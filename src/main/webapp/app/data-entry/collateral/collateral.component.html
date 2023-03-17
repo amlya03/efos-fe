@@ -302,8 +302,6 @@
             </div>
           </div>
           <!-- BRD Baru -->
-        </div>
-        <div class="col">
           <!-- CR Manrisk -->
           <div class="form-group row" *ngIf="this.collateralForm.get('tipe_agunan')?.value == 'C01'">
             <label class="col-sm-4 col-form-label">Negara Produsen</label>
@@ -333,6 +331,8 @@
             </div>
           </div>
           <!-- CR Manrisk -->
+        </div>
+        <div class="col">
           <!-- CR Manrisk -->
           <div class="form-group row" [hidden]="this.collateralForm.get('tipe_agunan')?.value == 'H01'">
             <label class="col-sm-4 col-form-label">Tahun dibangun (YYYY)</label>
@@ -1410,7 +1410,13 @@
         <td style="text-align: center" scope="col">{{ tableAgunan.tipe_agunan }}</td>
         <td style="text-align: center" scope="col">{{ tableAgunan.tanggal_terbit }}</td>
         <td style="text-align: center" scope="col">{{ tableAgunan.tipe_agunan }}</td>
-        <td style="text-align: center" scope="col">{{ tableAgunan.harga_objek | currency: 'Rp. ' }}</td>
+        <td style="text-align: center" scope="col">
+          {{
+            tableAgunan.nilai_pasar == ''
+              ? (tableAgunan.harga_objek | currency: 'Rp. ':'symbol':'1.0-0')
+              : (tableAgunan.nilai_pasar | currency: 'Rp. ':'symbol':'1.0-0')
+          }}
+        </td>
         <td style="text-align: center">
           <a type="button" (click)="gotoeditcollateral(tableAgunan.id_collateral_detail)">
             <fa-icon icon="eye"></fa-icon>

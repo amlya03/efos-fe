@@ -769,6 +769,7 @@ export class ParameterizedComponent implements OnInit {
 
   // 7
   createftpdpdetail(): void {
+    const baseUrl = this.baseUrl;
     const options = this.tablelistfasilitas.map((option: any) => {
       return `
         <option key="${option}" value="${option.id}">
@@ -803,7 +804,7 @@ export class ParameterizedComponent implements OnInit {
             hahaha = parameterValue;
             // console.warn(hahaha);
             // console.warn(parameterValue);
-            fetch(`http://10.20.34.110:8805/api/v1/efos-de/list_tipe_properti?sp=` + hahaha)
+            fetch(baseUrl + `v1/efos-de/list_tipe_properti?sp=` + hahaha)
               .then(function (response) {
                 return response.json();
               })

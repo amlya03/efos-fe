@@ -720,7 +720,6 @@
       <h6>Data Pasangan</h6>
     </a>
     <a
-      [hidden]="statusPerkawinan === 'BELUM KAWIN' || statusPerkawinan === 'CERAI MATI' || statusPerkawinan === 'CERAI HIDUP'"
       class="nav-item nav-link"
       [queryParams]="{
         curef: this.curef,
@@ -730,6 +729,12 @@
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
+      [hidden]="
+        this.modelIde.fasilitas_name === 'PTA' ||
+        statusPerkawinan === 'BELUM KAWIN' ||
+        statusPerkawinan === 'CERAI MATI' ||
+        statusPerkawinan === 'CERAI HIDUP'
+      "
     >
       <h6>Pekerjaan Pasangan</h6>
     </a>

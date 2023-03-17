@@ -45,6 +45,7 @@ import { DetailKomiteComponent } from './komite/detail-komite/detail-komite.comp
 import { HomeComponent } from './home/home.component';
 import { ParameterizedComponent } from './parameterized/parameterized.component';
 import { InputparameterscoringComponent } from './inputparameterscoring/inputparameterscoring.component';
+import { NegativeListComponent } from './data-entry/memo/negative-list/negative-list.component';
 
 @NgModule({
   imports: [
@@ -233,6 +234,10 @@ import { InputparameterscoringComponent } from './inputparameterscoring/inputpar
         {
           path: 'main-parameter-scoring',
           component: InputparameterscoringComponent,
+        },
+        {
+          path: 'negative-list',
+          component: NegativeListComponent,
         },
         {
           path: '',
