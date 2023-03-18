@@ -91,6 +91,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getLoading(true);
     this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.load();
     this.strukturForm = this.formBuilder.group({
@@ -154,8 +155,6 @@ export class StrukturPembiayaanComponent implements OnInit {
   }
 
   load(): void {
-    this.getLoading(true);
-
     setTimeout(() => {
       this.dataEntryService.getCollateralByCuref(this.curef).subscribe(coll => {
         this.responseCollateral = coll.result;
@@ -171,19 +170,19 @@ export class StrukturPembiayaanComponent implements OnInit {
           }
         }
       });
-    }, 5);
+    }, 2);
 
     setTimeout(() => {
       this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
         this.dataEntry = data.result;
       });
-    }, 10);
+    }, 4);
 
     setTimeout(() => {
       this.dataEntryService.getFetchKodeFasilitas().subscribe(data => {
         this.Kodefasilitas = data.result;
       });
-    }, 15);
+    }, 6);
 
     let modelCode: any;
     setTimeout(() => {
@@ -202,7 +201,7 @@ export class StrukturPembiayaanComponent implements OnInit {
           this.strukturForm.get('joint_income')?.setValue('1');
         }
       });
-    }, 20);
+    }, 8);
 
     setTimeout(() => {
       this.dataEntryService.getFetchStrukturDE(this.app_no_de, this.curef).subscribe(data => {
@@ -230,22 +229,22 @@ export class StrukturPembiayaanComponent implements OnInit {
             this.dataEntryService.getFetchTujuanPembiayaan(this.strukturModel.kode_fasilitas_name).subscribe(tujuanPem => {
               this.tujuanpembiayaan = tujuanPem.result;
             });
-          }, 20);
+          }, 5);
           setTimeout(() => {
             this.dataEntryService.getFetchProgramByKode(this.strukturModel.kode_fasilitas).subscribe(fasilitas => {
               this.kodeprogram = fasilitas.result;
             });
-          }, 50);
+          }, 10);
           setTimeout(() => {
             this.dataEntryService.getFetchProdukByKode(this.strukturModel.program).subscribe(program => {
               this.kodeproduk = program.result;
             });
-          }, 70);
+          }, 15);
           setTimeout(() => {
             this.dataEntryService.getFetchSkemaByKode(this.strukturModel.produk).subscribe(produk => {
               this.kodeskema = produk.result;
             });
-          }, 90);
+          }, 20);
           setTimeout(() => {
             if (this.strukturModel.skema_master == 1) {
               this.dataEntryService.getTenorFix(this.strukturModel.skema).subscribe(skemaFix => {
@@ -256,7 +255,7 @@ export class StrukturPembiayaanComponent implements OnInit {
                 this.tenor = skemaNon.result;
               });
             }
-          }, 120);
+          }, 25);
 
           let marginStep: any;
           let anguranStep: any;
@@ -271,7 +270,7 @@ export class StrukturPembiayaanComponent implements OnInit {
                 this.showMargin = marginStep.map((element: any, i: any) => ` Margin Ke ${i + 1} = ${element}`);
               });
             }
-          }, 200);
+          }, 30);
 
           setTimeout(() => {
             this.http
@@ -307,7 +306,7 @@ export class StrukturPembiayaanComponent implements OnInit {
                   }
                 },
               });
-          }, 500);
+          }, 50);
 
           setTimeout(() => {
             // /////////////////////////////////////////////////////////////////////////
@@ -333,14 +332,10 @@ export class StrukturPembiayaanComponent implements OnInit {
             this.strukturForm.setValue(retrivestrukturForm);
             this.getLoading(false);
             // /////////////////////////////////////////////////////////////////////////////
-          }, 1000);
+          }, 500);
         }
       });
     }, modelCode / 4);
-
-    // setTimeout(() => {
-    //   alert(this.strukturModel.margin)
-    // }, 2000);
   }
 
   goto(): void {
@@ -354,7 +349,6 @@ export class StrukturPembiayaanComponent implements OnInit {
   }
 
   onchangefasilitas(kodefasilitasnya: any): void {
-    this.getLoading(true);
     if (kodefasilitasnya[0] == 'U') {
       $('#uang_muka').attr('hidden', 'hidden');
       $('#siapsiap').attr('hidden', 'hidden');
@@ -364,12 +358,11 @@ export class StrukturPembiayaanComponent implements OnInit {
     }
     this.dataEntryService.getFetchProgramByKode(kodefasilitasnya[0]).subscribe({
       next: data => {
-        this.getLoading(false);
         this.kodeprogram = data.result;
       },
-      error: () => {
-        this.getLoading(false);
-      },
+      // error: () => {
+      //   //
+      // },
     });
 
     this.dataEntryService.getFetchTujuanPembiayaan(kodefasilitasnya[1]).subscribe(tujuanPem => {

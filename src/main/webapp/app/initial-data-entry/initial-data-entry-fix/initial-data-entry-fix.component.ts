@@ -25,6 +25,7 @@ import { refListJumlahKaryawan } from '../../data-entry/services/config/refListJ
 import { environment } from 'environments/environment';
 import { ServicesUploadDocumentService } from 'app/upload-document/services/services-upload-document.service';
 import Swal from 'sweetalert2';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'jhi-initial-data-entry-fix',
@@ -129,12 +130,10 @@ export class InitialDataEntryFixComponent implements OnInit {
   responseNamaWilayahJob: refJenisPekerjaan[] = [];
   // //////////////////////////////////////////
   refStatusPerkawinan?: refStatusPerkawinan[];
-  paramtanggal_lahir: string | undefined;
   kecamatan: any;
   kecamatan_pasangan: any;
   kelurahan: any;
   kelurahan_pasangan: any;
-  contohdata: any;
   daWakotaD: any;
   kecamatanD: any;
   kelurahanD: any;
@@ -734,10 +733,33 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   gotoprescreaning(): void {
+    // ////////////////// Buat Dukcapil //////////////////////////////
+    let ideResponse: modelCustomer;
+
+    const pipe = new DatePipe('en-US');
+    const datee = this.ideForm.get('tanggal_lahir')?.value;
+    const dateepasangan = this.ideForm.get('tanggal_lahir_pasangan')?.value;
+
+    const timestamp2 = pipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss');
+    const tgllahirkirim = pipe.transform(datee, 'dd-MM-yyyy');
+    const tgllahirkirimpasangan = pipe.transform(dateepasangan, 'dd-MM-yyyy');
+
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    const hour = today.getHours();
+    // today.getMinutes() <10?'0':'';
+    const menit = String(today.getMinutes()).padStart(2, '0');
+    const secon = today.getSeconds();
+    const milisecon = today.getMilliseconds();
+    const reffnumbernya = yyyy + mm + dd + hour + menit + secon + milisecon;
     const kirimPro = this.ideForm.get('provinsi')?.value.split('|');
     const kirimKota = this.ideForm.get('kabkota')?.value.split('|');
     const kirimKec = this.ideForm.get('kecamatan')?.value.split('|');
     const kirimKel = this.ideForm.get('kelurahan')?.value.split('|');
+    // ////////////////// Buat Dukcapil //////////////////////////////
+
     // ////////////////////pasangan//////////////////////////////////
     if (this.ideForm.get('status_perkawinan')?.value === 'KAWIN') {
       this.kirimProPas = this.ideForm.get('provinsi_pasangan')?.value.split('|');
@@ -780,178 +802,6 @@ export class InitialDataEntryFixComponent implements OnInit {
             } else {
               this.sendJenisBidangSebelum = this.jobForm.get('jenis_bidang_sebelum')?.value;
             }
-
-            // if (this.cekResultIde == 0) {
-            //   this.http
-            //     .post<any>(this.baseUrl + 'v1/efos-ide/create_job_info', {
-            //       alamat_pekerjaan_sebelum: this.jobForm.get('alamat_pekerjaan_sebelum')?.value,
-            //       alamat_perusahaan: this.jobForm.get('alamat_perusahaan')?.value,
-            //       barang_jasa: this.jobForm.get('barang_jasa')?.value,
-            //       bulan_berdiri: '',
-            //       bulan_berdiri_sebelum: '',
-            //       created_by: this.sessionServices.retrieve('sessionUserName'),
-            //       created_date: '',
-            //       curef: this.curef,
-            //       id: 0,
-            //       jabatan: this.jobForm.get('posisi')?.value,
-            //       jabatan_sebelum: this.jobForm.get('posisi_sebelum')?.value,
-            //       jenis_bidang: this.sendJenisBidang,
-            //       jenis_bidang_sebelum: this.sendJenisBidangSebelum,
-            //       jenis_pekerjaan: this.jobForm.get('tipe_pekerjaan')?.value,
-            //       jenis_pekerjaan_sebelum: this.jobForm.get('tipe_pekerjaan_sebelum')?.value,
-            //       jumlah_karyawan: this.jobForm.get('jumlah_karyawan')?.value,
-            //       jumlah_karyawan_sebelum: '',
-            //       kabkota: this.sendKotaJob[1],
-            //       kabkota_sebelum: '',
-            //       kategori_pekerjaan: 'Non Fix Income',
-            //       kategori_pekerjaan_sebelum: '',
-            //       kecamatan: this.sendKecJob[1],
-            //       kecamatan_sebelum: '',
-            //       kelurahan: this.sendKelJob[1],
-            //       kelurahan_sebelum: '',
-            //       kepemilikan_perusahaan: this.jobForm.get('kepemilikan_perusahaan')?.value,
-            //       kode_pos: this.jobForm.get('kode_pos')?.value,
-            //       kode_pos_sebelum: '',
-            //       lama_bekerja_bulan: this.jobForm.get('lama_bekerja_bulan')?.value,
-            //       lama_bekerja_bulan_sebelum: this.jobForm.get('lama_bekerja_bulan_sebelum')?.value,
-            //       lama_bekerja_tahun: this.jobForm.get('lama_bekerja_tahun')?.value,
-            //       lama_bekerja_tahun_sebelum: this.jobForm.get('lama_bekerja_tahun_sebelum')?.value,
-            //       nama_perusahaan: this.jobForm.get('nama_perusahaan')?.value,
-            //       nama_perusahaan_sebelum: this.jobForm.get('nama_perusahaan_sebelum')?.value,
-            //       no_siup: this.jobForm.get('no_siup')?.value,
-            //       no_telepon: this.jobForm.get('no_telepon')?.value,
-            //       npwp: this.jobForm.get('npwp')?.value,
-            //       payroll: '',
-            //       payroll_sebelum: '',
-            //       pemilik_usaha: this.jobForm.get('pemilik_usaha')?.value,
-            //       pendapatan: '',
-            //       pendapatan_lain: '',
-            //       posisi: this.jobForm.get('posisi')?.value,
-            //       posisi_sebelum: this.jobForm.get('posisi_sebelum')?.value,
-            //       provinsi: this.sendProJob[1],
-            //       provinsi_sebelum: '',
-            //       rt: this.jobForm.get('rt')?.value,
-            //       rt_sebelum: '',
-            //       rw: this.jobForm.get('rw')?.value,
-            //       rw_sebelum: '',
-            //       sektor_ekonomi: this.jobForm.get('sektor_ekonomi')?.value,
-            //       sektor_ekonomi_sebelum: this.jobForm.get('sektor_ekonomi_sebelum')?.value,
-            //       status_active: '',
-            //       tahun_berdiri: '',
-            //       tahun_berdiri_sebelum: '',
-            //       tipe_kepegawaian: '',
-            //       tipe_kepegawaian_sebelum: '',
-            //       tipe_pekerjaan: this.jobForm.get('tipe_pekerjaan')?.value,
-            //       tipe_pekerjaan_sebelum: this.jobForm.get('tipe_pekerjaan_sebelum')?.value,
-            //       tipe_perusahaan: this.jobForm.get('tipe_perusahaan')?.value,
-            //       tipe_perusahaan_sebelum: this.jobForm.get('tipe_perusahaan_sebelum')?.value,
-            //       total_pendapatan: '',
-            //       tunjangan: '',
-            //       umur_pensiun: '',
-            //       umur_pensiun_sebelum: '',
-            //     })
-            //     .subscribe({
-            //       next: data => {
-            //         this.http
-            //           .post<any>(this.baseUrl + 'v1/efos-ide/create_app_ide', {
-            //             nama: this.ideForm.get('nama')?.value,
-            //             nama_pasangan: this.ideForm.get('nama_pasangan')?.value,
-            //             kategori_pekerjaan: this.kirimKatePeker,
-            //             curef: this.curef,
-            //             jenis_kelamin: this.ideForm.get('jenis_kelamin')?.value,
-            //             jenis_kelamin_pasangan: this.ideForm.get('jenis_kelamin_pasangan')?.value,
-            //             usia: this.ideForm.get('usia')?.value,
-            //             app_no_ide: this.app_no_ide,
-            //             tanggal_lahir: this.ideForm.get('tanggal_lahir')?.value,
-            //             tanggal_lahir_pasangan: this.ideForm.get('tanggal_lahir_pasangan')?.value,
-            //             tempat_lahir: this.ideForm.get('tempat_lahir')?.value,
-            //             tempat_lahir_pasangan: this.ideForm.get('tempat_lahir_pasangan')?.value,
-            //             status_perkawinan: this.ideForm.get('status_perkawinan')?.value,
-            //             status_alamat: this.ideForm.get('status_alamat')?.value,
-            //             status_kendaraan: '',
-            //             status_ktp: this.ideForm.get('status_ktp')?.value,
-            //             status_ktp_pasangan: this.ideForm.get('status_ktp_pasangan')?.value,
-            //             status_rumah: '',
-            //             agama: this.ideForm.get('agama')?.value,
-            //             agama_pasangan: this.ideForm.get('agama_pasangan')?.value,
-            //             pendidikan: this.ideForm.get('pendidikan')?.value,
-            //             pendidikan_pasangan: this.ideForm.get('pendidikan_pasangan')?.value,
-            //             kewarganegaraan: this.ideForm.get('kewarganegaraan')?.value,
-            //             kewarganegaraan_pasangan: this.ideForm.get('kewarganegaraan_pasangan')?.value,
-            //             nama_ibu_kandung: this.ideForm.get('nama_ibu_kandung')?.value,
-            //             nama_ibu_kandung_pasangan: this.ideForm.get('nama_ibu_kandung_pasangan')?.value,
-            //             npwp: this.ideForm.get('npwp')?.value,
-            //             npwp_pasangan: this.ideForm.get('npwp_pasangan')?.value,
-            //             alamat_ktp: this.ideForm.get('alamat_ktp')?.value,
-            //             alamat_ktp_pasangan: this.ideForm.get('alamat_ktp_pasangan')?.value,
-            //             alamat_domisili: '',
-            //             provinsi: kirimPro[1],
-            //             provinsi_domisili: '',
-            //             provinsi_pasangan: this.kirimProPas[1],
-            //             kabkota: kirimKota[1],
-            //             kabkota_domisili: '',
-            //             kabkota_pasangan: this.kirimKotaPas[1],
-            //             kecamatan: kirimKec[1],
-            //             kecamatan_domisili: '',
-            //             kecamatan_pasangan: this.kirimKecPas[1],
-            //             kelurahan: kirimKel[1],
-            //             kelurahan_domisili: '',
-            //             kelurahan_pasangan: this.kirimKelPas[1],
-            //             kode_pos: this.ideForm.get('kode_pos')?.value,
-            //             kode_pos_domisili: '',
-            //             kode_pos_pasangan: this.ideForm.get('kode_pos_pasangan')?.value,
-            //             lama_menetap: '',
-            //             cabang: this.saveCabang,
-            //             created_by: this.sessionServices.retrieve('sessionUserName'),
-            //             created_date: '',
-            //             email: '',
-            //             email_pasangan: '',
-            //             id: 0,
-            //             jumlah_anak: '',
-            //             rt: this.ideForm.get('rt')?.value,
-            //             rt_domisili: '',
-            //             rt_pasangan: this.ideForm.get('rw_pasangan')?.value,
-            //             rw: this.ideForm.get('rw')?.value,
-            //             rw_domisili: '',
-            //             rw_pasangan: this.ideForm.get('rw_pasangan')?.value,
-            //             no_ktp: this.ideForm.get('no_ktp')?.value,
-            //             no_ktp_pasangan: this.ideForm.get('no_ktp_pasangan')?.value,
-            //             tanggal_terbit_ktp: this.ideForm.get('tanggal_terbit_ktp')?.value,
-            //             tanggal_terbit_ktp_pasangan: this.ideForm.get('tanggal_terbit_ktp_pasangan')?.value,
-            //             tanggal_exp_ktp: this.ideForm.get('tanggal_exp_ktp')?.value,
-            //             tanggal_exp_ktp_pasangan: this.ideForm.get('tanggal_exp_ktp_pasangan')?.value,
-            //             tipe_kendaraan: '',
-            //             no_handphone: this.ideForm.get('no_handphone')?.value,
-            //             no_handphone_pasangan: this.ideForm.get('no_handphone_pasangan')?.value,
-            //             no_telepon: '',
-            //             // updated_by: '',
-            //             // updated_date: '',
-            //             usia_pasangan: this.ideForm.get('usia_pasangan')?.value,
-            //           })
-            //           .subscribe({
-            //             next: data => {
-            //               this.contohdata = data.result.id;
-            //               this.app_no_ide = data.result.app_no_ide;
-            //               this.paramtanggal_lahir = data.result.tanggal_lahir;
-
-            //               this.router.navigate(['/hasilprescreening'], {
-            //                 queryParams: {
-            //                   kategori: this.kategori,
-            //                   id: data.result.id,
-            //                 },
-            //               });
-            //             },
-            //           });
-            //       },
-            //       error: error => {
-            //         // if (error.error.code == 400) {
-            //         alert('Gagal Menyimpan Data');
-            //         alert(error.error.message);
-            //         // }
-            //       },
-            //     });
-            // }
-            // else {
             this.http
               .post<any>(this.baseUrl + 'v1/efos-ide/update_job_info', {
                 alamat_pekerjaan_sebelum: this.jobForm.get('alamat_pekerjaan_sebelum')?.value,
@@ -1105,15 +955,108 @@ export class InitialDataEntryFixComponent implements OnInit {
                       .subscribe({
                         next: data => {
                           this.getLoading(false);
-                          this.contohdata = data.result.id;
                           this.app_no_ide = data.result.app_no_ide;
-                          this.paramtanggal_lahir = data.result.tanggal_lahir;
-                          this.router.navigate(['/hasilprescreening'], {
-                            queryParams: {
-                              kategori: this.kategori,
-                              id: this.paramId,
-                            },
-                          });
+                          ideResponse = data.result;
+
+                          this.http
+                            .post<any>(this.baseUrl + 'v1/efos-ide/dukcapil_verify', {
+                              no_id: ideResponse.app_no_ide,
+                              tanggal_lahir: ideResponse.tanggal_lahir,
+                              reffNumber: reffnumbernya,
+                              timestamp: timestamp2,
+                              channelID: 'EFOS',
+                              NIK: ideResponse.no_ktp,
+                              noKK: '',
+                              namaLengkap: ideResponse.nama,
+                              jenisKelamin: ideResponse.jenis_kelamin,
+                              tempatLahir: ideResponse.tempat_lahir,
+                              tglLahir: tgllahirkirim,
+                              createdBy: this.sessionServices.retrieve('sessionUserName'),
+                              appNoIde: ideResponse.app_no_ide,
+                              pendidikan: ideResponse.pendidikan,
+                              pekerjaan: '',
+                              statusPerkawinan: ideResponse.status_perkawinan,
+                              namaIbuKandung: ideResponse.nama_ibu_kandung,
+                              statusHubKeluarga: '',
+                              alamat: ideResponse.alamat_ktp,
+                              kodePropinsi: '',
+                              kodeKabupaten: '',
+                              kodeKecamatan: '',
+                              kodeKelurahan: '',
+                              namaPropinsi: ideResponse.provinsi,
+                              namaKabupaten: ideResponse.kabkota,
+                              namaKecamatan: ideResponse.kecamatan,
+                              namaKelurahan: ideResponse.kelurahan,
+                              noRW: ideResponse.rw,
+                              noRT: ideResponse.rt,
+                            })
+                            .subscribe({
+                              next: () => {
+                                this.http
+                                  .post<any>(this.baseUrl + 'v1/efos-ide/dukcapil_verify', {
+                                    no_id: ideResponse.app_no_ide,
+                                    tanggal_lahir: ideResponse.tanggal_lahir_pasangan,
+                                    reffNumber: reffnumbernya,
+                                    timestamp: timestamp2,
+                                    channelID: 'EFOS',
+                                    NIK: ideResponse.no_ktp_pasangan,
+                                    noKK: '',
+                                    namaLengkap: ideResponse.nama_pasangan,
+                                    jenisKelamin: ideResponse.jenis_kelamin_pasangan,
+                                    tempatLahir: ideResponse.tempat_lahir_pasangan,
+                                    tglLahir: tgllahirkirimpasangan,
+                                    createdBy: this.sessionServices.retrieve('sessionUserName'),
+                                    appNoIde: ideResponse.app_no_ide,
+                                    pendidikan: '',
+                                    pekerjaan: '',
+                                    statusPerkawinan: ideResponse.status_perkawinan,
+                                    namaIbuKandung: ideResponse.nama_ibu_kandung_pasangan,
+                                    statusHubKeluarga: '',
+                                    alamat: ideResponse.alamat_ktp_pasangan,
+                                    kodePropinsi: '',
+                                    kodeKabupaten: '',
+                                    kodeKecamatan: '',
+                                    kodeKelurahan: '',
+                                    namaPropinsi: ideResponse.provinsi_pasangan,
+                                    namaKabupaten: ideResponse.kabkota_pasangan,
+                                    namaKecamatan: ideResponse.kecamatan_pasangan,
+                                    namaKelurahan: ideResponse.kelurahan_pasangan,
+                                    noRW: ideResponse.rw_pasangan,
+                                    noRT: ideResponse.rt_pasangan,
+                                  })
+                                  .subscribe({
+                                    next: () => {
+                                      this.getLoading(false);
+                                      this.router.navigate(['/hasilprescreening'], {
+                                        queryParams: {
+                                          kategori: this.kategori,
+                                          id: this.paramId,
+                                        },
+                                      });
+                                    },
+                                    error: errResponseDukcapilPasangan => {
+                                      this.getLoading(false);
+                                      Swal.fire({
+                                        position: 'center',
+                                        icon: 'error',
+                                        title: errResponseDukcapilPasangan.result,
+                                      }).then(() => {
+                                        this.router.navigate(['/daftaraplikasiide']);
+                                      });
+                                    },
+                                  });
+                              },
+                              error: errResponseDukcapilNasabah => {
+                                this.getLoading(false);
+                                Swal.fire({
+                                  position: 'center',
+                                  icon: 'error',
+                                  title: errResponseDukcapilNasabah.result,
+                                }).then(() => {
+                                  this.router.navigate(['/daftaraplikasiide']);
+                                });
+                              },
+                            });
                         },
                         error: errKawin => {
                           Swal.fire({
@@ -1210,15 +1153,62 @@ export class InitialDataEntryFixComponent implements OnInit {
                       .subscribe({
                         next: data => {
                           this.getLoading(false);
-                          this.contohdata = data.result.id;
                           this.app_no_ide = data.result.app_no_ide;
-                          this.paramtanggal_lahir = data.result.tanggal_lahir;
-                          this.router.navigate(['/hasilprescreening'], {
-                            queryParams: {
-                              kategori: this.kategori,
-                              id: this.paramId,
-                            },
-                          });
+                          ideResponse = data.result;
+
+                          this.http
+                            .post<any>(this.baseUrl + 'v1/efos-ide/dukcapil_verify', {
+                              no_id: ideResponse.app_no_ide,
+                              tanggal_lahir: ideResponse.tanggal_lahir,
+                              reffNumber: reffnumbernya,
+                              timestamp: timestamp2,
+                              channelID: 'EFOS',
+                              NIK: ideResponse.no_ktp,
+                              noKK: '',
+                              namaLengkap: ideResponse.nama,
+                              jenisKelamin: ideResponse.jenis_kelamin,
+                              tempatLahir: ideResponse.tempat_lahir,
+                              tglLahir: tgllahirkirim,
+                              createdBy: this.sessionServices.retrieve('sessionUserName'),
+                              appNoIde: ideResponse.app_no_ide,
+                              pendidikan: ideResponse.pendidikan,
+                              pekerjaan: '',
+                              statusPerkawinan: ideResponse.status_perkawinan,
+                              namaIbuKandung: ideResponse.nama_ibu_kandung,
+                              statusHubKeluarga: '',
+                              alamat: ideResponse.alamat_ktp,
+                              kodePropinsi: '',
+                              kodeKabupaten: '',
+                              kodeKecamatan: '',
+                              kodeKelurahan: '',
+                              namaPropinsi: ideResponse.provinsi,
+                              namaKabupaten: ideResponse.kabkota,
+                              namaKecamatan: ideResponse.kecamatan,
+                              namaKelurahan: ideResponse.kelurahan,
+                              noRW: ideResponse.rw,
+                              noRT: ideResponse.rt,
+                            })
+                            .subscribe({
+                              next: () => {
+                                this.getLoading(false);
+                                this.router.navigate(['/hasilprescreening'], {
+                                  queryParams: {
+                                    kategori: this.kategori,
+                                    id: this.paramId,
+                                  },
+                                });
+                              },
+                              error: errResponseDukcapilNasabah => {
+                                this.getLoading(false);
+                                Swal.fire({
+                                  position: 'center',
+                                  icon: 'error',
+                                  title: errResponseDukcapilNasabah.result,
+                                }).then(() => {
+                                  this.router.navigate(['/daftaraplikasiide']);
+                                });
+                              },
+                            });
                         },
                         error: errLaj => {
                           Swal.fire({
@@ -1243,98 +1233,6 @@ export class InitialDataEntryFixComponent implements OnInit {
               });
             // }
           } else {
-            // if (this.cekResultIde == 0) {
-            //   this.http
-            //     .post<any>(this.baseUrl + 'v1/efos-ide/create_app_ide', {
-            //       nama: this.ideForm.get('nama')?.value,
-            //       nama_pasangan: this.ideForm.get('nama_pasangan')?.value,
-            //       kategori_pekerjaan: this.kirimKatePeker,
-            //       curef: this.curef,
-            //       jenis_kelamin: this.ideForm.get('jenis_kelamin')?.value,
-            //       jenis_kelamin_pasangan: this.ideForm.get('jenis_kelamin_pasangan')?.value,
-            //       usia: this.ideForm.get('usia')?.value,
-            //       app_no_ide: this.app_no_ide,
-            //       tanggal_lahir: this.ideForm.get('tanggal_lahir')?.value,
-            //       tanggal_lahir_pasangan: this.ideForm.get('tanggal_lahir_pasangan')?.value,
-            //       tempat_lahir: this.ideForm.get('tempat_lahir')?.value,
-            //       tempat_lahir_pasangan: this.ideForm.get('tempat_lahir_pasangan')?.value,
-            //       status_perkawinan: this.ideForm.get('status_perkawinan')?.value,
-            //       status_alamat: this.ideForm.get('status_alamat')?.value,
-            //       status_kendaraan: '',
-            //       status_ktp: this.ideForm.get('status_ktp')?.value,
-            //       status_ktp_pasangan: this.ideForm.get('status_ktp_pasangan')?.value,
-            //       status_rumah: '',
-            //       agama: this.ideForm.get('agama')?.value,
-            //       agama_pasangan: this.ideForm.get('agama_pasangan')?.value,
-            //       pendidikan: this.ideForm.get('pendidikan')?.value,
-            //       pendidikan_pasangan: this.ideForm.get('pendidikan_pasangan')?.value,
-            //       kewarganegaraan: this.ideForm.get('kewarganegaraan')?.value,
-            //       kewarganegaraan_pasangan: this.ideForm.get('kewarganegaraan_pasangan')?.value,
-            //       nama_ibu_kandung: this.ideForm.get('nama_ibu_kandung')?.value,
-            //       nama_ibu_kandung_pasangan: this.ideForm.get('nama_ibu_kandung_pasangan')?.value,
-            //       npwp: this.ideForm.get('npwp')?.value,
-            //       npwp_pasangan: this.ideForm.get('npwp_pasangan')?.value,
-            //       alamat_ktp: this.ideForm.get('alamat_ktp')?.value,
-            //       alamat_ktp_pasangan: this.ideForm.get('alamat_ktp_pasangan')?.value,
-            //       alamat_domisili: '',
-            //       provinsi: kirimPro[1],
-            //       provinsi_domisili: '',
-            //       provinsi_pasangan: this.kirimProPas[1],
-            //       kabkota: kirimKota[1],
-            //       kabkota_domisili: '',
-            //       kabkota_pasangan: this.kirimKotaPas[1],
-            //       kecamatan: kirimKec[1],
-            //       kecamatan_domisili: '',
-            //       kecamatan_pasangan: this.kirimKecPas[1],
-            //       kelurahan: kirimKel[1],
-            //       kelurahan_domisili: '',
-            //       kelurahan_pasangan: this.kirimKelPas[1],
-            //       kode_pos: this.ideForm.get('kode_pos')?.value,
-            //       kode_pos_domisili: '',
-            //       kode_pos_pasangan: this.ideForm.get('kode_pos_pasangan')?.value,
-            //       lama_menetap: '',
-            //       cabang: this.saveCabang,
-            //       created_by: this.sessionServices.retrieve('sessionUserName'),
-            //       created_date: '',
-            //       email: '',
-            //       email_pasangan: '',
-            //       id: 0,
-            //       jumlah_anak: '',
-            //       rt: this.ideForm.get('rt')?.value,
-            //       rt_domisili: '',
-            //       rt_pasangan: this.ideForm.get('rt_pasangan')?.value,
-            //       rw: this.ideForm.get('rw')?.value,
-            //       rw_domisili: '',
-            //       rw_pasangan: this.ideForm.get('rw_pasangan')?.value,
-            //       no_ktp: this.ideForm.get('no_ktp')?.value,
-            //       no_ktp_pasangan: this.ideForm.get('no_ktp_pasangan')?.value,
-            //       tanggal_terbit_ktp: this.ideForm.get('tanggal_terbit_ktp')?.value,
-            //       tanggal_terbit_ktp_pasangan: this.ideForm.get('tanggal_terbit_ktp_pasangan')?.value,
-            //       tanggal_exp_ktp: this.ideForm.get('tanggal_exp_ktp')?.value,
-            //       tanggal_exp_ktp_pasangan: this.ideForm.get('tanggal_exp_ktp_pasangan')?.value,
-            //       tipe_kendaraan: '',
-            //       no_handphone: this.ideForm.get('no_handphone')?.value,
-            //       no_handphone_pasangan: this.ideForm.get('no_handphone_pasangan')?.value,
-            //       no_telepon: '',
-            //       // updated_by: '',
-            //       // updated_date: '',
-            //       usia_pasangan: this.ideForm.get('usia_pasangan')?.value,
-            //     })
-            //     .subscribe({
-            //       next: data => {
-            //         this.contohdata = data.result.id;
-            //         this.app_no_ide = data.result.app_no_ide;
-            //         this.paramtanggal_lahir = data.result.tanggal_lahir;
-
-            //         this.router.navigate(['/hasilprescreening'], {
-            //           queryParams: {
-            //             kategori: this.kategori,
-            //             id: data.result.id,
-            //           },
-            //         });
-            //       },
-            //     });
-            // } else {
             if (this.ideForm.get('status_perkawinan')?.value === 'KAWIN') {
               this.http
                 .post<any>(this.baseUrl + 'v1/efos-ide/update_app_ide', {
@@ -1417,19 +1315,111 @@ export class InitialDataEntryFixComponent implements OnInit {
                 })
                 .subscribe({
                   next: data => {
-                    this.getLoading(false);
-                    this.contohdata = data.result.id;
                     this.app_no_ide = data.result.app_no_ide;
-                    this.paramtanggal_lahir = data.result.tanggal_lahir;
+                    ideResponse = data.result;
 
-                    this.router.navigate(['/hasilprescreening'], {
-                      queryParams: {
-                        kategori: this.kategori,
-                        id: this.paramId,
-                      },
-                    });
+                    this.http
+                      .post<any>(this.baseUrl + 'v1/efos-ide/dukcapil_verify', {
+                        no_id: ideResponse.app_no_ide,
+                        tanggal_lahir: ideResponse.tanggal_lahir,
+                        reffNumber: reffnumbernya,
+                        timestamp: timestamp2,
+                        channelID: 'EFOS',
+                        NIK: ideResponse.no_ktp,
+                        noKK: '',
+                        namaLengkap: ideResponse.nama,
+                        jenisKelamin: ideResponse.jenis_kelamin,
+                        tempatLahir: ideResponse.tempat_lahir,
+                        tglLahir: tgllahirkirim,
+                        createdBy: this.sessionServices.retrieve('sessionUserName'),
+                        appNoIde: ideResponse.app_no_ide,
+                        pendidikan: ideResponse.pendidikan,
+                        pekerjaan: '',
+                        statusPerkawinan: ideResponse.status_perkawinan,
+                        namaIbuKandung: ideResponse.nama_ibu_kandung,
+                        statusHubKeluarga: '',
+                        alamat: ideResponse.alamat_ktp,
+                        kodePropinsi: '',
+                        kodeKabupaten: '',
+                        kodeKecamatan: '',
+                        kodeKelurahan: '',
+                        namaPropinsi: ideResponse.provinsi,
+                        namaKabupaten: ideResponse.kabkota,
+                        namaKecamatan: ideResponse.kecamatan,
+                        namaKelurahan: ideResponse.kelurahan,
+                        noRW: ideResponse.rw,
+                        noRT: ideResponse.rt,
+                      })
+                      .subscribe({
+                        next: () => {
+                          this.http
+                            .post<any>(this.baseUrl + 'v1/efos-ide/dukcapil_verify', {
+                              no_id: ideResponse.app_no_ide,
+                              tanggal_lahir: ideResponse.tanggal_lahir_pasangan,
+                              reffNumber: reffnumbernya,
+                              timestamp: timestamp2,
+                              channelID: 'EFOS',
+                              NIK: ideResponse.no_ktp_pasangan,
+                              noKK: '',
+                              namaLengkap: ideResponse.nama_pasangan,
+                              jenisKelamin: ideResponse.jenis_kelamin_pasangan,
+                              tempatLahir: ideResponse.tempat_lahir_pasangan,
+                              tglLahir: tgllahirkirimpasangan,
+                              createdBy: this.sessionServices.retrieve('sessionUserName'),
+                              appNoIde: ideResponse.app_no_ide,
+                              pendidikan: '',
+                              pekerjaan: '',
+                              statusPerkawinan: ideResponse.status_perkawinan,
+                              namaIbuKandung: ideResponse.nama_ibu_kandung_pasangan,
+                              statusHubKeluarga: '',
+                              alamat: ideResponse.alamat_ktp_pasangan,
+                              kodePropinsi: '',
+                              kodeKabupaten: '',
+                              kodeKecamatan: '',
+                              kodeKelurahan: '',
+                              namaPropinsi: ideResponse.provinsi_pasangan,
+                              namaKabupaten: ideResponse.kabkota_pasangan,
+                              namaKecamatan: ideResponse.kecamatan_pasangan,
+                              namaKelurahan: ideResponse.kelurahan_pasangan,
+                              noRW: ideResponse.rw_pasangan,
+                              noRT: ideResponse.rt_pasangan,
+                            })
+                            .subscribe({
+                              next: () => {
+                                this.getLoading(false);
+                                this.router.navigate(['/hasilprescreening'], {
+                                  queryParams: {
+                                    kategori: this.kategori,
+                                    id: this.paramId,
+                                  },
+                                });
+                              },
+                              error: errResponseDukcapilPasangan => {
+                                this.getLoading(false);
+                                Swal.fire({
+                                  position: 'center',
+                                  icon: 'error',
+                                  title: errResponseDukcapilPasangan.result,
+                                }).then(() => {
+                                  this.router.navigate(['/daftaraplikasiide']);
+                                });
+                              },
+                            });
+                        },
+                        error: errResponseDukcapilNasabah => {
+                          this.getLoading(false);
+                          Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: errResponseDukcapilNasabah.result,
+                          }).then(() => {
+                            this.router.navigate(['/daftaraplikasiide']);
+                          });
+                        },
+                      });
                   },
                   error: errKaw => {
+                    this.getLoading(false);
                     Swal.fire({
                       position: 'center',
                       icon: 'error',
@@ -1437,7 +1427,6 @@ export class InitialDataEntryFixComponent implements OnInit {
                     }).then(() => {
                       this.router.navigate(['/daftaraplikasiide']);
                     });
-                    this.getLoading(false);
                   },
                 });
             } else {
@@ -1522,17 +1511,62 @@ export class InitialDataEntryFixComponent implements OnInit {
                 })
                 .subscribe({
                   next: data => {
-                    this.getLoading(false);
-                    this.contohdata = data.result.id;
                     this.app_no_ide = data.result.app_no_ide;
-                    this.paramtanggal_lahir = data.result.tanggal_lahir;
+                    ideResponse = data.result;
 
-                    this.router.navigate(['/hasilprescreening'], {
-                      queryParams: {
-                        kategori: this.kategori,
-                        id: this.paramId,
-                      },
-                    });
+                    this.http
+                      .post<any>(this.baseUrl + 'v1/efos-ide/dukcapil_verify', {
+                        no_id: ideResponse.app_no_ide,
+                        tanggal_lahir: ideResponse.tanggal_lahir,
+                        reffNumber: reffnumbernya,
+                        timestamp: timestamp2,
+                        channelID: 'EFOS',
+                        NIK: ideResponse.no_ktp,
+                        noKK: '',
+                        namaLengkap: ideResponse.nama,
+                        jenisKelamin: ideResponse.jenis_kelamin,
+                        tempatLahir: ideResponse.tempat_lahir,
+                        tglLahir: tgllahirkirim,
+                        createdBy: this.sessionServices.retrieve('sessionUserName'),
+                        appNoIde: ideResponse.app_no_ide,
+                        pendidikan: ideResponse.pendidikan,
+                        pekerjaan: '',
+                        statusPerkawinan: ideResponse.status_perkawinan,
+                        namaIbuKandung: ideResponse.nama_ibu_kandung,
+                        statusHubKeluarga: '',
+                        alamat: ideResponse.alamat_ktp,
+                        kodePropinsi: '',
+                        kodeKabupaten: '',
+                        kodeKecamatan: '',
+                        kodeKelurahan: '',
+                        namaPropinsi: ideResponse.provinsi,
+                        namaKabupaten: ideResponse.kabkota,
+                        namaKecamatan: ideResponse.kecamatan,
+                        namaKelurahan: ideResponse.kelurahan,
+                        noRW: ideResponse.rw,
+                        noRT: ideResponse.rt,
+                      })
+                      .subscribe({
+                        next: () => {
+                          this.getLoading(false);
+                          this.router.navigate(['/hasilprescreening'], {
+                            queryParams: {
+                              kategori: this.kategori,
+                              id: this.paramId,
+                            },
+                          });
+                        },
+                        error: errResponseDukcapilNasabah => {
+                          this.getLoading(false);
+                          Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: errResponseDukcapilNasabah.result,
+                          }).then(() => {
+                            this.router.navigate(['/daftaraplikasiide']);
+                          });
+                        },
+                      });
                   },
                   error: errLajang => {
                     Swal.fire({

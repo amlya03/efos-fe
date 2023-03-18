@@ -107,29 +107,6 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLoading(true);
-    this.verificationServices.postNavbar(this.sessionStorageService.retrieve('sessionRole')).subscribe({
-      next: data => {
-        this.navbarParameterize = data.result;
-        this.childNavbar = data.result[0].child;
-      },
-    });
-    // setTimeout(() => {
-    this.dataEntryServices.getFetchSemuaDataDE(this.app_no_de).subscribe(de => {
-      this.dataEntry = de.result;
-      if (de.result == null) {
-        this.statusPerkawinan = 'BELUM KAWIN';
-        this.getLoading(false);
-      } else {
-        this.statusPerkawinan = this.dataEntry.status_perkawinan;
-        this.getLoading(false);
-      }
-      this.dataEntryServices.getCustomerByCuref(this.dataEntry.curef).subscribe(customer => {
-        this.modelIde = customer.result;
-      });
-    });
-
-    // }, 5);
-
     this.entitiesNavbarItems = EntityNavbarItems;
     // this.profileService.getProfileInfo().subscribe(profileInfo => {
     //   this.inProduction = profileInfo.inProduction;
@@ -145,8 +122,31 @@ export class NavbarComponent implements OnInit {
     this.untukSessionFullName = this.sessionStorageService.retrieve('sessionFullName');
     this.untukSessionKodeCabang = this.sessionStorageService.retrieve('sessionKdCabang');
     this.sudahLogin = this.sessionStorageService.retrieve('SudahLogin');
+
     if (this.sudahLogin === null) {
       this.router.navigate(['/login']);
+      this.getLoading(false);
+    } else {
+      this.verificationServices.postNavbar(this.sessionStorageService.retrieve('sessionRole')).subscribe({
+        next: data => {
+          this.navbarParameterize = data.result;
+          this.childNavbar = data.result[0].child;
+        },
+      });
+
+      this.dataEntryServices.getFetchSemuaDataDE(this.app_no_de).subscribe(de => {
+        this.dataEntry = de.result;
+        if (de.result == null) {
+          this.statusPerkawinan = 'BELUM KAWIN';
+          this.getLoading(false);
+        } else {
+          this.statusPerkawinan = this.dataEntry.status_perkawinan;
+          this.getLoading(false);
+        }
+        this.dataEntryServices.getCustomerByCuref(this.dataEntry.curef).subscribe(customer => {
+          this.modelIde = customer.result;
+        });
+      });
     }
 
     // ADMINISTRATOR //

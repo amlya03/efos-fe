@@ -42,6 +42,7 @@ export class NegativeListComponent implements OnInit, OnDestroy {
   collateralModel: any;
   collateralResponse: listAgunan = new listAgunan();
   dukcapilModel: dukcapilModel = new dukcapilModel();
+  dukcapilModelPasangan: dukcapilModel = new dukcapilModel();
   curef: string | undefined;
   app_no_de: string | undefined;
   lembagaResponse: any;
@@ -140,12 +141,27 @@ export class NegativeListComponent implements OnInit, OnDestroy {
         // console.warn(this.dataEntryModel);
 
         // get Data Dukcapil
-        this.initialDataService.getDataDukcapil(this.dataEntryModel.no_ktp).subscribe({
-          next: dukcapil => {
-            this.dukcapilModel = dukcapil.result;
-            // console.warn('dukcapil', this.dukcapilModel)
-          },
-        });
+        if (this.dataEntryModel.status_perkawinan === 'KAWIN') {
+          this.initialDataService.getDataDukcapil(this.dataEntryModel.no_ktp).subscribe({
+            next: dukcapil => {
+              this.dukcapilModel = dukcapil.result;
+              // console.warn('dukcapil', this.dukcapilModel)
+              this.initialDataService.getDataDukcapil(this.dataEntryModel.no_ktp).subscribe({
+                next: dukcapilPasangan => {
+                  this.dukcapilModelPasangan = dukcapilPasangan.result;
+                  // console.warn('dukcapil', this.dukcapilModel)
+                },
+              });
+            },
+          });
+        } else {
+          this.initialDataService.getDataDukcapil(this.dataEntryModel.no_ktp).subscribe({
+            next: dukcapil => {
+              this.dukcapilModel = dukcapil.result;
+              // console.warn('dukcapil', this.dukcapilModel)
+            },
+          });
+        }
 
         // Get View Job Info
         this.dataEntryService.getFetchSemuaDataJob(this.dataEntryModel.curef).subscribe({

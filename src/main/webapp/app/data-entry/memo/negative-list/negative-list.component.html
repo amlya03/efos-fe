@@ -604,12 +604,12 @@
       </div>
       <div class="col" style="text-align: center">
         <fa-icon
-          [icon]="dukcapilModel.kecamatan.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
-          [ngStyle]="{ color: dukcapilModel.kecamatan.includes('Tidak Sesuai') ? 'red' : 'green' }"
+          [icon]="dukcapilModel.kelurahan.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+          [ngStyle]="{ color: dukcapilModel.kelurahan.includes('Tidak Sesuai') ? 'red' : 'green' }"
         ></fa-icon>
         <br />
-        <h6 [ngStyle]="{ color: dukcapilModel.kecamatan.includes('Tidak Sesuai') ? 'red' : 'green' }">
-          {{ dukcapilModel.kecamatan }}
+        <h6 [ngStyle]="{ color: dukcapilModel.kelurahan.includes('Tidak Sesuai') ? 'red' : 'green' }">
+          {{ dukcapilModel.kelurahan }}
         </h6>
       </div>
     </div>
@@ -683,6 +683,272 @@
         <h6 [ngStyle]="{ color: dukcapilModel.jenis_kelamin.includes('Tidak Sesuai') ? 'red' : 'green' }">
           {{ dukcapilModel.jenis_kelamin }}
         </h6>
+      </div>
+    </div>
+    <div *ngIf="dataEntryModel.status_perkawinan === 'KAWIN'">
+      <div class="row form-material">
+        <div class="col">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Nama Lengkap</label>
+            <div class="col-sm-8">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Nama Lengkap"
+                id="nama1"
+                name="nama1"
+                value="{{ dataEntryModel.nama_pasangan }}"
+                readonly
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col" style="text-align: center">
+          <fa-icon
+            [icon]="dukcapilModelPasangan.nama_lengkap.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+            [ngStyle]="{ color: dukcapilModelPasangan.nama_lengkap.includes('Tidak Sesuai') ? 'red' : 'green' }"
+          ></fa-icon>
+          <br />
+          <h6 [ngStyle]="{ color: dukcapilModelPasangan.nama_lengkap.includes('Tidak Sesuai') ? 'red' : 'green' }">
+            {{ dukcapilModelPasangan.nama_lengkap }}
+          </h6>
+        </div>
+      </div>
+      <br />
+      <div class="row form-material">
+        <div class="col">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
+            <div class="col-sm-8">
+              <div class="form-row">
+                <input
+                  class="form-control"
+                  type="date"
+                  id="tanggal_lahir"
+                  name="tanggal_lahir"
+                  value="{{ dataEntryModel.tanggal_lahir_pasangan }}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col" style="text-align: center">
+          <fa-icon
+            [icon]="dukcapilModelPasangan.tanggal_lahir.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+            [ngStyle]="{ color: dukcapilModelPasangan.tanggal_lahir.includes('Tidak Sesuai') ? 'red' : 'green' }"
+          ></fa-icon>
+          <br />
+          <h6 [ngStyle]="{ color: dukcapilModelPasangan.tanggal_lahir.includes('Tidak Sesuai') ? 'red' : 'green' }">
+            {{ dukcapilModelPasangan.tanggal_lahir }}
+          </h6>
+        </div>
+      </div>
+      <br />
+      <div class="row form-material">
+        <div class="col">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Alamat KTP</label>
+            <div class="col-sm-8">
+              <textarea
+                class="form-control h-150px"
+                rows="6"
+                id="alamat_ktp"
+                name="alamat_ktp"
+                value="{{ dataEntryModel.alamat_ktp_pasangan }}"
+                readonly
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="col" style="text-align: center">
+          <fa-icon
+            [icon]="dukcapilModelPasangan.alamat_ktp.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+            [ngStyle]="{ color: dukcapilModelPasangan.alamat_ktp.includes('Tidak Sesuai') ? 'red' : 'green' }"
+          ></fa-icon>
+          <br />
+          <h6 [ngStyle]="{ color: dukcapilModelPasangan.alamat_ktp.includes('Tidak Sesuai') ? 'red' : 'green' }">
+            {{ dukcapilModelPasangan.alamat_ktp }}
+          </h6>
+        </div>
+      </div>
+      <br />
+      <div class="row form-material">
+        <div class="col">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Provinsi</label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <input class="form-control" id="provinsi_cabang" name="provinsi" value="{{ dataEntryModel.provinsi_pasangan }}" readonly />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col" style="text-align: center">
+          <fa-icon
+            [icon]="dukcapilModelPasangan.provinsi.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+            [ngStyle]="{ color: dukcapilModelPasangan.provinsi.includes('Tidak Sesuai') ? 'red' : 'green' }"
+          ></fa-icon>
+          <br />
+          <h6 [ngStyle]="{ color: dukcapilModelPasangan.provinsi.includes('Tidak Sesuai') ? 'red' : 'green' }">
+            {{ dukcapilModelPasangan.provinsi }}
+          </h6>
+        </div>
+      </div>
+      <br />
+      <div class="row form-material">
+        <div class="col">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Kota</label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <input class="form-control" id="kabkota_cabang" name="kabkota" value="{{ dataEntryModel.kabkota_pasangan }}" readonly />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col" style="text-align: center">
+          <fa-icon
+            [icon]="dukcapilModelPasangan.kota.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+            [ngStyle]="{ color: dukcapilModelPasangan.kota.includes('Tidak Sesuai') ? 'red' : 'green' }"
+          ></fa-icon>
+          <br />
+          <h6 [ngStyle]="{ color: dukcapilModelPasangan.kota.includes('Tidak Sesuai') ? 'red' : 'green' }">
+            {{ dukcapilModelPasangan.kota }}
+          </h6>
+        </div>
+      </div>
+      <br />
+      <div class="row form-material">
+        <div class="col">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Kecamatan</label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <input class="form-control" id="kecamatan" name="kecamatan" value="{{ dataEntryModel.kecamatan_pasangan }}" readonly />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col" style="text-align: center">
+          <fa-icon
+            [icon]="dukcapilModelPasangan.kecamatan.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+            [ngStyle]="{ color: dukcapilModelPasangan.kecamatan.includes('Tidak Sesuai') ? 'red' : 'green' }"
+          ></fa-icon>
+          <br />
+          <h6 [ngStyle]="{ color: dukcapilModelPasangan.kecamatan.includes('Tidak Sesuai') ? 'red' : 'green' }">
+            {{ dukcapilModelPasangan.kecamatan }}
+          </h6>
+        </div>
+      </div>
+      <br />
+      <div class="row form-material">
+        <div class="col">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Kelurahan</label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <input class="form-control" id="kelurahan" name="kelurahan" value="{{ dataEntryModel.kelurahan_pasangan }}" readonly />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col" style="text-align: center">
+          <fa-icon
+            [icon]="dukcapilModelPasangan.kelurahan.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+            [ngStyle]="{ color: dukcapilModelPasangan.kelurahan.includes('Tidak Sesuai') ? 'red' : 'green' }"
+          ></fa-icon>
+          <br />
+          <h6 [ngStyle]="{ color: dukcapilModelPasangan.kelurahan.includes('Tidak Sesuai') ? 'red' : 'green' }">
+            {{ dukcapilModelPasangan.kelurahan }}
+          </h6>
+        </div>
+      </div>
+      <br />
+      <div class="row form-material">
+        <div class="col">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">RT / RW</label>
+            <div class="col">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="RT"
+                id="rt"
+                name="rt"
+                value="{{ dataEntryModel.rt_pasangan }}"
+                readonly
+              />
+            </div>
+            <div class="col">RT</div>
+            <div class="col">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="RW"
+                maxlength="3"
+                id="rw"
+                name="rw"
+                value="{{ dataEntryModel.rw_pasangan }}"
+                readonly
+              />
+            </div>
+            <div class="col">RW</div>
+          </div>
+        </div>
+        <div class="col" style="text-align: center">
+          <div class="row">
+            <div class="col" style="text-align: center">
+              <fa-icon
+                [icon]="dukcapilModelPasangan.rt.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+                [ngStyle]="{ color: dukcapilModelPasangan.rt.includes('Tidak Sesuai') ? 'red' : 'green' }"
+              ></fa-icon>
+              <br />
+              <h6 [ngStyle]="{ color: dukcapilModelPasangan.rt.includes('Tidak Sesuai') ? 'red' : 'green' }">
+                {{ dukcapilModelPasangan.rt }}
+              </h6>
+            </div>
+            <div class="col" style="text-align: center">
+              <fa-icon
+                [icon]="dukcapilModelPasangan.rw.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+                [ngStyle]="{ color: dukcapilModelPasangan.rw.includes('Tidak Sesuai') ? 'red' : 'green' }"
+              ></fa-icon>
+              <br />
+              <h6 [ngStyle]="{ color: dukcapilModelPasangan.rw.includes('Tidak Sesuai') ? 'red' : 'green' }">
+                {{ dukcapilModelPasangan.rw }}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="row form-material">
+        <div class="col">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <input
+                  class="form-control"
+                  id="jenis_kelamin"
+                  name="jenis_kelamin"
+                  value="{{ dataEntryModel.jenis_kelamin_pasangan }}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col" style="text-align: center">
+          <fa-icon
+            [icon]="dukcapilModelPasangan.jenis_kelamin.includes('Sesuai') ? 'circle-check' : 'circle-xmark'"
+            [ngStyle]="{ color: dukcapilModelPasangan.jenis_kelamin.includes('Tidak Sesuai') ? 'red' : 'green' }"
+          ></fa-icon>
+          <br />
+          <h6 [ngStyle]="{ color: dukcapilModelPasangan.jenis_kelamin.includes('Tidak Sesuai') ? 'red' : 'green' }">
+            {{ dukcapilModelPasangan.jenis_kelamin }}
+          </h6>
+        </div>
       </div>
     </div>
   </div>
