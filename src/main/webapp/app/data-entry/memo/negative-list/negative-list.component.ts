@@ -366,6 +366,35 @@ export class NegativeListComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: () => {
+          this.saveNegativeList();
+        },
+        error: () => {
+          this.router.navigate(['/data-entry']);
+        },
+      });
+  }
+
+  saveNegativeList(): void {
+    this.http
+      .post<any>(this.baseUrl + 'v1/efos-de/create_prescreen_bm', {
+        id: 0,
+        app_no_de: this.app_no_de,
+        checkCallReport: this.negativeForm.get('checkCallReport')?.value,
+        checkDataCopy: this.negativeForm.get('checkDataCopy')?.value,
+        checkDukcapil: this.negativeForm.get('checkDukcapil')?.value,
+        checkInstansi: this.negativeForm.get('checkInstansi')?.value,
+        checkIsu: this.negativeForm.get('checkIsu')?.value,
+        checkLamaBekerja: this.negativeForm.get('checkLamaBekerja')?.value,
+        checkPekerjaan: this.negativeForm.get('checkPekerjaan')?.value,
+        checkSlik: this.negativeForm.get('checkSlik')?.value,
+        checkUsiaPensiun: this.negativeForm.get('checkUsiaPensiun')?.value,
+        created_by: this.sessionStorageService.retrieve('sessionUserName'),
+        created_date: '',
+        updated_by: this.sessionStorageService.retrieve('sessionUserName'),
+        updated_date: '',
+      })
+      .subscribe({
+        next: () => {
           this.router.navigate(['/data-entry']);
         },
         error: () => {
