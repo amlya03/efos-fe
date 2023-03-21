@@ -1,3 +1,4 @@
+/* eslint-disable no-self-assign */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable eqeqeq */
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
@@ -282,6 +283,7 @@ export class CollateralEditComponent implements OnInit {
         value: '0',
         disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER',
       },
+      harga_transaksi: { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
       no_imb: { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
       tanggal_imb: { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
       status_sertifikat_input: { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
@@ -415,6 +417,7 @@ export class CollateralEditComponent implements OnInit {
         const ValidasiLuasTanah = <FormControl>this.editCollateralForm.get('luas_tanah');
         const ValidasiLuasBangunan = <FormControl>this.editCollateralForm.get('luas_bangunan');
         const ValidasiHargaObjek = <FormControl>this.editCollateralForm.get('harga_objek');
+        const ValidasiHargaTransaksi = <FormControl>this.editCollateralForm.get('harga_transaksi');
         const ValidasiAlamatSesuaiSertifikat = <FormControl>this.editCollateralForm.get('alamat_sesuai_sertifikat');
         const ValidasiProvinsiSesuaiSertifikat = <FormControl>this.editCollateralForm.get('provinsi_sesuai_sertifikat');
         const ValidasiKabkotaSesuaiSertifikat = <FormControl>this.editCollateralForm.get('kabkota_sesuai_sertifikat');
@@ -468,6 +471,7 @@ export class CollateralEditComponent implements OnInit {
         ValidasiLuasTanah.setValidators([Validators.required]);
         ValidasiLuasBangunan.setValidators([Validators.required]);
         ValidasiHargaObjek.setValidators([Validators.required]);
+        ValidasiHargaTransaksi.setValidators([Validators.required]);
         ValidasiAlamatSesuaiSertifikat.setValidators([Validators.required]);
         ValidasiProvinsiSesuaiSertifikat.setValidators([Validators.required]);
         ValidasiKabkotaSesuaiSertifikat.setValidators([Validators.required]);
@@ -524,6 +528,7 @@ export class CollateralEditComponent implements OnInit {
           luas_tanah: this.tableAgunan.luas_tanah,
           luas_bangunan: this.tableAgunan.luas_bangunan,
           harga_objek: this.tableAgunan.harga_objek,
+          harga_transaksi: this.tableAgunan.harga_transaksi,
           alamat_sesuai_sertifikat: this.tableAgunan.alamat_sesuai_sertifikat,
           //
           provinsi_sesuai_sertifikat: '',
@@ -761,7 +766,7 @@ export class CollateralEditComponent implements OnInit {
         nilai_likuidasi: this.editCollateralForm.get('nilai_likuidasi')?.value,
         no_imb: this.editCollateralForm.get('no_imb')?.value,
         tanggal_imb: this.editCollateralForm.get('tanggal_imb')?.value,
-
+        harga_transaksi: this.editCollateralForm.get('harga_transaksi')?.value,
         // / provinsiiiaanann
         provinsi_agunan: provinsiSplit[1],
         provinsi_sesuai_sertifikat: provSerSplit[1],
@@ -925,5 +930,9 @@ export class CollateralEditComponent implements OnInit {
   public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
+  }
+
+  setHargaObjek(hargaObjek: any): void {
+    this.editCollateralForm.get('harga_objek')?.setValue(hargaObjek);
   }
 }

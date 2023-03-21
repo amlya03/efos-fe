@@ -67,4 +67,5 @@ export class listAgunan {
   tanggal_imb: string | number | null | undefined;
   harga_transaksi: string | number | null | undefined;
   nilai_pks: string | number | null | undefined;
+  harga_objek_sertifikat: string | number | null | undefined;
 }

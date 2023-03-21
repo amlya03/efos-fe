@@ -1003,6 +1003,7 @@
                     currencyMask
                     [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
                     formControlName="nilai_pasar"
+                    (keypress)="setHargaObjek(this.collateralForm.get('nilai_pasar')?.value)"
                   />
                 </div>
                 <br />
@@ -1031,6 +1032,7 @@
                     type="tel"
                     class="form-control"
                     formControlName="nilai_pasar"
+                    (keypress)="setHargaObjek(this.collateralForm.get('nilai_pasar')?.value)"
                     currencyMask
                     [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
                   />
@@ -1060,13 +1062,14 @@
                   <input
                     type="tel"
                     class="form-control"
-                    formControlName="harga_objek"
+                    formControlName="harga_transaksi"
                     currencyMask
                     [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+                    (keypress)="setHargaObjek(this.collateralForm.get('harga_transaksi')?.value)"
                   />
                   <span
                     [hidden]="
-                      collateralForm.controls.harga_objek.valid ||
+                      collateralForm.controls.harga_transaksi.valid ||
                       this.untukSessionRole == 'BRANCHMANAGER' ||
                       this.untukSessionRole == 'VER_PRE_SPV'
                     "
@@ -1410,13 +1413,7 @@
         <td style="text-align: center" scope="col">{{ tableAgunan.tipe_agunan }}</td>
         <td style="text-align: center" scope="col">{{ tableAgunan.tanggal_terbit }}</td>
         <td style="text-align: center" scope="col">{{ tableAgunan.tipe_agunan }}</td>
-        <td style="text-align: center" scope="col">
-          {{
-            tableAgunan.nilai_pasar == ''
-              ? (tableAgunan.harga_objek | currency: 'Rp. ':'symbol':'1.0-0')
-              : (tableAgunan.nilai_pasar | currency: 'Rp. ':'symbol':'1.0-0')
-          }}
-        </td>
+        <td style="text-align: center" scope="col">{{ tableAgunan.harga_objek | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
         <td style="text-align: center">
           <a type="button" (click)="gotoeditcollateral(tableAgunan.id_collateral_detail)">
             <fa-icon icon="eye"></fa-icon>

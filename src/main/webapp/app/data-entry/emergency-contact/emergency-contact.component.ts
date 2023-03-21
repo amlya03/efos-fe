@@ -206,7 +206,6 @@ export class EmergencyContactComponent implements OnInit {
             };
             this.emergencyForm.setValue(retriveEmergency);
             setTimeout(() => {
-              this.getLoading(false);
               this.carimenggunakankodepos(this.daWa.kode_pos);
             }, 300);
           }
@@ -261,30 +260,37 @@ export class EmergencyContactComponent implements OnInit {
   }
 
   onChange(value: any): void {
+    this.getLoading(true);
     const proValue = value.split('|');
     this.datEntryService.getkabkota(proValue[0]).subscribe(data => {
       this.daWakota = data.result;
       this.emergencyForm.get('kabkota')?.setValue(this.retriveKodeKota + '|' + this.retrivekabkota);
+      this.getLoading(false);
     });
   }
 
   onChangekota(value: any): void {
+    this.getLoading(true);
     const kotaValue = value.split('|');
     this.datEntryService.getkecamatan(kotaValue[0]).subscribe(data => {
       this.kecamatan = data.result;
       this.emergencyForm.get('kecamatan')?.setValue(this.retriveKodeKecamatan + '|' + this.retrivekecamatan);
+      this.getLoading(false);
     });
   }
 
   onChangekecamatan(value: any): void {
+    this.getLoading(true);
     const kecValue = value.split('|');
     this.datEntryService.getkelurahan(kecValue[0]).subscribe(data => {
       this.kelurahan = data.result;
       this.emergencyForm.get('kelurahan')?.setValue(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
+      this.getLoading(false);
     });
   }
 
   onChangekelurahan(value: any): void {
+    this.getLoading(false);
     const datakodepos = value.split('|');
     this.daWakodepos = datakodepos[0];
     this.emergencyForm.get('kode_pos')?.setValue(this.daWakodepos);
@@ -404,6 +410,7 @@ export class EmergencyContactComponent implements OnInit {
   }
 
   carimenggunakankodepos(kodepost: any): void {
+    this.getLoading(true);
     this.datEntryService.getKdpost(kodepost).subscribe(data => {
       if (this.clickKdPost == 1) {
         this.responseKels = data.result.kels;
@@ -442,6 +449,7 @@ export class EmergencyContactComponent implements OnInit {
           this.retrivekelurahan = this.daWa.kelurahan;
           this.onChangekelurahan(this.retriveKodeKelurahan + '|' + this.retrivekelurahan);
         }
+        this.getLoading(false);
       }, 10);
       this.emergencyForm.get('provinsi')?.setValue(this.retriveKodeProvinsi + '|' + this.retriveprovinsi);
       this.onChange(this.retriveKodeProvinsi + '|' + this.retriveprovinsi);

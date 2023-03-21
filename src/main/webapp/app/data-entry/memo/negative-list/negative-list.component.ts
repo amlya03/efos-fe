@@ -8,6 +8,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { listAgunan } from 'app/data-entry/services/config/listAgunan.model';
 import { negativeList } from 'app/data-entry/services/config/negativeList.model';
+import { preScreenBm } from 'app/data-entry/services/config/preScreenBm.model';
 import { refListTipePerusahaan } from 'app/data-entry/services/config/refListTipePerusahaan.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { dukcapilModel } from 'app/initial-data-entry/services/config/dukcapilModel.model';
@@ -57,6 +58,7 @@ export class NegativeListComponent implements OnInit, OnDestroy {
   totalPasAng: any;
   joinTanggalMulai: any;
   joinJatuhTempoMulai: any;
+  modelPresreen: preScreenBm = new preScreenBm();
 
   @ViewChild(DataTableDirective)
   dtElement!: DataTableDirective;
@@ -244,6 +246,56 @@ export class NegativeListComponent implements OnInit, OnDestroy {
         this.getLoading(false);
       },
     });
+
+    this.dataEntryService.getPreScreenBM(this.app_no_de).subscribe(preScreen => {
+      this.modelPresreen = preScreen.result;
+
+      if (this.modelPresreen.checkUsiaPensiun) {
+        this.negativeForm.get('checkUsiaPensiun')?.setValue(1);
+      } else {
+        this.negativeForm.get('checkUsiaPensiun')?.setValue(1);
+      }
+      if (this.modelPresreen.checkSlik) {
+        this.negativeForm.get('checkSlik')?.setValue(1);
+      } else {
+        this.negativeForm.get('checkSlik')?.setValue(1);
+      }
+      if (this.modelPresreen.checkDukcapil) {
+        this.negativeForm.get('checkDukcapil')?.setValue(1);
+      } else {
+        this.negativeForm.get('checkDukcapil')?.setValue(1);
+      }
+      if (this.modelPresreen.checkPekerjaan) {
+        this.negativeForm.get('checkPekerjaan')?.setValue(1);
+      } else {
+        this.negativeForm.get('checkPekerjaan')?.setValue(1);
+      }
+      if (this.modelPresreen.checkLamaBekerja) {
+        this.negativeForm.get('checkLamaBekerja')?.setValue(1);
+      } else {
+        this.negativeForm.get('checkLamaBekerja')?.setValue(1);
+      }
+      if (this.modelPresreen.checkInstansi) {
+        this.negativeForm.get('checkInstansi')?.setValue(1);
+      } else {
+        this.negativeForm.get('checkInstansi')?.setValue(1);
+      }
+      if (this.modelPresreen.checkIsu) {
+        this.negativeForm.get('checkIsu')?.setValue(1);
+      } else {
+        this.negativeForm.get('checkIsu')?.setValue(1);
+      }
+      if (this.modelPresreen.checkDataCopy) {
+        this.negativeForm.get('checkDataCopy')?.setValue(1);
+      } else {
+        this.negativeForm.get('checkDataCopy')?.setValue(1);
+      }
+      if (this.modelPresreen.checkCallReport) {
+        this.negativeForm.get('checkCallReport')?.setValue(1);
+      } else {
+        this.negativeForm.get('checkCallReport')?.setValue(1);
+      }
+    });
   }
 
   public getLoading(loading: boolean): void {
@@ -366,10 +418,10 @@ export class NegativeListComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: () => {
-          this.saveNegativeList();
-        },
-        error: () => {
           this.router.navigate(['/data-entry']);
+        },
+        error(err) {
+          alert(err.error.message);
         },
       });
   }
@@ -386,7 +438,7 @@ export class NegativeListComponent implements OnInit, OnDestroy {
         checkIsu: this.negativeForm.get('checkIsu')?.value,
         checkLamaBekerja: this.negativeForm.get('checkLamaBekerja')?.value,
         checkPekerjaan: this.negativeForm.get('checkPekerjaan')?.value,
-        checkSlik: this.negativeForm.get('checkSlik')?.value,
+        checkSlik: 1,
         checkUsiaPensiun: this.negativeForm.get('checkUsiaPensiun')?.value,
         created_by: this.sessionStorageService.retrieve('sessionUserName'),
         created_date: '',
@@ -395,10 +447,10 @@ export class NegativeListComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: () => {
-          this.router.navigate(['/data-entry']);
+          this.updateStatus();
         },
-        error: () => {
-          this.router.navigate(['/data-entry']);
+        error(err) {
+          alert(err.error.message);
         },
       });
   }

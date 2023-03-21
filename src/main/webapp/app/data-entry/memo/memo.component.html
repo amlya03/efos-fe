@@ -108,6 +108,9 @@
   >
     Cetak Memo<span class="btn-icon-right"><i class="fa fa-print"></i></span>
   </button>
+  <button *ngIf="this.untukSessionRole === 'BRANCHMANAGER'" type="button" (click)="cetakDataEntry()" class="btn mb-1 btn-secondary">
+    Cetak Data Entry<span class="btn-icon-right"><i class="fa fa-print"></i></span>
+  </button>
   <button
     type="button"
     *ngIf="this.untukSessionRole === 'AO' && this.modelResultmemo == 0"

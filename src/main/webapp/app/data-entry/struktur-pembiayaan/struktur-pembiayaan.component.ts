@@ -290,10 +290,10 @@ export class StrukturPembiayaanComponent implements OnInit {
                 next: anguran => {
                   this.postId = anguran.result.angsuran;
                   // console.warn(this.postId)
-                  if (this.postId[0]) {
+                  if (this.postId[1]) {
                     this.showAngsuran = this.postId.map(
                       (value: any, i: any) =>
-                        ` Angsuran Ke ${i + 1} = ${value.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
+                        ` Angsuran Ke ${i + 1} = ${Number(value).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
                     );
                   } else {
                     anguranStep = this.postId.shift();
@@ -440,7 +440,13 @@ export class StrukturPembiayaanComponent implements OnInit {
     } else {
       this.dataEntryService.getFetchMarginStepUp(pemisahskemamaster[0]).subscribe(data => {
         const marginStep = data.result;
-        this.showMargin = 'Margin Tahun Ke 1 = ' + marginStep[0] + '; ' + 'Margin Tahun Ke 2 = ' + marginStep[1];
+        const marginFix = marginStep.unshift();
+
+        if (marginStep[1]) {
+          this.showMargin = marginStep.map((value: any, i: any) => ` Margin Ke ${i + 1} = ${Number(value)}`);
+        } else {
+          this.showMargin = 'Margin = ' + Number(marginFix);
+        }
         this.strukturForm.get('margin')?.setValue(pemisahfixr[1]);
       });
     }
@@ -474,9 +480,10 @@ export class StrukturPembiayaanComponent implements OnInit {
           const nilai = data.result.nilai_pembiayaan;
           // console.warn(this.postId);
           // console.warn(anguranStep)
-          if (this.postId[0]) {
+          if (this.postId[1]) {
             this.showAngsuran = this.postId.map(
-              (value: any, i: any) => ` Angsuran Ke ${i + 1} = ${value.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
+              (value: any, i: any) =>
+                ` Angsuran Ke ${i + 1} = ${Number(value).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
             );
           } else {
             this.showAngsuran = 'Angsuran = ' + Number(this.postId).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });

@@ -332,9 +332,9 @@ export class MemoComponent implements OnInit {
         imageUrl: '../../../content/images/bank-mega-syariah.png',
         imageHeight: 100,
         html:
-          '<div class="row"><div class="col">' +
+          '<div class="row" style="width: 100%;"><div class="col">' +
           '<br/>' +
-          '<ul><h5>Keterangan Memo :</h5><li>' +
+          '<ul style="text-align: left;"><h5>Keterangan Memo:</h5><li>' +
           '<h6 style="text-align: left;">' +
           this.detailMemoModel.keterangan +
           '</h6>' +
@@ -383,5 +383,9 @@ export class MemoComponent implements OnInit {
     this.router.navigate(['/negative-list'], {
       queryParams: { app_no_de: this.app_no_de },
     });
+  }
+
+  cetakDataEntry(): void {
+    window.open(this.baseUrl + 'v1/efos-de/downloadDocDataEntry/' + this.app_no_de);
   }
 }

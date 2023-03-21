@@ -324,6 +324,10 @@ export class CollateralComponent implements OnInit {
         { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
+      harga_transaksi: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
     });
   }
 
@@ -600,6 +604,7 @@ export class CollateralComponent implements OnInit {
         nilai_likuidasi: this.collateralForm.get('nilai_likuidasi')?.value,
         no_imb: this.collateralForm.get('no_imb')?.value,
         tanggal_imb: this.collateralForm.get('tanggal_imb')?.value,
+        harga_transaksi: this.collateralForm.get('harga_transaksi')?.value,
       })
       .subscribe({
         next() {
@@ -765,5 +770,9 @@ export class CollateralComponent implements OnInit {
   public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
+  }
+
+  setHargaObjek(hargaObjek: any): void {
+    this.collateralForm.get('harga_objek')?.setValue(hargaObjek);
   }
 }

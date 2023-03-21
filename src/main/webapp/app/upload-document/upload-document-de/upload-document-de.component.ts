@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/prefer-for-of */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -22,6 +22,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./upload-document-de.component.scss'],
 })
 export class UploadDocumentDeComponent implements OnInit, OnDestroy {
+  @Input() public isLoading: boolean | null = false;
+  @Input() isSpin: boolean | null = false;
   baseUrl: string = environment.baseUrl;
   uploadDocument: uploadDocument[] = [];
   dataEntry: fetchAllDe = new fetchAllDe();
@@ -67,6 +69,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.getLoading(true);
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -75,6 +78,11 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     };
     this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.load();
+  }
+
+  public getLoading(loading: boolean): void {
+    this.isLoading = loading;
+    this.isSpin = loading;
   }
 
   load(): void {
@@ -88,6 +96,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     this.fileUploadService.getListUploadDocument(this.curef, 'DE').subscribe(dE => {
       this.uploadDocument = dE.result;
       this.dtTrigger.next(dE.result);
+      this.getLoading(false);
     });
   }
 

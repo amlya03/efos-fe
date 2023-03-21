@@ -702,6 +702,7 @@
                 currencyMask
                 [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
                 formControlName="nilai_pasar"
+                (keypress)="setHargaObjek(this.editCollateralForm.get('nilai_pasar')?.value)"
               />
             </div>
             <br />
@@ -732,6 +733,7 @@
                 formControlName="nilai_pasar"
                 currencyMask
                 [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+                (keypress)="setHargaObjek(this.editCollateralForm.get('nilai_pasar')?.value)"
               />
             </div>
             <br />
@@ -759,13 +761,14 @@
               <input
                 type="tel"
                 class="form-control"
-                formControlName="harga_objek"
+                formControlName="harga_transaksi"
                 currencyMask
                 [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
+                (keypress)="setHargaObjek(this.editCollateralForm.get('harga_transaksi')?.value)"
               />
               <span
                 [hidden]="
-                  editCollateralForm.controls.harga_objek.valid ||
+                  editCollateralForm.controls.harga_transaksi.valid ||
                   this.untukSessionRole == 'BRANCHMANAGER' ||
                   this.untukSessionRole == 'VER_PRE_SPV'
                 "

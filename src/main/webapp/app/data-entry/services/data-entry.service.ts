@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { SessionStorageService } from 'ngx-webstorage';
 import { environment } from 'environments/environment';
+import { listAgunan } from './config/listAgunan.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +37,11 @@ export class DataEntryService {
     this.untukSessionFullName = this.sessionStorageService.retrieve('sessionFullName');
     this.untukSessionKodeCabang = this.sessionStorageService.retrieve('sessionKdCabang');
   }
+
+  // //////////////////////////// get Pre Screen BM ////////////////////////////////////////////
+  protected preScreenBM = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getPreScreenBM?sd=');
+  // //////////////////////////// get Pre Screen BM ////////////////////////////////////////////
+
   // //////////////////////////// Ref Negative List instansi ////////////////////////////////////////////
   protected list_negative_instansiUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_negative_instansi');
   // //////////////////////////// Ref Negative List instansi ////////////////////////////////////////////
@@ -647,4 +653,12 @@ export class DataEntryService {
     return this.http.get<ApiResponse>(this.fetchlistskemastepup);
   }
   // //////////////////////////// GET Skema Stepup //////////////////////////////////////////////////
+
+  updatedCollateral(model: listAgunan): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl + 'v1/efos-de/update_collateral', model);
+  }
+
+  getPreScreenBM(app_no_de: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.preScreenBM + app_no_de);
+  }
 }

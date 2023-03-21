@@ -192,7 +192,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       nama: ['', Validators.required],
       jenis_kelamin: ['', Validators.required],
       tanggal_lahir: ['', Validators.required],
-      usia: '',
+      usia: { value: '', disabled: true },
       tempat_lahir: ['', Validators.required],
       status_perkawinan: ['', Validators.required],
       agama: ['', Validators.required],
@@ -218,7 +218,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       nama_pasangan: '',
       jenis_kelamin_pasangan: { value: '', disabled: true },
       tanggal_lahir_pasangan: '',
-      usia_pasangan: '',
+      usia_pasangan: { value: '', disabled: true },
       tempat_lahir_pasangan: '',
       agama_pasangan: '',
       pendidikan_pasangan: '',
@@ -2401,6 +2401,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     this.getLoading(true);
     this.dataEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
+        console.warn(sukses);
         this.getLoading(false);
         if (this.clickKdPostLajang == 1) {
           this.responseKels = sukses.result.kels;
@@ -2501,11 +2502,10 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   submitBday(tanggal: any): void {
-    let Q4A = '';
-    const Bdate = tanggal;
-    const Bday = +new Date(Bdate);
-    Q4A += +~~((Date.now() - Bday) / 31557600000);
-    this.ideForm.get('usia')?.setValue(Q4A);
+    const DateInput = new Date(tanggal).getFullYear();
+    const DateNow = new Date().getFullYear();
+
+    this.ideForm.get('usia')?.setValue(Number(DateNow) - Number(DateInput));
 
     setTimeout(() => {
       if (
@@ -2520,11 +2520,10 @@ export class InitialDataEntryFixComponent implements OnInit {
   }
 
   submitBdayp(tanggal: any): void {
-    let Q4A = '';
-    const Bdate = tanggal;
-    const Bday = +new Date(Bdate);
-    Q4A += +~~((Date.now() - Bday) / 31557600000);
-    this.ideForm.get('usia_pasangan')?.setValue(Q4A);
+    const DateInput = new Date(tanggal).getFullYear();
+    const DateNow = new Date().getFullYear();
+
+    this.ideForm.get('usia_pasangan')?.setValue(Number(DateNow) - Number(DateInput));
 
     setTimeout(() => {
       if (this.ideForm.get('status_perkawinan')?.value === 'KAWIN' && this.ideForm.get('usia_pasangan')?.value < 18) {
