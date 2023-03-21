@@ -284,37 +284,8 @@ export class EditjobinfoComponent implements OnInit {
   }
 
   updatejobinfo(): void {
-    // contohtampungankategoripekerjaan: any // contohtampunganappde: any, // contohtampungstatuskawain: any, // contohtampungancuref: any,
-    const kategori_pekerjaan = document.getElementById('kategori_pekerjaan') as HTMLInputElement | any;
     const jenis_bidang = document.getElementById('jenis_bidang') as HTMLInputElement | any;
     const sektor_ekonomi = document.getElementById('jenis_sektor') as HTMLInputElement | any;
-    const jumlah_karyawan = document.getElementById('jumlah_karyawan') as HTMLInputElement | any;
-    const jumlah_karyawan2 = document.getElementById('jumlah_karyawan2') as HTMLInputElement | any;
-
-    // alert(pendapatan.value);
-    // alert(tunjangan.value);
-
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    const kirimanpyroljob = (<HTMLInputElement>document.getElementById('payroll')).checked;
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    const kirimanpyroljob1 = (<HTMLInputElement>document.getElementById('payroll1')).checked;
-
-    let kirimanjumlahkaryawan: any;
-    if (kategori_pekerjaan.value === 'Fix Income') {
-      kirimanjumlahkaryawan = jumlah_karyawan.value;
-    } else if (kategori_pekerjaan.value === 'Non Fix Income') {
-      kirimanjumlahkaryawan = jumlah_karyawan2.value;
-    } else {
-      kirimanjumlahkaryawan = null;
-    }
-
-    if (kirimanpyroljob == true) {
-      this.contohkirimpyrol = 1;
-    } else if (kirimanpyroljob1 == true) {
-      this.contohkirimpyrol = 0;
-    } else {
-      this.contohkirimpyrol = 9;
-    }
 
     const kirimanprovinsi = this.editJobForm.get('provinsi')?.value.split('|');
     const kirimankabkota = this.editJobForm.get('kabkota')?.value.split('|');
@@ -349,12 +320,10 @@ export class EditjobinfoComponent implements OnInit {
           id: this.datakirimanid,
           // jabatan: this.editJobForm.get('posisi')?.value,
           jenis_bidang: jenisbidangkirim,
+          sektor_ekonomi: sektor_ekonomi.value,
           jenis_pekerjaan: this.editJobForm.get('posisi')?.value,
           jumlah_karyawan: this.editJobForm.get('jumlah_karyawan')?.value,
-          kabkota: kirimankabkota[1],
           kategori_pekerjaan: this.editJob.kategori_pekerjaan,
-          kecamatan: kirimankecamatan[1],
-          kelurahan: kirimankelurahan[1],
           // nama_ibu_kandung: ' 1',
           // kepemilikan_perusahaan: npwp.value,
           kode_pos: this.editJobForm.get('kode_pos')?.value,
@@ -370,9 +339,11 @@ export class EditjobinfoComponent implements OnInit {
           pendapatan_lain: this.editJobForm.get('pendapatan_lain')?.value,
           posisi: this.editJobForm.get('posisi')?.value,
           provinsi: kirimanprovinsi[1],
+          kabkota: kirimankabkota[1],
+          kecamatan: kirimankecamatan[1],
+          kelurahan: kirimankelurahan[1],
           rt: this.editJobForm.get('rt')?.value,
           rw: this.editJobForm.get('rw')?.value,
-          sektor_ekonomi: sektor_ekonomi.value,
           tahun_berdiri: this.editJobForm.get('tahun_berdiri')?.value,
           tipe_kepegawaian: this.editJobForm.get('tipe_kepegawaian')?.value,
           tipe_pekerjaan: this.editJobForm.get('tipe_pekerjaan')?.value,

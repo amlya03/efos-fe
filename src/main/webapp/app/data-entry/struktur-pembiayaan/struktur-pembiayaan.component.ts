@@ -126,7 +126,7 @@ export class StrukturPembiayaanComponent implements OnInit {
         { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
-      harga_objek_pembiayaan: { value: '' || null, disabled: true },
+      harga_objek_pembiayaan: '',
       fee_based: [
         { value: '0' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
@@ -199,6 +199,11 @@ export class StrukturPembiayaanComponent implements OnInit {
           this.strukturForm.get('joint_income')?.setValue('0');
         } else {
           this.strukturForm.get('joint_income')?.setValue('1');
+        }
+        if (this.modelIde.fasilitas_name !== 'PTA') {
+          this.strukturForm.get('harga_objek_pembiayaan')?.disable();
+        } else {
+          this.strukturForm.get('harga_objek_pembiayaan')?.enable();
         }
       });
     }, 8);

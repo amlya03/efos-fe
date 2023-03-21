@@ -386,6 +386,10 @@ export class MemoComponent implements OnInit {
   }
 
   cetakDataEntry(): void {
-    window.open(this.baseUrl + 'v1/efos-de/downloadDocDataEntry/' + this.app_no_de);
+    if (this.dataEntryModel.kategori_pekerjaan === 'Fix Income') {
+      window.open(this.baseUrl + 'v1/efos-de/downloadDocDataEntry/' + this.app_no_de);
+    } else {
+      window.open(this.baseUrl + 'v1/efos-de/downloadDocDataEntryNonFix/' + this.app_no_de);
+    }
   }
 }
