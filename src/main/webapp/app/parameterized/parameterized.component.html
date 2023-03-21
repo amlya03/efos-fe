@@ -3,7 +3,7 @@
 </div>
 
 <div class="form-group row" [formGroup]="createform">
-  <label class="col-sm-4 col-form-label">Pilih paramete</label>
+  <label class="col-sm-4 col-form-label">Pilih parameter</label>
   <div class="col-sm-8">
     <div class="form-group">
       <select class="form-control2" id="status_perkawinan" formControlName="contoh" name="contoh">
@@ -20,8 +20,8 @@
         <option value="11">Create jabatan pemberi ket</option>
         <option value="12">Create jenis objek agunan</option>
         <option value="13">Create jenis pekerjaan</option>
-        <option value="14">Create produk</option>
         <option value="15">Create program</option>
+        <option value="14">Create produk</option>
         <option value="16">Create skema</option>
         <option value="17">Create skema fasilitas</option>
         <option value="18">Create margin tenor fix</option>
@@ -427,37 +427,6 @@
     </tbody>
   </table>
 </div>
-<!-- create produk -->
-<div *ngIf="this.createform.get('contoh')?.value === '14'">
-  <button id="tambahdata" (click)="createproduk()" type="button" class="btn btn-info">Tambah data</button>
-
-  <br />
-  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-    <h3 style="color: #fff; text-align: center">Table produk</h3>
-  </div>
-  <table class="table table-striped" datatable>
-    <thead style="background-color: #303030">
-      <tr>
-        <th scope="col" style="text-align: center; color: #fff">
-          <span>No</span>
-        </th>
-        <th scope="col" style="text-align: center; color: #fff">
-          <span>Kode Program</span>
-        </th>
-        <th scope="col" style="text-align: center; color: #fff">
-          <span>Produk</span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let tablelistproduk of tablelistproduk; index as i">
-        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
-        <td style="text-align: center" scope="col">{{ tablelistproduk.kode_program }}</td>
-        <td style="text-align: center" scope="col">{{ tablelistproduk.produk_deskripsi }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
 <!-- create program -->
 <div *ngIf="this.createform.get('contoh')?.value === '15'">
   <button id="tambahdata" (click)="createprogram()" type="button" class="btn btn-info">Tambah data</button>
@@ -497,6 +466,37 @@
         <td style="text-align: center" scope="col">{{ tablelistprogram.max_plafond | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
         <td style="text-align: center" scope="col">{{ tablelistprogram.min_plafond | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
         <td style="text-align: center" scope="col">{{ tablelistprogram.expired_date }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- create produk -->
+<div *ngIf="this.createform.get('contoh')?.value === '14'">
+  <button id="tambahdata" (click)="createproduk()" type="button" class="btn btn-info">Tambah data</button>
+
+  <br />
+  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+    <h3 style="color: #fff; text-align: center">Table produk</h3>
+  </div>
+  <table class="table table-striped" datatable>
+    <thead style="background-color: #303030">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Kode Program</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Produk</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tablelistproduk of tablelistproduk; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistproduk.kode_program }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistproduk.produk_deskripsi }}</td>
       </tr>
     </tbody>
   </table>
@@ -550,65 +550,6 @@
 <!-- create skema fasilitas -->
 <div *ngIf="this.createform.get('contoh')?.value === '17'">
   <button id="tambahdata" (click)="createskemafasilitas()" type="button" class="btn btn-info">Tambah data</button>
-
-  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-    <h3 style="color: #fff; text-align: center">Create skema fasilitas</h3>
-  </div>
-  <br />
-  <div class="form-group row">
-    <label class="col-sm-4 col-form-label"> status active</label>
-    <div class="col-sm-8">
-      <div class="form-group">
-        <select>
-          <option value="">Pilih status</option>
-          <option value="1">Aktif</option>
-          <option value="0">Tidak Aktif</option>
-        </select>
-      </div>
-      <br />
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-4 col-form-label">fasilitas</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control2" placeholder="fasilitas" id="model2" />
-      <br />
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-4 col-form-label">skema_fas_id</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control2" placeholder="skema fas id" id="model2" />
-      <br />
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-4 col-form-label">skema_id</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control2" placeholder="skema id" id="model2" />
-      <br />
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-4 col-form-label">tenor_tier</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control2" placeholder="tenor tier" id="model2" />
-      <br />
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-4 col-form-label">tier</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control2" placeholder="tier" id="model2" />
-      <br />
-    </div>
-  </div>
-  <br />
-  <br />
-  <div class="col" style="text-align: center">
-    <button class="fa fa-file-archive-o btn btn-dark" id="prosesData" name="proses" value="proses" type="button">Proses Data</button>
-  </div>
-  <br />
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
     <h3 style="color: #fff; text-align: center">Table fasilitas</h3>
   </div>
@@ -638,38 +579,7 @@
 <!-- create tenor margin fix -->
 <div *ngIf="this.createform.get('contoh')?.value === '18'">
   <button id="tambahdata" (click)="createstenormarginfix()" type="button" class="btn btn-info">Tambah data</button>
-
-  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-    <h3 style="color: #fff; text-align: center">Create tenor margin fix</h3>
-  </div>
   <br />
-  <div class="form-group row">
-    <label class="col-sm-4 col-form-label">margin</label>
-    <div class="col-sm-8">
-      <div class="form-group">
-        <input type="text" class="form-control2" placeholder="margin" id="merk2" />
-      </div>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-4 col-form-label">skema_fas_id</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control2" placeholder="skema fas id" id="model2" />
-      <br />
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-4 col-form-label">tn_code</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control2" placeholder="tn code" id="model2" />
-      <br />
-    </div>
-  </div>
-  <br />
-  <br />
-  <div class="col" style="text-align: center">
-    <button class="fa fa-file-archive-o btn btn-dark" id="prosesData" name="proses" value="proses" type="button">Proses Data</button>
-  </div>
   <br />
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
     <h3 style="color: #fff; text-align: center">Table tenor margin fix</h3>
@@ -700,37 +610,7 @@
 <!-- create tenor margin stepup -->
 <div *ngIf="this.createform.get('contoh')?.value === '19'">
   <button id="tambahdata" (click)="createstenormarginstepup()" type="button" class="btn btn-info">Tambah data</button>
-  <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-    <h3 style="color: #fff; text-align: center">Create tenor margin step up</h3>
-  </div>
   <br />
-  <div class="form-group row">
-    <label class="col-sm-4 col-form-label">margin</label>
-    <div class="col-sm-8">
-      <div class="form-group">
-        <input type="text" class="form-control2" placeholder="margin" id="merk2" />
-      </div>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-4 col-form-label">skema_fas_id</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control2" placeholder="skema fas id" id="model2" />
-      <br />
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-4 col-form-label">tn_code</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control2" placeholder="tn code" id="model2" />
-      <br />
-    </div>
-  </div>
-  <br />
-  <br />
-  <div class="col" style="text-align: center">
-    <button class="fa fa-file-archive-o btn btn-dark" id="prosesData" name="proses" value="proses" type="button">Proses Data</button>
-  </div>
   <br />
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
     <h3 style="color: #fff; text-align: center">Table tenor margin step up</h3>
