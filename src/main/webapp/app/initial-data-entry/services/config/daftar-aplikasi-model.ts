@@ -6,4 +6,5 @@ export class daftaraplikasimodelide {
   nama: any;
   kategori_pekerjaan: any;
   status_aplikasi: any;
+  status_aplikasi_desc: any;
 }
