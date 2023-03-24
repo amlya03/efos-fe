@@ -228,6 +228,30 @@
             <div *ngIf="navbar.menu_name === 'APPROVAL'">
               <span routerLink="/komite/detail-komite" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
             </div>
+            <!--untuk marameter-->
+            <!-- <div *ngIf="navbar.menu_name === 'parameterized'">
+              <span
+                routerLink="/initial-data-entryfix"
+                hidden
+                [queryParams]="{
+                  kategori: this.kategori,
+                  id: this.paramId,
+                  kode_fasilitas: this.kode_fasilitas,
+                  fasilitas: this.fasilitas
+                }"
+              ></span>
+              <span
+                routerLink="/hasilprescreening"
+                [queryParams]="{
+                  kategori: this.kategori,
+                  id: this.paramId,
+                  kode_fasilitas: this.kode_fasilitas,
+                  fasilitas: this.fasilitas
+                }"
+                hidden
+              ></span>
+            </div> -->
+            <!--untuk marameter-->
             <div *ngFor="let child of childNavbar">
               <span [routerLink]="child.link" hidden></span>
             </div>
@@ -914,5 +938,46 @@
       <h6>Parameter Scoring</h6>
     </a>
   </div>
+  <!--  untuk parameter -->
+  <!-- <div
+  *ngIf="
+    router.url ===
+      '/initial-data-entryfix?kategori=' + this.kategori + '&kode_fasilitas=' + this.kode_fasilitas + '&fasilitas=' + this.fasilitas ||
+    router.url === '/initial-data-entryfix?kategori=' + this.kategori + '&id=' + this.paramId ||
+    router.url === '/hasilprescreening?kategori=' + this.kategori + '&id=' + this.paramId
+  "
+>
+  <a
+    class="nav-item nav-link"
+    [routerLink]="'/initial-data-entryfix'"
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    *ngSwitchCase="'AO'"
+    [queryParams]="{
+      kategori: this.kategori,
+      id: this.paramId,
+      kode_fasilitas: this.kode_fasilitas,
+      fasilitas: this.fasilitas
+    }"
+  >
+    <h6>Initial Data Entry</h6>
+  </a>
+  <a
+    class="nav-item nav-link"
+    [queryParams]="{
+      kategori: this.kategori,
+      id: this.paramId,
+      kode_fasilitas: this.kode_fasilitas,
+      fasilitas: this.fasilitas
+    }"
+    routerLink="/hasilprescreening"
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    *ngSwitchCase="'AO'"
+  >
+    <h6>Hasil Pre Screening</h6>
+  </a>
+</div> -->
+  <!-- untuk parameter -->
 </nav>
 <jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>
