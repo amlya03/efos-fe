@@ -151,21 +151,21 @@ export class ParameterizedComponent implements OnInit {
     // //////////// List Akad //////////////////
     this.scoringServices.getListAkad().subscribe(akad => {
       this.modelListAkad = akad.result;
-      // console.log('ini fix' + this.modelListAkad);
+      console.log('ini fix' + this.modelListAkad);
     });
     // //////////// List Akad //////////////////
 
     // //////////// skema fix //////////////////
     this.datEntryService.getskemafix().subscribe(skema => {
       this.listskemafix = skema.result;
-      // console.log('ini fix' + this.listskemafix);
+      console.log('ini fix' + this.listskemafix);
     });
     // //////////// skema fix //////////////////
 
     // //////////// skema fix //////////////////
     this.datEntryService.getskemastepup().subscribe(skema => {
       this.listskemastepup = skema.result;
-      // console.log('ini stepup' + this.listskemastepup);
+      console.log('ini stepup' + this.listskemastepup);
     });
     // //////////// skema fix //////////////////
   }

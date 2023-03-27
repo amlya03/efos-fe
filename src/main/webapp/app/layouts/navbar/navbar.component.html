@@ -228,12 +228,6 @@
             <div *ngIf="navbar.menu_name === 'APPROVAL'">
               <span routerLink="/komite/detail-komite" [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }" hidden></span>
             </div>
-            <!--untuk parameter-->
-            <div *ngIf="navbar.menu_name === 'Parameter1'">
-              <span routerLink="/initial-data-entryfix" hidden></span>
-              <span routerLink="/hasilprescreening" hidden></span>
-            </div>
-            <!--untuk marameter-->
             <div *ngFor="let child of childNavbar">
               <span [routerLink]="child.link" hidden></span>
             </div>

@@ -345,11 +345,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Jumlah karyawan</label>
           <div class="col-sm-9">
-            <select formControlName="jumlah_karyawan" class="form-control">
-              <option *ngFor="let ListJumlahKaryawan of ListJumlahKaryawan" value="{{ ListJumlahKaryawan.deskripsi }}">
-                {{ ListJumlahKaryawan.deskripsi }}
-              </option>
-            </select>
+            <input formControlName="jumlah_karyawan" class="form-control" (keypress)="keyPressNumbers($event)" />
             <span
               [hidden]="
                 formPekerjaanPasangan.controls.jumlah_karyawan.valid ||

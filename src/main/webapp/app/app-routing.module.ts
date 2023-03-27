@@ -46,6 +46,7 @@ import { HomeComponent } from './home/home.component';
 import { ParameterizedComponent } from './parameterized/parameterized.component';
 import { InputparameterscoringComponent } from './inputparameterscoring/inputparameterscoring.component';
 import { NegativeListComponent } from './data-entry/memo/negative-list/negative-list.component';
+import { HeadAppraisalComponent } from './verification/daftar-aplikasi-isi-mapis/head-appraisal/head-appraisal.component';
 import { ParameterjobComponent } from './parameterized/parameterjob/parameterjob.component';
 import { ParameteragunanComponent } from './parameterized/parameteragunan/parameteragunan.component';
 import { ParameterstrukturComponent } from './parameterized/parameterstruktur/parameterstruktur.component';
@@ -300,6 +301,10 @@ import { ParameterhubkepemilikanagunanComponent } from './parameterized/paramete
         {
           path: 'negative-list',
           component: NegativeListComponent,
+        },
+        {
+          path: 'head-appraisal',
+          component: HeadAppraisalComponent,
         },
         {
           path: '',
