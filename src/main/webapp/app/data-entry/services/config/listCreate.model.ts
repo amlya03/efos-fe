@@ -19,4 +19,13 @@ export class listCreatemodel {
   kode_fasilitas?: any;
   fasilitas?: any;
   kode_akad: string | number | null | undefined;
+  produk_deskripsi: any;
+  kode_program: any;
+  expired_date: any;
+  min_plafond: any;
+  max_plafond: any;
+  program: any;
+  dp_min: any;
+  max_tenor: any;
+  skema_deskripsi: any;
 }

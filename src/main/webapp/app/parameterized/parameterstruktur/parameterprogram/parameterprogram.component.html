@@ -1,0 +1,40 @@
+<button id="tambahdata" (click)="createprogram()" type="button" class="btn btn-info">Tambah data</button>
+
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Table program</h3>
+</div>
+<table class="table table-striped" datatable>
+  <thead style="background-color: #303030">
+    <tr>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>No</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>Kode Fasilitas</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>Program</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>Min Platfond</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>Max Platfond</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>Expired Date</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tablelistprogram of tablelistprogram; index as i">
+      <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistprogram.kode_fasilitas }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistprogram.program }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistprogram.max_plafond | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistprogram.min_plafond | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistprogram.expired_date }}</td>
+    </tr>
+  </tbody>
+</table>

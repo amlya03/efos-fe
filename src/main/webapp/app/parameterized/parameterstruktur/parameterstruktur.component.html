@@ -1,0 +1,31 @@
+<button id="tambahdata" (click)="createfasilitas()" type="button" class="btn btn-info">Tambah data</button>
+
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Table Fasilitas</h3>
+</div>
+<table class="table table-striped" datatable>
+  <thead style="background-color: #303030">
+    <tr>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>No</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>kode_fasilitas</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>fasilitas</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>deskripsi</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tablelistfasilitas of tablelistfasilitas; index as i">
+      <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistfasilitas.kode_fasilitas }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistfasilitas.fasilitas }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistfasilitas.deskripsi }}</td>
+    </tr>
+  </tbody>
+</table>

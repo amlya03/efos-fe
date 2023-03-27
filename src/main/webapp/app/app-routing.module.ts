@@ -46,6 +46,15 @@ import { HomeComponent } from './home/home.component';
 import { ParameterizedComponent } from './parameterized/parameterized.component';
 import { InputparameterscoringComponent } from './inputparameterscoring/inputparameterscoring.component';
 import { NegativeListComponent } from './data-entry/memo/negative-list/negative-list.component';
+import { ParameterjobComponent } from './parameterized/parameterjob/parameterjob.component';
+import { ParameteragunanComponent } from './parameterized/parameteragunan/parameteragunan.component';
+import { ParameterstrukturComponent } from './parameterized/parameterstruktur/parameterstruktur.component';
+import { ParameterprogramComponent } from './parameterized/parameterstruktur/parameterprogram/parameterprogram.component';
+import { ParameterprodukComponent } from './parameterized/parameterstruktur/parameterproduk/parameterproduk.component';
+import { ParameterskemaComponent } from './parameterized/parameterstruktur/parameterskema/parameterskema.component';
+import { ParameterskemafasilitasComponent } from './parameterized/parameterstruktur/parameterskemafasilitas/parameterskemafasilitas.component';
+import { ParametermarginfixComponent } from './parameterized/parameterstruktur/parametermarginfix/parametermarginfix.component';
+import { ParametermarginstepupComponent } from './parameterized/parameterstruktur/parametermarginstepup/parametermarginstepup.component';
 
 @NgModule({
   imports: [
@@ -231,6 +240,43 @@ import { NegativeListComponent } from './data-entry/memo/negative-list/negative-
           path: 'parameterized',
           component: ParameterizedComponent,
         },
+        {
+          path: 'parameterjob',
+          component: ParameterjobComponent,
+        },
+        {
+          path: 'parameteragunan',
+          component: ParameteragunanComponent,
+        },
+        {
+          path: 'parameterstruktur',
+          component: ParameterstrukturComponent,
+        },
+        {
+          path: 'parameterstrukturprogram',
+          component: ParameterprogramComponent,
+        },
+        {
+          path: 'parameterstrukturproduk',
+          component: ParameterprodukComponent,
+        },
+        {
+          path: 'parameterstrukturskema',
+          component: ParameterskemaComponent,
+        },
+        {
+          path: 'parameterstrukturskemafasilitas',
+          component: ParameterskemafasilitasComponent,
+        },
+        {
+          path: 'parameterstrukturmarginfix',
+          component: ParametermarginfixComponent,
+        },
+        {
+          path: 'parameterstrukturmarginstepup',
+          component: ParametermarginstepupComponent,
+        },
+
         {
           path: 'main-parameter-scoring',
           component: InputparameterscoringComponent,

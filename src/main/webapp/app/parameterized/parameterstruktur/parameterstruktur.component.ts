@@ -1,0 +1,124 @@
+import { Component, OnInit } from '@angular/core';
+import { DataEntryService } from 'app/data-entry/services/data-entry.service';
+import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model';
+import Swal from 'sweetalert2';
+import { environment } from 'environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+@Component({
+  selector: 'jhi-parameterstruktur',
+  templateUrl: './parameterstruktur.component.html',
+  styleUrls: ['./parameterstruktur.component.scss'],
+})
+export class ParameterstrukturComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
+
+  tablelistfasilitas: listCreatemodel[] = [];
+  constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.datEntryService.getFetchKodeFasilitas().subscribe(table => {
+      this.tablelistfasilitas = table.result;
+    });
+  }
+
+  createfasilitas(): void {
+    Swal.fire({
+      title: 'Mohon Perhatikan',
+      text: 'Inputan yang sudah Terinput tidak bisa di edit ',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Create fasilitas',
+          html:
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Deskripsi</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="deskripsi"/> ' +
+            '</div></div>' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Fasilitas</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="fasilitas"/> ' +
+            '</div></div>' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Kode Fasilitas</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="kode_fasilitas"/> ' +
+            '</div></div>',
+          allowOutsideClick: false,
+          showDenyButton: true,
+          focusConfirm: false,
+        }).then(result => {
+          if (result.isConfirmed) {
+            const deskripsi = $('#deskripsi').val();
+            const fasilitas = $('#fasilitas').val();
+            const kode_fasilitas = $('#kode_fasilitas').val();
+
+            if (deskripsi === '') {
+              alert('Deskripsi harus di isi');
+              return;
+            } else if (fasilitas === '') {
+              alert('Fasilitas harus di isi');
+              return;
+            } else if (kode_fasilitas === '') {
+              alert('Kode Fasilitas harus di isi');
+              return;
+            } else {
+              const body = {
+                deskripsi: deskripsi,
+                fasilitas: fasilitas,
+                kode_fasilitas: kode_fasilitas,
+              };
+              const headers = new HttpHeaders({
+                'Content-Type': 'application/json; charset=utf-8',
+                // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
+              });
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_fasilitas+++', body, { headers }).subscribe({
+                next: () => {
+                  // console.warn(response);
+                  // this.sessionStorageService.store('sessionPs', passwordbaru);
+                  const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: toast => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer);
+                      toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    },
+                  });
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'Data berhasil di simpan',
+                  });
+                },
+                error: () => {
+                  const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: toast => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer);
+                      toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    },
+                  });
+                  Toast.fire({
+                    icon: 'error',
+                    title: 'Data gagal di simpan',
+                  });
+                },
+              });
+            }
+          }
+        });
+      }
+    });
+  }
+}
