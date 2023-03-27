@@ -44,10 +44,14 @@
           <td style="text-align: center">{{ initialDataEntry.nama }}</td>
           <td style="text-align: center">{{ initialDataEntry.app_no_ide }}</td>
           <td style="text-align: center">
-            <a (click)="viewdataide(initialDataEntry.id_customer, initialDataEntry.kategori_pekerjaan)">
+            <a
+              (click)="viewdataide(initialDataEntry.id_customer, initialDataEntry.kategori_pekerjaan)"
+              [hidden]="initialDataEntry.status_aplikasi.includes('9')"
+            >
               <fa-icon icon="ellipsis"></fa-icon>
               <br />Detail
             </a>
+            <strong *ngIf="initialDataEntry.status_aplikasi.includes('9')">{{ initialDataEntry.status_aplikasi_desc }}</strong>
           </td>
         </tr>
       </tbody>

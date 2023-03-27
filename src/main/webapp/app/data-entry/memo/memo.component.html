@@ -99,6 +99,9 @@
   >
     Simpan Memo
   </button>
+  <button *ngIf="checkStruktur == 1" type="button" (click)="cektakSkemaAngsuran()" id="cetakYuk" class="btn mb-1 btn-secondary">
+    Cetak Skema Angsuran<span class="btn-icon-right"><i class="fa fa-print"></i></span>
+  </button>
   <button
     [hidden]="this.untukSessionRole === 'VER_PRE_SPV'"
     type="button"

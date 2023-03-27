@@ -42,6 +42,7 @@ export class MemoComponent implements OnInit {
   popup: any;
   valBM = 1;
   checkBM = 1;
+  checkStruktur = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -105,6 +106,17 @@ export class MemoComponent implements OnInit {
         next: data => {
           this.dataEntryModel = data.result;
           this.tampilanfixornon = data.result.kategori_pekerjaan;
+
+          setTimeout(() => {
+            this.dataEntryService.getFetchStrukturDE(this.dataEntryModel.app_no_de, this.dataEntryModel.curef).subscribe(download => {
+              if (download.result == null) {
+                this.checkStruktur = 0;
+              } else {
+                this.checkStruktur = 1;
+              }
+            });
+          }, 1);
+
           if (this.untukSessionRole === 'BRANCHMANAGER') {
             if (
               this.dataEntryModel.status_perkawinan === 'BELUM KAWIN' ||
@@ -391,5 +403,9 @@ export class MemoComponent implements OnInit {
     } else {
       window.open(this.baseUrl + 'v1/efos-de/downloadDocDataEntryNonFix/' + this.app_no_de);
     }
+  }
+
+  cektakSkemaAngsuran(): void {
+    window.open(this.baseUrl + 'v1/efos-de/downloadAngsuranDataEntry/' + this.app_no_de);
   }
 }
