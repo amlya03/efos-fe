@@ -37,6 +37,11 @@ export class DataEntryService {
     this.untukSessionFullName = this.sessionStorageService.retrieve('sessionFullName');
     this.untukSessionKodeCabang = this.sessionStorageService.retrieve('sessionKdCabang');
   }
+  // ///////////////////////////// Download Skema Angsuran ////////////////////////////////////////////////////////////
+  protected downloadAngsuranDataEntry = this.applicationConfigService.getEndpointFor(
+    this.baseUrl + 'v1/efos-de/downloadAngsuranDataEntry/'
+  );
+  // ///////////////////////////// Download Skema Angsuran ////////////////////////////////////////////////////////////
 
   // //////////////////////////// get Pre Screen BM ////////////////////////////////////////////
   protected preScreenBM = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getPreScreenBM?sd=');
@@ -661,4 +666,10 @@ export class DataEntryService {
   getPreScreenBM(app_no_de: any): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.preScreenBM + app_no_de);
   }
+
+  // ///////////////////////////// Download Skema Angsuran ////////////////////////////////////////////////////////////
+  getDownloadAngsuranDataEntry(app_no_de: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.downloadAngsuranDataEntry + app_no_de);
+  }
+  // ///////////////////////////// Download Skema Angsuran ////////////////////////////////////////////////////////////
 }

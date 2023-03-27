@@ -6,4 +6,5 @@ export class getProgramModel {
   expired_date?: string;
   min_plafond?: number;
   max_plafond?: number;
+  biaya_admin: number | string | null | undefined;
 }

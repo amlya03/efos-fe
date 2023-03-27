@@ -218,7 +218,7 @@ export class StrukturPembiayaanComponent implements OnInit {
           this.jangkaWaktuRet = '';
           this.getLoading(false);
         } else {
-          this.kodeProgramRet = this.strukturModel.program + '|' + this.strukturModel.program_name;
+          this.kodeProgramRet = this.strukturModel.program + '|' + this.strukturModel.program_name + '|' + this.strukturModel.fee_based;
           this.kodeProdukRet = this.strukturModel.produk + '|' + this.strukturModel.produk_name;
           this.skemaRet =
             this.strukturModel.skema +
@@ -387,6 +387,7 @@ export class StrukturPembiayaanComponent implements OnInit {
         this.getLoading(false);
       },
     });
+    this.strukturForm.get('fee_based')?.setValue(kode[2]);
   }
 
   onchangeproduk(kodeProduk: any): void {
