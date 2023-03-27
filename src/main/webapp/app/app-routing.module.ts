@@ -55,6 +55,9 @@ import { ParameterskemaComponent } from './parameterized/parameterstruktur/param
 import { ParameterskemafasilitasComponent } from './parameterized/parameterstruktur/parameterskemafasilitas/parameterskemafasilitas.component';
 import { ParametermarginfixComponent } from './parameterized/parameterstruktur/parametermarginfix/parametermarginfix.component';
 import { ParametermarginstepupComponent } from './parameterized/parameterstruktur/parametermarginstepup/parametermarginstepup.component';
+import { ParameterdeveloperComponent } from './parameterized/parameteragunan/parameterdeveloper/parameterdeveloper.component';
+import { ParameterfasilitaslistrikComponent } from './parameterized/parameteragunan/parameterfasilitaslistrik/parameterfasilitaslistrik.component';
+import { ParameterhubkepemilikanagunanComponent } from './parameterized/parameteragunan/parameterhubkepemilikanagunan/parameterhubkepemilikanagunan.component';
 
 @NgModule({
   imports: [
@@ -248,6 +251,19 @@ import { ParametermarginstepupComponent } from './parameterized/parameterstruktu
           path: 'parameteragunan',
           component: ParameteragunanComponent,
         },
+        {
+          path: 'parameteragunandeveloper',
+          component: ParameterdeveloperComponent,
+        },
+        {
+          path: 'parameteragunanfasilitaslistrik',
+          component: ParameterfasilitaslistrikComponent,
+        },
+        {
+          path: 'parameteragunanhubkepemilikanagunan',
+          component: ParameterhubkepemilikanagunanComponent,
+        },
+
         {
           path: 'parameterstruktur',
           component: ParameterstrukturComponent,

@@ -1,1 +1,35 @@
-<p>parameterdeveloper works!</p>
+<button id="tambahdata" (click)="createdeveloper()" type="button" class="btn btn-info">Tambah data</button>
+
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Table Developer</h3>
+</div>
+<table class="table table-striped" datatable>
+  <thead style="background-color: #303030">
+    <tr>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>No</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>jenis_developer</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>kantor_cabang</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>nama_developer</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>Status aktif</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tablelistdeveloper of tablelistdeveloper; index as i">
+      <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistdeveloper.jenis_developer }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistdeveloper.kantor_cabang }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistdeveloper.nama_developer }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistdeveloper.active }}</td>
+    </tr>
+  </tbody>
+</table>

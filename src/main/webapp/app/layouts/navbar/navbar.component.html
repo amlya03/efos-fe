@@ -944,7 +944,14 @@
   <!-- untuk parameter -->
 
   <!--  untuk parameter agunan -->
-  <div *ngIf="router.url === '/parameteragunan'">
+  <div
+    *ngIf="
+      router.url === '/parameteragunan' ||
+      router.url === '/parameteragunandeveloper' ||
+      router.url === '/parameteragunanfasilitaslistrik' ||
+      router.url === '/parameteragunanhubkepemilikanagunan'
+    "
+  >
     <a
       class="nav-item nav-link"
       [queryParams]="{
@@ -962,13 +969,7 @@
     </a>
     <a
       class="nav-item nav-link"
-      [queryParams]="{
-        kategori: this.kategori,
-        id: this.paramId,
-        kode_fasilitas: this.kode_fasilitas,
-        fasilitas: this.fasilitas
-      }"
-      routerLink="/hasilprescreening"
+      routerLink="/parameteragunandeveloper"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'ADMIN_CFBD'"
@@ -977,13 +978,7 @@
     </a>
     <a
       class="nav-item nav-link"
-      [queryParams]="{
-        kategori: this.kategori,
-        id: this.paramId,
-        kode_fasilitas: this.kode_fasilitas,
-        fasilitas: this.fasilitas
-      }"
-      routerLink="/hasilprescreening"
+      routerLink="/parameteragunanfasilitaslistrik"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'ADMIN_CFBD'"
@@ -992,13 +987,7 @@
     </a>
     <a
       class="nav-item nav-link"
-      [queryParams]="{
-        kategori: this.kategori,
-        id: this.paramId,
-        kode_fasilitas: this.kode_fasilitas,
-        fasilitas: this.fasilitas
-      }"
-      routerLink="/hasilprescreening"
+      routerLink="/parameteragunanhubkepemilikanagunan"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'ADMIN_CFBD'"
