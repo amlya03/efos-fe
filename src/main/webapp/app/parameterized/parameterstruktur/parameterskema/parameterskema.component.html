@@ -1,0 +1,43 @@
+<button id="tambahdata" (click)="createskema()" type="button" class="btn btn-info">Tambah data</button>
+
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Table skema</h3>
+</div>
+<div class="table-responsive-sm">
+  <table class="table table-striped" datatable>
+    <thead style="background-color: #303030">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Skema Deskripsi</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Min Plafond</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Max Plafond</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Max Tenor</span>
+        </th>
+
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>DP Min</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tablelistskema of tablelistskema; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistskema.skema_deskripsi }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistskema.min_plafond | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistskema.max_plafond | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistskema.max_tenor | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistskema.dp_min | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

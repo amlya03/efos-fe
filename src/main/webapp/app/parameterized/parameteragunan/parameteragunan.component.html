@@ -1,0 +1,150 @@
+<button id="tambahdata" (click)="createaksesrumah()" type="button" class="btn btn-info">Tambah data</button>
+
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Table data Akses rumah</h3>
+</div>
+<table class="table table-striped" datatable>
+  <thead style="background-color: #303030">
+    <tr>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>No</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>Akses status</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>Status</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tableAgunan of tableAgunan; index as i">
+      <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+      <td style="text-align: center" scope="col">{{ tableAgunan.akses_rumah }}</td>
+      <td style="text-align: center" scope="col">{{ tableAgunan.active }}</td>
+    </tr>
+  </tbody>
+</table>
+<button id="tambahdata" (click)="createdeveloper()" type="button" class="btn btn-info">Tambah data</button>
+
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Table Developer</h3>
+</div>
+<table class="table table-striped" datatable>
+  <thead style="background-color: #303030">
+    <tr>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>No</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>jenis_developer</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>kantor_cabang</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>nama_developer</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>Status aktif</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tablelistdeveloper of tablelistdeveloper; index as i">
+      <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistdeveloper.jenis_developer }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistdeveloper.kantor_cabang }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistdeveloper.nama_developer }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistdeveloper.active }}</td>
+    </tr>
+  </tbody>
+</table>
+<button id="tambahdata" (click)="createfasilitaslistrik()" type="button" class="btn btn-info">Tambah data</button>
+
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Table Fasilitas Listrik</h3>
+</div>
+<table class="table table-striped" datatable>
+  <thead style="background-color: #303030">
+    <tr>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>No</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>fasilitas listrik</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>Status</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tablelistfasilitaslistrik of tablelistfasilitaslistrik; index as i">
+      <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistfasilitaslistrik.fasilitas_listrik }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistfasilitaslistrik.active }}</td>
+    </tr>
+  </tbody>
+</table>
+<button id="tambahdata" (click)="createhubkepemilikanagunan()" type="button" class="btn btn-info">Tambah data</button>
+
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Table Hub Kepemilikan Agunan</h3>
+</div>
+<table class="table table-striped" datatable>
+  <thead style="background-color: #303030">
+    <tr>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>No</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>deskripsi</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>Status</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tablelisthubunganagunan of tablelisthubunganagunan; index as i">
+      <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+      <td style="text-align: center" scope="col">{{ tablelisthubunganagunan.deskripsi }}</td>
+      <td style="text-align: center" scope="col">{{ tablelisthubunganagunan.active }}</td>
+    </tr>
+  </tbody>
+</table>
+<button id="tambahdata" (click)="createjenisobjekagunan()" type="button" class="btn btn-info">Tambah data</button>
+
+<br />
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Table jenis objek agunan</h3>
+</div>
+<table class="table table-striped" datatable>
+  <thead style="background-color: #303030">
+    <tr>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>No</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>jenis_objek_code</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>jenis_objek_deskripsi</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>active</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tablelistobjekagunan of tablelistobjekagunan; index as i">
+      <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistobjekagunan.jenis_objek_code }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistobjekagunan.jenis_objek_deskripsi }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistobjekagunan.active }}</td>
+    </tr>
+  </tbody>
+</table>
