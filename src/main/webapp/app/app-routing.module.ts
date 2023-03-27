@@ -46,6 +46,7 @@ import { HomeComponent } from './home/home.component';
 import { ParameterizedComponent } from './parameterized/parameterized.component';
 import { InputparameterscoringComponent } from './inputparameterscoring/inputparameterscoring.component';
 import { NegativeListComponent } from './data-entry/memo/negative-list/negative-list.component';
+import { HeadAppraisalComponent } from './verification/daftar-aplikasi-isi-mapis/head-appraisal/head-appraisal.component';
 
 @NgModule({
   imports: [
@@ -238,6 +239,10 @@ import { NegativeListComponent } from './data-entry/memo/negative-list/negative-
         {
           path: 'negative-list',
           component: NegativeListComponent,
+        },
+        {
+          path: 'head-appraisal',
+          component: HeadAppraisalComponent,
         },
         {
           path: '',

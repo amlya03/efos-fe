@@ -296,7 +296,7 @@ export class JobInfoComponent implements OnInit {
           validasiUmurPen.setValidators([Validators.required]);
           validasiBekTahun.setValidators([Validators.required]);
           validasiBekBulan.setValidators([Validators.required]);
-          validasiJumKar.setValidators([Validators.min(5), Validators.required]);
+          validasiJumKar.setValidators([Validators.min(25), Validators.required]);
           // validasiPendapatan.setValidators([Validators.required]);
           // validasiPendapatanLain.setValidators([Validators.required]);
           // validasiTunjangan.setValidators([Validators.required]);

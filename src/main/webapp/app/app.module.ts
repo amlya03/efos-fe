@@ -73,6 +73,7 @@ import { LoadingScreenComponent } from './layouts/loading-screen/loading-screen.
 import { ParameterizedComponent } from './parameterized/parameterized.component';
 import { InputparameterscoringComponent } from './inputparameterscoring/inputparameterscoring.component';
 import { NegativeListComponent } from './data-entry/memo/negative-list/negative-list.component';
+import { HeadAppraisalComponent } from './verification/daftar-aplikasi-isi-mapis/head-appraisal/head-appraisal.component';
 
 @NgModule({
   imports: [
@@ -152,6 +153,7 @@ import { NegativeListComponent } from './data-entry/memo/negative-list/negative-
     ParameterizedComponent,
     InputparameterscoringComponent,
     NegativeListComponent,
+    HeadAppraisalComponent,
   ],
   bootstrap: [MainComponent],
 })

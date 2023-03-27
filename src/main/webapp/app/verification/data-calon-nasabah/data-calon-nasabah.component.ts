@@ -463,7 +463,7 @@ export class DataCalonNasabahComponent implements OnInit {
           this.cekResult = 1;
         }
         // console.warn(data.result === null)
-        alert(this.dataCalonNasabahMap.verif_fasilitas_pembiayaan);
+        // alert(this.dataCalonNasabahMap.verif_fasilitas_pembiayaan);
         if (data.result === null) {
           const retriveCalonNasabah = {
             tanggal_verifikasi: '',

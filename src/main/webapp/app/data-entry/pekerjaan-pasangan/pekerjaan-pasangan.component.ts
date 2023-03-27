@@ -129,7 +129,7 @@ export class PekerjaanPasanganComponent implements OnInit {
       ],
       jumlah_karyawan: [
         { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
+        [Validators.min(25), Validators.required],
       ],
       tipe_perusahaan: [
         { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
