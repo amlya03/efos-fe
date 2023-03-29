@@ -105,6 +105,9 @@
     this.mutasiForm.get('debet')?.setValue('');
     this.mutasiForm.get('kredit')?.setValue('');
     this.mutasiForm.get('saldo')?.setValue('');
+    this.mutasiForm.get('kepemilikan_tabungan')?.setValue('');
+    this.mutasiForm.get('kepemilikan_giro')?.setValue('');
+    this.mutasiForm.get('kepemilikan_deposito')?.setValue('');
     hubunganDenganBank.style.display = 'block';
     this.mutasiForm.enable()
   "
@@ -297,7 +300,7 @@
   <div class="row">
     <div class="col" style="text-align: center">
       <button
-        type="submit"
+        type="button"
         [hidden]="this.untukSessionRole === 'VER_PRE_SPV'"
         class="btn btn-info"
         (click)="submitForm()"

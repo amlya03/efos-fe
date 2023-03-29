@@ -174,7 +174,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
         })
         .subscribe({
           next() {
-            // window.location.reload();
+            window.location.reload();
           },
           error: error => console.warn(error),
         });
@@ -200,7 +200,7 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
         })
         .subscribe({
           next() {
-            // window.location.reload();
+            window.location.reload();
           },
           error: error => console.warn(error),
         });
