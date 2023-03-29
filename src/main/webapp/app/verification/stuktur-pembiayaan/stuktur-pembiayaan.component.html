@@ -213,7 +213,6 @@
       <div class="col-sm-8">
         <input
           type="text"
-          readonly
           class="form-control"
           id="total_kewajiban_bank_pemohon"
           formControlName="total_kewajiban_bank_pemohon"
@@ -228,7 +227,6 @@
       <div class="col-sm-8">
         <input
           type="text"
-          readonly
           formControlName="total_outstanding"
           class="form-control"
           currencyMask
@@ -242,7 +240,6 @@
       <div class="col-sm-8">
         <input
           type="text"
-          readonly
           formControlName="total_plafon"
           class="form-control"
           currencyMask
@@ -251,18 +248,23 @@
       </div>
     </div>
     <p></p>
-    <div class="form-group row">
+    <div class="form-group row" [formGroup]="slikForm">
       <label class="col-sm-4 col-form-label">Presentase Penggunaan fasilitas Existing</label>
       <div class="col-sm-8">
         <input
+          hidden
           type="text"
-          readonly
           class="form-control"
           id="persentase_penggunaan_fasilitas"
-          name="persentase_penggunaan_fasilitas"
-          #persentase_penggunaan_fasilitas1
+          formControlName="persentase_pembiayaan_existing"
           currencyMask
-          value="{{ (+this.slikForm.get('total_outstanding')?.value / +this.slikForm.get('total_plafon')?.value) * 100 | currency: ' ' }}%"
+        />
+        <input
+          readonly
+          type="text"
+          class="form-control"
+          currencyMask
+          value="{{ slikForm.get('persentase_pembiayaan_existing')?.value }} %"
         />
       </div>
     </div>
@@ -272,7 +274,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Skema</label>
         <div class="col-sm-8">
-          <select formControlName="skema" #analisa_skema class="form-control" (change)="tenorSkema(strukturForm.get('skema')?.value)">
+          <select formControlName="skema" class="form-control" (change)="tenorSkema(strukturForm.get('skema')?.value)">
             <option value="">Pilih Skema</option>
             <option
               *ngFor="let Skema of Skema"
@@ -287,7 +289,11 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Tenor</label>
         <div class="col-sm-8">
-          <select formControlName="tenor" #analisa_tenor class="form-control">
+          <select
+            formControlName="tenor"
+            class="form-control"
+            (change)="getTenor(strukturForm.get('skema')?.value.split('|')[1], strukturForm.get('tenor')?.value)"
+          >
             <option value="">Pilih Tenor</option>
             <option *ngFor="let tenor of tenor" value="{{ tenor.tn_code }}">{{ tenor.tn_code }} Bulan</option>
           </select>
@@ -365,16 +371,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Total Angsuran</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            hidden
-            class="form-control"
-            id="total_angsuran"
-            formControlName="total_angsuran"
-            #total_angsuran1
-            currencyMask
-            value="{{ +this.slikForm.get('total_kewajiban_bank_pemohon')?.value + +this.strukturForm.get('angsuran')?.value }}"
-          />
+          <input type="text" hidden class="form-control" id="total_angsuran" formControlName="total_angsuran" currencyMask />
           <input
             type="text"
             readonly
@@ -391,15 +388,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Maximal DSR</label>
         <div class="col-sm-8">
-          <input
-            type="text"
-            readonly
-            class="form-control"
-            id="maximal_dsr"
-            name="maximal_dsr"
-            #maximal_dsr1
-            value="{{ this.analisaPembiayaan.dsr }} %"
-          />
+          <input type="text" readonly class="form-control" id="maximal_dsr" name="maximal_dsr" value="{{ this.analisaPembiayaan.dsr }} %" />
         </div>
       </div>
       <br />
@@ -582,15 +571,21 @@
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Luas Tanah</label>
-      <div class="col-sm-8">
+      <div class="col-sm-4">
         <input type="text" readonly class="form-control" id="luas_tanah" formControlName="luas_tanah" />
+      </div>
+      <div class="col-sm-4">
+        <strong>M2</strong>
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Luas Bangunan</label>
-      <div class="col-sm-8">
+      <div class="col-sm-4">
         <input type="text" readonly class="form-control" id="luas_bangunan" formControlName="luas_bangunan" />
+      </div>
+      <div class="col-sm-4">
+        <strong>M2</strong>
       </div>
     </div>
   </div>
@@ -672,7 +667,7 @@
 <p></p>
 <p></p>
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Rekomendasi System</h3>
+  <h3 style="color: #fff; text-align: center">Rekomendasi</h3>
 </div>
 <p></p>
 <div class="row form-material">
@@ -681,34 +676,62 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Tenor</label>
       <div class="col-sm-8">
-        <input type="text" readonly class="form-control" id="rekomendasi_tenor" name="rekomendasi_tenor" />
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="rekomendasi_tenor"
+          name="rekomendasi_tenor"
+          value="{{ strukturForm.get('tenor')?.value }} Bulan"
+        />
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Harga Perolehan</label>
       <div class="col-sm-8">
-        <input type="text" readonly class="form-control" id="harga_perolehan" name="harga_perolehan" />
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="harga_perolehan"
+          name="harga_perolehan"
+          value="{{ strukturForm.get('harga_permintaan')?.value | currency: 'Rp. ':'symbol':'1.0-0' }}"
+        />
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Nilai Pembiayaan</label>
       <div class="col-sm-8">
-        <input type="text" readonly class="form-control" id="rekomendasi_nilai_pembiayaan" name="rekomendasi_nilai_pembiayaan" />
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="rekomendasi_nilai_pembiayaan"
+          name="rekomendasi_nilai_pembiayaan"
+          value="{{ strukturForm.get('nilai_pembiayaan')?.value | currency: 'Rp. ':'symbol':'1.0-0' }}"
+        />
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Down Payment</label>
       <div class="col">
-        <input type="text" readonly class="form-control" id="rekomendasi_down_payment" name="rekomendasi_down_payment" />
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="rekomendasi_down_payment"
+          name="rekomendasi_down_payment"
+          value="{{ strukturForm.get('down_payment')?.value | currency: 'Rp. ':'symbol':'1.0-0' }}"
+        />
       </div>
       <div class="col">
-        <label>35 %</label>
+        <label>Min 20 %</label>
       </div>
     </div>
-    <br />
+    <!-- <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Angsuran</label>
       <div class="col">
@@ -738,35 +761,68 @@
         <label>Tahun Ke 3 - 5</label>
       </div>
     </div>
-    <br />
+    <br /> -->
   </div>
   <!-- ////Colom ke 2\\\\\ -->
   <div class="col">
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Harga Jual</label>
-      <div class="col-sm-8">
-        <input type="text" readonly class="form-control" id="harga_jual" name="harga_jual" />
+      <label class="col-sm-4 col-form-label">Angsuran</label>
+      <div class="col">
+        <div *ngFor="let angsuran of showAngsuran">
+          <input type="text" readonly class="form-control" value="{{ angsuran | currency: 'Rp. ':'symbol':'1.0-0' }}" />
+          <p></p>
+        </div>
+      </div>
+      <div class="col" *ngIf="strukturForm.get('skema')?.value.split('|')[1] === '2'">
+        <div *ngFor="let angsuran of showAngsuran; index as i">
+          <label>Ke {{ i + 1 }}</label>
+          <p></p>
+          <p></p>
+        </div>
       </div>
     </div>
     <br />
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label">Margin</label>
-      <div class="col-sm-8">
-        <input type="text" readonly class="form-control" id="margin" name="margin" />
+      <label class="col-sm-4 col-form-label">Rate Margin</label>
+      <div class="col">
+        <div *ngFor="let margin of showMargin">
+          <input type="text" readonly class="form-control" value="{{ margin }}" />
+          <p></p>
+        </div>
+      </div>
+      <div class="col" *ngIf="strukturForm.get('skema')?.value.split('|')[1] === '2'">
+        <div *ngFor="let margin of showMargin; index as i">
+          <strong>Ke {{ i + 1 }}</strong>
+          <p></p>
+        </div>
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Akad</label>
       <div class="col-sm-8">
-        <input type="text" readonly class="form-control" id="akad" name="akad" />
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="akad"
+          name="akad"
+          value="{{ strukturForm.get('skema')?.value.split('|')[3] }}"
+        />
       </div>
     </div>
     <br />
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Hasil Scoring</label>
       <div class="col-sm-3">
-        <input type="text" readonly class="form-control" id="hasil_scoring" name="hasil_scoring" [value]="this.hasilScoring" />
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          id="hasil_scoring"
+          name="hasil_scoring"
+          value="{{ this.hasilScoring ? this.hasilScoring : 'Belum Tehitung' }}"
+        />
       </div>
       <div class="col-sm-4">
         <h5 *ngIf="this.hasilStatus === 'DISETUJUI'" style="color: green">{{ this.hasilStatus }}</h5>
@@ -782,9 +838,7 @@
     [disabled]="this.dpKurang == 1"
     type="submit"
     class="btn btn-info"
-    (click)="
-      onSubmit(maximal_dsr1.value, persentase_penggunaan_fasilitas1.value, analisa_skema.value, analisa_tenor.value, total_angsuran1.value)
-    "
+    (click)="onSubmit()"
   >
     Simpan Data
   </button>

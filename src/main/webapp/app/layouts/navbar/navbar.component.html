@@ -1113,5 +1113,40 @@
     </a>
   </div>
   <!-- untuk parameterstruktur -->
+
+  <!-- Start Tab Module Appraisal -->
+  <div *ngIf="router.url === '/daftar_input_mapis' || router.url === '/head-appraisal' || router.url === '/daftar-aplikasi-appraisal'">
+    <a
+      class="nav-item nav-link"
+      routerLink="daftar_input_mapis"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngIf="untukSessionRole === 'APPRAISAL-SPV'"
+    >
+      <h6>Daftar Aplikasi Assigment</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="daftar-aplikasi-appraisal"
+      [queryParams]="{
+        app_no_de: this.app_no_de
+      }"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngIf="untukSessionRole === 'APPRAISAL-SPV'"
+    >
+      <h6>Daftar Aplikasi On Process</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="head-appraisal"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngIf="untukSessionRole === 'APPRAISAL-SPV'"
+    >
+      <h6>Daftar Aplikasi Review</h6>
+    </a>
+  </div>
+  <!-- End Tab Module Appraisal -->
 </nav>
 <jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

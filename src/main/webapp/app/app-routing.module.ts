@@ -59,6 +59,7 @@ import { ParametermarginstepupComponent } from './parameterized/parameterstruktu
 import { ParameterdeveloperComponent } from './parameterized/parameteragunan/parameterdeveloper/parameterdeveloper.component';
 import { ParameterfasilitaslistrikComponent } from './parameterized/parameteragunan/parameterfasilitaslistrik/parameterfasilitaslistrik.component';
 import { ParameterhubkepemilikanagunanComponent } from './parameterized/parameteragunan/parameterhubkepemilikanagunan/parameterhubkepemilikanagunan.component';
+import { DaftarAplikasiAppraisalComponent } from './verification/daftar-aplikasi-isi-mapis/mapis/daftar-aplikasi-appraisal/daftar-aplikasi-appraisal.component';
 
 @NgModule({
   imports: [
@@ -305,6 +306,10 @@ import { ParameterhubkepemilikanagunanComponent } from './parameterized/paramete
         {
           path: 'head-appraisal',
           component: HeadAppraisalComponent,
+        },
+        {
+          path: 'daftar-aplikasi-appraisal',
+          component: DaftarAplikasiAppraisalComponent,
         },
         {
           path: '',

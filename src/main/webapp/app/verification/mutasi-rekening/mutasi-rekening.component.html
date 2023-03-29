@@ -117,7 +117,7 @@
 <br />
 <div class="table-responsive">
   <br />
-  <table class="table table-striped" datatable>
+  <table class="table table-striped" datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
     <thead>
       <tr>
         <th style="text-align: center" scope="col">#</th>
@@ -208,6 +208,12 @@
         <div class="col"><input type="checkbox" formControlName="kepemilikan_giro" />&nbsp;Kepemilikan Giro</div>
         <div class="col"><input type="checkbox" formControlName="kepemilikan_deposito" />&nbsp;Kepemilikan Deposito</div>
       </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Gaji Tercermin direkening</label>
+        <div class="col-sm-2"><input type="radio" formControlName="gaji_tercermin" value="1" />&nbsp;Ya</div>
+        <div class="col-sm-2"><input type="radio" formControlName="gaji_tercermin" value="0" />&nbsp;Tidak</div>
+      </div>
     </div>
     <!-- ////Colom ke 2\\\\\ -->
     <div class="col">
@@ -271,6 +277,17 @@
             currencyMask
             [options]="{ prefix: 'Rp. ', thousands: ',', decimal: ',', precision: 0 }"
           />
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Keterangan</label>
+        <div class="col-sm-8">
+          <select class="form-control" formControlName="keterangan">
+            <option value="">Pilih Data</option>
+            <option value="Nasabah">Nasabah</option>
+            <option value="Pasangan">Pasangan</option>
+          </select>
         </div>
       </div>
     </div>

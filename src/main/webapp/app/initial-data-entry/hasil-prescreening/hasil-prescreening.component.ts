@@ -177,14 +177,13 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getLoading(true);
+    this.getLoading(false);
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
       responsive: true,
     };
-    this.load();
     this.personalInfoForm = this.formBuilder.group({
       radiobuttonnama: [{ value: '' || null }, Validators.required],
       radiobuttontanggal: [{ value: '' || null }, Validators.required],
@@ -212,6 +211,21 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
       radiobuttonrwpasangan: [{ value: '' || null }, Validators.required],
       radiobuttonjenispasangan: [{ value: '' || null }, Validators.required],
     });
+
+    if (this.paramId) {
+      this.load();
+    } else {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Tidak Bisa Langsung Membuka Hasil Prescreening',
+        text: 'Initial Data Entry Belum disimpan dan di Prosess',
+        showConfirmButton: false,
+        timer: 3000,
+      }).then(() => {
+        this.router.navigate(['/daftaraplikasiide']);
+      });
+    }
   }
 
   ngOnDestroy(): void {

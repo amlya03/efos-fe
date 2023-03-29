@@ -13,10 +13,11 @@ export class refStrukturPembiayaan {
   max_dsr?: number;
   max_angsuran?: number | string | null | undefined;
   dsr?: number;
-  persentase_pembiayaan_existing?: number;
+  persentase_pembiayaan_existing: number | string | null | undefined;
   created_date?: string;
   created_by?: string;
   updated_date?: string;
   updated_by?: string;
   akad: string | null | undefined | number;
+  ftv: string | null | undefined | number;
 }

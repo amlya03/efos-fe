@@ -139,7 +139,7 @@ export class MemoVerificationComponent implements OnInit {
       .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
         app_no_de: this.app_no_de,
         created_by: this.untukSessionUserName,
-        status_aplikasi: this.dataEntry.status_aplikasi,
+        status_aplikasi: '3.1',
       })
       .subscribe({
         next: () => {

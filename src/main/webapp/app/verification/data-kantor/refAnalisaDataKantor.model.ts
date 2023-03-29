@@ -51,4 +51,9 @@ export class refAnalisaDataKantor {
   created_by?: string;
   updated_by?: string;
   waktu_verifikasi?: string;
+
+  jumlah_pinjaman_kantor: string | number | null | undefined;
+  komponen_gaji: string | number | null | undefined;
+  pembayaran_gaji: string | number | null | undefined;
+  tenor_pinjaman_kantor: string | number | null | undefined;
 }

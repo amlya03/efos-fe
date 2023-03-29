@@ -250,51 +250,52 @@ export class NegativeListComponent implements OnInit, OnDestroy {
     this.dataEntryService.getPreScreenBM(this.app_no_de).subscribe(preScreen => {
       this.modelPresreen = preScreen.result;
 
-      if (this.modelPresreen.checkUsiaPensiun) {
+      if (this.modelPresreen.checkUsiaPensiun === '1') {
         this.negativeForm.get('checkUsiaPensiun')?.setValue(1);
       } else {
-        this.negativeForm.get('checkUsiaPensiun')?.setValue(1);
+        this.negativeForm.get('checkUsiaPensiun')?.setValue(0);
       }
-      if (this.modelPresreen.checkSlik) {
+      if (this.modelPresreen.checkSlik === '1') {
         this.negativeForm.get('checkSlik')?.setValue(1);
       } else {
-        this.negativeForm.get('checkSlik')?.setValue(1);
+        this.negativeForm.get('checkSlik')?.setValue(0);
       }
-      if (this.modelPresreen.checkDukcapil) {
+      if (this.modelPresreen.checkDukcapil === '1') {
         this.negativeForm.get('checkDukcapil')?.setValue(1);
       } else {
-        this.negativeForm.get('checkDukcapil')?.setValue(1);
+        this.negativeForm.get('checkDukcapil')?.setValue(0);
       }
-      if (this.modelPresreen.checkPekerjaan) {
+      if (this.modelPresreen.checkPekerjaan === '1') {
         this.negativeForm.get('checkPekerjaan')?.setValue(1);
       } else {
-        this.negativeForm.get('checkPekerjaan')?.setValue(1);
+        this.negativeForm.get('checkPekerjaan')?.setValue(0);
       }
-      if (this.modelPresreen.checkLamaBekerja) {
+      if (this.modelPresreen.checkLamaBekerja === '1') {
         this.negativeForm.get('checkLamaBekerja')?.setValue(1);
       } else {
-        this.negativeForm.get('checkLamaBekerja')?.setValue(1);
+        this.negativeForm.get('checkLamaBekerja')?.setValue(0);
       }
-      if (this.modelPresreen.checkInstansi) {
+      if (this.modelPresreen.checkInstansi === '1') {
         this.negativeForm.get('checkInstansi')?.setValue(1);
       } else {
-        this.negativeForm.get('checkInstansi')?.setValue(1);
+        this.negativeForm.get('checkInstansi')?.setValue(0);
       }
-      if (this.modelPresreen.checkIsu) {
+      if (this.modelPresreen.checkIsu === '1') {
         this.negativeForm.get('checkIsu')?.setValue(1);
       } else {
-        this.negativeForm.get('checkIsu')?.setValue(1);
+        this.negativeForm.get('checkIsu')?.setValue(0);
       }
-      if (this.modelPresreen.checkDataCopy) {
+      if (this.modelPresreen.checkDataCopy === '1') {
         this.negativeForm.get('checkDataCopy')?.setValue(1);
       } else {
-        this.negativeForm.get('checkDataCopy')?.setValue(1);
+        this.negativeForm.get('checkDataCopy')?.setValue(0);
       }
-      if (this.modelPresreen.checkCallReport) {
+      if (this.modelPresreen.checkCallReport === '1') {
         this.negativeForm.get('checkCallReport')?.setValue(1);
       } else {
-        this.negativeForm.get('checkCallReport')?.setValue(1);
+        this.negativeForm.get('checkCallReport')?.setValue(0);
       }
+      console.warn(this.negativeForm.getRawValue());
     });
   }
 
@@ -326,15 +327,69 @@ export class NegativeListComponent implements OnInit, OnDestroy {
   }
 
   openUploadDokumen(): void {
-    this.router.navigate(['/upload_document/upload_document_de'], {
-      queryParams: { curef: this.dataEntryModel.curef, app_no_de: this.dataEntryModel.app_no_de },
-    });
+    this.http
+      .post<any>(this.baseUrl + 'v1/efos-de/create_prescreen_bm', {
+        id: 0,
+        app_no_de: this.app_no_de,
+        checkCallReport: this.negativeForm.get('checkCallReport')?.value,
+        checkDataCopy: this.negativeForm.get('checkDataCopy')?.value,
+        checkDukcapil: this.negativeForm.get('checkDukcapil')?.value,
+        checkInstansi: this.negativeForm.get('checkInstansi')?.value,
+        checkIsu: this.negativeForm.get('checkIsu')?.value,
+        checkLamaBekerja: this.negativeForm.get('checkLamaBekerja')?.value,
+        checkPekerjaan: this.negativeForm.get('checkPekerjaan')?.value,
+        checkSlik: 1,
+        checkUsiaPensiun: this.negativeForm.get('checkUsiaPensiun')?.value,
+        created_by: this.sessionStorageService.retrieve('sessionUserName'),
+        created_date: '',
+        updated_by: this.sessionStorageService.retrieve('sessionUserName'),
+        updated_date: '',
+      })
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/upload_document/upload_document_de'], {
+            queryParams: { curef: this.dataEntryModel.curef, app_no_de: this.dataEntryModel.app_no_de },
+          });
+        },
+        error: () => {
+          this.router.navigate(['/upload_document/upload_document_de'], {
+            queryParams: { curef: this.dataEntryModel.curef, app_no_de: this.dataEntryModel.app_no_de },
+          });
+        },
+      });
   }
 
   openCallReport(): void {
-    this.router.navigate(['/data-entry/call-report'], {
-      queryParams: { curef: this.dataEntryModel.curef, app_no_de: this.dataEntryModel.app_no_de },
-    });
+    this.http
+      .post<any>(this.baseUrl + 'v1/efos-de/create_prescreen_bm', {
+        id: 0,
+        app_no_de: this.app_no_de,
+        checkCallReport: this.negativeForm.get('checkCallReport')?.value,
+        checkDataCopy: this.negativeForm.get('checkDataCopy')?.value,
+        checkDukcapil: this.negativeForm.get('checkDukcapil')?.value,
+        checkInstansi: this.negativeForm.get('checkInstansi')?.value,
+        checkIsu: this.negativeForm.get('checkIsu')?.value,
+        checkLamaBekerja: this.negativeForm.get('checkLamaBekerja')?.value,
+        checkPekerjaan: this.negativeForm.get('checkPekerjaan')?.value,
+        checkSlik: 1,
+        checkUsiaPensiun: this.negativeForm.get('checkUsiaPensiun')?.value,
+        created_by: this.sessionStorageService.retrieve('sessionUserName'),
+        created_date: '',
+        updated_by: this.sessionStorageService.retrieve('sessionUserName'),
+        updated_date: '',
+      })
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/data-entry/call-report'], {
+            queryParams: { curef: this.dataEntryModel.curef, app_no_de: this.dataEntryModel.app_no_de },
+          });
+        },
+        error: () => {
+          this.router.navigate(['/data-entry/call-report'], {
+            queryParams: { curef: this.dataEntryModel.curef, app_no_de: this.dataEntryModel.app_no_de },
+          });
+        },
+      });
   }
 
   checkUsiaPensiun(event: any): void {

@@ -77,6 +77,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
     this.daWaService.getDaWa().subscribe(data => {
       this.checkLenghtResult = data.result;
+      // console.warn(data)
       if (data.code === 200) {
         this.daWa = data.result;
         this.dtTrigger.next(this.daWa);
@@ -84,7 +85,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
       }
     });
     // ////////Aprisal/////
-    this.daWaService.getDaWaAprisal().subscribe(data => {
+    this.daWaService.getListAnalys().subscribe(data => {
       // console.warn('aprisal', data);
       if (data.code === 200) {
         this.daWaAprisal = data.result;
@@ -146,7 +147,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
             .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
               analis_verifikasi: this.kirimAssign,
               app_no_de: this.kirimDe[i],
-              status_aplikasi: this.kirimStatusAplikasi[i],
+              status_aplikasi: '3.0.1',
               created_by: this.sessionStorageService.retrieve('sessionUserName'),
             })
             .subscribe({});
@@ -161,7 +162,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
             .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
               analis_verifikasi: this.kirimAssign,
               app_no_de: this.checkLenghtResult[i].app_no_de,
-              status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+              status_aplikasi: '3.0.1',
               created_by: this.sessionStorageService.retrieve('sessionUserName'),
             })
             .subscribe({});

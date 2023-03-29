@@ -39,7 +39,7 @@ export class StrukturPembiayaanComponent implements OnInit {
   kodeskema: refSkema[] = [];
   strukturModel: getStrukturPembiayaan = new getStrukturPembiayaan();
   modelIde: modelCustomer = new modelCustomer();
-  responseCollateral: any;
+  responseCollateral: listAgunan = new listAgunan();
   modelCollateral: listAgunan = new listAgunan();
   kodeFasilitasRet: any;
   kodeProgramRet: any;
@@ -157,18 +157,19 @@ export class StrukturPembiayaanComponent implements OnInit {
   load(): void {
     setTimeout(() => {
       this.dataEntryService.getCollateralByCuref(this.curef).subscribe(coll => {
-        this.responseCollateral = coll.result;
-        if (this.responseCollateral.find((value: listAgunan) => value.jenis_objek == 3)) {
-          if (this.responseCollateral.find((value: listAgunan) => value.nilai_pasar)) {
-            this.modelCollateral = this.responseCollateral.find((value: listAgunan) => value.nilai_pasar);
-            this.strukturForm.get('harga_objek_pembiayaan')?.setValue(this.modelCollateral.nilai_pasar);
-            // console.warn('p',this.modelCollateral)
-          } else {
-            this.modelCollateral = this.responseCollateral.find((value: listAgunan) => value.harga_objek);
-            this.strukturForm.get('harga_objek_pembiayaan')?.setValue(this.modelCollateral.harga_objek);
-            // console.warn('h',this.modelCollateral)
-          }
-        }
+        this.responseCollateral = coll.result.shift();
+        // console.warn(this.responseCollateral.harga_objek)
+        // if (this.responseCollateral.find((value: listAgunan) => value.jenis_objek == 3)) {
+        //   if (this.responseCollateral.find((value: listAgunan) => value.nilai_pasar)) {
+        //     this.modelCollateral = this.responseCollateral.find((value: listAgunan) => value.nilai_pasar);
+        //     this.strukturForm.get('harga_objek_pembiayaan')?.setValue(this.modelCollateral.nilai_pasar);
+        //     // console.warn('p',this.modelCollateral)
+        //   } else {
+        //     this.modelCollateral = this.responseCollateral.find((value: listAgunan) => value.harga_objek);
+        this.strukturForm.get('harga_objek_pembiayaan')?.setValue(this.responseCollateral.harga_objek);
+        // console.warn('h',this.modelCollateral)
+        // }
+        // }
       });
     }, 2);
 

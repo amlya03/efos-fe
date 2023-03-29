@@ -76,6 +76,7 @@ import { NegativeListComponent } from './data-entry/memo/negative-list/negative-
 import { HeadAppraisalComponent } from './verification/daftar-aplikasi-isi-mapis/head-appraisal/head-appraisal.component';
 import { ParameterskemaComponent } from './parameterized/parameterstruktur/parameterskema/parameterskema.component';
 import { ParameterprogramComponent } from './parameterized/parameterstruktur/parameterprogram/parameterprogram.component';
+import { DaftarAplikasiAppraisalComponent } from './verification/daftar-aplikasi-isi-mapis/mapis/daftar-aplikasi-appraisal/daftar-aplikasi-appraisal.component';
 
 @NgModule({
   imports: [
@@ -158,6 +159,7 @@ import { ParameterprogramComponent } from './parameterized/parameterstruktur/par
     HeadAppraisalComponent,
     ParameterskemaComponent,
     ParameterprogramComponent,
+    DaftarAplikasiAppraisalComponent,
   ],
   bootstrap: [MainComponent],
 })
