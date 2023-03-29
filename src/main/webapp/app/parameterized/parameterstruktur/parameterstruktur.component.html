@@ -19,6 +19,9 @@
         <span>deskripsi</span>
       </th>
       <th scope="col" style="text-align: center; color: #fff">
+        <span>Status</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
         <span></span>
       </th>
     </tr>
@@ -29,6 +32,7 @@
       <td style="text-align: center" scope="col">{{ tablelistfasilitas.kode_fasilitas }}</td>
       <td style="text-align: center" scope="col">{{ tablelistfasilitas.fasilitas }}</td>
       <td style="text-align: center" scope="col">{{ tablelistfasilitas.deskripsi }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistfasilitas.active === '1' ? 'Aktive' : 'Tidak Aktif' }}</td>
       <td style="text-align: center" scope="col">
         <a (click)="viewdatafasilita(tablelistfasilitas.id)">
           <fa-icon icon="ellipsis"></fa-icon>

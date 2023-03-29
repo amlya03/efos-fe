@@ -16,10 +16,12 @@ export class ParameterprogramComponent implements OnInit {
   tablelistprogram: listCreatemodel[] = [];
   inputScoring: any;
   dataretrive: any;
+  statusvalue: any;
+  kirimactive: any;
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
 
   ngOnInit(): void {
-    this.datEntryService.getListprogram().subscribe(table => {
+    this.datEntryService.getListprogramall().subscribe(table => {
       this.tablelistprogram = table.result;
     });
     this.datEntryService.getFetchKodeFasilitas().subscribe(data => {
@@ -50,6 +52,11 @@ export class ParameterprogramComponent implements OnInit {
         Swal.fire({
           title: 'Create Program',
           html:
+            '<br />' +
+            '<div class="row form-material" style="width:100%"><div class="form-group row">' +
+            '<label class="col-sm-4 col-form-label">Status Aktif</label>' +
+            '<div class="col-sm-8"><select class="form-control" id="status_active"><option value="">Pilih Status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '</div></div>' +
             '<br />' +
             '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode Fasilitas</label>' +
             // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
@@ -83,8 +90,11 @@ export class ParameterprogramComponent implements OnInit {
             const min_plafond = $('#min_plafond').val();
             const max_plafond = $('#max_plafond').val();
             const expired_date = $('#expired_date').val();
-
-            if (kode_fasilitas === '') {
+            const active = $('#status_active').val();
+            if (active === '') {
+              alert('Status Aktif Harus Dipilih');
+              return;
+            } else if (kode_fasilitas === '') {
               alert('Kode Fasilitas Harus Di isi');
               return;
             } else if (program === '') {
@@ -100,13 +110,15 @@ export class ParameterprogramComponent implements OnInit {
               alert('Expired date harus di isi');
               return;
             } else {
-              //  if(active=='0'){
-              //     this.kirimactive=0;
-              //  }else{
-              //   this.kirimactive=1;
-              //  }
+              if (active == '0') {
+                this.kirimactive = 0;
+              } else {
+                this.kirimactive = 1;
+              }
 
               const body = {
+                id: 0,
+                active: this.kirimactive,
                 kode_fasilitas: kode_fasilitas,
                 program: program,
                 min_plafond: min_plafond,
@@ -117,7 +129,7 @@ export class ParameterprogramComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_program+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_program', body, { headers }).subscribe({
                 next: () => {
                   // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
@@ -175,13 +187,18 @@ export class ParameterprogramComponent implements OnInit {
       this.dataretrive = table.result;
     });
     const data = this.dataretrive;
-    const nama = this.dataretrive.program.substring(0, 3);
+    // const nama = this.dataretrive.program.substring(0, 3);
     const namaprogram = this.dataretrive.program;
-    // alert(namaprogram);
-    // alert(data.program);
-    // alert(this.dataretrive.max_plafond);
-    // alert(this.dataretrive.min_plafond);
-    // alert(options.program);
+
+    const status = this.dataretrive.active;
+
+    alert(status);
+    if (status === '1') {
+      this.statusvalue = 'Aktif';
+    } else {
+      this.statusvalue = 'Tidak Aktif';
+    }
+
     Swal.fire({
       title: 'Mohon Perhatikan',
       text: 'Inputan yang sudah Terinput tidak bisa di edit ',
@@ -197,17 +214,26 @@ export class ParameterprogramComponent implements OnInit {
           title: 'Create Program',
           html:
             '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode Fasilitas</label>' +
-            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-8"><select class="form-control" id="kode_fasilitas"><option value=' +
-            data.kode_fasilitas +
-            '>' +
-            nama +
-            '</option>' +
-            `${options}` +
-            '</select>' +
+            '<div class="row form-material" style="width:100%"><div class="form-group row">' +
+            '<label class="col-sm-4 col-form-label">Status Aktif</label>' +
+            '<div class="col-sm-8"><select class="form-control" id="status_active"><option value="' +
+            status +
+            '">' +
+            this.statusvalue +
+            '</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
             '<br />' +
+            // '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode Fasilitas</label>' +
+            // // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            // '<div class="col-sm-8"><select class="form-control" id="kode_fasilitas"><option value=' +
+            // data.kode_fasilitas +
+            // '>' +
+            // nama +
+            // '</option>' +
+            // `${options}` +
+            // '</select>' +
+            // '</div></div>' +
+            // '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Program</label>' +
             '<div class="col-sm-8"><input type="text" class="form-control" id="program" value="' +
             namaprogram +
@@ -241,9 +267,9 @@ export class ParameterprogramComponent implements OnInit {
             const min_plafond = $('#min_plafond').val();
             const max_plafond = $('#max_plafond').val();
             const expired_date = $('#expired_date').val();
-
-            if (kode_fasilitas === '') {
-              alert('Kode Fasilitas Harus Di isi');
+            const active = $('#status_active').val();
+            if (active === '') {
+              alert('Status Aktif Harus Dipilih');
               return;
             } else if (program === '') {
               alert('Profram harus di isi');
@@ -258,14 +284,17 @@ export class ParameterprogramComponent implements OnInit {
               alert('Expired date harus di isi');
               return;
             } else {
-              //  if(active=='0'){
-              //     this.kirimactive=0;
-              //  }else{
-              //   this.kirimactive=1;
-              //  }
+              if (active == '0') {
+                this.kirimactive = 0;
+              } else {
+                this.kirimactive = 1;
+              }
 
               const body = {
-                kode_fasilitas: kode_fasilitas,
+                id: id,
+                active: this.kirimactive,
+                kode_program: data.kode_program,
+                kode_fasilitas: data.kode_fasilitas,
                 program: program,
                 min_plafond: min_plafond,
                 max_plafond: max_plafond,
@@ -275,7 +304,7 @@ export class ParameterprogramComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_program+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_program', body, { headers }).subscribe({
                 next: () => {
                   // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);

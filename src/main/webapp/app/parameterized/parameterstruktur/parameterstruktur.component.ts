@@ -15,6 +15,8 @@ export class ParameterstrukturComponent implements OnInit {
 
   tablelistfasilitas: listCreatemodel[] = [];
   dataretrive: any;
+  statusvalue: any;
+  kirimactive: any;
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
 
   ngOnInit(): void {
@@ -30,6 +32,14 @@ export class ParameterstrukturComponent implements OnInit {
 
     const baseUrl = this.baseUrl;
     const options = this.dataretrive;
+    const status = this.dataretrive.active;
+
+    alert(status);
+    if (status === '1') {
+      this.statusvalue = 'Aktif';
+    } else {
+      this.statusvalue = 'Tidak Aktif';
+    }
 
     alert(options.fasilitas);
 
@@ -48,6 +58,15 @@ export class ParameterstrukturComponent implements OnInit {
         Swal.fire({
           title: 'Edit  fasilitas',
           html:
+            '<br />' +
+            '<div class="row form-material" style="width:100%"><div class="form-group row">' +
+            '<label class="col-sm-4 col-form-label">Status Aktif</label>' +
+            '<div class="col-sm-8"><select class="form-control" id="status_active"><option value="' +
+            status +
+            '">' +
+            this.statusvalue +
+            '</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Deskripsi</label>' +
             '<div class="col-sm-8"><input type="text" class="form-control" id="deskripsi" value=' +
@@ -71,11 +90,15 @@ export class ParameterstrukturComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
+            const active = $('#status_active').val();
             const deskripsi = $('#deskripsi').val();
             const fasilitas = $('#fasilitas').val();
             const kode_fasilitas = $('#kode_fasilitas').val();
 
-            if (deskripsi === '') {
+            if (active === '') {
+              alert('Status Aktif harus di isi');
+              return;
+            } else if (deskripsi === '') {
               alert('Deskripsi harus di isi');
               return;
             } else if (fasilitas === '') {
@@ -85,8 +108,16 @@ export class ParameterstrukturComponent implements OnInit {
               alert('Kode Fasilitas harus di isi');
               return;
             } else {
+              if (active === '0') {
+                this.kirimactive = 0;
+              } else {
+                this.kirimactive = 1;
+              }
+              alert(active);
+              alert(id);
               const body = {
                 id: id,
+                active: this.kirimactive,
                 deskripsi: deskripsi,
                 fasilitas: fasilitas,
                 kode_fasilitas: kode_fasilitas,
@@ -156,6 +187,11 @@ export class ParameterstrukturComponent implements OnInit {
           title: 'Create fasilitas',
           html:
             '<br />' +
+            '<div class="row form-material" style="width:100%"><div class="form-group row">' +
+            '<label class="col-sm-4 col-form-label">Status Aktif</label>' +
+            '<div class="col-sm-8"><select class="form-control" id="status_active"><option value="">Pilih Status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '</div></div>' +
+            '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Deskripsi</label>' +
             '<div class="col-sm-8"><input type="text" class="form-control" id="deskripsi"/> ' +
             '</div></div>' +
@@ -175,9 +211,10 @@ export class ParameterstrukturComponent implements OnInit {
             const deskripsi = $('#deskripsi').val();
             const fasilitas = $('#fasilitas').val();
             const kode_fasilitas = $('#kode_fasilitas').val();
-
-            if (deskripsi === '') {
-              alert('Deskripsi harus di isi');
+            const active = $('#status_active').val();
+            if (active === '') {
+            } else if (deskripsi === '') {
+              alert('Status Akrif harus dipilih');
               return;
             } else if (fasilitas === '') {
               alert('Fasilitas harus di isi');
@@ -186,8 +223,15 @@ export class ParameterstrukturComponent implements OnInit {
               alert('Kode Fasilitas harus di isi');
               return;
             } else {
+              if (active == '0') {
+                this.kirimactive = 0;
+              } else {
+                this.kirimactive = 1;
+              }
+
               const body = {
                 id: 0,
+                active: this.kirimactive,
                 deskripsi: deskripsi,
                 fasilitas: fasilitas,
                 kode_fasilitas: kode_fasilitas,

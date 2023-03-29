@@ -22,7 +22,7 @@ export class ParameterprodukComponent implements OnInit {
     this.datEntryService.getListprogram().subscribe(table => {
       this.tablelistprogram = table.result;
     });
-    this.datEntryService.getListproduk().subscribe(table => {
+    this.datEntryService.getListprodukall().subscribe(table => {
       this.tablelistproduk = table.result;
     });
   }
