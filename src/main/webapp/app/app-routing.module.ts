@@ -59,6 +59,9 @@ import { ParametermarginstepupComponent } from './parameterized/parameterstruktu
 import { ParameterdeveloperComponent } from './parameterized/parameteragunan/parameterdeveloper/parameterdeveloper.component';
 import { ParameterfasilitaslistrikComponent } from './parameterized/parameteragunan/parameterfasilitaslistrik/parameterfasilitaslistrik.component';
 import { ParameterhubkepemilikanagunanComponent } from './parameterized/parameteragunan/parameterhubkepemilikanagunan/parameterhubkepemilikanagunan.component';
+import { ParameterjenisobjekagunanComponent } from './parameterized/parameteragunan/parameterjenisobjekagunan/parameterjenisobjekagunan.component';
+import { ParameterftpdpComponent } from './parameterized/parameterstruktur/parameterftpdp/parameterftpdp.component';
+import { ParameterjenispekerjaanComponent } from './parameterized/parameterjob/parameterjenispekerjaan/parameterjenispekerjaan.component';
 
 @NgModule({
   imports: [
@@ -249,6 +252,11 @@ import { ParameterhubkepemilikanagunanComponent } from './parameterized/paramete
           component: ParameterjobComponent,
         },
         {
+          path: 'parameterjobjenispekerjaan',
+          component: ParameterjenispekerjaanComponent,
+        },
+
+        {
           path: 'parameteragunan',
           component: ParameteragunanComponent,
         },
@@ -263,6 +271,10 @@ import { ParameterhubkepemilikanagunanComponent } from './parameterized/paramete
         {
           path: 'parameteragunanhubkepemilikanagunan',
           component: ParameterhubkepemilikanagunanComponent,
+        },
+        {
+          path: 'parameteragunanjenisobjekagunan',
+          component: ParameterjenisobjekagunanComponent,
         },
 
         {
@@ -292,6 +304,10 @@ import { ParameterhubkepemilikanagunanComponent } from './parameterized/paramete
         {
           path: 'parameterstrukturmarginstepup',
           component: ParametermarginstepupComponent,
+        },
+        {
+          path: 'parameterstrukturftpdp',
+          component: ParameterftpdpComponent,
         },
 
         {

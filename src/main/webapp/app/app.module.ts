@@ -76,6 +76,21 @@ import { NegativeListComponent } from './data-entry/memo/negative-list/negative-
 import { HeadAppraisalComponent } from './verification/daftar-aplikasi-isi-mapis/head-appraisal/head-appraisal.component';
 import { ParameterskemaComponent } from './parameterized/parameterstruktur/parameterskema/parameterskema.component';
 import { ParameterprogramComponent } from './parameterized/parameterstruktur/parameterprogram/parameterprogram.component';
+import { ParameteragunanComponent } from './parameterized/parameteragunan/parameteragunan.component';
+import { ParameterdeveloperComponent } from './parameterized/parameteragunan/parameterdeveloper/parameterdeveloper.component';
+import { ParameterfasilitaslistrikComponent } from './parameterized/parameteragunan/parameterfasilitaslistrik/parameterfasilitaslistrik.component';
+import { ParameterhubkepemilikanagunanComponent } from './parameterized/parameteragunan/parameterhubkepemilikanagunan/parameterhubkepemilikanagunan.component';
+import { ParameterjenisobjekagunanComponent } from './parameterized/parameteragunan/parameterjenisobjekagunan/parameterjenisobjekagunan.component';
+import { ParameterstrukturComponent } from './parameterized/parameterstruktur/parameterstruktur.component';
+import { ParameterprodukComponent } from './parameterized/parameterstruktur/parameterproduk/parameterproduk.component';
+import { ParameterskemafasilitasComponent } from './parameterized/parameterstruktur/parameterskemafasilitas/parameterskemafasilitas.component';
+import { ParametermarginfixComponent } from './parameterized/parameterstruktur/parametermarginfix/parametermarginfix.component';
+import { ParametermarginstepupComponent } from './parameterized/parameterstruktur/parametermarginstepup/parametermarginstepup.component';
+import { ParameterftpdpComponent } from './parameterized/parameterstruktur/parameterftpdp/parameterftpdp.component';
+import { ParameterftpdpdetailComponent } from './parameterized/parameterstruktur/parameterftpdpdetail/parameterftpdpdetail.component';
+import { ParameterinformasidiriComponent } from './parameterized/parameterinformasidiri/parameterinformasidiri.component';
+import { ParameterjenispekerjaanComponent } from './parameterized/parameterjob/parameterjenispekerjaan/parameterjenispekerjaan.component';
+import { ParameterjobComponent } from './parameterized/parameterjob/parameterjob.component';
 
 @NgModule({
   imports: [
@@ -158,6 +173,21 @@ import { ParameterprogramComponent } from './parameterized/parameterstruktur/par
     HeadAppraisalComponent,
     ParameterskemaComponent,
     ParameterprogramComponent,
+    ParameteragunanComponent,
+    ParameterdeveloperComponent,
+    ParameterfasilitaslistrikComponent,
+    ParameterhubkepemilikanagunanComponent,
+    ParameterjenisobjekagunanComponent,
+    ParameterstrukturComponent,
+    ParameterprodukComponent,
+    ParameterskemafasilitasComponent,
+    ParametermarginfixComponent,
+    ParametermarginstepupComponent,
+    ParameterftpdpComponent,
+    ParameterftpdpdetailComponent,
+    ParameterinformasidiriComponent,
+    ParameterjenispekerjaanComponent,
+    ParameterjobComponent,
   ],
   bootstrap: [MainComponent],
 })

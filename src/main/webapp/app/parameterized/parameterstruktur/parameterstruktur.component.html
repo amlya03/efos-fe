@@ -18,6 +18,9 @@
       <th scope="col" style="text-align: center; color: #fff">
         <span>deskripsi</span>
       </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span></span>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +29,12 @@
       <td style="text-align: center" scope="col">{{ tablelistfasilitas.kode_fasilitas }}</td>
       <td style="text-align: center" scope="col">{{ tablelistfasilitas.fasilitas }}</td>
       <td style="text-align: center" scope="col">{{ tablelistfasilitas.deskripsi }}</td>
+      <td style="text-align: center" scope="col">
+        <a (click)="viewdatafasilita(tablelistfasilitas.id)">
+          <fa-icon icon="ellipsis"></fa-icon>
+          <br />Edit
+        </a>
+      </td>
     </tr>
   </tbody>
 </table>

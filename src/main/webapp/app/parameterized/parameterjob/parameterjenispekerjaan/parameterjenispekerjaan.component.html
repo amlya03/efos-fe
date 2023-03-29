@@ -1,7 +1,8 @@
-<button id="tambahdata" (click)="createaksesrumah()" type="button" class="btn btn-info">Tambah data</button>
+<button id="tambahdata" (click)="createjenispekerjaan()" type="button" class="btn btn-info">Tambah data</button>
 
+<br />
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Table data Akses rumah</h3>
+  <h3 style="color: #fff; text-align: center">Table jenis Pekerjaan</h3>
 </div>
 <table class="table table-striped" datatable>
   <thead style="background-color: #303030">
@@ -10,7 +11,7 @@
         <span>No</span>
       </th>
       <th scope="col" style="text-align: center; color: #fff">
-        <span>Akses status</span>
+        <span>deskripsi</span>
       </th>
       <th scope="col" style="text-align: center; color: #fff">
         <span>Status</span>
@@ -18,10 +19,10 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let tableAgunan of tableAgunan; index as i">
+    <tr *ngFor="let tablelistjenispekerjaan of tablelistjenispekerjaan; index as i">
       <td style="text-align: center" scope="col">{{ i + 1 }}</td>
-      <td style="text-align: center" scope="col">{{ tableAgunan.akses_rumah }}</td>
-      <td style="text-align: center" scope="col">{{ tableAgunan.active }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistjenispekerjaan.deskripsi }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistjenispekerjaan.active }}</td>
     </tr>
   </tbody>
 </table>

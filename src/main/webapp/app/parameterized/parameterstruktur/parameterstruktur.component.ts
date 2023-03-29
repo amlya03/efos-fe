@@ -14,11 +14,129 @@ export class ParameterstrukturComponent implements OnInit {
   baseUrl: string = environment.baseUrl;
 
   tablelistfasilitas: listCreatemodel[] = [];
+  dataretrive: any;
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
 
   ngOnInit(): void {
     this.datEntryService.getFetchKodeFasilitas().subscribe(table => {
       this.tablelistfasilitas = table.result;
+    });
+  }
+
+  viewdatafasilita(id: any): void {
+    this.datEntryService.getdataretrivefasilitas(id).subscribe(table => {
+      this.dataretrive = table.result;
+    });
+
+    const baseUrl = this.baseUrl;
+    const options = this.dataretrive;
+
+    alert(options.fasilitas);
+
+    alert(id);
+    Swal.fire({
+      title: 'Mohon Perhatikan',
+      text: 'Tolang Input dengan benar ',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Edit',
+      cancelButtonText: 'Tidak',
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Edit  fasilitas',
+          html:
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Deskripsi</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="deskripsi" value=' +
+            options.deskripsi +
+            '/> ' +
+            '</div></div>' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Fasilitas</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="fasilitas" value=' +
+            options.fasilitas +
+            ' /> ' +
+            '</div></div>' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Kode Fasilitas</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="kode_fasilitas" value= ' +
+            options.kode_fasilitas +
+            ' /> ' +
+            '</div></div>',
+          allowOutsideClick: false,
+          showDenyButton: true,
+          focusConfirm: false,
+        }).then(result => {
+          if (result.isConfirmed) {
+            const deskripsi = $('#deskripsi').val();
+            const fasilitas = $('#fasilitas').val();
+            const kode_fasilitas = $('#kode_fasilitas').val();
+
+            if (deskripsi === '') {
+              alert('Deskripsi harus di isi');
+              return;
+            } else if (fasilitas === '') {
+              alert('Fasilitas harus di isi');
+              return;
+            } else if (kode_fasilitas === '') {
+              alert('Kode Fasilitas harus di isi');
+              return;
+            } else {
+              const body = {
+                id: id,
+                deskripsi: deskripsi,
+                fasilitas: fasilitas,
+                kode_fasilitas: kode_fasilitas,
+              };
+              const headers = new HttpHeaders({
+                'Content-Type': 'application/json; charset=utf-8',
+                // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
+              });
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_fasilitas', body, { headers }).subscribe({
+                next: () => {
+                  // console.warn(response);
+                  // this.sessionStorageService.store('sessionPs', passwordbaru);
+                  const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: toast => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer);
+                      toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    },
+                  });
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'Data berhasil di simpan',
+                  });
+                },
+                error: () => {
+                  const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: toast => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer);
+                      toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    },
+                  });
+                  Toast.fire({
+                    icon: 'error',
+                    title: 'Data gagal di simpan',
+                  });
+                },
+              });
+            }
+          }
+        });
+      }
     });
   }
 
@@ -69,6 +187,7 @@ export class ParameterstrukturComponent implements OnInit {
               return;
             } else {
               const body = {
+                id: 0,
                 deskripsi: deskripsi,
                 fasilitas: fasilitas,
                 kode_fasilitas: kode_fasilitas,
@@ -77,7 +196,7 @@ export class ParameterstrukturComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_fasilitas+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_fasilitas', body, { headers }).subscribe({
                 next: () => {
                   // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);

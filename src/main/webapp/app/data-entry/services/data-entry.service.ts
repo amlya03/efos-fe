@@ -281,6 +281,10 @@ export class DataEntryService {
   protected fetchlistskemastepup = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_skema_stepup');
   // /////////////////////////////  Ref List Skema Stepup \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // /////////////////////////////  Ref fetchdataretrivefasilitas\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchdataretrivefasilitas = this.applicationConfigService.getEndpointFor(this.baseUrl + '/v1/efos-ref/getRefFasilitas?si=');
+  // /////////////////////////////  Ref fetchdataretrivefasilitas\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
     if (this.untukSessionRole === 'BRANCHMANAGER') {
@@ -658,6 +662,12 @@ export class DataEntryService {
     return this.http.get<ApiResponse>(this.fetchlistskemastepup);
   }
   // //////////////////////////// GET Skema Stepup //////////////////////////////////////////////////
+
+  // //////////////////////////// GET dataretrivefasilitas //////////////////////////////////////////////////
+  getdataretrivefasilitas(id: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchdataretrivefasilitas + id);
+  }
+  // //////////////////////////// GET dataretrivefasilitas //////////////////////////////////////////////////
 
   updatedCollateral(model: listAgunan): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(this.baseUrl + 'v1/efos-de/update_collateral', model);

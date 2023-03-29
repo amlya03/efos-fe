@@ -6,24 +6,23 @@ import Swal from 'sweetalert2';
 import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model';
 
 @Component({
-  selector: 'jhi-parameterfasilitaslistrik',
-  templateUrl: './parameterfasilitaslistrik.component.html',
-  styleUrls: ['./parameterfasilitaslistrik.component.scss'],
+  selector: 'jhi-parameterjenispekerjaan',
+  templateUrl: './parameterjenispekerjaan.component.html',
+  styleUrls: ['./parameterjenispekerjaan.component.scss'],
 })
-export class ParameterfasilitaslistrikComponent implements OnInit {
+export class ParameterjenispekerjaanComponent implements OnInit {
   baseUrl: string = environment.baseUrl;
 
-  tablelistfasilitaslistrik: listCreatemodel[] = [];
   kirimactive: any;
+  tablelistjenispekerjaan: listCreatemodel[] = [];
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
 
   ngOnInit(): void {
-    this.datEntryService.getFetchListFasilitasListrik().subscribe(table => {
-      this.tablelistfasilitaslistrik = table.result;
+    this.datEntryService.getFetchListJenisPekerjaan().subscribe(table => {
+      this.tablelistjenispekerjaan = table.result;
     });
   }
-
-  createfasilitaslistrik(): void {
+  createjenispekerjaan(): void {
     Swal.fire({
       title: 'Mohon Perhatikan',
       text: 'Inputan yang sudah Terinput tidak bisa di edit ',
@@ -36,15 +35,15 @@ export class ParameterfasilitaslistrikComponent implements OnInit {
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: 'Create Fasilitas Listrik ',
+          title: 'Create Jenis Pekerjaan',
           html:
             '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Status Aktif</label>' +
-            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih Status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">status Aktif</label>' +
+            '<div class="col-sm-8">  <select id="status_active" class="form-control"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '</div></div>' +
             '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Fasilitas Listrik</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="fasilitas_listrik"/> ' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Pekerjaan</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="deskripsi"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -52,13 +51,13 @@ export class ParameterfasilitaslistrikComponent implements OnInit {
         }).then(result => {
           if (result.isConfirmed) {
             const active = $('#status_active').val();
-            const fasilitas_listrik = $('#fasilitas_listrik').val();
+            const deskripsi = $('#deskripsi').val();
 
             if (active === '') {
               alert('Status Aktif Harus Di isi');
               return;
-            } else if (fasilitas_listrik === '') {
-              alert('Fasilitas Listrik harus di isi');
+            } else if (deskripsi === '') {
+              alert('Deskripsi harus di isi');
               return;
             } else {
               if (active === '0') {
@@ -69,13 +68,13 @@ export class ParameterfasilitaslistrikComponent implements OnInit {
 
               const body = {
                 active: this.kirimactive,
-                fasilitas_listrik: fasilitas_listrik,
+                deskripsi: deskripsi,
               };
               const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_fasilitas_listrik+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/', body, { headers }).subscribe({
                 next: () => {
                   // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
