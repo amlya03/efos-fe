@@ -18,7 +18,7 @@ export class ParameterstrukturComponent implements OnInit {
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
 
   ngOnInit(): void {
-    this.datEntryService.getFetchKodeFasilitas().subscribe(table => {
+    this.datEntryService.getFetchKodeFasilitasall().subscribe(table => {
       this.tablelistfasilitas = table.result;
     });
   }
@@ -52,7 +52,7 @@ export class ParameterstrukturComponent implements OnInit {
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Deskripsi</label>' +
             '<div class="col-sm-8"><input type="text" class="form-control" id="deskripsi" value=' +
             options.deskripsi +
-            '/> ' +
+            '> ' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Fasilitas</label>' +

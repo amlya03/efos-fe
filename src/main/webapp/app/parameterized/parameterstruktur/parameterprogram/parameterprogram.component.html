@@ -25,6 +25,9 @@
       <th scope="col" style="text-align: center; color: #fff">
         <span>Expired Date</span>
       </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span></span>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -35,6 +38,12 @@
       <td style="text-align: center" scope="col">{{ tablelistprogram.max_plafond | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
       <td style="text-align: center" scope="col">{{ tablelistprogram.min_plafond | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
       <td style="text-align: center" scope="col">{{ tablelistprogram.expired_date }}</td>
+      <td style="text-align: center" scope="col">
+        <a (click)="viewdataprogram(tablelistprogram.id)">
+          <fa-icon icon="ellipsis"></fa-icon>
+          <br />Edit
+        </a>
+      </td>
     </tr>
   </tbody>
 </table>
