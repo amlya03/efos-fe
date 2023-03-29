@@ -17,7 +17,12 @@ export class ParameterdeveloperComponent implements OnInit {
   kirimactive: any;
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.datEntryService.getFetchListDeveloper().subscribe(table => {
+      this.tablelistdeveloper = table.result;
+      //  console.log(this.tablelistdeveloper);
+    });
+  }
 
   createdeveloper(): void {
     Swal.fire({

@@ -14,9 +14,13 @@ export class ParameterftpdpComponent implements OnInit {
   tablelistproduk: any;
   tablelistftvdp: any;
   tampungpemecah: any;
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient, protected datEntryService: DataEntryService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.datEntryService.getListproduk().subscribe(table => {
+      this.tablelistproduk = table.result;
+    });
+  }
 
   viewftvdetail(id: any): void {
     // this.createform.get('contoh')?.setValue('7');

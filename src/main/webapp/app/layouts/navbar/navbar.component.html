@@ -465,15 +465,15 @@
       <h6>Daftar Review SPV1</h6>
     </a>
 
-    <!-- <a
-    class="nav-item nav-link"
-    routerLink="daftar-review-spv2"
-    [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{ exact: true }"
-    *ngIf="'VER_PRE_SPV_2'"
-  >
-    <h6>Daftar Review SPV2</h6>
-  </a>   -->
+    <a
+      class="nav-item nav-link"
+      routerLink="daftar-review-spv2"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngIf="'VER_PRE_SPV_2'"
+    >
+      <h6>Daftar Review SPV2</h6>
+    </a>
   </div>
   <div
     *ngIf="
@@ -915,7 +915,7 @@
     </a>
   </div>
   <!--  untuk parameter -->
-  <div *ngIf="router.url === '/parameterjob'">
+  <div *ngIf="router.url === '/parameterjob' || router.url === '/parameterjobjenispekerjaan'">
     <a
       class="nav-item nav-link"
       [routerLink]="'/parameterjob'"
@@ -927,7 +927,7 @@
     </a>
     <a
       class="nav-item nav-link"
-      [routerLink]="'/parameterjob1'"
+      [routerLink]="'/parameterjobjenispekerjaan'"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'ADMIN_CFBD'"
@@ -943,7 +943,8 @@
       router.url === '/parameteragunan' ||
       router.url === '/parameteragunandeveloper' ||
       router.url === '/parameteragunanfasilitaslistrik' ||
-      router.url === '/parameteragunanhubkepemilikanagunan'
+      router.url === '/parameteragunanhubkepemilikanagunan' ||
+      router.url === '/parameteragunanjenisobjekagunan'
     "
   >
     <a
@@ -990,13 +991,7 @@
     </a>
     <a
       class="nav-item nav-link"
-      [queryParams]="{
-        kategori: this.kategori,
-        id: this.paramId,
-        kode_fasilitas: this.kode_fasilitas,
-        fasilitas: this.fasilitas
-      }"
-      routerLink="/hasilprescreening"
+      routerLink="/parameteragunanjenisobjekagunan"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'ADMIN_CFBD'"
@@ -1015,7 +1010,8 @@
       router.url === '/parameterstrukturskema' ||
       router.url === '/parameterstrukturskemafasilitas' ||
       router.url === '/parameterstrukturmarginfix' ||
-      router.url === '/parameterstrukturmarginstepup'
+      router.url === '/parameterstrukturmarginstepup' ||
+      router.url === '/parameterstrukturftpdp'
     "
   >
     <a
@@ -1089,7 +1085,7 @@
         kode_fasilitas: this.kode_fasilitas,
         fasilitas: this.fasilitas
       }"
-      routerLink="/hasilprescreening"
+      routerLink="/parameterstrukturftpdp"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'ADMIN_CFBD'"

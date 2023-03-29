@@ -22,6 +22,7 @@ export class ParameterjobComponent implements OnInit {
   ngOnInit(): void {
     this.datEntryService.getFetchListJabatan().subscribe(table => {
       this.tablelistjabatan = table.result;
+      console.log(this.tablelistjabatan);
     });
     this.datEntryService.getFetchListJenisPekerjaan().subscribe(table => {
       this.tablelistjenispekerjaan = table.result;

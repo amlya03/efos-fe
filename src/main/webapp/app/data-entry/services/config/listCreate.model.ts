@@ -1,4 +1,5 @@
 export class listCreatemodel {
+  id: any;
   akses_rumah?: any;
   active?: any;
   produk?: any;

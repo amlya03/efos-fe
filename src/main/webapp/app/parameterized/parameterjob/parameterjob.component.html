@@ -16,6 +16,9 @@
       <th scope="col" style="text-align: center; color: #fff">
         <span>Status</span>
       </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>edit</span>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -23,34 +26,12 @@
       <td style="text-align: center" scope="col">{{ i + 1 }}</td>
       <td style="text-align: center" scope="col">{{ tablelistjabatan.jabatan_deskripsi }}</td>
       <td style="text-align: center" scope="col">{{ tablelistjabatan.active }}</td>
-    </tr>
-  </tbody>
-</table>
-
-<br />
-<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Table jenis Pekerjaan</h3>
-</div>
-<button id="tambahdata" (click)="createjenispekerjaan()" type="button" class="btn btn-info">Tambah data</button>
-<table class="table table-striped" datatable>
-  <thead style="background-color: #303030">
-    <tr>
-      <th scope="col" style="text-align: center; color: #fff">
-        <span>No</span>
-      </th>
-      <th scope="col" style="text-align: center; color: #fff">
-        <span>deskripsi</span>
-      </th>
-      <th scope="col" style="text-align: center; color: #fff">
-        <span>Status</span>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let tablelistjenispekerjaan of tablelistjenispekerjaan; index as i">
-      <td style="text-align: center" scope="col">{{ i + 1 }}</td>
-      <td style="text-align: center" scope="col">{{ tablelistjenispekerjaan.deskripsi }}</td>
-      <td style="text-align: center" scope="col">{{ tablelistjenispekerjaan.active }}</td>
+      <td style="text-align: center" scope="col">
+        <a>
+          <fa-icon icon="ellipsis"></fa-icon>
+          <br />Detail
+        </a>
+      </td>
     </tr>
   </tbody>
 </table>

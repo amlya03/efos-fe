@@ -134,6 +134,10 @@ export class DataEntryService {
   protected getKodeFasilitas = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/list_fasilitas');
   // //////////////////////////// Kode Fasilitas //////////////////////////////////////////////////
 
+  // //////////////////////////// Kode Fasilitas //////////////////////////////////////////////////
+  protected getKodeFasilitasall = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_fasilitas_all');
+  // //////////////////////////// Kode Fasilitas //////////////////////////////////////////////////
+
   // //////////////////////////// Ref List Kendaraan //////////////////////////////////////////////////
   protected refListKendaraan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_tipe_kendaraan');
   // //////////////////////////// Ref List Kendaraan //////////////////////////////////////////////////
@@ -280,6 +284,22 @@ export class DataEntryService {
   // /////////////////////////////  Ref List Skema Stepup \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected fetchlistskemastepup = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_skema_stepup');
   // /////////////////////////////  Ref List Skema Stepup \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // /////////////////////////////  Ref fetchdataretrivefasilitas\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchdataretrivefasilitas = this.applicationConfigService.getEndpointFor(this.baseUrl + '/v1/efos-ref/getRefFasilitas?si=');
+  // /////////////////////////////  Ref fetchdataretrivefasilitas\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // /////////////////////////////  Ref fetchdataretriveprogram\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchdataretriveprogram = this.applicationConfigService.getEndpointFor(this.baseUrl + '/v1/efos-ref/getRefProgram?si=');
+  // /////////////////////////////  Ref fetchdataretriveprogram\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // /////////////////////////////  Ref fetchdataretriveproduk\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchdataretriveproduk = this.applicationConfigService.getEndpointFor(this.baseUrl + '/v1/efos-ref/getRefProduk?si=');
+  // /////////////////////////////  Ref fetchdataretriveproduk\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // /////////////////////////////  Ref fetchdataretriveskema\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchdataretriveskema = this.applicationConfigService.getEndpointFor(this.baseUrl + '/v1/efos-ref/getRefSkema?si=');
+  // /////////////////////////////  Ref fetchdataretriveskema\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
@@ -455,6 +475,12 @@ export class DataEntryService {
   // //////////////////////////// Kode Fasilitas //////////////////////////////////////////////////
   getFetchKodeFasilitas(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getKodeFasilitas);
+  }
+  // //////////////////////////// Kode Fasilitas //////////////////////////////////////////////////
+
+  // //////////////////////////// Kode Fasilitas //////////////////////////////////////////////////
+  getFetchKodeFasilitasall(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getKodeFasilitasall);
   }
   // //////////////////////////// Kode Fasilitas //////////////////////////////////////////////////
 
@@ -658,6 +684,30 @@ export class DataEntryService {
     return this.http.get<ApiResponse>(this.fetchlistskemastepup);
   }
   // //////////////////////////// GET Skema Stepup //////////////////////////////////////////////////
+
+  // //////////////////////////// GET dataretrivefasilitas //////////////////////////////////////////////////
+  getdataretrivefasilitas(id: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchdataretrivefasilitas + id);
+  }
+  // //////////////////////////// GET dataretrivefasilitas //////////////////////////////////////////////////
+
+  // //////////////////////////// GET dataretrivefasilitas //////////////////////////////////////////////////
+  getdataretriveprogram(id: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchdataretriveprogram + id);
+  }
+  // //////////////////////////// GET dataretrivefasilitas //////////////////////////////////////////////////
+
+  // //////////////////////////// GET dataretriveproduk //////////////////////////////////////////////////
+  getdataretriveproduk(id: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchdataretriveproduk + id);
+  }
+  // //////////////////////////// GET dataretriveproduk //////////////////////////////////////////////////
+
+  // //////////////////////////// GET dataretriveskema //////////////////////////////////////////////////
+  getdataretriveskema(id: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchdataretriveskema + id);
+  }
+  // //////////////////////////// GET dataretriveskema //////////////////////////////////////////////////
 
   updatedCollateral(model: listAgunan): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(this.baseUrl + 'v1/efos-de/update_collateral', model);

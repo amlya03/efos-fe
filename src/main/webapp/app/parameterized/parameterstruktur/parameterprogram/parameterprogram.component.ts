@@ -15,6 +15,7 @@ export class ParameterprogramComponent implements OnInit {
 
   tablelistprogram: listCreatemodel[] = [];
   inputScoring: any;
+  dataretrive: any;
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
 
   ngOnInit(): void {
@@ -71,6 +72,159 @@ export class ParameterprogramComponent implements OnInit {
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Expired Date</label>' +
             '<div class="col-sm-8"><input type="date" class="form-control" id="expired_date"/> ' +
+            '</div></div>',
+          allowOutsideClick: false,
+          showDenyButton: true,
+          focusConfirm: false,
+        }).then(result => {
+          if (result.isConfirmed) {
+            const kode_fasilitas = $('#kode_fasilitas').val();
+            const program = $('#program').val();
+            const min_plafond = $('#min_plafond').val();
+            const max_plafond = $('#max_plafond').val();
+            const expired_date = $('#expired_date').val();
+
+            if (kode_fasilitas === '') {
+              alert('Kode Fasilitas Harus Di isi');
+              return;
+            } else if (program === '') {
+              alert('Profram harus di isi');
+              return;
+            } else if (min_plafond === '') {
+              alert('Min Platfron harus di isi');
+              return;
+            } else if (max_plafond === '') {
+              alert('Max Plafond harus di isi');
+              return;
+            } else if (expired_date === '') {
+              alert('Expired date harus di isi');
+              return;
+            } else {
+              //  if(active=='0'){
+              //     this.kirimactive=0;
+              //  }else{
+              //   this.kirimactive=1;
+              //  }
+
+              const body = {
+                kode_fasilitas: kode_fasilitas,
+                program: program,
+                min_plafond: min_plafond,
+                max_plafond: max_plafond,
+                expired_date: expired_date,
+              };
+              const headers = new HttpHeaders({
+                'Content-Type': 'application/json; charset=utf-8',
+                // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
+              });
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_program+++', body, { headers }).subscribe({
+                next: () => {
+                  // console.warn(response);
+                  // this.sessionStorageService.store('sessionPs', passwordbaru);
+                  const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: toast => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer);
+                      toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    },
+                  });
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'Data berhasil di simpan',
+                  });
+                },
+                error: () => {
+                  const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: toast => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer);
+                      toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    },
+                  });
+                  Toast.fire({
+                    icon: 'error',
+                    title: 'Data gagal di simpan',
+                  });
+                },
+              });
+            }
+          }
+        });
+      }
+    });
+  }
+
+  viewdataprogram(id: any): void {
+    const options = this.inputScoring.map((option: any) => {
+      return `
+        <option key="${option}" value="${option.kode_fasilitas}">
+            ${option.fasilitas}
+        </option>
+      `;
+    });
+
+    this.datEntryService.getdataretriveprogram(id).subscribe(table => {
+      this.dataretrive = table.result;
+    });
+    const data = this.dataretrive;
+    alert(data.program);
+    alert(this.dataretrive.max_plafond);
+    alert(this.dataretrive.min_plafond);
+    // alert(options.program);
+    Swal.fire({
+      title: 'Mohon Perhatikan',
+      text: 'Inputan yang sudah Terinput tidak bisa di edit ',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Tambah Data',
+      cancelButtonText: 'Tidak',
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Create Program',
+          html:
+            '<br />' +
+            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode Fasilitas</label>' +
+            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            '<div class="col-sm-8"><select class="form-control" id="kode_fasilitas"><option value=' +
+            data.kode_fasilitas +
+            '>Pilih Parameter</option>' +
+            `${options}` +
+            '</select>' +
+            '</div></div>' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Program</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="program" value=' +
+            data.program +
+            '/> ' +
+            '</div></div>' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Min Plafond</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="min_plafond" value=' +
+            data.min_plafond +
+            '/> ' +
+            '</div></div>' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Max Plafond</label>' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="max_plafond" value=' +
+            data.max_plafond +
+            '/> ' +
+            '</div></div>' +
+            '<br />' +
+            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Expired Date</label>' +
+            '<div class="col-sm-8"><input type="date" class="form-control" id="expired_date" value=' +
+            data.expired_date +
+            '/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,

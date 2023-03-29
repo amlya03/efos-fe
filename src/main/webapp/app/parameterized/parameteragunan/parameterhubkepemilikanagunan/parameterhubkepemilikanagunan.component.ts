@@ -17,7 +17,11 @@ export class ParameterhubkepemilikanagunanComponent implements OnInit {
   kirimactive: any;
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.datEntryService.getFetchListPemegangHak().subscribe(table => {
+      this.tablelisthubunganagunan = table.result;
+    });
+  }
 
   createhubkepemilikanagunan(): void {
     Swal.fire({

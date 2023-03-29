@@ -19,6 +19,7 @@ export class ParameterskemafasilitasComponent implements OnInit {
   kirimanskema: any;
   kirimactive: any;
   tampungpemecah: any;
+  // tablelistproduk: any;
 
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
 
@@ -27,6 +28,9 @@ export class ParameterskemafasilitasComponent implements OnInit {
       this.tablelistskemanew = table.result;
       // console.log(this.tablelistskema);
     });
+    // this.datEntryService.getListproduk().subscribe(table => {
+    //   this.tablelistproduk = table.result;
+    // });
   }
 
   createskemafasilitas(): void {
