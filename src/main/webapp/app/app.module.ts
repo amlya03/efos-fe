@@ -190,6 +190,7 @@ import { ParameterjobComponent } from './parameterized/parameterjob/parameterjob
     ParameterinformasidiriComponent,
     ParameterjenispekerjaanComponent,
     ParameterjobComponent,
+    DaftarAplikasiAppraisalComponent,
   ],
   bootstrap: [MainComponent],
 })

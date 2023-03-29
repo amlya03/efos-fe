@@ -201,7 +201,7 @@ export class ParameterskemaComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_skema+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_skema', body, { headers }).subscribe({
                 next: () => {
                   // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
