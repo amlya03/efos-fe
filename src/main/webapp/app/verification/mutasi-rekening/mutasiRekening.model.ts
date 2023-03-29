@@ -12,4 +12,6 @@ export class mutasiRekening {
   created_by?: string | null;
   updated_date?: string | null;
   updated_by?: string | null;
+  gaji_tercermin: string | number | null | undefined;
+  keterangan: string | number | null | undefined;
 }

@@ -1,4 +1,3 @@
-<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>
 <div class="row form-material">
   <div class="col-md-6">
     <label class="m-t-5">No Aplikasi</label>
@@ -21,9 +20,9 @@
     <div class="form-group">
       <select #fasilitas class="form-control">
         <option selected value="">Pilih Pencarian Berdasarkan Fasilitas</option>
-        <!-- <option *ngFor="let listFasilitas of listFasilitas" value="{{ listFasilitas.fasilitas }}">
+        <option *ngFor="let listFasilitas of listFasilitas" value="{{ listFasilitas.fasilitas }}">
           {{ listFasilitas.fasilitas }}
-        </option> -->
+        </option>
       </select>
     </div>
   </div>
@@ -40,15 +39,8 @@
     </button>
   </div>
   <p></p>
-  <p></p>
-  <p></p>
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-    <h3 style="color: #fff; text-align: center">Daftar Aplikasi</h3>
-  </div>
-  <p></p>
-  <p></p>
-  <div>
-    <button class="btn btn-info" style="float: right" (click)="checkuncheckall()">Pilih Semua</button>
+    <h3 style="color: #fff; text-align: center">Daftar Aplikasi Appraisal</h3>
   </div>
   <p></p>
   <p></p>
@@ -64,40 +56,24 @@
           <th hidden></th>
           <th style="text-align: center">Verification</th>
           <th></th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let listAppraisal of getListAppraisalProcess; index as i">
+        <tr *ngFor="let daWa of daWa; index as i">
           <td style="text-align: center">{{ i + 1 }}</td>
-          <td style="text-align: center">{{ listAppraisal.app_no_de }}</td>
-          <td style="text-align: center">{{ listAppraisal.nama }}</td>
-          <td style="text-align: center">{{ listAppraisal.program_pembiayaan }}</td>
-          <td style="text-align: center">{{ listAppraisal.kategori_pekerjaan }}</td>
-          <td hidden>{{ listAppraisal.kategori_pekerjaan === 'Fix Income' }}</td>
-          <td style="text-align: center">{{ listAppraisal.status_aplikasi_desc }}</td>
+          <td style="text-align: center">{{ daWa.app_no_de }}</td>
+          <td style="text-align: center">{{ daWa.nama }}</td>
+          <td style="text-align: center">{{ daWa.program_pembiayaan }}</td>
+          <td style="text-align: center">{{ daWa.kategori_pekerjaan }}</td>
+          <td hidden>{{ daWa.kategori_pekerjaan === 'Fix Income' }}</td>
+          <td style="text-align: center">{{ daWa.status_aplikasi_desc }}</td>
           <td style="text-align: center">
-            <input
-              id="checkDaWa{{ i + 1 }}"
-              (change)="getProoduct($event, listAppraisal.app_no_de)"
-              type="checkbox"
-              [checked]="isChecked"
-            />
-          </td>
-          <td style="text-align: center">
-            <a (click)="viewData(listAppraisal.app_no_de)"> <fa-icon icon="ellipsis"></fa-icon><br />Detail </a>
+            <a (click)="viewdataentry(daWa.app_no_de)" type="button"> <fa-icon icon="ellipsis"></fa-icon><br />Detail </a>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
   <p></p>
-  <p></p>
-  <div class="input-group" style="justify-content: center">
-    <div class="input-group-append">
-      <button type="button" class="btn btn-danger">Reject</button>
-      <button type="button" class="btn btn-warning" (click)="updateStatus()">Update Status</button>
-    </div>
-  </div>
 </div>
 <jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

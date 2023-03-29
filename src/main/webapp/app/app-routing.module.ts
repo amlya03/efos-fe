@@ -62,6 +62,7 @@ import { ParameterhubkepemilikanagunanComponent } from './parameterized/paramete
 import { ParameterjenisobjekagunanComponent } from './parameterized/parameteragunan/parameterjenisobjekagunan/parameterjenisobjekagunan.component';
 import { ParameterftpdpComponent } from './parameterized/parameterstruktur/parameterftpdp/parameterftpdp.component';
 import { ParameterjenispekerjaanComponent } from './parameterized/parameterjob/parameterjenispekerjaan/parameterjenispekerjaan.component';
+import { DaftarAplikasiAppraisalComponent } from './verification/daftar-aplikasi-isi-mapis/mapis/daftar-aplikasi-appraisal/daftar-aplikasi-appraisal.component';
 
 @NgModule({
   imports: [
@@ -321,6 +322,10 @@ import { ParameterjenispekerjaanComponent } from './parameterized/parameterjob/p
         {
           path: 'head-appraisal',
           component: HeadAppraisalComponent,
+        },
+        {
+          path: 'daftar-aplikasi-appraisal',
+          component: DaftarAplikasiAppraisalComponent,
         },
         {
           path: '',

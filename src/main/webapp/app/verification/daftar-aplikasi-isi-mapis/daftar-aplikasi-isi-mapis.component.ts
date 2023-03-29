@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/prefer-for-of */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/member-ordering */
+/* eslint-disable @typescript-eslint/no-unnecessary-boolean-literal-compare */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,6 +13,8 @@ import { daWaModel } from '../daftar-aplikasi-waiting-assigment/daWa.model';
 import { daWaModelAprisal } from '../daftar-aplikasi-waiting-assigment/daWaAprisal.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { getListFasilitasModel } from 'app/data-entry/services/config/getListFasilitasModel.model';
+import { SessionStorageService } from 'ngx-webstorage';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'jhi-daftar-aplikasi-isi-mapis',
@@ -16,6 +22,7 @@ import { getListFasilitasModel } from 'app/data-entry/services/config/getListFas
   styleUrls: ['./daftar-aplikasi-isi-mapis.component.scss'],
 })
 export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
+  baseUrl: string = environment.baseUrl;
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
   title = 'EFOS';
@@ -23,16 +30,16 @@ export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
   daWa?: daWaModel[] = [];
   getCheckDaWa: daWaModel[] = new Array<daWaModel>();
   listFasilitas: getListFasilitasModel[] = [];
-  daWaAprisal?: daWaModelAprisal[];
+  appraisalUser?: daWaModelAprisal[];
   onResponseSuccess: any;
   valueCariButton = '';
   kategori_pekerjaan = '';
-  kirimDe: any;
-  kirimStatusAplikasi: any;
+  kirimDe: daWaModel[] = [];
+  kirimStatusAplikasi: daWaModel[] = [];
   kirimAssign: any;
 
   // checklist dawa
-  checklistDaWa: any;
+  checkLenghtResult: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -40,12 +47,13 @@ export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
 
   constructor(
-    protected daWaService: ServiceVerificationService,
+    protected verificationServices: ServiceVerificationService,
     protected dataEntryServices: DataEntryService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected modalService: NgbModal,
-    protected http: HttpClient
+    protected http: HttpClient,
+    private sessionStorageService: SessionStorageService
   ) {}
 
   ngOnInit(): void {
@@ -60,7 +68,7 @@ export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
   load(): void {
     this.getLoading(true);
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
-    this.daWaService.getListAppAppraisal().subscribe(data => {
+    this.verificationServices.getListHeadAppraisal().subscribe(data => {
       // console.warn(data);
       if (data.code === 200) {
         this.daWa = data.result;
@@ -71,8 +79,13 @@ export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
     });
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
     // ///////////////////////// LIst Cari Fasilitas //////////////////////
-    this.dataEntryServices.getFetchKodeFasilitas().subscribe(data => {
-      this.listFasilitas = data.result;
+    // this.dataEntryServices.getFetchKodeFasilitas().subscribe(data => {
+    //   this.listFasilitas = data.result;
+    // });
+
+    // List Appraisal
+    this.verificationServices.getDaWaAprisal().subscribe(user => {
+      this.appraisalUser = user.result;
     });
   }
 
@@ -95,12 +108,91 @@ export class DaftarAplikasiIsiMapisComponent implements OnInit, OnDestroy {
     }, 50);
   }
 
-  viewdataentry(getAppNoDe: any): void {
-    this.router.navigate(['/mapis'], { queryParams: { app_no_de: getAppNoDe } });
-  }
-
   public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
+  }
+
+  // ceklis semua
+  isChecked = false;
+  checkuncheckall(): void {
+    if (this.isChecked === true) {
+      this.isChecked = false;
+    } else {
+      this.isChecked = true;
+    }
+  }
+
+  // Get Chek data
+  getProoduct(isSelected: any, appNoDe: any): void {
+    const checked = isSelected.target.checked;
+    if (checked) {
+      this.kirimDe.push(appNoDe);
+      // this.kirimStatusAplikasi.push(statusAplikasi);
+    } else {
+      const uncheckDE = this.kirimDe.findIndex((list: any) => list === appNoDe);
+      this.kirimDe.splice(uncheckDE, 1);
+
+      // const uncheckStatusApp = this.kirimStatusAplikasi.findIndex((list: any) => list === statusAplikasi);
+      // this.kirimStatusAplikasi.splice(uncheckStatusApp, 1);
+    }
+  }
+
+  viewData(getAppNoDe: any): void {
+    this.router.navigate(['/mapis'], { queryParams: { app_no_de: getAppNoDe } });
+  }
+
+  // post assign
+  postAssign(): void {
+    // setTimeout(() => {
+    if (this.kirimDe.length !== 0 && this.kirimAssign != null) {
+      if (this.isChecked === false) {
+        this.kirimDe;
+        for (let i = 0; i < this.kirimDe.length; i++) {
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-verif/appraisal_assignment', {
+              analis_verifikasi: this.kirimAssign,
+              app_no_de: this.kirimDe[i],
+              status_aplikasi: '3.0',
+              created_by: this.sessionStorageService.retrieve('sessionUserName'),
+            })
+            .subscribe({});
+          if (this.kirimDe[this.kirimDe.length - 1] === this.kirimDe[i]) {
+            alert('Data di Assign kepada ' + this.kirimAssign);
+            window.location.reload();
+          }
+        }
+      } else {
+        for (let i = 0; i < this.checkLenghtResult.length; i++) {
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-verif/appraisal_assignment', {
+              analis_verifikasi: this.kirimAssign,
+              app_no_de: this.checkLenghtResult[i].app_no_de,
+              status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+              created_by: this.sessionStorageService.retrieve('sessionUserName'),
+            })
+            .subscribe({});
+
+          if (this.checkLenghtResult[this.checkLenghtResult.length - 1] === this.checkLenghtResult[i]) {
+            alert('Data di Assign kepada ' + this.kirimAssign);
+            window.location.reload();
+          }
+        }
+      }
+    } else {
+      alert('Harap Pilih Data Terlebih Dahulu');
+    }
+    // }, 1000);
+
+    this.dtElement.dtInstance.then((dtIntance: DataTables.Api) => {
+      dtIntance.destroy();
+      this.dtOptions = {
+        pagingType: 'full_numbers',
+        pageLength: 10,
+        processing: true,
+        responsive: true,
+      };
+      this.dtTrigger.next(this.daWa);
+    });
   }
 }

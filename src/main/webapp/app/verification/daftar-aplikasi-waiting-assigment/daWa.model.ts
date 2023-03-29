@@ -89,4 +89,5 @@ export class daWaModel {
   joint_income?: string | null | undefined;
   plafon_analis?: string | null | undefined;
   tenor_analis?: string | null | undefined;
+  proses_appraisal: string | null | undefined | number;
 }

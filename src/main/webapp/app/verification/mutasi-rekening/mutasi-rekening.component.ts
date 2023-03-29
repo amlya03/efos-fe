@@ -102,6 +102,8 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
       kepemilikan_tabungan: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: false },
       kepemilikan_giro: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: false },
       kepemilikan_deposito: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: false },
+      gaji_tercermin: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '1' },
+      keterangan: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: 'Nasabah' },
     });
 
     this.load();
@@ -167,10 +169,12 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           kepemilikan_tabungan: this.postKepemilikanTabungan,
           kepemilikan_giro: this.postKepemilikanGiro,
           kepemilikan_deposito: this.postKepemilikanDeposito,
+          gaji_tercermin: this.mutasiForm.get('gaji_tercermin')?.value,
+          keterangan: this.mutasiForm.get('keterangan')?.value,
         })
         .subscribe({
           next() {
-            window.location.reload();
+            // window.location.reload();
           },
           error: error => console.warn(error),
         });
@@ -191,10 +195,12 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           kepemilikan_deposito: this.postKepemilikanDeposito,
           updated_by: this.sessionStorageService.retrieve('sessionUserName'),
           updated_date: '',
+          gaji_tercermin: this.mutasiForm.get('gaji_tercermin')?.value,
+          keterangan: this.mutasiForm.get('keterangan')?.value,
         })
         .subscribe({
           next() {
-            window.location.reload();
+            // window.location.reload();
           },
           error: error => console.warn(error),
         });
@@ -242,6 +248,8 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
           kepemilikan_tabungan: this.getKepemilikanTabungan,
           kepemilikan_giro: this.getKepemilikanGiro,
           kepemilikan_deposito: this.getKepemilikanDeposito,
+          gaji_tercermin: this.getTableMutasi.gaji_tercermin,
+          keterangan: this.getTableMutasi.keterangan,
         };
         this.mutasiForm.setValue(retriveMutasi);
       });

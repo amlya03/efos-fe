@@ -487,6 +487,47 @@
     </div>
   </div>
   <br />
+  <div class="row form-material">
+    <label class="col-sm-2 col-form-label">Jumlah Pinjaman Kantor</label>
+    <div class="col-sm-10">
+      <input
+        type="text"
+        class="form-control"
+        maxlength="20"
+        formControlName="jumlah_pinjaman_kantor"
+        currencyMask
+        [options]="{ prefix: 'Rp. ', thousands: ',', decimal: '.', precision: 0 }"
+      />
+    </div>
+  </div>
+  <br />
+  <div class="row form-material">
+    <label class="col-sm-2 col-form-label">Komponen Gaji</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" maxlength="30" formControlName="komponen_gaji" />
+    </div>
+  </div>
+  <br />
+  <div class="row form-material">
+    <label class="col-sm-2 col-form-label">Pembayaran Gaji</label>
+    <div [class]="dataKantorForm.get('pembayaran_gaji')?.value === 'Keterangan lain' ? 'col-sm-5' : 'col-sm-10'">
+      <select class="form-control" formControlName="pembayaran_gaji">
+        <option value="">Pilih Data</option>
+        <option *ngFor="let list of listPembayaranGaji" value="{{ list.deskripsi }}">{{ list.deskripsi }}</option>
+      </select>
+    </div>
+    <div class="col-sm-5" *ngIf="dataKantorForm.get('pembayaran_gaji')?.value === 'Keterangan lain'">
+      <input type="text" class="form-control" maxlength="100" formControlName="pembayaran_gaji_input" />
+    </div>
+  </div>
+  <br />
+  <div class="row form-material">
+    <label class="col-sm-2 col-form-label">Tenor Pinjaman Kantor</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" maxlength="20" formControlName="tenor_pinjaman_kantor" />
+    </div>
+  </div>
+  <br />
   <br />
   <br />
   <div class="row">

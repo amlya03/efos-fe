@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -18,9 +19,21 @@ export class ServiceVerificationService {
   protected getNavbar = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos/users/menu');
   // /////////////////////////////////// NAVBAR /////////////////////////////////////////////////////////////////////////////////////
 
+  // ///////////////////////////////// Daftar APlikasi Head Appraisal ///////////////////////////////////////////////////////////getListAppAppraisal
+  protected getListHeadAppraisalUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/list_app_appraisal');
+  // ///////////////////////////////// Daftar APlikasi Head Appraisal ///////////////////////////////////////////////////////////
+
   // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////getListAppAppraisal
-  protected getListAppAppraisalUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/list_app_appraisal');
+  protected getListAppAppraisalProcessUrl = this.applicationConfigService.getEndpointFor(
+    this.baseUrl + 'v1/efos-verif/list_app_appraisal_process'
+  );
   // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////
+
+  // ///////////////////////////////// Daftar APlikasi Appraisal Review ///////////////////////////////////////////////////////////getListAppAppraisal
+  protected getListAppraisalReviewUrl = this.applicationConfigService.getEndpointFor(
+    this.baseUrl + 'v1/efos-verif/list_app_appraisal_review'
+  );
+  // ///////////////////////////////// Daftar APlikasi Appraisal Review ///////////////////////////////////////////////////////////
 
   // ///////////////////////////////// Daftar APlikasi Waiting Assigment ///////////////////////////////////////////////////////////
   protected getListAllVerifUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/list_app_verif');
@@ -31,7 +44,6 @@ export class ServiceVerificationService {
   // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
 
   // //////////////////////service daftar aplikasi waiting assign\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  protected allDataVerif = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/list_app_verif');
   protected listAprisal = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/list_appraisal');
   // //////////////////////service daftar aplikasi waiting assign\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -135,6 +147,11 @@ export class ServiceVerificationService {
   // ///////////////////////////////////////////////////////////// Ref list imb appraisal  ///////////////////////////////////////////////////////////
   protected listImbAppraisal = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_imb_appraisal');
   // //////////////////////////////////////////////////////////// Ref list imb appraisal ////////////////////////////////////////////////////////////
+
+  // ////////////////////////////////// List Analis //////////////////////////////////////////////////////////////
+  protected listAnalys = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/list_analyst');
+  // ////////////////////////////////// List Analis //////////////////////////////////////////////////////////////
+
   // ////////////////////// REFF \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
@@ -151,7 +168,11 @@ export class ServiceVerificationService {
   }
 
   getDaWa(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.allDataVerif);
+    return this.http.get<ApiResponse>(this.getListAllVerifUrl);
+  }
+
+  getListAnalys(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.listAnalys);
   }
 
   getDaWaAprisal(): Observable<ApiResponse> {
@@ -237,11 +258,23 @@ export class ServiceVerificationService {
   }
   // //////////////////////// MAPIS ///////////////////////////////////////////////////////////////////////
 
-  // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////
-  getListAppAppraisal(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.getListAppAppraisalUrl);
+  // ///////////////////////////////// Daftar APlikasi Head Appraisal ///////////////////////////////////////////////////////////
+  getListHeadAppraisal(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getListHeadAppraisalUrl);
   }
-  // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////
+  // ///////////////////////////////// Daftar APlikasi Head Appraisal ///////////////////////////////////////////////////////////
+
+  // ///////////////////////////////// Daftar APlikasi Appraisal proses ///////////////////////////////////////////////////////////
+  getListAppraisalProcess(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getListAppAppraisalProcessUrl);
+  }
+  // ///////////////////////////////// Daftar APlikasi Appraisal proses ///////////////////////////////////////////////////////////
+
+  // ///////////////////////////////// Daftar APlikasi Appraisal review ///////////////////////////////////////////////////////////
+  getListAppraisalReview(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.getListAppraisalReviewUrl);
+  }
+  // ///////////////////////////////// Daftar APlikasi Appraisal review ///////////////////////////////////////////////////////////
 
   // ///////////////////// REF ////////////////////////////////////////////////
   // ////////////////////// Ref Hubungan Agunan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

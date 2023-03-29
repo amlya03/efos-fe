@@ -15,4 +15,6 @@ export class listMutasi {
   kepemilikan_tabungan?: number;
   kepemilikan_giro?: number;
   kepemilikan_deposito?: number;
+  gaji_tercermin: string | number | null | undefined;
+  keterangan: string | number | null | undefined;
 }
