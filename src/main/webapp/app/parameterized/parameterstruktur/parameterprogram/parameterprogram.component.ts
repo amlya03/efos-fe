@@ -175,9 +175,12 @@ export class ParameterprogramComponent implements OnInit {
       this.dataretrive = table.result;
     });
     const data = this.dataretrive;
-    alert(data.program);
-    alert(this.dataretrive.max_plafond);
-    alert(this.dataretrive.min_plafond);
+    const nama = this.dataretrive.program.substring(0, 3);
+    const namaprogram = this.dataretrive.program;
+    // alert(namaprogram);
+    // alert(data.program);
+    // alert(this.dataretrive.max_plafond);
+    // alert(this.dataretrive.min_plafond);
     // alert(options.program);
     Swal.fire({
       title: 'Mohon Perhatikan',
@@ -198,33 +201,35 @@ export class ParameterprogramComponent implements OnInit {
             // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '<div class="col-sm-8"><select class="form-control" id="kode_fasilitas"><option value=' +
             data.kode_fasilitas +
-            '>Pilih Parameter</option>' +
+            '>' +
+            nama +
+            '</option>' +
             `${options}` +
             '</select>' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Program</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="program" value=' +
-            data.program +
-            '/> ' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="program" value="' +
+            namaprogram +
+            '"> ' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Min Plafond</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="min_plafond" value=' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="min_plafond" value="' +
             data.min_plafond +
-            '/> ' +
+            '"> ' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Max Plafond</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="max_plafond" value=' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="max_plafond" value="' +
             data.max_plafond +
-            '/> ' +
+            '"> ' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Expired Date</label>' +
-            '<div class="col-sm-8"><input type="date" class="form-control" id="expired_date" value=' +
+            '<div class="col-sm-8"><input type="date" class="form-control" id="expired_date" value="' +
             data.expired_date +
-            '/> ' +
+            '"> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
