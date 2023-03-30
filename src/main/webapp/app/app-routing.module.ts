@@ -63,6 +63,7 @@ import { DaftarAplikasiAppraisalComponent } from './verification/daftar-aplikasi
 import { ParameterjenisobjekagunanComponent } from './parameterized/parameteragunan/parameterjenisobjekagunan/parameterjenisobjekagunan.component';
 import { ParameterftpdpComponent } from './parameterized/parameterstruktur/parameterftpdp/parameterftpdp.component';
 import { ParameterjenispekerjaanComponent } from './parameterized/parameterjob/parameterjenispekerjaan/parameterjenispekerjaan.component';
+import { DaftarAplikasiReviewSpvComponent } from './verification/daftar-aplikasi-review-spv/daftar-aplikasi-review-spv.component';
 
 @NgModule({
   imports: [
@@ -102,7 +103,7 @@ import { ParameterjenispekerjaanComponent } from './parameterized/parameterjob/p
         },
         {
           path: 'daftar-review-spv2',
-          component: DaftarAplikasiWaitingUpdateStatusComponent,
+          component: DaftarAplikasiReviewSpvComponent,
         },
         {
           path: 'data-calon-nasabah',

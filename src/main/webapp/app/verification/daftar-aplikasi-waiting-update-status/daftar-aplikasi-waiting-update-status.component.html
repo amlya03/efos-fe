@@ -48,7 +48,7 @@
   </div>
   <p></p>
   <br />
-  <div>
+  <div [hidden]="this.userRole === 'VER_PRE_SPV_2'">
     <button class="btn btn-info" style="float: right" (click)="checkuncheckall()">Pilih Semua</button>
   </div>
   <br />
@@ -65,7 +65,7 @@
           <th hidden></th>
           <th style="text-align: center">Nama Analys</th>
           <th style="text-align: center">Status</th>
-          <th style="text-align: center"></th>
+          <th style="text-align: center" [hidden]="this.userRole === 'VER_PRE_SPV_2'"></th>
           <th style="text-align: center"></th>
         </tr>
       </thead>
