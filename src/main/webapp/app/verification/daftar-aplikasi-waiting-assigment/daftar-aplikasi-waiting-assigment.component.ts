@@ -38,6 +38,7 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
   kirimDe: number[] = [];
   kirimStatusAplikasi: number[] = [];
   kirimAssign: any;
+  kirimNamaNasabah: number[] = [];
 
   // checklist dawa
   checkLenghtResult: any;
@@ -123,16 +124,20 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
     }
   }
 
-  getProoduct(isSelected: any, appNoDe: any, statusAplikasi: any): void {
+  getProoduct(isSelected: any, appNoDe: any, statusAplikasi: any, namaNasabah: any): void {
     const checked = isSelected.target.checked;
     if (checked) {
       this.kirimDe.push(appNoDe);
       this.kirimStatusAplikasi.push(statusAplikasi);
+      this.kirimNamaNasabah.push(namaNasabah);
     } else {
       const index = this.kirimDe.findIndex(list => list === appNoDe);
       this.kirimDe.splice(index, 1);
+
+      const namaMin = this.kirimNamaNasabah.findIndex((listNama: any) => listNama === namaNasabah);
+      this.kirimNamaNasabah.splice(namaMin, 1);
     }
-    // console.warn(this.kirimStatusAplikasi);
+    // console.warn(this.kirimNamaNasabah);
     // console.warn(this.kirimDe);
   }
 
@@ -143,34 +148,179 @@ export class DaftarAplikasiWaitingAssigmentComponent implements OnInit, OnDestro
       if (this.isChecked === false) {
         this.kirimDe;
         for (let i = 0; i < this.kirimDe.length; i++) {
-          this.http
-            .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
-              analis_verifikasi: this.kirimAssign,
-              app_no_de: this.kirimDe[i],
-              status_aplikasi: '3.0.1',
-              created_by: this.sessionStorageService.retrieve('sessionUserName'),
-            })
-            .subscribe({});
-          if (this.kirimDe[this.kirimDe.length - 1] === this.kirimDe[i]) {
-            alert('Data di Assign kepada ' + this.kirimAssign);
-            window.location.reload();
-          }
+          Swal.fire({
+            title: 'Catatan',
+            html:
+              '<div class="row form-material" style="width: 100%;">' +
+              '<label>Catatan Kepada Analis ' +
+              this.kirimAssign +
+              ' untuk Nasabah ' +
+              this.kirimNamaNasabah[i] +
+              '</label>' +
+              '<br />' +
+              '<p></p>' +
+              '<div class="form-group row">' +
+              '<label class="col-sm-2 col-form-label"></label>' +
+              '<div class="col-sm-10"><textarea class="form-control" cols="10" rows="5" id="catatan"></textarea>' +
+              '</div></div><p></p>' +
+              '<div>',
+            focusConfirm: false,
+            showConfirmButton: true,
+            confirmButtonText: 'Simpan',
+            // allowOutsideClick: false,
+          }).then(() => {
+            const catatanValue = $('#catatan').val();
+            if (catatanValue) {
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-de/create_memo', {
+                  id: 0,
+                  keterangan: catatanValue,
+                  users: this.sessionStorageService.retrieve('sessionFullName'),
+                  role: this.sessionStorageService.retrieve('sessionRole'),
+                  app_no_de: this.kirimDe[i],
+                  created_date: '',
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({
+                  next: () => {
+                    this.http
+                      .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
+                        analis_verifikasi: this.kirimAssign,
+                        app_no_de: this.kirimDe[i],
+                        status_aplikasi: '3.0.1',
+                        created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                      })
+                      .subscribe({});
+                    if (this.kirimDe[this.kirimDe.length - 1] === this.kirimDe[i]) {
+                      alert('Data di Assign kepada ' + this.kirimAssign);
+                      window.location.reload();
+                    }
+                  },
+                  error(error) {
+                    alert(error.error.message);
+                  },
+                });
+            } else {
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-de/create_memo', {
+                  id: 0,
+                  keterangan: 'Tidak Ada',
+                  users: this.sessionStorageService.retrieve('sessionFullName'),
+                  role: this.sessionStorageService.retrieve('sessionRole'),
+                  app_no_de: this.kirimDe[i],
+                  created_date: '',
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({
+                  next: () => {
+                    this.http
+                      .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
+                        analis_verifikasi: this.kirimAssign,
+                        app_no_de: this.kirimDe[i],
+                        status_aplikasi: '3.0.1',
+                        created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                      })
+                      .subscribe({});
+                    if (this.kirimDe[this.kirimDe.length - 1] === this.kirimDe[i]) {
+                      alert('Data di Assign kepada ' + this.kirimAssign);
+                      window.location.reload();
+                    }
+                  },
+                  error(error) {
+                    alert(error.error.message);
+                  },
+                });
+            }
+          });
         }
       } else {
         for (let i = 0; i < this.checkLenghtResult.length; i++) {
-          this.http
-            .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
-              analis_verifikasi: this.kirimAssign,
-              app_no_de: this.checkLenghtResult[i].app_no_de,
-              status_aplikasi: '3.0.1',
-              created_by: this.sessionStorageService.retrieve('sessionUserName'),
-            })
-            .subscribe({});
+          Swal.fire({
+            title: 'Catatan',
+            html:
+              '<div class="row form-material" style="width: 100%;">' +
+              '<label>Catatan Kepada Analis ' +
+              this.kirimAssign +
+              ' untuk Nasabah ' +
+              this.kirimNamaNasabah[i] +
+              '</label>' +
+              '<br />' +
+              '<p></p>' +
+              '<div class="form-group row">' +
+              '<label class="col-sm-2 col-form-label"></label>' +
+              '<div class="col-sm-10"><textarea class="form-control" cols="10" rows="5" id="catatan"></textarea>' +
+              '</div></div><p></p>' +
+              '<div>',
+            focusConfirm: false,
+            showConfirmButton: true,
+            confirmButtonText: 'Simpan',
+            // allowOutsideClick: false,
+          }).then(() => {
+            const catatanValue = $('#catatan').val();
+            if (catatanValue) {
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-de/create_memo', {
+                  id: 0,
+                  keterangan: catatanValue,
+                  users: this.sessionStorageService.retrieve('sessionFullName'),
+                  role: this.sessionStorageService.retrieve('sessionRole'),
+                  app_no_de: this.kirimDe[i],
+                  created_date: '',
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({
+                  next: () => {
+                    this.http
+                      .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
+                        analis_verifikasi: this.kirimAssign,
+                        app_no_de: this.checkLenghtResult[i].app_no_de,
+                        status_aplikasi: '3.0.1',
+                        created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                      })
+                      .subscribe({});
 
-          if (this.checkLenghtResult[this.checkLenghtResult.length - 1] === this.checkLenghtResult[i]) {
-            alert('Data di Assign kepada ' + this.kirimAssign);
-            window.location.reload();
-          }
+                    if (this.checkLenghtResult[this.checkLenghtResult.length - 1] === this.checkLenghtResult[i]) {
+                      alert('Data di Assign kepada ' + this.kirimAssign);
+                      window.location.reload();
+                    }
+                  },
+                  error(error) {
+                    alert(error.error.message);
+                  },
+                });
+            } else {
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-de/create_memo', {
+                  id: 0,
+                  keterangan: 'Tidak Ada',
+                  users: this.sessionStorageService.retrieve('sessionFullName'),
+                  role: this.sessionStorageService.retrieve('sessionRole'),
+                  app_no_de: this.kirimDe[i],
+                  created_date: '',
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({
+                  next: () => {
+                    this.http
+                      .post<any>(this.baseUrl + 'v1/efos-verif/verif_assignment', {
+                        analis_verifikasi: this.kirimAssign,
+                        app_no_de: this.checkLenghtResult[i].app_no_de,
+                        status_aplikasi: '3.0.1',
+                        created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                      })
+                      .subscribe({});
+
+                    if (this.checkLenghtResult[this.checkLenghtResult.length - 1] === this.checkLenghtResult[i]) {
+                      alert('Data di Assign kepada ' + this.kirimAssign);
+                      window.location.reload();
+                    }
+                  },
+                  error(error) {
+                    alert(error.error.message);
+                  },
+                });
+            }
+          });
         }
       }
     } else {

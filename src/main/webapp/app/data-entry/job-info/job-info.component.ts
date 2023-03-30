@@ -145,6 +145,7 @@ export class JobInfoComponent implements OnInit {
       tipe_kepegawaian: '',
       jenis_bidang: '',
       sektor_ekonomi: '',
+      lama_beroperasi: '',
     });
     this.datajobsebelum = this.formBuilder.group({
       kategori_pekerjaan_sebelum: '',
@@ -672,6 +673,7 @@ export class JobInfoComponent implements OnInit {
         tipe_kepegawaian: this.jobInfoForm.get('tipe_kepegawaian')?.value,
         tipe_pekerjaan: this.jobInfoForm.get('tipe_pekerjaan')?.value,
         tipe_perusahaan: this.jobInfoForm.get('tipe_perusahaan')?.value,
+        lama_beroperasi: this.jobInfoForm.get('lama_beroperasi')?.value,
         total_pendapatan:
           Number(this.jobInfoForm.get('pendapatan')?.value) +
           Number(this.jobInfoForm.get('pendapatan_lain')?.value) +

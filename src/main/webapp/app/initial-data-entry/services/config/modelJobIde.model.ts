@@ -64,4 +64,5 @@ export class modelJobIde {
   status_active: string | number | undefined | null;
   jenis_pekerjaan: string | number | undefined | null;
   jenis_pekerjaan_sebelum: string | number | undefined | null;
+  lama_beroperasi: string | number | undefined | null;
 }

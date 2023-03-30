@@ -196,7 +196,12 @@
                 hidden
               ></span>
             </div>
-            <div *ngIf="navbar.menu_name === 'Verification' && untukSessionRole === 'VER_PRE_SPV'">
+            <div
+              *ngIf="
+                (navbar.menu_name === 'Verification' && untukSessionRole === 'VER_PRE_SPV') ||
+                (navbar.menu_name === 'Verification' && untukSessionRole === 'VER_PRE_SPV_2')
+              "
+            >
               <span class="col nav-link" routerLink="daftar-aplikasi-waiting-assigment" hidden></span>
               <span class="col nav-link" routerLink="daftar-aplikasi-on-process" hidden></span>
               <span class="col nav-link" routerLink="daftar-review-spv1" hidden></span>
@@ -431,52 +436,6 @@
   </div>
   <div
     *ngIf="
-      router.url === '/daftar-aplikasi-waiting-assigment' ||
-      router.url === '/daftar-aplikasi-on-process' ||
-      router.url === '/daftar-review-spv1' ||
-      router.url === '/daftar-review-spv2'
-    "
-  >
-    <a
-      class="nav-item nav-link"
-      routerLink="daftar-aplikasi-waiting-assigment"
-      [routerLinkActive]="'active'"
-      [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="'VER_PRE_SPV'"
-    >
-      <h6>Daftar Aplikasi Waiting Assigment</h6>
-    </a>
-    <a
-      class="nav-item nav-link"
-      routerLink="daftar-aplikasi-on-process"
-      [routerLinkActive]="'active'"
-      [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="'VER_PRE_SPV'"
-    >
-      <h6>Daftar Aplikasi On Process</h6>
-    </a>
-    <a
-      class="nav-item nav-link"
-      routerLink="daftar-review-spv1"
-      [routerLinkActive]="'active'"
-      [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="'VER_PRE_SPV'"
-    >
-      <h6>Daftar Review SPV1</h6>
-    </a>
-
-    <a
-      class="nav-item nav-link"
-      routerLink="daftar-review-spv2"
-      [routerLinkActive]="'active'"
-      [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="'VER_PRE_SPV_2'"
-    >
-      <h6>Daftar Review SPV2</h6>
-    </a>
-  </div>
-  <div
-    *ngIf="
       router.url === '/analisa-keuangan' ||
       router.url === '/analisa-keuangan?app_no_de=' + this.app_no_de + '&curef=' + this.curef ||
       router.url === '/data-calon-nasabah' ||
@@ -503,7 +462,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV_2' || untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Checklist Document</h6>
     </a>
@@ -513,7 +472,7 @@
       [routerLinkActive]="'active'"
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV_2' || untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Detail Analisa</h6>
     </a>
@@ -523,7 +482,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV_2' || untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Data Kantor</h6>
     </a>
@@ -533,7 +492,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV_2' || untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Mutasi Rekening</h6>
     </a>
@@ -543,7 +502,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV_2' || untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Analisa Keuangan</h6>
     </a>
@@ -553,7 +512,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV_2' || untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Struktur Pembiayaan</h6>
     </a>
@@ -563,7 +522,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV_2' || untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Syarat Persetujuan</h6>
     </a>
@@ -573,7 +532,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV_2' || untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Kesimpulan</h6>
     </a>
@@ -583,7 +542,7 @@
       [queryParams]="{ app_no_de: this.app_no_de, curef: this.curef }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
+      *ngIf="untukSessionRole == 'VER_PRE_SPV_2' || untukSessionRole == 'VER_PRE_SPV' || untukSessionRole == 'VER_PRESCR'"
     >
       <h6>Memo</h6>
     </a>
@@ -658,7 +617,11 @@
       (router.url === '/upload_document/upload_document_de?curef=' + this.curef + '&app_no_de=' + this.app_no_de &&
         untukSessionRole === 'VER_PRE_SPV') ||
       (router.url === '/upload_document/upload_document_agunan?curef=' + this.curef + '&app_no_de=' + this.app_no_de &&
-        untukSessionRole === 'VER_PRE_SPV')
+        untukSessionRole === 'VER_PRE_SPV') ||
+      (router.url === '/upload_document/upload_document_de?curef=' + this.curef + '&app_no_de=' + this.app_no_de &&
+        untukSessionRole === 'VER_PRE_SPV_2') ||
+      (router.url === '/upload_document/upload_document_agunan?curef=' + this.curef + '&app_no_de=' + this.app_no_de &&
+        untukSessionRole === 'VER_PRE_SPV_2')
     "
   >
     <!-- <div>
@@ -675,7 +638,12 @@
       }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
+      *ngIf="
+        untukSessionRole === 'AO' ||
+        untukSessionRole === 'VER_PRE_SPV' ||
+        untukSessionRole === 'VER_PRE_SPV_2' ||
+        untukSessionRole === 'BRANCHMANAGER'
+      "
     >
       <h6>Personal Info</h6>
     </a>
@@ -690,7 +658,12 @@
       routerLink="data-entry/job-info"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
+      *ngIf="
+        untukSessionRole === 'AO' ||
+        untukSessionRole === 'VER_PRE_SPV' ||
+        untukSessionRole === 'VER_PRE_SPV_2' ||
+        untukSessionRole === 'BRANCHMANAGER'
+      "
     >
       <span
         class="col nav-link"
@@ -715,7 +688,12 @@
       routerLink="data-entry/data-pasangan"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
+      *ngIf="
+        untukSessionRole === 'AO' ||
+        untukSessionRole === 'VER_PRE_SPV' ||
+        untukSessionRole === 'VER_PRE_SPV_2' ||
+        untukSessionRole === 'BRANCHMANAGER'
+      "
     >
       <h6>Data Pasangan</h6>
     </a>
@@ -728,7 +706,12 @@
       routerLink="data-entry/pekerjaan-pasangan"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
+      *ngIf="
+        untukSessionRole === 'AO' ||
+        untukSessionRole === 'VER_PRE_SPV' ||
+        untukSessionRole === 'VER_PRE_SPV_2' ||
+        untukSessionRole === 'BRANCHMANAGER'
+      "
       [hidden]="
         this.modelIde.fasilitas_name === 'PTA' ||
         statusPerkawinan === 'BELUM KAWIN' ||
@@ -747,7 +730,12 @@
       routerLink="data-entry/collateral"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
+      *ngIf="
+        untukSessionRole === 'AO' ||
+        untukSessionRole === 'VER_PRE_SPV' ||
+        untukSessionRole === 'VER_PRE_SPV_2' ||
+        untukSessionRole === 'BRANCHMANAGER'
+      "
       [hidden]="this.modelIde.fasilitas_name === 'PTA'"
     >
       <span
@@ -773,7 +761,12 @@
       routerLink="data-entry/struktur-pembiayaan"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
+      *ngIf="
+        untukSessionRole === 'AO' ||
+        untukSessionRole === 'VER_PRE_SPV' ||
+        untukSessionRole === 'VER_PRE_SPV_2' ||
+        untukSessionRole === 'BRANCHMANAGER'
+      "
     >
       <h6>Struktur Pembiayaan</h6>
     </a>
@@ -787,7 +780,12 @@
       routerLink="data-entry/emergency-contact"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
+      *ngIf="
+        untukSessionRole === 'AO' ||
+        untukSessionRole === 'VER_PRE_SPV' ||
+        untukSessionRole === 'VER_PRE_SPV_2' ||
+        untukSessionRole === 'BRANCHMANAGER'
+      "
     >
       <h6>Emergency Contact</h6>
     </a>
@@ -801,7 +799,12 @@
       }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
+      *ngIf="
+        untukSessionRole === 'AO' ||
+        untukSessionRole === 'VER_PRE_SPV' ||
+        untukSessionRole === 'VER_PRE_SPV_2' ||
+        untukSessionRole === 'BRANCHMANAGER'
+      "
     >
       <h6>Call Report</h6>
     </a>
@@ -814,7 +817,7 @@
       }"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      *ngIf="untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
+      *ngIf="untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'VER_PRE_SPV_2' || untukSessionRole === 'BRANCHMANAGER'"
     >
       <h6>Upload Document Data Entry</h6>
     </a>
@@ -827,7 +830,7 @@
         curef: this.curef,
         app_no_de: this.app_no_de
       }"
-      *ngIf="untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
+      *ngIf="untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'VER_PRE_SPV_2' || untukSessionRole === 'BRANCHMANAGER'"
       [hidden]="dataEntry.kode_fasilitas_name === 'PTA'"
     >
       <h6>Upload Document Agunan</h6>
@@ -841,7 +844,12 @@
         curef: this.curef,
         app_no_de: this.app_no_de
       }"
-      *ngIf="untukSessionRole === 'AO' || untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'BRANCHMANAGER'"
+      *ngIf="
+        untukSessionRole === 'AO' ||
+        untukSessionRole === 'VER_PRE_SPV' ||
+        untukSessionRole === 'VER_PRE_SPV_2' ||
+        untukSessionRole === 'BRANCHMANAGER'
+      "
     >
       <h6>Memo</h6>
     </a>
@@ -1144,5 +1152,56 @@
     </a>
   </div>
   <!-- End Tab Module Appraisal -->
+
+  <!-- Start Tab Module SPV1 dan SPV2 -->
+  <div
+    *ngIf="
+      router.url === '/daftar-aplikasi-waiting-assigment' ||
+      router.url === '/daftar-aplikasi-on-process' ||
+      router.url === '/daftar-review-spv1' ||
+      router.url === '/daftar-review-spv2'
+    "
+  >
+    <a
+      class="nav-item nav-link"
+      routerLink="daftar-aplikasi-waiting-assigment"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngIf="untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'VER_PRE_SPV_2'"
+    >
+      <h6>Daftar Aplikasi Assigment</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="daftar-aplikasi-on-process"
+      [queryParams]="{
+        app_no_de: this.app_no_de
+      }"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngIf="untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'VER_PRE_SPV_2'"
+    >
+      <h6>Daftar Aplikasi On Process</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="daftar-review-spv1"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngIf="untukSessionRole === 'VER_PRE_SPV' || untukSessionRole === 'VER_PRE_SPV_2'"
+    >
+      <h6>{{ untukSessionRole === 'VER_PRE_SPV' ? 'Daftar Aplikasi Review' : 'Daftar Aplikasi SPV1' }}</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="daftar-review-spv2"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngIf="untukSessionRole === 'VER_PRE_SPV_2'"
+    >
+      <h6>Daftar Aplikasi Review</h6>
+    </a>
+  </div>
+  <!-- End Tab Module SPV2 -->
 </nav>
 <jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>

@@ -51,7 +51,12 @@
               <fa-icon icon="ellipsis"></fa-icon>
               <br />Detail
             </a>
-            <strong *ngIf="initialDataEntry.status_aplikasi.includes('9')">{{ initialDataEntry.status_aplikasi_desc }}</strong>
+            <h6
+              *ngIf="initialDataEntry.status_aplikasi.includes('9')"
+              [ngStyle]="{ color: initialDataEntry.status_aplikasi.includes('9') ? 'red' : 'green' }"
+            >
+              {{ initialDataEntry.status_aplikasi_desc }}
+            </h6>
           </td>
         </tr>
       </tbody>

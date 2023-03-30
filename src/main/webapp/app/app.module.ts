@@ -92,6 +92,7 @@ import { ParameterftpdpdetailComponent } from './parameterized/parameterstruktur
 import { ParameterinformasidiriComponent } from './parameterized/parameterinformasidiri/parameterinformasidiri.component';
 import { ParameterjenispekerjaanComponent } from './parameterized/parameterjob/parameterjenispekerjaan/parameterjenispekerjaan.component';
 import { ParameterjobComponent } from './parameterized/parameterjob/parameterjob.component';
+import { DaftarAplikasiReviewSpvComponent } from './verification/daftar-aplikasi-review-spv/daftar-aplikasi-review-spv.component';
 
 @NgModule({
   imports: [
@@ -191,6 +192,7 @@ import { ParameterjobComponent } from './parameterized/parameterjob/parameterjob
     ParameterjenispekerjaanComponent,
     ParameterjobComponent,
     DaftarAplikasiAppraisalComponent,
+    DaftarAplikasiReviewSpvComponent,
   ],
   bootstrap: [MainComponent],
 })

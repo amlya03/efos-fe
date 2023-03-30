@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable @typescript-eslint/prefer-for-of */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
@@ -211,5 +212,95 @@ export class HeadAppraisalComponent implements OnInit {
       alert('Harap Pilih Data Terlebih Dahulu');
     }
     // }, 1000);
+  }
+
+  // Reject
+  postReject(): void {
+    Swal.fire({
+      title: 'Forward Ke Data Entry atau Reject Data?',
+      text: 'Pilih Forward Ke Data Entry atau Reject Data',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Forward Ke Data Entry!',
+      cancelButtonText: 'Reject Data!',
+    }).then(result => {
+      if (result.value) {
+        if (this.kirimDe.length != 0) {
+          if (this.isChecked) {
+            for (let i = 0; i < this.checkLenghtResult.length; i++) {
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-de/update_status_back_de', {
+                  app_no_de: this.checkLenghtResult[i].app_no_de,
+                  status_aplikasi: '3.0.0.2',
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({});
+              if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
+                Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Data Entry', 'success').then(() => {
+                  window.location.reload();
+                });
+              }
+            }
+          } else {
+            this.kirimDe;
+            for (let i = 0; i < this.kirimDe.length; i++) {
+              // alert(this.kirimDe[i]);
+              // alert(this.kirimStatusAplikasi[i])
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-de/update_status_back_de', {
+                  app_no_de: this.kirimDe[i],
+                  status_aplikasi: '3.0.0.2',
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({});
+              if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
+                Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Data Entry', 'success').then(() => {
+                  window.location.reload();
+                });
+              }
+            }
+          }
+        } else {
+          alert('Harap Pilih Data Terlebih Dahulu');
+        }
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        if (this.kirimDe.length != 0) {
+          if (this.isChecked) {
+            for (let i = 0; i < this.checkLenghtResult.length; i++) {
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-de/update_status_reject', {
+                  app_no_de: this.checkLenghtResult[i].app_no_de,
+                  status_aplikasi: '3.0.0.2',
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({});
+              if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
+                Swal.fire('Data Sudah Di Reject', '', 'success').then(() => {
+                  window.location.reload();
+                });
+              }
+            }
+          } else {
+            this.kirimDe;
+            for (let i = 0; i < this.kirimDe.length; i++) {
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-de/update_status_reject', {
+                  app_no_de: this.kirimDe[i],
+                  status_aplikasi: '3.0.0.2',
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({});
+              if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
+                Swal.fire('Data Sudah Di Reject', '', 'success').then(() => {
+                  window.location.reload();
+                });
+              }
+            }
+          }
+        } else {
+          alert('Harap Pilih Data Terlebih Dahulu');
+        }
+      }
+    });
   }
 }

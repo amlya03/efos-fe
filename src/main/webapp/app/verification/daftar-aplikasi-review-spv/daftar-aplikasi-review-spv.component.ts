@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-boolean-literal-compare */
 /* eslint-disable eqeqeq */
 /* eslint-disable @typescript-eslint/prefer-for-of */
 import { HttpClient } from '@angular/common/http';
@@ -6,22 +5,22 @@ import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
-import Swal from 'sweetalert2';
-import { ServiceVerificationService } from '../service/service-verification.service';
-import { daWuS } from './daWuS.model';
-import { Subject } from 'rxjs';
-import { SessionStorageService } from 'ngx-webstorage';
 import { getListFasilitasModel } from 'app/data-entry/services/config/getListFasilitasModel.model';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { environment } from 'environments/environment';
+import { SessionStorageService } from 'ngx-webstorage';
+import { Subject } from 'rxjs';
+import Swal from 'sweetalert2';
+import { daWuS } from '../daftar-aplikasi-waiting-update-status/daWuS.model';
+import { ServiceVerificationService } from '../service/service-verification.service';
 
 @Component({
-  selector: 'jhi-daftar-aplikasi-waiting-update-status',
-  templateUrl: './daftar-aplikasi-waiting-update-status.component.html',
-  styleUrls: ['./daftar-aplikasi-waiting-update-status.component.scss'],
+  selector: 'jhi-daftar-aplikasi-review-spv',
+  templateUrl: './daftar-aplikasi-review-spv.component.html',
+  styleUrls: ['./daftar-aplikasi-review-spv.component.scss'],
 })
-export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDestroy {
+export class DaftarAplikasiReviewSpvComponent implements OnInit, OnDestroy {
   baseUrl: string = environment.baseUrl;
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
@@ -42,7 +41,6 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
   checkLenghtResult: any;
   curef: any;
   isChecked = false;
-  userRole: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -61,15 +59,14 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
 
   // ceklis semua
   checkuncheckall(): void {
-    if (this.isChecked === true) {
-      this.isChecked = false;
-    } else {
+    if (this.isChecked) {
       this.isChecked = true;
+    } else {
+      this.isChecked = false;
     }
   }
 
   ngOnInit(): void {
-    this.userRole = this.sessionStorageService.retrieve('sessionRole');
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -86,6 +83,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
       this.listFasilitas = data.result;
     });
     // ///////////////////////// LIst Cari Fasilitas //////////////////////
+
     this.daWusService.getDaWuS().subscribe(data => {
       this.checkLenghtResult = data.result;
       // console.log(this.checkLenghtResult);
@@ -130,7 +128,22 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
   // update status
   postUpdateStatus(): void {
     if (this.kirimDe.length != 0) {
-      if (this.isChecked === false) {
+      if (this.isChecked) {
+        for (let i = 0; i < this.checkLenghtResult.length; i++) {
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+              app_no_de: this.checkLenghtResult[i].app_no_de,
+              status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+              created_by: this.sessionStorageService.retrieve('sessionUserName'),
+            })
+            .subscribe({});
+          if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
+            Swal.fire('Data Berhasil di Updated', '', 'success').then(() => {
+              window.location.reload();
+            });
+          }
+        }
+      } else {
         this.kirimDe;
         for (let i = 0; i < this.kirimDe.length; i++) {
           // alert(this.kirimDe[i]);
@@ -143,21 +156,6 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
             })
             .subscribe({});
           if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
-            Swal.fire('Data Berhasil di Updated', '', 'success').then(() => {
-              window.location.reload();
-            });
-          }
-        }
-      } else {
-        for (let i = 0; i < this.checkLenghtResult.length; i++) {
-          this.http
-            .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
-              app_no_de: this.checkLenghtResult[i].app_no_de,
-              status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
-              created_by: this.sessionStorageService.retrieve('sessionUserName'),
-            })
-            .subscribe({});
-          if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
             Swal.fire('Data Berhasil di Updated', '', 'success').then(() => {
               window.location.reload();
             });
@@ -181,7 +179,22 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
     }).then(result => {
       if (result.value) {
         if (this.kirimDe.length != 0) {
-          if (this.isChecked === false) {
+          if (this.isChecked) {
+            for (let i = 0; i < this.checkLenghtResult.length; i++) {
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-de/update_status_back_de', {
+                  app_no_de: this.checkLenghtResult[i].app_no_de,
+                  status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({});
+              if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
+                Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Data Entry', 'success').then(() => {
+                  window.location.reload();
+                });
+              }
+            }
+          } else {
             this.kirimDe;
             for (let i = 0; i < this.kirimDe.length; i++) {
               // alert(this.kirimDe[i]);
@@ -199,28 +212,28 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
                 });
               }
             }
-          } else {
-            for (let i = 0; i < this.checkLenghtResult.length; i++) {
-              this.http
-                .post<any>(this.baseUrl + 'v1/efos-de/update_status_back_de', {
-                  app_no_de: this.checkLenghtResult[i].app_no_de,
-                  status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
-                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
-                })
-                .subscribe({});
-              if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
-                Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Data Entry', 'success').then(() => {
-                  window.location.reload();
-                });
-              }
-            }
           }
         } else {
           alert('Harap Pilih Data Terlebih Dahulu');
         }
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         if (this.kirimDe.length != 0) {
-          if (this.isChecked === false) {
+          if (this.isChecked) {
+            for (let i = 0; i < this.checkLenghtResult.length; i++) {
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-verif/update_status_back_analis', {
+                  app_no_de: this.checkLenghtResult[i].app_no_de,
+                  status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({});
+              if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
+                Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Analys Staff', 'success').then(() => {
+                  window.location.reload();
+                });
+              }
+            }
+          } else {
             this.kirimDe;
             for (let i = 0; i < this.kirimDe.length; i++) {
               this.http
@@ -231,21 +244,6 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
                 })
                 .subscribe({});
               if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
-                Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Analys Staff', 'success').then(() => {
-                  window.location.reload();
-                });
-              }
-            }
-          } else {
-            for (let i = 0; i < this.checkLenghtResult.length; i++) {
-              this.http
-                .post<any>(this.baseUrl + 'v1/efos-verif/update_status_back_analis', {
-                  app_no_de: this.checkLenghtResult[i].app_no_de,
-                  status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
-                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
-                })
-                .subscribe({});
-              if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
                 Swal.fire('Data Berhasil di Forward!', 'File Sudah Pindah ke Analys Staff', 'success').then(() => {
                   window.location.reload();
                 });
@@ -271,7 +269,22 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
     }).then(result => {
       if (result.value) {
         if (this.kirimDe.length != 0) {
-          if (this.isChecked === false) {
+          if (this.isChecked) {
+            for (let i = 0; i < this.checkLenghtResult.length; i++) {
+              this.http
+                .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+                  app_no_de: this.checkLenghtResult[i].app_no_de,
+                  status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                })
+                .subscribe({});
+              if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
+                Swal.fire('Data di Reject!', 'File Sudah Tidak Ada', 'success').then(() => {
+                  window.location.reload();
+                });
+              }
+            }
+          } else {
             this.kirimDe;
             for (let i = 0; i < this.kirimDe.length; i++) {
               // alert(this.kirimDe[i]);
@@ -284,21 +297,6 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
                 })
                 .subscribe({});
               if (this.kirimDe[this.kirimDe.length - 1] == this.kirimDe[i]) {
-                Swal.fire('Data di Reject!', 'File Sudah Tidak Ada', 'success').then(() => {
-                  window.location.reload();
-                });
-              }
-            }
-          } else {
-            for (let i = 0; i < this.checkLenghtResult.length; i++) {
-              this.http
-                .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
-                  app_no_de: this.checkLenghtResult[i].app_no_de,
-                  status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
-                  created_by: this.sessionStorageService.retrieve('sessionUserName'),
-                })
-                .subscribe({});
-              if (this.checkLenghtResult[this.checkLenghtResult.length - 1] == this.checkLenghtResult[i]) {
                 Swal.fire('Data di Reject!', 'File Sudah Tidak Ada', 'success').then(() => {
                   window.location.reload();
                 });

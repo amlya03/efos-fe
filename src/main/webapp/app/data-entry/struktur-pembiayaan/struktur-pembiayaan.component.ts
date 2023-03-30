@@ -127,10 +127,7 @@ export class StrukturPembiayaanComponent implements OnInit {
         Validators.required,
       ],
       harga_objek_pembiayaan: '',
-      fee_based: [
-        { value: '0' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      fee_based: { value: '' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
       uang_muka: [
         { value: '0' || null, disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
@@ -212,6 +209,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     setTimeout(() => {
       this.dataEntryService.getFetchStrukturDE(this.app_no_de, this.curef).subscribe(data => {
         this.strukturModel = data.result;
+        // alert(this.strukturModel.program + '|' + this.strukturModel.program_name + '|' + this.strukturModel.fee_based)
         if (data.result == null || data.result == '') {
           this.kodeProgramRet = '';
           this.kodeProdukRet = '';

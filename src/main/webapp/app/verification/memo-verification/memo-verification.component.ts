@@ -136,7 +136,7 @@ export class MemoVerificationComponent implements OnInit {
   // Update STatus
   updateStatus(): void {
     this.http
-      .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+      .post<any>(this.baseUrl + 'v1/efos-de/update_status_analyst_paralel', {
         app_no_de: this.app_no_de,
         created_by: this.untukSessionUserName,
         status_aplikasi: '3.1',
@@ -145,7 +145,15 @@ export class MemoVerificationComponent implements OnInit {
         next: () => {
           this.router.navigate(['/daftar-aplikasi-verification']);
         },
-        error: error => console.warn(error),
+        error(error) {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: error.error.message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        },
       });
   }
 

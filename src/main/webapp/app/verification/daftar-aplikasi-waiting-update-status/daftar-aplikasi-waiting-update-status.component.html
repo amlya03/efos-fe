@@ -80,7 +80,12 @@
           <td style="text-align: center">{{ daWuS.analis_verifikasi }}</td>
           <td style="text-align: center">Completed</td>
           <td style="text-align: center">
-            <input (change)="getProoduct($event, daWuS.app_no_de, daWuS.status_aplikasi)" type="checkbox" [checked]="isChecked" />
+            <input
+              [hidden]="this.userRole === 'VER_PRE_SPV_2'"
+              (change)="getProoduct($event, daWuS.app_no_de, daWuS.status_aplikasi)"
+              type="checkbox"
+              [checked]="isChecked"
+            />
           </td>
           <td style="text-align: center">
             <a (click)="readOnlyButton(daWuS.app_no_de)"><fa-icon icon="ellipsis"></fa-icon><br />Detail</a>
@@ -92,9 +97,9 @@
 </div>
 <div class="row">
   <div class="col" style="text-align: center">
-    <button type="button" (click)="postUpdateStatus()" class="btn btn-info">Update</button>
-    <button type="button" (click)="postForward()" class="btn btn-primary">Forward To</button>
-    <button type="button" class="btn btn-danger" (click)="confirmBox()">Reject</button>
+    <button type="button" (click)="postUpdateStatus()" class="btn btn-info" [hidden]="this.userRole === 'VER_PRE_SPV_2'">Update</button>
+    <button type="button" (click)="postForward()" class="btn btn-primary" [hidden]="this.userRole === 'VER_PRE_SPV_2'">Forward To</button>
+    <button type="button" class="btn btn-danger" (click)="confirmBox()" [hidden]="this.userRole === 'VER_PRE_SPV_2'">Reject</button>
   </div>
 </div>
 <jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>
