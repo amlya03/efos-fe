@@ -95,6 +95,10 @@ export class ServiceVerificationService {
   );
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // //////////////////////service daftar aplikasi SPV 2 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected listAppAnalisaReview2 = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/list_app_analisa_review2');
+  // //////////////////////service daftar aplikasi SPV 2 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // ////////////////////// Analaisa Pembiayaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected allAnalisaPembiayaan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/getAnalisaPembiayaan?sd=');
   // ////////////////////// Analaisa Pembiayaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -191,6 +195,12 @@ export class ServiceVerificationService {
     return this.http.get<ApiResponse>(this.allDataWaitingUpdateStatus);
   }
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // //////////////////////service daftar aplikasi SPV 2 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getListAppAnalisaReview2(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.listAppAnalisaReview2);
+  }
+  // //////////////////////service daftar aplikasi SPV 2 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////////////////// Analisa \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   fetchAnalisaKeuangan(app_no_de: string): Observable<ApiResponse> {

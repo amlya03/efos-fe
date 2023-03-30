@@ -84,7 +84,7 @@ export class DaftarAplikasiReviewSpvComponent implements OnInit, OnDestroy {
     });
     // ///////////////////////// LIst Cari Fasilitas //////////////////////
 
-    this.daWusService.getDaWuS().subscribe(data => {
+    this.daWusService.getListAppAnalisaReview2().subscribe(data => {
       this.checkLenghtResult = data.result;
       // console.log(this.checkLenghtResult);
       if (data.code === 200) {
