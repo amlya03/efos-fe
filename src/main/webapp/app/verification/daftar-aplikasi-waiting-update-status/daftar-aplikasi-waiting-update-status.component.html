@@ -79,13 +79,8 @@
           <td hidden>{{ daWuS.kategori_pekerjaan === 'Fix Income' }}</td>
           <td style="text-align: center">{{ daWuS.analis_verifikasi }}</td>
           <td style="text-align: center">Completed</td>
-          <td style="text-align: center">
-            <input
-              [hidden]="this.userRole === 'VER_PRE_SPV_2'"
-              (change)="getProoduct($event, daWuS.app_no_de, daWuS.status_aplikasi)"
-              type="checkbox"
-              [checked]="isChecked"
-            />
+          <td style="text-align: center" [hidden]="this.userRole === 'VER_PRE_SPV_2'">
+            <input (change)="getProoduct($event, daWuS.app_no_de, daWuS.status_aplikasi)" type="checkbox" [checked]="isChecked" />
           </td>
           <td style="text-align: center">
             <a (click)="readOnlyButton(daWuS.app_no_de)"><fa-icon icon="ellipsis"></fa-icon><br />Detail</a>

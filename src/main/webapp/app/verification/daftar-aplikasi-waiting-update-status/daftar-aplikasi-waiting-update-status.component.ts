@@ -136,9 +136,9 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
           // alert(this.kirimDe[i]);
           // alert(this.kirimStatusAplikasi[i])
           this.http
-            .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+            .post<any>(this.baseUrl + 'v1/efos-de/update_status_analyst_paralel', {
               app_no_de: this.kirimDe[i],
-              status_aplikasi: this.kirimStatusAplikasi[i],
+              status_aplikasi: '3.2',
               created_by: this.sessionStorageService.retrieve('sessionUserName'),
             })
             .subscribe({});
@@ -151,9 +151,9 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
       } else {
         for (let i = 0; i < this.checkLenghtResult.length; i++) {
           this.http
-            .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+            .post<any>(this.baseUrl + 'v1/efos-de/update_status_analyst_paralel', {
               app_no_de: this.checkLenghtResult[i].app_no_de,
-              status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+              status_aplikasi: '3.2',
               created_by: this.sessionStorageService.retrieve('sessionUserName'),
             })
             .subscribe({});
@@ -189,7 +189,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
               this.http
                 .post<any>(this.baseUrl + 'v1/efos-de/update_status_back_de', {
                   app_no_de: this.kirimDe[i],
-                  status_aplikasi: this.kirimStatusAplikasi[i],
+                  status_aplikasi: '3.2',
                   created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 })
                 .subscribe({});
@@ -204,7 +204,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
               this.http
                 .post<any>(this.baseUrl + 'v1/efos-de/update_status_back_de', {
                   app_no_de: this.checkLenghtResult[i].app_no_de,
-                  status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+                  status_aplikasi: '3.2',
                   created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 })
                 .subscribe({});
@@ -226,7 +226,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
               this.http
                 .post<any>(this.baseUrl + 'v1/efos-verif/update_status_back_analis', {
                   app_no_de: this.kirimDe[i],
-                  status_aplikasi: this.kirimStatusAplikasi[i],
+                  status_aplikasi: '3.2',
                   created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 })
                 .subscribe({});
@@ -241,7 +241,7 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
               this.http
                 .post<any>(this.baseUrl + 'v1/efos-verif/update_status_back_analis', {
                   app_no_de: this.checkLenghtResult[i].app_no_de,
-                  status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+                  status_aplikasi: '3.2',
                   created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 })
                 .subscribe({});
@@ -277,9 +277,9 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
               // alert(this.kirimDe[i]);
               // alert(this.kirimStatusAplikasi[i])
               this.http
-                .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+                .post<any>(this.baseUrl + 'v1/efos-de/update_status_analyst_paralel', {
                   app_no_de: this.kirimDe[i],
-                  status_aplikasi: this.kirimStatusAplikasi[i],
+                  status_aplikasi: '3.2',
                   created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 })
                 .subscribe({});
@@ -292,9 +292,9 @@ export class DaftarAplikasiWaitingUpdateStatusComponent implements OnInit, OnDes
           } else {
             for (let i = 0; i < this.checkLenghtResult.length; i++) {
               this.http
-                .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+                .post<any>(this.baseUrl + 'v1/efos-de/update_status_analyst_paralel', {
                   app_no_de: this.checkLenghtResult[i].app_no_de,
-                  status_aplikasi: this.checkLenghtResult[i].status_aplikasi,
+                  status_aplikasi: '3.2',
                   created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 })
                 .subscribe({});
