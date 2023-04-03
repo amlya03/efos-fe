@@ -72,7 +72,10 @@
           <td style="text-align: center">{{ daWa.kategori_pekerjaan }}</td>
           <td hidden>{{ daWa.kategori_pekerjaan === 'Fix Income' }}</td>
           <td style="text-align: center">
-            <h6 [ngStyle]="{ color: daWa.proses_appraisal ? 'green' : 'orange' }">{{ daWa.proses_appraisal ? 'Done' : 'On Proses' }}</h6>
+            <h6 [ngStyle]="{ color: daWa.proses_appraisal ? 'green' : 'orange' }" [hidden]="daWa.kode_fasilitas_name === 'PTA'">
+              {{ daWa.proses_appraisal ? 'Done' : 'On Proses' }}
+            </h6>
+            <h6 *ngIf="daWa.kode_fasilitas_name === 'PTA'">-</h6>
           </td>
           <td style="text-align: center">{{ daWa.status_aplikasi_desc }}</td>
           <td style="text-align: center">

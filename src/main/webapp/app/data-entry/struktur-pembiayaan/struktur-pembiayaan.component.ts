@@ -463,7 +463,7 @@ export class StrukturPembiayaanComponent implements OnInit {
     const kirimanproduk = this.strukturForm.get('produk')?.value.split('|');
     const kirimanskema = this.strukturForm.get('skema')?.value.split('|');
     const kirimanjangkawaktu = this.strukturForm.get('jangka_waktu')?.value.split('|');
-    let anguranStep: any;
+
     this.http
       .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
         // headers: headers,
@@ -481,7 +481,6 @@ export class StrukturPembiayaanComponent implements OnInit {
       .subscribe({
         next: data => {
           this.postId = data.result.angsuran;
-          anguranStep = this.postId.unshift();
           const nilai = data.result.nilai_pembiayaan;
           // console.warn(this.postId);
           // console.warn(anguranStep)
@@ -490,10 +489,11 @@ export class StrukturPembiayaanComponent implements OnInit {
               (value: any, i: any) =>
                 ` Angsuran Ke ${i + 1} = ${Number(value).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
             );
+            this.strukturForm.get('angsuran')?.setValue(this.postId[this.postId.length - 1]);
           } else {
             this.showAngsuran = 'Angsuran = ' + Number(this.postId).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+            this.strukturForm.get('angsuran')?.setValue(this.postId);
           }
-          this.strukturForm.get('angsuran')?.setValue(anguranStep);
           this.strukturForm.get('nilai_pembiayaan')?.setValue(nilai);
           this.getLoading(false);
         },

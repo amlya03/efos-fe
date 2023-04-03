@@ -73,6 +73,8 @@ export class StukturPembiayaanComponent implements OnInit {
   // cek result
   cekResult = 0;
 
+  colateralNilaiAgunan: any;
+
   constructor(
     public router: Router,
     protected activatedRoute: ActivatedRoute,
@@ -130,6 +132,11 @@ export class StukturPembiayaanComponent implements OnInit {
       ftv: '',
       tipe_agunan: '',
       jenis_objek: '',
+      nilai_pks: '',
+      harga_transaksi: '',
+      nilai_likuidasi: '',
+      nilai_pasar: '',
+      nilai_indikasi: '',
     });
   }
 
@@ -181,6 +188,11 @@ export class StukturPembiayaanComponent implements OnInit {
             ftv: '0',
             tipe_agunan: '',
             jenis_objek: '',
+            nilai_pks: '',
+            harga_transaksi: '',
+            nilai_likuidasi: '',
+            nilai_pasar: '',
+            nilai_indikasi: '',
           };
           this.mapisForm.setValue(retriveForm);
         } else {
@@ -190,11 +202,16 @@ export class StukturPembiayaanComponent implements OnInit {
             luas_bangunan: this.mapisModel.luas_bangunan,
             luas_tanah: this.mapisModel.luas_tanah,
             nilai_imb: this.mapisModel.nilai_imb,
+            nilai_pks: this.mapisModel.nilai_pks,
+            harga_transaksi: this.mapisModel.harga_transaksi,
             nilai_market: this.mapisModel.nilai_market,
             objek_pembiayaan: this.mapisModel.objek_pembiayaan,
             ftv: this.mapisModel.ftv,
             tipe_agunan: this.mapisModel.tipe_agunan,
             jenis_objek: this.mapisModel.jenis_objek,
+            nilai_likuidasi: this.mapisModel.nilai_likuidasi,
+            nilai_pasar: this.mapisModel.nilai_pasar,
+            nilai_indikasi: this.mapisModel.nilai_indikasi,
           };
           this.mapisForm.setValue(retriveForm);
         }
@@ -341,18 +358,23 @@ export class StukturPembiayaanComponent implements OnInit {
       }
 
       this.responseCollateral = data.result;
+      // if (this.responseCollateral.find((value: listAgunan) => value.jenis_objek == 3)) {
+      // if (this.responseCollateral.find((value: listAgunan) => value.nilai_pasar)) {
+      //   this.modelCollateral = this.responseCollateral.find((value: listAgunan) => value.nilai_pasar);
+      //   // this.strukturForm.get('harga_objek_pembiayaan')?.setValue(this.modelCollateral.nilai_pasar)
+      //   // console.warn('p',this.modelCollateral)
+      // } else {
       // eslint-disable-next-line eqeqeq
-      if (this.responseCollateral.find((value: listAgunan) => value.jenis_objek == 3)) {
-        if (this.responseCollateral.find((value: listAgunan) => value.nilai_pasar)) {
-          this.modelCollateral = this.responseCollateral.find((value: listAgunan) => value.nilai_pasar);
-          // this.strukturForm.get('harga_objek_pembiayaan')?.setValue(this.modelCollateral.nilai_pasar)
-          // console.warn('p',this.modelCollateral)
-        } else {
-          this.modelCollateral = this.responseCollateral.find((value: listAgunan) => value.harga_objek);
-          // this.strukturForm.get('harga_objek_pembiayaan')?.setValue(this.modelCollateral.harga_objek)
-          // console.warn('h',this.modelCollateral)
-        }
+      this.modelCollateral = this.responseCollateral.find((value: listAgunan) => value.jenis_objek == 3);
+      if (this.modelCollateral.nilai_agunan) {
+        this.colateralNilaiAgunan = this.modelCollateral.nilai_agunan;
+      } else {
+        this.colateralNilaiAgunan = '';
       }
+      // this.strukturForm.get('harga_objek_pembiayaan')?.setValue(this.modelCollateral.harga_objek)
+      // console.warn('h',this.modelCollateral)
+      // }
+      // }
     });
   }
   getTenor(master: any, isiten: any): void {
