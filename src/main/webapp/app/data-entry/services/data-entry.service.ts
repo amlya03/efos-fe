@@ -649,19 +649,19 @@ export class DataEntryService {
     return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getPropinsi/');
   }
 
-  getkabkota(req?: number | null): Observable<ApiResponse> {
+  getkabkota(req: any): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getKota/' + req);
   }
 
-  getkecamatan(req?: number | null): Observable<ApiResponse> {
+  getkecamatan(req: any): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getKec/' + req);
   }
 
-  getkelurahan(req?: number | null): Observable<ApiResponse> {
+  getkelurahan(req: any): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getKel/' + req);
   }
 
-  getKdpost(req?: number | null): Observable<ApiResponse> {
+  getKdpost(req: any): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.baseUrl + 'v1/efos/getWilByKdPos/' + req);
   }
 

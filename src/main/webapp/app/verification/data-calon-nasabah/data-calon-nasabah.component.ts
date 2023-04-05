@@ -102,73 +102,316 @@ export class DataCalonNasabahComponent implements OnInit {
     this.editor = new Editor();
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.dataCalonNasabahForm = this.formBuilder.group({
-      tanggal_verifikasi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      tanggal_verifikasi: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
       pemberi_keterangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      hubungan_pemberi_keterangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_alamat: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_alamat: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_rt_rw: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_rt_rw: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_provinsi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_provinsi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_kabkota: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_kabkota: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_kecamatan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_kecamatan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_kelurahan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_kelurahan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_kode_pos: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_kode_pos: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_tanggal_lahir: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_tanggal_lahir: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_pendidikan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_pendidikan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_status_menikah: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_status_menikah: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_ibu_kandung: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_ibu_kandung: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      hubungan_pemberi_keterangan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_alamat: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_alamat: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_rt_rw: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_rt_rw: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_provinsi: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_provinsi: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_kabkota: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_kabkota: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_kecamatan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_kecamatan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_kelurahan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_kelurahan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_kode_pos: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_kode_pos: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_tanggal_lahir: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_tanggal_lahir: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_pendidikan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_pendidikan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_status_menikah: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_status_menikah: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_ibu_kandung: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_ibu_kandung: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
       // verif_jumlah_tanggungan: '',
       // note_verif_jumlah_tanggungan: '',
-      verif_nama_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_nama_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_pekerjaan_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_pekerjaan_pasangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      fasilitas_pembiayaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      karakter_calon_nasabah: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      status_rumah: [{ value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' }, Validators.required],
+      verif_nama_pasangan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_nama_pasangan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_pekerjaan_pasangan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_pekerjaan_pasangan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      fasilitas_pembiayaan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      karakter_calon_nasabah: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      status_rumah: [
+        {
+          value: '',
+          disabled:
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+        },
+        Validators.required,
+      ],
       // cek: '',
       // cek: this.formBuilder.array([]),
       // cek: new FormArray([
       //   new FormControl(true),
       //   new FormControl(false),
       // ]),
-      rumah_dihuni: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      rumah_dihuni: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
       lama_menetap_bulan: [
-        { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+        {
+          value: '',
+          disabled:
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+        },
         Validators.required,
       ],
       lama_menetap_tahun: [
-        { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+        {
+          value: '',
+          disabled:
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+        },
         Validators.required,
       ],
-      jenis_bangunan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      lokasi_perumahan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      fasilitas_listrik: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      jenis_bangunan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      lokasi_perumahan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      fasilitas_listrik: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
       // isi_rumah: '',
-      kondisi_lingkungan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      akses_jalan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      garasi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      carport: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      kendaraan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      kondisi_lingkungan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      akses_jalan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      garasi: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      carport: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      kendaraan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
       jumlah_kendaraan: [
-        { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+        {
+          value: '',
+          disabled:
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+        },
         Validators.required,
       ],
-      kondisi_kendaraan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_thp: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_thp: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_fasilitas_pembiayaan: { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_fasilitas_pembiayaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      kondisi_kendaraan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_thp: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_thp: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_fasilitas_pembiayaan: {
+        value: '0',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_fasilitas_pembiayaan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
       // created_date: "",
       // updated_date: "",
       // created_by: "",

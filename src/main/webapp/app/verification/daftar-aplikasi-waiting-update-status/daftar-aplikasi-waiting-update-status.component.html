@@ -44,7 +44,13 @@
   <br />
   <br />
   <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-    <h3 style="color: #fff; text-align: center">Daftar Aplikasi Data Verification Assigment on Process</h3>
+    <h3 style="color: #fff; text-align: center">
+      {{
+        this.userRole === 'VER_PRE_SPV_2'
+          ? 'Daftar Aplikasi Data Verification Assigment on Process SPV1'
+          : 'Daftar Aplikasi Data Verification Assigment on Process'
+      }}
+    </h3>
   </div>
   <p></p>
   <br />

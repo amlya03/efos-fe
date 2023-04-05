@@ -122,59 +122,269 @@ export class DataKantorComponent implements OnInit {
     });
 
     this.dataKantorForm = this.formBuilder.group({
-      tanggal_verifikasi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      pemberi_keterangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      hubungan_pemberi_keterangan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_fax: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_fax: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_no_telepon: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_no_telepon: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_alamat_perusahaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_alamat_perusahaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_nama_perusahaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_nama_perusahaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_provinsi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_provinsi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_kabkota: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_kabkota: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_kecamatan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_kecamatan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_kelurahan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_kelurahan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_kode_pos: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_kode_pos: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_lama_bekerja: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_lama_bekerja: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_bidang_usaha: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_bidang_usaha: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_sektor_ekonomi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_sektor_ekonomi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_tipe_pekerjaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_tipe_pekerjaan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_status_kepegawaian: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_status_kepegawaian: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_jabatan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_jabatan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      verif_usia_pensiun: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      note_verif_usia_pensiun: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      divisi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      aspek_syariah: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      waktu_verifikasi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      tanggal_verifikasi: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      pemberi_keterangan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      hubungan_pemberi_keterangan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_fax: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_fax: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_no_telepon: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_no_telepon: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_alamat_perusahaan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_alamat_perusahaan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_nama_perusahaan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_nama_perusahaan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_provinsi: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_provinsi: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_kabkota: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_kabkota: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_kecamatan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_kecamatan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_kelurahan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_kelurahan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_kode_pos: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_kode_pos: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_lama_bekerja: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_lama_bekerja: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_bidang_usaha: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_bidang_usaha: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_sektor_ekonomi: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_sektor_ekonomi: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_tipe_pekerjaan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_tipe_pekerjaan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_status_kepegawaian: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_status_kepegawaian: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_jabatan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_jabatan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      verif_usia_pensiun: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      note_verif_usia_pensiun: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      divisi: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      aspek_syariah: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      waktu_verifikasi: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
 
       jumlah_pinjaman_kantor: [
-        { value: '0', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+        {
+          value: '0',
+          disabled:
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+        },
         [Validators.maxLength(30), Validators.required],
       ],
       komponen_gaji: [
-        { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+        {
+          value: '',
+          disabled:
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+        },
         [Validators.maxLength(30), Validators.required],
       ],
       pembayaran_gaji: [
-        { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+        {
+          value: '',
+          disabled:
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+        },
         [Validators.maxLength(100), Validators.required],
       ],
       tenor_pinjaman_kantor: [
-        { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+        {
+          value: '',
+          disabled:
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+            this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+        },
         [Validators.maxLength(20), Validators.required],
       ],
       pembayaran_gaji_input: '',

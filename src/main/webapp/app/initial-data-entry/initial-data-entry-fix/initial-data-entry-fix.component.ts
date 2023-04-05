@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable no-bitwise */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable eqeqeq */
@@ -26,6 +29,7 @@ import { environment } from 'environments/environment';
 import { ServicesUploadDocumentService } from 'app/upload-document/services/services-upload-document.service';
 import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
+import { wilayahModel } from '../services/config/wilayahModel.model';
 
 @Component({
   selector: 'jhi-initial-data-entry-fix',
@@ -114,8 +118,8 @@ export class InitialDataEntryFixComponent implements OnInit {
   retriveSektorSebelum: any;
   // //////////////////////////////////////////////////////////////
   // //////////////////////////////////////////////////////////////
-  daWaprof: any;
-  daWakota: any;
+  daWaprof: wilayahModel[] = [];
+  daWakota: wilayahModel[] = [];
   ideForm!: FormGroup;
   jobForm!: FormGroup;
   // //////////////////////////////////////////////////////////////
@@ -130,9 +134,9 @@ export class InitialDataEntryFixComponent implements OnInit {
   responseNamaWilayahJob: refJenisPekerjaan[] = [];
   // //////////////////////////////////////////
   refStatusPerkawinan?: refStatusPerkawinan[];
-  kecamatan: any;
+  kecamatan: wilayahModel[] = [];
   kecamatan_pasangan: any;
-  kelurahan: any;
+  kelurahan: wilayahModel[] = [];
   kelurahan_pasangan: any;
   daWakotaD: any;
   kecamatanD: any;
@@ -359,6 +363,7 @@ export class InitialDataEntryFixComponent implements OnInit {
       sektor_ekonomi_sebelum: '',
       lama_bekerja_bulan_sebelum: 0,
       lama_bekerja_tahun_sebelum: 0,
+      lama_beroperasi: 0,
     });
 
     const ValidasiNamaPerusahaaan = <FormControl>this.jobForm.get('nama_perusahaan');
@@ -579,8 +584,58 @@ export class InitialDataEntryFixComponent implements OnInit {
           this.ideForm.setValue(retriveIde);
 
           setTimeout(() => {
-            this.carimenggunakankodepost(this.modelIde.kode_pos);
-            this.carimenggunakankodepostp(this.modelIde.kode_pos_pasangan);
+            // retrive Wilayah Baru
+            if (this.modelIde) {
+              // Provinsi
+              const provRes = this.daWaprof.find((value: wilayahModel) => value.namaWilayah === this.modelIde.provinsi);
+              this.ideForm.get('provinsi')?.setValue(provRes?.kdWilayah + '|' + provRes?.namaWilayah);
+
+              // Kota
+              this.dataEntryService.getkabkota(provRes?.kdWilayah).subscribe(retKota => {
+                this.daWakota = retKota.result;
+                const kotaResponse = this.daWakota.find((value: wilayahModel) => value.namaWilayah === this.modelIde.kabkota);
+                this.ideForm.get('kabkota')?.setValue(kotaResponse?.kdWilayah + '|' + kotaResponse?.namaWilayah);
+
+                // Kecataman
+                this.dataEntryService.getkecamatan(kotaResponse?.kdWilayah).subscribe(retKec => {
+                  this.kecamatan = retKec.result;
+                  const kecResponse = this.kecamatan.find((value: wilayahModel) => value.namaWilayah === this.modelIde.kecamatan);
+                  this.ideForm.get('kecamatan')?.setValue(kecResponse?.kdWilayah + '|' + kecResponse?.namaWilayah);
+
+                  // Kelurahan
+                  this.dataEntryService.getkelurahan(kecResponse?.kdWilayah).subscribe(retKel => {
+                    this.kelurahan = retKel.result;
+                    const kelResponse = this.kelurahan.find((value: wilayahModel) => value.namaWilayah === this.modelIde.kelurahan);
+                    this.ideForm.get('kelurahan')?.setValue(kelResponse?.kdPos + '|' + kelResponse?.namaWilayah);
+                  });
+                });
+              });
+
+              // Provinsi Pasangan
+              const provResPasangan = this.daWaprof.find((value: wilayahModel) => value.namaWilayah === this.modelIde.provinsi);
+              this.ideForm.get('provinsi_pasangan')?.setValue(provResPasangan?.kdWilayah + '|' + provResPasangan?.namaWilayah);
+
+              // Kota Pasangan
+              this.dataEntryService.getkabkota(provResPasangan?.kdWilayah).subscribe(retKota => {
+                this.daWakotaD = retKota.result;
+                const kotaResponsePasangan = this.daWakota.find((value: wilayahModel) => value.namaWilayah === this.modelIde.kabkota);
+                this.ideForm.get('kabkota_pasangan')?.setValue(kotaResponsePasangan?.kdWilayah + '|' + kotaResponsePasangan?.namaWilayah);
+
+                // Kecataman Pasangan
+                this.dataEntryService.getkecamatan(kotaResponsePasangan?.kdWilayah).subscribe(retKec => {
+                  this.kecamatanD = retKec.result;
+                  const kecResponsePasangan = this.kecamatan.find((value: wilayahModel) => value.namaWilayah === this.modelIde.kecamatan);
+                  this.ideForm.get('kecamatan_pasangan')?.setValue(kecResponsePasangan?.kdWilayah + '|' + kecResponsePasangan?.namaWilayah);
+
+                  // Kelurahan Pasangan
+                  this.dataEntryService.getkelurahan(kecResponsePasangan?.kdWilayah).subscribe(retKel => {
+                    this.kelurahanD = retKel.result;
+                    const kelResponsePasangan = this.kelurahan.find((value: wilayahModel) => value.namaWilayah === this.modelIde.kelurahan);
+                    this.ideForm.get('kelurahan_pasangan')?.setValue(kelResponsePasangan?.kdPos + '|' + kelResponsePasangan?.namaWilayah);
+                  });
+                });
+              });
+            }
           }, 300);
 
           setTimeout(() => {
@@ -642,6 +697,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                   sektor_ekonomi_sebelum: '',
                   lama_bekerja_bulan_sebelum: '',
                   lama_bekerja_tahun_sebelum: '',
+                  lama_beroperasi: '0',
                 };
                 this.jobForm.setValue(retriveJob);
                 this.getLoading(false);
@@ -684,6 +740,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                   sektor_ekonomi_sebelum: this.modelJob.sektor_ekonomi_sebelum,
                   lama_bekerja_bulan_sebelum: this.modelJob.lama_bekerja_bulan_sebelum,
                   lama_bekerja_tahun_sebelum: this.modelJob.lama_bekerja_tahun_sebelum,
+                  lama_beroperasi: this.modelJob.lama_beroperasi,
                 };
                 this.jobForm.setValue(retriveJob);
                 this.getLoading(false);
@@ -693,7 +750,34 @@ export class InitialDataEntryFixComponent implements OnInit {
                 this.retriveSektor = this.modelJob.sektor_ekonomi;
                 this.retriveSektorSebelum = this.modelJob.sektor_ekonomi_sebelum;
                 setTimeout(() => {
-                  this.cariPekerPost(this.modelJob.kode_pos);
+                  // Provinsi Job
+                  const provResJob = this.daWaprof.find((value: wilayahModel) => value.namaWilayah === this.modelJob.provinsi);
+                  this.jobForm.get('provinsi')?.setValue(provResJob?.kdWilayah + '|' + provResJob?.namaWilayah);
+
+                  let kotaResponseJob: any;
+                  let kecResponseJob: any;
+                  let kelResponseJob: any;
+
+                  // Kota Job
+                  this.dataEntryService.getkabkota(provResJob?.kdWilayah).subscribe(retKota => {
+                    this.kotaChangeJob = retKota.result;
+                    kotaResponseJob = this.kotaChangeJob.find((value: wilayahModel) => value.namaWilayah === this.modelJob.kabkota);
+                    this.jobForm.get('kabkota')?.setValue(kotaResponseJob?.kdWilayah + '|' + kotaResponseJob?.namaWilayah);
+
+                    // Kecataman Job
+                    this.dataEntryService.getkecamatan(kotaResponseJob?.kdWilayah).subscribe(retKec => {
+                      this.kecChangeJob = retKec.result;
+                      kecResponseJob = this.kecChangeJob.find((value: wilayahModel) => value.namaWilayah === this.modelJob.kecamatan);
+                      this.jobForm.get('kecamatan')?.setValue(kecResponseJob?.kdWilayah + '|' + kecResponseJob?.namaWilayah);
+
+                      // Kelurahan Job
+                      this.dataEntryService.getkelurahan(kecResponseJob?.kdWilayah).subscribe(retKel => {
+                        this.kelChangeJob = retKel.result;
+                        kelResponseJob = this.kelChangeJob.find((value: wilayahModel) => value.namaWilayah === this.modelJob.kelurahan);
+                        this.jobForm.get('kelurahan')?.setValue(kelResponseJob?.kdPos + '|' + kelResponseJob?.namaWilayah);
+                      });
+                    });
+                  });
                 }, 100);
               }
               // }, 200);
@@ -869,6 +953,7 @@ export class InitialDataEntryFixComponent implements OnInit {
                 tunjangan: '',
                 umur_pensiun: '',
                 umur_pensiun_sebelum: '',
+                lama_beroperasi: this.jobForm.get('lama_beroperasi')?.value,
               })
               .subscribe({
                 next: () => {
@@ -1691,6 +1776,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             tunjangan: '',
             umur_pensiun: '',
             umur_pensiun_sebelum: '',
+            lama_beroperasi: this.jobForm.get('lama_beroperasi')?.value,
           })
           .subscribe({
             next: () => {
@@ -1855,6 +1941,7 @@ export class InitialDataEntryFixComponent implements OnInit {
             tunjangan: '',
             umur_pensiun: '',
             umur_pensiun_sebelum: '',
+            lama_beroperasi: this.jobForm.get('lama_beroperasi')?.value,
           })
           .subscribe({
             next: () => {
@@ -2401,7 +2488,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     this.getLoading(true);
     this.dataEntryService.getKdpost(kodepost).subscribe({
       next: sukses => {
-        console.warn(sukses);
+        // console.warn(sukses);
         this.getLoading(false);
         if (this.clickKdPostLajang == 1) {
           this.responseKels = sukses.result.kels;

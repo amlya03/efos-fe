@@ -92,18 +92,24 @@ export class MutasiRekeningComponent implements OnInit, OnDestroy {
     };
 
     this.mutasiForm = this.formBuilder.group({
-      nama_bank: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
-      no_rekening: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
-      tahun: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
-      bulan: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
-      debet: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
-      kredit: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
-      saldo: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '' },
-      kepemilikan_tabungan: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: false },
-      kepemilikan_giro: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: false },
-      kepemilikan_deposito: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: false },
-      gaji_tercermin: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: '1' },
-      keterangan: { disabled: this.untukSessionRole === 'VER_PRE_SPV', value: 'Nasabah' },
+      nama_bank: { disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2', value: '' },
+      no_rekening: { disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2', value: '' },
+      tahun: { disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2', value: '' },
+      bulan: { disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2', value: '' },
+      debet: { disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2', value: '' },
+      kredit: { disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2', value: '' },
+      saldo: { disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2', value: '' },
+      kepemilikan_tabungan: {
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2',
+        value: false,
+      },
+      kepemilikan_giro: { disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2', value: false },
+      kepemilikan_deposito: {
+        disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2',
+        value: false,
+      },
+      gaji_tercermin: { disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2', value: '1' },
+      keterangan: { disabled: this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2', value: 'Nasabah' },
     });
 
     this.load();

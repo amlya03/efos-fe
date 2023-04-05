@@ -834,7 +834,7 @@
 </div>
 <div class="col" style="text-align: center">
   <button
-    [hidden]="this.untukSessionRole == 'VER_PRE_SPV'"
+    [hidden]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'VER_PRE_SPV_2'"
     [disabled]="this.dpKurang == 1"
     type="submit"
     class="btn btn-info"

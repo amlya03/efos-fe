@@ -26,7 +26,14 @@
   <br />
   <div class="input-group" style="justify-content: center">
     <button type="button" (click)="next()" class="btn btn-info" [hidden]="this.untukSessionRole == 'VER_PRESCR'">Selanjutnya</button>
-    <button type="submit" class="btn btn-info" [hidden]="this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'">
+    <button
+      type="submit"
+      class="btn btn-info"
+      [hidden]="
+        this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+        this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2'
+      "
+    >
       Simpan Data
     </button>
   </div>

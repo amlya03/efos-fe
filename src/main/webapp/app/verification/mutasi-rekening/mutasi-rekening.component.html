@@ -301,7 +301,7 @@
     <div class="col" style="text-align: center">
       <button
         type="button"
-        [hidden]="this.untukSessionRole === 'VER_PRE_SPV'"
+        [hidden]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
         class="btn btn-info"
         (click)="submitForm()"
         [disabled]="mutasiForm.invalid"
@@ -316,7 +316,11 @@
   <div class="col" style="text-align: center">
     <button
       type="submit"
-      [hidden]="this.untukSessionRole === 'VER_PRE_SPV' || (this.untukSessionRole === 'VER_PRESCR' && this.resultMutasi == '')"
+      [hidden]="
+        this.untukSessionRole === 'VER_PRE_SPV' ||
+        this.untukSessionRole === 'VER_PRE_SPV_2' ||
+        (this.untukSessionRole === 'VER_PRESCR' && this.resultMutasi == '')
+      "
       *ngIf="(this.tambahTableMutasi == 1 && lihatMutasi == 0) || (this.tambahTableMutasi == 0 && lihatMutasi == 1)"
       class="btn btn-info"
       (click)="next()"

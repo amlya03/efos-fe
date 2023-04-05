@@ -59,8 +59,18 @@ export class KesimpulanComponent implements OnInit {
     this.load();
     // ////////// Validasi \\\\\\\\\\\\\\\\\
     this.kesimpulanForm = this.formBuilder.group({
-      kesimpulan: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
-      rekomendasi: { value: '', disabled: this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' },
+      kesimpulan: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
+      rekomendasi: {
+        value: '',
+        disabled:
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV' ||
+          this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV_2',
+      },
     });
   }
 

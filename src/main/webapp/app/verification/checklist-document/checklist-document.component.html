@@ -99,7 +99,7 @@
                   name="validasiDE{{ i + 1 }}"
                   id="validasiDE{{ i + 1 }}"
                   value="1"
-                  [disabled]="this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'"
+                  [disabled]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
                   [checked]="this.uploadDocument.validasi == 1"
                 />
                 <br /><label>Sesuai</label>
@@ -110,7 +110,7 @@
                   name="validasiDE{{ i + 1 }}"
                   id="validasiDE{{ i + 1 }}"
                   value="0"
-                  [disabled]="this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'"
+                  [disabled]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
                   [checked]="this.uploadDocument.validasi == 0"
                 />
                 <br /><label>Tidak Sesuai</label>
@@ -119,7 +119,7 @@
           </td>
           <td style="text-align: center">
             <input
-              [disabled]="this.untukSessionRole == 'VER_PRE_SPV'"
+              [disabled]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
               type="text"
               class="form-control"
               id="keteranganDE{{ i + 1 }}"
@@ -196,7 +196,7 @@
             <div class="row">
               <div class="col">
                 <input
-                  [disabled]="this.untukSessionRole == 'VER_PRE_SPV'"
+                  [disabled]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
                   type="radio"
                   name="validasiAgunan{{ i + 1 }}"
                   id="validasiAgunan{{ i + 1 }}"
@@ -207,12 +207,12 @@
               </div>
               <div class="col">
                 <input
-                  [disabled]="this.untukSessionRole == 'VER_PRE_SPV'"
+                  [disabled]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
                   type="radio"
                   name="validasiAgunan{{ i + 1 }}"
                   id="validasiAgunan{{ i + 1 }}"
                   value="0"
-                  [disabled]="this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'"
+                  [disabled]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
                   [checked]="this.uploadAgunan.validasi == 0"
                 />
                 <br /><label>Tidak Sesuai</label>
@@ -221,11 +221,11 @@
           </td>
           <td style="text-align: center">
             <input
-              [disabled]="this.untukSessionRole == 'VER_PRE_SPV'"
+              [disabled]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
               type="text"
               class="form-control"
               id="keteranganAgunan{{ i + 1 }}"
-              [disabled]="this.sessionStorageService.retrieve('sessionRole') === 'VER_PRE_SPV'"
+              [disabled]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
               value="{{ this.uploadAgunan.note_validasi }}"
             />
           </td>
@@ -275,7 +275,13 @@
 </div>
 <div class="row">
   <div class="col" style="text-align: center">
-    <button [hidden]="this.untukSessionRole == 'VER_PRE_SPV'" (click)="postCeklis()" class="btn btn-info">Simpan Data</button>
+    <button
+      [hidden]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
+      (click)="postCeklis()"
+      class="btn btn-info"
+    >
+      Simpan Data
+    </button>
     <button [hidden]="this.untukSessionRole == 'VER_PRESCR'" class="btn btn-info" (click)="updateStatus()">Selanjutnya</button>
   </div>
 </div>

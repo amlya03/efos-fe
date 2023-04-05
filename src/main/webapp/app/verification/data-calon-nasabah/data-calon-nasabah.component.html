@@ -762,21 +762,21 @@
             <!---cek-->
             <!-- <input type="text" value="{{this.dataCalonNasabahMap.cek}}"> -->
             <input
-              [disabled]="this.untukSessionRole === 'VER_PRE_SPV'"
+              [disabled]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
               type="checkbox"
               value="Sertifikat"
               (change)="onCheckCek($event)"
               [checked]="this.checkboxCekSertif == 'Sertifikat'"
             />Sertifikat &nbsp;&nbsp;
             <input
-              [disabled]="this.untukSessionRole === 'VER_PRE_SPV'"
+              [disabled]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
               type="checkbox"
               value="Akta Jual Beli"
               (change)="onCheckCek($event)"
               [checked]="this.checkboxCekAkte == 'Akta Jual Beli'"
             />Akta Jual Beli &nbsp;&nbsp;
             <input
-              [disabled]="this.untukSessionRole === 'VER_PRE_SPV'"
+              [disabled]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
               type="checkbox"
               value="Rekening Telepon"
               (change)="onCheckCek($event)"
@@ -785,14 +785,14 @@
             <!-- </div> -->
             <!-- <div class="col"> -->
             <input
-              [disabled]="this.untukSessionRole === 'VER_PRE_SPV'"
+              [disabled]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
               type="checkbox"
               value="PBB"
               (change)="onCheckCek($event)"
               [checked]="this.checkboxCekPbb == 'PBB'"
             />PBB &nbsp;&nbsp;
             <input
-              [disabled]="this.untukSessionRole === 'VER_PRE_SPV'"
+              [disabled]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
               type="checkbox"
               value="Rekening Listrik"
               (change)="onCheckCek($event)"
@@ -874,21 +874,21 @@
         <div class="col">
           <!--isi_rumah-->
           <input
-            [disabled]="this.untukSessionRole === 'VER_PRE_SPV'"
+            [disabled]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
             type="checkbox"
             value="Mobil"
             (change)="onCheckRumah($event)"
             [checked]="this.isiRumahMobil == 'Mobil'"
           />Mobil &nbsp;&nbsp;
           <input
-            [disabled]="this.untukSessionRole === 'VER_PRE_SPV'"
+            [disabled]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
             type="checkbox"
             value="Motor"
             (change)="onCheckRumah($event)"
             [checked]="this.isiRumahMotor == 'Motor'"
           />Motor &nbsp;&nbsp;
           <input
-            [disabled]="this.untukSessionRole === 'VER_PRE_SPV'"
+            [disabled]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
             type="checkbox"
             value="TV"
             (change)="onCheckRumah($event)"
@@ -897,14 +897,14 @@
           <!-- </div>
         <div class="col"> -->
           <input
-            [disabled]="this.untukSessionRole === 'VER_PRE_SPV'"
+            [disabled]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
             type="checkbox"
             value="Sofa"
             (change)="onCheckRumah($event)"
             [checked]="this.isiRumahSofa == 'Sofa'"
           />Sofa &nbsp;&nbsp;
           <input
-            [disabled]="this.untukSessionRole === 'VER_PRE_SPV'"
+            [disabled]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
             type="checkbox"
             value="Perabot Lainnya"
             (change)="onCheckRumah($event)"
@@ -1007,7 +1007,11 @@
   <p></p>
   <p></p>
   <div class="row">
-    <div class="col" style="text-align: center" [hidden]="this.untukSessionRole === 'VER_PRE_SPV'">
+    <div
+      class="col"
+      style="text-align: center"
+      [hidden]="this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'VER_PRE_SPV_2'"
+    >
       <button class="btn btn-info" [disabled]="dataCalonNasabahForm.invalid">Simpan Data</button>
     </div>
     <div class="col" style="text-align: center" [hidden]="this.untukSessionRole == 'VER_PRESCR'">

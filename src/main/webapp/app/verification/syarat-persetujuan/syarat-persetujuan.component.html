@@ -35,7 +35,12 @@
   <h3 style="color: #fff; text-align: center">Syarat Akad</h3>
 </div>
 <br />
-<button class="btn btn-info" style="float: right" (click)="simpanSyaratAkad()" [hidden]="this.untukSessionRole == 'VER_PRE_SPV'">
+<button
+  class="btn btn-info"
+  style="float: right"
+  (click)="simpanSyaratAkad()"
+  [hidden]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'VER_PRE_SPV_2'"
+>
   Tambah Syarat
 </button>
 <br />
@@ -54,7 +59,7 @@
       <td style="text-align: center">{{ syaratAkad.syarat }}</td>
       <td style="text-align: center">
         {{ syaratAkad.keterangan }}
-        <!-- <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRE_SPV'">
+        <!-- <select class="form-control" [disabled]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'VER_PRE_SPV_2'">
           <option value="Disyaratkan">Disyaratkan</option>
           <option value="Tidak Disyaratkan">Tidak Disyaratkan</option>
         </select> -->
@@ -68,7 +73,12 @@
   <h3 style="color: #fff; text-align: center">Syarat Cair</h3>
 </div>
 <br />
-<button class="btn btn-info" style="float: right" (click)="simpanSyaratCair()" [hidden]="this.untukSessionRole == 'VER_PRE_SPV'">
+<button
+  class="btn btn-info"
+  style="float: right"
+  (click)="simpanSyaratCair()"
+  [hidden]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'VER_PRE_SPV_2'"
+>
   Tambah Syarat
 </button>
 <br />
@@ -95,7 +105,12 @@
   <h3 style="color: #fff; text-align: center">Syarat Lain-lain</h3>
 </div>
 <br />
-<button class="btn btn-info" style="float: right" (click)="simpanSyaratLain()" [hidden]="this.untukSessionRole == 'VER_PRE_SPV'">
+<button
+  class="btn btn-info"
+  style="float: right"
+  (click)="simpanSyaratLain()"
+  [hidden]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'VER_PRE_SPV_2'"
+>
   Tambah Syarat
 </button>
 <br />
@@ -145,7 +160,7 @@
       </td>
       <td>
         <input
-          [hidden]="this.untukSessionRole == 'VER_PRE_SPV'"
+          [hidden]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'VER_PRE_SPV_2'"
           type="text"
           class="form-control"
           value="{{ cekUjiKepatuhan.keterangan }}"
@@ -176,7 +191,7 @@
   <label class="col-sm-2 col-form-label">Deskripsi Area Concern</label>
   <div class="col-sm-10">
     <input
-      [disabled]="this.untukSessionRole == 'VER_PRE_SPV'"
+      [disabled]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'VER_PRE_SPV_2'"
       type="text"
       class="form-control"
       id="deskripsiAreaConcern"
@@ -187,7 +202,14 @@
 <br />
 <br />
 <div class="input-group" style="justify-content: center">
-  <button [hidden]="this.untukSessionRole == 'VER_PRE_SPV'" type="button" class="btn btn-info" (click)="simpanData()">Simpan Data</button>
+  <button
+    [hidden]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'VER_PRE_SPV_2'"
+    type="button"
+    class="btn btn-info"
+    (click)="simpanData()"
+  >
+    Simpan Data
+  </button>
   <button (click)="goto()" [hidden]="this.untukSessionRole == 'VER_PRESCR'" type="button" class="btn btn-info">Selanjutnya</button>
 </div>
 <br />
