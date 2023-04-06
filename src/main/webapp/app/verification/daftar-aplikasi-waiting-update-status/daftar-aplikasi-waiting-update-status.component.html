@@ -69,6 +69,7 @@
           <th style="text-align: center">Program</th>
           <th style="text-align: center">Tipe Pekerjaan</th>
           <th hidden></th>
+          <th style="text-align: center">Appraisal</th>
           <th style="text-align: center">Nama Analys</th>
           <th style="text-align: center">Status</th>
           <th style="text-align: center" [hidden]="this.userRole === 'VER_PRE_SPV_2'"></th>
@@ -83,6 +84,12 @@
           <td style="text-align: center">{{ daWuS.program_pembiayaan }}</td>
           <td style="text-align: center">{{ daWuS.kategori_pekerjaan }}</td>
           <td hidden>{{ daWuS.kategori_pekerjaan === 'Fix Income' }}</td>
+          <td style="text-align: center">
+            <h6 [ngStyle]="{ color: daWuS.proses_appraisal ? 'green' : 'orange' }" [hidden]="daWuS.kode_fasilitas_name === 'PTA'">
+              {{ daWuS.proses_appraisal ? 'Done' : 'On Proses' }}
+            </h6>
+            <h6 *ngIf="daWuS.kode_fasilitas_name === 'PTA'">-</h6>
+          </td>
           <td style="text-align: center">{{ daWuS.analis_verifikasi }}</td>
           <td style="text-align: center">Completed</td>
           <td style="text-align: center" [hidden]="this.userRole === 'VER_PRE_SPV_2'">
