@@ -71,7 +71,7 @@ export class InquiryComponent implements OnInit, OnDestroy {
       this.sessionStorageService.store('uploadDEA', 0);
     }, 10);
     setTimeout(() => {
-      this.inquiryservice.getDaftarAplikasiDataEntry().subscribe(data => {
+      this.inquiryservice.getdatastatustrakinginquiry().subscribe(data => {
         // console.warn(data);
         if (data.code === 200) {
           this.dataEntry = (data as any).result;

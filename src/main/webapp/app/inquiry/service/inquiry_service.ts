@@ -313,6 +313,10 @@ export class DataEntryService {
   protected fetchgetDetailTracking = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getDetailTracking?sd=');
   // /////////////////////////////  Ref fetchgetDetailTracking\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // /////////////////////////////  Ref fetchgetDetailinquiry\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchgetDetailinquiry = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/list_app_inquiry?sc=');
+  // /////////////////////////////  Ref fetchgetDetailinquiry\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
     if (this.untukSessionRole === 'BRANCHMANAGER') {
@@ -738,6 +742,22 @@ export class DataEntryService {
     return this.http.get<ApiResponse>(this.fetchgetDetailTracking + id);
   }
   // //////////////////////////// GET dataretriveskema //////////////////////////////////////////////////
+
+  // //////////////////////////// GET getdatastatustrakinginquiry //////////////////////////////////////////////////
+  getdatastatustrakinginquiry(): Observable<ApiResponse> {
+    if (this.untukSessionRole === 'BRANCHMANAGER') {
+      this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
+        this.baseUrl + 'v1/efos-de/list_app_inquiry?sc=' + this.untukSessionKodeCabang
+      );
+    } else {
+      this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
+        this.baseUrl + 'v1/efos-de/list_app_inquiry?sc=' + this.untukSessionKodeCabang
+      );
+    }
+    return this.http.get<ApiResponse>(this.daftarAplikasiDataEntry);
+    // return this.http.get<ApiResponse>(this.fetchgetDetailinquiry + id);
+  }
+  // //////////////////////////// GET getdatastatustrakinginquiry //////////////////////////////////////////////////
 
   //   updatedCollateral(model: listAgunan): Observable<ApiResponse> {
   //     return this.http.post<ApiResponse>(this.baseUrl + 'v1/efos-de/update_collateral', model);
