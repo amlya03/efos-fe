@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SessionStorageService } from 'ngx-webstorage';
 import { DataEntryService } from './service/inquiry_service';
+import { environment } from 'environments/environment';
 declare let $: any;
 
 @Component({
@@ -18,6 +19,7 @@ declare let $: any;
 export class InquiryComponent implements OnInit, OnDestroy {
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
+  baseUrl: string = environment.baseUrl;
   title = 'EFOS';
   app_no_de!: string;
   tampungandataygdibawa: any;
@@ -71,6 +73,10 @@ export class InquiryComponent implements OnInit, OnDestroy {
       this.sessionStorageService.store('uploadDEA', 0);
     }, 10);
     setTimeout(() => {
+      // alert(this.sessionStorageService.retrieve('sessionRole'));
+      // if(this.sessionStorageService.retrieve('sessionRole')){
+
+      // }
       this.inquiryservice.getdatastatustrakinginquiry().subscribe(data => {
         // console.warn(data);
         if (data.code === 200) {
@@ -97,6 +103,10 @@ export class InquiryComponent implements OnInit, OnDestroy {
     // alert("1 "+ this.a)
     // alert("2 "+ this.b)
     // alert("3 "+ this.c)
+  }
+
+  downloadxlsx(): void {
+    window.open(this.baseUrl + 'v1/efos-de/download_data_entry_xlsx');
   }
 
   clearInput(): void {

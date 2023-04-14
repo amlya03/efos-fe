@@ -749,6 +749,8 @@ export class DataEntryService {
       this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
         this.baseUrl + 'v1/efos-de/list_app_inquiry?sc=' + this.untukSessionKodeCabang
       );
+    } else if (this.untukSessionRole === 'ADMIN_PIPELINE') {
+      this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/list_app_inquiry_all');
     } else {
       this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
         this.baseUrl + 'v1/efos-de/list_app_inquiry?sc=' + this.untukSessionKodeCabang
