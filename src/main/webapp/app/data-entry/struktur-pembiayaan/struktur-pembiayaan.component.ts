@@ -492,7 +492,7 @@ export class StrukturPembiayaanComponent implements OnInit {
             this.strukturForm.get('angsuran')?.setValue(this.postId[this.postId.length - 1]);
           } else {
             this.showAngsuran = 'Angsuran = ' + Number(this.postId).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-            this.strukturForm.get('angsuran')?.setValue(this.postId);
+            this.strukturForm.get('angsuran')?.setValue(this.postId[this.postId.length - 1]);
           }
           this.strukturForm.get('nilai_pembiayaan')?.setValue(nilai);
           this.getLoading(false);
