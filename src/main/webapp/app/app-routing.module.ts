@@ -64,6 +64,8 @@ import { ParameterjenisobjekagunanComponent } from './parameterized/parameteragu
 import { ParameterftpdpComponent } from './parameterized/parameterstruktur/parameterftpdp/parameterftpdp.component';
 import { ParameterjenispekerjaanComponent } from './parameterized/parameterjob/parameterjenispekerjaan/parameterjenispekerjaan.component';
 import { DaftarAplikasiReviewSpvComponent } from './verification/daftar-aplikasi-review-spv/daftar-aplikasi-review-spv.component';
+import { InquiryComponent } from './inquiry/inquiry.component';
+import { InqueryDetailComponent } from './inquiry/inquirydetail/inquery-detail/inquery-detail.component';
 
 @NgModule({
   imports: [
@@ -327,6 +329,14 @@ import { DaftarAplikasiReviewSpvComponent } from './verification/daftar-aplikasi
         {
           path: 'daftar-aplikasi-appraisal',
           component: DaftarAplikasiAppraisalComponent,
+        },
+        {
+          path: 'inquiry',
+          component: InquiryComponent,
+        },
+        {
+          path: 'inquiry-detail',
+          component: InqueryDetailComponent,
         },
         {
           path: '',

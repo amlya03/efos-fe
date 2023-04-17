@@ -93,6 +93,8 @@ import { ParameterinformasidiriComponent } from './parameterized/parameterinform
 import { ParameterjenispekerjaanComponent } from './parameterized/parameterjob/parameterjenispekerjaan/parameterjenispekerjaan.component';
 import { ParameterjobComponent } from './parameterized/parameterjob/parameterjob.component';
 import { DaftarAplikasiReviewSpvComponent } from './verification/daftar-aplikasi-review-spv/daftar-aplikasi-review-spv.component';
+import { InquiryComponent } from './inquiry/inquiry.component';
+import { InqueryDetailComponent } from './inquiry/inquirydetail/inquery-detail/inquery-detail.component';
 
 @NgModule({
   imports: [
@@ -193,6 +195,8 @@ import { DaftarAplikasiReviewSpvComponent } from './verification/daftar-aplikasi
     ParameterjobComponent,
     DaftarAplikasiAppraisalComponent,
     DaftarAplikasiReviewSpvComponent,
+    InquiryComponent,
+    InqueryDetailComponent,
   ],
   bootstrap: [MainComponent],
 })
