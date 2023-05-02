@@ -23,7 +23,7 @@ export class InquiryComponent implements OnInit, OnDestroy {
   title = 'EFOS';
   app_no_de!: string;
   tampungandataygdibawa: any;
-  dataEntry?: dataentrymodel[];
+  dataEntry: dataentrymodel[] = [];
   valueCariButton = '';
   kategori_pekerjaan = '';
   a = '';
@@ -72,20 +72,13 @@ export class InquiryComponent implements OnInit, OnDestroy {
       this.sessionStorageService.store('uploadDE', 0);
       this.sessionStorageService.store('uploadDEA', 0);
     }, 10);
-    setTimeout(() => {
-      // alert(this.sessionStorageService.retrieve('sessionRole'));
-      // if(this.sessionStorageService.retrieve('sessionRole')){
 
-      // }
-      this.inquiryservice.getdatastatustrakinginquiry().subscribe(data => {
-        // console.warn(data);
-        if (data.code === 200) {
-          this.dataEntry = (data as any).result;
-          this.dtTrigger.next(data.result);
-          this.getLoading(false);
-        }
-      });
-    }, 20);
+    this.inquiryservice.getdatastatustrakinginquiry().subscribe(data => {
+      // console.warn(data);
+      this.dataEntry = data.result;
+      this.dtTrigger.next(data.result);
+      this.getLoading(false);
+    });
   }
 
   ngOnDestroy(): void {
@@ -93,16 +86,46 @@ export class InquiryComponent implements OnInit, OnDestroy {
     // alert('knfsdkds');
   }
 
-  cariButton(listKategori: string, inputNamaNasabah: string, inputNoAplikasi: string): void {
+  cariButton(listKategori: string, inputNamaNasabah: string, inputNoAplikasi: string, tglMulai: any, tglAkhir: any): void {
     $('#dataTables-example').DataTable().columns(4).search(inputNoAplikasi).draw();
     $('#dataTables-example').DataTable().columns(3).search(inputNamaNasabah).draw();
     $('#dataTables-example').DataTable().columns(2).search(listKategori).draw();
-    // this.a = inputNoAplikasi
-    // this.b = inputNamaNasabah
-    // this.c = listKategori
-    // alert("1 "+ this.a)
-    // alert("2 "+ this.b)
-    // alert("3 "+ this.c)
+
+    // date range
+    const splitTglMulai = tglMulai.split('-');
+    const splitTglAkhir = tglAkhir.split('-');
+    // console.warn(splitTglMulai[2])
+    // console.warn(tglMulai)
+    $('#dataTables-example').DataTable().columns(7).search(splitTglMulai[0]).draw();
+    $('#dataTables-example').DataTable().columns(8).search(splitTglMulai[1]).draw();
+    $('#dataTables-example').DataTable().columns(9).search(splitTglMulai[2]).draw();
+
+    // Custom filtering function which will search data in column four between two values
+    // $.fn.dataTable.ext.search.push(
+    //   function( settings : any, data: any, dataIndex:any ) {
+    //       const min = tglMulai;
+    //       const max = tglAkhir;
+    //       const date = new Date(data[7]);
+    //       console.warn('1<=12', Number(1) <= Number(12))
+    //       // console.warn('sett',settings)
+    //       // console.warn('data',data)
+    //       // console.warn('dataIndex',dataIndex)
+    //       const minDate = new Date(tglMulai);
+    //       const maxDate = new Date(tglAkhir);
+    //       console.warn(minDate <= date  && date <= maxDate)
+    //       // console.warn(date <= max)
+    //       if (
+    //           ( min === null && max === null ) ||
+    //           ( min === null && date <= max ) ||
+    //           ( min <= date   && max === null ) ||
+    //           ( min <= date  && date <= max )
+    //       ) {
+    //         return true;
+    //       }else{
+    //         return false;
+    //       }
+    //   }
+    // )
   }
 
   downloadxlsx(): void {
@@ -131,5 +154,49 @@ export class InquiryComponent implements OnInit, OnDestroy {
   public getLoading(loading: boolean): void {
     this.isLoading = loading;
     this.isSpin = loading;
+  }
+
+  filterStart(tglMulai: any, tglAkhir: any): void {
+    const splitTglMulai = tglMulai.split('-');
+    const splitTglAkhir = tglAkhir.split('-');
+
+    // $('#dataTables-example').DataTable().columns(7).search(tglMulai).draw();
+    //  // Create date inputs
+    const minDate = new Date(tglMulai);
+    const maxDate = new Date(tglAkhir);
+
+    // // DataTables initialisation
+    // var table = $('#example').DataTable();
+
+    // // Refilter the table
+    // $('#min, #max').on('change', function () {
+    //     table.draw();
+    // });
+
+    // Custom filtering function which will search data in column four between two values
+    $.fn.dataTable.ext.search.push(function (settings: any, data: any, dataIndex: any) {
+      const min = tglMulai;
+      const max = tglAkhir;
+      const date = new Date(data[7]);
+      console.warn('isiTable', date);
+      console.warn('min', min);
+      console.warn('1<=12', Number(1) <= Number(12));
+      // console.warn('sett',settings)
+      // console.warn('data',data)
+      // console.warn('dataIndex',dataIndex)
+      console.warn(minDate <= date && date <= maxDate);
+      // console.warn(date <= max)
+      if (
+        // ( min === null && max === null ) ||
+        // ( min === null && date <= max ) ||
+        // ( min <= date   && max === null ) ||
+        min <= date &&
+        date <= max
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
   }
 }

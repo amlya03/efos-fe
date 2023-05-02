@@ -447,27 +447,8 @@ export class CollateralComponent implements OnInit {
   }
 
   tambahcollateral(): void {
-    Swal.fire({
-      title: 'Apakah Fasilitas yang dipilih adalah PTA?',
-      text: 'Pilih Ya! jika yang dipilih adalah PTA',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Ya, PTA!',
-      cancelButtonText: 'Tidak, Bukan PTA!',
-    }).then(result => {
-      if (result.isConfirmed) {
-        this.router.navigate(['/data-entry/struktur-pembiayaan'], {
-          queryParams: {
-            curef: this.curef,
-            app_no_de: this.app_no_de,
-          },
-        });
-      }
-      this.tambahatautidak = 'benar';
-      $('#tambahdata').attr('hidden', 'hidden');
-    });
+    this.tambahatautidak = 'benar';
+    $('#tambahdata').attr('hidden', 'hidden');
   }
 
   goto(): void {

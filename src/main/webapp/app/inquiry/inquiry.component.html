@@ -15,11 +15,27 @@
   <div class="col-md-6">
     <label class="m-t-5">Nama Nasabah</label>
     <input #namaNasabah type="text" class="form-control" placeholder="Masukan Nama Nasabah" aria-controls="example" />
+    <p></p>
+    <div class="row">
+      <div class="col">
+        <label class="m-t-5">Tanggal Mulai</label>
+        <input type="date" class="form-control" #tglMulai />
+      </div>
+      <div class="col">
+        <label class="m-t-5">Tanggal Akhir</label>
+        <input type="date" class="form-control" #tglAkhir />
+      </div>
+    </div>
   </div>
   <div class="col" style="text-align: center">
     <br />
-    <button (click)="cariButton(kategori.value, namaNasabah.value, noAplikasi.value)" class="btn btn-dark">Cari Data</button>
-    <button class="btn btn-info" (click)="noAplikasi.value = ''; namaNasabah.value = ''; kategori.value = ''; clearInput()">
+    <button (click)="cariButton(kategori.value, namaNasabah.value, noAplikasi.value, tglMulai.value, tglAkhir.value)" class="btn btn-dark">
+      Cari Data
+    </button>
+    <button
+      class="btn btn-info"
+      (click)="noAplikasi.value = ''; namaNasabah.value = ''; kategori.value = ''; tglMulai.value = ''; clearInput()"
+    >
       Clear Data
     </button>
     <button type="button" (click)="downloadxlsx()" class="btn mb-1 btn-secondary">
@@ -37,6 +53,10 @@
           <th style="text-align: center">No Aplikasi</th>
           <th style="text-align: center">Status Aplikasi</th>
           <th style="text-align: center">Nilai Pembiayaan</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th style="text-align: center">Tanggal</th>
           <th style="text-align: center">Aksi</th>
         </tr>
       </thead>
@@ -48,7 +68,11 @@
           <td style="text-align: center">{{ dataEntry.nama }}</td>
           <td style="text-align: center">{{ dataEntry.app_no_de }}</td>
           <td style="text-align: center">{{ dataEntry.status_aplikasi_desc }}</td>
-          <td style="text-align: center">{{ dataEntry.nilai_pembiayaan | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
+          <td style="text-align: center">{{ dataEntry.nilai_pembiayaan }}</td>
+          <td style="text-align: center" hidden>{{ dataEntry.customer_created_date | date: 'y' }}</td>
+          <td style="text-align: center" hidden>{{ dataEntry.customer_created_date | date: 'MM' }}</td>
+          <td style="text-align: center" hidden>{{ dataEntry.customer_created_date | date: 'd' }}</td>
+          <td style="text-align: center">{{ dataEntry.customer_created_date | date: 'd MMMM y H:mm:ss' }}</td>
           <td style="text-align: center">
             <a type="button" (click)="viewdataentry(dataEntry.app_no_de, dataEntry.curef)">
               <fa-icon icon="eye"></fa-icon>

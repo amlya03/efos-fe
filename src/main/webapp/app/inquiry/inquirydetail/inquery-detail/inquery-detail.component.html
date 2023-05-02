@@ -67,10 +67,11 @@
       <tbody>
         <tr *ngFor="let getstatustraking of getstatustraking; index as i">
           <td style="text-align: center">{{ i + 1 }}</td>
-          <td style="text-align: center">{{ getstatustraking.start_date }}</td>
-          <td style="text-align: center">{{ getstatustraking.end_date }}</td>
-          <td style="text-align: center">{{ getstatustraking.sla + ' hari' }}</td>
+          <td style="text-align: center">{{ getstatustraking.start_date | date: 'd MMMM y H:mm:ss' }}</td>
+          <td style="text-align: center">{{ getstatustraking.end_date | date: 'd MMMM y H:mm:ss' }}</td>
+          <td style="text-align: center">{{ getstatustraking.sla }} hari</td>
           <td style="text-align: center">{{ getstatustraking.status_aplikasi }}</td>
+          <!-- {{ value_expression | date [ : format [ : timezone [ : locale ] ] ] }} -->
         </tr>
       </tbody>
     </table>
