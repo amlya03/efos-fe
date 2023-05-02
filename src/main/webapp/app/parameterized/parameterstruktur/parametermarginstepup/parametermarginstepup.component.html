@@ -11,7 +11,7 @@
         <span>No</span>
       </th>
       <th scope="col" style="text-align: center; color: #fff">
-        <span>Akses status</span>
+        <span>Deskripsi</span>
       </th>
       <th scope="col" style="text-align: center; color: #fff">
         <span>Status</span>
@@ -19,10 +19,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let tableAgunan of tableAgunan; index as i">
+    <tr *ngFor="let listskemastepup of listskemastepup; index as i">
       <td style="text-align: center" scope="col">{{ i + 1 }}</td>
-      <td style="text-align: center" scope="col">{{ tableAgunan.akses_rumah }}</td>
-      <td style="text-align: center" scope="col">{{ tableAgunan.active }}</td>
+      <!-- <td style="text-align: center" scope="col">{{ listskemastepup.skema_deskripsi }}</td> -->
+      <td style="text-align: center" scope="col">{{ listskemastepup.skema_deskripsi }}</td>
+      <!-- <td style="text-align: center" scope="col">{{ listskemastepup.active }}</td> -->
     </tr>
   </tbody>
 </table>

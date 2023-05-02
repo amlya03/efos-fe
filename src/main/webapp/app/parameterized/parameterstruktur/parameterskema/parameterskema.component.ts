@@ -31,7 +31,7 @@ export class ParameterskemaComponent implements OnInit {
   ngOnInit(): void {
     this.datEntryService.getListskema().subscribe(table => {
       this.tablelistskema = table.result;
-      // console.log(this.tablelistskema);
+      console.log(this.tablelistskema);
     });
     this.scoringServices.getListAkad().subscribe(akad => {
       this.modelListAkad = akad.result;

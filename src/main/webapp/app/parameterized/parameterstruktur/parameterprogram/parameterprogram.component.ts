@@ -186,6 +186,7 @@ export class ParameterprogramComponent implements OnInit {
     this.datEntryService.getdataretriveprogram(id).subscribe(table => {
       this.dataretrive = table.result;
     });
+
     const data = this.dataretrive;
     // const nama = this.dataretrive.program.substring(0, 3);
     const namaprogram = this.dataretrive.program;

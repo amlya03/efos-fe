@@ -58,6 +58,7 @@ export class NavbarComponent implements OnInit {
   datakirimanappide: any;
   datakirimanidcustomer: any;
   paramId: any;
+  // id: any;
   kategori: any;
   kode_fasilitas: any;
   fasilitas: any;
@@ -101,6 +102,7 @@ export class NavbarComponent implements OnInit {
       this.datakirimanid = params.datakirimanid;
       this.datakirimantgllahir = params.datakirimantgllahir;
       this.datakirimanappide = params.datakirimanappide;
+      // this.id=params.id;
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   }

@@ -4,6 +4,7 @@ import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model';
+import { parameterModel } from 'app/parameterized/config/parameterModel.model';
 
 @Component({
   selector: 'jhi-parameterproduk',
@@ -16,6 +17,8 @@ export class ParameterprodukComponent implements OnInit {
   tablelistprogram: listCreatemodel[] = [];
   tablelistproduk: listCreatemodel[] = [];
   dataretrive: any;
+  getdataretriveprogram: any;
+  dataretriveprogram: any;
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
 
   ngOnInit(): void {
@@ -138,12 +141,7 @@ export class ParameterprodukComponent implements OnInit {
   }
 
   viewdataproduk(id: any): void {
-    this.datEntryService.getdataretriveproduk(id).subscribe(table => {
-      this.dataretrive = table.result;
-    });
-
-    alert(this.dataretrive);
-
+    let dataretrive: any;
     // /// menanti api  untuk kodeProgram
     const options = this.tablelistprogram.map((option: any) => {
       return `
@@ -153,10 +151,24 @@ export class ParameterprodukComponent implements OnInit {
       `;
     });
 
+    this.datEntryService.getdataretriveproduk(id).subscribe({
+      next: table => {
+        this.dataretrive = table.result;
+
+        this.datEntryService.getListprogram().subscribe(table => {
+          this.dataretriveprogram = table.result;
+
+          dataretrive = this.dataretriveprogram.find((value: parameterModel) => value.kode_program === this.dataretrive.kode_program);
+          console.warn(dataretrive.program);
+        });
+      },
+    });
+    // alert(this.dataretrive.kode_program)
+
     // /// menanti api  untuk kodeProgram
     Swal.fire({
       title: 'Mohon Perhatikan',
-      text: 'Inputan yang sudah Terinput tidak bisa di edit ',
+      text: 'Data harus Di isi dengan benar  ',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -166,18 +178,24 @@ export class ParameterprodukComponent implements OnInit {
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: 'Create Produk ',
+          title: 'Edit  Produk ',
           html:
             '<br />' +
             '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode program</label>' +
             // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-8"><select class="form-control" id="kode_program"><option value="">Pilih program</option>' +
+            '<div class="col-sm-8"><select class="form-control" id="kode_program"><option value="' +
+            this.dataretrive.kode_program +
+            '">' +
+            dataretrive.program +
+            '</option>' +
             `${options}` +
             '</select>' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Produk Deskripsi</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="produk_deskripsi"/> ' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="produk_deskripsi" value="' +
+            this.dataretrive.produk_deskripsi +
+            '"/> ' +
             '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
@@ -200,6 +218,7 @@ export class ParameterprodukComponent implements OnInit {
               return;
             } else {
               const body = {
+                id: id,
                 kode_program: kode_program,
                 kode_produk: '',
                 produk_deskripsi: produk_deskripsi,
@@ -208,7 +227,7 @@ export class ParameterprodukComponent implements OnInit {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_produk+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_produk', body, { headers }).subscribe({
                 next: () => {
                   // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);
