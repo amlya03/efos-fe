@@ -201,7 +201,11 @@ export class StrukturPembiayaanComponent implements OnInit {
         if (this.modelIde.fasilitas_name !== 'PTA') {
           this.strukturForm.get('harga_objek_pembiayaan')?.disable();
         } else {
-          this.strukturForm.get('harga_objek_pembiayaan')?.enable();
+          if (this.untukSessionRole === 'VER_PRE_SPV' || this.untukSessionRole === 'BRANCHMANAGER') {
+            this.strukturForm.get('harga_objek_pembiayaan')?.disable();
+          } else {
+            this.strukturForm.get('harga_objek_pembiayaan')?.enable();
+          }
         }
       });
     }, 8);

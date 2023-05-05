@@ -68,4 +68,9 @@ export class listAgunan {
   harga_transaksi: string | number | null | undefined;
   nilai_pks: string | number | null | undefined;
   harga_objek_sertifikat: string | number | null | undefined;
+  luas_bangunan_sertifikat: string | number | null | undefined;
+  luas_tanah_sertifikat: string | number | null | undefined;
+  agunan_tunai: string | number | null | undefined;
+  no_rekening_agunan: string | number | null | undefined;
+  status_agunan_tunai: string | number | null | undefined;
 }

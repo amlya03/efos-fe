@@ -187,16 +187,10 @@
   </div>
 </div>
 <br />
-<div class="row form-material">
+<div class="row form-material" [formGroup]="areaOfConForm">
   <label class="col-sm-2 col-form-label">Deskripsi Area Concern</label>
   <div class="col-sm-10">
-    <input
-      [disabled]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'VER_PRE_SPV_2'"
-      type="text"
-      class="form-control"
-      id="deskripsiAreaConcern"
-      value="{{ this.bodyDeskripsiAreaOfconcern }}"
-    />
+    <input type="text" class="form-control" id="deskripsiAreaConcern" formControlName="deskripsi_area" />
   </div>
 </div>
 <br />

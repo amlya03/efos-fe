@@ -925,7 +925,11 @@
 <br />
 <br />
 <div class="row form-material" [hidden]="this.ideResponseById == 1">
-  <div class="col" style="text-align: center">
+  <div
+    class="col"
+    style="text-align: center"
+    [hidden]="this.responseNasabah === 'checking slik on process' || this.responseNasabah === 'Process Extract'"
+  >
     <button (click)="gotopersonalinfo()" name="submit_button" class="fa fa-file-archive-o btn btn-warning" [hidden]="this.simpanDhn == 1">
       Proses Data
     </button>

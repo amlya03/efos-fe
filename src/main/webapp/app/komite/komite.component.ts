@@ -32,6 +32,7 @@ export class KomiteComponent implements OnInit {
   kodeprogram: getProgramModel[] = [];
   refPersetujuanKhusus: refPersetujuanKhususModel[] = [];
   listPersetujuanKhusus: listPersetujuanKhususModel[] = [];
+  roleAkun: any;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
@@ -55,19 +56,28 @@ export class KomiteComponent implements OnInit {
       processing: true,
       responsive: true,
     };
-    this.load();
+    this.roleAkun = this.sessionStorageService.retrieve('sessionRole');
+    this.load(this.roleAkun);
   }
-  load(): void {
+  load(role: any): void {
     this.dataEntryService.getFetchKodeFasilitas().subscribe(data => {
       this.Kodefasilitas = data.result;
     });
 
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
-    this.komiteService.getDaftarAplikasiApproval().subscribe(data => {
-      this.modelListAgunan = data.result;
-      this.dtTrigger.next(this.modelListAgunan);
-    });
+    if (role === 'DIRBISNIS') {
+      this.komiteService.getListAppDirbisnis().subscribe(data => {
+        this.modelListAgunan = data.result;
+        this.dtTrigger.next(this.modelListAgunan);
+      });
+    } else {
+      this.komiteService.getDaftarAplikasiApproval().subscribe(data => {
+        this.modelListAgunan = data.result;
+        this.dtTrigger.next(this.modelListAgunan);
+      });
+    }
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
+
     // //////////////////////////////////////////////// Ref Persetujuan Khusus ///////////////////////////////////////////////////////////////////////
     this.komiteService.getRefPersetujuanKhusus().subscribe(data => {
       this.refPersetujuanKhusus = data.result;
@@ -85,9 +95,9 @@ export class KomiteComponent implements OnInit {
     listProgram: string,
     listKategori: string,
     inputNamaNasabah: string,
-    inputNoAplikasi: string,
-    listFasilitas: string,
-    inputCabang: string
+    inputNoAplikasi: string
+    // listFasilitas: string,
+    // inputCabang: string
   ): void {
     $('#dataTables-example').DataTable().columns(1).search(inputNoAplikasi).draw();
     $('#dataTables-example').DataTable().columns(2).search(inputNamaNasabah).draw();

@@ -306,16 +306,16 @@ export class NegativeListComponent implements OnInit, OnDestroy {
 
   // View Upload
   viewData(): void {
-    let popup: any;
-    const buatPdf = this.uploadDocument.nama_dokumen?.split('.').pop();
-    if (buatPdf === 'pdf') {
-      window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + this.uploadDocument.nama_dokumen + '');
-    } else {
-      const url = this.baseUrl + 'v1/efos-de/downloadFile/' + this.uploadDocument.nama_dokumen + '';
-      const img = '<img src="' + url + '">';
-      popup = window.open('');
-      popup.document.write(img);
-    }
+    // let popup: any;
+    // const buatPdf = this.uploadDocument.nama_dokumen?.split('.').pop();
+    // if (buatPdf === 'pdf') {
+    window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + this.uploadDocument.nama_dokumen + '');
+    // } else {
+    //   const url = this.baseUrl + 'v1/efos-de/downloadFile/' + this.uploadDocument.nama_dokumen + '';
+    //   const img = '<img src="' + url + '">';
+    //   popup = window.open('');
+    //   popup.document.write(img);
+    // }
   }
 
   openSlikContent(slikContent: any): void {

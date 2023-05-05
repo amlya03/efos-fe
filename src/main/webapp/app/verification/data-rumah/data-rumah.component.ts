@@ -21,6 +21,7 @@ import { ServiceVerificationService } from '../service/service-verification.serv
 import { refAnalisaKeuangan } from './refAnalisaKeuangan.model';
 import { environment } from 'environments/environment';
 import { InitialDataEntryService } from '../../initial-data-entry/services/initial-data-entry.service';
+import { refAnalisaDataKantor } from '../data-kantor/refAnalisaDataKantor.model';
 
 @Component({
   selector: 'jhi-data-rumah',
@@ -70,6 +71,8 @@ export class DataRumahComponent implements OnInit {
 
   // kewajiban bank pasangan
   kewajibanBankPasangan: any;
+
+  dataKantorMap: refAnalisaDataKantor = new refAnalisaDataKantor();
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;

@@ -9,6 +9,68 @@
       <div class="row form-material">
         <div class="col">
           <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Agunan Tunai?</label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <select class="form-control" id="status_agunan_tunai" formControlName="status_agunan_tunai">
+                  <option selected value="">Pilih Data</option>
+                  <option value="1">Ya</option>
+                  <option value="0">Tidak</option>
+                </select>
+              </div>
+              <span
+                [hidden]="
+                  collateralForm.controls.tipe_agunan.valid ||
+                  this.untukSessionRole == 'BRANCHMANAGER' ||
+                  this.untukSessionRole == 'VER_PRE_SPV'
+                "
+                class="text-danger"
+                >Field Wajib Diisi
+              </span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Agunan Tunai?</label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <select class="form-control" id="agunan_tunai" formControlName="agunan_tunai">
+                  <option selected value="">Pilih Data</option>
+                  <option value="Tabungan">Tabungan</option>
+                  <option value="Deposito">Deposito</option>
+                  <option value="Giro">Giro</option>
+                </select>
+              </div>
+              <span
+                [hidden]="
+                  collateralForm.controls.tipe_agunan.valid ||
+                  this.untukSessionRole == 'BRANCHMANAGER' ||
+                  this.untukSessionRole == 'VER_PRE_SPV'
+                "
+                class="text-danger"
+                >Field Wajib Diisi
+              </span>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">No Rekening Agunan</label>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <input class="form-control" id="no_rekening_agunan" formControlName="no_rekening_agunan" />
+              </div>
+              <span
+                [hidden]="
+                  collateralForm.controls.tipe_agunan.valid ||
+                  this.untukSessionRole == 'BRANCHMANAGER' ||
+                  this.untukSessionRole == 'VER_PRE_SPV'
+                "
+                class="text-danger"
+                >Field Wajib Diisi
+              </span>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
             <label class="col-sm-4 col-form-label">Tipe Agunan</label>
             <div class="col-sm-8">
               <div class="form-group">

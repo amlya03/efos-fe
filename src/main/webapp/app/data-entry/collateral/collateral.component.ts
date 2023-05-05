@@ -328,6 +328,18 @@ export class CollateralComponent implements OnInit {
         { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
+      agunan_tunai: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      status_agunan_tunai: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
+      no_rekening_agunan: [
+        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
+        Validators.required,
+      ],
     });
   }
 
@@ -586,6 +598,9 @@ export class CollateralComponent implements OnInit {
         no_imb: this.collateralForm.get('no_imb')?.value,
         tanggal_imb: this.collateralForm.get('tanggal_imb')?.value,
         harga_transaksi: this.collateralForm.get('harga_transaksi')?.value,
+        agunan_tunai: this.collateralForm.get('agunan_tunai')?.value,
+        status_agunan_tunai: this.collateralForm.get('status_agunan_tunai')?.value,
+        no_rekening_agunan: this.collateralForm.get('no_rekening_agunan')?.value,
       })
       .subscribe({
         next() {

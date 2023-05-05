@@ -107,7 +107,8 @@ export class SyaratPersetujuanComponent implements OnInit {
     this.load();
 
     this.areaOfConForm = this.formBuilder.group({
-      area_of_concern: '',
+      area_of_concern: { value: '0', disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'VER_PRE_SPV_2' },
+      deskripsi_area: { value: '', disabled: this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'VER_PRE_SPV_2' },
     });
   }
 
@@ -125,6 +126,7 @@ export class SyaratPersetujuanComponent implements OnInit {
 
     // ambil semua data Syarat Persetujuan
     this.serviceVerificationService.getfetchSyaratPersetujuan(this.app_no_de).subscribe(data => {
+      // console.warn(data)
       // Syarat Persetujuan
       this.syaratPersetujuan = data.result.syarat;
       this.syaratPersetujuan?.forEach(element => {
@@ -149,20 +151,27 @@ export class SyaratPersetujuanComponent implements OnInit {
       // Area Of Concern
       this.areaOfConcernModel = data.result.area_of_concern;
 
-      const retriveForm = {
-        area_of_concern: data.result.area_of_concern.status_area,
-      };
-      this.areaOfConForm.setValue(retriveForm);
-
-      if (data.result.area_of_concern === null) {
-        this.bodyDeskripsiAreaOfconcern = '';
-        this.cekResult = 0;
-      } else {
+      if (data.result.area_of_concern) {
         this.bodyDeskripsiAreaOfconcern = data.result.area_of_concern.deskripsi_area;
         this.cekResult = 1;
-      }
 
-      this.dtTrigger.next(data.result.syarat);
+        const retriveForm = {
+          area_of_concern: this.areaOfConcernModel.status_area,
+          deskripsi_area: this.areaOfConcernModel.deskripsi_area,
+        };
+        this.areaOfConForm.setValue(retriveForm);
+        this.dtTrigger.next(data.result);
+      } else {
+        this.bodyDeskripsiAreaOfconcern = '';
+        this.cekResult = 0;
+
+        const retriveForm = {
+          area_of_concern: this.bodyDeskripsiAreaOfconcern,
+          deskripsi_area: this.bodyDeskripsiAreaOfconcern,
+        };
+        this.areaOfConForm.setValue(retriveForm);
+        this.dtTrigger.next(data.result);
+      }
     });
   }
 
@@ -374,7 +383,7 @@ export class SyaratPersetujuanComponent implements OnInit {
           created_by: this.sessionStorageService.retrieve('sessionUserName'),
           created_date: '',
           curef: this.dataEntry.curef,
-          deskripsi_area: this.areaOfConInput,
+          deskripsi_area: this.areaOfConForm.get('deskripsi_area')?.value,
           status_area: this.areaOfConForm.get('area_of_concern')?.value,
         })
         .subscribe({});
@@ -385,7 +394,7 @@ export class SyaratPersetujuanComponent implements OnInit {
           updated_by: this.sessionStorageService.retrieve('sessionUserName'),
           updated_date: '',
           curef: this.dataEntry.curef,
-          deskripsi_area: this.areaOfConInput,
+          deskripsi_area: this.areaOfConForm.get('deskripsi_area')?.value,
           status_area: this.areaOfConForm.get('area_of_concern')?.value,
         })
         .subscribe({});

@@ -20,4 +20,6 @@ export class refStrukturPembiayaan {
   updated_by?: string;
   akad: string | null | undefined | number;
   ftv: string | null | undefined | number;
+  score: string | null | undefined | number;
+  score_desc: string | null | undefined | number;
 }

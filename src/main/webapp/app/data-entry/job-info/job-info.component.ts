@@ -577,7 +577,6 @@ export class JobInfoComponent implements OnInit {
 
   goto(): void {
     this.sessionStorageService.store('jobInfo', 1);
-    // this.onResponseSuccess(res);
     if (this.customerModel.fasilitas_name === 'PTA') {
       if (this.dataEntry.status_perkawinan === 'KAWIN') {
         this.router.navigate(['/data-entry/data-pasangan'], {
@@ -586,8 +585,6 @@ export class JobInfoComponent implements OnInit {
             app_no_de: this.app_no_de,
           },
         });
-
-        // console.warn(this.curef);
       } else {
         this.router.navigate(['/data-entry/struktur-pembiayaan'], {
           queryParams: {
@@ -793,22 +790,40 @@ export class JobInfoComponent implements OnInit {
 
         .subscribe({
           next: () => {
-            if (this.dataEntry.status_perkawinan === 'KAWIN') {
-              alert('Berhasil Menyimpan Data');
-              this.router.navigate(['/data-entry/data-pasangan'], {
-                queryParams: {
-                  curef: this.curef,
-                  app_no_de: this.app_no_de,
-                },
-              });
+            if (this.customerModel.fasilitas_name === 'PTA') {
+              if (this.dataEntry.status_perkawinan === 'KAWIN') {
+                this.router.navigate(['/data-entry/data-pasangan'], {
+                  queryParams: {
+                    curef: this.curef,
+                    app_no_de: this.app_no_de,
+                  },
+                });
+              } else {
+                this.router.navigate(['/data-entry/struktur-pembiayaan'], {
+                  queryParams: {
+                    curef: this.curef,
+                    app_no_de: this.app_no_de,
+                  },
+                });
+              }
             } else {
-              alert('Berhasil Menyimpan Data');
-              this.router.navigate(['/data-entry/collateral'], {
-                queryParams: {
-                  curef: this.curef,
-                  app_no_de: this.app_no_de,
-                },
-              });
+              if (this.dataEntry.status_perkawinan === 'KAWIN') {
+                this.router.navigate(['/data-entry/data-pasangan'], {
+                  queryParams: {
+                    curef: this.curef,
+                    app_no_de: this.app_no_de,
+                  },
+                });
+
+                // console.warn(this.curef);
+              } else {
+                this.router.navigate(['/data-entry/collateral'], {
+                  queryParams: {
+                    curef: this.curef,
+                    app_no_de: this.app_no_de,
+                  },
+                });
+              }
             }
           },
           error: error => {

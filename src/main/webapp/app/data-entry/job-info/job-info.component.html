@@ -108,14 +108,7 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Lama Beroperasi</label>
         <div class="col-sm-5">
-          <input
-            type="number"
-            formControlName="lama_beroperasi"
-            class="form-control"
-            [disabled]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'"
-            min="0"
-            oninput="this.value = Math.abs(this.value)"
-          />
+          <input type="number" formControlName="lama_beroperasi" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" />
         </div>
         <label class="col-sm-2">Tahun</label>
       </div>

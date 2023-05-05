@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/prefer-for-of */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable eqeqeq */
@@ -24,6 +25,7 @@ import { getPersetujuanPembiayaanModel } from '../services/config/getPersetujuan
 import Swal from 'sweetalert2';
 import { environment } from 'environments/environment';
 import { userModel } from '../services/config/userModel.model';
+import { limitPemutusModel } from '../services/config/limitPemutusModel.model';
 
 @Component({
   selector: 'jhi-detail-komite',
@@ -63,6 +65,10 @@ export class DetailKomiteComponent implements OnInit {
   persetujuanPembiayaan: getPersetujuanPembiayaanModel[] = [];
   retriveFinal: getPersetujuanPembiayaanModel[] = [];
   userNya: userModel = new userModel();
+  showAngsuran: any;
+  showAngsuran2: any;
+  showAngsuran3: any;
+  limitKewenanganPemutus: limitPemutusModel = new limitPemutusModel();
 
   // Hasil Scoring
   hasilScoring: any;
@@ -99,7 +105,6 @@ export class DetailKomiteComponent implements OnInit {
   ngOnInit(): void {
     this.getLoading(true);
     this.cabang = this.sessionStorageService.retrieve('sessionKdCabang');
-    this.load();
     // //////////////////// Fasilitas Yang Diminta //////////////////////
     this.komiteFasilitasYangDimintaForm = this.formBuilder.group({
       harga_permintaan: '',
@@ -121,12 +126,13 @@ export class DetailKomiteComponent implements OnInit {
 
     // //////////////////// Persetujuan Pembiayaan //////////////////////
     this.persetujuanPembiayaanForm = this.formBuilder.group({
-      limit_kewenangan_memutus: '0',
-      plafon_pembiayaan: '0',
+      limit_kewenangan_memutus: { value: '0', disabled: true },
+      plafon_pembiayaan: { value: '0', disabled: true },
       keputusan: '',
       alasan_penolakan: '',
       keterangan: '',
     });
+    this.load();
   }
   load(): void {
     // //////////////////////////////////////////////// Get Data Users ///////////////////////////////////////////////////////////////////////
@@ -167,14 +173,25 @@ export class DetailKomiteComponent implements OnInit {
       this.komiteServices.getPersetujuanPembiayaan(this.app_no_de).subscribe(data => {
         this.persetujuanPembiayaan = data.result;
         this.retriveFinal = data.result;
-        const retrivepersetujuanPembiayaanForm = {
-          limit_kewenangan_memutus: this.retriveFinal[this.retriveFinal.length - 1].limit_kewenangan_memutus,
-          plafon_pembiayaan: this.retriveFinal[this.retriveFinal.length - 1].plafon_pembiayaan,
-          keputusan: this.retriveFinal[this.retriveFinal.length - 1].keputusan,
-          alasan_penolakan: this.retriveFinal[this.retriveFinal.length - 1].alasan_penolakan,
-          keterangan: this.retriveFinal[this.retriveFinal.length - 1].keterangan,
-        };
-        this.persetujuanPembiayaanForm.setValue(retrivepersetujuanPembiayaanForm);
+        if (this.retriveFinal[0]) {
+          const retrivepersetujuanPembiayaanForm = {
+            limit_kewenangan_memutus: this.retriveFinal[this.retriveFinal.length - 1].limit_kewenangan_memutus,
+            plafon_pembiayaan: this.retriveFinal[this.retriveFinal.length - 1].plafon_pembiayaan,
+            keputusan: this.retriveFinal[this.retriveFinal.length - 1].keputusan,
+            alasan_penolakan: this.retriveFinal[this.retriveFinal.length - 1].alasan_penolakan,
+            keterangan: this.retriveFinal[this.retriveFinal.length - 1].keterangan,
+          };
+          this.persetujuanPembiayaanForm.setValue(retrivepersetujuanPembiayaanForm);
+        } else {
+          const retrivepersetujuanPembiayaanForm = {
+            limit_kewenangan_memutus: '',
+            plafon_pembiayaan: '',
+            keputusan: '',
+            alasan_penolakan: '',
+            keterangan: '',
+          };
+          this.persetujuanPembiayaanForm.setValue(retrivepersetujuanPembiayaanForm);
+        }
       });
     }, 20);
     // ////////////////// Get Persetujuan Pembiayaan ////////////////////////////////
@@ -183,10 +200,10 @@ export class DetailKomiteComponent implements OnInit {
     setTimeout(() => {
       this.komiteServices.getDetailApproval(this.app_no_de).subscribe(data => {
         this.detailApproval = data.result;
-        if (data.result == null) {
-          this.cekDetailKomite = 0;
-        } else {
+        if (data.result) {
           this.cekDetailKomite = 1;
+        } else {
+          this.cekDetailKomite = 0;
         }
       });
     }, 25);
@@ -210,6 +227,22 @@ export class DetailKomiteComponent implements OnInit {
           }
         });
         // ////////////////////////////////////////////////////////////////////////////////////////
+
+        if (this.dataEntry.kode_fasilitas_name === 'PTA') {
+          setTimeout(() => {
+            this.komiteServices.getLimitApprovalPTA().subscribe(limitKewenangan => {
+              this.limitKewenanganPemutus = limitKewenangan.result.value;
+              this.persetujuanPembiayaanForm.get('limit_kewenangan_memutus')?.setValue(this.limitKewenanganPemutus);
+            });
+          }, 1);
+        } else {
+          setTimeout(() => {
+            this.komiteServices.getLimitApprovalNonPTA().subscribe(limitKewenangan => {
+              this.limitKewenanganPemutus = limitKewenangan.result.value;
+              this.persetujuanPembiayaanForm.get('limit_kewenangan_memutus')?.setValue(this.limitKewenanganPemutus);
+            });
+          }, 1);
+        }
       });
     }, 35);
     setTimeout(() => {
@@ -247,7 +280,7 @@ export class DetailKomiteComponent implements OnInit {
         this.strukturAnalisa = strukturAnalisa.result;
         // //////////////////////// Fasilitas Yang DIminta ////////////////////////////////////////
         setTimeout(() => {
-          if (this.cekDetailKomite === 0) {
+          if (this.cekDetailKomite == 0) {
             const retrivestrukturForm = {
               harga_permintaan: this.strukturAnalisa.harga_permintaan,
               down_payment: this.strukturAnalisa.down_payment,
@@ -267,12 +300,11 @@ export class DetailKomiteComponent implements OnInit {
             this.komiteFasilitasYangDimintaForm.setValue(retrivestrukturForm);
           }
         }, 10);
-        let anguran1: any;
-        let anguran2: any;
 
+        let anguran1: any;
         setTimeout(() => {
           this.http
-            .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
+            .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran_analyst', {
               app_no_de: this.dataEntry.app_no_de,
               curef: this.dataEntry.curef,
               dp: this.strukturAnalisa.down_payment,
@@ -286,15 +318,17 @@ export class DetailKomiteComponent implements OnInit {
             })
             .subscribe({
               next: data => {
-                anguran1 = data.result.angsuran[0];
-                anguran2 = data.result.angsuran[1];
+                anguran1 = data.result.angsuran;
 
-                if (anguran2 == null) {
-                  this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue('Angsuran = ' + anguran1);
+                if (anguran1[1]) {
+                  this.showAngsuran = anguran1.map(
+                    (value: any, i: any) =>
+                      ` Angsuran Ke ${i + 1} = ${Number(value).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
+                  );
+                  this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue(anguran1[anguran1.length - 1]);
                 } else {
-                  this.komiteFasilitasYangDimintaForm
-                    .get('angsuran')
-                    ?.setValue('Angsuran Tahun Ke 1 = ' + anguran1 + '; ' + 'Angsuran Tahun Ke 2 = ' + anguran2);
+                  this.showAngsuran = 'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                  this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue(anguran1[anguran1.length - 1]);
                 }
 
                 setTimeout(() => {
@@ -337,6 +371,7 @@ export class DetailKomiteComponent implements OnInit {
 
         // //////////////////////// Rekomendasi System ////////////////////////////////////////
         setTimeout(() => {
+          this.persetujuanPembiayaanForm.get('plafon_pembiayaan')?.setValue(this.strukturAnalisa.nilai_pembiayaan);
           if (this.cekDetailKomite === 0) {
             const retriveRekomendasiSystem = {
               skema: this.strukturAnalisa.skema_code + '|' + this.strukturAnalisa.skema_master + '|' + this.strukturAnalisa.skema,
@@ -375,7 +410,7 @@ export class DetailKomiteComponent implements OnInit {
             });
           }
           this.http
-            .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
+            .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran_analyst', {
               app_no_de: this.dataEntry.app_no_de,
               curef: this.dataEntry.curef,
               dp: this.strukturAnalisa.down_payment,
@@ -389,15 +424,17 @@ export class DetailKomiteComponent implements OnInit {
             })
             .subscribe({
               next: data => {
-                const anguranKe1 = data.result.angsuran[0];
-                const anguranKe2 = data.result.angsuran[1];
+                const anguranKe1 = data.result.angsuran;
 
-                if (anguranKe2 == null) {
-                  this.keputusanPembiayaanForm.get('angsuran')?.setValue('Angsuran = ' + anguranKe1);
+                if (anguranKe1[1]) {
+                  this.showAngsuran3 = anguranKe1.map(
+                    (value: any, i: any) =>
+                      ` Angsuran Ke ${i + 1} = ${Number(value).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
+                  );
+                  this.keputusanPembiayaanForm.get('angsuran')?.setValue(anguranKe1[anguranKe1.length - 1]);
                 } else {
-                  this.keputusanPembiayaanForm
-                    .get('angsuran')
-                    ?.setValue('Angsuran Tahun Ke 1 = ' + anguranKe1 + '; ' + 'Angsuran Tahun Ke 2 = ' + anguranKe2);
+                  this.showAngsuran3 = 'Angsuran = ' + Number(anguranKe1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                  this.keputusanPembiayaanForm.get('angsuran')?.setValue(anguranKe1[anguranKe1.length - 1]);
                 }
                 this.getLoading(false);
               },
@@ -415,7 +452,7 @@ export class DetailKomiteComponent implements OnInit {
   }
   hitungFasilitasYangDiminta(): void {
     this.http
-      .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
+      .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran_analyst', {
         app_no_de: this.dataEntry.app_no_de,
         curef: this.dataEntry.curef,
         dp: this.komiteFasilitasYangDimintaForm.get('down_payment')?.value,
@@ -429,15 +466,16 @@ export class DetailKomiteComponent implements OnInit {
       })
       .subscribe({
         next: data => {
-          const anguran1 = data.result.angsuran[0];
-          const anguran2 = data.result.angsuran[1];
-
-          if (anguran2 == null) {
-            this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue('Angsuran = ' + anguran1);
+          const anguran1 = data.result.angsuran;
+          if (anguran1[1]) {
+            this.showAngsuran = anguran1.map(
+              (value: any, i: any) =>
+                ` Angsuran Ke ${i + 1} = ${Number(value).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
+            );
+            this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue(anguran1[anguran1.length - 1]);
           } else {
-            this.komiteFasilitasYangDimintaForm
-              .get('angsuran')
-              ?.setValue('Angsuran Tahun Ke 1 = ' + anguran1 + '; ' + 'Angsuran Tahun Ke 2 = ' + anguran2);
+            this.showAngsuran = 'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+            this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue(anguran1[anguran1.length - 1]);
           }
         },
         error(err) {
@@ -466,7 +504,7 @@ export class DetailKomiteComponent implements OnInit {
   hitungRekomendasiSystem(): void {
     const deskripsiSkema = this.keputusanPembiayaanForm.get('skema')?.value.split('|');
     this.http
-      .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
+      .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran_analyst', {
         app_no_de: this.dataEntry.app_no_de,
         curef: this.dataEntry.curef,
         dp: this.keputusanPembiayaanForm.get('down_payment')?.value,
@@ -481,15 +519,17 @@ export class DetailKomiteComponent implements OnInit {
       .subscribe({
         next: data => {
           // console.warn('rekon', data);
-          const anguran1 = data.result.angsuran[0];
-          const anguran2 = data.result.angsuran[1];
+          const anguran1 = data.result.angsuran;
 
-          if (anguran2 == null) {
-            this.keputusanPembiayaanForm.get('angsuran')?.setValue('Angsuran = ' + anguran1);
+          if (anguran1[1]) {
+            this.showAngsuran2 = anguran1.map(
+              (value: any, i: any) =>
+                ` Angsuran Ke ${i + 1} = ${Number(value).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
+            );
+            this.keputusanPembiayaanForm.get('angsuran')?.setValue(anguran1[anguran1.length - 1]);
           } else {
-            this.keputusanPembiayaanForm
-              .get('angsuran')
-              ?.setValue('Angsuran Tahun Ke 1 = ' + anguran1 + '; ' + 'Angsuran Tahun Ke 2 = ' + anguran2);
+            this.showAngsuran2 = 'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+            this.keputusanPembiayaanForm.get('angsuran')?.setValue(anguran1[anguran1.length - 1]);
           }
         },
         error(err) {
@@ -505,21 +545,12 @@ export class DetailKomiteComponent implements OnInit {
     // contooohhhhh// this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value.replace(/,/g, '').replace('Rp. ', '').split('.')[0]
     const skemaFull = this.keputusanPembiayaanForm.get('skema')?.value.split('|');
     const totalPendapatanFull = this.jobByCurefDE.total_pendapatan;
-    const angsuranfix = this.komiteFasilitasYangDimintaForm.get('angsuran')?.value.replace('Angsuran = ', '');
-    const angsuranNon1 = angsuranfix.replace('Angsuran Tahun Ke 1 = ', '');
-    const angsuranNon2 = angsuranNon1.replace('Angsuran Tahun Ke 2 = ', '');
-    const angsurannya = angsuranNon2.split('; ');
-
-    const angsuranfix2 = this.keputusanPembiayaanForm.get('angsuran')?.value.replace('Angsuran = ', '');
-    const angsuranNon12 = angsuranfix2.replace('Angsuran Tahun Ke 1 = ', '');
-    const angsuranNon22 = angsuranNon12.replace('Angsuran Tahun Ke 2 = ', '');
-    const angsurannya2 = angsuranNon22.split('; ');
     if (this.cekDetailKomite === 0) {
       this.http
         .post<any>(this.baseUrl + 'v1/efos-approval/create_approval', {
           app_no_de: this.app_no_de,
-          angsuran: angsurannya[0],
-          angsuran_keputusan: angsurannya2[0],
+          angsuran: this.komiteFasilitasYangDimintaForm.get('angsuran')?.value,
+          angsuran_keputusan: this.keputusanPembiayaanForm.get('angsuran')?.value,
           created_by: this.sessionStorageService.retrieve('sessionUserName'),
           created_date: '',
           dp: this.komiteFasilitasYangDimintaForm.get('down_payment')?.value,
@@ -611,8 +642,8 @@ export class DetailKomiteComponent implements OnInit {
       this.http
         .post<any>(this.baseUrl + 'v1/efos-approval/update_data_approval', {
           app_no_de: this.app_no_de,
-          angsuran: angsurannya[0],
-          angsuran_keputusan: angsurannya2[0],
+          angsuran: this.komiteFasilitasYangDimintaForm.get('angsuran')?.value,
+          angsuran_keputusan: this.keputusanPembiayaanForm.get('angsuran')?.value,
           dp: this.komiteFasilitasYangDimintaForm.get('down_payment')?.value,
           dp_keputusan: this.keputusanPembiayaanForm.get('down_payment')?.value,
           dsr: this.komiteFasilitasYangDimintaForm.get('dsr')?.value,
@@ -734,15 +765,6 @@ export class DetailKomiteComponent implements OnInit {
     // contooohhhhh// this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value.replace(/,/g, '').replace('Rp. ', '').split('.')[0]
     const skemaFull = this.keputusanPembiayaanForm.get('skema')?.value.split('|');
     const totalPendapatanFull = this.jobByCurefDE.total_pendapatan;
-    const angsuranfix = this.komiteFasilitasYangDimintaForm.get('angsuran')?.value.replace('Angsuran = ', '');
-    const angsuranNon1 = angsuranfix.replace('Angsuran Tahun Ke 1 = ', '');
-    const angsuranNon2 = angsuranNon1.replace('Angsuran Tahun Ke 2 = ', '');
-    const angsurannya = angsuranNon2.split('; ');
-
-    const angsuranfix2 = this.keputusanPembiayaanForm.get('angsuran')?.value.replace('Angsuran = ', '');
-    const angsuranNon12 = angsuranfix2.replace('Angsuran Tahun Ke 1 = ', '');
-    const angsuranNon22 = angsuranNon12.replace('Angsuran Tahun Ke 2 = ', '');
-    const angsurannya2 = angsuranNon22.split('; ');
     // /////////////////////// Create Approval /////////////////////////////
 
     Swal.fire({
@@ -758,8 +780,8 @@ export class DetailKomiteComponent implements OnInit {
           this.http
             .post<any>(this.baseUrl + 'v1/efos-approval/create_approval', {
               app_no_de: this.app_no_de,
-              angsuran: angsurannya[0],
-              angsuran_keputusan: angsurannya2[0],
+              angsuran: this.komiteFasilitasYangDimintaForm.get('angsuran')?.value,
+              angsuran_keputusan: this.keputusanPembiayaanForm.get('angsuran')?.value,
               created_by: this.sessionStorageService.retrieve('sessionUserName'),
               created_date: '',
               dp: this.komiteFasilitasYangDimintaForm.get('down_payment')?.value,
@@ -849,8 +871,8 @@ export class DetailKomiteComponent implements OnInit {
           this.http
             .post<any>(this.baseUrl + 'v1/efos-approval/update_data_approval', {
               app_no_de: this.app_no_de,
-              angsuran: angsurannya[0],
-              angsuran_keputusan: angsurannya2[0],
+              angsuran: this.komiteFasilitasYangDimintaForm.get('angsuran')?.value,
+              angsuran_keputusan: this.keputusanPembiayaanForm.get('angsuran')?.value,
               dp: this.komiteFasilitasYangDimintaForm.get('down_payment')?.value,
               dp_keputusan: this.keputusanPembiayaanForm.get('down_payment')?.value,
               dsr: this.komiteFasilitasYangDimintaForm.get('dsr')?.value,

@@ -2827,14 +2827,14 @@ export class InitialDataEntryFixComponent implements OnInit {
     });
   }
   download(): void {
-    const buatPdf = this.isiUpload[0].nama_dokumen.split('.').pop();
-    if (buatPdf == 'pdf') {
-      window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + this.isiUpload[0].nama_dokumen + '');
-    } else {
-      const url = this.baseUrl + 'v1/efos-de/downloadFile/' + this.isiUpload[0].nama_dokumen + '';
-      const img = '<img src="' + url + '">';
-      this.popup = window.open('');
-      this.popup.document.write(img);
-    }
+    // const buatPdf = this.isiUpload[0].nama_dokumen.split('.').pop();
+    // if (buatPdf == 'pdf') {
+    window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + this.isiUpload[0].nama_dokumen + '');
+    // } else {
+    //   const url = this.baseUrl + 'v1/efos-de/downloadFile/' + this.isiUpload[0].nama_dokumen + '';
+    //   const img = '<img src="' + url + '">';
+    //   this.popup = window.open('');
+    //   this.popup.document.write(img);
+    // }
   }
 }

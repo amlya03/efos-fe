@@ -324,17 +324,17 @@ export class MemoComponent implements OnInit {
     }
   }
   download(): void {
-    const buatPdf = this.getMemoUpload.nama_dokumen?.split('.').pop();
-    if (buatPdf == 'pdf') {
-      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-      window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + this.getMemoUpload.nama_dokumen + '');
-    } else {
-      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-      const url = this.baseUrl + 'v1/efos-de/downloadFile/' + this.getMemoUpload.nama_dokumen + '';
-      const img = '<img src="' + url + '">';
-      this.popup = window.open('');
-      this.popup.document.write(img);
-    }
+    // const buatPdf = this.getMemoUpload.nama_dokumen?.split('.').pop();
+    // if (buatPdf == 'pdf') {
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+    window.open(this.baseUrl + 'v1/efos-de/downloadFile/' + this.getMemoUpload.nama_dokumen + '');
+    // } else {
+    //   // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+    //   const url = this.baseUrl + 'v1/efos-de/downloadFile/' + this.getMemoUpload.nama_dokumen + '';
+    //   const img = '<img src="' + url + '">';
+    //   this.popup = window.open('');
+    //   this.popup.document.write(img);
+    // }
   }
   view(id: number | null | undefined): void {
     this.dataEntryService.getFetchListMemo(id).subscribe(data => {

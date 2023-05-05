@@ -308,7 +308,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Harga Permintaan</label>
+        <label class="col-sm-4 col-form-label">Harga / Nilai Objek</label>
         <div class="col-sm-8">
           <input
             type="text"
@@ -337,7 +337,7 @@
       </div>
       <br />
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Down Payment</label>
+        <label class="col-sm-4 col-form-label">DP / Porsi Nasabah</label>
         <div [ngClass]="dataEntry.kode_fasilitas_name === 'PTA' ? 'col-sm-8' : 'col-sm-5'">
           <input
             type="text"
@@ -832,6 +832,7 @@
     </div>
   </div>
 </div>
+<br />
 <div class="col" style="text-align: center">
   <button
     [hidden]="this.untukSessionRole == 'VER_PRE_SPV' || this.untukSessionRole == 'VER_PRE_SPV_2'"

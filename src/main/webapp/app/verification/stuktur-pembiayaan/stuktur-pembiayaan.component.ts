@@ -357,7 +357,7 @@ export class StukturPembiayaanComponent implements OnInit {
             });
 
           this.http
-            .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
+            .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran_analyst', {
               app_no_de: this.dataEntry.app_no_de,
               curef: this.dataEntry.curef,
               dp: this.strukturPembiayaan.down_payment,
@@ -450,7 +450,7 @@ export class StukturPembiayaanComponent implements OnInit {
     this.getLoading(true);
     const skemaidName = skema_id.split('|');
     this.http
-      .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran', {
+      .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran_analyst', {
         app_no_de: this.dataEntry.app_no_de,
         curef: this.dataEntry.curef,
         dp: this.strukturForm.get('down_payment')?.value,
@@ -565,6 +565,8 @@ export class StukturPembiayaanComponent implements OnInit {
           skema_code: Skemanya[0],
           skema_master: Skemanya[1],
           akad: this.strukturForm.get('akad')?.value,
+          score: this.hasilScoring,
+          score_desc: this.hasilStatus,
         })
         .subscribe({
           next: () => {
@@ -596,6 +598,8 @@ export class StukturPembiayaanComponent implements OnInit {
           skema_code: Skemanya[0],
           skema_master: Skemanya[1],
           akad: this.strukturForm.get('akad')?.value,
+          score: this.hasilScoring,
+          score_desc: this.hasilStatus,
         })
         .subscribe({
           next: () => {
