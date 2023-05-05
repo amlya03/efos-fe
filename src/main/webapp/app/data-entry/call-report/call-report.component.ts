@@ -17,6 +17,8 @@ import { refStatusSertifikat } from '../services/config/refStatusSertifikat.mode
 import { environment } from 'environments/environment';
 import { refJenisPekerjaan } from '../services/config/refJenisPekerjaan.model';
 import { modelCustomer } from 'app/initial-data-entry/services/config/modelCustomer.model';
+import { KomiteService } from 'app/komite/services/komite.service';
+import { userModel } from 'app/komite/services/config/userModel.model';
 
 @Component({
   selector: 'jhi-call-report',
@@ -60,6 +62,7 @@ export class CallReportComponent implements OnInit {
   cekSimpanData = 0;
   tanggalWawancara: any;
   customerModel: modelCustomer = new modelCustomer();
+  userData: userModel = new userModel();
 
   constructor(
     private route: ActivatedRoute,
@@ -69,7 +72,8 @@ export class CallReportComponent implements OnInit {
     private formBuilder: FormBuilder,
     protected dataEntryService: DataEntryService,
     private sessionStorageService: SessionStorageService,
-    protected verificationServices: ServiceVerificationService
+    protected verificationServices: ServiceVerificationService,
+    protected komiteServices: KomiteService
   ) {
     this.route.queryParams.subscribe(params => {
       this.curef = params.curef;
@@ -187,6 +191,11 @@ export class CallReportComponent implements OnInit {
         this.customerModel = customer.result;
       });
     }, 2);
+    setTimeout(() => {
+      this.komiteServices.getDataUsers(this.app_no_de).subscribe(responseKomite => {
+        this.userData = responseKomite.result;
+      });
+    }, 3);
     setTimeout(() => {
       setTimeout(() => {
         this.dataEntryService.getListKepemilikanAgunan().subscribe(kep => {
