@@ -1,27 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model';
 import Swal from 'sweetalert2';
 import { environment } from 'environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'jhi-parameterstruktur',
   templateUrl: './parameterstruktur.component.html',
   styleUrls: ['./parameterstruktur.component.scss'],
 })
-export class ParameterstrukturComponent implements OnInit {
+export class ParameterstrukturComponent implements OnInit, OnDestroy {
   baseUrl: string = environment.baseUrl;
-
   tablelistfasilitas: listCreatemodel[] = [];
   dataretrive: any;
   statusvalue: any;
   kirimactive: any;
+
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
+
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+    // alert('knfsdkds');
+  }
 
   ngOnInit(): void {
     this.datEntryService.getFetchKodeFasilitasall().subscribe(table => {
       this.tablelistfasilitas = table.result;
+      this.dtTrigger.next(this.tablelistfasilitas);
     });
   }
 
@@ -34,16 +47,16 @@ export class ParameterstrukturComponent implements OnInit {
     const options = this.dataretrive;
     const status = this.dataretrive.active;
 
-    alert(status);
+    // alert(status);
     if (status === '1') {
       this.statusvalue = 'Aktif';
     } else {
       this.statusvalue = 'Tidak Aktif';
     }
 
-    alert(options.fasilitas);
+    // alert(options.fasilitas);
 
-    alert(id);
+    // alert(id);
     Swal.fire({
       title: 'Mohon Perhatikan',
       text: 'Tolang Input dengan benar ',

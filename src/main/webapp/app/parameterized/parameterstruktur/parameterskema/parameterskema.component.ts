@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
@@ -6,13 +6,15 @@ import { environment } from 'environments/environment';
 import Swal from 'sweetalert2';
 import { SessionStorageService } from 'ngx-webstorage';
 import { InputScoringService } from 'app/input-scoring/input-scoring.service';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'jhi-parameterskema',
   templateUrl: './parameterskema.component.html',
   styleUrls: ['./parameterskema.component.scss'],
 })
-export class ParameterskemaComponent implements OnInit {
+export class ParameterskemaComponent implements OnInit, OnDestroy {
   baseUrl: string = environment.baseUrl;
 
   tablelistproduk: listCreatemodel[] = [];
@@ -21,6 +23,10 @@ export class ParameterskemaComponent implements OnInit {
   kirimanskema: any;
   tampungpemecah: any;
   kirimanskemadeskripsi: any;
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
   constructor(
     protected datEntryService: DataEntryService,
     protected http: HttpClient,
@@ -28,10 +34,16 @@ export class ParameterskemaComponent implements OnInit {
     protected scoringServices: InputScoringService
   ) {}
 
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+    // alert('knfsdkds');
+  }
+
   ngOnInit(): void {
     this.datEntryService.getListskema().subscribe(table => {
       this.tablelistskema = table.result;
       // console.log(this.tablelistskema);
+      this.dtTrigger.next(this.tablelistskema);
     });
     this.scoringServices.getListAkad().subscribe(akad => {
       this.modelListAkad = akad.result;

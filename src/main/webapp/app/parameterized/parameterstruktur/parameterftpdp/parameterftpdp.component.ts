@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -14,35 +15,39 @@ export class ParameterftpdpComponent implements OnInit {
   tablelistproduk: any;
   tablelistftvdp: any;
   tampungpemecah: any;
-  constructor(protected http: HttpClient, protected datEntryService: DataEntryService) {}
+  tableftvdpdetail: any;
+
+  constructor(protected http: HttpClient, protected datEntryService: DataEntryService, private router: Router) {}
 
   ngOnInit(): void {
     this.datEntryService.getListproduk().subscribe(table => {
       this.tablelistproduk = table.result;
     });
+    this.datEntryService.getListftvdp().subscribe(table => {
+      this.tablelistftvdp = table.result;
+    });
   }
 
   viewftvdetail(id: any): void {
+    // alert(id);
     // this.createform.get('contoh')?.setValue('7');
     // this.tampunganidviewdetail = id;
+
+    this.router
+      .navigate(['/parameterstrukturftpdpdetail'], {
+        queryParams: { id: id },
+      })
+      .then(() => {
+        window.location.reload();
+      });
+
     // this.datEntryService.getlistftvdpdetail(id).subscribe({
     //   next: de => {
     //     this.tableftvdpdetail = de.result;
     //     // console.warn(this.tableftvdpdetail);
     //   },
-    //   // error: err => {
-    //   //   console.warn('fff', err)
-    //   //   this.getLoading(false);
-    //   // }
+
     // });
-    // // this.getLoading(true);
-    // // this.router
-    // //   .navigate(['/data-entry/personalinfo'], {
-    // //     queryParams: { curef: getCuref, app_no_de: getAppNoDe },
-    // //   })
-    // //   .then(() => {
-    // //     window.location.reload();
-    // //   });
   }
 
   createftpdp(): void {

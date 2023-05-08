@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import Swal from 'sweetalert2';
+import { DataTableDirective } from 'angular-datatables';
 import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'jhi-parameterprogram',
   templateUrl: './parameterprogram.component.html',
   styleUrls: ['./parameterprogram.component.scss'],
 })
-export class ParameterprogramComponent implements OnInit {
+export class ParameterprogramComponent implements OnInit, OnDestroy {
   baseUrl: string = environment.baseUrl;
 
   tablelistprogram: listCreatemodel[] = [];
@@ -18,11 +20,23 @@ export class ParameterprogramComponent implements OnInit {
   dataretrive: any;
   statusvalue: any;
   kirimactive: any;
+
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
+
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+    // alert('knfsdkds');
+  }
 
   ngOnInit(): void {
     this.datEntryService.getListprogramall().subscribe(table => {
       this.tablelistprogram = table.result;
+      this.dtTrigger.next(this.tablelistprogram);
     });
     this.datEntryService.getFetchKodeFasilitas().subscribe(data => {
       this.inputScoring = data.result;
@@ -186,6 +200,7 @@ export class ParameterprogramComponent implements OnInit {
     this.datEntryService.getdataretriveprogram(id).subscribe(table => {
       this.dataretrive = table.result;
     });
+
     const data = this.dataretrive;
     // const nama = this.dataretrive.program.substring(0, 3);
     const namaprogram = this.dataretrive.program;

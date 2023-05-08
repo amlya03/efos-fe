@@ -1,17 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import Swal from 'sweetalert2';
 import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model';
 import { listskemastepup } from 'app/data-entry/services/config/listskemastepup';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'jhi-parametermarginstepup',
   templateUrl: './parametermarginstepup.component.html',
   styleUrls: ['./parametermarginstepup.component.scss'],
 })
-export class ParametermarginstepupComponent implements OnInit {
+export class ParametermarginstepupComponent implements OnInit, OnDestroy {
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
+
   tableAgunan: listCreatemodel[] = [];
   kirimantenortier: any;
   kirimanmargin: any;
@@ -21,10 +28,16 @@ export class ParametermarginstepupComponent implements OnInit {
   listskemastepup: listskemastepup[] = [];
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
 
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+    // alert('knfsdkds');
+  }
+
   ngOnInit(): void {
     this.datEntryService.getskemastepup().subscribe(skema => {
       this.listskemastepup = skema.result;
-      // console.log('ini stepup' + this.listskemastepup);
+      this.dtTrigger.next(skema.result);
+      console.warn('ini stepup' + skema);
     });
   }
 

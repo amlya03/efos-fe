@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
+import { DataTableDirective } from 'angular-datatables';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import Swal from 'sweetalert2';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'jhi-parameterskemafasilitas',
   templateUrl: './parameterskemafasilitas.component.html',
   styleUrls: ['./parameterskemafasilitas.component.scss'],
 })
-export class ParameterskemafasilitasComponent implements OnInit {
+export class ParameterskemafasilitasComponent implements OnInit, OnDestroy {
   baseUrl: string = environment.baseUrl;
 
   tableAgunan: listCreatemodel[] = [];
@@ -21,11 +23,22 @@ export class ParameterskemafasilitasComponent implements OnInit {
   tampungpemecah: any;
   // tablelistproduk: any;
 
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
+
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+    // alert('knfsdkds');
+  }
 
   ngOnInit(): void {
     this.datEntryService.getListskemanew().subscribe(table => {
       this.tablelistskemanew = table.result;
+      this.dtTrigger.next(this.tablelistskemanew);
       // console.log(this.tablelistskema);
     });
     // this.datEntryService.getListproduk().subscribe(table => {

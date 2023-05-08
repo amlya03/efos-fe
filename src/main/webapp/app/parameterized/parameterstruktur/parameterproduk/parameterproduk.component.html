@@ -4,7 +4,7 @@
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Table produk</h3>
 </div>
-<table class="table table-striped" datatable>
+<table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
   <thead style="background-color: #303030">
     <tr>
       <th scope="col" style="text-align: center; color: #fff">
@@ -16,9 +16,9 @@
       <th scope="col" style="text-align: center; color: #fff">
         <span>Produk</span>
       </th>
-      <th scope="col" style="text-align: center; color: #fff">
+      <!-- <th scope="col" style="text-align: center; color: #fff">
         <span>Status</span>
-      </th>
+      </th> -->
       <th scope="col" style="text-align: center; color: #fff">
         <span></span>
       </th>
@@ -29,7 +29,7 @@
       <td style="text-align: center" scope="col">{{ i + 1 }}</td>
       <td style="text-align: center" scope="col">{{ tablelistproduk.kode_program }}</td>
       <td style="text-align: center" scope="col">{{ tablelistproduk.produk_deskripsi }}</td>
-      <td style="text-align: center" scope="col">{{ tablelistproduk.active === '1' ? 'Aktive' : 'Tidak Aktif' }}</td>
+      <!-- <td style="text-align: center" scope="col">{{ tablelistproduk.active === '1' ? 'Aktive' : 'Tidak Aktif' }}</td> -->
       <td style="text-align: center" scope="col">
         <a (click)="viewdataproduk(tablelistproduk.id)">
           <fa-icon icon="ellipsis"></fa-icon>

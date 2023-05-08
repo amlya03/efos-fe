@@ -1019,7 +1019,8 @@
       router.url === '/parameterstrukturskemafasilitas' ||
       router.url === '/parameterstrukturmarginfix' ||
       router.url === '/parameterstrukturmarginstepup' ||
-      router.url === '/parameterstrukturftpdp'
+      router.url === '/parameterstrukturftpdp' ||
+      router.url === '/parameterstrukturftpdpdetail?id=' + paramId
     "
   >
     <a
@@ -1085,6 +1086,7 @@
     >
       <h6>Parameter Margin Step Up</h6>
     </a>
+
     <a
       class="nav-item nav-link"
       [queryParams]="{
@@ -1099,8 +1101,15 @@
       *ngSwitchCase="'ADMIN_CFBD'"
     >
       <h6>Parameter FTP DP</h6>
+      <span
+        routerLink="/parameterstrukturftpdpdetail"
+        hidden
+        [queryParams]="{
+          id: this.paramId
+        }"
+      ></span>
     </a>
-    <a
+    <!-- <a
       class="nav-item nav-link"
       [queryParams]="{
         kategori: this.kategori,
@@ -1108,13 +1117,13 @@
         kode_fasilitas: this.kode_fasilitas,
         fasilitas: this.fasilitas
       }"
-      routerLink="/hasilprescreening"
+      routerLink="/parameterstrukturftpdpdetail"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'ADMIN_CFBD'"
     >
       <h6>Parameter FTP DP Detail</h6>
-    </a>
+    </a> -->
   </div>
   <!-- untuk parameterstruktur -->
 

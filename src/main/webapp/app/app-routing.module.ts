@@ -66,6 +66,7 @@ import { ParameterjenispekerjaanComponent } from './parameterized/parameterjob/p
 import { DaftarAplikasiReviewSpvComponent } from './verification/daftar-aplikasi-review-spv/daftar-aplikasi-review-spv.component';
 import { InquiryComponent } from './inquiry/inquiry.component';
 import { InqueryDetailComponent } from './inquiry/inquirydetail/inquery-detail/inquery-detail.component';
+import { ParameterftpdpdetailComponent } from './parameterized/parameterstruktur/parameterftpdpdetail/parameterftpdpdetail.component';
 
 @NgModule({
   imports: [
@@ -313,7 +314,10 @@ import { InqueryDetailComponent } from './inquiry/inquirydetail/inquery-detail/i
           path: 'parameterstrukturftpdp',
           component: ParameterftpdpComponent,
         },
-
+        {
+          path: 'parameterstrukturftpdpdetail',
+          component: ParameterftpdpdetailComponent,
+        },
         {
           path: 'main-parameter-scoring',
           component: InputparameterscoringComponent,
