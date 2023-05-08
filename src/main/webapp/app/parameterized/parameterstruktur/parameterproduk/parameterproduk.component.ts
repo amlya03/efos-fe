@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'environments/environment';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model';
 import { parameterModel } from 'app/parameterized/config/parameterModel.model';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'jhi-parameterproduk',
   templateUrl: './parameterproduk.component.html',
   styleUrls: ['./parameterproduk.component.scss'],
 })
-export class ParameterprodukComponent implements OnInit {
+export class ParameterprodukComponent implements OnInit, OnDestroy {
   baseUrl: string = environment.baseUrl;
 
   tablelistprogram: listCreatemodel[] = [];
@@ -19,7 +21,17 @@ export class ParameterprodukComponent implements OnInit {
   dataretrive: any;
   getdataretriveprogram: any;
   dataretriveprogram: any;
+
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+    // alert('knfsdkds');
+  }
 
   ngOnInit(): void {
     this.datEntryService.getListprogram().subscribe(table => {
@@ -27,6 +39,7 @@ export class ParameterprodukComponent implements OnInit {
     });
     this.datEntryService.getListprodukall().subscribe(table => {
       this.tablelistproduk = table.result;
+      this.dtTrigger.next(this.tablelistproduk);
     });
   }
 
