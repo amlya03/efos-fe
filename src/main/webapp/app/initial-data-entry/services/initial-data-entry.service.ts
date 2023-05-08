@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { SessionStorageService } from 'ngx-webstorage';
 import { environment } from 'environments/environment';
+import { dhnModel } from './config/dhnModel.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,10 @@ export class InitialDataEntryService {
   koderetirvt = '';
   baseUrl: string = environment.baseUrl;
   baseUrlDukcapil: string = environment.baseUrlDukcapil;
+
+  // ///////////////////////////////////////////////// get Data Dukcapil ///////////////////////////////////////////////////
+  protected cekDhn = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/cekDhn');
+  // /////////////////////////////////////////////////  get Data Dukcapil  //////////////////////////////////////////////////
 
   // ///////////////////////////////////////////////// get Data Dukcapil ///////////////////////////////////////////////////
   protected getDataDukcapilManual = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ide/get_data_dukcapil_manual');
@@ -193,6 +198,12 @@ export class InitialDataEntryService {
   getDataDukcapil(ktp: any): Observable<ApiResponse> {
     const nik = { nik: ktp };
     return this.http.post<ApiResponse>(this.getDataDukcapilManual, nik);
+  }
+  // ///////////////////////////////////////////////// get Data Dukcapil ///////////////////////////////////////////////////
+
+  // ///////////////////////////////////////////////// get Data Dukcapil ///////////////////////////////////////////////////
+  postCekDhn(body: dhnModel): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.getDataDukcapilManual, body);
   }
   // ///////////////////////////////////////////////// get Data Dukcapil ///////////////////////////////////////////////////
 }

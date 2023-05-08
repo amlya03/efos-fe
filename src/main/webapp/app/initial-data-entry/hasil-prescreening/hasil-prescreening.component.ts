@@ -19,6 +19,7 @@ import { modelCustomer } from '../services/config/modelCustomer.model';
 import { dukcapilModel } from '../services/config/dukcapilModel.model';
 import { environment } from 'environments/environment';
 import Swal from 'sweetalert2';
+import { dhnModel } from '../services/config/dhnModel.model';
 // import { count } from 'console';
 
 export type EntityArrayResponseDaWa = HttpResponse<ApiResponse>;
@@ -75,6 +76,7 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   listLajangSlik: slik[] = new Array<slik>();
   listMenikahSlik: slik[] = new Array<slik>();
   dataEntry: modelCustomer = new modelCustomer();
+  cekDhnModel: dhnModel = new dhnModel();
   ideResponseById = 0;
   downloadSlik: any;
   simpanDhn = 0;
@@ -236,6 +238,8 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
     this.initialDataEntry.getCustomer(this.paramId).subscribe({
       next: data => {
         this.dataEntry = data.result.customer;
+        this.cekDhnModel.no_id = this.dataEntry.app_no_ide;
+        this.cekDhnModel.tanggal_lahir = this.dataEntry.tanggal_lahir;
 
         this.initialDataEntry.getDuplicateCheck(this.dataEntry.no_ktp, this.dataEntry.nama).subscribe({
           next: duplikat => {
@@ -813,26 +817,21 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
   }
 
   cekDataDhn(): void {
-    this.http
-      .post<any>(this.baseUrl + 'v1/efos-ide/cekDhn', {
-        no_id: this.dataEntry.app_no_ide,
-        tanggal_lahir: this.dataEntry.tanggal_lahir,
-      })
-      .subscribe({
-        next: dhn => {
-          this.hasildhn = dhn.result.token;
-          this.initialDataEntry.getDataDhn(this.dataEntry.app_no_ide).subscribe({
-            next: getdhn => {
-              this.tableGetDhn = getdhn.result;
-              if (getdhn.result != '') {
-                this.simpanDhn = 1;
-              } else {
-                this.simpanDhn = 0;
-              }
-            },
-          });
-        },
-      });
+    this.initialDataEntry.postCekDhn(this.cekDhnModel).subscribe({
+      next: dhn => {
+        this.hasildhn = dhn.result.token;
+        this.initialDataEntry.getDataDhn(this.dataEntry.app_no_ide).subscribe({
+          next: getdhn => {
+            this.tableGetDhn = getdhn.result;
+            if (getdhn.result != '') {
+              this.simpanDhn = 1;
+            } else {
+              this.simpanDhn = 0;
+            }
+          },
+        });
+      },
+    });
   }
 
   backtoide(): void {
