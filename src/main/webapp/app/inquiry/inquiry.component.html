@@ -38,7 +38,12 @@
     >
       Clear Data
     </button>
-    <button type="button" (click)="downloadxlsx()" class="btn mb-1 btn-secondary">
+    <button
+      *ngIf="this.untukSessionRole === 'ADMIN_PIPELINE'"
+      type="button"
+      (click)="downloadxlsx(kategori.value, namaNasabah.value, noAplikasi.value, tglMulai.value, tglAkhir.value)"
+      class="btn mb-1 btn-secondary"
+    >
       Generate xlsx<span class="btn-icon-right"><i class="fa fa-print"></i></span>
     </button>
   </div>

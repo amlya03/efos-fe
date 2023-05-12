@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { dataentrymodel } from '../data-entry/data-entry-model';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -23,6 +23,9 @@ export class InquiryComponent implements OnInit, OnDestroy {
   title = 'EFOS';
   app_no_de!: string;
   tampungandataygdibawa: any;
+  untukSessionRole: any;
+  untukSessionKodeCabang: any;
+  untukSessionFullName: any;
   dataEntry: dataentrymodel[] = [];
   valueCariButton = '';
   kategori_pekerjaan = '';
@@ -50,6 +53,11 @@ export class InquiryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
+    this.untukSessionKodeCabang = this.sessionStorageService.retrieve('sessionKdCabang');
+    this.untukSessionFullName = this.sessionStorageService.retrieve('sessionFullName');
+
+    // alert(this.untukSessionRole);
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -87,18 +95,80 @@ export class InquiryComponent implements OnInit, OnDestroy {
   }
 
   cariButton(listKategori: string, inputNamaNasabah: string, inputNoAplikasi: string, tglMulai: any, tglAkhir: any): void {
-    $('#dataTables-example').DataTable().columns(4).search(inputNoAplikasi).draw();
-    $('#dataTables-example').DataTable().columns(3).search(inputNamaNasabah).draw();
-    $('#dataTables-example').DataTable().columns(2).search(listKategori).draw();
-
+    // $('#dataTables-example').DataTable().columns(4).search(inputNoAplikasi).draw();
+    // $('#dataTables-example').DataTable().columns(3).search(inputNamaNasabah).draw();
+    // $('#dataTables-example').DataTable().columns(2).search(listKategori).draw();
+    // this.ngOnDestroy();
+    $('#dataTables-example').DataTable().destroy();
     // date range
-    const splitTglMulai = tglMulai.split('-');
-    const splitTglAkhir = tglAkhir.split('-');
-    // console.warn(splitTglMulai[2])
     // console.warn(tglMulai)
-    $('#dataTables-example').DataTable().columns(7).search(splitTglMulai[0]).draw();
-    $('#dataTables-example').DataTable().columns(8).search(splitTglMulai[1]).draw();
-    $('#dataTables-example').DataTable().columns(9).search(splitTglMulai[2]).draw();
+    if (this.untukSessionRole === 'ADMIN_PIPELINE') {
+      const splitTglMulai = tglMulai.split('-');
+      const splitTglEnd = tglAkhir.split('-');
+      // const splitTglAkhir = tglAkhir.split('-');
+
+      if (tglMulai == '' && tglAkhir == '') {
+        const tanggalend = '';
+        const tanggalstart = '';
+
+        this.inquiryservice.getFetchfilterall(tanggalend, inputNoAplikasi, listKategori, inputNamaNasabah, tanggalstart).subscribe(data => {
+          this.dataEntry = data.result;
+          this.dtTrigger.next(data.result);
+          this.getLoading(false);
+        });
+      } else {
+        const tanggalend = splitTglEnd[0] + '/' + splitTglEnd[1] + '/' + splitTglEnd[2];
+        const tanggalstart = splitTglMulai[0] + '/' + splitTglMulai[1] + '/' + splitTglMulai[2];
+        this.inquiryservice.getFetchfilterall(tanggalend, inputNoAplikasi, listKategori, inputNamaNasabah, tanggalstart).subscribe(data => {
+          this.dataEntry = data.result;
+          this.dtTrigger.next(data.result);
+          this.getLoading(false);
+        });
+      }
+
+      // console.warn(splitTglMulai[2])
+      // console.warn(tanggalstart)
+
+      // this.inquiryservice.getFetchfilterall(tanggalend, this.untukSessionKodeCabang,inputNoAplikasi,listKategori,inputNamaNasabah,tanggalstart, this.untukSessionFullName).subscribe(data => {
+      // console.warn(data);
+      //   this.inquiryservice.getFetchfilterall(tanggalend,inputNoAplikasi,listKategori,inputNamaNasabah,tanggalstart).subscribe(data => {
+      //   this.dataEntry = data.result;
+      //   this.dtTrigger.next(data.result);
+      //   this.getLoading(false);
+      // });
+      alert('pipeline');
+    } else {
+      const splitTglMulai = tglMulai.split('-');
+      const splitTglEnd = tglAkhir.split('-');
+      // const splitTglAkhir = tglAkhir.split('-');
+      const tanggalend = splitTglEnd[0] + '/' + splitTglEnd[1] + '/' + splitTglEnd[2];
+      const tanggalstart = splitTglMulai[0] + '/' + splitTglMulai[1] + '/' + splitTglMulai[2];
+      // console.warn(splitTglMulai[2])
+      console.warn(tanggalstart);
+      this.inquiryservice
+        .getFetchfilter(
+          tanggalend,
+          this.untukSessionKodeCabang,
+          inputNoAplikasi,
+          listKategori,
+          inputNamaNasabah,
+          tanggalstart,
+          this.untukSessionFullName
+        )
+        .subscribe(data => {
+          // this.inquiryservice.getFetchfilter(tanggalend,inputNoAplikasi,listKategori,inputNamaNasabah,tanggalstart).subscribe(data => {
+          // console.warn(data);
+          this.dataEntry = data.result;
+          this.dtTrigger.next(data.result);
+          this.getLoading(false);
+
+          alert('cabang');
+        });
+    }
+
+    // $('#dataTables-example').DataTable().columns(7).search(splitTglMulai[0]).draw();
+    // $('#dataTables-example').DataTable().columns(8).search(splitTglMulai[1]).draw();
+    // $('#dataTables-example').DataTable().columns(9).search(splitTglMulai[2]).draw();
 
     // Custom filtering function which will search data in column four between two values
     // $.fn.dataTable.ext.search.push(
@@ -128,8 +198,63 @@ export class InquiryComponent implements OnInit, OnDestroy {
     // )
   }
 
-  downloadxlsx(): void {
-    window.open(this.baseUrl + 'v1/efos-de/download_data_entry_xlsx');
+  downloadxlsx(listKategori: string, inputNamaNasabah: string, inputNoAplikasi: string, tglMulai: any, tglAkhir: any): void {
+    if (listKategori == '' && inputNamaNasabah == '' && inputNoAplikasi == '' && tglMulai == '' && tglAkhir == '') {
+      window.open(this.baseUrl + 'v1/efos-de/download_data_entry_xlsx');
+      alert('download all filter ');
+    } else {
+      const splitTglMulai = tglMulai.split('-');
+      const splitTglEnd = tglAkhir.split('-');
+      // const splitTglAkhir = tglAkhir.split('-');
+      if (tglMulai == '' && tglAkhir == '') {
+        const tanggalend = tglAkhir;
+        const tanggalstart = tglMulai;
+        this.inquiryservice
+          .getFetchdownloadfilter(tanggalend, inputNoAplikasi, listKategori, inputNamaNasabah, tanggalstart)
+          .subscribe(data => {
+            this.dataEntry = data.result;
+            this.dtTrigger.next(data.result);
+            this.getLoading(false);
+          });
+        window.open(
+          this.baseUrl +
+            'v1/efos-de/download_data_entry_xlsx_filter?end_date=' +
+            tanggalend +
+            '&sd=' +
+            inputNoAplikasi +
+            '&sf=' +
+            listKategori +
+            '&sn=' +
+            inputNamaNasabah +
+            '&start_date=' +
+            tanggalstart
+        );
+      } else {
+        const tanggalend = splitTglEnd[0] + '/' + splitTglEnd[1] + '/' + splitTglEnd[2];
+        const tanggalstart = splitTglMulai[0] + '/' + splitTglMulai[1] + '/' + splitTglMulai[2];
+        this.inquiryservice
+          .getFetchdownloadfilter(tanggalend, inputNoAplikasi, listKategori, inputNamaNasabah, tanggalstart)
+          .subscribe(data => {
+            this.dataEntry = data.result;
+            this.dtTrigger.next(data.result);
+            this.getLoading(false);
+          });
+      }
+
+      // console.warn(splitTglMulai[2])
+      // console.warn(tanggalstart)
+
+      // this.inquiryservice.getFetchfilterall(tanggalend, this.untukSessionKodeCabang,inputNoAplikasi,listKategori,inputNamaNasabah,tanggalstart, this.untukSessionFullName).subscribe(data => {
+      // console.warn(data);
+      //   this.inquiryservice.getFetchdownloadfilter(tanggalend,inputNoAplikasi,listKategori,inputNamaNasabah,tanggalstart).subscribe(data => {
+      //   this.dataEntry = data.result;
+      //   this.dtTrigger.next(data.result);
+      //   this.getLoading(false);
+      // });
+      alert('download filter ');
+    }
+
+    // window.open(this.baseUrl + 'v1/efos-de/download_data_entry_xlsx');
   }
 
   clearInput(): void {

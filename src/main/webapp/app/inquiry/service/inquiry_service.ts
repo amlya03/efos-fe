@@ -317,6 +317,78 @@ export class DataEntryService {
   protected fetchgetDetailinquiry = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/list_app_inquiry?sc=');
   // /////////////////////////////  Ref fetchgetDetailinquiry\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // /////////////////////////////  Ref fetchgetfilter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchgetfilter = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/list_app_inquiry_filter?');
+  // /////////////////////////////  Ref fetchgetfilter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // /////////////////////////////  Ref fetchgetfilterpipeline\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchgetfilterpipeline = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/list_app_inquiry_all_filter?');
+  // /////////////////////////////  Ref fetchgetfilterpipeline\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // /////////////////////////////  Ref fetchgetdownloadfilter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchgetdownloadfilter = this.applicationConfigService.getEndpointFor(
+    this.baseUrl + 'v1/efos-de/download_data_entry_xlsx_filter?'
+  );
+  // /////////////////////////////  Ref fetchgetdownloadfilter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // /////////////////////////// Ref getFetchfilter ////////////////////////////////////////////
+  getFetchfilterall(
+    end_date: string | null | undefined,
+    sd: string | null | undefined,
+    sf: string | null | undefined,
+    sn: string | null | undefined,
+    start_date: string | null | undefined
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      this.fetchgetfilterpipeline + 'end_date=' + end_date + '&sd=' + sd + '&sf=' + sf + '&sn=' + sn + '&start_date=' + start_date
+    );
+  }
+  // /////////////////////////// Ref getFetchfilter ////////////////////////////////////////////
+
+  // /////////////////////////// Ref getFetchfilterall ////////////////////////////////////////////
+  getFetchfilter(
+    end_date: string | null | undefined,
+    sc: string | null | undefined,
+    sd: string | null | undefined,
+    sf: string | null | undefined,
+    sn: string | null | undefined,
+    start_date: string | null | undefined,
+    su: string | null | undefined
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      this.fetchgetfilter +
+        'end_date=' +
+        end_date +
+        '&sc=' +
+        sc +
+        '&sd=' +
+        sd +
+        '&sf=' +
+        sf +
+        '&sn=' +
+        sn +
+        '&start_date=' +
+        start_date +
+        '&su=' +
+        su
+    );
+  }
+  // /////////////////////////// Ref getFetchfilterall ////////////////////////////////////////////
+
+  // /////////////////////////// Ref getFetchfilterall ////////////////////////////////////////////
+  getFetchdownloadfilter(
+    end_date: string | null | undefined,
+    sd: string | null | undefined,
+    sf: string | null | undefined,
+    sn: string | null | undefined,
+    start_date: string | null | undefined
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      this.fetchgetdownloadfilter + 'end_date=' + end_date + '&sd=' + sd + '&sf=' + sf + '&sn=' + sn + '&start_date=' + start_date
+    );
+  }
+  // /////////////////////////// Ref getFetchfilterall ////////////////////////////////////////////
+
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
     if (this.untukSessionRole === 'BRANCHMANAGER') {
