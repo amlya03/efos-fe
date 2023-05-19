@@ -65,14 +65,9 @@ export class DetailKomiteComponent implements OnInit {
   persetujuanPembiayaan: getPersetujuanPembiayaanModel[] = [];
   retriveFinal: getPersetujuanPembiayaanModel[] = [];
   userNya: userModel = new userModel();
-  showAngsuran: any;
-  showAngsuran2: any;
-  showAngsuran3: any;
+  showAngsuranRekomendasiSystem: any;
+  showAngsuranKeputusanPembiayaan: any;
   limitKewenanganPemutus: limitPemutusModel = new limitPemutusModel();
-
-  // Hasil Scoring
-  hasilScoring: any;
-  hasilStatus: any;
 
   // Ref Skema
   Skema: refSkema[] = [];
@@ -107,8 +102,8 @@ export class DetailKomiteComponent implements OnInit {
     this.cabang = this.sessionStorageService.retrieve('sessionKdCabang');
     // //////////////////// Fasilitas Yang Diminta //////////////////////
     this.komiteFasilitasYangDimintaForm = this.formBuilder.group({
-      harga_permintaan: '',
-      down_payment: '',
+      harga_permintaan: { value: '', disabled: true },
+      down_payment: { value: '', disabled: true },
       tenor: '',
       angsuran: '',
       dsr: '',
@@ -200,6 +195,7 @@ export class DetailKomiteComponent implements OnInit {
     setTimeout(() => {
       this.komiteServices.getDetailApproval(this.app_no_de).subscribe(data => {
         this.detailApproval = data.result;
+        // console.warn(data)
         if (data.result) {
           this.cekDetailKomite = 1;
         } else {
@@ -291,79 +287,50 @@ export class DetailKomiteComponent implements OnInit {
             };
             this.komiteFasilitasYangDimintaForm.setValue(retrivestrukturForm);
           }
-        }, 10);
-
-        let anguran1: any;
-        setTimeout(() => {
-          this.http
-            .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran_analyst', {
-              app_no_de: this.dataEntry.app_no_de,
-              curef: this.dataEntry.curef,
-              dp: this.strukturAnalisa.down_payment,
-              fasilitas: this.dataEntry.fasilitas_ke,
-              harga_objek: this.strukturAnalisa.harga_permintaan,
-              kode_fasilitas: this.dataEntry.kode_fasilitas,
-              kode_produk: this.dataEntry.produk,
-              skema_id: this.strukturByDe.skema,
-              skema_master: this.strukturByDe.skema_master,
-              tenor: this.strukturAnalisa.tenor,
-            })
-            .subscribe({
-              next: data => {
-                anguran1 = data.result.angsuran;
-
-                if (anguran1[1]) {
-                  this.showAngsuran = anguran1.map(
-                    (value: any, i: any) =>
-                      ` Angsuran Ke ${i + 1} = ${Number(value).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
-                  );
-                  this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue(anguran1[anguran1.length - 1]);
-                } else {
-                  this.showAngsuran = 'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-                  this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue(anguran1[anguran1.length - 1]);
-                }
-
-                setTimeout(() => {
-                  this.http
-                    .post<any>(this.baseUrl + 'v1/efos-verif/getHitungAnalisaPembiayaan', {
-                      angsuran: data.result.angsuran[data.result.angsuran.length - 1],
-                      app_no_de: this.dataEntry.app_no_de,
-                    })
-                    .subscribe({
-                      next: dsrRes => {
-                        this.komiteFasilitasYangDimintaForm.get('dsr')?.setValue(dsrRes.result.dsr);
-                        setTimeout(() => {
-                          this.http
-                            .post<any>(this.baseUrl + 'v1/efos-verif/getHitungScoring', {
-                              dsr: this.komiteFasilitasYangDimintaForm.get('dsr')?.value,
-                              app_no_de: this.dataEntry.app_no_de,
-                            })
-                            .subscribe({
-                              next: score => {
-                                // console.warn(data);
-                                this.hasilScoring = score.result.score_value;
-                                this.hasilStatus = score.result.score_desc;
-                              },
-                            });
-                        }, 10);
-                      },
-                    });
-                }, 10);
-              },
-              error: err => {
-                if (err.error.code === '400') {
-                  alert(err.error.message);
-                  this.getLoading(false);
-                }
-              },
-            });
+          setTimeout(() => {
+            this.http
+              .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran_analyst', {
+                app_no_de: this.dataEntry.app_no_de,
+                curef: this.dataEntry.curef,
+                dp: this.strukturAnalisa.down_payment,
+                fasilitas: this.dataEntry.fasilitas_ke,
+                harga_objek: this.strukturAnalisa.harga_permintaan,
+                kode_fasilitas: this.dataEntry.kode_fasilitas,
+                kode_produk: this.dataEntry.produk,
+                skema_id: this.strukturAnalisa.skema,
+                skema_master: this.strukturAnalisa.skema_master,
+                tenor: this.strukturAnalisa.tenor,
+              })
+              .subscribe({
+                next: data => {
+                  const anguran1 = data.result.angsuran;
+                  if (anguran1[1]) {
+                    this.showAngsuranRekomendasiSystem = anguran1.map(
+                      (value: any, i: any) =>
+                        ` Angsuran Ke ${i + 1} = ${Number(value).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
+                    );
+                    this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue(anguran1[anguran1.length - 1]);
+                  } else {
+                    this.showAngsuranRekomendasiSystem =
+                      'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                    this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue(anguran1[anguran1.length - 1]);
+                  }
+                },
+                error(err) {
+                  if (err.error.code === '400') {
+                    alert(err.error.message);
+                  }
+                },
+              });
+          }, 10);
         }, 10);
         // ///////////////////////////////////////////////////////////////////////////////
         // /////////////////////// Fasilitas Yang DIminta //////////////////////////////////////////
 
-        // //////////////////////// Rekomendasi System ////////////////////////////////////////
+        // //////////////////////// Fasilitas Yang Direkomendasikan ////////////////////////////////////////
         setTimeout(() => {
           this.persetujuanPembiayaanForm.get('plafon_pembiayaan')?.setValue(this.strukturAnalisa.nilai_pembiayaan);
+          // console.warn('Analis',this.strukturAnalisa)
           if (this.cekDetailKomite === 0) {
             const retriveRekomendasiSystem = {
               skema: this.strukturAnalisa.skema_code + '|' + this.strukturAnalisa.skema_master + '|' + this.strukturAnalisa.skema,
@@ -374,8 +341,10 @@ export class DetailKomiteComponent implements OnInit {
               angsuran: this.strukturAnalisa.angsuran,
             };
             this.keputusanPembiayaanForm.setValue(retriveRekomendasiSystem);
+            this.showAngsuranRekomendasiSystem = this.showAngsuranKeputusanPembiayaan;
             this.getLoading(false);
           } else {
+            // console.warn('Analis',this.detailApproval)
             const retriveRekomendasiSystem = {
               skema:
                 this.detailApproval.skema_keputusan +
@@ -390,6 +359,7 @@ export class DetailKomiteComponent implements OnInit {
               angsuran: this.detailApproval.angsuran,
             };
             this.keputusanPembiayaanForm.setValue(retriveRekomendasiSystem);
+            this.getLoading(false);
           }
           // /////////////////////////////////////////////////////////////////////
           if (this.strukturAnalisa.skema_master === '1') {
@@ -401,81 +371,10 @@ export class DetailKomiteComponent implements OnInit {
               this.tenorRekomendasi = Non.result;
             });
           }
-          this.http
-            .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran_analyst', {
-              app_no_de: this.dataEntry.app_no_de,
-              curef: this.dataEntry.curef,
-              dp: this.strukturAnalisa.down_payment,
-              fasilitas: this.dataEntry.fasilitas_ke,
-              harga_objek: this.strukturAnalisa.harga_permintaan,
-              kode_fasilitas: this.dataEntry.kode_fasilitas,
-              kode_produk: this.dataEntry.produk,
-              skema_id: this.strukturByDe.skema,
-              skema_master: this.strukturByDe.skema_master,
-              tenor: this.strukturAnalisa.tenor,
-            })
-            .subscribe({
-              next: data => {
-                const anguranKe1 = data.result.angsuran;
-
-                if (anguranKe1[1]) {
-                  this.showAngsuran3 = anguranKe1.map(
-                    (value: any, i: any) =>
-                      ` Angsuran Ke ${i + 1} = ${Number(value).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
-                  );
-                  this.keputusanPembiayaanForm.get('angsuran')?.setValue(anguranKe1[anguranKe1.length - 1]);
-                } else {
-                  this.showAngsuran3 = 'Angsuran = ' + Number(anguranKe1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-                  this.keputusanPembiayaanForm.get('angsuran')?.setValue(anguranKe1[anguranKe1.length - 1]);
-                }
-                this.getLoading(false);
-              },
-              error: err => {
-                if (err.error.code == 400) {
-                  alert(err.error.message);
-                  this.getLoading(false);
-                }
-              },
-            });
         }, 60);
         // /////////////////////// Rekomendasi SYstem //////////////////////////////////////////
       });
     }, 60);
-  }
-  hitungFasilitasYangDiminta(): void {
-    this.http
-      .post<any>(this.baseUrl + 'v1/efos-de/hitung_angsuran_analyst', {
-        app_no_de: this.dataEntry.app_no_de,
-        curef: this.dataEntry.curef,
-        dp: this.komiteFasilitasYangDimintaForm.get('down_payment')?.value,
-        fasilitas: this.dataEntry.fasilitas_ke,
-        harga_objek: this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value,
-        kode_fasilitas: this.dataEntry.kode_fasilitas,
-        kode_produk: this.dataEntry.produk,
-        skema_id: this.strukturByDe.skema,
-        skema_master: this.strukturByDe.skema_master,
-        tenor: this.komiteFasilitasYangDimintaForm.get('tenor')?.value,
-      })
-      .subscribe({
-        next: data => {
-          const anguran1 = data.result.angsuran;
-          if (anguran1[1]) {
-            this.showAngsuran = anguran1.map(
-              (value: any, i: any) =>
-                ` Angsuran Ke ${i + 1} = ${Number(value).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
-            );
-            this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue(anguran1[anguran1.length - 1]);
-          } else {
-            this.showAngsuran = 'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-            this.komiteFasilitasYangDimintaForm.get('angsuran')?.setValue(anguran1[anguran1.length - 1]);
-          }
-        },
-        error(err) {
-          if (err.error.code === '400') {
-            alert(err.error.message);
-          }
-        },
-      });
   }
 
   changeKeputusanPembiayaan(skema: any): void {
@@ -512,15 +411,15 @@ export class DetailKomiteComponent implements OnInit {
         next: data => {
           // console.warn('rekon', data);
           const anguran1 = data.result.angsuran;
-
           if (anguran1[1]) {
-            this.showAngsuran2 = anguran1.map(
+            this.showAngsuranKeputusanPembiayaan = anguran1.map(
               (value: any, i: any) =>
                 ` Angsuran Ke ${i + 1} = ${Number(value).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`
             );
             this.keputusanPembiayaanForm.get('angsuran')?.setValue(anguran1[anguran1.length - 1]);
           } else {
-            this.showAngsuran2 = 'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+            this.showAngsuranKeputusanPembiayaan =
+              'Angsuran = ' + Number(anguran1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
             this.keputusanPembiayaanForm.get('angsuran')?.setValue(anguran1[anguran1.length - 1]);
           }
         },
@@ -609,8 +508,18 @@ export class DetailKomiteComponent implements OnInit {
                         next: () => {
                           // console.warn(data);
                           if (this.idPost[this.refPersetujuanKhusus.length - 1] == this.idPost[i]) {
-                            alert('Data Berhasil disimpan');
-                            window.location.reload();
+                            // alert('Data Berhasil disimpan');
+                            this.http
+                              .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+                                app_no_de: this.app_no_de,
+                                status_aplikasi: this.dataEntry.status_aplikasi,
+                                created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                              })
+                              .subscribe(() => {
+                                Swal.fire('Success', 'Data Berhasil disimpan', 'success').then(() => {
+                                  this.router.navigate(['/komite']);
+                                });
+                              });
                           }
                         },
                         error() {
@@ -639,7 +548,7 @@ export class DetailKomiteComponent implements OnInit {
           dp: this.komiteFasilitasYangDimintaForm.get('down_payment')?.value,
           dp_keputusan: this.keputusanPembiayaanForm.get('down_payment')?.value,
           dsr: this.komiteFasilitasYangDimintaForm.get('dsr')?.value,
-          id: 0,
+          id: this.detailApproval.id,
           jangka_waktu: this.keputusanPembiayaanForm.get('jangka_waktu')?.value,
           max_pembiayaan: this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value,
           max_pembiayaan_keputusan: this.keputusanPembiayaanForm.get('harga_permintaan')?.value,
@@ -702,8 +611,17 @@ export class DetailKomiteComponent implements OnInit {
                         next: () => {
                           // console.warn(data);
                           if (this.idPost[this.refPersetujuanKhusus.length - 1] == this.idPost[i]) {
-                            alert('Data Berhasil disimpan');
-                            window.location.reload();
+                            this.http
+                              .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+                                app_no_de: this.app_no_de,
+                                status_aplikasi: this.dataEntry.status_aplikasi,
+                                created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                              })
+                              .subscribe(() => {
+                                Swal.fire('Success', 'Data Berhasil disimpan', 'success').then(() => {
+                                  this.router.navigate(['/komite']);
+                                });
+                              });
                           }
                         },
                         error() {
@@ -711,10 +629,6 @@ export class DetailKomiteComponent implements OnInit {
                         },
                       });
                   }
-                  // setTimeout(() => {
-                  //   alert('Data Berhasil Disimpan');
-                  //   window.location.reload();
-                  // }, 300);
                   // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                 },
                 error() {
@@ -742,11 +656,31 @@ export class DetailKomiteComponent implements OnInit {
     }).then(result => {
       if (result.value) {
         Swal.fire('Data Berhasil diUpdate!', 'Data Sudah di Tim Analis', 'success').then(() => {
-          window.location.reload();
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+              app_no_de: this.app_no_de,
+              status_aplikasi: this.dataEntry.status_aplikasi,
+              created_by: this.sessionStorageService.retrieve('sessionUserName'),
+            })
+            .subscribe(() => {
+              Swal.fire('Success', 'Data Berhasil disimpan', 'success').then(() => {
+                this.router.navigate(['/komite']);
+              });
+            });
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire('Data Berhasil diUpdate', 'Data Sudah di Tim Supervisor', 'success').then(() => {
-          window.location.reload();
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-de/update_status_tracking', {
+              app_no_de: this.app_no_de,
+              status_aplikasi: this.dataEntry.status_aplikasi,
+              created_by: this.sessionStorageService.retrieve('sessionUserName'),
+            })
+            .subscribe(() => {
+              Swal.fire('Success', 'Data Berhasil disimpan', 'success').then(() => {
+                this.router.navigate(['/komite']);
+              });
+            });
         });
       }
     });
@@ -839,7 +773,9 @@ export class DetailKomiteComponent implements OnInit {
                           .subscribe({
                             next: () => {
                               if (this.idPost[this.refPersetujuanKhusus.length - 1] == this.idPost[i]) {
-                                window.location.reload();
+                                Swal.fire('Succes', 'Data Berhasil di Simpan', 'error').then(() => {
+                                  window.location.reload();
+                                });
                               }
                             },
                             error() {
@@ -868,7 +804,7 @@ export class DetailKomiteComponent implements OnInit {
               dp: this.komiteFasilitasYangDimintaForm.get('down_payment')?.value,
               dp_keputusan: this.keputusanPembiayaanForm.get('down_payment')?.value,
               dsr: this.komiteFasilitasYangDimintaForm.get('dsr')?.value,
-              id: 0,
+              id: this.detailApproval.id,
               jangka_waktu: this.keputusanPembiayaanForm.get('jangka_waktu')?.value,
               max_pembiayaan: this.komiteFasilitasYangDimintaForm.get('harga_permintaan')?.value,
               max_pembiayaan_keputusan: this.keputusanPembiayaanForm.get('harga_permintaan')?.value,
@@ -931,7 +867,9 @@ export class DetailKomiteComponent implements OnInit {
                             next: () => {
                               // console.warn(data);
                               if (this.idPost[this.refPersetujuanKhusus.length - 1] == this.idPost[i]) {
-                                window.location.reload();
+                                Swal.fire('Succes', 'Data Berhasil di Simpan', 'error').then(() => {
+                                  window.location.reload();
+                                });
                               }
                             },
                             error() {
@@ -939,10 +877,6 @@ export class DetailKomiteComponent implements OnInit {
                             },
                           });
                       }
-                      // setTimeout(() => {
-                      //   alert('Data Berhasil Disimpan');
-                      //   window.location.reload();
-                      // }, 300);
                       // ///////////////////////Post Syarat Persetujuan Khusus /////////////////////////////
                     },
                     error() {
@@ -961,7 +895,7 @@ export class DetailKomiteComponent implements OnInit {
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire('Data Tidak direject!', 'Data disimpan', 'info').then(() => {
-          // window.location.reload();
+          window.location.reload();
         });
       }
     });

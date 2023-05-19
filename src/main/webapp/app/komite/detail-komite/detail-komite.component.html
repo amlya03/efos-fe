@@ -221,7 +221,14 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Angsuran</label>
       <div class="col-sm-8">
-        <input type="text" readonly class="form-control" value="{{ showAngsuran }}" data-toggle="tooltip" data-placement="bottom" />
+        <input
+          type="text"
+          readonly
+          class="form-control"
+          value="{{ showAngsuranRekomendasiSystem }}"
+          data-toggle="tooltip"
+          data-placement="bottom"
+        />
       </div>
     </div>
     <br />
@@ -310,7 +317,6 @@
         <input
           type="text"
           class="form-control"
-          (blur)="hitungFasilitasYangDiminta()"
           formControlName="harga_permintaan"
           (keypress)="keyPressNumbers($event)"
           currencyMask
@@ -322,9 +328,10 @@
     <div class="form-group row" [formGroup]="komiteFasilitasYangDimintaForm">
       <label class="col-sm-4 col-form-label">Jangka Waktu</label>
       <div class="col-sm-8">
-        <select type="text" class="form-control" (blur)="hitungFasilitasYangDiminta()" formControlName="tenor">
-          <option *ngFor="let tenor of tenor" value="{{ tenor.tn_code }}">{{ tenor.tn_code }} Bulan</option>
-        </select>
+        <input type="text" class="form-control" formControlName="tenor" hidden />
+        <input type="text" readonly class="form-control" value="{{ komiteFasilitasYangDimintaForm.get('tenor')?.value }} Bulan" />
+        <!-- <option *ngFor="let tenor of tenor" value="{{ tenor.tn_code }}">{{ tenor.tn_code }} Bulan</option>
+        </input> -->
       </div>
     </div>
     <br />
@@ -347,7 +354,6 @@
         <input
           type="text"
           class="form-control"
-          (blur)="hitungFasilitasYangDiminta()"
           formControlName="down_payment"
           (keypress)="keyPressNumbers($event)"
           currencyMask
@@ -366,8 +372,8 @@
           readonly
           data-toggle="tooltip"
           data-placement="bottom"
-          title="{{ showAngsuran3 }}"
-          value="{{ showAngsuran3 }}"
+          title="{{ showAngsuranRekomendasiSystem }}"
+          value="{{ showAngsuranRekomendasiSystem }}"
         />
       </div>
     </div>
@@ -473,8 +479,8 @@
           class="form-control"
           data-toggle="tooltip"
           data-placement="bottom"
-          title="{{ showAngsuran2 }}"
-          value="{{ showAngsuran2 }}"
+          title="{{ showAngsuranKeputusanPembiayaan }}"
+          value="{{ showAngsuranKeputusanPembiayaan }}"
         />
       </div>
     </div>
@@ -549,13 +555,6 @@
   </div>
 </div>
 <div class="row" style="text-align: center">
-  <!-- <div
-    class="col"
-    *ngIf="
-      +this.persetujuanPembiayaanForm.get('limit_kewenangan_memutus')?.value >=
-      +this.persetujuanPembiayaanForm.get('plafon_pembiayaan')?.value
-    "
-  > -->
   <div class="col">
     <button
       type="button"
