@@ -228,21 +228,13 @@ export class DetailKomiteComponent implements OnInit {
         });
         // ////////////////////////////////////////////////////////////////////////////////////////
 
-        if (this.dataEntry.kode_fasilitas_name === 'PTA') {
-          setTimeout(() => {
-            this.komiteServices.getLimitApprovalPTA().subscribe(limitKewenangan => {
-              this.limitKewenanganPemutus = limitKewenangan.result.value;
-              this.persetujuanPembiayaanForm.get('limit_kewenangan_memutus')?.setValue(this.limitKewenanganPemutus);
-            });
-          }, 1);
-        } else {
-          setTimeout(() => {
-            this.komiteServices.getLimitApprovalNonPTA().subscribe(limitKewenangan => {
-              this.limitKewenanganPemutus = limitKewenangan.result.value;
-              this.persetujuanPembiayaanForm.get('limit_kewenangan_memutus')?.setValue(this.limitKewenanganPemutus);
-            });
-          }, 1);
-        }
+        // this.dataEntry.kode_fasilitas_name
+        setTimeout(() => {
+          this.komiteServices.getLimitAll(this.dataEntry.kode_fasilitas_name).subscribe(limitKewenangan => {
+            this.limitKewenanganPemutus = limitKewenangan.result.value;
+            this.persetujuanPembiayaanForm.get('limit_kewenangan_memutus')?.setValue(this.limitKewenanganPemutus);
+          });
+        }, 1);
       });
     }, 35);
     setTimeout(() => {

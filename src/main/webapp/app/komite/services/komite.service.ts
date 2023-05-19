@@ -6,13 +6,21 @@ import { Observable } from 'rxjs';
 import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { environment } from 'environments/environment';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Injectable({
   providedIn: 'root',
 })
 export class KomiteService {
   baseUrl: string = environment.baseUrl;
-  constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
+  untukSessionRole: any;
+  constructor(
+    protected http: HttpClient,
+    protected applicationConfigService: ApplicationConfigService,
+    private sessionStorageService: SessionStorageService
+  ) {
+    this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
+  }
 
   // //////////////////////////////////////////////// get Limit Approval non PTA ///////////////////////////////////////////////////////////////////////
   protected getLimitApprovalNonPTAUrl = this.applicationConfigService.getEndpointFor(
@@ -23,6 +31,16 @@ export class KomiteService {
   // //////////////////////////////////////////////// get Limit Approval PTA ///////////////////////////////////////////////////////////////////////
   protected getLimitApprovalPTAUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-approval/getLimitApprovalPTA');
   // //////////////////////////////////////////////// get Limit Approval PTA ///////////////////////////////////////////////////////////////////////
+
+  // //////////////////////////////////////////////// getLimitDirBisnisNonPTAUrl ///////////////////////////////////////////////////////////////////////
+  protected getLimitDirBisnisNonPTAUrl = this.applicationConfigService.getEndpointFor(
+    this.baseUrl + 'v1/efos-approval/getLimitDirBisnisNonPTA'
+  );
+  // //////////////////////////////////////////////// getLimitDirBisnisNonPTAUrl ///////////////////////////////////////////////////////////////////////
+
+  // //////////////////////////////////////////////// getLimitDirBisnisPTA ///////////////////////////////////////////////////////////////////////
+  protected getLimitDirBisnisPTAUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-approval/getLimitDirBisnisPTA');
+  // //////////////////////////////////////////////// getLimitDirBisnisPTA ///////////////////////////////////////////////////////////////////////
 
   // //////////////////////////////////////////////// Get DirBisnis ///////////////////////////////////////////////////////////////////////
   protected getListAppDirbisnisUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-approval/list_app_dirbisnis');
@@ -97,6 +115,28 @@ export class KomiteService {
     return this.http.get<ApiResponse>(this.getListAppDirbisnisUrl);
   }
   // //////////////////////////////////////////////// Get DirBisnis ///////////////////////////////////////////////////////////////////////
+
+  // //////////////////////////////////////////////// Get DirBisnis all ///////////////////////////////////////////////////////////////////////
+  getLimitAll(kode_fasilitas: any): Observable<ApiResponse> {
+    if (this.untukSessionRole === 'DIRBISNIS') {
+      if (kode_fasilitas === 'PTA') {
+        // return this.http.get<ApiResponse>(this.getLimitDirBisnisPTAUrl);
+        return this.http.get<ApiResponse>(this.getLimitDirBisnisNonPTAUrl);
+      } else {
+        return this.http.get<ApiResponse>(this.getLimitDirBisnisNonPTAUrl);
+      }
+      // return this.http.get<ApiResponse>(this.getLimitApprovalNonPTAUrl);
+    } else {
+      if (kode_fasilitas === 'PTA') {
+        return this.http.get<ApiResponse>(this.getLimitApprovalPTAUrl);
+      } else {
+        return this.http.get<ApiResponse>(this.getLimitApprovalNonPTAUrl);
+      }
+      // return this.http.get<ApiResponse>(this.getLimitApprovalNonPTAUrl);
+    }
+    // return this.http.get<ApiResponse>(this.getLimitApprovalNonPTAUrl);
+  }
+  // //////////////////////////////////////////////// Get DirBisnis all ///////////////////////////////////////////////////////////////////////
 
   // //////////////////////////////////////////////// Get DirBisnis ///////////////////////////////////////////////////////////////////////
   getLimitApprovalNonPTA(): Observable<ApiResponse> {

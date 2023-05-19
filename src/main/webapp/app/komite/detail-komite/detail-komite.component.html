@@ -228,13 +228,13 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Scoring</label>
       <div class="col-sm-2">
-        <input type="text" readonly class="form-control" value="{{ this.hasilScoring }}" />
+        <input type="text" readonly class="form-control" value="{{ this.strukturAnalisa.score }}" />
       </div>
-      <div class="col-sm-2" *ngIf="this.hasilStatus === 'BAD'">
-        <h6 style="color: red">{{ this.hasilStatus }}</h6>
+      <div class="col-sm-2" *ngIf="this.strukturAnalisa.score_desc === 'BAD'">
+        <h6 style="color: red">{{ this.strukturAnalisa.score_desc }}</h6>
       </div>
-      <div class="col-sm-2" [hidden]="this.hasilStatus === 'BAD'">
-        <h6 style="color: green">{{ this.hasilStatus }}</h6>
+      <div class="col-sm-2" [hidden]="this.strukturAnalisa.score_desc === 'BAD'">
+        <h6 style="color: green">{{ this.strukturAnalisa.score_desc }}</h6>
       </div>
     </div>
   </div>
