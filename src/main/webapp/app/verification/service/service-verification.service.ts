@@ -29,6 +29,12 @@ export class ServiceVerificationService {
   );
   // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////
 
+  // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////getListAppAppraisal
+  protected getListAppAppraisalByUserNameUrl = this.applicationConfigService.getEndpointFor(
+    this.baseUrl + 'v1/efos-verif/list_app_appraisal_assign?su='
+  );
+  // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////
+
   // ///////////////////////////////// Daftar APlikasi Appraisal Review ///////////////////////////////////////////////////////////getListAppAppraisal
   protected getListAppraisalReviewUrl = this.applicationConfigService.getEndpointFor(
     this.baseUrl + 'v1/efos-verif/list_app_appraisal_review'
@@ -285,8 +291,12 @@ export class ServiceVerificationService {
   // ///////////////////////////////// Daftar APlikasi Head Appraisal ///////////////////////////////////////////////////////////
 
   // ///////////////////////////////// Daftar APlikasi Appraisal proses ///////////////////////////////////////////////////////////
-  getListAppraisalProcess(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.getListAppAppraisalProcessUrl);
+  getListAppraisalProcess(full_name: any): Observable<ApiResponse> {
+    if (full_name) {
+      return this.http.get<ApiResponse>(this.getListAppAppraisalByUserNameUrl + full_name);
+    } else {
+      return this.http.get<ApiResponse>(this.getListAppAppraisalProcessUrl);
+    }
   }
   // ///////////////////////////////// Daftar APlikasi Appraisal proses ///////////////////////////////////////////////////////////
 

@@ -8,6 +8,7 @@ import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { daWaModel } from 'app/verification/daftar-aplikasi-waiting-assigment/daWa.model';
 import { daWaModelAprisal } from 'app/verification/daftar-aplikasi-waiting-assigment/daWaAprisal.model';
 import { ServiceVerificationService } from 'app/verification/service/service-verification.service';
+import { SessionStorageService } from 'ngx-webstorage';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -29,6 +30,7 @@ export class DaftarAplikasiAppraisalComponent implements OnInit {
   kirimDe: any;
   kirimStatusAplikasi: any;
   kirimAssign: any;
+  fullNameSession: any;
 
   // checklist dawa
   checklistDaWa: any;
@@ -44,10 +46,17 @@ export class DaftarAplikasiAppraisalComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected modalService: NgbModal,
-    protected http: HttpClient
+    protected http: HttpClient,
+    protected sessionStorageService: SessionStorageService
   ) {}
 
   ngOnInit(): void {
+    if (this.sessionStorageService.retrieve('sessionRole') === 'APPRAISAL') {
+      this.fullNameSession = this.sessionStorageService.retrieve('sessionFullName');
+    } else {
+      this.fullNameSession = '';
+    }
+
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -59,14 +68,16 @@ export class DaftarAplikasiAppraisalComponent implements OnInit {
   load(): void {
     this.getLoading(true);
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
-    this.daWaService.getListAppraisalProcess().subscribe(data => {
-      // console.warn(data);
-      if (data.code === 200) {
+    this.daWaService.getListAppraisalProcess(this.fullNameSession).subscribe({
+      next: data => {
         this.daWa = data.result;
         this.getCheckDaWa = data.result;
         this.dtTrigger.next(this.daWa);
         this.getLoading(false);
-      }
+      },
+      error: () => {
+        this.getLoading(false);
+      },
     });
     // /////////////////////////langsung dari depan service hanhya untul url////////////////////////////
     // ///////////////////////// LIst Cari Fasilitas //////////////////////
