@@ -89,6 +89,12 @@ export class ServiceVerificationService {
   protected allDataOnProcess = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/list_analisa_process');
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // ///////////////////////////////// Daftar APlikasi Analis Nama Alais ///////////////////////////////////////////////////////////
+  protected getListAppProcessDanNamaAnalisUrl = this.applicationConfigService.getEndpointFor(
+    this.baseUrl + 'v1/efos-verif/list_analisa_process_analis?su='
+  );
+  // ///////////////////////////////// Daftar APlikasi Analis Nama Alais ///////////////////////////////////////////////////////////
+
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected allDataWaitingUpdateStatus = this.applicationConfigService.getEndpointFor(
     this.baseUrl + 'v1/efos-verif/list_app_analisa_review'
@@ -185,8 +191,12 @@ export class ServiceVerificationService {
   // //////////////////////service daftar aplikasi waiting assign\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getDaOp(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.allDataOnProcess);
+  getDaOp(url: any): Observable<ApiResponse> {
+    if (url) {
+      return this.http.get<ApiResponse>(this.getListAppProcessDanNamaAnalisUrl + url);
+    } else {
+      return this.http.get<ApiResponse>(this.allDataOnProcess);
+    }
   }
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 

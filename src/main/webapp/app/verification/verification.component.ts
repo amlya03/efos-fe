@@ -11,6 +11,7 @@ import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model
 import { Subject } from 'rxjs';
 import { daOp } from './daftar-aplikasi-on-process/daOp.model';
 import { ServiceVerificationService } from './service/service-verification.service';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-verification',
@@ -24,6 +25,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
   daftarAplikasiVerif?: daOp[];
   listFasilitas: getListFasilitasModel[] = [];
   curef: any;
+  fullNameSession: any;
 
   public getLoading(loading: boolean): void {
     this.isLoading = loading;
@@ -42,10 +44,12 @@ export class VerificationComponent implements OnInit, OnDestroy {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     protected modalService: NgbModal,
-    protected dataEntryService: DataEntryService
+    protected dataEntryService: DataEntryService,
+    protected sessionStorageService: SessionStorageService
   ) {}
 
   ngOnInit(): void {
+    this.fullNameSession = this.sessionStorageService.retrieve('sessionFullName');
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -67,7 +71,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
     });
     // ///////////////////////// LIst Cari Fasilitas //////////////////////
 
-    this.DaftarAplikasiVerifServices.getDaOp().subscribe(data => {
+    this.DaftarAplikasiVerifServices.getDaOp(this.fullNameSession).subscribe(data => {
       if (data.code === 200) {
         this.daftarAplikasiVerif = data.result;
         this.dtTrigger.next(data.result);

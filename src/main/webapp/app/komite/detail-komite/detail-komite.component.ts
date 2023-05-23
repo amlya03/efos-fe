@@ -773,9 +773,17 @@ export class DetailKomiteComponent implements OnInit {
                           .subscribe({
                             next: () => {
                               if (this.idPost[this.refPersetujuanKhusus.length - 1] == this.idPost[i]) {
-                                Swal.fire('Succes', 'Data Berhasil di Simpan', 'error').then(() => {
-                                  window.location.reload();
-                                });
+                                this.http
+                                  .post<any>(this.baseUrl + 'v1/efos-de/update_status_reject', {
+                                    app_no_de: this.app_no_de,
+                                    status_aplikasi: this.dataEntry.status_aplikasi,
+                                    created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                                  })
+                                  .subscribe(() => {
+                                    Swal.fire('Reject!', '', 'warning').then(() => {
+                                      this.router.navigate(['/komite']);
+                                    });
+                                  });
                               }
                             },
                             error() {
@@ -867,9 +875,17 @@ export class DetailKomiteComponent implements OnInit {
                             next: () => {
                               // console.warn(data);
                               if (this.idPost[this.refPersetujuanKhusus.length - 1] == this.idPost[i]) {
-                                Swal.fire('Succes', 'Data Berhasil di Simpan', 'error').then(() => {
-                                  window.location.reload();
-                                });
+                                this.http
+                                  .post<any>(this.baseUrl + 'v1/efos-de/update_status_reject', {
+                                    app_no_de: this.app_no_de,
+                                    status_aplikasi: this.dataEntry.status_aplikasi,
+                                    created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                                  })
+                                  .subscribe(() => {
+                                    Swal.fire('Reject!', '', 'warning').then(() => {
+                                      this.router.navigate(['/komite']);
+                                    });
+                                  });
                               }
                             },
                             error() {
@@ -890,9 +906,17 @@ export class DetailKomiteComponent implements OnInit {
               },
             });
         }
-        Swal.fire('Data Berhasil direject!', 'Data Sudah direject', 'success').then(() => {
-          window.location.reload();
-        });
+        this.http
+          .post<any>(this.baseUrl + 'v1/efos-de/update_status_reject', {
+            app_no_de: this.app_no_de,
+            status_aplikasi: this.dataEntry.status_aplikasi,
+            created_by: this.sessionStorageService.retrieve('sessionUserName'),
+          })
+          .subscribe(() => {
+            Swal.fire('Reject!', '', 'warning').then(() => {
+              this.router.navigate(['/komite']);
+            });
+          });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire('Data Tidak direject!', 'Data disimpan', 'info').then(() => {
           window.location.reload();
