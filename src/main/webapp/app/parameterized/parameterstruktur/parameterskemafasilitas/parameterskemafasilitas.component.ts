@@ -21,6 +21,7 @@ export class ParameterskemafasilitasComponent implements OnInit, OnDestroy {
   kirimanskema: any;
   kirimactive: any;
   tampungpemecah: any;
+  kode_skema_all: any;
   // tablelistproduk: any;
 
   @ViewChild(DataTableDirective, { static: false })
@@ -140,108 +141,185 @@ export class ParameterskemafasilitasComponent implements OnInit, OnDestroy {
             const tenor_tier1 = $('#tenor_tier1').val();
             const tenor_tier2 = $('#tenor_tier2').val();
             const tenor_tier3 = $('#tenor_tier3').val();
+            const kode_skema = $('#kode_skema').val();
+            this.kode_skema_all = kode_skema;
+            const potonganskema = this.kode_skema_all.split('|');
 
-            if (active === '') {
-              alert('Kode Fasilitas Harus Di isi');
-              return;
-            } else if (tear_select === '') {
-              alert('Profram harus di isi');
-              return;
+            if (potonganskema[1] == '1') {
+              if (active === '') {
+                alert('Kode Fasilitas Harus Di isi');
+                return;
+              } else {
+                if (active === '0') {
+                  this.kirimactive = 0;
+                } else {
+                  this.kirimactive = 1;
+                }
+
+                this.tampungpemecah = $('#kode_skema').val();
+
+                const pemecahbenar = this.tampungpemecah.split('|');
+                this.kirimanskema = pemecahbenar[0];
+                //  this.kirimanskemadeskripsi=pemecahbenar[1];
+
+                const body = {
+                  id: 0,
+                  active: this.kirimactive,
+                  skema_id: this.kirimanskema,
+                  tier: tear_select,
+                  tenor_tier: this.kirimantenortier,
+                  fasilitas: '0',
+                  // max_plafond:max_plafond,
+                  // expired_date:expired_date,
+                };
+                const headers = new HttpHeaders({
+                  'Content-Type': 'application/json; charset=utf-8',
+                  // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
+                });
+                this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_skema_fasilitas', body, { headers }).subscribe({
+                  next: () => {
+                    // console.warn(response);
+                    // this.sessionStorageService.store('sessionPs', passwordbaru);
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: toast => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                      },
+                    });
+                    Toast.fire({
+                      icon: 'success',
+                      title: 'Data berhasil di simpan',
+                    });
+                  },
+                  error: () => {
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: toast => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                      },
+                    });
+                    Toast.fire({
+                      icon: 'error',
+                      title: 'Data gagal di simpan',
+                    });
+                  },
+                });
+              }
             } else {
-              if (active === '0') {
-                this.kirimactive = 0;
+              if (active === '') {
+                alert('Kode Fasilitas Harus Di isi');
+                return;
+              } else if (tear_select === '') {
+                alert('Profram harus di isi');
+                alert(kode_skema);
+                return;
               } else {
-                this.kirimactive = 1;
+                if (active === '0') {
+                  this.kirimactive = 0;
+                } else {
+                  this.kirimactive = 1;
+                }
+
+                if (tear_select === '1') {
+                  if (tenor_tier1 === '') {
+                    alert('tenor tier 1 Harus Di isi');
+                    return;
+                  }
+                  this.kirimantenortier = tenor_tier1;
+                } else if (tear_select === '2') {
+                  if (tenor_tier1 === '') {
+                    alert('tenor tier 1 Harus Di isi');
+                    return;
+                  } else if (tenor_tier2 === '') {
+                    alert('tenor tier 2 Harus Di isi');
+                    return;
+                  }
+                  this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2;
+                } else {
+                  if (tenor_tier1 === '') {
+                    alert('tenor tier 1 Harus Di isi');
+                    return;
+                  }
+                  if (tenor_tier2 === '') {
+                    alert('tenor tier 2 Harus Di isi');
+                    return;
+                  }
+                  if (tenor_tier3 === '') {
+                    alert('tenor tier 3 Harus Di isi');
+                    return;
+                  }
+                  this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2 + '-' + tenor_tier3;
+                }
+
+                this.tampungpemecah = $('#kode_skema').val();
+
+                const pemecahbenar = this.tampungpemecah.split('|');
+                this.kirimanskema = pemecahbenar[0];
+                //  this.kirimanskemadeskripsi=pemecahbenar[1];
+
+                const body = {
+                  id: 0,
+                  active: this.kirimactive,
+                  skema_id: this.kirimanskema,
+                  tier: tear_select,
+                  tenor_tier: this.kirimantenortier,
+                  fasilitas: '0',
+                  // max_plafond:max_plafond,
+                  // expired_date:expired_date,
+                };
+                const headers = new HttpHeaders({
+                  'Content-Type': 'application/json; charset=utf-8',
+                  // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
+                });
+                this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_skema_fasilitas', body, { headers }).subscribe({
+                  next: () => {
+                    // console.warn(response);
+                    // this.sessionStorageService.store('sessionPs', passwordbaru);
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: toast => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                      },
+                    });
+                    Toast.fire({
+                      icon: 'success',
+                      title: 'Data berhasil di simpan',
+                    });
+                  },
+                  error: () => {
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: toast => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                      },
+                    });
+                    Toast.fire({
+                      icon: 'error',
+                      title: 'Data gagal di simpan',
+                    });
+                  },
+                });
               }
-
-              if (tear_select === '1') {
-                if (tenor_tier1 === '') {
-                  alert('tenor tier 1 Harus Di isi');
-                  return;
-                }
-                this.kirimantenortier = tenor_tier1;
-              } else if (tear_select === '2') {
-                if (tenor_tier1 === '') {
-                  alert('tenor tier 1 Harus Di isi');
-                  return;
-                } else if (tenor_tier2 === '') {
-                  alert('tenor tier 2 Harus Di isi');
-                  return;
-                }
-                this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2;
-              } else {
-                if (tenor_tier1 === '') {
-                  alert('tenor tier 1 Harus Di isi');
-                  return;
-                }
-                if (tenor_tier2 === '') {
-                  alert('tenor tier 2 Harus Di isi');
-                  return;
-                }
-                if (tenor_tier3 === '') {
-                  alert('tenor tier 3 Harus Di isi');
-                  return;
-                }
-                this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2 + '-' + tenor_tier3;
-              }
-
-              this.tampungpemecah = $('#kode_skema').val();
-
-              const pemecahbenar = this.tampungpemecah.split('|');
-              this.kirimanskema = pemecahbenar[0];
-              //  this.kirimanskemadeskripsi=pemecahbenar[1];
-
-              const body = {
-                active: this.kirimactive,
-                skema_id: this.kirimanskema,
-                tier: tear_select,
-                tenor_tier: this.kirimantenortier,
-                fasilitas: '0',
-                // max_plafond:max_plafond,
-                // expired_date:expired_date,
-              };
-              const headers = new HttpHeaders({
-                'Content-Type': 'application/json; charset=utf-8',
-                // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
-              });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_skema_fasilitas+++', body, { headers }).subscribe({
-                next: () => {
-                  // console.warn(response);
-                  // this.sessionStorageService.store('sessionPs', passwordbaru);
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: toast => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer);
-                      toast.addEventListener('mouseleave', Swal.resumeTimer);
-                    },
-                  });
-                  Toast.fire({
-                    icon: 'success',
-                    title: 'Data berhasil di simpan',
-                  });
-                },
-                error: () => {
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: toast => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer);
-                      toast.addEventListener('mouseleave', Swal.resumeTimer);
-                    },
-                  });
-                  Toast.fire({
-                    icon: 'error',
-                    title: 'Data gagal di simpan',
-                  });
-                },
-              });
             }
           }
         });

@@ -216,7 +216,7 @@ export class ParametermarginstepupComponent implements OnInit, OnDestroy {
                 alert('initenortier2');
                 // alert(tier+">"+tear2);
                 this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2;
-                return;
+                // return;
               }
             } else if (tier === '3') {
               alert('ini jalan ?');

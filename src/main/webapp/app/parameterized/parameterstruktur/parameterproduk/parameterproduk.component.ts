@@ -100,6 +100,7 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
               return;
             } else {
               const body = {
+                id: '0',
                 kode_program: kode_program,
                 kode_produk: '',
                 produk_deskripsi: produk_deskripsi,
@@ -108,7 +109,7 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
                 'Content-Type': 'application/json; charset=utf-8',
                 // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
               });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_produk+++', body, { headers }).subscribe({
+              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_produk', body, { headers }).subscribe({
                 next: () => {
                   // console.warn(response);
                   // this.sessionStorageService.store('sessionPs', passwordbaru);

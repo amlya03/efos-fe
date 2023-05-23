@@ -821,12 +821,15 @@ export class DataEntryService {
       this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
         this.baseUrl + 'v1/efos-de/list_app_inquiry?sc=' + this.untukSessionKodeCabang
       );
-    } else if (this.untukSessionRole === 'ADMIN_PIPELINE') {
-      this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/list_app_inquiry_all');
-    } else {
+    } else if (this.untukSessionRole === 'AO') {
+      // this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/list_app_inquiry_all');
       this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
-        this.baseUrl + 'v1/efos-de/list_app_inquiry?sc=' + this.untukSessionKodeCabang
+        this.baseUrl + 'v1/efos-de/list_app_inquiry?su=' + this.untukSessionUserName
       );
+    } else {
+      // this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(
+      //   this.baseUrl + 'v1/efos-de/list_app_inquiry?su=' + this.untukSessionKodeCabang);
+      this.daftarAplikasiDataEntry = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/list_app_inquiry_all');
     }
     return this.http.get<ApiResponse>(this.daftarAplikasiDataEntry);
     // return this.http.get<ApiResponse>(this.fetchgetDetailinquiry + id);
