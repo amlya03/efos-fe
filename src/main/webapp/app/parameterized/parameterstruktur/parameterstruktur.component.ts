@@ -126,8 +126,8 @@ export class ParameterstrukturComponent implements OnInit, OnDestroy {
               } else {
                 this.kirimactive = 1;
               }
-              alert(active);
-              alert(id);
+              // alert(active);
+              // alert(id);
               const body = {
                 id: id,
                 active: this.kirimactive,

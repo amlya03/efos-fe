@@ -27,6 +27,9 @@
         <th scope="col" style="text-align: center; color: #fff">
           <span>DP Min</span>
         </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span></span>
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -37,6 +40,12 @@
         <td style="text-align: center" scope="col">{{ tablelistskema.max_plafond | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
         <td style="text-align: center" scope="col">{{ tablelistskema.max_tenor | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
         <td style="text-align: center" scope="col">{{ tablelistskema.dp_min | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
+        <td style="text-align: center" scope="col">
+          <a (click)="viewdataskema(tablelistskema.id)">
+            <fa-icon icon="ellipsis"></fa-icon>
+            <br />Edit
+          </a>
+        </td>
       </tr>
     </tbody>
   </table>

@@ -16,6 +16,8 @@ export class ParametermarginfixComponent implements OnInit {
 
   listskemafix: listskemafix[] = [];
   tableAgunan: listCreatemodel[] = [];
+  tenortier: any;
+  margin: any;
   constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
 
   ngOnInit(): void {
@@ -153,6 +155,12 @@ export class ParametermarginfixComponent implements OnInit {
             '</select>' +
             '</div></div>' +
             '<br />' +
+            '<div class="row form-material">' +
+            '<div class="col">' +
+            '<div class="form-lable row" id="jumlahtenorid" ><label class="col-sm-4 col-form-label">Jumlah Tenor</label>' +
+            '<div class="col-sm-8"><input type="number" class="form-control" id="jumlah_tenor"/> ' +
+            '</div></div>' +
+            '<br />' +
             '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Jumlah margin</label>' +
             '<div class="col-sm-8"><select class="form-control" id="jumlah_margin"><option value="0">Pilih Jumlah margin </option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>' +
             '</select>' +
@@ -248,77 +256,116 @@ export class ParametermarginfixComponent implements OnInit {
         }).then(result => {
           if (result.isConfirmed) {
             const skema_fasilitas = $('#skema_fasilitas').val();
-            const margin = $('#margin').val();
+            const margin1 = $('#margin1').val();
+            const margin2 = $('#margin2').val();
+            const margin3 = $('#margin3').val();
+            const margin4 = $('#margin4').val();
+            const margin5 = $('#margin5').val();
+            const tenor1 = $('#jangka_waktu1').val();
+            const tenor2 = $('#jangka_waktu2').val();
+            const tenor3 = $('#jangka_waktu3').val();
+            const tenor4 = $('#jangka_waktu4').val();
+            const tenor5 = $('#jangka_waktu5').val();
+            // alert(margin);
             const tn_code = $('#tn_code').val();
+            const jumlahtier = $('#jumlah_margin').val();
+
             // let max_plafond = $('#max_plafond').val();
             // let expired_date = $('#expired_date').val();
 
             if (skema_fasilitas === '') {
               alert('Skema Fasilitas Harus Di isi ');
               return;
-            } else if (margin === '') {
+            } else if (margin1 === '') {
               alert('Margin Harus Di isi');
               return;
             } else if (tn_code === '') {
               alert('Tn Code Harus Di isi');
               return;
-            } else {
-              //  if(active=='0'){
-              //     this.kirimactive=0;
-              //  }else{
-              //   this.kirimactive=1;
-              //  }
-
-              const body = {
-                margin: $('#margin').val(),
-                skema_id: $('#skema_fasilitas').val() + '_fas0',
-                tenor: $('#tenor').val(),
-                tenor_tier: '',
-                tier: '',
-              };
-              const headers = new HttpHeaders({
-                'Content-Type': 'application/json; charset=utf-8',
-                // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
-              });
-              this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_tenor_margin_fix', body, { headers }).subscribe({
-                next: () => {
-                  // console.warn(response);
-                  // this.sessionStorageService.store('sessionPs', passwordbaru);
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: toast => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer);
-                      toast.addEventListener('mouseleave', Swal.resumeTimer);
-                    },
-                  });
-                  Toast.fire({
-                    icon: 'success',
-                    title: 'Data berhasil di simpan',
-                  });
-                },
-                error: () => {
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: toast => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer);
-                      toast.addEventListener('mouseleave', Swal.resumeTimer);
-                    },
-                  });
-                  Toast.fire({
-                    icon: 'error',
-                    title: 'Data gagal di simpan',
-                  });
-                },
-              });
             }
+            if (jumlahtier == null) {
+              alert('tenor harus di isi ');
+              return;
+            }
+
+            if (jumlahtier == '1') {
+              this.tenortier = tenor1;
+
+              this.margin = margin1;
+            } else if (jumlahtier == '2') {
+              this.tenortier = tenor1 + '-' + tenor2;
+
+              this.margin = margin1 + '-' + margin2;
+            } else if (jumlahtier == '3') {
+              this.tenortier = tenor1 + '-' + tenor2 + '-' + tenor3;
+
+              this.margin = margin1 + '-' + margin2 + '-' + margin3;
+            } else if (jumlahtier == '4') {
+              this.tenortier = tenor1 + '-' + tenor2 + '-' + tenor3 + '-' + tenor4;
+
+              this.margin = margin1 + '-' + margin2 + '-' + margin3 + '-' + margin4;
+            } else if (jumlahtier == '5') {
+              this.tenortier = tenor1 + '-' + tenor2 + '-' + tenor3 + '-' + tenor4 + '-' + tenor5;
+
+              this.margin = margin1 + '-' + margin2 + '-' + margin3 + '-' + margin4 + '-' + margin5;
+            }
+            // else {
+            //  if(active=='0'){
+            //     this.kirimactive=0;
+            //  }else{
+            //   this.kirimactive=1;
+            //  }
+
+            const body = {
+              skema_id: $('#skema_fasilitas').val() + '_fas0',
+              tenor: $('#jumlah_tenor').val(),
+              tenor_tier: this.tenortier,
+              tier: $('#jumlah_margin').val(),
+              margin: this.margin,
+            };
+            const headers = new HttpHeaders({
+              'Content-Type': 'application/json; charset=utf-8',
+              // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
+            });
+            this.http.post<any>('http://10.20.34.178:8805/api/v1/efos-ref/create_tenor_margin_fix', body, { headers }).subscribe({
+              next: () => {
+                // console.warn(response);
+                // this.sessionStorageService.store('sessionPs', passwordbaru);
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 3000,
+                  timerProgressBar: true,
+                  didOpen: toast => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                  },
+                });
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Data berhasil di simpan',
+                });
+              },
+              error: () => {
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 3000,
+                  timerProgressBar: true,
+                  didOpen: toast => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                  },
+                });
+                Toast.fire({
+                  icon: 'error',
+                  title: 'Data gagal di simpan',
+                });
+              },
+            });
+            // }
           }
         });
       }

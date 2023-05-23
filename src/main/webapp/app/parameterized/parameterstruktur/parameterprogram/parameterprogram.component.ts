@@ -30,7 +30,6 @@ export class ParameterprogramComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
-    // alert('knfsdkds');
   }
 
   ngOnInit(): void {
@@ -207,7 +206,6 @@ export class ParameterprogramComponent implements OnInit, OnDestroy {
 
     const status = this.dataretrive.active;
 
-    alert(status);
     if (status === '1') {
       this.statusvalue = 'Aktif';
     } else {
