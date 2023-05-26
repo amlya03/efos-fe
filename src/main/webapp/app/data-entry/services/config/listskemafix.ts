@@ -11,4 +11,6 @@ export class listskemafix {
   max_tenor?: string | undefined | number | null;
   create_date?: string | undefined | number | null;
   akad?: string | undefined | number | null;
+  tn_code: any;
+  margin: any;
 }

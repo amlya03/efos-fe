@@ -1,8 +1,8 @@
-<button id="tambahdata" (click)="createstenormarginstepup()" type="button" class="btn btn-info">Tambah data</button>
+<button id="tambahdata" (click)="editmarginstapup()" type="button" class="btn btn-info">edit data</button>
 <br />
 <br />
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Table tenor margin step up</h3>
+  <h3 style="color: #fff; text-align: center">Table tenor margin {{ this.skema_deskripsi }}</h3>
 </div>
 <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
   <thead style="background-color: #303030">
@@ -11,10 +11,10 @@
         <span>No</span>
       </th>
       <th scope="col" style="text-align: center; color: #fff">
-        <span>Deskripsi</span>
+        <span>Tenor</span>
       </th>
       <th scope="col" style="text-align: center; color: #fff">
-        <span>Status</span>
+        <span>Margin</span>
       </th>
     </tr>
   </thead>
@@ -22,8 +22,8 @@
     <tr *ngFor="let listskemastepup of listskemastepup; index as i">
       <td style="text-align: center" scope="col">{{ i + 1 }}</td>
       <!-- <td style="text-align: center" scope="col">{{ listskemastepup.skema_deskripsi }}</td> -->
-      <td style="text-align: center" scope="col">{{ listskemastepup.skema_deskripsi }}</td>
-      <!-- <td style="text-align: center" scope="col">{{ listskemastepup.active }}</td> -->
+      <td style="text-align: center" scope="col">{{ listskemastepup.tn_code }}</td>
+      <td style="text-align: center" scope="col">{{ listskemastepup.margin }}</td>
     </tr>
   </tbody>
 </table>

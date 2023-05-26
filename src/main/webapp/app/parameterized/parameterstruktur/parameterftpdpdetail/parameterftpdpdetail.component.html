@@ -4,17 +4,32 @@
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
   <h3 style="color: #fff; text-align: center">Table FTP DP Detail</h3>
 </div>
-<table class="table table-striped" datatable>
+<table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
   <thead style="background-color: #303030">
     <tr>
       <th scope="col" style="text-align: center; color: #fff">
         <span>No</span>
       </th>
       <th scope="col" style="text-align: center; color: #fff">
-        <span>FAsilitas</span>
+        <span>FTVDPID</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>Min</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>Max</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>FTV</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>DP</span>
       </th>
       <th scope="col" style="text-align: center; color: #fff">
         <span>Deskripsi</span>
+      </th>
+      <th scope="col" style="text-align: center; color: #fff">
+        <span>aksi</span>
       </th>
     </tr>
   </thead>
@@ -22,7 +37,17 @@
     <tr *ngFor="let tableftvdpdetail of tableftvdpdetail; index as i">
       <td style="text-align: center" scope="col">{{ i + 1 }}</td>
       <td style="text-align: center" scope="col">{{ tableftvdpdetail.id_ftv_dp }}</td>
+      <td style="text-align: center" scope="col">{{ tableftvdpdetail.min }}</td>
+      <td style="text-align: center" scope="col">{{ tableftvdpdetail.max }}</td>
+      <td style="text-align: center" scope="col">{{ tableftvdpdetail.ftv }}</td>
+      <td style="text-align: center" scope="col">{{ tableftvdpdetail.dp }}</td>
       <td style="text-align: center" scope="col">{{ tableftvdpdetail.tipe_properti_deskripsi }}</td>
+      <td style="text-align: center" scope="col">
+        <a (click)="editftpdpdetail(tableftvdpdetail.id)">
+          <fa-icon icon="ellipsis"></fa-icon>
+          <br />Edit
+        </a>
+      </td>
     </tr>
   </tbody>
 </table>

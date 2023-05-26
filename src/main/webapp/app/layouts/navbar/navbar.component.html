@@ -1020,7 +1020,9 @@
       router.url === '/parameterstrukturmarginfix' ||
       router.url === '/parameterstrukturmarginstepup' ||
       router.url === '/parameterstrukturftpdp' ||
-      router.url === '/parameterstrukturftpdpdetail?id=' + paramId
+      router.url === '/parameterstrukturftpdpdetail?id=' + paramId ||
+      router.url === '/parameterstrukturmarginfix?skema=' + this.skema + '&skemamaster=' + this.skema_master ||
+      router.url === '/parameterstrukturmarginstepup?skema=' + this.skema + '&skemamaster=' + this.skema_master
     "
   >
     <a
@@ -1058,8 +1060,24 @@
       *ngSwitchCase="'ADMIN_CFBD'"
     >
       <h6>Parameter Skema</h6>
+      <span
+        routerLink="/parameterstrukturmarginfix"
+        hidden
+        [queryParams]="{
+          skema: this.skema,
+          skemamaster: this.skema_master
+        }"
+      ></span>
+      <span
+        routerLink="/parameterstrukturmarginstepup"
+        hidden
+        [queryParams]="{
+          skema: this.skema,
+          skemamaster: this.skema_master
+        }"
+      ></span>
     </a>
-    <a
+    <!-- <a
       class="nav-item nav-link"
       [routerLink]="'/parameterstrukturskemafasilitas'"
       [routerLinkActive]="'active'"
@@ -1085,7 +1103,7 @@
       *ngSwitchCase="'ADMIN_CFBD'"
     >
       <h6>Parameter Margin Step Up</h6>
-    </a>
+    </a> -->
 
     <a
       class="nav-item nav-link"
@@ -1100,7 +1118,7 @@
       [routerLinkActiveOptions]="{ exact: true }"
       *ngSwitchCase="'ADMIN_CFBD'"
     >
-      <h6>Parameter FTP DP</h6>
+      <h6>Parameter FTV DP</h6>
       <span
         routerLink="/parameterstrukturftpdpdetail"
         hidden

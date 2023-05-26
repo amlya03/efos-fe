@@ -29,4 +29,6 @@ export class listCreatemodel {
   dp_min: any;
   max_tenor: any;
   skema_deskripsi: any;
+  skema: any;
+  skema_master: any;
 }

@@ -11,4 +11,6 @@ export class listskemastepup {
   max_tenor?: string | undefined | number | null;
   create_date?: string | undefined | number | null;
   akad?: string | undefined | number | null;
+  margin: any;
+  tn_code: any;
 }

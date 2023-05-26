@@ -1,4 +1,6 @@
 <button id="tambahdata" (click)="createskema()" type="button" class="btn btn-info">Tambah data</button>
+<button id="tambahdata" (click)="createstenormarginfix()" type="button" class="btn btn-info">Tambah Margin Fix</button>
+<button id="tambahdata" (click)="createstenormarginstepup()" type="button" class="btn btn-info">Tambah Margin Step Up</button>
 
 <br />
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
@@ -30,6 +32,9 @@
         <th scope="col" style="text-align: center; color: #fff">
           <span></span>
         </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span></span>
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -44,6 +49,12 @@
           <a (click)="viewdataskema(tablelistskema.id)">
             <fa-icon icon="ellipsis"></fa-icon>
             <br />Edit
+          </a>
+        </td>
+        <td style="text-align: center" scope="col">
+          <a (click)="viewmargin(tablelistskema.skema, tablelistskema.skema_master)">
+            <fa-icon icon="ellipsis"></fa-icon>
+            <br />View Margin
           </a>
         </td>
       </tr>

@@ -293,6 +293,10 @@ export class DataEntryService {
   protected fetchlistskemastepup = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_skema_stepup');
   // /////////////////////////////  Ref List Skema Stepup \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // /////////////////////////////  Ref List Skema Stepup \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchmarginnew = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_margin_skema?si=');
+  // /////////////////////////////  Ref List Skema Stepup \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // /////////////////////////////  Ref fetchdataretrivefasilitas\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected fetchdataretrivefasilitas = this.applicationConfigService.getEndpointFor(this.baseUrl + '/v1/efos-ref/getRefFasilitas?si=');
   // /////////////////////////////  Ref fetchdataretrivefasilitas\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -308,6 +312,10 @@ export class DataEntryService {
   // /////////////////////////////  Ref fetchdataretriveskema\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected fetchdataretriveskema = this.applicationConfigService.getEndpointFor(this.baseUrl + '/v1/efos-ref/getRefSkema?si=');
   // /////////////////////////////  Ref fetchdataretriveskema\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // /////////////////////////////  Ref fetchdataretrivesftvdetail\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchdataretrivesftvdetail = this.applicationConfigService.getEndpointFor(this.baseUrl + '/v1/efos-ref/getRefFtvDpDetail?si=');
+  // /////////////////////////////  Ref fetchdataretrivesftvdetail\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // /////////////////////////// DAFTAR APLIKASI DATA ENTRY ////////////////////////////////////////////
   getDaftarAplikasiDataEntry(): Observable<ApiResponse> {
@@ -705,6 +713,10 @@ export class DataEntryService {
   }
   // //////////////////////////// GET Skema Stepup //////////////////////////////////////////////////
 
+  getmarginnew(skema: any, skema_master: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchmarginnew + skema_master + '&ss=' + skema);
+  }
+
   // //////////////////////////// GET dataretrivefasilitas //////////////////////////////////////////////////
   getdataretrivefasilitas(id: any): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.fetchdataretrivefasilitas + id);
@@ -726,6 +738,12 @@ export class DataEntryService {
   // //////////////////////////// GET dataretriveskema //////////////////////////////////////////////////
   getdataretriveskema(id: any): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.fetchdataretriveskema + id);
+  }
+  // //////////////////////////// GET dataretriveskema //////////////////////////////////////////////////
+
+  // //////////////////////////// GET dataretriveskema //////////////////////////////////////////////////
+  getdataretriveftvdetail(id: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchlistftvdpdetail + id);
   }
   // //////////////////////////// GET dataretriveskema //////////////////////////////////////////////////
 

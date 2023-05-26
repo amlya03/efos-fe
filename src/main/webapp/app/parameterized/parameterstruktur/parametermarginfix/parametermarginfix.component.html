@@ -1,28 +1,31 @@
-<button id="tambahdata" (click)="createstenormarginfix()" type="button" class="btn btn-info">Tambah data</button>
+<button id="tambahdata" (click)="updatemargin()" type="button" class="btn btn-info">edit data</button>
 <br />
 <br />
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Table tenor margin fix</h3>
+  <h3 style="color: #fff; text-align: center">Table tenor margin {{ this.skema_deskripsi }}</h3>
 </div>
-<table class="table table-striped" datatable>
-  <thead style="background-color: #303030">
-    <tr>
-      <th scope="col" style="text-align: center; color: #fff">
-        <span>No</span>
-      </th>
-      <th scope="col" style="text-align: center; color: #fff">
-        <span>Deskripsi</span>
-      </th>
-      <th scope="col" style="text-align: center; color: #fff">
-        <span>Status</span>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let listskemafix of listskemafix; index as i">
-      <td style="text-align: center" scope="col">{{ i + 1 }}</td>
-      <!-- <td style="text-align: center" scope="col">{{ listskemafix.akses_rumah }}</td> -->
-      <td style="text-align: center" scope="col">{{ listskemafix.skema_deskripsi }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-responsive-sm">
+  <table class="table table-striped" datatable datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+    <thead style="background-color: #303030">
+      <tr>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>No</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Tenor</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
+          <span>Margin</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let listskemafix of listskemafix; index as i">
+        <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <!-- <td style="text-align: center" scope="col">{{ listskemafix.akses_rumah }}</td> -->
+        <td style="text-align: center" scope="col">{{ listskemafix.tn_code }}</td>
+        <td style="text-align: center" scope="col">{{ listskemafix.margin }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

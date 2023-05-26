@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'jhi-parameterftpdp',
@@ -16,6 +17,8 @@ export class ParameterftpdpComponent implements OnInit {
   tablelistftvdp: any;
   tampungpemecah: any;
   tableftvdpdetail: any;
+  dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
 
   constructor(protected http: HttpClient, protected datEntryService: DataEntryService, private router: Router) {}
 
@@ -25,6 +28,7 @@ export class ParameterftpdpComponent implements OnInit {
     });
     this.datEntryService.getListftvdp().subscribe(table => {
       this.tablelistftvdp = table.result;
+      this.dtTrigger.next(this.tablelistftvdp);
     });
   }
 

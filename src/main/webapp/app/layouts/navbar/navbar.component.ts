@@ -62,6 +62,9 @@ export class NavbarComponent implements OnInit {
   kategori: any;
   kode_fasilitas: any;
   fasilitas: any;
+  skema: any;
+  skema_master: any;
+  skema_deskripsi: any;
   navbarParameterize: navbarModel[] = [];
   childNavbar: navbarModel[] = [];
   statusPerkawinan: any;
@@ -102,6 +105,9 @@ export class NavbarComponent implements OnInit {
       this.datakirimanid = params.datakirimanid;
       this.datakirimantgllahir = params.datakirimantgllahir;
       this.datakirimanappide = params.datakirimanappide;
+      this.skema = params.skema;
+      this.skema_master = params.skemamaster;
+      this.skema_deskripsi = params.skema_deskripsi;
       // this.id=params.id;
     });
     // ////////////////////buat tangkap param\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
