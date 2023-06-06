@@ -60,7 +60,7 @@ export class DaftarAplikasiOnProcessComponent implements OnInit, OnDestroy {
     });
     // ///////////////////////// LIst Cari Fasilitas //////////////////////
 
-    this.daOpService.getDaOp().subscribe(data => {
+    this.daOpService.getDaOp('').subscribe(data => {
       if (data.code === 200) {
         this.daOp = data.result;
         this.dtTrigger.next(this.daOp);

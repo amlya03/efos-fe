@@ -29,6 +29,12 @@ export class ServiceVerificationService {
   );
   // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////
 
+  // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////getListAppAppraisal
+  protected getListAppAppraisalByUserNameUrl = this.applicationConfigService.getEndpointFor(
+    this.baseUrl + 'v1/efos-verif/list_app_appraisal_assign?su='
+  );
+  // ///////////////////////////////// Daftar APlikasi Appraisal ///////////////////////////////////////////////////////////
+
   // ///////////////////////////////// Daftar APlikasi Appraisal Review ///////////////////////////////////////////////////////////getListAppAppraisal
   protected getListAppraisalReviewUrl = this.applicationConfigService.getEndpointFor(
     this.baseUrl + 'v1/efos-verif/list_app_appraisal_review'
@@ -88,6 +94,12 @@ export class ServiceVerificationService {
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected allDataOnProcess = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-verif/list_analisa_process');
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ///////////////////////////////// Daftar APlikasi Analis Nama Alais ///////////////////////////////////////////////////////////
+  protected getListAppProcessDanNamaAnalisUrl = this.applicationConfigService.getEndpointFor(
+    this.baseUrl + 'v1/efos-verif/list_analisa_process_analis?su='
+  );
+  // ///////////////////////////////// Daftar APlikasi Analis Nama Alais ///////////////////////////////////////////////////////////
 
   // //////////////////////service daftar aplikasi waiting update status\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected allDataWaitingUpdateStatus = this.applicationConfigService.getEndpointFor(
@@ -185,8 +197,12 @@ export class ServiceVerificationService {
   // //////////////////////service daftar aplikasi waiting assign\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getDaOp(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.allDataOnProcess);
+  getDaOp(url: any): Observable<ApiResponse> {
+    if (url) {
+      return this.http.get<ApiResponse>(this.getListAppProcessDanNamaAnalisUrl + url);
+    } else {
+      return this.http.get<ApiResponse>(this.allDataOnProcess);
+    }
   }
   // //////////////////////service daftar aplikasi on process\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -275,8 +291,12 @@ export class ServiceVerificationService {
   // ///////////////////////////////// Daftar APlikasi Head Appraisal ///////////////////////////////////////////////////////////
 
   // ///////////////////////////////// Daftar APlikasi Appraisal proses ///////////////////////////////////////////////////////////
-  getListAppraisalProcess(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.getListAppAppraisalProcessUrl);
+  getListAppraisalProcess(full_name: any): Observable<ApiResponse> {
+    if (full_name) {
+      return this.http.get<ApiResponse>(this.getListAppAppraisalByUserNameUrl + full_name);
+    } else {
+      return this.http.get<ApiResponse>(this.getListAppAppraisalProcessUrl);
+    }
   }
   // ///////////////////////////////// Daftar APlikasi Appraisal proses ///////////////////////////////////////////////////////////
 
