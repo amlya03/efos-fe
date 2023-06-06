@@ -7,8 +7,8 @@
     <div class="form-group">
       <select #kategori class="form-control">
         <option selected value="">Pilih Pencarian Berdasarkan Kategori Pekerjaan</option>
-        <option value="true">Fix Income</option>
-        <option value="false">Non Fix Income</option>
+        <option value="Fix Income">Fix Income</option>
+        <option value="Non Fix Income">Non Fix Income</option>
       </select>
     </div>
   </div>
@@ -34,7 +34,7 @@
     </button>
     <button
       class="btn btn-info"
-      (click)="noAplikasi.value = ''; namaNasabah.value = ''; kategori.value = ''; tglMulai.value = ''; clearInput()"
+      (click)="noAplikasi.value = ''; namaNasabah.value = ''; kategori.value = ''; tglMulai.value = ''; tglAkhir.value = ''; clearInput()"
     >
       Clear Data
     </button>

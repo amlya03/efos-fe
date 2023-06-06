@@ -33,7 +33,6 @@ export class ParameterftpdpComponent implements OnInit {
   }
 
   viewftvdetail(id: any): void {
-    // alert(id);
     // this.createform.get('contoh')?.setValue('7');
     // this.tampunganidviewdetail = id;
 
@@ -77,7 +76,6 @@ export class ParameterftpdpComponent implements OnInit {
         let hahaha;
         $(document).ready(function () {
           $('#jangankodeproduk').change(function () {
-            alert('jalan');
             //  this.tampungpemecah= $('#jangankodeproduk').val();
             // const pemecahbenar=this.tampungpemecah.split('|');
             const parameterValue = $(this).val() as HTMLElement | any;

@@ -50,6 +50,20 @@
       </div>
     </div>
   </div>
+  <p></p>
+  <button
+    (click)="downloadpdfpenolakan(dataDE.app_no_de)"
+    *ngIf="
+      this.dataDE.status_aplikasi === '9.0' ||
+      this.dataDE.status_aplikasi === '9.1' ||
+      this.dataDE.status_aplikasi === '9.0.2' ||
+      this.dataDE.status_aplikasi === '9.0.5' ||
+      this.dataDE.status_aplikasi === '9.0.6'
+    "
+    class="btn btn-info"
+  >
+    Batal
+  </button>
 
   <p></p>
   <div class="col" style="text-align: center"></div>

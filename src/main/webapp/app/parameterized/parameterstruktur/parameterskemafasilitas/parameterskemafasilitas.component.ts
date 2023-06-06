@@ -33,7 +33,6 @@ export class ParameterskemafasilitasComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
-    // alert('knfsdkds');
   }
 
   ngOnInit(): void {
@@ -81,9 +80,6 @@ export class ParameterskemafasilitasComponent implements OnInit, OnDestroy {
           });
 
           $('#tear_select').change(function () {
-            alert('tear on select');
-            alert($('#tear_select').val());
-
             if ($('#tear_select').val() === '1') {
               $('#id_tenortear1').removeAttr('hidden');
             } else if ($('#tear_select').val() === '2') {

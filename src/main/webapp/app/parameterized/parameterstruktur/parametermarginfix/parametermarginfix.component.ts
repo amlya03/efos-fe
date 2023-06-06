@@ -45,7 +45,6 @@ export class ParametermarginfixComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
-    // alert('knfsdkds');
   }
 
   ngOnInit(): void {
@@ -85,7 +84,6 @@ export class ParametermarginfixComponent implements OnInit {
           $('#jumlah_margin').change(function () {
             // $('#tenor_tier1').val('1');
             if ($('#jumlah_margin').val() === '1') {
-              alert('test');
               $('#jangka_waktu_id1').removeAttr('hidden');
               $('#margin_id1').removeAttr('hidden');
 
@@ -300,7 +298,7 @@ export class ParametermarginfixComponent implements OnInit {
             const tenor3 = $('#jangka_waktu3').val();
             const tenor4 = $('#jangka_waktu4').val();
             const tenor5 = $('#jangka_waktu5').val();
-            // alert(margin);
+
             const tn_code = $('#tn_code').val();
             const jumlahtier = $('#jumlah_margin').val();
 
@@ -433,7 +431,6 @@ export class ParametermarginfixComponent implements OnInit {
           $('#jumlah_margin').change(function () {
             // $('#tenor_tier1').val('1');
             if ($('#jumlah_margin').val() === '1') {
-              alert('test');
               $('#jangka_waktu_id1').removeAttr('hidden');
               $('#margin_id1').removeAttr('hidden');
 
@@ -648,7 +645,7 @@ export class ParametermarginfixComponent implements OnInit {
             const tenor3 = $('#jangka_waktu3').val();
             const tenor4 = $('#jangka_waktu4').val();
             const tenor5 = $('#jangka_waktu5').val();
-            // alert(margin);
+
             const tn_code = $('#tn_code').val();
             const jumlahtier = $('#jumlah_margin').val();
 

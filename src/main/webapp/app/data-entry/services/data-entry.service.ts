@@ -43,6 +43,10 @@ export class DataEntryService {
   );
   // ///////////////////////////// Download Skema Angsuran ////////////////////////////////////////////////////////////
 
+  // ///////////////////////////// Download Skema Angsuran ////////////////////////////////////////////////////////////
+  protected downloadpenolakanpdf = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/downloadSuratPenolakan/');
+  // ///////////////////////////// Download Skema Angsuran ////////////////////////////////////////////////////////////
+
   // //////////////////////////// get Pre Screen BM ////////////////////////////////////////////
   protected preScreenBM = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-de/getPreScreenBM?sd=');
   // //////////////////////////// get Pre Screen BM ////////////////////////////////////////////
@@ -283,6 +287,9 @@ export class DataEntryService {
 
   // /////////////////////////////  Ref List FTVDP detail \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected fetchlistftvdpdetail = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_ftv_dp_detail?ss=');
+  // /////////////////////////////  Ref List FTVDP detail \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  // /////////////////////////////  Ref List FTVDP detail \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  protected fetchlistftvdpdetailbyid = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/getRefFtvDpDetail?si=');
   // /////////////////////////////  Ref List FTVDP detail \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // /////////////////////////////  Ref List Skema Fix \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -747,6 +754,12 @@ export class DataEntryService {
   }
   // //////////////////////////// GET dataretriveskema //////////////////////////////////////////////////
 
+  // //////////////////////////// GET dataretriveskema //////////////////////////////////////////////////
+  getdataretriveftvdetailbyid(id: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.fetchlistftvdpdetailbyid + id);
+  }
+  // //////////////////////////// GET dataretriveskema //////////////////////////////////////////////////
+
   updatedCollateral(model: listAgunan): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(this.baseUrl + 'v1/efos-de/update_collateral', model);
   }
@@ -760,4 +773,10 @@ export class DataEntryService {
     return this.http.get<ApiResponse>(this.downloadAngsuranDataEntry + app_no_de);
   }
   // ///////////////////////////// Download Skema Angsuran ////////////////////////////////////////////////////////////
+
+  // ///////////////////////////// getDownloadpdfpenolakan ////////////////////////////////////////////////////////////
+  getDownloadpdfpenolakan(app_no_de: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.downloadpenolakanpdf + app_no_de);
+  }
+  // ///////////////////////////// getDownloadpdfpenolakan ////////////////////////////////////////////////////////////
 }

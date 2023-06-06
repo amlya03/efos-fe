@@ -28,7 +28,6 @@ export class ParameterstrukturComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
-    // alert('knfsdkds');
   }
 
   ngOnInit(): void {
@@ -47,16 +46,12 @@ export class ParameterstrukturComponent implements OnInit, OnDestroy {
     const options = this.dataretrive;
     const status = this.dataretrive.active;
 
-    // alert(status);
     if (status === '1') {
       this.statusvalue = 'Aktif';
     } else {
       this.statusvalue = 'Tidak Aktif';
     }
 
-    // alert(options.fasilitas);
-
-    // alert(id);
     Swal.fire({
       title: 'Mohon Perhatikan',
       text: 'Tolang Input dengan benar ',
@@ -126,8 +121,7 @@ export class ParameterstrukturComponent implements OnInit, OnDestroy {
               } else {
                 this.kirimactive = 1;
               }
-              // alert(active);
-              // alert(id);
+
               const body = {
                 id: id,
                 active: this.kirimactive,

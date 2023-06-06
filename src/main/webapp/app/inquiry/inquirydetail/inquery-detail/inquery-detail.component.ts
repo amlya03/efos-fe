@@ -10,6 +10,7 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { DataEntryService } from 'app/inquiry/service/inquiry_service';
 import { dataentrymodel } from 'app/data-entry/data-entry-model';
 import { inquirymodel } from 'app/inquiry/inquiry-model';
+import { environment } from 'environments/environment';
 // import { DataEntryService } from './inquiry/service/inquiry_service';
 declare let $: any;
 
@@ -19,6 +20,7 @@ declare let $: any;
   styleUrls: ['./inquery-detail.component.scss'],
 })
 export class InqueryDetailComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
   @Input() public isLoading: boolean | null = false;
   @Input() isSpin: boolean | null = false;
   title = 'EFOS';
@@ -92,6 +94,7 @@ export class InqueryDetailComponent implements OnInit {
         console.warn(data);
         this.dataDE = data.result;
         console.warn(this.dataDE);
+        alert(this.dataDE.status_aplikasi);
         // if (data.code === 200) {
         //   this.getstatustraking = (data as any).result;
         //   this.dtTrigger.next(data.result);
@@ -125,6 +128,11 @@ export class InqueryDetailComponent implements OnInit {
       $('#dataTables-example').DataTable().columns().search('').draw();
     }, 50);
     // alert("bbb")
+  }
+
+  downloadpdfpenolakan(de: any) {
+    window.open(this.baseUrl + 'v1/efos-de/downloadDocPenolakan/' + de + '');
+    // window.open(this.baseUrl + 'v1/efos-de/downloadDocPenolakan/' + 'de221220000185' +'');
   }
 
   viewdataentry(getAppNoDe: any, getCuref: any): void {

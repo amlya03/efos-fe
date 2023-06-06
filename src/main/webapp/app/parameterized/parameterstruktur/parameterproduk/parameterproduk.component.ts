@@ -30,7 +30,6 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
-    // alert('knfsdkds');
   }
 
   ngOnInit(): void {
@@ -177,7 +176,6 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
         });
       },
     });
-    // alert(this.dataretrive.kode_program)
 
     // /// menanti api  untuk kodeProgram
     Swal.fire({

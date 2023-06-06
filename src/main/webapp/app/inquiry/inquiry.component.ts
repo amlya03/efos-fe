@@ -26,6 +26,7 @@ export class InquiryComponent implements OnInit, OnDestroy {
   untukSessionRole: any;
   untukSessionKodeCabang: any;
   untukSessionFullName: any;
+  untukSessionUserName: any;
   dataEntry: dataentrymodel[] = [];
   valueCariButton = '';
   kategori_pekerjaan = '';
@@ -56,6 +57,7 @@ export class InquiryComponent implements OnInit, OnDestroy {
     this.untukSessionRole = this.sessionStorageService.retrieve('sessionRole');
     this.untukSessionKodeCabang = this.sessionStorageService.retrieve('sessionKdCabang');
     this.untukSessionFullName = this.sessionStorageService.retrieve('sessionFullName');
+    this.untukSessionUserName = this.sessionStorageService.retrieve('sessionUserName');
 
     // alert(this.untukSessionRole);
     this.dtOptions = {
@@ -98,11 +100,22 @@ export class InquiryComponent implements OnInit, OnDestroy {
     // $('#dataTables-example').DataTable().columns(4).search(inputNoAplikasi).draw();
     // $('#dataTables-example').DataTable().columns(3).search(inputNamaNasabah).draw();
     // $('#dataTables-example').DataTable().columns(2).search(listKategori).draw();
-    // this.ngOnDestroy();
-    $('#dataTables-example').DataTable().destroy();
+
+    //  this.ngOnDestroy();
+    // $('#dataTables-example').DataTable().destroy();
     // date range
     // console.warn(tglMulai)
-    if (this.untukSessionRole === 'ADMIN_PIPELINE') {
+    // alert(listKategori);
+    if (
+      this.untukSessionRole === 'ADMIN_PIPELINE' ||
+      this.untukSessionRole === 'KOMITE' ||
+      this.untukSessionRole === 'MAN_RISK' ||
+      this.untukSessionRole === 'ADMIN_CFBD' ||
+      this.untukSessionRole === 'APPRAISAL-SPV' ||
+      this.untukSessionRole === 'VER_PRE_SPV_2' ||
+      this.untukSessionRole === 'VER_PRESCR' ||
+      this.untukSessionRole === 'VER_PRE_SPV'
+    ) {
       const splitTglMulai = tglMulai.split('-');
       const splitTglEnd = tglAkhir.split('-');
       // const splitTglAkhir = tglAkhir.split('-');
@@ -113,7 +126,8 @@ export class InquiryComponent implements OnInit, OnDestroy {
 
         this.inquiryservice.getFetchfilterall(tanggalend, inputNoAplikasi, listKategori, inputNamaNasabah, tanggalstart).subscribe(data => {
           this.dataEntry = data.result;
-          this.dtTrigger.next(data.result);
+          this.refreshDatatables(this.dataEntry);
+          // this.dtTrigger.next(data.result);
           this.getLoading(false);
         });
       } else {
@@ -121,7 +135,8 @@ export class InquiryComponent implements OnInit, OnDestroy {
         const tanggalstart = splitTglMulai[0] + '/' + splitTglMulai[1] + '/' + splitTglMulai[2];
         this.inquiryservice.getFetchfilterall(tanggalend, inputNoAplikasi, listKategori, inputNamaNasabah, tanggalstart).subscribe(data => {
           this.dataEntry = data.result;
-          this.dtTrigger.next(data.result);
+          this.refreshDatatables(this.dataEntry);
+          // this.dtTrigger.next(data.result);
           this.getLoading(false);
         });
       }
@@ -136,34 +151,136 @@ export class InquiryComponent implements OnInit, OnDestroy {
       //   this.dtTrigger.next(data.result);
       //   this.getLoading(false);
       // });
-      alert('pipeline');
+      // alert('pipeline');
     } else {
       const splitTglMulai = tglMulai.split('-');
       const splitTglEnd = tglAkhir.split('-');
-      // const splitTglAkhir = tglAkhir.split('-');
-      const tanggalend = splitTglEnd[0] + '/' + splitTglEnd[1] + '/' + splitTglEnd[2];
-      const tanggalstart = splitTglMulai[0] + '/' + splitTglMulai[1] + '/' + splitTglMulai[2];
-      // console.warn(splitTglMulai[2])
-      console.warn(tanggalstart);
-      this.inquiryservice
-        .getFetchfilter(
-          tanggalend,
-          this.untukSessionKodeCabang,
-          inputNoAplikasi,
-          listKategori,
-          inputNamaNasabah,
-          tanggalstart,
-          this.untukSessionFullName
-        )
-        .subscribe(data => {
-          // this.inquiryservice.getFetchfilter(tanggalend,inputNoAplikasi,listKategori,inputNamaNasabah,tanggalstart).subscribe(data => {
-          // console.warn(data);
-          this.dataEntry = data.result;
-          this.dtTrigger.next(data.result);
-          this.getLoading(false);
 
-          alert('cabang');
-        });
+      if (tglMulai == '' && tglAkhir == '') {
+        const tanggalend = '';
+        const tanggalstart = '';
+        if (this.untukSessionRole === 'AO') {
+          this.untukSessionKodeCabang = '';
+
+          this.inquiryservice
+            .getFetchfilter(
+              tanggalend,
+              this.untukSessionKodeCabang,
+              inputNoAplikasi,
+              listKategori,
+              inputNamaNasabah,
+              tanggalstart,
+              this.untukSessionUserName
+            )
+            .subscribe(data => {
+              this.dataEntry = data.result;
+              this.refreshDatatables(this.dataEntry);
+              // this.dtTrigger.next(data.result);
+              this.getLoading(false);
+            });
+        } else {
+          this.untukSessionUserName = '';
+          // this.ngOnDestroy();
+          this.inquiryservice
+            .getFetchfilter(
+              tanggalend,
+              this.untukSessionKodeCabang,
+              inputNoAplikasi,
+              listKategori,
+              inputNamaNasabah,
+              tanggalstart,
+              this.untukSessionUserName
+            )
+            .subscribe(data => {
+              this.dataEntry = data.result;
+              this.refreshDatatables(this.dataEntry);
+              // this.dtTrigger.next(data.result);
+              this.getLoading(false);
+            });
+        }
+      } else {
+        const tanggalend = splitTglEnd[0] + '/' + splitTglEnd[1] + '/' + splitTglEnd[2];
+        const tanggalstart = splitTglMulai[0] + '/' + splitTglMulai[1] + '/' + splitTglMulai[2];
+
+        if (this.untukSessionRole === 'AO') {
+          this.untukSessionKodeCabang = '';
+          // this.ngOnDestroy();
+          this.inquiryservice
+            .getFetchfilter(
+              tanggalend,
+              this.untukSessionKodeCabang,
+              inputNoAplikasi,
+              listKategori,
+              inputNamaNasabah,
+              tanggalstart,
+              this.untukSessionUserName
+            )
+            .subscribe(data => {
+              this.dataEntry = data.result;
+              this.refreshDatatables(this.dataEntry);
+              // this.dtTrigger.next(data.result);
+              this.getLoading(false);
+            });
+        } else {
+          this.untukSessionUserName = '';
+          // this.ngOnDestroy();
+          this.inquiryservice
+            .getFetchfilter(
+              tanggalend,
+              this.untukSessionKodeCabang,
+              inputNoAplikasi,
+              listKategori,
+              inputNamaNasabah,
+              tanggalstart,
+              this.untukSessionUserName
+            )
+            .subscribe(data => {
+              this.dataEntry = data.result;
+              this.refreshDatatables(this.dataEntry);
+              // this.dtTrigger.next(data.result);
+              this.getLoading(false);
+            });
+        }
+
+        // this.inquiryservice.getFetchfilter(tanggalend,
+        //   this.untukSessionKodeCabang,
+        //   inputNoAplikasi,
+        //   listKategori,
+        //   inputNamaNasabah,
+        //   tanggalstart,
+        //   this.untukSessionUserName).subscribe(data => {
+        //   this.dataEntry = data.result;
+        //   this.dtTrigger.next(data.result);
+        //   this.getLoading(false);
+        // });
+      }
+
+      // const splitTglMulai = tglMulai.split('-');
+      // const splitTglEnd = tglAkhir.split('-');
+      // // const splitTglAkhir = tglAkhir.split('-');
+      // const tanggalend = splitTglEnd[0] + '/' + splitTglEnd[1] + '/' + splitTglEnd[2];
+      // const tanggalstart = splitTglMulai[0] + '/' + splitTglMulai[1] + '/' + splitTglMulai[2];
+      // // console.warn(splitTglMulai[2])
+      // console.warn(tanggalstart);
+      // this.inquiryservice
+      //   .getFetchfilter(
+      // tanggalend,
+      // this.untukSessionKodeCabang,
+      // inputNoAplikasi,
+      // listKategori,
+      // inputNamaNasabah,
+      // tanggalstart,
+      // this.untukSessionFullName
+      //   )
+      //   .subscribe(data => {
+      //     // this.inquiryservice.getFetchfilter(tanggalend,inputNoAplikasi,listKategori,inputNamaNasabah,tanggalstart).subscribe(data => {
+      //     // console.warn(data);
+      //     this.dataEntry = data.result;
+      //     this.dtTrigger.next(data.result);
+      //     this.getLoading(false);
+
+      //     // alert('cabang');
+      //   });
     }
 
     // $('#dataTables-example').DataTable().columns(7).search(splitTglMulai[0]).draw();
@@ -201,7 +318,7 @@ export class InquiryComponent implements OnInit, OnDestroy {
   downloadxlsx(listKategori: string, inputNamaNasabah: string, inputNoAplikasi: string, tglMulai: any, tglAkhir: any): void {
     if (listKategori == '' && inputNamaNasabah == '' && inputNoAplikasi == '' && tglMulai == '' && tglAkhir == '') {
       window.open(this.baseUrl + 'v1/efos-de/download_data_entry_xlsx');
-      alert('download all filter ');
+      // alert('download all filter ');
     } else {
       const splitTglMulai = tglMulai.split('-');
       const splitTglEnd = tglAkhir.split('-');
@@ -251,18 +368,26 @@ export class InquiryComponent implements OnInit, OnDestroy {
       //   this.dtTrigger.next(data.result);
       //   this.getLoading(false);
       // });
-      alert('download filter ');
+      // alert('download filter ');
     }
 
     // window.open(this.baseUrl + 'v1/efos-de/download_data_entry_xlsx');
   }
 
   clearInput(): void {
-    $('#dataTables-example').DataTable().search('').draw();
-    setTimeout(() => {
-      $('#dataTables-example').DataTable().columns().search('').draw();
-    }, 50);
+    // $('#dataTables-example').DataTable().search('').draw();
+    // setTimeout(() => {
+    //   $('#dataTables-example').DataTable().columns().search('').draw();
+    // }, 50);
     // alert("bbb")
+    // this.ngOnDestroy();
+    this.inquiryservice.getdatastatustrakinginquiry().subscribe(data => {
+      // console.warn(data);
+      this.dataEntry = data.result;
+      this.refreshDatatables(this.dataEntry);
+      // this.dtTrigger.next(data.result);
+      this.getLoading(false);
+    });
   }
 
   viewdataentry(getAppNoDe: any, getCuref: any): void {
@@ -322,6 +447,20 @@ export class InquiryComponent implements OnInit, OnDestroy {
       } else {
         return false;
       }
+    });
+  }
+
+  refreshDatatables(data: any): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtOptions = {
+        pagingType: 'full_numbers',
+        pageLength: 10,
+        processing: true,
+        responsive: true,
+      };
+      this.dtTrigger.next(data);
+      this.getLoading(false);
     });
   }
 }

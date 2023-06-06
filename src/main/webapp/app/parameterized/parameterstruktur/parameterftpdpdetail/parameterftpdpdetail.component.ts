@@ -75,7 +75,6 @@ export class ParameterftpdpdetailComponent implements OnInit {
   }
 
   createftpdpdetail(): void {
-    // alert("test");
     const baseUrl = this.baseUrl;
     const options = this.tablelistfasilitas.map((option: any) => {
       return `
@@ -133,6 +132,8 @@ export class ParameterftpdpdetailComponent implements OnInit {
               $('#tipeperoperitid').attr('hidden', 'true');
               // $('#kode_agunan').attr('hidden', 'true');
             } else {
+              $('#tipeperoperitid').removeAttr('hidden');
+              $('#kodeagunanid').removeAttr('hidden');
             }
           });
         });
@@ -191,8 +192,6 @@ export class ParameterftpdpdetailComponent implements OnInit {
             this.tampungpemecah = $('#tipe_properti').val();
 
             const pemecahbenar = this.tampungpemecah.split('|');
-
-            alert(kode_fasilitas);
 
             // return;
 
@@ -304,15 +303,16 @@ export class ParameterftpdpdetailComponent implements OnInit {
   }
 
   editftpdpdetail(id: any): void {
-    this.datEntryService.getdataretriveftvdetail(this.id).subscribe(table => {
+    this.datEntryService.getdataretriveftvdetailbyid(id).subscribe(table => {
       this.tableftvdpdetailid = table.result;
+
       // this.dtTrigger.next(this.tableftvdpdetail);
     });
 
-    // alert("test");
     const dp = this.tableftvdpdetailid.dp;
     const min = this.tableftvdpdetailid.min;
     const max = this.tableftvdpdetailid.max;
+    const ftv = this.tableftvdpdetailid.max;
 
     const baseUrl = this.baseUrl;
     const options = this.tablelistfasilitas.map((option: any) => {
@@ -378,39 +378,47 @@ export class ParameterftpdpdetailComponent implements OnInit {
         Swal.fire({
           title: 'Create FTP Detail ',
           html:
-            '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label"> Fasilitas</label>' +
-            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-8"><select class="form-control" id="kode_fasilitas"><option value="">Pilih Parameter</option>' +
-            `${options}` +
-            '</select>' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row " id="kodeagunanid"><label class="col-sm-4 col-form-label"> Agunan</label>' +
-            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-8"><select class="form-control" id="kode_agunan"><option value="">Pilih Parameter</option>' +
-            `${optionsagunan}` +
-            '</select>' +
-            '<br />' +
-            '</div></div>' +
-            '<div class="form-lable row " id="tipeperoperitid"><label class="col-sm-4 col-form-label">Properti</label>' +
-            '<div class="col-sm-8">  <select id="tipe_properti" class="form-control"><option value="">Pilih Status</option></select>' +
-            '<br />' +
-            '</div></div>' +
+            // '<br />' +
+            // '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label"> Fasilitas</label>' +
+            // // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            // '<div class="col-sm-8"><select class="form-control" id="kode_fasilitas"><option value="">Pilih Parameter</option>' +
+            // `${options}` +
+            // '</select>' +
+            // '</div></div>' +
+            // '<br />' +
+            // '<div class="form-lable row " id="kodeagunanid"><label class="col-sm-4 col-form-label"> Agunan</label>' +
+            // // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
+            // '<div class="col-sm-8"><select class="form-control" id="kode_agunan"><option value="">Pilih Parameter</option>' +
+            // `${optionsagunan}` +
+            // '</select>' +
+            // '<br />' +
+            // '</div></div>' +
+            // '<div class="form-lable row " id="tipeperoperitid"><label class="col-sm-4 col-form-label">Properti</label>' +
+            // '<div class="col-sm-8">  <select id="tipe_properti" class="form-control"><option value="">Pilih Status</option></select>' +
+            // '<br />' +
+            // '</div></div>' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Min </label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="Min"/> ' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="Min" value="' +
+            min +
+            '"/> ' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Max</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="Max"/> ' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="Max" value="' +
+            max +
+            '"/> ' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">FTV</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="ftv"/> ' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="ftv" value="' +
+            ftv +
+            '"/> ' +
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">dp</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="dp"/> ' +
+            '<div class="col-sm-8"><input type="text" class="form-control" id="dp" value="' +
+            dp +
+            '"/> ' +
             '</div></div>',
 
           allowOutsideClick: false,
@@ -418,79 +426,44 @@ export class ParameterftpdpdetailComponent implements OnInit {
           focusConfirm: false,
         }).then(result => {
           if (result.isConfirmed) {
-            const kode_fasilitas = $('#kode_fasilitas').val();
-            const kode_agunan = $('#kode_agunan').val();
-            const tipe_properti = $('#tipe_properti').val();
+            // const kode_fasilitas = $('#kode_fasilitas').val();
+            // const kode_agunan = $('#kode_agunan').val();
+            // const tipe_properti = $('#tipe_properti').val();
             const Min = $('#Min').val();
             const Max = $('#Max').val();
             const ftv = $('#ftv').val();
             const dp = $('#dp').val();
 
-            this.tampungpemecah = $('#tipe_properti').val();
+            // this.tampungpemecah = $('#tipe_properti').val();
 
-            const pemecahbenar = this.tampungpemecah.split('|');
-
-            alert(kode_fasilitas);
+            // const pemecahbenar = this.tampungpemecah.split('|');
 
             // return;
 
-            if (kode_fasilitas === '') {
-              alert('Status Aktif Harus Di isi');
+            if (Min === '') {
+              alert('Fasilitas  harus di isi');
               return;
-            }
-
-            if (kode_fasilitas == '1') {
-              if (Min === '') {
-                alert('Fasilitas  harus di isi');
-                return;
-              } else if (Max === '') {
-                alert('Fasilitas  harus di isi');
-                return;
-              } else if (ftv === '') {
-                alert('Fasilitas  harus di isi');
-                return;
-              } else if (dp === '') {
-                alert('Fasilitas  harus di isi');
-                return;
-              }
-
-              this.tipeproperti = ' ';
-              this.tipepropertideskripsi = 'PTA';
-            } else {
-              if (kode_agunan === '') {
-                alert('Fasilitas  harus di isi');
-                return;
-              } else if (tipe_properti === '') {
-                alert('Fasilitas  harus di isi');
-                return;
-              } else if (Min === '') {
-                alert('Fasilitas  harus di isi');
-                return;
-              } else if (Max === '') {
-                alert('Fasilitas  harus di isi');
-                return;
-              } else if (ftv === '') {
-                alert('Fasilitas  harus di isi');
-                return;
-              } else if (dp === '') {
-                alert('Fasilitas  harus di isi');
-                return;
-              }
-
-              this.tipeproperti = pemecahbenar[0];
-              this.tipepropertideskripsi = pemecahbenar[1];
+            } else if (Max === '') {
+              alert('Fasilitas  harus di isi');
+              return;
+            } else if (ftv === '') {
+              alert('Fasilitas  harus di isi');
+              return;
+            } else if (dp === '') {
+              alert('Fasilitas  harus di isi');
+              return;
             }
 
             const body = {
               dp: dp,
-              fasilitas: kode_fasilitas,
+              // fasilitas: kode_fasilitas,
               ftv: ftv,
-              id: '0',
-              id_ftv_dp: this.id,
+              id: id,
+              // id_ftv_dp: this.id,
               min: Min,
               max: Max,
-              tipe_properti: this.tipeproperti,
-              tipe_properti_deskripsi: this.tipepropertideskripsi,
+              // tipe_properti: this.tipeproperti,
+              // tipe_properti_deskripsi: this.tipepropertideskripsi,
             };
 
             const headers = new HttpHeaders({

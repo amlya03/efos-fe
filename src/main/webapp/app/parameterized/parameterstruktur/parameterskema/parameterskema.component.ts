@@ -274,7 +274,6 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
                 const pemecahbenar = this.tampungpemecah.split('|');
                 this.kirimanskema = pemecahbenar[0];
                 this.kirimanskemadeskripsi = pemecahbenar[1];
-                alert(this.kirimanskema);
               }
               if (skema_master == '1') {
                 this.tierselect = '';
@@ -606,7 +605,6 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
           $('#jumlah_margin').change(function () {
             // $('#tenor_tier1').val('1');
             if ($('#jumlah_margin').val() === '1') {
-              alert('test');
               $('#jangka_waktu_id1').removeAttr('hidden');
               $('#margin_id1').removeAttr('hidden');
 
@@ -1053,7 +1051,7 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
             const tenor_tier2 = $('#tenor_tier2').val();
             const tenor_tier3 = $('#tenor_tier3').val();
             const tier = $('#tier_id').val();
-            alert(tier);
+
             if (skema_fasilitas === '') {
               alert('Skema Fasilitas harus di isi');
               return;
@@ -1099,13 +1097,11 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
                 // alert(x > y);
                 return;
               } else {
-                alert('initenortier2');
                 // alert(tier+">"+tear2);
                 this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2;
                 // return;
               }
             } else if (tier === '3') {
-              alert('ini jalan ?');
               if (margin1 === '') {
                 alert('Margin1 harus di isi');
                 return;
@@ -1135,9 +1131,6 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
               var a: number = Number(tear2);
               var b: number = Number(tier);
               if (tear2 >= tier) {
-                // alert(tear2 > tier);
-                // alert(tear3 > tier);
-                // alert(a > b);
                 alert('tenor 2 tier tidak boleh melebihi tenor11111');
                 return;
               } else if (tear3 >= tier) {
@@ -1146,7 +1139,7 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
               } else {
                 // alert(tier > tear2);
                 // alert(tier > tear3);
-                alert('ini tenor 3');
+
                 this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2 + '-' + tenor_tier3;
                 return;
               }

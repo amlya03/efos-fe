@@ -194,7 +194,7 @@ export class ParametermarginstepupComponent implements OnInit, OnDestroy {
             const tenor_tier2 = $('#tenor_tier2').val();
             const tenor_tier3 = $('#tenor_tier3').val();
             const tier = $('#tier_id').val();
-            alert(tier);
+
             if (skema_fasilitas === '') {
               alert('Skema Fasilitas harus di isi');
               return;
@@ -235,18 +235,13 @@ export class ParametermarginstepupComponent implements OnInit, OnDestroy {
               // let y=tear2;
               if (tear2 >= tier) {
                 alert('tenor 2 tier tidak boleh melebihi tenor');
-                // alert(tier+">"+tear2);
-                // alert(tear2 > tier);
-                // alert(x > y);
+
                 return;
               } else {
-                alert('initenortier2');
-                // alert(tier+">"+tear2);
                 this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2;
                 // return;
               }
             } else if (tier === '3') {
-              alert('ini jalan ?');
               if (margin1 === '') {
                 alert('Margin1 harus di isi');
                 return;
@@ -276,18 +271,12 @@ export class ParametermarginstepupComponent implements OnInit, OnDestroy {
               var a: number = Number(tear2);
               var b: number = Number(tier);
               if (tear2 >= tier) {
-                // alert(tear2 > tier);
-                // alert(tear3 > tier);
-                // alert(a > b);
                 alert('tenor 2 tier tidak boleh melebihi tenor11111');
                 return;
               } else if (tear3 >= tier) {
                 alert('tenor tier 3 tidak boleh melebihi tenor');
                 return;
               } else {
-                // alert(tier > tear2);
-                // alert(tier > tear3);
-                alert('ini tenor 3');
                 this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2 + '-' + tenor_tier3;
                 return;
               }
@@ -477,7 +466,7 @@ export class ParametermarginstepupComponent implements OnInit, OnDestroy {
             const tenor_tier2 = $('#tenor_tier2').val();
             const tenor_tier3 = $('#tenor_tier3').val();
             const tier = $('#tier_id').val();
-            alert(tier);
+
             // if (skema_fasilitas === '') {
             //   alert('Skema Fasilitas harus di isi');
             //   return;
@@ -523,13 +512,10 @@ export class ParametermarginstepupComponent implements OnInit, OnDestroy {
                 // alert(x > y);
                 return;
               } else {
-                alert('initenortier2');
-                // alert(tier+">"+tear2);
                 this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2;
                 // return;
               }
             } else if (tier === '3') {
-              alert('ini jalan ?');
               if (margin1 === '') {
                 alert('Margin1 harus di isi');
                 return;
@@ -562,7 +548,7 @@ export class ParametermarginstepupComponent implements OnInit, OnDestroy {
                 // alert(tear2 > tier);
                 // alert(tear3 > tier);
                 // alert(a > b);
-                alert('tenor 2 tier tidak boleh melebihi tenor11111');
+                alert('tenor 2 tier tidak boleh melebihi tenor');
                 return;
               } else if (tear3 >= tier) {
                 alert('tenor tier 3 tidak boleh melebihi tenor');
@@ -570,7 +556,7 @@ export class ParametermarginstepupComponent implements OnInit, OnDestroy {
               } else {
                 // alert(tier > tear2);
                 // alert(tier > tear3);
-                alert('ini tenor 3');
+
                 this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2 + '-' + tenor_tier3;
                 // return;
               }
