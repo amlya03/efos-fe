@@ -83,6 +83,7 @@ export class DetailKomiteComponent implements OnInit {
   // cek result get detail komite
   cekDetailKomite = 0;
   idPost: any;
+  role: any;
 
   constructor(
     public router: Router,
@@ -105,6 +106,8 @@ export class DetailKomiteComponent implements OnInit {
   ngOnInit(): void {
     this.getLoading(true);
     this.cabang = this.sessionStorageService.retrieve('sessionKdCabang');
+    this.role = this.sessionStorageService.retrieve('sessionRole');
+    alert(this.role);
     // //////////////////// Fasilitas Yang Diminta //////////////////////
     this.komiteFasilitasYangDimintaForm = this.formBuilder.group({
       harga_permintaan: '',
