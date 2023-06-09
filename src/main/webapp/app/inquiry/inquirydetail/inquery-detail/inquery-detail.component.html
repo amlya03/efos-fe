@@ -54,11 +54,21 @@
   <button
     (click)="downloadpdfpenolakan(dataDE.app_no_de)"
     *ngIf="
-      this.dataDE.status_aplikasi === '9.0' ||
-      this.dataDE.status_aplikasi === '9.1' ||
-      this.dataDE.status_aplikasi === '9.0.2' ||
-      this.dataDE.status_aplikasi === '9.0.5' ||
-      this.dataDE.status_aplikasi === '9.0.6'
+      (this.dataDE.status_aplikasi === '9.0' && this.role === 'BRANCHMANAGER') ||
+      (this.dataDE.status_aplikasi === '9.0' && this.role === 'VER_PRE_SPV') ||
+      (this.dataDE.status_aplikasi === '9.0' && this.role === 'VER_PRE_SPV_2') ||
+      (this.dataDE.status_aplikasi === '9.1' && this.role === 'BRANCHMANAGER') ||
+      (this.dataDE.status_aplikasi === '9.1' && this.role === 'VER_PRE_SPV') ||
+      (this.dataDE.status_aplikasi === '9.1' && this.role === 'VER_PRE_SPV_2') ||
+      (this.dataDE.status_aplikasi === '9.0.2' && this.role === 'BRANCHMANAGER') ||
+      (this.dataDE.status_aplikasi === '9.0.2' && this.role === 'VER_PRE_SPV') ||
+      (this.dataDE.status_aplikasi === '9.0.2' && this.role === 'VER_PRE_SPV_2') ||
+      (this.dataDE.status_aplikasi === '9.0.5' && this.role === 'BRANCHMANAGER') ||
+      (this.dataDE.status_aplikasi === '9.0.5' && this.role === 'VER_PRE_SPV') ||
+      (this.dataDE.status_aplikasi === '9.0.5' && this.role === 'VER_PRE_SPV_2') ||
+      (this.dataDE.status_aplikasi === '9.0.6' && this.role === 'BRANCHMANAGER') ||
+      (this.dataDE.status_aplikasi === '9.0.6' && this.role === 'VER_PRE_SPV') ||
+      (this.dataDE.status_aplikasi === '9.0.6' && this.role === 'VER_PRE_SPV_2')
     "
     class="btn btn-info"
   >

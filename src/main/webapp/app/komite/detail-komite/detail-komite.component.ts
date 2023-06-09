@@ -102,7 +102,7 @@ export class DetailKomiteComponent implements OnInit {
     this.getLoading(true);
     this.cabang = this.sessionStorageService.retrieve('sessionKdCabang');
     this.role = this.sessionStorageService.retrieve('sessionRole');
-    alert(this.role);
+    // alert(this.role);
     // //////////////////// Fasilitas Yang Diminta //////////////////////
     this.komiteFasilitasYangDimintaForm = this.formBuilder.group({
       harga_permintaan: { value: '', disabled: true },

@@ -494,7 +494,7 @@
 <p></p>
 <div class="row form-material" [formGroup]="persetujuanPembiayaanForm">
   <div class="col">
-    <div class="form-group row" *ngIf="this.role === 'DIRBISNIS'">
+    <div class="form-group row" *ngIf="this.role === 'DIRBISNIS' || this.role === 'KOMITE'">
       <label class="col-sm-4 col-form-label">Limit Kewenangan Memutus</label>
       <div class="col-sm-8">
         <input
@@ -508,7 +508,7 @@
       </div>
     </div>
     <br />
-    <div class="form-group row" *ngIf="this.role === 'DIRBISNIS'">
+    <div class="form-group row" *ngIf="this.role === 'DIRBISNIS' || this.role === 'KOMITE'">
       <label class="col-sm-4 col-form-label">Plafond Pembiayaan yang Akan Diputus</label>
       <div class="col-sm-8">
         <input

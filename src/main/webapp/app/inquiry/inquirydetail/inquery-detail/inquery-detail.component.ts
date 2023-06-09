@@ -27,6 +27,7 @@ export class InqueryDetailComponent implements OnInit {
   app_no_de!: string;
   tampungandataygdibawa: any;
   getstatustraking?: inquirymodel[];
+  role: any;
   dataDE?: any;
   valueCariButton = '';
   kategori_pekerjaan = '';
@@ -54,6 +55,7 @@ export class InqueryDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.role = this.sessionStorageService.retrieve('sessionRole');
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -94,7 +96,7 @@ export class InqueryDetailComponent implements OnInit {
         console.warn(data);
         this.dataDE = data.result;
         console.warn(this.dataDE);
-        alert(this.dataDE.status_aplikasi);
+        // alert(this.dataDE.status_aplikasi);
         // if (data.code === 200) {
         //   this.getstatustraking = (data as any).result;
         //   this.dtTrigger.next(data.result);
