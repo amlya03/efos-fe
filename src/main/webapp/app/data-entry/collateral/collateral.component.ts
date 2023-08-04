@@ -328,14 +328,8 @@ export class CollateralComponent implements OnInit {
         { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
       ],
-      agunan_tunai: [
-        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
-      status_agunan_tunai: [
-        { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
-        Validators.required,
-      ],
+      agunan_tunai: '1',
+      status_agunan_tunai: '',
       no_rekening_agunan: [
         { value: '', disabled: this.untukSessionRole === 'VER_PRESCR' || this.untukSessionRole === 'BRANCHMANAGER' },
         Validators.required,
