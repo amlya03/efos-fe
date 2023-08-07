@@ -312,7 +312,7 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
               }
 
               const body = {
-                created_date: this.sessionStorageService.retrieve('sessionUserName'),
+                created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 dp_min: dp_min,
                 fasilitas: fasilitas,
                 id: 0,
