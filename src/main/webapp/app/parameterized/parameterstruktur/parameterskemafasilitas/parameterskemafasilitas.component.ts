@@ -56,9 +56,9 @@ export class ParameterskemafasilitasComponent implements OnInit, OnDestroy {
     });
 
     Swal.fire({
-      title: 'Mohon Perhatikan',
-      text: 'Inputan yang sudah Terinput tidak bisa di edit ',
-      icon: 'warning',
+      title: 'Tambah Data Input Parameter Skema Fasilitas',
+      text: '',
+      icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -106,7 +106,6 @@ export class ParameterskemafasilitasComponent implements OnInit, OnDestroy {
             '</div></div>' +
             '<br />' +
             '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Skema</label>' +
-            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
             '<div class="col-sm-8"><select class="form-control" id="kode_skema"><option value="">Pilih Skema</option>' +
             `${options}` +
             '</select>' +

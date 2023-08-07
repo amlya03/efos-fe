@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { DataTableDirective } from 'angular-datatables';
 import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model';
 import { Subject } from 'rxjs';
+import { listFasilitasModel } from 'app/parameterized/config/listFasilitasModel.model';
 
 @Component({
   selector: 'jhi-parameterprogram',
@@ -16,7 +17,7 @@ export class ParameterprogramComponent implements OnInit, OnDestroy {
   baseUrl: string = environment.baseUrl;
 
   tablelistprogram: listCreatemodel[] = [];
-  inputScoring: any;
+  listFasilitasValue: listFasilitasModel[] = [];
   dataretrive: any;
   statusvalue: any;
   kirimactive: any;
@@ -38,12 +39,12 @@ export class ParameterprogramComponent implements OnInit, OnDestroy {
       this.dtTrigger.next(this.tablelistprogram);
     });
     this.datEntryService.getFetchKodeFasilitas().subscribe(data => {
-      this.inputScoring = data.result;
+      this.listFasilitasValue = data.result;
     });
   }
 
   createprogram(): void {
-    const options = this.inputScoring.map((option: any) => {
+    const options = this.listFasilitasValue.map((option: listFasilitasModel) => {
       return `
         <option key="${option}" value="${option.kode_fasilitas}">
             ${option.fasilitas}
@@ -66,36 +67,63 @@ export class ParameterprogramComponent implements OnInit, OnDestroy {
           title: 'Create Program',
           html:
             '<br />' +
-            '<div class="row form-material" style="width:100%"><div class="form-group row">' +
+            '<div class="row form-material" style="width:100%">' +
+            '<div class="form-group row">' +
             '<label class="col-sm-4 col-form-label">Status Aktif</label>' +
-            '<div class="col-sm-8"><select class="form-control" id="status_active"><option value="">Pilih Status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode Fasilitas</label>' +
-            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-8"><select class="form-control" id="kode_fasilitas"><option value="">Pilih Parameter</option>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="status_active">' +
+            '<option value="">Pilih Status</option>' +
+            '<option value="1">Aktif</option>' +
+            '<option value="0">Tidak Aktif</option>' +
+            '</select>' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row" id="dataValueDiv1">' +
+            '<label class="col-sm-4 col-form-label">Kode Fasilitas</label>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="kode_fasilitas">' +
+            '<option value="">Pilih Parameter</option>' +
             `${options}` +
             '</select>' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Program</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="program"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Min Plafond</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="min_plafond"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Max Plafond</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="max_plafond"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Expired Date</label>' +
-            '<div class="col-sm-8"><input type="date" class="form-control" id="expired_date"/> ' +
-            '</div></div>',
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row" id="dataValueDiv">' +
+            '<label class="col-sm-4 col-form-label">Program</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="text" class="form-control" id="program"/> ' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row" id="dataValueDiv">' +
+            '<label class="col-sm-4 col-form-label">Min Plafond</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="text" class="form-control" id="min_plafond"/> ' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row" id="dataValueDiv">' +
+            '<label class="col-sm-4 col-form-label">Max Plafond</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="text" class="form-control" id="max_plafond"/> ' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row" id="dataValueDiv">' +
+            '<label class="col-sm-4 col-form-label">Expired Date</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="date" class="form-control" id="expired_date"/> ' +
+            '</div>' +
+            '</div>' +
+            '</div>',
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
+          confirmButtonColor: '#3085d6',
+          denyButtonColor: '#d33',
+          confirmButtonText: 'Ya',
+          denyButtonText: 'Tidak',
         }).then(result => {
           if (result.isConfirmed) {
             const kode_fasilitas = $('#kode_fasilitas').val();
@@ -128,7 +156,16 @@ export class ParameterprogramComponent implements OnInit, OnDestroy {
               } else {
                 this.kirimactive = 1;
               }
+              this.tablelistprogram.filter((validasiFrontEnd: listCreatemodel) => {
+                console.log(
+                  validasiFrontEnd.kode_fasilitas === kode_fasilitas &&
+                    validasiFrontEnd.program === program &&
+                    validasiFrontEnd.min_plafond === min_plafond &&
+                    validasiFrontEnd.max_plafond === max_plafond
+                );
+              });
 
+              return;
               const body = {
                 id: 0,
                 active: this.kirimactive,
@@ -188,7 +225,7 @@ export class ParameterprogramComponent implements OnInit, OnDestroy {
   }
 
   viewdataprogram(id: any): void {
-    const options = this.inputScoring.map((option: any) => {
+    const options = this.listFasilitasValue.map((option: any) => {
       return `
         <option key="${option}" value="${option.kode_fasilitas}">
             ${option.fasilitas}

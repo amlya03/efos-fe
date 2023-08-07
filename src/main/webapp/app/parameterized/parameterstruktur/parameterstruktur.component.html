@@ -1,7 +1,7 @@
 <button id="tambahdata" (click)="createfasilitas()" type="button" class="btn btn-info">Tambah data</button>
 
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Table Fasilitas</h3>
+  <h3 style="color: #fff; text-align: center">Daftar - daftar Fasilitas</h3>
 </div>
 <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
   <thead style="background-color: #303030">
@@ -10,13 +10,13 @@
         <span>No</span>
       </th>
       <th scope="col" style="text-align: center; color: #fff">
-        <span>kode_fasilitas</span>
+        <span>Kode Fasilitas</span>
       </th>
       <th scope="col" style="text-align: center; color: #fff">
-        <span>fasilitas</span>
+        <span>Nama Fasilitas</span>
       </th>
       <th scope="col" style="text-align: center; color: #fff">
-        <span>deskripsi</span>
+        <span>Deskripsi</span>
       </th>
       <th scope="col" style="text-align: center; color: #fff">
         <span>Status</span>
@@ -32,7 +32,7 @@
       <td style="text-align: center" scope="col">{{ tablelistfasilitas.kode_fasilitas }}</td>
       <td style="text-align: center" scope="col">{{ tablelistfasilitas.fasilitas }}</td>
       <td style="text-align: center" scope="col">{{ tablelistfasilitas.deskripsi }}</td>
-      <td style="text-align: center" scope="col">{{ tablelistfasilitas.active === '1' ? 'Aktive' : 'Tidak Aktif' }}</td>
+      <td style="text-align: center" scope="col">{{ tablelistfasilitas.active === '1' ? 'Aktif' : 'Tidak Aktif' }}</td>
       <td style="text-align: center" scope="col">
         <a (click)="viewdatafasilita(tablelistfasilitas.id)">
           <fa-icon icon="ellipsis"></fa-icon>
