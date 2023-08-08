@@ -154,10 +154,12 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
             $('#skema').empty();
             if (skema_master === '2') {
               $('#id_tear').removeAttr('hidden');
+              $('#divSkemaAll').removeAttr('hidden');
               $('#skema').append(`${optionSkemaNonFix}`);
               $('#skema').append(`<option value="Lainnya">Lainnya</option>`);
             } else {
               $('#id_tear').attr('hidden', 'true');
+              $('#divSkemaAll').removeAttr('hidden');
               $('#skema').append(`${optionSkemaFix}`);
               $('#skema').append(`<option value="Lainnya">Lainnya</option>`);
             }
@@ -178,9 +180,12 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
           $('#tear_select').change(function () {
             if ($('#tear_select').val() === '1') {
               $('#id_tenortear1').removeAttr('hidden');
+              $('#id_tenortear2').attr('hidden', 'true');
+              $('#id_tenortear3').attr('hidden', 'true');
             } else if ($('#tear_select').val() === '2') {
               $('#id_tenortear1').removeAttr('hidden');
               $('#id_tenortear2').removeAttr('hidden');
+              $('#id_tenortear3').attr('hidden', 'true');
             } else if ($('#tear_select').val() === '3') {
               $('#id_tenortear1').removeAttr('hidden');
               $('#id_tenortear2').removeAttr('hidden');
@@ -230,25 +235,33 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
             '</select>' +
             '</div>' +
             '</div>' +
-            '<div class="form-group row" id="id_tenortear1" hidden>' +
-            '<label class="col-sm-4 col-form-label">Tenor Tier 1</label>' +
+            '<div class="row">' +
+            '<div class="col" id="id_tenortear1" hidden>' +
+            '<div class="form-group row">' +
+            '<label class="col-sm-4 col-form-label">1</label>' +
             '<div class="col-sm-8">' +
             '<input type="text" class="form-control" id="tenor_tier1"/> ' +
             '</div>' +
             '</div>' +
-            '<div class="form-group row" id="id_tenortear2" hidden>' +
-            '<label class="col-sm-4 col-form-label">Tenor Tier 2</label>' +
+            '</div>' +
+            '<div class="col" id="id_tenortear2" hidden>' +
+            '<div class="form-group row">' +
+            '<label class="col-sm-4 col-form-label">2</label>' +
             '<div class="col-sm-8">' +
             '<input type="text" class="form-control" id="tenor_tier2"/> ' +
             '</div>' +
             '</div>' +
-            '<div class="form-group row" id="id_tenortear3" hidden>' +
-            '<label class="col-sm-4 col-form-label">Tenor Tier 3</label>' +
+            '</div>' +
+            '<div class="col" id="id_tenortear3" hidden>' +
+            '<div class="form-group row">' +
+            '<label class="col-sm-4 col-form-label">3</label>' +
             '<div class="col-sm-8">' +
             '<input type="text" class="form-control" id="tenor_tier3"/> ' +
             '</div>' +
             '</div>' +
-            '<div class="form-group row">' +
+            '</div>' +
+            '</div>' +
+            '<div class="form-group row" id="divSkemaAll" hidden>' +
             '<label class="col-sm-4 col-form-label">Skema</label>' +
             '<div class="col-sm-8">' +
             '<select class="form-control" id="skema">' +
@@ -320,6 +333,7 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
           denyButtonColor: '#d33',
           confirmButtonText: 'Simpan',
           denyButtonText: 'Tidak',
+          scrollbarPadding: true,
         }).then(result => {
           if (result.isConfirmed) {
             const fasilitas = $('#fasilitas').val();
@@ -450,7 +464,6 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
                   });
               });
 
-              return;
               const body = {
                 created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 dp_min: dp_min,
@@ -519,207 +532,218 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
   }
 
   viewdataskema(id: any): void {
-    // const options = this.inputScoring.map((option: any) => {
-    //   return `
-    //     <option key="${option}" value="${option.kode_fasilitas}">
-    //         ${option.fasilitas}
-    //     </option>
-    //   `;
-    // });
+    const listAkad = this.modelListAkad.map((option: listCreatemodel) => {
+      return `
+      <option key="${option}" value="${option.deskripsi}">
+      ${option.deskripsi}
+      </option>
+      `;
+    });
 
     this.datEntryService.getdataretriveskema(id).subscribe(table => {
       this.dataretrive = table.result;
-    });
 
-    const listAkad = this.modelListAkad.map((option: listCreatemodel) => {
-      return `
-            <option key="${option}" value="${option.deskripsi}">
-                ${option.deskripsi}
-            </option>
-          `;
-    });
+      const deskripsiskema = this.dataretrive.skema_deskripsi;
+      const akat = this.dataretrive.akad;
+      const max = this.dataretrive.max_plafond;
+      const min = this.dataretrive.min_plafond;
+      const mindp = this.dataretrive.dp_min;
 
-    // const data = this.dataretrive;
-    // const nama = this.dataretrive.program.substring(0, 3);
-    const deskripsiskema = this.dataretrive.skema_deskripsi;
-    const akat = this.dataretrive.akad;
-    const max = this.dataretrive.max_plafond;
-    const min = this.dataretrive.min_plafond;
-    const mindp = this.dataretrive.dp_min;
-    // const status = this.dataretrive.active;
+      Swal.fire({
+        title: 'Edit Data Parameter Skema',
+        text: '',
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Edit Data!',
+        cancelButtonText: 'Tidak',
+      }).then(result => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: 'Edit Data Skema',
+            html:
+              '<br />' +
+              '<div class="row form-material" style="width:100%">' +
+              '<div class="form-group row" id="dataValueDiv">' +
+              '<label class="col-sm-4 col-form-label">Skema Deskripsi </label>' +
+              '<div class="col-sm-8">' +
+              '<input type="text" class="form-control" id="skema_deskripsi" value="' +
+              deskripsiskema +
+              '"> ' +
+              '</div>' +
+              '</div>' +
+              '<br />' +
+              '<div class="form-group row">' +
+              '<label class="col-sm-4 col-form-label">Akad</label>' +
+              '<div class="col-sm-8">' +
+              '<select class="form-control" id="akad">' +
+              '<option value="' +
+              akat +
+              '">' +
+              akat +
+              '</option>' +
+              `${listAkad}` +
+              '</select>' +
+              '</div>' +
+              '</div>' +
+              '<p></p>' +
+              '<div class="form-group row" id="dataValueDiv">' +
+              '<label class="col-sm-4 col-form-label">Max Plafond</label>' +
+              '<div class="col-sm-8">' +
+              '<input type="text" class="form-control" id="max_plafond" value="' +
+              max +
+              '"> ' +
+              '</div>' +
+              '</div>' +
+              '<p></p>' +
+              '<div class="form-group row" id="dataValueDiv">' +
+              '<label class="col-sm-4 col-form-label">Min Plafond</label>' +
+              '<div class="col-sm-8">' +
+              '<input type="text" class="form-control" id="min_plafond" value="' +
+              min +
+              '"> ' +
+              '</div>' +
+              '</div>' +
+              '<p></p>' +
+              '<div class="form-group row" id="dataValueDiv">' +
+              '<label class="col-sm-4 col-form-label">Down payment minimal</label>' +
+              '<div class="col-sm-8">' +
+              '<input type="text" class="form-control" id="dp_minimal" value="' +
+              mindp +
+              '"> ' +
+              '</div>' +
+              '</div>' +
+              '</div>',
+            allowOutsideClick: false,
+            showDenyButton: true,
+            focusConfirm: false,
+            confirmButtonColor: '#3085d6',
+            denyButtonColor: '#d33',
+            confirmButtonText: 'Simpan',
+            denyButtonText: 'Tidak',
+          }).then(result => {
+            if (result.isConfirmed) {
+              const skemadeskripsi = $('#skema_deskripsi').val();
+              const akat = $('#akat').val();
+              const tear_select = $('#tear_select').val();
+              const min_plafond = $('#min_plafond').val();
+              const max_plafond = $('#max_plafond').val();
+              const dp_minimal = $('#dp_minimal').val();
+              const active = $('#status_active').val();
 
-    // if (status === '1') {
-    //   this.statusvalue = 'Aktif';
-    // } else {
-    //   this.statusvalue = 'Tidak Aktif';
-    // }
-
-    Swal.fire({
-      title: 'Mohon Perhatikan',
-      text: 'Inputan yang sudah Terinput tidak bisa di edit ',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Tambah Data',
-      cancelButtonText: 'Tidak',
-    }).then(result => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: 'Create Program',
-          html:
-            '<br />' +
-            '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Skema Deskripsi </label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="skema_deskripsi" value="' +
-            deskripsiskema +
-            '"> ' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row"><label class="col-sm-4 col-form-label">Akad</label>' +
-            '<div class="col-sm-8"><select class="form-control" id="akad"><option value="' +
-            akat +
-            '">' +
-            akat +
-            '</option>' +
-            `${listAkad}` +
-            '</select>' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Max Plafond</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="max_plafond" value="' +
-            max +
-            '"> ' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Min Plafond</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="min_plafond" value="' +
-            min +
-            '"> ' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Dp minimal</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="dp_minimal" value="' +
-            mindp +
-            '"> ' +
-            '</div></div>',
-          allowOutsideClick: false,
-          showDenyButton: true,
-          focusConfirm: false,
-        }).then(result => {
-          if (result.isConfirmed) {
-            const skemadeskripsi = $('#skema_deskripsi').val();
-            const akat = $('#akat').val();
-            const tear_select = $('#tear_select').val();
-            const min_plafond = $('#min_plafond').val();
-            const max_plafond = $('#max_plafond').val();
-            const dp_minimal = $('#dp_minimal').val();
-            const active = $('#status_active').val();
-            if (active === '') {
-              alert('Status Aktif Harus Dipilih');
-              return;
-            } else if (skemadeskripsi === '') {
-              alert('skema deskripsi harus di isi');
-              return;
-            } else if (min_plafond === '') {
-              alert('Min Platfron harus di isi');
-              return;
-            } else if (max_plafond === '') {
-              alert('Max Plafond harus di isi');
-              return;
-            } else if (akat === '') {
-              alert('akat harus di isi');
-              return;
-            } else if (dp_minimal === '') {
-              alert('Dp  harus di isi');
-              return;
-            } else {
-              // if (active == '0') {
-              //   this.kirimactive = 0;
-              // } else {
-              //   this.kirimactive = 1;
-              // }
-
-              const body = {
-                id: id,
-                // active: this.kirimactive,
-                // kode_program: data.kode_program,
-                // kode_fasilitas: data.kode_fasilitas,
-                // program: program,
-                skema_deskripsi: skemadeskripsi,
-                min_plafond: min_plafond,
-                max_plafond: max_plafond,
-                akad: akat,
-                dp_min: dp_minimal,
-                tenor: tear_select,
-                tenor_tier: this.kirimantenortier,
-              };
-              const headers = new HttpHeaders({
-                'Content-Type': 'application/json; charset=utf-8',
-                // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
-              });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_skema', body, { headers }).subscribe({
-                next: () => {
-                  // console.warn(response);
-                  // this.sessionStorageService.store('sessionPs', passwordbaru);
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: toast => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer);
-                      toast.addEventListener('mouseleave', Swal.resumeTimer);
-                    },
-                  });
-                  Toast.fire({
-                    icon: 'success',
-                    title: 'Data berhasil di simpan',
-                  });
-                },
-                error: () => {
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: toast => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer);
-                      toast.addEventListener('mouseleave', Swal.resumeTimer);
-                    },
-                  });
-                  Toast.fire({
-                    icon: 'error',
-                    title: 'Data gagal di simpan',
-                  });
-                },
-              });
+              if (skemadeskripsi === '') {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Gagal, Skema Deskripsi harus di isi',
+                });
+                return;
+              } else if (min_plafond === '') {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Gagal, Minimal Plafond harus di isi',
+                });
+                return;
+              } else if (max_plafond === '') {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Gagal, Maximal Plafond harus di isi',
+                });
+                return;
+              } else if (akat === '') {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Gagal, Akad harus di isi',
+                });
+                return;
+              } else if (dp_minimal === '') {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Gagal, Down Payment harus di isi',
+                });
+                return;
+              } else {
+                const body = {
+                  id: id,
+                  // active: this.kirimactive,
+                  // kode_program: data.kode_program,
+                  // kode_fasilitas: data.kode_fasilitas,
+                  // program: program,
+                  skema_deskripsi: skemadeskripsi,
+                  min_plafond: min_plafond,
+                  max_plafond: max_plafond,
+                  akad: akat,
+                  dp_min: dp_minimal,
+                  tenor: tear_select,
+                  tenor_tier: this.kirimantenortier,
+                };
+                const headers = new HttpHeaders({
+                  'Content-Type': 'application/json; charset=utf-8',
+                  // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
+                });
+                this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_skema', body, { headers }).subscribe({
+                  next: () => {
+                    // console.warn(response);
+                    // this.sessionStorageService.store('sessionPs', passwordbaru);
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: toast => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                      },
+                    });
+                    Toast.fire({
+                      icon: 'success',
+                      title: 'Data berhasil di simpan',
+                    }).then(() => {
+                      window.location.reload();
+                    });
+                  },
+                  error: () => {
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: toast => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                      },
+                    });
+                    Toast.fire({
+                      icon: 'error',
+                      title: 'Data gagal di simpan',
+                    });
+                  },
+                });
+              }
             }
-          }
-        });
-      }
+          });
+        }
+      });
     });
   }
 
   viewmargin(skema: any, skemamaster: any) {
     if (skemamaster == '2') {
-      this.router
-        .navigate(['parameterstrukturmarginstepup'], {
-          queryParams: { skema: skema, skemamaster: skemamaster },
-        })
-        .then(() => {
-          window.location.reload();
-        });
+      this.router.navigate(['parameterstrukturmarginstepup'], {
+        queryParams: { skema: skema, skemamaster: skemamaster },
+      });
+      // .then(() => {
+      //   window.location.reload();
+      // });
     } else {
-      this.router
-        .navigate(['parameterstrukturmarginfix'], {
-          queryParams: { skema: skema, skemamaster: skemamaster },
-        })
-        .then(() => {
-          window.location.reload();
-        });
+      this.router.navigate(['parameterstrukturmarginfix'], {
+        queryParams: { skema: skema, skemamaster: skemamaster },
+      });
+      // .then(() => {
+      //   window.location.reload();
+      // });
     }
   }
 

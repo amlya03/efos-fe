@@ -1,4 +1,4 @@
-<button id="tambahdata" (click)="editmarginstapup()" type="button" class="btn btn-info">edit data</button>
+<button id="tambahdata" (click)="editmarginstapup()" type="button" class="btn btn-info">Tambah Data</button>
 <br />
 <br />
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
@@ -22,7 +22,7 @@
     <tr *ngFor="let listskemastepup of listskemastepup; index as i">
       <td style="text-align: center" scope="col">{{ i + 1 }}</td>
       <!-- <td style="text-align: center" scope="col">{{ listskemastepup.skema_deskripsi }}</td> -->
-      <td style="text-align: center" scope="col">{{ listskemastepup.tn_code }}</td>
+      <td style="text-align: center" scope="col">{{ listskemastepup.tn_code }} Bulan</td>
       <td style="text-align: center" scope="col">{{ listskemastepup.margin }}</td>
     </tr>
   </tbody>

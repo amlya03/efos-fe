@@ -70,9 +70,9 @@ export class ParametermarginfixComponent implements OnInit {
     });
 
     Swal.fire({
-      title: 'Mohon Perhatikan',
-      text: 'Inputan yang sudah Terinput tidak bisa di edit ',
-      icon: 'warning',
+      title: 'Tambah Data Margin',
+      text: '',
+      icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -179,13 +179,6 @@ export class ParametermarginfixComponent implements OnInit {
           title: 'Create Tenor Margin Fix',
           width: '850px',
           html:
-            // '<br />' +
-            // '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Skema fasilitas</label>' +
-            // // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            // '<div class="col-sm-8"><select class="form-control" id="skema_fasilitas"><option value="">Pilih skema Fasilitas</option>' +
-            // `${options}` +
-            // '</select>' +
-            // '</div></div>' +
             '<br />' +
             '<div class="row form-material">' +
             '<div class="col">' +
@@ -212,7 +205,6 @@ export class ParametermarginfixComponent implements OnInit {
             '<br />' +
             '</div>' +
             '</div>' +
-            /// ini
             '<br />' +
             '<div class="row form-material">>' +
             '<div class="col">' +
@@ -228,7 +220,6 @@ export class ParametermarginfixComponent implements OnInit {
             '<br />' +
             '</div>' +
             '</div>' +
-            /// ini
             '<br />' +
             '<div class="row form-material">>' +
             '<div class="col">' +
@@ -243,7 +234,6 @@ export class ParametermarginfixComponent implements OnInit {
             '</div></div>' +
             '</div>' +
             '</div>' +
-            ///ini
             '<br />' +
             '<div class="row form-material">>' +
             '<div class="col">' +
@@ -258,7 +248,6 @@ export class ParametermarginfixComponent implements OnInit {
             '</div></div>' +
             '</div>' +
             '</div>' +
-            ///
             '<br />' +
             '<div class="row form-material">>' +
             '<div class="col">' +
@@ -272,16 +261,7 @@ export class ParametermarginfixComponent implements OnInit {
             '</div></div>' +
             '</div>' +
             '</div>' +
-            ///
-
-            // '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">tenor</label>' +
-            // '<div class="col-sm-8"><input type="text" class="form-control" id="tenor"/> ' +
-            // '</div></div>' +
             '<br />',
-
-          // '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Margin</label>' +
-          // '<div class="col-sm-8"><input type="text" class="form-control" id="margin"/> ' +
-          // '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
@@ -417,9 +397,9 @@ export class ParametermarginfixComponent implements OnInit {
     });
 
     Swal.fire({
-      title: 'Mohon Perhatikan',
-      text: 'Inputan yang sudah Terinput tidak bisa di edit ',
-      icon: 'warning',
+      title: 'Tambah Data Margin dan Tenor',
+      text: '',
+      icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -526,13 +506,6 @@ export class ParametermarginfixComponent implements OnInit {
           title: 'Create Tenor Margin Fix',
           width: '850px',
           html:
-            // '<br />' +
-            // '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Skema fasilitas</label>' +
-            // // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            // '<div class="col-sm-8"><select class="form-control" id="skema_fasilitas"><option value="">Pilih skema Fasilitas</option>' +
-            // `${options}` +
-            // '</select>' +
-            // '</div></div>' +
             '<br />' +
             '<div class="row form-material">' +
             '<div class="col">' +
@@ -619,16 +592,7 @@ export class ParametermarginfixComponent implements OnInit {
             '</div></div>' +
             '</div>' +
             '</div>' +
-            ///
-
-            // '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">tenor</label>' +
-            // '<div class="col-sm-8"><input type="text" class="form-control" id="tenor"/> ' +
-            // '</div></div>' +
             '<br />',
-
-          // '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Margin</label>' +
-          // '<div class="col-sm-8"><input type="text" class="form-control" id="margin"/> ' +
-          // '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
@@ -711,8 +675,6 @@ export class ParametermarginfixComponent implements OnInit {
             });
             this.http.post<any>(this.baseUrl + '1/efos-ref/update_tenor_margin_fix', body, { headers }).subscribe({
               next: () => {
-                // console.warn(response);
-                // this.sessionStorageService.store('sessionPs', passwordbaru);
                 const Toast = Swal.mixin({
                   toast: true,
                   position: 'top-end',
@@ -727,6 +689,8 @@ export class ParametermarginfixComponent implements OnInit {
                 Toast.fire({
                   icon: 'success',
                   title: 'Data berhasil di simpan',
+                }).then(() => {
+                  this.router.navigate(['parameterstrukturskema']);
                 });
               },
               error: () => {

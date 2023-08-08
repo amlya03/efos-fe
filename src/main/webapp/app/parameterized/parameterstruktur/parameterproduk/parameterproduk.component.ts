@@ -235,6 +235,10 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
+          confirmButtonColor: '#3085d6',
+          denyButtonColor: '#d33',
+          confirmButtonText: 'Simpan',
+          denyButtonText: 'Tidak',
         }).then(result => {
           if (result.isConfirmed) {
             const kode_program = $('#kode_program').val();

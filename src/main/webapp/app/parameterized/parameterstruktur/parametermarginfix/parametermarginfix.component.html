@@ -1,8 +1,8 @@
-<button id="tambahdata" (click)="updatemargin()" type="button" class="btn btn-info">edit data</button>
+<button id="tambahdata" (click)="updatemargin()" type="button" class="btn btn-info">Tambah Data</button>
 <br />
 <br />
 <div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
-  <h3 style="color: #fff; text-align: center">Table tenor margin {{ this.skema_deskripsi }}</h3>
+  <h3 style="color: #fff; text-align: center">Table Tenor Dan Margin</h3>
 </div>
 <div class="table-responsive-sm">
   <table class="table table-striped" datatable datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
@@ -23,7 +23,7 @@
       <tr *ngFor="let listskemafix of listskemafix; index as i">
         <td style="text-align: center" scope="col">{{ i + 1 }}</td>
         <!-- <td style="text-align: center" scope="col">{{ listskemafix.akses_rumah }}</td> -->
-        <td style="text-align: center" scope="col">{{ listskemafix.tn_code }}</td>
+        <td style="text-align: center" scope="col">{{ listskemafix.tn_code }} Bulan</td>
         <td style="text-align: center" scope="col">{{ listskemafix.margin }}</td>
       </tr>
     </tbody>
