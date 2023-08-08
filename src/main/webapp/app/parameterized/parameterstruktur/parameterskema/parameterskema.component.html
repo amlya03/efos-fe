@@ -14,6 +14,9 @@
           <span>No</span>
         </th>
         <th scope="col" style="text-align: center; color: #fff">
+          <span>Kode Skema</span>
+        </th>
+        <th scope="col" style="text-align: center; color: #fff">
           <span>Skema Deskripsi</span>
         </th>
         <th scope="col" style="text-align: center; color: #fff">
@@ -25,7 +28,6 @@
         <th scope="col" style="text-align: center; color: #fff">
           <span>Max Tenor</span>
         </th>
-
         <th scope="col" style="text-align: center; color: #fff">
           <span>DP Min</span>
         </th>
@@ -40,6 +42,7 @@
     <tbody>
       <tr *ngFor="let tablelistskema of tablelistskema; index as i">
         <td style="text-align: center" scope="col">{{ i + 1 }}</td>
+        <td style="text-align: center" scope="col">{{ tablelistskema.skema }}</td>
         <td style="text-align: center" scope="col">{{ tablelistskema.skema_deskripsi }}</td>
         <td style="text-align: center" scope="col">{{ tablelistskema.min_plafond | currency: 'Rp. ':'symbol':'1.0-0' }}</td>
         <td style="text-align: center" scope="col">{{ tablelistskema.max_plafond | currency: 'Rp. ':'symbol':'1.0-0' }}</td>

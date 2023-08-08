@@ -43,7 +43,6 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
   }
 
   createproduk(): void {
-    // /// menanti api  untuk kodeProgram
     const options = this.tablelistprogram.map((option: any) => {
       return `
         <option key="${option}" value="${option.kode_program}">
@@ -54,50 +53,72 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
 
     // /// menanti api  untuk kodeProgram
     Swal.fire({
-      title: 'Mohon Perhatikan',
-      text: 'Inputan yang sudah Terinput tidak bisa di edit ',
-      icon: 'warning',
+      title: 'Tambah Data input Parameter Produk?',
+      text: '',
+      icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Tambah Data',
-      cancelButtonText: 'Tidak',
+      confirmButtonText: 'Ya, Tambah Data!',
+      cancelButtonText: 'Tidak!',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: 'Create Produk ',
+          title: 'Tambah Data Produk',
           html:
             '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode program</label>' +
-            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-8"><select class="form-control" id="kode_program"><option value="">Pilih program</option>' +
+            '<div class="row form-material" style="width:100%">' +
+            '<div class="form-group row" id="dataValueDiv1">' +
+            '<label class="col-sm-4 col-form-label">Kode program</label>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="kode_program">' +
+            '<option value="">Pilih Produk</option>' +
             `${options}` +
             '</select>' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Produk Deskripsi</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="produk_deskripsi"/> ' +
-            '</div></div>',
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row" id="dataValueDiv">' +
+            '<label class="col-sm-4 col-form-label">Deskripsi Produk</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="text" class="form-control" id="produk_deskripsi"/> ' +
+            '</div>' +
+            '</div>' +
+            '</div>',
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
+          confirmButtonColor: '#3085d6',
+          denyButtonColor: '#d33',
+          confirmButtonText: 'Simpan',
+          denyButtonText: 'Tidak',
         }).then(result => {
           if (result.isConfirmed) {
             const kode_program = $('#kode_program').val();
             const produk_deskripsi = $('#produk_deskripsi').val();
 
-            //  if(active=='0'){
-            //     this.kirimactive=0;
-            //  }else{
-            //   this.kirimactive=1;
-            //  }
             if (kode_program === '') {
-              alert('Kode Program Harus Di isi');
+              Swal.fire({
+                icon: 'error',
+                title: 'Gagal, Kode Program Harus di pilih',
+              });
               return;
             } else if (produk_deskripsi === '') {
-              alert('Produk Deskripsi harus di isi');
+              Swal.fire({
+                icon: 'error',
+                title: 'Gagal, Deskripsi Produk Harus di pilih',
+              });
               return;
             } else {
+              this.tablelistproduk.filter((validasiFrontEnd: listCreatemodel) => {
+                if (validasiFrontEnd.kode_program === kode_program && validasiFrontEnd.produk_deskripsi === produk_deskripsi)
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal, Data Sudah Ada',
+                  });
+                return;
+              });
+
               const body = {
                 id: '0',
                 kode_program: kode_program,
@@ -126,6 +147,8 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
                   Toast.fire({
                     icon: 'success',
                     title: 'Data berhasil di simpan',
+                  }).then(() => {
+                    window.location.reload();
                   });
                 },
                 error: () => {

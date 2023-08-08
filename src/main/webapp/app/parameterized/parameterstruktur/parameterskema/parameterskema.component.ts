@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { listskemafix } from 'app/data-entry/services/config/listskemafix';
 import { listskemastepup } from 'app/data-entry/services/config/listskemastepup';
+import { listSkemaModel } from 'app/parameterized/config/listSkemaModel.model';
 
 @Component({
   selector: 'jhi-parameterskema',
@@ -21,7 +22,7 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
   baseUrl: string = environment.baseUrl;
 
   tablelistproduk: listCreatemodel[] = [];
-  tablelistskema: listCreatemodel[] = [];
+  tablelistskema: listSkemaModel[] = [];
   modelListAkad: listCreatemodel[] = [];
   kirimanskema: any;
   tampungpemecah: any;
@@ -34,6 +35,8 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
   dataretrive: any;
 
   listskemafix: listskemafix[] = [];
+  listSkemaMasterFix: listSkemaModel[] = [];
+  listSkemaMasterNonFix: listSkemaModel[] = [];
   margin: any;
   tenortier: any;
   listskemastepup: listskemastepup[] = [];
@@ -60,7 +63,14 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.datEntryService.getListskema().subscribe(table => {
       this.tablelistskema = table.result;
-      // console.log(this.tablelistskema);
+
+      this.tablelistskema.forEach(element => {
+        if (element.skema_master === '2') {
+          this.listSkemaMasterNonFix.push(element);
+        } else {
+          this.listSkemaMasterFix.push(element);
+        }
+      });
       this.dtTrigger.next(this.tablelistskema);
     });
     this.datEntryService.getskemastepup().subscribe(skema => {
@@ -93,10 +103,26 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
           `;
     });
 
-    const optionsskema = this.tablelistskema.map((option: any) => {
+    const optionsskema = this.tablelistskema.map((option: listSkemaModel) => {
       return `
             <option key="${option}" value="${option.skema}|${option.skema_deskripsi}">
-                ${option.skema_deskripsi}
+            ${option.skema}-${option.skema_deskripsi}
+            </option>
+          `;
+    });
+
+    const optionSkemaFix = this.listSkemaMasterFix.map((option: listSkemaModel) => {
+      return `
+            <option key="${option}" value="${option.skema}|${option.skema_deskripsi}">
+            ${option.skema}-${option.skema_deskripsi}
+            </option>
+          `;
+    });
+
+    const optionSkemaNonFix = this.listSkemaMasterNonFix.map((option: listSkemaModel) => {
+      return `
+            <option key="${option}" value="${option.skema}|${option.skema_deskripsi}">
+            ${option.skema}-${option.skema_deskripsi}
             </option>
           `;
     });
@@ -110,27 +136,34 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
     });
     // /// menanti api  untuk kodeproduk
     Swal.fire({
-      title: 'Mohon Perhatikan',
-      text: 'Inputan yang sudah Terinput tidak bisa di edit ',
-      icon: 'warning',
+      title: 'Tambah Data Input Parameter Skema',
+      text: '',
+      icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Tambah Data',
+      confirmButtonText: 'Ya, Tambah Data!',
       cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         $(document).ready(function () {
+          // Logic for Skema Master
           $('#skema_master').change(function () {
             const skema_master = $('#skema_master').val();
 
+            $('#skema').empty();
             if (skema_master === '2') {
               $('#id_tear').removeAttr('hidden');
+              $('#skema').append(`${optionSkemaNonFix}`);
+              $('#skema').append(`<option value="Lainnya">Lainnya</option>`);
             } else {
               $('#id_tear').attr('hidden', 'true');
+              $('#skema').append(`${optionSkemaFix}`);
+              $('#skema').append(`<option value="Lainnya">Lainnya</option>`);
             }
           });
 
+          // Logic for Skema
           $('#skema').change(function () {
             if ($('#skema').val() === 'Lainnya') {
               // alert('ini');
@@ -141,10 +174,8 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
             }
           });
 
+          // Logic for Tier
           $('#tear_select').change(function () {
-            alert('tear on select');
-            alert($('#tear_select').val());
-
             if ($('#tear_select').val() === '1') {
               $('#id_tenortear1').removeAttr('hidden');
             } else if ($('#tear_select').val() === '2') {
@@ -163,73 +194,132 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
         });
 
         Swal.fire({
-          title: 'Create Skema',
+          title: 'Tambah Data Parameter Skema',
           html:
-            // '<br />' +
-            '<div class="form-lable row" hidden><label class="col-sm-4 col-form-label">Fasilitas</label>' +
-            '<div class="col-sm-8"><select class="form-control" id="fasilitas"><option value="">Pilih Fasilitas</option> <option value="1">Fix Income</option> <option value="2">Non Fix Income</option></select>' +
-            '<br /></div></div>' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Produk</label>' +
-            '<div class="col-sm-8"><select class="form-control" id="kode_produk"><option value="">Pilih Produk</option>' +
+            '<br />' +
+            '<div class="row form-material" style="width:100%">' +
+            '<div class="form-group row" id="dataValueDiv1">' +
+            '<label class="col-sm-4 col-form-label">Kode Produk</label>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="kode_produk">' +
+            '<option value="">Pilih Produk</option>' +
             `${options}` +
             '</select>' +
-            '</div></div>' +
+            '</div>' +
+            '</div>' +
             '<br />' +
-            '<div class="form-lable row"><label class="col-sm-4 col-form-label">Skema Master</label>' +
-            '<div class="col-sm-8"><select class="form-control" id="skema_master"><option value="">Pilih Skema Master</option> <option value="1">Fix</option> <option value="2">Step up</option></select>' +
-            '</div></div>' +
+            '<div class="form-group row">' +
+            '<label class="col-sm-4 col-form-label">Skema Master</label>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="skema_master">' +
+            '<option value="">Pilih Skema Master</option>' +
+            '<option value="1">Fix</option>' +
+            '<option value="2">Step up</option>' +
+            '</select>' +
+            '</div>' +
+            '</div>' +
             '<br />' +
-            '<div class="form-lable row" id="id_tear" hidden><label class="col-sm-4 col-form-label">tier</label>' +
-            '<div class="col-sm-8"> <select id="tear_select" class="form-control"><option value="">Pilih tier</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>' +
-            '<br>' +
-            '</div></div>' +
-            // '<br />' +
-            '<div class="form-lable row" id="id_tenortear1" hidden><label class="col-sm-4 col-form-label">tenor_tier</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="tenor_tier1"/> ' +
-            '<br>' +
-            '</div></div>' +
-            // '<br />' +
-            '<div class="form-lable row" id="id_tenortear2" hidden><label class="col-sm-4 col-form-label">tenor_tier2</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="tenor_tier2"/> ' +
-            '<br>' +
-            '</div></div>' +
-            // '<br />' +
-            '<div class="form-lable row" id="id_tenortear3" hidden><label class="col-sm-4 col-form-label">tenor_tier3</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="tenor_tier3"/> ' +
-            '<br>' +
-            '</div></div>' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Skema</label>' +
-            '<div class="col-sm-8"><select class="form-control" id="skema"><option value="">Pilih Skema</option>' +
-            `${optionsskema}` +
-            '<option value="Lainnya">Lainnya</option></select>' +
-            '<br /></div></div>' +
-            '<div class="form-lable row " id="lainnya1" hidden><label class="col-sm-4 col-form-label hidden">Deskripsi skema</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="skema_deskripsi"/>' +
-            '<br /></div></div>' +
-            '<div class="form-lable row"><label class="col-sm-4 col-form-label">Akad</label>' +
-            '<div class="col-sm-8"><select class="form-control" id="akad"><option value="">Pilih Akad</option>' +
+            '<div class="form-group row" id="id_tear" hidden>' +
+            '<label class="col-sm-4 col-form-label">Tier</label>' +
+            '<div class="col-sm-8">' +
+            '<select id="tear_select" class="form-control">' +
+            '<option value="">Pilih Tier</option>' +
+            '<option value="1">1</option>' +
+            '<option value="2">2</option>' +
+            '<option value="3">3</option>' +
+            '</select>' +
+            '</div>' +
+            '</div>' +
+            '<div class="form-group row" id="id_tenortear1" hidden>' +
+            '<label class="col-sm-4 col-form-label">Tenor Tier 1</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="text" class="form-control" id="tenor_tier1"/> ' +
+            '</div>' +
+            '</div>' +
+            '<div class="form-group row" id="id_tenortear2" hidden>' +
+            '<label class="col-sm-4 col-form-label">Tenor Tier 2</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="text" class="form-control" id="tenor_tier2"/> ' +
+            '</div>' +
+            '</div>' +
+            '<div class="form-group row" id="id_tenortear3" hidden>' +
+            '<label class="col-sm-4 col-form-label">Tenor Tier 3</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="text" class="form-control" id="tenor_tier3"/> ' +
+            '</div>' +
+            '</div>' +
+            '<div class="form-group row">' +
+            '<label class="col-sm-4 col-form-label">Skema</label>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="skema">' +
+            '<option value="">Pilih Skema</option>' +
+            `${optionSkemaFix}` +
+            '<option value="Lainnya">Lainnya</option>' +
+            '</select>' +
+            '</div>' +
+            '</div>' +
+            '<div class="form-group row" id="lainnya1" hidden>' +
+            '<label class="col-sm-4 col-form-label hidden">Deskripsi skema</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="text" class="form-control" id="skema_deskripsi"/>' +
+            '</div>' +
+            '</div>' +
+            '<div class="form-group row">' +
+            '<label class="col-sm-4 col-form-label">Fasilitas Ke</label>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="fasilitas">' +
+            '<option value="">Pilih Fasilitas</option>' +
+            '<option value="1">1</option>' +
+            '<option value="2">2</option>' +
+            '<option value="3">3</option>' +
+            '</select>' +
+            '</div>' +
+            '</div>' +
+            '<div class="form-group row">' +
+            '<label class="col-sm-4 col-form-label">Akad</label>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="akad">' +
+            '<option value="">Pilih Akad</option>' +
             `${listAkad}` +
             '</select>' +
-            '</div></div>' +
+            '</div>' +
+            '</div>' +
             '<br />' +
-            '<div class="form-lable row"><label class="col-sm-4 col-form-label">dp</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="dp_min"/> ' +
-            '</div></div>' +
+            '<div class="form-group row">' +
+            '<label class="col-sm-4 col-form-label">Minimal Down Payment</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="text" class="form-control" id="dp_min"/> ' +
+            '</div>' +
+            '</div>' +
             '<br />' +
-            '<div class="form-lable row"><label class="col-sm-4 col-form-label">Max Platfon</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="max_platfon"/> ' +
-            '</div></div>' +
+            '<div class="form-group row">' +
+            '<label class="col-sm-4 col-form-label">Max Plafond</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="text" class="form-control" id="max_platfon"/> ' +
+            '</div>' +
+            '</div>' +
             '<br />' +
-            '<div class="form-lable row"><label class="col-sm-4 col-form-label">Min Platfon</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="min_platfon"/> ' +
-            '</div></div>' +
+            '<div class="form-group row">' +
+            '<label class="col-sm-4 col-form-label">Min Plafond</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="text" class="form-control" id="min_platfon"/> ' +
+            '</div>' +
+            '</div>' +
             '<br />' +
-            '<div class="form-lable row"><label class="col-sm-4 col-form-label">Max tenor</label>' +
-            '<div class="col-sm-8"><input type="text" class="form-control" id="max_tenor"/> ' +
-            '</div></div>',
+            '<div class="form-group row">' +
+            '<label class="col-sm-4 col-form-label">Max tenor</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="text" class="form-control" id="max_tenor"/> ' +
+            '</div>' +
+            '</div>' +
+            '</div>',
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
+          confirmButtonColor: '#3085d6',
+          denyButtonColor: '#d33',
+          confirmButtonText: 'Simpan',
+          denyButtonText: 'Tidak',
         }).then(result => {
           if (result.isConfirmed) {
             const fasilitas = $('#fasilitas').val();
@@ -247,22 +337,41 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
             const tenor_tier3 = $('#tenor_tier3').val();
 
             if (kode_produk === '') {
-              alert('Kode Produk Harus Di isi');
+              Swal.fire({
+                icon: 'error',
+                title: 'Gagal, Kode Produk Harus Di isi',
+              });
               return;
             } else if (min_platfon === '') {
-              alert('Min Platfron harus di isi');
+              Swal.fire({
+                icon: 'error',
+                title: 'Gagal, Minimal Plafond Harus di pilih',
+              });
               return;
             } else if (max_platfon === '') {
-              alert('Max Platfon harus di isi');
+              Swal.fire({
+                icon: 'error',
+                title: 'Gagal, Maximal Plafond Harus di pilih',
+              });
               return;
             } else if (max_tenor === '') {
               alert('Max Tenor harus di isi');
+              Swal.fire({
+                icon: 'error',
+                title: 'Gagal, Maximal Tenor Harus di pilih',
+              });
               return;
             } else if (skema_master === '') {
-              alert('Skema Master harus di isi');
+              Swal.fire({
+                icon: 'error',
+                title: 'Gagal, Skema Master Harus di pilih',
+              });
               return;
             } else if (skema === '') {
-              alert('Skema harus di isi');
+              Swal.fire({
+                icon: 'error',
+                title: 'Gagal, Skema Harus di pilih',
+              });
               return;
             } else {
               if (skema === 'Lainnya') {
@@ -281,36 +390,67 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
               } else {
                 if (tear_select === '1') {
                   if (tenor_tier1 === '') {
-                    alert('tenor tier 1 Harus Di isi');
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Gagal, Tenor Tier 1 Harus di isi',
+                    });
                     return;
                   }
                   this.kirimantenortier = tenor_tier1;
                 } else if (tear_select === '2') {
                   if (tenor_tier1 === '') {
-                    alert('tenor tier 1 Harus Di isi');
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Gagal, Tenor Tier 1 Harus di isi',
+                    });
                     return;
                   } else if (tenor_tier2 === '') {
-                    alert('tenor tier 2 Harus Di isi');
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Gagal, Tenor Tier 2 Harus di isi',
+                    });
                     return;
                   }
                   this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2;
                 } else {
                   if (tenor_tier1 === '') {
-                    alert('tenor tier 1 Harus Di isi');
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Gagal, Tenor Tier 1 Harus di isi',
+                    });
                     return;
                   }
                   if (tenor_tier2 === '') {
-                    alert('tenor tier 2 Harus Di isi');
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Gagal, Tenor Tier 2 Harus di isi',
+                    });
                     return;
                   }
                   if (tenor_tier3 === '') {
-                    alert('tenor tier 3 Harus Di isi');
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Gagal, Tenor Tier 3 Harus di isi',
+                    });
                     return;
                   }
                   this.kirimantenortier = tenor_tier1 + '-' + tenor_tier2 + '-' + tenor_tier3;
                 }
               }
 
+              this.tablelistskema.map((mappingOption: listSkemaModel) => {
+                if (
+                  mappingOption.kode_produk === kode_produk &&
+                  mappingOption.skema + '|' + mappingOption.skema_deskripsi === skema &&
+                  mappingOption.akad === akad
+                )
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal, Data Sudah Ada',
+                  });
+              });
+
+              return;
               const body = {
                 created_by: this.sessionStorageService.retrieve('sessionUserName'),
                 dp_min: dp_min,
@@ -349,6 +489,8 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
                   Toast.fire({
                     icon: 'success',
                     title: 'Data berhasil di simpan',
+                  }).then(() => {
+                    window.location.reload();
                   });
                 },
                 error: () => {
