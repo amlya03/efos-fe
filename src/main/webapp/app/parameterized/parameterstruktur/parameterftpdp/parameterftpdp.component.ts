@@ -6,6 +6,7 @@ import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { listFtvDpModel } from 'app/parameterized/config/listFtvDpModel.model';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-parameterftpdp',
@@ -21,7 +22,12 @@ export class ParameterftpdpComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
 
-  constructor(protected http: HttpClient, protected datEntryService: DataEntryService, private router: Router) {}
+  constructor(
+    protected http: HttpClient,
+    protected datEntryService: DataEntryService,
+    private router: Router,
+    private sessionStorage: SessionStorageService
+  ) {}
 
   ngOnInit(): void {
     this.datEntryService.getListprodukall().subscribe(table => {
@@ -157,6 +163,7 @@ export class ParameterftpdpComponent implements OnInit {
               kode_produk: pemecahbenar[0],
               id: '',
               skema_id: kodeskema,
+              created_by: this.sessionStorage.retrieve('sessionRole'),
             };
             const headers = new HttpHeaders({
               'Content-Type': 'application/json; charset=utf-8',

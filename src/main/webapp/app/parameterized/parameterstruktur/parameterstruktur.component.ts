@@ -6,6 +6,7 @@ import { environment } from 'environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-parameterstruktur',
@@ -24,7 +25,7 @@ export class ParameterstrukturComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
 
-  constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
+  constructor(protected datEntryService: DataEntryService, protected http: HttpClient, private sessionStorage: SessionStorageService) {}
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
@@ -169,6 +170,7 @@ export class ParameterstrukturComponent implements OnInit, OnDestroy {
                     deskripsi: deskripsi,
                     fasilitas: fasilitas,
                     kode_fasilitas: kode_fasilitas,
+                    updated_by: this.sessionStorage.retrieve('sessionRole'),
                   };
                   const headers = new HttpHeaders({
                     'Content-Type': 'application/json; charset=utf-8',
@@ -338,6 +340,7 @@ export class ParameterstrukturComponent implements OnInit, OnDestroy {
                     deskripsi: deskripsi,
                     fasilitas: fasilitas,
                     kode_fasilitas: kode_fasilitas,
+                    created_by: this.sessionStorage.retrieve('sessionRole'),
                   };
                   const headers = new HttpHeaders({
                     'Content-Type': 'application/json; charset=utf-8',

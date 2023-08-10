@@ -8,6 +8,7 @@ import { parameterModel } from 'app/parameterized/config/parameterModel.model';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { listProdukModel } from 'app/parameterized/config/listProdukModel.model';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-parameterproduk',
@@ -27,7 +28,7 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
   dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
-  constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
+  constructor(protected datEntryService: DataEntryService, protected http: HttpClient, private sessionStorage: SessionStorageService) {}
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
@@ -134,6 +135,7 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
                     kode_program: kode_program,
                     kode_produk: '',
                     produk_deskripsi: produk_deskripsi,
+                    created_by: this.sessionStorage.retrieve('sessionRole'),
                   };
                   const headers = new HttpHeaders({
                     'Content-Type': 'application/json; charset=utf-8',
@@ -273,6 +275,7 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
                 kode_program: kode_program,
                 kode_produk: '',
                 produk_deskripsi: produk_deskripsi,
+                updated_by: this.sessionStorage.retrieve('sessionRole'),
               };
               const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',

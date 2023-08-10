@@ -7,6 +7,7 @@ import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model
 import Swal from 'sweetalert2';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-parameterftpdpdetail',
@@ -30,7 +31,12 @@ export class ParameterftpdpdetailComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
 
-  constructor(protected http: HttpClient, protected datEntryService: DataEntryService, private route: ActivatedRoute) {
+  constructor(
+    protected http: HttpClient,
+    protected datEntryService: DataEntryService,
+    private route: ActivatedRoute,
+    private sessionStorage: SessionStorageService
+  ) {
     this.route.queryParams.subscribe(params => {
       this.id = params.id;
     });
@@ -249,6 +255,7 @@ export class ParameterftpdpdetailComponent implements OnInit {
               max: Max,
               tipe_properti: this.tipeproperti,
               tipe_properti_deskripsi: this.tipepropertideskripsi,
+              created_by: this.sessionStorage.retrieve('sessionRole'),
             };
 
             const headers = new HttpHeaders({
@@ -454,6 +461,7 @@ export class ParameterftpdpdetailComponent implements OnInit {
                 max: Max,
                 // tipe_properti: this.tipeproperti,
                 // tipe_properti_deskripsi: this.tipepropertideskripsi,
+                updated_by: this.sessionStorage.retrieve('sessionRole'),
               };
 
               const headers = new HttpHeaders({

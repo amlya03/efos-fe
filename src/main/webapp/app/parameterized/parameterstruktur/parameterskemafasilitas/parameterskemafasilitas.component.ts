@@ -6,6 +6,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import Swal from 'sweetalert2';
 import { Subject } from 'rxjs';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-parameterskemafasilitas',
@@ -29,7 +30,7 @@ export class ParameterskemafasilitasComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
 
-  constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
+  constructor(protected datEntryService: DataEntryService, protected http: HttpClient, private sessionStorage: SessionStorageService) {}
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
@@ -164,6 +165,7 @@ export class ParameterskemafasilitasComponent implements OnInit, OnDestroy {
                   tier: tear_select,
                   tenor_tier: this.kirimantenortier,
                   fasilitas: '0',
+                  created_by: this.sessionStorage.retrieve('sessionRole'),
                   // max_plafond:max_plafond,
                   // expired_date:expired_date,
                 };
@@ -269,6 +271,7 @@ export class ParameterskemafasilitasComponent implements OnInit, OnDestroy {
                   tier: tear_select,
                   tenor_tier: this.kirimantenortier,
                   fasilitas: '0',
+                  created_by: this.sessionStorage.retrieve('sessionRole'),
                   // max_plafond:max_plafond,
                   // expired_date:expired_date,
                 };

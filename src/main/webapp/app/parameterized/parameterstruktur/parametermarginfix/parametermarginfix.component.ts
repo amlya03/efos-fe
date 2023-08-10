@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-parametermarginfix',
@@ -29,7 +30,8 @@ export class ParametermarginfixComponent implements OnInit {
     protected datEntryService: DataEntryService,
     protected http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private sessionStorage: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.skema = params.skema;
@@ -343,6 +345,7 @@ export class ParametermarginfixComponent implements OnInit {
               tenor_tier: this.tenortier,
               tier: $('#jumlah_margin').val(),
               margin: this.margin,
+              created_by: this.sessionStorage.retrieve('sessionRole'),
             };
             const headers = new HttpHeaders({
               'Content-Type': 'application/json; charset=utf-8',
@@ -708,6 +711,7 @@ export class ParametermarginfixComponent implements OnInit {
               tenor_tier: this.tenortier,
               tier: $('#jumlah_margin').val(),
               margin: this.margin,
+              updated_by: this.sessionStorage.retrieve('sessionRole'),
             };
             const headers = new HttpHeaders({
               'Content-Type': 'application/json; charset=utf-8',

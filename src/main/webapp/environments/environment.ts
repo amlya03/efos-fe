@@ -12,10 +12,10 @@ export const environment = {
   // baseUrl: 'http://10.20.34.110:8808/api/',
 
   // ======================== UAT ===============================
-  // baseUrl: 'http://10.20.34.110:8805/api/',
+  baseUrl: 'http://10.20.34.110:8805/api/',
 
   // ======================== DEV ===============================
-  baseUrl: 'http://localhost:8805/api/',
+  // baseUrl: 'http://localhost:8805/api/',
   baseUrlDukcapil: 'http://10.20.82.12:8083/',
 };
 

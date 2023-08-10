@@ -7,6 +7,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model';
 import { Subject } from 'rxjs';
 import { listFasilitasModel } from 'app/parameterized/config/listFasilitasModel.model';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-parameterprogram',
@@ -27,7 +28,7 @@ export class ParameterprogramComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
 
-  constructor(protected datEntryService: DataEntryService, protected http: HttpClient) {}
+  constructor(protected datEntryService: DataEntryService, protected http: HttpClient, private sessionStorage: SessionStorageService) {}
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
@@ -202,6 +203,7 @@ export class ParameterprogramComponent implements OnInit, OnDestroy {
                     min_plafond: min_plafond,
                     max_plafond: max_plafond,
                     expired_date: expired_date,
+                    created_by: this.sessionStorage.retrieve('sessionRole'),
                   };
                   const headers = new HttpHeaders({
                     'Content-Type': 'application/json; charset=utf-8',
@@ -390,6 +392,7 @@ export class ParameterprogramComponent implements OnInit, OnDestroy {
                   min_plafond: min_plafond,
                   max_plafond: max_plafond,
                   expired_date: expired_date,
+                  updated_by: this.sessionStorage.retrieve('sessionRole'),
                 };
                 const headers = new HttpHeaders({
                   'Content-Type': 'application/json; charset=utf-8',

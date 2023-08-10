@@ -8,6 +8,7 @@ import { listskemastepup } from 'app/data-entry/services/config/listskemastepup'
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-parametermarginstepup',
@@ -35,7 +36,8 @@ export class ParametermarginstepupComponent implements OnInit, OnDestroy {
     protected datEntryService: DataEntryService,
     protected http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private sessionStorage: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {
       this.skema = params.skema;
@@ -290,6 +292,7 @@ export class ParametermarginstepupComponent implements OnInit, OnDestroy {
               tenor: this.kirimantenor,
               tenor_tier: this.kirimantenortier,
               tier: this.kirimantier,
+              created_by: this.sessionStorage.retrieve('sessionRole'),
             };
             const headers = new HttpHeaders({
               'Content-Type': 'application/json; charset=utf-8',
@@ -588,6 +591,7 @@ export class ParametermarginstepupComponent implements OnInit, OnDestroy {
               tenor: this.kirimantenor,
               tenor_tier: this.kirimantenortier,
               tier: this.kirimantier,
+              updated_by: this.sessionStorage.retrieve('sessionRole'),
             };
             const headers = new HttpHeaders({
               'Content-Type': 'application/json; charset=utf-8',

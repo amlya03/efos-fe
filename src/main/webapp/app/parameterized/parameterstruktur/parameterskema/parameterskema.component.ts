@@ -52,7 +52,8 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
     protected http: HttpClient,
     private router: Router,
     private sessionStorageService: SessionStorageService,
-    protected scoringServices: InputScoringService
+    protected scoringServices: InputScoringService,
+    private sessionStorage: SessionStorageService
   ) {}
 
   ngOnDestroy(): void {
@@ -707,6 +708,7 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
                   dp_min: dp_minimal,
                   tenor: tear_select,
                   tenor_tier: this.kirimantenortier,
+                  updated_by: this.sessionStorage.retrieve('sessionRole'),
                 };
                 const headers = new HttpHeaders({
                   'Content-Type': 'application/json; charset=utf-8',
@@ -1100,6 +1102,7 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
               tenor_tier: this.tenortier,
               tier: $('#jumlah_margin').val(),
               margin: this.margin,
+              created_by: this.sessionStorage.retrieve('sessionRole'),
             };
             const headers = new HttpHeaders({
               'Content-Type': 'application/json; charset=utf-8',
@@ -1415,6 +1418,7 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
               tenor: this.kirimantenor,
               tenor_tier: this.kirimantenortier,
               tier: this.kirimantier,
+              created_by: this.sessionStorage.retrieve('sessionRole'),
             };
             const headers = new HttpHeaders({
               'Content-Type': 'application/json; charset=utf-8',
