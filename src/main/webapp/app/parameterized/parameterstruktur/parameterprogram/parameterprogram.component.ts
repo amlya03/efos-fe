@@ -44,6 +44,7 @@ export class ParameterprogramComponent implements OnInit, OnDestroy {
   }
 
   createprogram(): void {
+    let tampunganValidasi: any = 0;
     const options = this.listFasilitasValue.map((option: listFasilitasModel) => {
       return `
         <option key="${option}" value="${option.kode_fasilitas}">
@@ -126,12 +127,13 @@ export class ParameterprogramComponent implements OnInit, OnDestroy {
           denyButtonText: 'Tidak',
         }).then(result => {
           if (result.isConfirmed) {
-            const kode_fasilitas = $('#kode_fasilitas').val();
-            const program = $('#program').val();
-            const min_plafond = $('#min_plafond').val();
-            const max_plafond = $('#max_plafond').val();
-            const expired_date = $('#expired_date').val();
-            const active = $('#status_active').val();
+            const kode_fasilitas: any = $('#kode_fasilitas').val();
+            const program: any = $('#program').val();
+            const min_plafond: any = $('#min_plafond').val();
+            const max_plafond: any = $('#max_plafond').val();
+            const expired_date: any = $('#expired_date').val();
+            const active: any = $('#status_active').val();
+
             if (active === '') {
               Swal.fire({
                 icon: 'error',
@@ -177,71 +179,76 @@ export class ParameterprogramComponent implements OnInit, OnDestroy {
 
               this.tablelistprogram.map((validasiFrontEnd: listCreatemodel) => {
                 if (
-                  validasiFrontEnd.kode_fasilitas === kode_fasilitas &&
-                  validasiFrontEnd.program === program &&
-                  Number(validasiFrontEnd.min_plafond) == Number(min_plafond) &&
-                  Number(validasiFrontEnd.max_plafond) === Number(max_plafond)
-                )
+                  validasiFrontEnd.kode_fasilitas.toUpperCase().replace(/\s/g, '') === kode_fasilitas.toUpperCase().replace(/\s/g, '') &&
+                  validasiFrontEnd.program.toUpperCase().replace(/\s/g, '') === program.toUpperCase().replace(/\s/g, '')
+                ) {
                   Swal.fire({
                     icon: 'error',
                     title: 'Gagal, Data Sudah Ada',
                   });
-                return;
+                  tampunganValidasi = 1;
+                }
               });
 
-              const body = {
-                id: 0,
-                active: this.kirimactive,
-                kode_fasilitas: kode_fasilitas,
-                program: program,
-                min_plafond: min_plafond,
-                max_plafond: max_plafond,
-                expired_date: expired_date,
-              };
-              const headers = new HttpHeaders({
-                'Content-Type': 'application/json; charset=utf-8',
-                // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
-              });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_program', body, { headers }).subscribe({
-                next: () => {
-                  // console.warn(response);
-                  // this.sessionStorageService.store('sessionPs', passwordbaru);
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: toast => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer);
-                      toast.addEventListener('mouseleave', Swal.resumeTimer);
+              setTimeout(() => {
+                if (tampunganValidasi == 1) {
+                  return;
+                } else {
+                  const body = {
+                    id: 0,
+                    active: this.kirimactive,
+                    kode_fasilitas: kode_fasilitas,
+                    program: program,
+                    min_plafond: min_plafond,
+                    max_plafond: max_plafond,
+                    expired_date: expired_date,
+                  };
+                  const headers = new HttpHeaders({
+                    'Content-Type': 'application/json; charset=utf-8',
+                    // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
+                  });
+                  this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_program', body, { headers }).subscribe({
+                    next: () => {
+                      // console.warn(response);
+                      // this.sessionStorageService.store('sessionPs', passwordbaru);
+                      const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: toast => {
+                          toast.addEventListener('mouseenter', Swal.stopTimer);
+                          toast.addEventListener('mouseleave', Swal.resumeTimer);
+                        },
+                      });
+                      Toast.fire({
+                        icon: 'success',
+                        title: 'Data berhasil di simpan',
+                      }).then(() => {
+                        window.location.reload();
+                      });
+                    },
+                    error: () => {
+                      const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: toast => {
+                          toast.addEventListener('mouseenter', Swal.stopTimer);
+                          toast.addEventListener('mouseleave', Swal.resumeTimer);
+                        },
+                      });
+                      Toast.fire({
+                        icon: 'error',
+                        title: 'Data gagal di simpan',
+                      });
                     },
                   });
-                  Toast.fire({
-                    icon: 'success',
-                    title: 'Data berhasil di simpan',
-                  }).then(() => {
-                    window.location.reload();
-                  });
-                },
-                error: () => {
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: toast => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer);
-                      toast.addEventListener('mouseleave', Swal.resumeTimer);
-                    },
-                  });
-                  Toast.fire({
-                    icon: 'error',
-                    title: 'Data gagal di simpan',
-                  });
-                },
-              });
+                }
+              }, 30);
             }
           }
         });

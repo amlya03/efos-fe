@@ -274,14 +274,15 @@ export class ParameterstrukturComponent implements OnInit, OnDestroy {
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
-          confirmButtonText: 'Ya',
+          confirmButtonText: 'Simpan',
           denyButtonText: 'Tidak',
         }).then(result => {
           if (result.isConfirmed) {
-            const deskripsi = $('#deskripsi').val();
-            const fasilitas = $('#fasilitas').val();
-            const kode_fasilitas = $('#kode_fasilitas').val();
-            const active = $('#status_active').val();
+            const deskripsi: any = $('#deskripsi').val();
+            const fasilitas: any = $('#fasilitas').val();
+            const kode_fasilitas: any = $('#kode_fasilitas').val();
+            const active: any = $('#status_active').val();
+            let tampunganValidasi: any = 0;
 
             if (active === '') {
               Swal.fire({
@@ -315,65 +316,73 @@ export class ParameterstrukturComponent implements OnInit, OnDestroy {
 
               this.tablelistfasilitas.map((validasiFrontEnd: listCreatemodel) => {
                 if (
-                  validasiFrontEnd.deskripsi === deskripsi &&
-                  validasiFrontEnd.fasilitas === fasilitas &&
-                  validasiFrontEnd.kode_fasilitas === kode_fasilitas
-                )
+                  validasiFrontEnd.deskripsi.toUpperCase().replace(/\s/g, '') === deskripsi.toUpperCase().replace(/\s/g, '') &&
+                  validasiFrontEnd.fasilitas.toUpperCase().replace(/\s/g, '') === fasilitas.toUpperCase().replace(/\s/g, '') &&
+                  validasiFrontEnd.kode_fasilitas.toUpperCase().replace(/\s/g, '') === kode_fasilitas.toUpperCase().replace(/\s/g, '')
+                ) {
                   Swal.fire({
                     icon: 'error',
                     title: 'Gagal, Data Sudah Ada',
                   });
+                  tampunganValidasi = 1;
+                }
               });
 
-              const body = {
-                id: 0,
-                active: this.kirimactive,
-                deskripsi: deskripsi,
-                fasilitas: fasilitas,
-                kode_fasilitas: kode_fasilitas,
-              };
-              const headers = new HttpHeaders({
-                'Content-Type': 'application/json; charset=utf-8',
-                // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
-              });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_fasilitas', body, { headers }).subscribe({
-                next: () => {
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: toast => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer);
-                      toast.addEventListener('mouseleave', Swal.resumeTimer);
+              setTimeout(() => {
+                if (tampunganValidasi == 1) {
+                  return;
+                } else {
+                  const body = {
+                    id: 0,
+                    active: this.kirimactive,
+                    deskripsi: deskripsi,
+                    fasilitas: fasilitas,
+                    kode_fasilitas: kode_fasilitas,
+                  };
+                  const headers = new HttpHeaders({
+                    'Content-Type': 'application/json; charset=utf-8',
+                    // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
+                  });
+                  this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_fasilitas', body, { headers }).subscribe({
+                    next: () => {
+                      const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: toast => {
+                          toast.addEventListener('mouseenter', Swal.stopTimer);
+                          toast.addEventListener('mouseleave', Swal.resumeTimer);
+                        },
+                      });
+                      Toast.fire({
+                        icon: 'success',
+                        title: 'Data berhasil di simpan',
+                      }).then(() => {
+                        window.location.reload();
+                      });
+                    },
+                    error: () => {
+                      const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: toast => {
+                          toast.addEventListener('mouseenter', Swal.stopTimer);
+                          toast.addEventListener('mouseleave', Swal.resumeTimer);
+                        },
+                      });
+                      Toast.fire({
+                        icon: 'error',
+                        title: 'Data gagal di simpan',
+                      });
                     },
                   });
-                  Toast.fire({
-                    icon: 'success',
-                    title: 'Data berhasil di simpan',
-                  }).then(() => {
-                    window.location.reload();
-                  });
-                },
-                error: () => {
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: toast => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer);
-                      toast.addEventListener('mouseleave', Swal.resumeTimer);
-                    },
-                  });
-                  Toast.fire({
-                    icon: 'error',
-                    title: 'Data gagal di simpan',
-                  });
-                },
-              });
+                }
+              }, 30);
             }
           }
         });

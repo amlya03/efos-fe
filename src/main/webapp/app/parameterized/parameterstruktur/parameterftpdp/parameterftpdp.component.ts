@@ -5,6 +5,7 @@ import { environment } from 'environments/environment';
 import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { listFtvDpModel } from 'app/parameterized/config/listFtvDpModel.model';
 
 @Component({
   selector: 'jhi-parameterftpdp',
@@ -23,7 +24,7 @@ export class ParameterftpdpComponent implements OnInit {
   constructor(protected http: HttpClient, protected datEntryService: DataEntryService, private router: Router) {}
 
   ngOnInit(): void {
-    this.datEntryService.getListproduk().subscribe(table => {
+    this.datEntryService.getListprodukall().subscribe(table => {
       this.tablelistproduk = table.result;
     });
     this.datEntryService.getListftvdp().subscribe(table => {
@@ -33,56 +34,40 @@ export class ParameterftpdpComponent implements OnInit {
   }
 
   viewftvdetail(id: any): void {
-    // this.createform.get('contoh')?.setValue('7');
-    // this.tampunganidviewdetail = id;
-
-    this.router
-      .navigate(['/parameterstrukturftpdpdetail'], {
-        queryParams: { id: id },
-      })
-      .then(() => {
-        window.location.reload();
-      });
-
-    // this.datEntryService.getlistftvdpdetail(id).subscribe({
-    //   next: de => {
-    //     this.tableftvdpdetail = de.result;
-    //     // console.warn(this.tableftvdpdetail);
-    //   },
-
-    // });
+    this.router.navigate(['/parameterstrukturftpdpdetail'], {
+      queryParams: { id: id },
+    });
   }
 
   createftpdp(): void {
     const baseUrl = this.baseUrl;
+    let hahaha;
+    let tampunganValidasi: any;
+
     Swal.fire({
-      title: 'Mohon Perhatikan',
-      text: 'Inputan yang sudah Terinput tidak bisa di edit ',
-      icon: 'warning',
+      title: 'Tambah Data Input Parameter FTV DP',
+      text: '',
+      icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Tambah Data',
+      confirmButtonText: 'Ya, Tambah Data!',
       cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         const options = this.tablelistproduk.map((option: any) => {
           return `
-            <option key="${option}" value="${option.kode_produk}| ${option.produk_deskripsi}">
+            <option key="${option}" value="${option.kode_produk}|${option.produk_deskripsi}">
                 ${option.produk_deskripsi}
             </option>
           `;
         });
-        let hahaha;
+
         $(document).ready(function () {
           $('#jangankodeproduk').change(function () {
-            //  this.tampungpemecah= $('#jangankodeproduk').val();
-            // const pemecahbenar=this.tampungpemecah.split('|');
-            const parameterValue = $(this).val() as HTMLElement | any;
+            const parameterValue: any = $(this).val();
             hahaha = parameterValue.split('|');
-            // console.warn(hahaha);
-            // console.warn(parameterValue);
-            fetch(baseUrl + 'v1/efos-ref/list_skema_ftv?ss=' + hahaha[0])
+            fetch(baseUrl + 'v1/efos-de/list_skema?ss=' + hahaha[0])
               .then(function (response) {
                 return response.json();
               })
@@ -99,24 +84,35 @@ export class ParameterftpdpComponent implements OnInit {
         });
 
         Swal.fire({
-          title: 'Create FTP DP',
+          title: 'Tambah Data FTV DP',
           html:
             '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode produk</label>' +
-            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-8"><select class="form-control" id="jangankodeproduk"><option value="">Pilih produk</option>' +
+            '<div class="row form-material" style="width:100%">' +
+            '<div class="form-group row" id="dataValueDiv1">' +
+            '<label class="col-sm-4 col-form-label">Deskripsi Program</label>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="jangankodeproduk">' +
+            '<option value="">Pilih Deskripsi Program</option>' +
             `${options}` +
             '</select>' +
-            '</div></div>' +
+            '</div>' +
+            '</div>' +
             '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode produk</label>' +
-            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-8"><select class="form-control" id="kodeskema"><option value="">Pilih produk</option></select>' +
-            '</div></div>' +
-            '<br />',
+            '<div class="form-group row" id="dataValueDiv1">' +
+            '<label class="col-sm-4 col-form-label">Skema</label>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="kodeskema">' +
+            '<option value="">Pilih Skema</option></select>' +
+            '</div>' +
+            '</div>' +
+            '</div>',
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
+          confirmButtonColor: '#3085d6',
+          denyButtonColor: '#d33',
+          confirmButtonText: 'Simpan',
+          denyButtonText: 'Tidak',
         }).then(result => {
           if (result.isConfirmed) {
             const jangankodeproduk = $('#jangankodeproduk').val();
@@ -126,13 +122,36 @@ export class ParameterftpdpComponent implements OnInit {
             const pemecahbenar = this.tampungpemecah.split('|');
 
             if (jangankodeproduk === '') {
-              alert('Status Aktif Harus Di isi');
+              Swal.fire({
+                icon: 'error',
+                title: 'Gagal, Deskripsi Program Harus di pilih',
+              });
               return;
             } else if (kodeskema === '') {
-              alert('Fasilitas Listrik harus di isi');
+              Swal.fire({
+                icon: 'error',
+                title: 'Gagal, Skema Harus di pilih',
+              });
               return;
             }
 
+            // this.tablelistftvdp.map((mappingOption: listFtvDpModel) => {
+            //   if (
+            //       ((mappingOption.kode_produk.toUpperCase()).replace(/\s/g, '') === (pemecahbenar[0].toUpperCase()).replace(/\s/g, '')) &&
+            //       ((mappingOption.nama_produk.toUpperCase()).replace(/\s/g, '') === (pemecahbenar[1].toUpperCase()).replace(/\s/g, ''))
+            //   ){
+            //     Swal.fire({
+            //       icon: 'error',
+            //       title: 'Gagal, Data Sudah Ada',
+            //     });
+            //     tampunganValidasi = 1;
+            //   }
+            // });
+
+            // setTimeout(() => {
+            //   if(tampunganValidasi == 1){
+            //     return;
+            //   }else{
             const body = {
               nama_produk: pemecahbenar[1],
               kode_produk: pemecahbenar[0],
@@ -161,6 +180,8 @@ export class ParameterftpdpComponent implements OnInit {
                 Toast.fire({
                   icon: 'success',
                   title: 'Data berhasil di simpan',
+                }).then(() => {
+                  window.location.reload();
                 });
               },
               error: () => {
@@ -181,6 +202,8 @@ export class ParameterftpdpComponent implements OnInit {
                 });
               },
             });
+            //   }
+            // }, 30);
           }
         });
       }

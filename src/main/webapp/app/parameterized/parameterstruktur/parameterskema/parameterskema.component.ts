@@ -93,8 +93,8 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
   }
 
   createskema(): void {
-    // ///DELAY
-    // /// menanti api  untuk kodeproduk
+    // DELAY
+    let tampunganValidasi: any = 0;
     const options = this.tablelistproduk.map((option: any) => {
       return `
             <option key="${option}" value="${option.kode_produk}">
@@ -110,6 +110,9 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
             </option>
           `;
     });
+
+    const readArrayEmptyFix = this.listSkemaMasterFix.toString() === '';
+    const readArrayEmptyNonFix = this.listSkemaMasterNonFix.toString() === '';
 
     const optionSkemaFix = this.listSkemaMasterFix.map((option: listSkemaModel) => {
       return `
@@ -153,12 +156,27 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
 
             $('#skema').empty();
             if (skema_master === '2') {
+              if (readArrayEmptyNonFix) {
+                $('#lainnya1').removeAttr('hidden');
+              } else {
+                $('#lainnya1').attr('hidden', 'true');
+              }
+
               $('#id_tear').removeAttr('hidden');
               $('#divSkemaAll').removeAttr('hidden');
               $('#skema').append(`${optionSkemaNonFix}`);
               $('#skema').append(`<option value="Lainnya">Lainnya</option>`);
             } else {
+              if (readArrayEmptyFix) {
+                $('#lainnya1').removeAttr('hidden');
+              } else {
+                $('#lainnya1').attr('hidden', 'true');
+              }
+
               $('#id_tear').attr('hidden', 'true');
+              $('#id_tenortear1').attr('hidden', 'true');
+              $('#id_tenortear2').attr('hidden', 'true');
+              $('#id_tenortear3').attr('hidden', 'true');
               $('#divSkemaAll').removeAttr('hidden');
               $('#skema').append(`${optionSkemaFix}`);
               $('#skema').append(`<option value="Lainnya">Lainnya</option>`);
@@ -204,10 +222,10 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
             '<br />' +
             '<div class="row form-material" style="width:100%">' +
             '<div class="form-group row" id="dataValueDiv1">' +
-            '<label class="col-sm-4 col-form-label">Kode Produk</label>' +
+            '<label class="col-sm-4 col-form-label">Deskripsi Program</label>' +
             '<div class="col-sm-8">' +
             '<select class="form-control" id="kode_produk">' +
-            '<option value="">Pilih Produk</option>' +
+            '<option value="">Pilih Deskripsi Program</option>' +
             `${options}` +
             '</select>' +
             '</div>' +
@@ -277,7 +295,7 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
             '<input type="text" class="form-control" id="skema_deskripsi"/>' +
             '</div>' +
             '</div>' +
-            '<div class="form-group row">' +
+            '<div class="form-group row" hidden>' +
             '<label class="col-sm-4 col-form-label">Fasilitas Ke</label>' +
             '<div class="col-sm-8">' +
             '<select class="form-control" id="fasilitas">' +
@@ -336,15 +354,16 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
           scrollbarPadding: true,
         }).then(result => {
           if (result.isConfirmed) {
+            // alert('masuk')
             const fasilitas = $('#fasilitas').val();
-            const kode_produk = $('#kode_produk').val();
+            const kode_produk: any = $('#kode_produk').val();
             const min_platfon = $('#min_platfon').val();
             const max_platfon = $('#max_platfon').val();
             const max_tenor = $('#max_tenor').val();
             const skema_master = $('#skema_master').val();
-            const skema = $('#skema').val();
+            const skema: any = $('#skema').val();
             const dp_min = $('#dp_min').val();
-            const akad = $('#akad').val();
+            const akad: any = $('#akad').val();
             const tear_select = $('#tear_select').val();
             const tenor_tier1 = $('#tenor_tier1').val();
             const tenor_tier2 = $('#tenor_tier2').val();
@@ -454,76 +473,88 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
 
               this.tablelistskema.map((mappingOption: listSkemaModel) => {
                 if (
-                  mappingOption.kode_produk === kode_produk &&
-                  mappingOption.skema + '|' + mappingOption.skema_deskripsi === skema &&
-                  mappingOption.akad === akad
-                )
+                  mappingOption.kode_produk.toUpperCase().replace(/\s/g, '') === kode_produk.toUpperCase().replace(/\s/g, '') &&
+                  (mappingOption.skema.toUpperCase() + '|' + mappingOption.skema_deskripsi.toUpperCase()).replace(/\s/g, '') ===
+                    skema.toUpperCase().replace(/\s/g, '') &&
+                  mappingOption.akad.toUpperCase().replace(/\s/g, '') === akad.toUpperCase().replace(/\s/g, '')
+                ) {
                   Swal.fire({
                     icon: 'error',
                     title: 'Gagal, Data Sudah Ada',
                   });
+                  tampunganValidasi = 1;
+                }
               });
+              // alert("1")
 
-              const body = {
-                created_by: this.sessionStorageService.retrieve('sessionUserName'),
-                dp_min: dp_min,
-                fasilitas: fasilitas,
-                id: 0,
-                kode_produk: kode_produk,
-                max_plafond: max_platfon,
-                max_tenor: max_tenor,
-                min_plafond: min_platfon,
-                skema: this.kirimanskema,
-                skema_deskripsi: this.kirimanskemadeskripsi,
-                skema_master: skema_master,
-                akad: akad,
-                tenor: this.tierselect,
-                tenor_tier: this.kirimantenortier,
-              };
-              const headers = new HttpHeaders({
-                'Content-Type': 'application/json; charset=utf-8',
-                // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
-              });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_skema', body, { headers }).subscribe({
-                next: () => {
-                  // console.warn(response);
-                  // this.sessionStorageService.store('sessionPs', passwordbaru);
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: toast => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer);
-                      toast.addEventListener('mouseleave', Swal.resumeTimer);
+              setTimeout(() => {
+                if (tampunganValidasi == 1) {
+                  // alert("2")
+                  return;
+                } else {
+                  // alert("3")
+                  const body = {
+                    created_by: this.sessionStorageService.retrieve('sessionUserName'),
+                    dp_min: dp_min,
+                    fasilitas: fasilitas,
+                    id: 0,
+                    kode_produk: kode_produk,
+                    max_plafond: max_platfon,
+                    max_tenor: max_tenor,
+                    min_plafond: min_platfon,
+                    skema: this.kirimanskema,
+                    skema_deskripsi: this.kirimanskemadeskripsi,
+                    skema_master: skema_master,
+                    akad: akad,
+                    tenor: this.tierselect,
+                    tenor_tier: this.kirimantenortier,
+                  };
+                  const headers = new HttpHeaders({
+                    'Content-Type': 'application/json; charset=utf-8',
+                    // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
+                  });
+                  this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_skema', body, { headers }).subscribe({
+                    next: () => {
+                      // console.warn(response);
+                      // this.sessionStorageService.store('sessionPs', passwordbaru);
+                      const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: toast => {
+                          toast.addEventListener('mouseenter', Swal.stopTimer);
+                          toast.addEventListener('mouseleave', Swal.resumeTimer);
+                        },
+                      });
+                      Toast.fire({
+                        icon: 'success',
+                        title: 'Data berhasil di simpan',
+                      }).then(() => {
+                        window.location.reload();
+                      });
+                    },
+                    error: () => {
+                      const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: toast => {
+                          toast.addEventListener('mouseenter', Swal.stopTimer);
+                          toast.addEventListener('mouseleave', Swal.resumeTimer);
+                        },
+                      });
+                      Toast.fire({
+                        icon: 'error',
+                        title: 'Data gagal di simpan',
+                      });
                     },
                   });
-                  Toast.fire({
-                    icon: 'success',
-                    title: 'Data berhasil di simpan',
-                  }).then(() => {
-                    window.location.reload();
-                  });
-                },
-                error: () => {
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: toast => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer);
-                      toast.addEventListener('mouseleave', Swal.resumeTimer);
-                    },
-                  });
-                  Toast.fire({
-                    icon: 'error',
-                    title: 'Data gagal di simpan',
-                  });
-                },
-              });
+                }
+              }, 30);
             }
           }
         });
@@ -757,9 +788,9 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
     });
 
     Swal.fire({
-      title: 'Mohon Perhatikan',
-      text: 'Inputan yang sudah Terinput tidak bisa di edit ',
-      icon: 'warning',
+      title: 'Tambah Margin dan Tenor untuk Fix',
+      text: '',
+      icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -863,115 +894,143 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
         });
 
         Swal.fire({
-          title: 'Create Tenor Margin Fix',
-          width: '850px',
+          title: 'Tambah Margin dan Tenor untuk Fix',
+          width: '1000px',
           html:
             '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Skema fasilitas</label>' +
-            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-8"><select class="form-control" id="skema_fasilitas"><option value="">Pilih skema Fasilitas</option>' +
+            '<div class="row form-material" style="width: 100%;">' +
+            '<div class="form-group row" id="dataValueDiv1">' +
+            '<label class="col-sm-4 col-form-label">Skema fasilitas</label>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="skema_fasilitas">' +
+            '<option value="">Pilih skema Fasilitas</option>' +
             `${options}` +
             '</select>' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="row form-material">' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="jumlahtenorid" ><label class="col-sm-4 col-form-label">Jumlah Tenor</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jumlah_tenor"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Jumlah margin</label>' +
-            '<div class="col-sm-8"><select class="form-control" id="jumlah_margin"><option value="0">Pilih Jumlah margin </option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row" id="jumlahtenorid" >' +
+            '<label class="col-sm-4 col-form-label">Jumlah Tenor</label>' +
+            '<div class="col-sm-3">' +
+            '<input type="number" class="form-control" id="jumlah_tenor"/> ' +
+            '</div>' +
+            '<div class="col-sm-2">' +
+            '<h6>Bulan</h6>' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row " id="dataValueDiv1">' +
+            '<label class="col-sm-4 col-form-label">Jumlah margin</label>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="jumlah_margin">' +
+            '<option value="0">Pilih Jumlah margin </option>' +
+            '<option value="1">1</option>' +
+            '<option value="2">2</option>' +
+            '<option value="3">3</option>' +
+            '<option value="4">4</option>' +
+            '<option value="5">5</option>' +
             '</select>' +
-            '</div></div>' +
-            '<br />' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
             '<div class="row form-material">' +
             '<div class="col">' +
-            '<div class="form-lable row" id="jangka_waktu_id1" hidden><label class="col-sm-4 col-form-label">Jangka waktu 1</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jangka_waktu1"/> ' +
-            '</div></div>' +
-            '<br />' +
+            '<div class="form-group row" id="jangka_waktu_id1" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka waktu 1</label>' +
+            '<div class="col-sm-3">' +
+            '<input type="number" class="form-control" id="jangka_waktu1"/> ' +
+            '</div>' +
+            '<div class="col-sm-2">' +
+            '<h6>Bulan</h6>' +
+            '</div>' +
+            '<p></p>' +
+            '</div>' +
+            '<div class="form-group row" id="jangka_waktu_id2" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka waktu 2</label>' +
+            '<div class="col-sm-3">' +
+            '<input type="number" class="form-control" id="jangka_waktu2"/> ' +
+            '</div>' +
+            '<div class="col-sm-2">' +
+            '<h6>Bulan</h6>' +
+            '</div>' +
+            '<p></p>' +
+            '</div>' +
+            '<div class="form-group row" id="jangka_waktu_id3" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka waktu 3</label>' +
+            '<div class="col-sm-3">' +
+            '<input type="number" class="form-control" id="jangka_waktu3"/> ' +
+            '</div>' +
+            '<div class="col-sm-2">' +
+            '<h6>Bulan</h6>' +
+            '</div>' +
+            '<p></p>' +
+            '</div>' +
+            '<div class="form-group row" id="jangka_waktu_id4" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka waktu 4</label>' +
+            '<div class="col-sm-3">' +
+            '<input type="number" class="form-control" id="jangka_waktu4"/> ' +
+            '</div>' +
+            '<div class="col-sm-2">' +
+            '<h6>Bulan</h6>' +
+            '</div>' +
+            '<p></p>' +
+            '</div>' +
+            '<div class="form-group row" id="jangka_waktu_id5" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka waktu 5</label>' +
+            '<div class="col-sm-3">' +
+            '<input type="number" class="form-control" id="jangka_waktu5"/> ' +
+            '</div>' +
+            '<div class="col-sm-2">' +
+            '<h6>Bulan</h6>' +
+            '</div>' +
+            '<p></p>' +
+            '</div>' +
             '</div>' +
             '<div class="col">' +
-            '<div class="form-lable row" id="margin_id1" hidden><label class="col-sm-4 col-form-label">Margin 1</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin1"/> ' +
-            '</div></div>' +
-            '<br />' +
+            '<div class="form-group row" id="margin_id1" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 1</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin1"/> ' +
+            '</div>' +
+            '<p></p>' +
+            '</div>' +
+            '<div class="form-group row" id="margin_id2" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 2</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin2"/> ' +
+            '</div>' +
+            '<p></p>' +
+            '</div>' +
+            '<div class="form-group row" id="margin_id3" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 3</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin3"/> ' +
+            '</div>' +
+            '<p></p>' +
+            '</div>' +
+            '<div class="form-group row" id="margin_id4" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 4</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin4"/> ' +
+            '</div>' +
+            '<p></p>' +
+            '</div>' +
+            '<div class="form-group row" id="margin_id5" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 5</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin5"/> ' +
+            '</div>' +
+            '<p></p>' +
             '</div>' +
             '</div>' +
-            /// ini
-            '<br />' +
-            '<div class="row form-material">>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="jangka_waktu_id2" hidden><label class="col-sm-4 col-form-label">Jangka waktu 2</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jangka_waktu2"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '</div>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="margin_id2" hidden><label class="col-sm-4 col-form-label">Margin 2</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin2"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '</div>' +
-            '</div>' +
-            /// ini
-            '<br />' +
-            '<div class="row form-material">>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="jangka_waktu_id3" hidden><label class="col-sm-4 col-form-label">Jangka waktu 3</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jangka_waktu3"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '</div>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="margin_id3" hidden><label class="col-sm-4 col-form-label">Margin 3</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin3"/> ' +
-            '</div></div>' +
-            '</div>' +
-            '</div>' +
-            ///ini
-            '<br />' +
-            '<div class="row form-material">>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="jangka_waktu_id4" hidden><label class="col-sm-4 col-form-label">Jangka waktu 4</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jangka_waktu4"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '</div>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="margin_id4" hidden><label class="col-sm-4 col-form-label">Margin 4</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin4"/> ' +
-            '</div></div>' +
-            '</div>' +
-            '</div>' +
-            ///
-            '<br />' +
-            '<div class="row form-material">>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="jangka_waktu_id5" hidden><label class="col-sm-4 col-form-label">Jangka waktu 5</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jangka_waktu5"/> ' +
-            '</div></div>' +
-            '</div>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="margin_id5" hidden><label class="col-sm-4 col-form-label">Margin 5</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin5"/> ' +
-            '</div></div>' +
-            '</div>' +
-            '</div>' +
-            ///
-
-            // '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">tenor</label>' +
-            // '<div class="col-sm-8"><input type="text" class="form-control" id="tenor"/> ' +
-            // '</div></div>' +
             '<br />',
-
-          // '<div class="form-lable row" id="dataValueDiv"><label class="col-sm-4 col-form-label">Margin</label>' +
-          // '<div class="col-sm-8"><input type="text" class="form-control" id="margin"/> ' +
-          // '</div></div>',
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
+          confirmButtonColor: '#3085d6',
+          denyButtonColor: '#d33',
+          confirmButtonText: 'Simpan',
+          denyButtonText: 'Tidak',
         }).then(result => {
           if (result.isConfirmed) {
             const skema_fasilitas = $('#skema_fasilitas').val();
@@ -1064,6 +1123,8 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
                 Toast.fire({
                   icon: 'success',
                   title: 'Data berhasil di simpan',
+                }).then(() => {
+                  window.location.reload();
                 });
               },
               error: () => {
@@ -1101,9 +1162,9 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
     });
 
     Swal.fire({
-      title: 'Mohon Perhatikan',
-      text: 'Inputan yang sudah Terinput tidak bisa di edit ',
-      icon: 'warning',
+      title: 'Tambah Data Tenor dan Manrgin untuk Step up',
+      text: '',
+      icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -1151,59 +1212,94 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
         });
 
         Swal.fire({
-          title: 'Create Tenor Margin Step Up',
+          title: 'Tambah Data Tenor dan Manrgin untuk Step up',
+          width: '1000px',
           html:
-            '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Skema fasilitas</label>' +
-            // '<div class="col-sm-8">  <select id="status_active"><option value="">Pilih status</option><option value="1">Aktif</option><option value="0">Tidak Aktif</option></select>' +
-            '<div class="col-sm-8"><select class="form-control" id="skema_fasilitas"><option value="">Pilih skema Fasilitas</option>' +
+            '<br/>' +
+            '<div class="row form-material" style="width: 100%;">' +
+            '<div class="form-group row" id="dataValueDiv1">' +
+            '<label class="col-sm-4 col-form-label">Skema fasilitas</label>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="skema_fasilitas">' +
+            '<option value="">Pilih skema Fasilitas</option>' +
             `${options}` +
             '</select>' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Tier</label>' +
-            '<div class="col-sm-8"><select class="form-control" id="tier_id"><option value="0">Pilih Tier</option><option value="2">2</option><option value="3">3</option>' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row" id="dataValueDiv1">' +
+            '<label class="col-sm-4 col-form-label">Tier</label>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="tier_id">' +
+            '<option value="0">Pilih Tier</option>' +
+            '<option value="2">2</option>' +
+            '<option value="3">3</option>' +
             '</select>' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="tenor1_id" ><label class="col-sm-4 col-form-label">tenor </label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="tenor1"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="margin_1_id" hidden><label class="col-sm-4 col-form-label">Margin 1</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin_1"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="margin_2_id" hidden><label class="col-sm-4 col-form-label">Margin 2</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin_2"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="margin_3_id" hidden><label class="col-sm-4 col-form-label">Margin 3</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin_3"/> ' +
-            '</div></div>' +
-            // '<br />' +
-            // '<div class="form-lable row" id="tenor2_id" hidden><label class="col-sm-4 col-form-label">tenor 2</label>' +
-            // '<div class="col-sm-8"><input type="text" class="form-control" id="tenor2"/> ' +
-            // '</div></div>'+
-            // '<br />' +
-            // '<div class="form-lable row" id="tenor3_id" hidden><label class="col-sm-4 col-form-label">tenor 3</label>' +
-            // '<div class="col-sm-8"><input type="text" class="form-control" id="tenor3"/> ' +
-            // '</div></div>'+
-            '<br />' +
-            '<div class="form-lable row" id="tenor_tier1_id" hidden><label class="col-sm-4 col-form-label">tenor_tier 1</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="tenor_tier1"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="tenor_tier2_id" hidden><label class="col-sm-4 col-form-label">teno_tier 2</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="tenor_tier2"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row" id="tenor_tier3_id" hidden><label class="col-sm-4 col-form-label">tenor_tier 3</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="tenor_tier3"/> ' +
-            '</div></div>',
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row" id="tenor1_id" >' +
+            '<label class="col-sm-4 col-form-label">Jumlah Tenor</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="tenor1"/> ' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="row">' +
+            '<div class="col">' +
+            '<div class="form-group row" id="tenor_tier1_id" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka Waktu 1</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="tenor_tier1"/> ' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row" id="tenor_tier2_id" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka Waktu 2</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="tenor_tier2"/> ' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row" id="tenor_tier3_id" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka Waktu 3</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="tenor_tier3"/> ' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '<div class="col">' +
+            '<div class="form-group row" id="margin_1_id" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 1</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin_1"/> ' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row" id="margin_2_id" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 2</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin_2"/> ' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row" id="margin_3_id" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 3</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin_3"/> ' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '</div>' +
+            '</div>' +
+            '</div>',
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
+          confirmButtonColor: '#3085d6',
+          denyButtonColor: '#d33',
+          confirmButtonText: 'Simpan',
+          denyButtonText: 'Tidak',
         }).then(result => {
           if (result.isConfirmed) {
             const skema_fasilitas = $('#skema_fasilitas').val();
@@ -1343,6 +1439,8 @@ export class ParameterskemaComponent implements OnInit, OnDestroy {
                 Toast.fire({
                   icon: 'success',
                   title: 'Data berhasil di simpan',
+                }).then(() => {
+                  window.location.reload();
                 });
               },
               error: () => {

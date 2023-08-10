@@ -176,95 +176,101 @@ export class ParametermarginfixComponent implements OnInit {
         });
 
         Swal.fire({
-          title: 'Create Tenor Margin Fix',
-          width: '850px',
+          title: 'Tambah Data Tenor dan Margin Untuk Fix',
           html:
-            '<br />' +
-            '<div class="row form-material">' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="jumlahtenorid" ><label class="col-sm-4 col-form-label">Jumlah Tenor</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jumlah_tenor"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Jumlah margin</label>' +
-            '<div class="col-sm-8"><select class="form-control" id="jumlah_margin"><option value="0">Pilih Jumlah margin </option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>' +
+            '<div class="row form-material" style="width:100%">' +
+            '<div class="form-group row" id="jumlahtenorid" >' +
+            '<label class="col-sm-4 col-form-label">Jumlah Tenor</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="jumlah_tenor"/> ' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row" id="dataValueDiv1">' +
+            '<label class="col-sm-4 col-form-label">Jumlah margin</label>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="jumlah_margin">' +
+            '<option value="0">Pilih Jumlah margin </option>' +
+            '<option value="1">1</option>' +
+            '<option value="2">2</option>' +
+            '<option value="3">3</option>' +
+            '<option value="4">4</option>' +
+            '<option value="5">5</option>' +
             '</select>' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="row form-material">' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="row">' +
             '<div class="col">' +
-            '<div class="form-lable row" id="jangka_waktu_id1" hidden><label class="col-sm-4 col-form-label">Jangka waktu 1</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jangka_waktu1"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '</div>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="margin_id1" hidden><label class="col-sm-4 col-form-label">Margin 1</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin1"/> ' +
-            '</div></div>' +
-            '<br />' +
+            '<div class="form-group row" id="jangka_waktu_id1" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka waktu 1</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="jangka_waktu1"/> ' +
             '</div>' +
             '</div>' +
-            '<br />' +
-            '<div class="row form-material">>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="jangka_waktu_id2" hidden><label class="col-sm-4 col-form-label">Jangka waktu 2</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jangka_waktu2"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '</div>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="margin_id2" hidden><label class="col-sm-4 col-form-label">Margin 2</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin2"/> ' +
-            '</div></div>' +
-            '<br />' +
+            '<div class="form-group row" id="jangka_waktu_id2" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka waktu 2</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="jangka_waktu2"/> ' +
             '</div>' +
             '</div>' +
-            '<br />' +
-            '<div class="row form-material">>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="jangka_waktu_id3" hidden><label class="col-sm-4 col-form-label">Jangka waktu 3</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jangka_waktu3"/> ' +
-            '</div></div>' +
-            '<br />' +
+            '<div class="form-group row" id="jangka_waktu_id3" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka waktu 3</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="jangka_waktu3"/> ' +
+            '</div>' +
+            '</div>' +
+            '<div class="form-group row" id="jangka_waktu_id4" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka waktu 4</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="jangka_waktu4"/> ' +
+            '</div>' +
+            '</div>' +
+            '<div class="form-group row" id="jangka_waktu_id5" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka waktu 5</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="jangka_waktu5"/> ' +
+            '</div>' +
+            '</div>' +
             '</div>' +
             '<div class="col">' +
-            '<div class="form-lable row" id="margin_id3" hidden><label class="col-sm-4 col-form-label">Margin 3</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin3"/> ' +
-            '</div></div>' +
+            '<div class="form-group row" id="margin_id1" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 1</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin1"/> ' +
             '</div>' +
             '</div>' +
-            '<br />' +
-            '<div class="row form-material">>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="jangka_waktu_id4" hidden><label class="col-sm-4 col-form-label">Jangka waktu 4</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jangka_waktu4"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '</div>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="margin_id4" hidden><label class="col-sm-4 col-form-label">Margin 4</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin4"/> ' +
-            '</div></div>' +
+            '<div class="form-group row" id="margin_id2" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 2</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin2"/> ' +
             '</div>' +
             '</div>' +
-            '<br />' +
-            '<div class="row form-material">>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="jangka_waktu_id5" hidden><label class="col-sm-4 col-form-label">Jangka waktu 5</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jangka_waktu5"/> ' +
-            '</div></div>' +
-            '</div>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="margin_id5" hidden><label class="col-sm-4 col-form-label">Margin 5</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin5"/> ' +
-            '</div></div>' +
+            '<div class="form-group row" id="margin_id3" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 3</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin3"/> ' +
             '</div>' +
             '</div>' +
-            '<br />',
+            '<div class="form-group row" id="margin_id4" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 4</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin4"/> ' +
+            '</div>' +
+            '</div>' +
+            '<div class="form-group row" id="margin_id5" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 5</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin5"/> ' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>',
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
+          scrollbarPadding: true,
         }).then(result => {
           if (result.isConfirmed) {
             const skema_fasilitas = $('#skema_fasilitas').val();
@@ -503,99 +509,133 @@ export class ParametermarginfixComponent implements OnInit {
         });
 
         Swal.fire({
-          title: 'Create Tenor Margin Fix',
-          width: '850px',
+          title: 'Tambah Data Tenor dan Margin untuk Fix',
+          width: '1000px',
           html:
             '<br />' +
-            '<div class="row form-material">' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="jumlahtenorid" ><label class="col-sm-4 col-form-label">Jumlah Tenor</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jumlah_tenor"/> ' +
-            '</div></div>' +
-            '<br />' +
-            '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Jumlah margin</label>' +
-            '<div class="col-sm-8"><select class="form-control" id="jumlah_margin"><option value="0">Pilih Jumlah margin </option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>' +
+            '<div class="row form-material" style="width: 100%;">' +
+            '<div class="form-group row" id="jumlahtenorid" >' +
+            '<label class="col-sm-4 col-form-label">Jumlah Tenor</label>' +
+            '<div class="col-sm-3">' +
+            '<input type="number" class="form-control" id="jumlah_tenor"/> ' +
+            '</div>' +
+            '<div class="col-sm-1">' +
+            '<h6>Bulan</h6>' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
+            '<div class="form-group row " id="dataValueDiv1">' +
+            '<label class="col-sm-4 col-form-label">Jumlah margin</label>' +
+            '<div class="col-sm-8">' +
+            '<select class="form-control" id="jumlah_margin">' +
+            '<option value="0">Pilih Jumlah margin </option>' +
+            '<option value="1">1</option>' +
+            '<option value="2">2</option>' +
+            '<option value="3">3</option>' +
+            '<option value="4">4</option>' +
+            '<option value="5">5</option>' +
             '</select>' +
-            '</div></div>' +
-            '<br />' +
+            '</div>' +
+            '</div>' +
+            '<p></p>' +
             '<div class="row form-material">' +
             '<div class="col">' +
-            '<div class="form-lable row" id="jangka_waktu_id1" hidden><label class="col-sm-4 col-form-label">Jangka waktu 1</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jangka_waktu1"/> ' +
-            '</div></div>' +
-            '<br />' +
+            '<div class="form-group row" id="jangka_waktu_id1" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka waktu 1</label>' +
+            '<div class="col-sm-3">' +
+            '<input type="number" class="form-control" id="jangka_waktu1"/> ' +
+            '</div>' +
+            '<div class="col-sm-2">' +
+            '<h6>Bulan</h6>' +
+            '</div>' +
+            '<p></p>' +
+            '</div>' +
+            '<div class="form-group row" id="jangka_waktu_id2" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka waktu 2</label>' +
+            '<div class="col-sm-3">' +
+            '<input type="number" class="form-control" id="jangka_waktu2"/> ' +
+            '</div>' +
+            '<div class="col-sm-2">' +
+            '<h6>Bulan</h6>' +
+            '</div>' +
+            '<p></p>' +
+            '</div>' +
+            '<div class="form-group row" id="jangka_waktu_id3" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka waktu 3</label>' +
+            '<div class="col-sm-3">' +
+            '<input type="number" class="form-control" id="jangka_waktu3"/> ' +
+            '</div>' +
+            '<div class="col-sm-2">' +
+            '<h6>Bulan</h6>' +
+            '</div>' +
+            '<p></p>' +
+            '</div>' +
+            '<div class="form-group row" id="jangka_waktu_id4" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka waktu 4</label>' +
+            '<div class="col-sm-3">' +
+            '<input type="number" class="form-control" id="jangka_waktu4"/> ' +
+            '</div>' +
+            '<div class="col-sm-2">' +
+            '<h6>Bulan</h6>' +
+            '</div>' +
+            '<p></p>' +
+            '</div>' +
+            '<div class="form-group row" id="jangka_waktu_id5" hidden>' +
+            '<label class="col-sm-4 col-form-label">Jangka waktu 5</label>' +
+            '<div class="col-sm-3">' +
+            '<input type="number" class="form-control" id="jangka_waktu5"/> ' +
+            '</div>' +
+            '<div class="col-sm-2">' +
+            '<h6>Bulan</h6>' +
+            '</div>' +
+            '<p></p>' +
+            '</div>' +
             '</div>' +
             '<div class="col">' +
-            '<div class="form-lable row" id="margin_id1" hidden><label class="col-sm-4 col-form-label">Margin 1</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin1"/> ' +
-            '</div></div>' +
-            '<br />' +
+            '<div class="form-group row" id="margin_id1" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 1</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin1"/> ' +
             '</div>' +
+            '<p></p>' +
             '</div>' +
-            /// ini
-            '<br />' +
-            '<div class="row form-material">>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="jangka_waktu_id2" hidden><label class="col-sm-4 col-form-label">Jangka waktu 2</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jangka_waktu2"/> ' +
-            '</div></div>' +
-            '<br />' +
+            '<div class="form-group row" id="margin_id2" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 2</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin2"/> ' +
             '</div>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="margin_id2" hidden><label class="col-sm-4 col-form-label">Margin 2</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin2"/> ' +
-            '</div></div>' +
-            '<br />' +
+            '<p></p>' +
             '</div>' +
+            '<div class="form-group row" id="margin_id3" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 3</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin3"/> ' +
             '</div>' +
-            /// ini
-            '<br />' +
-            '<div class="row form-material">>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="jangka_waktu_id3" hidden><label class="col-sm-4 col-form-label">Jangka waktu 3</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jangka_waktu3"/> ' +
-            '</div></div>' +
-            '<br />' +
+            '<p></p>' +
             '</div>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="margin_id3" hidden><label class="col-sm-4 col-form-label">Margin 3</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin3"/> ' +
-            '</div></div>' +
+            '<div class="form-group row" id="margin_id4" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 4</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin4"/> ' +
             '</div>' +
+            '<p></p>' +
             '</div>' +
-            ///ini
-            '<br />' +
-            '<div class="row form-material">>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="jangka_waktu_id4" hidden><label class="col-sm-4 col-form-label">Jangka waktu 4</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jangka_waktu4"/> ' +
-            '</div></div>' +
-            '<br />' +
+            '<div class="form-group row" id="margin_id5" hidden>' +
+            '<label class="col-sm-4 col-form-label">Margin 5</label>' +
+            '<div class="col-sm-8">' +
+            '<input type="number" class="form-control" id="margin5"/> ' +
             '</div>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="margin_id4" hidden><label class="col-sm-4 col-form-label">Margin 4</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin4"/> ' +
-            '</div></div>' +
-            '</div>' +
-            '</div>' +
-            ///
-            '<br />' +
-            '<div class="row form-material">>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="jangka_waktu_id5" hidden><label class="col-sm-4 col-form-label">Jangka waktu 5</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="jangka_waktu5"/> ' +
-            '</div></div>' +
-            '</div>' +
-            '<div class="col">' +
-            '<div class="form-lable row" id="margin_id5" hidden><label class="col-sm-4 col-form-label">Margin 5</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control" id="margin5"/> ' +
-            '</div></div>' +
+            '<p></p>' +
             '</div>' +
             '</div>' +
             '<br />',
           allowOutsideClick: false,
           showDenyButton: true,
           focusConfirm: false,
+          confirmButtonColor: '#3085d6',
+          denyButtonColor: '#d33',
+          confirmButtonText: 'Simpan',
+          denyButtonText: 'Tidak',
         }).then(result => {
           if (result.isConfirmed) {
             const skema_fasilitas = $('#skema_fasilitas').val();

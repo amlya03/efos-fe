@@ -7,6 +7,7 @@ import { listCreatemodel } from 'app/data-entry/services/config/listCreate.model
 import { parameterModel } from 'app/parameterized/config/parameterModel.model';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import { listProdukModel } from 'app/parameterized/config/listProdukModel.model';
 
 @Component({
   selector: 'jhi-parameterproduk',
@@ -17,7 +18,7 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
   baseUrl: string = environment.baseUrl;
 
   tablelistprogram: listCreatemodel[] = [];
-  tablelistproduk: listCreatemodel[] = [];
+  tablelistproduk: listProdukModel[] = [];
   dataretrive: any;
   getdataretriveprogram: any;
   dataretriveprogram: any;
@@ -43,6 +44,7 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
   }
 
   createproduk(): void {
+    let tampunganValidasi: any = 0;
     const options = this.tablelistprogram.map((option: any) => {
       return `
         <option key="${option}" value="${option.kode_program}">
@@ -53,7 +55,7 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
 
     // /// menanti api  untuk kodeProgram
     Swal.fire({
-      title: 'Tambah Data input Parameter Produk?',
+      title: 'Tambah Data input Deskripsi Program?',
       text: '',
       icon: 'info',
       showCancelButton: true,
@@ -64,7 +66,7 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: 'Tambah Data Produk',
+          title: 'Tambah Data Deskripsi Program',
           html:
             '<br />' +
             '<div class="row form-material" style="width:100%">' +
@@ -72,14 +74,14 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
             '<label class="col-sm-4 col-form-label">Kode program</label>' +
             '<div class="col-sm-8">' +
             '<select class="form-control" id="kode_program">' +
-            '<option value="">Pilih Produk</option>' +
+            '<option value="">Pilih Program</option>' +
             `${options}` +
             '</select>' +
             '</div>' +
             '</div>' +
             '<p></p>' +
             '<div class="form-group row" id="dataValueDiv">' +
-            '<label class="col-sm-4 col-form-label">Deskripsi Produk</label>' +
+            '<label class="col-sm-4 col-form-label">Deskripsi Program</label>' +
             '<div class="col-sm-8">' +
             '<input type="text" class="form-control" id="produk_deskripsi"/> ' +
             '</div>' +
@@ -94,8 +96,8 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
           denyButtonText: 'Tidak',
         }).then(result => {
           if (result.isConfirmed) {
-            const kode_program = $('#kode_program').val();
-            const produk_deskripsi = $('#produk_deskripsi').val();
+            let kode_program: any = $('#kode_program').val();
+            let produk_deskripsi: any = $('#produk_deskripsi').val();
 
             if (kode_program === '') {
               Swal.fire({
@@ -110,65 +112,75 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
               });
               return;
             } else {
-              this.tablelistproduk.filter((validasiFrontEnd: listCreatemodel) => {
-                if (validasiFrontEnd.kode_program === kode_program && validasiFrontEnd.produk_deskripsi === produk_deskripsi)
+              this.tablelistproduk.map((validasiFrontEnd: listProdukModel) => {
+                if (
+                  validasiFrontEnd.kode_program.toUpperCase().replace(/\s/g, '') === kode_program.toUpperCase().replace(/\s/g, '') &&
+                  validasiFrontEnd.produk_deskripsi.toUpperCase().replace(/\s/g, '') === produk_deskripsi.toUpperCase().replace(/\s/g, '')
+                ) {
                   Swal.fire({
                     icon: 'error',
                     title: 'Gagal, Data Sudah Ada',
                   });
-                return;
+                  tampunganValidasi = 1;
+                }
               });
 
-              const body = {
-                id: '0',
-                kode_program: kode_program,
-                kode_produk: '',
-                produk_deskripsi: produk_deskripsi,
-              };
-              const headers = new HttpHeaders({
-                'Content-Type': 'application/json; charset=utf-8',
-                // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
-              });
-              this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_produk', body, { headers }).subscribe({
-                next: () => {
-                  // console.warn(response);
-                  // this.sessionStorageService.store('sessionPs', passwordbaru);
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: toast => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer);
-                      toast.addEventListener('mouseleave', Swal.resumeTimer);
+              setTimeout(() => {
+                if (tampunganValidasi == 1) {
+                  return;
+                } else {
+                  const body = {
+                    id: '0',
+                    kode_program: kode_program,
+                    kode_produk: '',
+                    produk_deskripsi: produk_deskripsi,
+                  };
+                  const headers = new HttpHeaders({
+                    'Content-Type': 'application/json; charset=utf-8',
+                    // Authorization: `Bearer ${this.SessionStorageService.retrieve('authenticationToken')}`,
+                  });
+                  this.http.post<any>(this.baseUrl + 'v1/efos-ref/create_produk', body, { headers }).subscribe({
+                    next: () => {
+                      // console.warn(response);
+                      // this.sessionStorageService.store('sessionPs', passwordbaru);
+                      const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: toast => {
+                          toast.addEventListener('mouseenter', Swal.stopTimer);
+                          toast.addEventListener('mouseleave', Swal.resumeTimer);
+                        },
+                      });
+                      Toast.fire({
+                        icon: 'success',
+                        title: 'Data berhasil di simpan',
+                      }).then(() => {
+                        window.location.reload();
+                      });
+                    },
+                    error: () => {
+                      const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: toast => {
+                          toast.addEventListener('mouseenter', Swal.stopTimer);
+                          toast.addEventListener('mouseleave', Swal.resumeTimer);
+                        },
+                      });
+                      Toast.fire({
+                        icon: 'error',
+                        title: 'Data gagal di simpan',
+                      });
                     },
                   });
-                  Toast.fire({
-                    icon: 'success',
-                    title: 'Data berhasil di simpan',
-                  }).then(() => {
-                    window.location.reload();
-                  });
-                },
-                error: () => {
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: toast => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer);
-                      toast.addEventListener('mouseleave', Swal.resumeTimer);
-                    },
-                  });
-                  Toast.fire({
-                    icon: 'error',
-                    title: 'Data gagal di simpan',
-                  });
-                },
-              });
+                }
+              }, 30);
             }
           }
         });
@@ -202,18 +214,18 @@ export class ParameterprodukComponent implements OnInit, OnDestroy {
 
     // /// menanti api  untuk kodeProgram
     Swal.fire({
-      title: 'Mohon Perhatikan',
-      text: 'Data harus Di isi dengan benar  ',
-      icon: 'warning',
+      title: 'Edit Data Deskripsi Program',
+      text: '',
+      icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Tambah Data',
+      confirmButtonText: 'Edit Data',
       cancelButtonText: 'Tidak',
     }).then(result => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: 'Edit  Produk ',
+          title: 'Edit Deskripsi Program ',
           html:
             '<br />' +
             '<div class="form-lable row " id="dataValueDiv1"><label class="col-sm-4 col-form-label">Kode program</label>' +
