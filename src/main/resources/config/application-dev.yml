@@ -53,7 +53,14 @@ spring:
     cache: false
 
 server:
-  port: 8888
+  # ============ DEV ============ #
+  port: 9999
+
+  # ============ SIT ============ #
+  # port: 8808
+
+  # ============ UIT ============ #
+  # port: 8888
   # ssl:
   #   key-store: classpath:config/tls/smw.bms.keystore.jks
   #   key-store-password: bms123
