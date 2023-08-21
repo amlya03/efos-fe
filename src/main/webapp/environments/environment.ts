@@ -15,8 +15,8 @@ export const environment = {
   // baseUrl: 'http://10.20.34.110:8805/api/',
 
   // ======================== DEV ===============================
-  // baseUrl: 'http://localhost:8805/api/',
-  baseUrl: 'http://10.20.34.110:8888/api/',
+  baseUrl: 'http://localhost:8805/api/',
+//   baseUrl: 'http://10.20.34.110:8888/api/',
 
   // ======================== Dukcapil ===============================
   baseUrlDukcapil: 'http://10.20.82.12:8083/',

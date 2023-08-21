@@ -40,6 +40,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   hapusUpload: any;
   popup: any;
   untukSessionRole: any;
+  memeriksaChecked: any = false;
 
   // Progress bar
   proggresBar: any;
@@ -52,6 +53,7 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject<any>();
   dtOptions: DataTables.Settings = {};
   idUpload: any;
+  termAndCondition: any;
 
   constructor(
     public router: Router,
@@ -90,6 +92,11 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     this.dataEntryService.getFetchSemuaDataDE(this.app_no_de).subscribe(data => {
       this.dataEntry = data.result;
       // console.log(this.dataEntry);
+      if(this.dataEntry.kode_fasilitas_name === "PTA"){
+      this.dataEntryService.getInfoUpdateAo().subscribe(term =>{
+        this.termAndCondition = term.result.value;
+      });
+      }
     });
 
     // get List DE
@@ -225,5 +232,10 @@ export class UploadDocumentDeComponent implements OnInit, OnDestroy {
     //   this.popup = window.open('');
     //   this.popup.document.write(img);
     // }
+  }
+
+  //checkbox
+  periksa(event: any): any{
+    this.memeriksaChecked = event.checked;
   }
 }

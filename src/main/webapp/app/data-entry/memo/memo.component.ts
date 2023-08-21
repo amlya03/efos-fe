@@ -43,6 +43,8 @@ export class MemoComponent implements OnInit {
   valBM = 1;
   checkBM = 1;
   checkStruktur = 0;
+  termAndCondition: any;
+  memeriksaChecked: any = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -106,6 +108,10 @@ export class MemoComponent implements OnInit {
         next: data => {
           this.dataEntryModel = data.result;
           this.tampilanfixornon = data.result.kategori_pekerjaan;
+
+          this.dataEntryService.getInfoUpdateBm().subscribe(term =>{
+            this.termAndCondition = term.result.value;
+          });
 
           setTimeout(() => {
             this.dataEntryService.getFetchStrukturDE(this.dataEntryModel.app_no_de, this.dataEntryModel.curef).subscribe(download => {
@@ -407,5 +413,9 @@ export class MemoComponent implements OnInit {
 
   cektakSkemaAngsuran(): void {
     window.open(this.baseUrl + 'v1/efos-de/downloadAngsuranDataEntry/' + this.app_no_de);
+  }
+
+  periksa(event: any): any{
+    this.memeriksaChecked = event.checked;
   }
 }

@@ -268,27 +268,7 @@ export class InitialDataEntryFixComponent implements OnInit {
     this.validasiNo_handphone_pasangan = <FormControl>this.ideForm.get('no_handphone_pasangan');
 
     this.subscription = validasiStatusPerkawinan.valueChanges.subscribe(value => {
-      if (value === 'KAWIN') {
-        this.validasiNamaPasangan.setValidators([Validators.required]);
-        this.validasiJenis_kelamin_pasangan.setValidators([Validators.required]);
-        this.validasiTanggal_lahir_pasangan.setValidators([Validators.required]);
-        this.validasiTempat_lahir_pasangan.setValidators([Validators.required]);
-        this.validasiAgama_pasangan.setValidators([Validators.required]);
-        this.validasiPendidikan_pasangan.setValidators([Validators.required]);
-        this.validasiKewarganegaraan_pasangan.setValidators([Validators.required]);
-        this.validasiNama_ibu_kandung_pasangan.setValidators([Validators.required]);
-        this.validasiAlamat_ktp_pasangan.setValidators([Validators.required]);
-        this.validasiProvinsi_pasangan.setValidators([Validators.required]);
-        this.validasiKabkota_pasangan.setValidators([Validators.required]);
-        this.validasiKecamatan_pasangan.setValidators([Validators.required]);
-        this.validasiKelurahan_pasangan.setValidators([Validators.required]);
-        this.validasiKode_pos_pasangan.setValidators([Validators.required]);
-        this.validasiRt_pasangan.setValidators([Validators.required]);
-        this.validasiRw_pasangan.setValidators([Validators.required]);
-        this.validasiNo_ktp_pasangan.setValidators([Validators.required]);
-        this.validasiTanggal_terbit_ktp_pasangan.setValidators([Validators.required]);
-        this.validasiNo_handphone_pasangan.setValidators([Validators.required]);
-      } else {
+    if (this.fasilitas === "PTA") {
         this.validasiNamaPasangan.setValidators(null);
         this.validasiJenis_kelamin_pasangan.setValidators(null);
         this.validasiTanggal_lahir_pasangan.setValidators(null);
@@ -308,7 +288,49 @@ export class InitialDataEntryFixComponent implements OnInit {
         this.validasiNo_ktp_pasangan.setValidators(null);
         this.validasiTanggal_terbit_ktp_pasangan.setValidators(null);
         this.validasiNo_handphone_pasangan.setValidators(null);
-      }
+    } else {
+    if (value === 'KAWIN') {
+            this.validasiNamaPasangan.setValidators([Validators.required]);
+            this.validasiJenis_kelamin_pasangan.setValidators([Validators.required]);
+            this.validasiTanggal_lahir_pasangan.setValidators([Validators.required]);
+            this.validasiTempat_lahir_pasangan.setValidators([Validators.required]);
+            this.validasiAgama_pasangan.setValidators([Validators.required]);
+            this.validasiPendidikan_pasangan.setValidators([Validators.required]);
+            this.validasiKewarganegaraan_pasangan.setValidators([Validators.required]);
+            this.validasiNama_ibu_kandung_pasangan.setValidators([Validators.required]);
+            this.validasiAlamat_ktp_pasangan.setValidators([Validators.required]);
+            this.validasiProvinsi_pasangan.setValidators([Validators.required]);
+            this.validasiKabkota_pasangan.setValidators([Validators.required]);
+            this.validasiKecamatan_pasangan.setValidators([Validators.required]);
+            this.validasiKelurahan_pasangan.setValidators([Validators.required]);
+            this.validasiKode_pos_pasangan.setValidators([Validators.required]);
+            this.validasiRt_pasangan.setValidators([Validators.required]);
+            this.validasiRw_pasangan.setValidators([Validators.required]);
+            this.validasiNo_ktp_pasangan.setValidators([Validators.required]);
+            this.validasiTanggal_terbit_ktp_pasangan.setValidators([Validators.required]);
+            this.validasiNo_handphone_pasangan.setValidators([Validators.required]);
+          } else {
+            this.validasiNamaPasangan.setValidators(null);
+            this.validasiJenis_kelamin_pasangan.setValidators(null);
+            this.validasiTanggal_lahir_pasangan.setValidators(null);
+            this.validasiTempat_lahir_pasangan.setValidators(null);
+            this.validasiAgama_pasangan.setValidators(null);
+            this.validasiPendidikan_pasangan.setValidators(null);
+            this.validasiKewarganegaraan_pasangan.setValidators(null);
+            this.validasiNama_ibu_kandung_pasangan.setValidators(null);
+            this.validasiAlamat_ktp_pasangan.setValidators(null);
+            this.validasiProvinsi_pasangan.setValidators(null);
+            this.validasiKabkota_pasangan.setValidators(null);
+            this.validasiKecamatan_pasangan.setValidators(null);
+            this.validasiKelurahan_pasangan.setValidators(null);
+            this.validasiKode_pos_pasangan.setValidators(null);
+            this.validasiRt_pasangan.setValidators(null);
+            this.validasiRw_pasangan.setValidators(null);
+            this.validasiNo_ktp_pasangan.setValidators(null);
+            this.validasiTanggal_terbit_ktp_pasangan.setValidators(null);
+            this.validasiNo_handphone_pasangan.setValidators(null);
+          }
+    }
       this.validasiNamaPasangan.updateValueAndValidity();
       this.validasiJenis_kelamin_pasangan.updateValueAndValidity();
       this.validasiTanggal_lahir_pasangan.updateValueAndValidity();

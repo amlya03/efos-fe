@@ -87,6 +87,22 @@
   </div>
 </div>
 <br />
+<div class="form-group row" [hidden]="this.untukSessionRole == 'AO' || this.untukSessionRole == 'VER_PRE_SPV'">
+  <div class="col-md-8">
+    <div class="form-group">
+      <p id="telahmemeriksa">
+        <input
+          style="width: 20px; height: 20px"
+          type="checkbox"
+          #memeriksa
+          (change)="periksa(memeriksa)"
+        />
+        {{ this.termAndCondition }}
+      </p>
+    </div>
+  </div>
+</div>
+<br />
 <div class="text-center">
   <button
     [hidden]="this.untukSessionRole === 'VER_PRE_SPV'"
@@ -116,7 +132,7 @@
   </button>
   <button
     type="button"
-    *ngIf="this.untukSessionRole === 'AO' && this.modelResultmemo == 0"
+    *ngIf="this.untukSessionRole === 'AO' && this.modelResultmemo == 0 && memeriksaChecked"
     (click)="updatekeupload()"
     id="simpan_memo"
     name="simpan_memo"
@@ -127,7 +143,7 @@
   </button>
   <button
     type="button"
-    *ngIf="
+    *ngIf="memeriksaChecked &&
       (this.untukSessionRole === 'BRANCHMANAGER' && this.valBM == 0 && this.checkBM == 0) ||
       (this.untukSessionRole === 'VER_PRE_SPV' && this.valBM == 0 && this.checkBM == 0)
     "
@@ -141,7 +157,7 @@
       (this.untukSessionRole === 'VER_PRE_SPV' && this.valBM == 0 && this.checkBM == 0) -->
   <button
     (click)="kembalikede()"
-    *ngIf="
+    *ngIf="memeriksaChecked &&
       (this.untukSessionRole === 'BRANCHMANAGER' && this.valBM == 0 && this.checkBM == 0) ||
       (this.untukSessionRole === 'VER_PRE_SPV' && this.valBM == 0 && this.checkBM == 0)
     "

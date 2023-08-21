@@ -104,13 +104,29 @@
   </div>
 </div>
 <br />
+<div class="form-group row" [hidden]="dataEntry.kode_fasilitas_name === 'PPR' || this.untukSessionRole == 'BM' || this.untukSessionRole == 'VER_PRE_SPV'">
+  <div class="col-md-8">
+    <div class="form-group">
+      <p id="telahmemeriksa">
+        <input
+          style="width: 20px; height: 20px"
+          type="checkbox"
+          #memeriksa
+          (change)="periksa(memeriksa)"
+        />
+        {{ this.termAndCondition }}
+      </p>
+    </div>
+  </div>
+</div>
+<br />
 <button
   class="btn btn-warning"
   (click)="updateStatus()"
-  *ngIf="dataEntry.kode_fasilitas_name === 'PTA'"
   style="float: right"
+  *ngIf="memeriksaChecked && dataEntry.kode_fasilitas_name === 'PTA'"
   [hidden]="
-    this.untukSessionRole === 'BRANCHMANAGER' || (dataEntry.kode_fasilitas_name === 'PTA' && this.untukSessionRole === 'VER_PRE_SPV')
+    this.untukSessionRole === 'BRANCHMANAGER' || (dataEntry.kode_fasilitas_name === 'PTA' && this.untukSessionRole === 'VER_PRE_SPV' )
   "
 >
   Update Status

@@ -104,10 +104,27 @@
   </div>
 </div>
 <br />
+<div class="form-group row" [hidden]="this.untukSessionRole == 'BRANCHMANAGER' || this.untukSessionRole == 'VER_PRE_SPV'">
+  <div class="col-md-8">
+    <div class="form-group">
+      <p id="telahmemeriksa">
+        <input
+          style="width: 20px; height: 20px"
+          type="checkbox"
+          #memeriksa
+          (change)="periksa(memeriksa)"
+        />
+        {{ this.termAndCondition }}
+      </p>
+    </div>
+  </div>
+</div>
+<br />
 <button class="btn btn-warning" (click)="next()" [hidden]="this.untukSessionRole === 'AO'" style="float: right">Selanjutnya</button>
 <button
   class="btn btn-warning"
   (click)="updateStatus()"
+  *ngIf="memeriksaChecked"
   [hidden]="this.untukSessionRole === 'BRANCHMANAGER' || this.untukSessionRole === 'VER_PRE_SPV'"
   style="float: right"
 >

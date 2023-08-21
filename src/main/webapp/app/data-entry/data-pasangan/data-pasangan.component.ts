@@ -8,7 +8,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { datapasangamodel } from './data-pasangan-model';
 import { DataEntryService } from '../services/data-entry.service';
 import { SessionStorageService } from 'ngx-webstorage';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { fetchAllDe } from 'app/upload-document/services/config/fetchAllDe.model';
 import { environment } from 'environments/environment';
 import { refJenisPekerjaan } from '../services/config/refJenisPekerjaan.model';
@@ -122,8 +122,17 @@ export class DataPasanganComponent implements OnInit {
     }, 2);
 
     setTimeout(() => {
+      const emailPasanganValidator = <FormControl>this.dataPasanganForm.get('email_pasangan');
       this.datEntryService.getCustomerByCuref(this.curef).subscribe(customer => {
         this.customerModel = customer.result;
+
+        if(this.customerModel.fasilitas_name === "PTA"){
+        emailPasanganValidator.setValidators(null);
+        }
+        else{
+        emailPasanganValidator.setValidators([Validators.required]);
+        }
+        emailPasanganValidator.updateValueAndValidity();
       });
     }, 5);
 
