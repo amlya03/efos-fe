@@ -406,224 +406,379 @@ export class HasilPrescreeningComponent implements OnInit, OnDestroy {
 
     // get Data Dukcapil
     if (this.dataEntry.status_perkawinan === 'KAWIN') {
-      this.initialDataEntry.getDataDukcapil(this.dataEntry.no_ktp).subscribe({
-        next: dukcapilResponse => {
-          this.dukcapilModel = dukcapilResponse.result;
-
-          this.initialDataEntry.getDataDukcapil(this.dataEntry.no_ktp_pasangan).subscribe({
-            next: dukcapilResponseMenikah => {
-              this.datadukcapilpasangan = dukcapilResponseMenikah.result;
-
-              setTimeout(() => {
-                this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe({
-                  next: getdataSLikMenikah => {
-                    this.resultDataSlik = getdataSLikMenikah.result.dataSlikResult;
-                    // /////////////////////// Logic SLIK ////////////////////////
-                    if (getdataSLikMenikah.result == '') {
-                      this.getLoading(false);
-                    }
-
-                    if (getdataSLikMenikah.result.dataSlikResult == '') {
-                      this.hideCekSlik = 0;
-                    } else {
-                      this.hideCekSlik = 1;
-                    }
-                    // /////////////////////// Logic SLIK ////////////////////////
-
-                    setTimeout(() => {
-                      this.totalOutNas = getdataSLikMenikah.result.total_outstanding_nasabah;
-                      this.totalPlaNas = getdataSLikMenikah.result.total_plafon_nasabah;
-                      this.totalAngNas = getdataSLikMenikah.result.total_angsuran_nasabah;
-                      this.totalPasOut = getdataSLikMenikah.result.total_outstanding_pasangan;
-                      this.totalPasPla = getdataSLikMenikah.result.total_plafon_pasangan;
-                      this.totalPasAng = getdataSLikMenikah.result.total_angsuran_pasangan;
-                    }, 10);
-
-                    setTimeout(() => {
-                      if (this.resultDataSlik == '') {
-                        this.http
-                          .post<any>(this.baseUrl + 'v1/efos-ide/slik_verify', {
-                            channelID: 'EFOS',
-                            createdBy: this.sessionStorageService.retrieve('sessionUserName'),
-                            idUserCabang: this.sessionStorageService.retrieve('sessionUserName'),
-                            jenisKelamin: this.jenisKelaminHps,
-                            jenisKelaminPasangan: this.jenisKelaminPasHps,
-                            jenisProduct: this.dataEntry.fasilitas_name,
-                            kodeCabang: this.sessionStorageService.retrieve('sessionKdCabang'),
-                            namaNasabah: this.dataEntry.nama,
-                            namaPasangan: this.dataEntry.nama_pasangan,
-                            noAplikasi: this.dataEntry.app_no_ide,
-                            noKtp: this.dataEntry.no_ktp,
-                            noKtpPasangan: this.dataEntry.no_ktp_pasangan,
-                            npwp: this.dataEntry.npwp,
-                            reffNumber: reffnumbernya,
-                            statusMenikah: this.statusMenikahHps,
-                            tempatLahir: this.dataEntry.tempat_lahir,
-                            tempatLahirPasangan: this.dataEntry.tempat_lahir_pasangan,
-                            tglLahir: this.dataEntry.tanggal_lahir,
-                            tglLahirPasangan: this.dataEntry.tanggal_lahir_pasangan,
-                            timestamp: timestamp2,
-                            tujuanSlikChecking: '1',
-                          })
-                          .subscribe({
-                            next: menikahSlikResponse => {
-                              setTimeout(() => {
-                                if (menikahSlikResponse.code == 200) {
-                                  let responseResultSukses: any;
-                                  const responseSlikMenikah = menikahSlikResponse.result.responseDesc;
-                                  if (responseSlikMenikah === 'request slik checking success') {
-                                    this.responseSlikMenikah = 1;
-                                    responseResultSukses = '';
-                                  } else {
-                                    responseResultSukses = menikahSlikResponse.result.dataSlikResult;
-                                    this.responseSlikMenikah = 0;
-                                  }
-                                  this.dataslik = menikahSlikResponse.result.responseObject;
-                                  this.dataslik.forEach(element => {
-                                    if (
-                                      element.statusApplicant === 'Debitur Utama' ||
-                                      element.statusApplicant == '' ||
-                                      element.statusApplicant == null
-                                    ) {
-                                      this.listLajangSlik.push(element);
-                                      if (this.listLajangSlik[0].idNumber === 'undefined') {
-                                        this.responseNasabah = responseResultSukses[0].response_description;
-                                      } else {
-                                        this.responseNasabah = 'checking slik on process';
-                                      }
-                                    } else {
-                                      this.listMenikahSlik.push(element);
-                                      if (this.listMenikahSlik[0].idNumber === 'undefined') {
-                                        this.responsePasangan = this.listMenikahSlik[0].response_description;
-                                      } else {
-                                        this.responsePasangan = 'checking slik on process';
-                                      }
-                                    }
-                                    this.getLoading(false);
-                                  });
-                                  this.dtTrigger.next(responseSlikMenikah);
-                                } else {
-                                  this.dtTrigger.next(this.resultDataSlik);
-                                  this.getLoading(false);
-                                  alert(menikahSlikResponse.message);
-                                }
-                              }, 50);
-                            },
-                            error: () => {
-                              this.getLoading(false);
-                            },
-                          });
-                      } else {
-                        this.dataslik = getdataSLikMenikah.result.dataSlikResult;
-                        setTimeout(() => {
-                          let responseFailedLaj: any;
-                          let responseFailedMen: any;
-                          this.dataslik.forEach(response => {
-                            if (
-                              response.status_applicant === 'Debitur Utama' ||
-                              response.status_applicant == '' ||
-                              response.status_applicant == null
-                            ) {
-                              // alert(this.dataslik[0].status_applicant)
-                              this.listLajangSlik.push(response);
-                              // if (this.listLajangSlik[0].idNumber === 'undefined') {
-                              responseFailedLaj = this.listLajangSlik[0].response_description;
-                              if (responseFailedLaj.includes('get SLIK Result Failed')) {
-                                this.responseNasabah = 'SLIK Result Failed';
-                              } else {
-                                this.responseNasabah = this.listLajangSlik[0].response_description;
-                              }
-                              //   console.warn(this.responseNasabah)
-                              // } else {
-                              //   this.responseNasabah = 'checking slik on process';
-                              // }
-                            } else {
-                              this.listMenikahSlik.push(response);
-                              // if (this.listMenikahSlik[0].idNumber === 'undefined') {
-                              responseFailedMen = this.listMenikahSlik[0].response_description;
-                              if (responseFailedMen.includes('get SLIK Result Failed')) {
-                                this.responsePasangan = 'SLIK Result Failed';
-                              } else {
-                                this.responsePasangan = this.listMenikahSlik[0].response_description;
-                              }
-                              // } else {
-                              //   this.responsePasangan = 'checking slik on process';
-                              // }
-                            }
-                          });
-                          setTimeout(() => {
-                            let tanggalJatuhTempoLajang: any;
-                            let tanggalMulaiLajang: any;
-                            this.listLajangSlik.forEach(sLikMenikahRssponse => {
-                              // ///////////////////// Mulai ////////////////////////////
-                              tanggalMulaiLajang = sLikMenikahRssponse.tanggal_mulai;
-                              const resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
-                              const resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
-                              const resultMulaiTanggal = tanggalMulaiLajang.slice(6);
-                              this.joinLajangTanggalMulai = resultMulaiTahun + '/' + resultMulaiBulan + '/' + resultMulaiTanggal;
-                              // ///////////////////// Mulai ////////////////////////////
-
-                              // ///////////////////// Jatuh Tempo ////////////////////////////
-                              tanggalJatuhTempoLajang = sLikMenikahRssponse.tanggal_jatuh_tempo;
-                              const resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
-                              const resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
-                              const resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
-                              this.joinLajangJatuhTempoMulai =
-                                resultJatuhTempoTahun + '/' + resultJatuhTempoBulan + '/' + resultJatuhTempoTanggal;
-                              // ///////////////////// Jatuh Tempo ////////////////////////////
-                            });
-
-                            let tanggalMulaiMenikah: any;
-                            let tanggalJatuhTempoMenikah: any;
-                            this.listMenikahSlik.forEach(slikMenikah => {
-                              // ///////////////////// Mulai ////////////////////////////
-                              tanggalMulaiMenikah = slikMenikah.tanggal_mulai;
-                              const resultMenikahMulaiTahun = tanggalMulaiMenikah.slice(0, 4);
-                              const resultMenikahMulaiBulan = tanggalMulaiMenikah.slice(4, 6);
-                              const resultMenikahMulaiTanggal = tanggalMulaiMenikah.slice(6);
-                              this.joinMenikahTanggalMulai =
-                                resultMenikahMulaiTahun + '/' + resultMenikahMulaiBulan + '/' + resultMenikahMulaiTanggal;
-                              // ///////////////////// Mulai ////////////////////////////
-
-                              // ///////////////////// Jatuh Tempo ////////////////////////////
-                              tanggalJatuhTempoMenikah = slikMenikah.tanggal_jatuh_tempo;
-                              const resultMenikahJatuhTempoTahun = tanggalJatuhTempoMenikah.slice(0, 4);
-                              const resultMenikahJatuhTempoBulan = tanggalJatuhTempoMenikah.slice(4, 6);
-                              const resultMenikahJatuhTempoTanggal = tanggalJatuhTempoMenikah.slice(6);
-                              this.joinMenikahJatuhTempoMulai =
-                                resultMenikahJatuhTempoTahun + '/' + resultMenikahJatuhTempoBulan + '/' + resultMenikahJatuhTempoTanggal;
-                              // ///////////////////// Jatuh Tempo ////////////////////////////
-                            });
-                          }, this.dataslik.length * 1);
-                          this.dtTrigger.next(this.dataslik);
-                          this.getLoading(false);
-                        }, 50);
-                      }
-                    }, 30);
-                  },
-                  error: () => {
+      if (this.dataEntry.fasilitas_name === 'PTA') {
+        this.initialDataEntry.getDataDukcapil(this.dataEntry.no_ktp).subscribe({
+          next: dukcapilResponse => {
+            this.dukcapilModel = dukcapilResponse.result;
+  
+            setTimeout(() => {
+              this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe({
+                next: getDataSLik => {
+                  if (getDataSLik.result == '') {
                     this.getLoading(false);
-                  },
-                });
-              }, 50);
-            },
-            error(errordukcapilResponseMenikah) {
-              Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: errordukcapilResponseMenikah.error.message,
+                  }
+                  this.listLajangSlik = getDataSLik.result.dataSlikResult;
+  
+                  if (getDataSLik.result.dataSlikResult == '') {
+                    this.hideCekSlik = 0;
+                  } else {
+                    this.hideCekSlik = 1;
+                  }
+  
+                  setTimeout(() => {
+                    this.totalOutNas = getDataSLik.result.total_outstanding_nasabah;
+                    this.totalPlaNas = getDataSLik.result.total_plafon_nasabah;
+                    this.totalAngNas = getDataSLik.result.total_angsuran_nasabah;
+                    this.totalPasOut = getDataSLik.result.total_outstanding_pasangan;
+                    this.totalPasPla = getDataSLik.result.total_plafon_pasangan;
+                    this.totalPasAng = getDataSLik.result.total_angsuran_pasangan;
+                  }, 20);
+  
+                  setTimeout(() => {
+                    if (getDataSLik.result.dataSlikResult == '') {
+                      this.http
+                        .post<any>(this.baseUrl + 'v1/efos-ide/slik_verify', {
+                          channelID: 'EFOS',
+                          createdBy: this.sessionStorageService.retrieve('sessionUserName'),
+                          idUserCabang: this.sessionStorageService.retrieve('sessionUserName'),
+                          jenisKelamin: this.jenisKelaminHps,
+                          jenisKelaminPasangan: this.jenisKelaminPasHps,
+                          jenisProduct: this.dataEntry.fasilitas_name,
+                          kodeCabang: this.sessionStorageService.retrieve('sessionKdCabang'),
+                          namaNasabah: this.dataEntry.nama,
+                          namaPasangan: this.dataEntry.nama_pasangan,
+                          noAplikasi: this.dataEntry.app_no_ide,
+                          noKtp: this.dataEntry.no_ktp,
+                          noKtpPasangan: this.dataEntry.no_ktp_pasangan,
+                          npwp: this.dataEntry.npwp,
+                          reffNumber: reffnumbernya,
+                          statusMenikah: this.statusMenikahHps,
+                          tempatLahir: this.dataEntry.tempat_lahir,
+                          tempatLahirPasangan: this.dataEntry.tempat_lahir_pasangan,
+                          tglLahir: this.dataEntry.tanggal_lahir,
+                          tglLahirPasangan: this.dataEntry.tanggal_lahir_pasangan,
+                          timestamp: timestamp2,
+                          tujuanSlikChecking: '1',
+                        })
+                        .subscribe({
+                          next: dataSlikVerify => {
+                            $('#example').DataTable({
+                              destroy: true,
+                            });
+                            this.dtTrigger.unsubscribe();
+                            if (dataSlikVerify.code == 200) {
+                              this.responseNasabah = this.listLajangSlik[0].response_description;
+                              let tanggalMulaiLajang: any;
+                              let tanggalJatuhTempoLajang: any;
+                              this.listLajangSlik.forEach(lajangSLikResponse => {
+                                // ///////////////////// Mulai ////////////////////////////
+                                tanggalMulaiLajang = lajangSLikResponse.tanggal_mulai;
+                                const resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
+                                const resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
+                                const resultMulaiTanggal = tanggalMulaiLajang.slice(6);
+                                this.joinLajangTanggalMulai = resultMulaiTahun + '/' + resultMulaiBulan + '/' + resultMulaiTanggal;
+                                // ///////////////////// Mulai ////////////////////////////
+  
+                                // ///////////////////// Jatuh Tempo ////////////////////////////
+                                tanggalJatuhTempoLajang = lajangSLikResponse.tanggal_jatuh_tempo;
+                                const resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
+                                const resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
+                                const resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
+                                this.joinLajangJatuhTempoMulai =
+                                  resultJatuhTempoTahun + '/' + resultJatuhTempoBulan + '/' + resultJatuhTempoTanggal;
+                                // ///////////////////// Jatuh Tempo ////////////////////////////
+                              });
+                              this.dtTrigger.next(this.listLajangSlik);
+                              this.getLoading(false);
+                            } else {
+                              this.responseNasabah = this.listLajangSlik[0].response_description;
+                              let tanggalMulaiLajang: any;
+                              let tanggalJatuhTempoLajang: any;
+                              this.listLajangSlik.forEach(slikLajangResonse => {
+                                // ///////////////////// Mulai ////////////////////////////
+                                tanggalMulaiLajang = slikLajangResonse.tanggal_mulai;
+                                const resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
+                                const resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
+                                const resultMulaiTanggal = tanggalMulaiLajang.slice(6);
+                                this.joinLajangTanggalMulai = resultMulaiTahun + '/' + resultMulaiBulan + '/' + resultMulaiTanggal;
+                                // ///////////////////// Mulai ////////////////////////////
+  
+                                // ///////////////////// Jatuh Tempo ////////////////////////////
+                                tanggalJatuhTempoLajang = slikLajangResonse.tanggal_jatuh_tempo;
+                                const resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
+                                const resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
+                                const resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
+                                this.joinLajangJatuhTempoMulai =
+                                  resultJatuhTempoTahun + '/' + resultJatuhTempoBulan + '/' + resultJatuhTempoTanggal;
+                                // ///////////////////// Jatuh Tempo ////////////////////////////
+                              });
+                              this.dtTrigger.next(this.listLajangSlik);
+                              this.getLoading(false);
+                            }
+                          },
+                          error: () => {
+                            this.getLoading(false);
+                          },
+                        });
+                    } else {
+                      let tanggalMulaiLajang: any;
+                      let tanggalJatuhTempoLajang: any;
+                      this.responseNasabah = this.listLajangSlik[0].response_description;
+                      this.listLajangSlik.forEach(slikLajang => {
+                        // ///////////////////// Mulai ////////////////////////////
+                        tanggalMulaiLajang = slikLajang.tanggal_mulai;
+                        const resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
+                        const resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
+                        const resultMulaiTanggal = tanggalMulaiLajang.slice(6);
+                        this.joinLajangTanggalMulai = resultMulaiTahun + '/' + resultMulaiBulan + '/' + resultMulaiTanggal;
+                        // ///////////////////// Mulai ////////////////////////////
+  
+                        // ///////////////////// Jatuh Tempo ////////////////////////////
+                        tanggalJatuhTempoLajang = slikLajang.tanggal_jatuh_tempo;
+                        const resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
+                        const resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
+                        const resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
+                        this.joinLajangJatuhTempoMulai = resultJatuhTempoTahun + '/' + resultJatuhTempoBulan + '/' + resultJatuhTempoTanggal;
+                        // ///////////////////// Jatuh Tempo ////////////////////////////
+                      });
+                      this.dtTrigger.next(this.listLajangSlik);
+                    }
+                  }, 30);
+                },
+                error: () => {
+                  this.getLoading(false);
+                },
               });
-            },
-          });
-        },
-        error(errorDukcapilResponse) {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: errorDukcapilResponse.error.message,
-          });
-        },
-      });
+            }, 50);
+          },
+          error(errorDukcapilResponse) {
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: errorDukcapilResponse.error.message,
+            });
+          },
+        });
+      } else {
+        this.initialDataEntry.getDataDukcapil(this.dataEntry.no_ktp).subscribe({
+          next: dukcapilResponse => {
+            this.dukcapilModel = dukcapilResponse.result;
+  
+            this.initialDataEntry.getDataDukcapil(this.dataEntry.no_ktp_pasangan).subscribe({
+              next: dukcapilResponseMenikah => {
+                this.datadukcapilpasangan = dukcapilResponseMenikah.result;
+  
+                setTimeout(() => {
+                  this.dataRumah.fetchSlik(this.dataEntry.app_no_ide).subscribe({
+                    next: getdataSLikMenikah => {
+                      this.resultDataSlik = getdataSLikMenikah.result.dataSlikResult;
+                      // /////////////////////// Logic SLIK ////////////////////////
+                      if (getdataSLikMenikah.result == '') {
+                        this.getLoading(false);
+                      }
+  
+                      if (getdataSLikMenikah.result.dataSlikResult == '') {
+                        this.hideCekSlik = 0;
+                      } else {
+                        this.hideCekSlik = 1;
+                      }
+                      // /////////////////////// Logic SLIK ////////////////////////
+  
+                      setTimeout(() => {
+                        this.totalOutNas = getdataSLikMenikah.result.total_outstanding_nasabah;
+                        this.totalPlaNas = getdataSLikMenikah.result.total_plafon_nasabah;
+                        this.totalAngNas = getdataSLikMenikah.result.total_angsuran_nasabah;
+                        this.totalPasOut = getdataSLikMenikah.result.total_outstanding_pasangan;
+                        this.totalPasPla = getdataSLikMenikah.result.total_plafon_pasangan;
+                        this.totalPasAng = getdataSLikMenikah.result.total_angsuran_pasangan;
+                      }, 10);
+  
+                      setTimeout(() => {
+                        if (this.resultDataSlik == '') {
+                          this.http
+                            .post<any>(this.baseUrl + 'v1/efos-ide/slik_verify', {
+                              channelID: 'EFOS',
+                              createdBy: this.sessionStorageService.retrieve('sessionUserName'),
+                              idUserCabang: this.sessionStorageService.retrieve('sessionUserName'),
+                              jenisKelamin: this.jenisKelaminHps,
+                              jenisKelaminPasangan: this.jenisKelaminPasHps,
+                              jenisProduct: this.dataEntry.fasilitas_name,
+                              kodeCabang: this.sessionStorageService.retrieve('sessionKdCabang'),
+                              namaNasabah: this.dataEntry.nama,
+                              namaPasangan: this.dataEntry.nama_pasangan,
+                              noAplikasi: this.dataEntry.app_no_ide,
+                              noKtp: this.dataEntry.no_ktp,
+                              noKtpPasangan: this.dataEntry.no_ktp_pasangan,
+                              npwp: this.dataEntry.npwp,
+                              reffNumber: reffnumbernya,
+                              statusMenikah: this.statusMenikahHps,
+                              tempatLahir: this.dataEntry.tempat_lahir,
+                              tempatLahirPasangan: this.dataEntry.tempat_lahir_pasangan,
+                              tglLahir: this.dataEntry.tanggal_lahir,
+                              tglLahirPasangan: this.dataEntry.tanggal_lahir_pasangan,
+                              timestamp: timestamp2,
+                              tujuanSlikChecking: '1',
+                            })
+                            .subscribe({
+                              next: menikahSlikResponse => {
+                                setTimeout(() => {
+                                  if (menikahSlikResponse.code == 200) {
+                                    let responseResultSukses: any;
+                                    const responseSlikMenikah = menikahSlikResponse.result.responseDesc;
+                                    if (responseSlikMenikah === 'request slik checking success') {
+                                      this.responseSlikMenikah = 1;
+                                      responseResultSukses = '';
+                                    } else {
+                                      responseResultSukses = menikahSlikResponse.result.dataSlikResult;
+                                      this.responseSlikMenikah = 0;
+                                    }
+                                    this.dataslik = menikahSlikResponse.result.responseObject;
+                                    this.dataslik.forEach(element => {
+                                      if (
+                                        element.statusApplicant === 'Debitur Utama' ||
+                                        element.statusApplicant == '' ||
+                                        element.statusApplicant == null
+                                      ) {
+                                        this.listLajangSlik.push(element);
+                                        if (this.listLajangSlik[0].idNumber === 'undefined') {
+                                          this.responseNasabah = responseResultSukses[0].response_description;
+                                        } else {
+                                          this.responseNasabah = 'checking slik on process';
+                                        }
+                                      } else {
+                                        this.listMenikahSlik.push(element);
+                                        if (this.listMenikahSlik[0].idNumber === 'undefined') {
+                                          this.responsePasangan = this.listMenikahSlik[0].response_description;
+                                        } else {
+                                          this.responsePasangan = 'checking slik on process';
+                                        }
+                                      }
+                                      this.getLoading(false);
+                                    });
+                                    this.dtTrigger.next(responseSlikMenikah);
+                                  } else {
+                                    this.dtTrigger.next(this.resultDataSlik);
+                                    this.getLoading(false);
+                                    alert(menikahSlikResponse.message);
+                                  }
+                                }, 50);
+                              },
+                              error: () => {
+                                this.getLoading(false);
+                              },
+                            });
+                        } else {
+                          this.dataslik = getdataSLikMenikah.result.dataSlikResult;
+                          setTimeout(() => {
+                            let responseFailedLaj: any;
+                            let responseFailedMen: any;
+                            this.dataslik.forEach(response => {
+                              if (
+                                response.status_applicant === 'Debitur Utama' ||
+                                response.status_applicant == '' ||
+                                response.status_applicant == null
+                              ) {
+                                // alert(this.dataslik[0].status_applicant)
+                                this.listLajangSlik.push(response);
+                                // if (this.listLajangSlik[0].idNumber === 'undefined') {
+                                responseFailedLaj = this.listLajangSlik[0].response_description;
+                                if (responseFailedLaj.includes('get SLIK Result Failed')) {
+                                  this.responseNasabah = 'SLIK Result Failed';
+                                } else {
+                                  this.responseNasabah = this.listLajangSlik[0].response_description;
+                                }
+                                //   console.warn(this.responseNasabah)
+                                // } else {
+                                //   this.responseNasabah = 'checking slik on process';
+                                // }
+                              } else {
+                                this.listMenikahSlik.push(response);
+                                // if (this.listMenikahSlik[0].idNumber === 'undefined') {
+                                responseFailedMen = this.listMenikahSlik[0].response_description;
+                                if (responseFailedMen.includes('get SLIK Result Failed')) {
+                                  this.responsePasangan = 'SLIK Result Failed';
+                                } else {
+                                  this.responsePasangan = this.listMenikahSlik[0].response_description;
+                                }
+                                // } else {
+                                //   this.responsePasangan = 'checking slik on process';
+                                // }
+                              }
+                            });
+                            setTimeout(() => {
+                              let tanggalJatuhTempoLajang: any;
+                              let tanggalMulaiLajang: any;
+                              this.listLajangSlik.forEach(sLikMenikahRssponse => {
+                                // ///////////////////// Mulai ////////////////////////////
+                                tanggalMulaiLajang = sLikMenikahRssponse.tanggal_mulai;
+                                const resultMulaiTahun = tanggalMulaiLajang.slice(0, 4);
+                                const resultMulaiBulan = tanggalMulaiLajang.slice(4, 6);
+                                const resultMulaiTanggal = tanggalMulaiLajang.slice(6);
+                                this.joinLajangTanggalMulai = resultMulaiTahun + '/' + resultMulaiBulan + '/' + resultMulaiTanggal;
+                                // ///////////////////// Mulai ////////////////////////////
+  
+                                // ///////////////////// Jatuh Tempo ////////////////////////////
+                                tanggalJatuhTempoLajang = sLikMenikahRssponse.tanggal_jatuh_tempo;
+                                const resultJatuhTempoTahun = tanggalJatuhTempoLajang.slice(0, 4);
+                                const resultJatuhTempoBulan = tanggalJatuhTempoLajang.slice(4, 6);
+                                const resultJatuhTempoTanggal = tanggalJatuhTempoLajang.slice(6);
+                                this.joinLajangJatuhTempoMulai =
+                                  resultJatuhTempoTahun + '/' + resultJatuhTempoBulan + '/' + resultJatuhTempoTanggal;
+                                // ///////////////////// Jatuh Tempo ////////////////////////////
+                              });
+  
+                              let tanggalMulaiMenikah: any;
+                              let tanggalJatuhTempoMenikah: any;
+                              this.listMenikahSlik.forEach(slikMenikah => {
+                                // ///////////////////// Mulai ////////////////////////////
+                                tanggalMulaiMenikah = slikMenikah.tanggal_mulai;
+                                const resultMenikahMulaiTahun = tanggalMulaiMenikah.slice(0, 4);
+                                const resultMenikahMulaiBulan = tanggalMulaiMenikah.slice(4, 6);
+                                const resultMenikahMulaiTanggal = tanggalMulaiMenikah.slice(6);
+                                this.joinMenikahTanggalMulai =
+                                  resultMenikahMulaiTahun + '/' + resultMenikahMulaiBulan + '/' + resultMenikahMulaiTanggal;
+                                // ///////////////////// Mulai ////////////////////////////
+  
+                                // ///////////////////// Jatuh Tempo ////////////////////////////
+                                tanggalJatuhTempoMenikah = slikMenikah.tanggal_jatuh_tempo;
+                                const resultMenikahJatuhTempoTahun = tanggalJatuhTempoMenikah.slice(0, 4);
+                                const resultMenikahJatuhTempoBulan = tanggalJatuhTempoMenikah.slice(4, 6);
+                                const resultMenikahJatuhTempoTanggal = tanggalJatuhTempoMenikah.slice(6);
+                                this.joinMenikahJatuhTempoMulai =
+                                  resultMenikahJatuhTempoTahun + '/' + resultMenikahJatuhTempoBulan + '/' + resultMenikahJatuhTempoTanggal;
+                                // ///////////////////// Jatuh Tempo ////////////////////////////
+                              });
+                            }, this.dataslik.length * 1);
+                            this.dtTrigger.next(this.dataslik);
+                            this.getLoading(false);
+                          }, 50);
+                        }
+                      }, 30);
+                    },
+                    error: () => {
+                      this.getLoading(false);
+                    },
+                  });
+                }, 50);
+              },
+              error(errordukcapilResponseMenikah) {
+                Swal.fire({
+                  position: 'center',
+                  icon: 'error',
+                  title: errordukcapilResponseMenikah.error.message,
+                });
+              },
+            });
+          },
+          error(errorDukcapilResponse) {
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: errorDukcapilResponse.error.message,
+            });
+          },
+        });
+      }
     } else {
       this.initialDataEntry.getDataDukcapil(this.dataEntry.no_ktp).subscribe({
         next: dukcapilResponse => {
