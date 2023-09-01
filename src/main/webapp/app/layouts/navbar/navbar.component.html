@@ -902,7 +902,7 @@
       <h6>Detail Approval</h6>
     </a>
   </div>
-  <div *ngIf="router.url === '/main-parameter-scoring' || router.url === '/input-scoring-manual'">
+  <div *ngIf="router.url === '/main-parameter-scoring' || router.url === '/input-scoring-manual' || router.url === '/parameter-rac'">
     <a
       class="nav-item nav-link"
       routerLink="main-parameter-scoring"
@@ -920,6 +920,15 @@
       *ngSwitchCase="'MAN_RISK'"
     >
       <h6>Parameter Scoring</h6>
+    </a>
+    <a
+      class="nav-item nav-link"
+      routerLink="parameter-rac"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngSwitchCase="'MAN_RISK'"
+    >
+      <h6>Parameter RAC</h6>
     </a>
   </div>
   <!--  untuk parameter -->

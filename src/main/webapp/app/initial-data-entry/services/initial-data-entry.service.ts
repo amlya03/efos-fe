@@ -9,7 +9,7 @@ import { environment } from 'environments/environment';
 import { dhnModel } from './config/dhnModel.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class InitialDataEntryService {
   koderetirvt = '';
@@ -108,8 +108,8 @@ export class InitialDataEntryService {
   // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getAppId(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.ideAppId);
+  getAppId(kode_fasilitas: any, cabang: any): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.ideAppId + '?cabang=' + cabang + '&kode_fasilitas=' + kode_fasilitas);
   }
   // ////////////////////// Ref Hubungan Emergency \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -123,7 +123,7 @@ export class InitialDataEntryService {
   getTokenDukcapil(): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(this.getTokenDucpil, {
       password: '3foWeb@pp',
-      username: 'efo',
+      username: 'efo'
     });
   }
   // ////////////////////// Get Token Ducapil \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -166,7 +166,7 @@ export class InitialDataEntryService {
 
   // ///////////////////////////////////////////////// get Duplicate Check ///////////////////////////////////////////////////
   getDuplicateCheck(noktp: any, nama: any): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.duplicateCheck + noktp + '&sn=' + nama);
+    return this.http.get<ApiResponse>(this.duplicateCheck + noktp);
   }
   // ///////////////////////////////////////////////// get Duplicate Check ///////////////////////////////////////////////////
 

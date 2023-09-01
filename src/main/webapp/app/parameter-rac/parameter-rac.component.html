@@ -1,0 +1,329 @@
+<jhi-loading-screen [isLoading]="isLoading" [isSpin]="isSpin"></jhi-loading-screen>
+<div style="background-image: linear-gradient(to right, #fff 0%, #fff 0%, #fff 0%, #8567d3 33%, #8567d3 66%, #fff 100%)">
+  <h3 style="color: #fff; text-align: center">Parameter RAC</h3>
+</div>
+<br />
+<div class="row form-material" [formGroup]="scoringForm">
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Status</label>
+      <div class="col-sm-8">
+        <select #status class="form-control" id="status" name="status">
+          <option value="">Pilih Status</option>
+          <option value="Aktif">Aktif</option>
+          <option value="Non Aktif">Non Aktif</option>
+        </select>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Jenis Fasilitas</label>
+      <div class="col-sm-8">
+        <select
+          #jenis_fasilitas
+          class="form-control"
+          (change)="onchangefasilitas(this.scoringForm.get('fasilitas')?.value)"
+          id="fasilitas"
+          formControlName="fasilitas"
+        >
+          <option selected value="">Pilih Jenis Fasilitas</option>
+          <option *ngFor="let fasilitas of modelJenisFasilitas" value="{{ fasilitas.kode_fasilitas }}|{{ fasilitas.deskripsi }}">
+            {{ fasilitas.deskripsi }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <br />
+  </div>
+  <br />
+  <div class="col">
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Segmentasi Fasilitas</label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <select #segmentasi_fasilitas class="form-control" formControlName="segmentasi_fasilitas" id="segmentasi_fasilitas">
+            <option value="">Pilih Segmentasi Fasilitas</option>
+            <option value="Secure">Secure</option>
+            <option value="Unsecure">Unsecure</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label">Kode Fasilitas</label>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <input #kode_fasilitas type="text" class="form-control" id="kode_fasilitas" formControlName="kode_fasilitas" />
+        </div>
+      </div>
+    </div>
+    <br />
+  </div>
+</div>
+<div class="col" style="text-align: center">
+  <br />
+  <button class="btn btn-info col-sm-1" style="float: center">Add</button>
+</div>
+<p></p>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" (click)="clickModals(test)">Launch demo modal</button>
+
+<ng-template #test>
+  <div class="modal-header">
+    <h5 class="modal-title" id="ModalTitleRAC">Master Parameter RAC</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" [formGroup]="createRacForm">
+    <div class="form-group row">
+      <label for="inputJenisFasilitas" class="col-sm-4 col-form-label">Jenis Fasilitas</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="inputJenisFasilitas" placeholder="Jenis Fasilitas" formControlName="fasilitas" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label for="inputKodeFasilitas" class="col-sm-4 col-form-label">Kode Fasilitas</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="inputKodeFasilitas" placeholder="Kode Fasilitas" formControlName="kode_fasilitas" />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <div class="col-sm-4">Status Kepegawaian</div>
+      <div class="col-sm-8">
+        <div class="form-check form-check-inline" *ngFor="let listTipePegawai of modelTipeKepegawaian; let i = index">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="kontrak"
+            id="kontrak"
+            value="{{ listTipePegawai.tipe_kepegawaian_deskripsi }}"
+            (change)="onCheckChangeKepegawaian($event)"
+            formControlName="status_kepegawaian"
+          />
+          <label class="form-check-label" for="kontrak"> Kontrak </label>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <label for="inputMinimalPendapatan" class="col-sm-4 col-form-label">Minimal Pendapatan</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          id="inputMinimalPendapatan"
+          placeholder="Minimal Pendapatan"
+          formControlName="min_pendapatan"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <div class="col-sm-4">Minimal Usia</div>
+      <div class="col-sm-6">
+        <div class="row" *ngFor="let listPernikahan of modelStatusPerkawinan; let i = index">
+          <div class="col-sm-1">
+            <input class="form-check-input" type="checkbox" id="single" />
+          </div>
+          <div class="col-sm-3">
+            <label class="form-check-label" for="single"> {{ listPernikahan.deskripsi }} </label>
+          </div>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="tahunMinimalUsiaSingle" placeholder="Tahun" formControlName="min_usia" />
+          </div>
+          <div class="col-sm-2">
+            <label class="form-check-label" for="tahunMinimalUsiaSingle"> Tahun </label>
+          </div>
+        </div>
+        <br />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <div class="col-sm-4">Segmentasi</div>
+      <div class="col-sm-8">
+        <div class="form-check form-check-inline" *ngFor="let listKategori of modelKategoriPekerjaan; let i = index">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="segmentasiFixIncome"
+            value="{{ listKategori.category_job_id }}|{{ listKategori.category_job_deskripsi }}"
+            (change)="onCheckChangeSegmentasi($event)"
+            formControlName="segmentasi"
+          />
+          <label class="form-check-label" for="segmentasiFixIncome"> {{ listKategori.category_job_deskripsi }} </label>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <div class="col-sm-4">Maksimal usia</div>
+      <div class="col-sm-8">
+        <div class="row" *ngFor="let listFromSegmentasi of checkboxSegmentasi; let i = index">
+          <label class="form-check-label" for="max_usiaFixIncome"> {{ listFromSegmentasi }} </label>
+          <div class="col-sm-3">
+            <select #status class="form-control" id="maksimalUsia" name="maksimalUsia" formControlName="tipe_pekerjaan">
+              <option value="">Pilih Tipe Pekerjaan</option>
+              <option value="{{ listTipe.job_desc }}" *ngFor="let listTipe of modelTipePekerjaan; let i = index">
+                {{ listTipe.job_desc }}
+              </option>
+            </select>
+          </div>
+          <div class="col-sm-1">
+            <label for="dan">&</label>
+          </div>
+          <div class="col-sm-4">
+            <select #status class="form-control" id="posisi" name="posisi" formControlName="posisi">
+              <option value="">Pilih Posisi</option>
+              <option value="Aktif">Aktif</option>
+              <option value="Non Aktif">Non Aktif</option>
+            </select>
+          </div>
+          <div class="col-sm-1">
+            <label for="samadengan">=</label>
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" id="inputJenisFasilitas" placeholder="Tahun" formControlName="max_usia" />
+          </div>
+        </div>
+        <br />
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <div class="col-sm-4">Minimal Masa Kerja</div>
+      <div class="col-sm-8">
+        <div class="row">
+          <label class="form-check-label" for="tetap"> Fix Income </label>
+          <div class="col-sm-3">
+            <select #status class="form-control" id="status" name="status">
+              <option value="">Pilih Status</option>
+              <option value="Aktif">Aktif</option>
+              <option value="Non Aktif">Non Aktif</option>
+            </select>
+          </div>
+          <div class="col-sm-1">
+            <label for="samadengan">=</label>
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" id="inputJenisFasilitas" placeholder="Tahun" />
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <label class="form-check-label" for="tetap"> Non Fix Income </label>
+          <div class="col-sm-3">
+            <select #status class="form-control" id="status" name="status">
+              <option value="">Pilih Status</option>
+              <option value="Aktif">Aktif</option>
+              <option value="Non Aktif">Non Aktif</option>
+            </select>
+          </div>
+          <div class="col-sm-1">
+            <label for="samadengan">=</label>
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" id="inputJenisFasilitas" placeholder="Tahun" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group row">
+      <div class="col-sm-4">Ketentuan Jenis Perusahaan</div>
+      <div class="col-sm-8">
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <label for="inputState"> </label>
+            <select id="inputState" class="form-control">
+              <option selected>Choose...</option>
+              <option>...</option>
+            </select>
+          </div>
+          <div class="form-group col-sm-6">
+            <div class="row">
+              <div class="col-sm-12">
+                <label class="col-sm-12 col-form-label" for="inputZip">Lama operasional perusahaan</label>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" id="inputZip" />
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="form-check-label" for="single"> Tahun </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <label class="col-sm-12 col-form-label" for="inputZip">Minimal jumlah karyawan</label>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" id="inputZip" />
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="form-check-label" for="single"> Tahun </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-primary">Save changes</button>
+  </div>
+</ng-template>
+
+<div class="table-responsive">
+  <table id="dataTables-example" class="table table-striped table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+    <thead>
+      <tr class="table-dark">
+        <th style="text-align: center">No</th>
+        <th style="text-align: center">Kode Fasilitas</th>
+        <th style="text-align: center">Jenis Fasilitas</th>
+        <th style="text-align: center">Segmentasi</th>
+        <th style="text-align: center">Tanggal Perubahan</th>
+        <th style="text-align: center">Status</th>
+        <th colspan="3" style="text-align: center" class="col-">Keterangan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let modelparameterrac of parameterrac; index as i">
+        <td style="text-align: center">{{ i + 1 }}</td>
+        <td style="text-align: center">{{ modelparameterrac.kode_fasilitas }}</td>
+        <td style="text-align: center">{{ modelparameterrac.jenis_fasilitas }}</td>
+        <td style="text-align: center">{{ modelparameterrac.segmentasi }}</td>
+        <td style="text-align: center">{{ modelparameterrac.updated_date }}</td>
+        <td style="text-align: center">{{ modelparameterrac.active }}</td>
+        <td style="text-align: center" class="col-1">
+          <a type="button">
+            <fa-icon icon="eye"></fa-icon>
+            <br />View
+          </a>
+        </td>
+        <td style="text-align: center" class="col-1">
+          <a type="button">
+            <fa-icon icon="eye"></fa-icon>
+            <br />Detail
+          </a>
+        </td>
+        <td style="text-align: center" class="col-1">
+          <a type="button" (click)="deleteData(modelparameterrac.id)">
+            <fa-icon icon="trash"></fa-icon>
+            <br />Delete
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p></p>
+<br />
+<br />

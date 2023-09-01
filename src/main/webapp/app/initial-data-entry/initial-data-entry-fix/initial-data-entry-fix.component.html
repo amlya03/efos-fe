@@ -305,16 +305,23 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">No KTP</label>
       <div class="col-sm-8">
-        <input
-          formControlName="no_ktp"
-          type="tel"
-          (keypress)="keyPressNumbers($event)"
-          class="form-control"
-          placeholder="Nomor KTP"
-          maxlength="16"
-          id="no_ktp"
-          name="no_ktp"
-        />
+        <div class="input-group mb-3">
+          <input
+            formControlName="no_ktp"
+            type="tel"
+            (keypress)="keyPressNumbers($event)"
+            class="form-control"
+            placeholder="Nomor KTP"
+            maxlength="16"
+            id="no_ktp"
+            name="no_ktp"
+          />
+          <div class="input-group-append">
+            <button (click)="carimenggunakanktp(this.ideForm.get('no_ktp')?.value)" class="btn btn-outline-dark" type="button">
+              Cari Data
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     <br />
@@ -1257,17 +1264,19 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">No KTP</label>
         <div class="col-sm-8">
-          <input
-            formControlName="no_ktp_pasangan"
-            type="tel"
-            (keypress)="keyKtpNpwp($event)"
-            class="form-control"
-            placeholder="Nomor KTP"
-            id="no_ktp_pasangan"
-            name="no_ktp_pasangan"
-            maxlength="16"
-            oninvalid="this.setCustomValidity('harap masukan 16 digit no ktp')"
-          />
+          <div class="input-group mb-3">
+            <input
+              formControlName="no_ktp_pasangan"
+              type="tel"
+              (keypress)="keyKtpNpwp($event)"
+              class="form-control"
+              placeholder="Nomor KTP"
+              id="no_ktp_pasangan"
+              name="no_ktp_pasangan"
+              maxlength="16"
+              oninvalid="this.setCustomValidity('harap masukan 16 digit no ktp')"
+            />
+          </div>
         </div>
       </div>
       <br />

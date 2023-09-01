@@ -95,6 +95,7 @@ import { ParameterjobComponent } from './parameterized/parameterjob/parameterjob
 import { DaftarAplikasiReviewSpvComponent } from './verification/daftar-aplikasi-review-spv/daftar-aplikasi-review-spv.component';
 import { InquiryComponent } from './inquiry/inquiry.component';
 import { InqueryDetailComponent } from './inquiry/inquirydetail/inquery-detail/inquery-detail.component';
+import { ParameterRacComponent } from './parameter-rac/parameter-rac.component';
 
 @NgModule({
   imports: [
@@ -117,14 +118,14 @@ import { InqueryDetailComponent } from './inquiry/inquirydetail/inquery-detail/i
     NgxEditorModule,
     ReactiveFormsModule,
     ReactiveFormsModule,
-    NgxCurrencyModule,
+    NgxCurrencyModule
   ],
   providers: [
     Title,
     { provide: LOCALE_ID, useValue: 'en' },
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
-    CurrencyPipe,
+    CurrencyPipe
   ],
   declarations: [
     MainComponent,
@@ -197,8 +198,9 @@ import { InqueryDetailComponent } from './inquiry/inquirydetail/inquery-detail/i
     DaftarAplikasiReviewSpvComponent,
     InquiryComponent,
     InqueryDetailComponent,
+    ParameterRacComponent
   ],
-  bootstrap: [MainComponent],
+  bootstrap: [MainComponent]
 })
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class AppModule {

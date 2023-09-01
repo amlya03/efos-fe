@@ -7,7 +7,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { environment } from 'environments/environment';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class InputScoringService {
   baseUrl: string = environment.baseUrl;
@@ -15,6 +15,14 @@ export class InputScoringService {
   // ////////////////////// get Sub Parameter Scoring BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   protected getParameterScoringUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/getParameterScoring?si=');
   // ////////////////////// get Sub Parameter Scoring BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // /////////////////////////// List Segmentasi ////////////////////////////////////////////
+  protected listSegmentasiUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_segmentasi');
+  // /////////////////////////// List Segmentasi ////////////////////////////////////////////
+
+  // /////////////////////////// List Tipe Kepegawaian ////////////////////////////////////////////
+  protected listTipeKepegawaianUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_RefTipeKepegawaian');
+  // /////////////////////////// List Tipe Kepegawaian ////////////////////////////////////////////
 
   // /////////////////////////// List scoring ////////////////////////////////////////////
   protected listScoring = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_data_scoring');
@@ -32,15 +40,31 @@ export class InputScoringService {
   protected parameterscoring = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_parameter_scoring');
   // /////////////////////////// Reff parameterscoring ////////////////////////////////////////////
 
+  // /////////////////////////// Reff parameterrac////////////////////////////////////////////
+  protected parameterrac = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_parameter_rac');
+  // /////////////////////////// Reff parameterscoring ////////////////////////////////////////////
+
+  // /////////////////////////// Reff kategori pekerjaan////////////////////////////////////////////
+  protected kategoripekerjaan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_RefKategoriPekerjaan');
+  // /////////////////////////// Reff kategori pekerjaan ////////////////////////////////////////////
+
   // /////////////////////////// Reff getmainparamterscoringbyid////////////////////////////////////////////
   protected reffgetmainparamterscoringbyid = this.applicationConfigService.getEndpointFor(
     this.baseUrl + 'v1/efos-ref/getMainParameterScoring?si='
   );
   // /////////////////////////// Reff getmainparamterscoringbyid ////////////////////////////////////////////
 
+  // /////////////////////////// Reff deleteracbyid////////////////////////////////////////////
+  protected reffdeleteracbyid = this.applicationConfigService.getEndpointFor(this.baseUrl + '/v1/efos-ref/delete_RefRAC?id=');
+  // /////////////////////////// Reff deleteracbyid ////////////////////////////////////////////
+
   // /////////////////////////// Reff getdatascoringbyid////////////////////////////////////////////
   protected reffgetdatascoringbyid = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/getDataScoring?si=');
   // /////////////////////////// Reff getdatascoringbyid ////////////////////////////////////////////
+
+  // /////////////////////////// Reff getparameterracbyid////////////////////////////////////////////
+  protected reffgetparameterracbyid = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/getrac?si=');
+  // /////////////////////////// Reff getparameterracbyid ////////////////////////////////////////////
 
   // /////////////////////////// Reff List Akad ////////////////////////////////////////////
   protected listAkadUrl = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_akad');
@@ -72,6 +96,18 @@ export class InputScoringService {
   }
   // ////////////////////// Ref scoring \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // ////////////////////// List segmentasi \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  listSegmentasi(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.listSegmentasiUrl);
+  }
+  // ////////////////////// List segmentasi \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////// List segmentasi \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  listTipeKepegawaian(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.listTipeKepegawaianUrl);
+  }
+  // ////////////////////// List segmentasi \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // ////////////////////// List scoring \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   listDataScoring(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.listScoring);
@@ -90,6 +126,18 @@ export class InputScoringService {
   }
   // ////////////////////// List listparameterscoring \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // ////////////////////// get listparameterrac \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  listparameterrac(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.parameterrac);
+  }
+  // ////////////////////// List listparameterrac \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////// get kategori pekerjaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  listkategoripekerjaan(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.kategoripekerjaan);
+  }
+  // ////////////////////// get kategori pekerjaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // ////////////////////// get listparameterscoring \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   getmainparameterscoringbyid(id: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.reffgetmainparamterscoringbyid + id);
@@ -102,11 +150,23 @@ export class InputScoringService {
   }
   // ////////////////////// List getdatascoringdetail\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // ////////////////////// get deleteracbyid \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getdeleterac(id: string | null | undefined): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.reffdeleteracbyid + id);
+  }
+  // ////////////////////// List getdatascoringdetail\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // ////////////////////// get Sub Parameter Scoring BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   getParameterScoring(id: string | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.getParameterScoringUrl + id);
   }
   // ////////////////////// get Sub Parameter Scoring BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  // ////////////////////// get Sub Parameter Rac BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  getParameterRac(id: string | null | undefined): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.reffgetparameterracbyid + id);
+  }
+  // ////////////////////// get Sub Parameter Rac BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // /////////////////////////// Reff list Ftv Scoring ////////////////////////////////////////////
   listFtvScoring(): Observable<ApiResponse> {

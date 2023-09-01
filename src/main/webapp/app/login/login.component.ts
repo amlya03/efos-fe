@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'jhi-login',
-  templateUrl: './login.component.html',
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements AfterViewInit {
   @ViewChild('username', { static: false })
@@ -23,7 +23,7 @@ export class LoginComponent implements AfterViewInit {
     username: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     // rememberMe: new FormControl(false, { nonNullable: true, validators: [Validators.required] }),
-    app: new FormControl('efo', { nonNullable: true }),
+    app: new FormControl('efo', { nonNullable: true })
   });
 
   constructor(
@@ -53,7 +53,7 @@ export class LoginComponent implements AfterViewInit {
             imageAlt: 'Custom image',
             showConfirmButton: false,
             allowEscapeKey: false,
-            allowOutsideClick: false,
+            allowOutsideClick: false
           });
           // There were no routing during login (eg from navigationToStoredUrl)
           this.router.navigate(['/home']).then(() => {
@@ -65,11 +65,11 @@ export class LoginComponent implements AfterViewInit {
         Swal.fire({
           icon: 'error',
           title: 'Perhatikan !',
-          text: 'User name atau Password salah',
+          text: 'User name atau Password salah'
         });
 
         this.authenticationError = true;
-      },
+      }
     });
   }
 }

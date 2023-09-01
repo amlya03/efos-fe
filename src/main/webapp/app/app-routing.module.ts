@@ -67,6 +67,7 @@ import { DaftarAplikasiReviewSpvComponent } from './verification/daftar-aplikasi
 import { InquiryComponent } from './inquiry/inquiry.component';
 import { InqueryDetailComponent } from './inquiry/inquirydetail/inquery-detail/inquery-detail.component';
 import { ParameterftpdpdetailComponent } from './parameterized/parameterstruktur/parameterftpdpdetail/parameterftpdpdetail.component';
+import { ParameterRacComponent } from './parameter-rac/parameter-rac.component';
 
 @NgModule({
   imports: [
@@ -75,286 +76,290 @@ import { ParameterftpdpdetailComponent } from './parameterized/parameterstruktur
         {
           path: 'admin',
           data: {
-            authorities: [Authority.ADMIN],
+            authorities: [Authority.ADMIN]
           },
           canActivate: [UserRouteAccessService],
-          loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule),
+          loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule)
         },
         {
           path: 'account',
-          loadChildren: () => import('./account/account.module').then(m => m.AccountModule),
+          loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
         },
         {
           path: 'login',
-          loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
+          loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
         },
         {
           path: 'daftar-aplikasi-verification',
-          component: VerificationComponent,
+          component: VerificationComponent
         },
         {
           path: 'daftar-aplikasi-waiting-assigment',
-          component: DaftarAplikasiWaitingAssigmentComponent,
+          component: DaftarAplikasiWaitingAssigmentComponent
         },
         {
           path: 'daftar-aplikasi-on-process',
-          component: DaftarAplikasiOnProcessComponent,
+          component: DaftarAplikasiOnProcessComponent
         },
         {
           path: 'daftar-review-spv1',
-          component: DaftarAplikasiWaitingUpdateStatusComponent,
+          component: DaftarAplikasiWaitingUpdateStatusComponent
         },
         {
           path: 'daftar-review-spv2',
-          component: DaftarAplikasiReviewSpvComponent,
+          component: DaftarAplikasiReviewSpvComponent
         },
         {
           path: 'data-calon-nasabah',
-          component: DataCalonNasabahComponent,
+          component: DataCalonNasabahComponent
         },
         {
           path: 'data-kantor',
-          component: DataKantorComponent,
+          component: DataKantorComponent
         },
         {
           path: 'analisa-keuangan',
-          component: DataRumahComponent,
+          component: DataRumahComponent
         },
         {
           path: 'mutasi-rekening',
-          component: MutasiRekeningComponent,
+          component: MutasiRekeningComponent
         },
         {
           path: 'sturktur-pembiayaan',
-          component: StukturPembiayaanComponent,
+          component: StukturPembiayaanComponent
         },
         {
           path: 'checklist-document',
-          component: ChecklistDocumentComponent,
+          component: ChecklistDocumentComponent
         },
         {
           path: 'syarat-persetujuan',
-          component: SyaratPersetujuanComponent,
+          component: SyaratPersetujuanComponent
         },
         {
           path: 'verification/memo',
-          component: MemoVerificationComponent,
+          component: MemoVerificationComponent
         },
         {
           path: 'kesimpulan',
-          component: KesimpulanComponent,
+          component: KesimpulanComponent
         },
         {
           path: 'data-entry',
-          component: DataEntryComponent,
+          component: DataEntryComponent
         },
         {
           path: 'data-entry/personalinfo',
-          component: PersonalInfoComponent,
+          component: PersonalInfoComponent
         },
         {
           path: 'data-entry/job-info',
-          component: JobInfoComponent,
+          component: JobInfoComponent
         },
         {
           path: 'data-entry/data-pasangan',
-          component: DataPasanganComponent,
+          component: DataPasanganComponent
         },
         {
           path: 'data-entry/pekerjaan-pasangan',
-          component: PekerjaanPasanganComponent,
+          component: PekerjaanPasanganComponent
         },
         {
           path: 'data-entry/collateral',
-          component: CollateralComponent,
+          component: CollateralComponent
         },
         {
           path: 'data-entry/struktur-pembiayaan',
-          component: StrukturPembiayaanComponent,
+          component: StrukturPembiayaanComponent
         },
         {
           path: 'data-entry/emergency-contact',
-          component: EmergencyContactComponent,
+          component: EmergencyContactComponent
         },
         {
           path: 'data-entry/call-report',
-          component: CallReportComponent,
+          component: CallReportComponent
         },
         {
           path: 'data-entry/editjobinfo',
-          component: EditjobinfoComponent,
+          component: EditjobinfoComponent
         },
         {
           path: 'data-entry/editcollateral',
-          component: CollateralEditComponent,
+          component: CollateralEditComponent
         },
         {
           path: 'data-entry/memo',
-          component: MemoComponent,
+          component: MemoComponent
         },
         {
           path: 'daftaraplikasiide',
-          component: InitialDataEntryComponent,
+          component: InitialDataEntryComponent
         },
         {
           path: 'daftaraplikasiidetambahide',
-          component: DaftarAplikasiPilihComponent,
+          component: DaftarAplikasiPilihComponent
         },
         {
           path: 'initial-data-entryfix',
-          component: InitialDataEntryFixComponent,
+          component: InitialDataEntryFixComponent
         },
         {
           path: 'hasilprescreening',
-          component: HasilPrescreeningComponent,
+          component: HasilPrescreeningComponent
         },
         {
           path: 'upload_document',
-          component: UploadDocumentComponent,
+          component: UploadDocumentComponent
         },
         {
           path: 'upload_document/upload_document_de',
-          component: UploadDocumentDeComponent,
+          component: UploadDocumentDeComponent
         },
         {
           path: 'upload_document/upload_document_agunan',
-          component: UploadDocumentAgunanComponent,
+          component: UploadDocumentAgunanComponent
         },
         {
           path: 'ideCoba',
-          component: InitialDataEntryComponent,
+          component: InitialDataEntryComponent
         },
         {
           path: 'daftar_input_mapis',
-          component: DaftarAplikasiIsiMapisComponent,
+          component: DaftarAplikasiIsiMapisComponent
         },
         {
           path: 'mapis',
-          component: MapisComponent,
+          component: MapisComponent
         },
         {
           path: 'input-scoring-manual',
-          component: InputScoringComponent,
+          component: InputScoringComponent
         },
         {
           path: 'komite',
-          component: KomiteComponent,
+          component: KomiteComponent
         },
         {
           path: 'komite/detail-komite',
-          component: DetailKomiteComponent,
+          component: DetailKomiteComponent
         },
         {
           path: 'home',
-          component: HomeComponent,
+          component: HomeComponent
         },
         {
           path: 'parameterized',
-          component: ParameterizedComponent,
+          component: ParameterizedComponent
         },
         {
           path: 'parameterjob',
-          component: ParameterjobComponent,
+          component: ParameterjobComponent
         },
         {
           path: 'parameterjobjenispekerjaan',
-          component: ParameterjenispekerjaanComponent,
+          component: ParameterjenispekerjaanComponent
         },
 
         {
           path: 'parameteragunan',
-          component: ParameteragunanComponent,
+          component: ParameteragunanComponent
         },
         {
           path: 'parameteragunandeveloper',
-          component: ParameterdeveloperComponent,
+          component: ParameterdeveloperComponent
         },
         {
           path: 'parameteragunanfasilitaslistrik',
-          component: ParameterfasilitaslistrikComponent,
+          component: ParameterfasilitaslistrikComponent
         },
         {
           path: 'parameteragunanhubkepemilikanagunan',
-          component: ParameterhubkepemilikanagunanComponent,
+          component: ParameterhubkepemilikanagunanComponent
         },
         {
           path: 'parameteragunanjenisobjekagunan',
-          component: ParameterjenisobjekagunanComponent,
+          component: ParameterjenisobjekagunanComponent
         },
 
         {
           path: 'parameterstruktur',
-          component: ParameterstrukturComponent,
+          component: ParameterstrukturComponent
         },
         {
           path: 'parameterstrukturprogram',
-          component: ParameterprogramComponent,
+          component: ParameterprogramComponent
         },
         {
           path: 'parameterstrukturproduk',
-          component: ParameterprodukComponent,
+          component: ParameterprodukComponent
         },
         {
           path: 'parameterstrukturskema',
-          component: ParameterskemaComponent,
+          component: ParameterskemaComponent
         },
         {
           path: 'parameterstrukturskemafasilitas',
-          component: ParameterskemafasilitasComponent,
+          component: ParameterskemafasilitasComponent
         },
         {
           path: 'parameterstrukturmarginfix',
-          component: ParametermarginfixComponent,
+          component: ParametermarginfixComponent
         },
         {
           path: 'parameterstrukturmarginstepup',
-          component: ParametermarginstepupComponent,
+          component: ParametermarginstepupComponent
         },
         {
           path: 'parameterstrukturftpdp',
-          component: ParameterftpdpComponent,
+          component: ParameterftpdpComponent
         },
         {
           path: 'parameterstrukturftpdpdetail',
-          component: ParameterftpdpdetailComponent,
+          component: ParameterftpdpdetailComponent
         },
         {
           path: 'main-parameter-scoring',
-          component: InputparameterscoringComponent,
+          component: InputparameterscoringComponent
         },
         {
           path: 'negative-list',
-          component: NegativeListComponent,
+          component: NegativeListComponent
         },
         {
           path: 'head-appraisal',
-          component: HeadAppraisalComponent,
+          component: HeadAppraisalComponent
         },
         {
           path: 'daftar-aplikasi-appraisal',
-          component: DaftarAplikasiAppraisalComponent,
+          component: DaftarAplikasiAppraisalComponent
         },
         {
           path: 'inquiry',
-          component: InquiryComponent,
+          component: InquiryComponent
         },
         {
           path: 'inquiry-detail',
-          component: InqueryDetailComponent,
+          component: InqueryDetailComponent
+        },
+        {
+          path: 'parameter-rac',
+          component: ParameterRacComponent
         },
         {
           path: '',
           // loadChildren: () => import(`./entities/entity-routing.module`).then(m => m.EntityRoutingModule),
           redirectTo: 'login',
-          pathMatch: 'full',
+          pathMatch: 'full'
         },
         navbarRoute,
-        ...errorRoute,
+        ...errorRoute
       ],
       { enableTracing: DEBUG_INFO_ENABLED }
-    ),
+    )
   ],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class AppRoutingModule {}
