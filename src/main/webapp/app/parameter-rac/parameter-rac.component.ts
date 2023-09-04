@@ -23,6 +23,8 @@ import { getListTipePekerjaan } from 'app/data-entry/services/config/getListTipe
 import { refKategoriPekerjaanModel } from 'app/data-entry/services/config/refKategoriPekekerjaanModel.model';
 import { refTipeKepegawaianModel } from 'app/data-entry/services/config/refTipeKepegawaianModel.model';
 import { refStatusPerkawinan } from 'app/verification/service/config/refStatusPerkawinan.model';
+import { refJabatan } from 'app/verification/service/config/refJabatan.model';
+import { refTipePerusahaan } from 'app/data-entry/services/config/refTipePerusahaan.model';
 
 @Component({
   selector: 'jhi-parameter-rac',
@@ -42,8 +44,22 @@ export class ParameterRacComponent implements OnInit {
   modelTipeKepegawaian: refTipeKepegawaianModel[] = [];
   modelStatusPerkawinan: refStatusPerkawinan[] = [];
   modelTipePekerjaan: getListTipePekerjaan[] = [];
+  modelTipePekerjaanFix: getListTipePekerjaan[] = [];
+  modelTipePekerjaanNon: getListTipePekerjaan[] = [];
+  modelPosisi: refJabatan[] = [];
+  modelTipePerusahaan: refTipePerusahaan[] = [];
+
   checkboxSegmentasi: String[] = [];
   checkboxKepegawaian: String[] = [];
+  checkboxPernikahan: String[] = [];
+
+  kodevalue: String[] = [];
+  pekerjaanValue: String[] = [];
+  thnMinUsia: any;
+  pekerjaanMaxUsia: any;
+
+  // /////////////////////
+  storeCheckboxCondition: any = undefined;
 
   // Start Data Tables
   @ViewChild(DataTableDirective, { static: true })
@@ -79,20 +95,7 @@ export class ParameterRacComponent implements OnInit {
       status: '',
       fasilitas: '',
       segmentasi_fasilitas: '',
-      kode_fasilitas: { value: '' || null, disabled: true },
-      updated_date: '',
-      status_kepegawaian: '',
-      min_pendapatan: '',
-      status_pernikahan: '',
-      min_usia: '',
-      segmentasi: new FormArray([]),
-      max_usia: '',
-      min_masakerja: '',
-      jenis_perusahaan: '',
-      lama_beroperasi: '',
-      jumlah_karyawan: '',
-      tipe_pekerjaan: '',
-      posisi: ''
+      kode_fasilitas: { value: '' || null, disabled: true }
     });
 
     this.createRacForm = this.formBuilder.group({
@@ -100,7 +103,7 @@ export class ParameterRacComponent implements OnInit {
       segmentasi_fasilitas: '',
       kode_fasilitas: { value: '' || null, disabled: true },
       updated_date: '',
-      status_kepegawaian: '',
+      status_kepegawaian: '' /*this.formBuilder.array([])*/,
       min_pendapatan: '',
       status_pernikahan: '',
       min_usia: '',
@@ -111,13 +114,14 @@ export class ParameterRacComponent implements OnInit {
       lama_beroperasi: '',
       jumlah_karyawan: '',
       tipe_pekerjaan: '',
+      tipe_perusahaan: '',
       posisi: ''
     });
 
     this.load();
   }
 
-  load(): void {
+  load(): any {
     this.getLoading(true);
 
     setTimeout(() => {
@@ -141,7 +145,9 @@ export class ParameterRacComponent implements OnInit {
     setTimeout(() => {
       this.scoringServices.listparameterrac().subscribe({
         next: racResponse => {
+          // Save result to model
           this.parameterrac = racResponse.result;
+
           // Pemanggilan value ke datatables
           this.dtTrigger.next(this.parameterrac);
           this.getLoading(false);
@@ -160,6 +166,16 @@ export class ParameterRacComponent implements OnInit {
         this.modelStatusPerkawinan = status.result;
       });
     }, 6);
+    setTimeout(() => {
+      this.dataEntryService.getFetchListJabatan().subscribe(data => {
+        this.modelPosisi = data.result;
+      });
+    }, 7);
+    setTimeout(() => {
+      this.dataEntryService.getFetchTipePerusahaan().subscribe(data => {
+        this.modelTipePerusahaan = data.result;
+      });
+    }, 8);
   }
 
   deleteData(id: any): void {
@@ -183,55 +199,99 @@ export class ParameterRacComponent implements OnInit {
     });
   }
 
-  createR(): void {}
-
   onCheckChangeSegmentasi(event: any) {
+    // $('#andLabel0').hide();
     let kodeKategoriPekerjaan: any;
     let deskripsiKategoriPekerjaan: any;
     if (event.target.checked) {
       // /* Selected */
       this.checkboxSegmentasi.push(event.target.value);
-      this.checkboxSegmentasi.forEach((value: String) => {
+      this.checkboxSegmentasi.forEach((value: String, index: number) => {
         kodeKategoriPekerjaan = value.split('|')[0];
         deskripsiKategoriPekerjaan = value.split('|')[1];
-        this.dataEntryService.getFetchListTipePekerjaan(kodeKategoriPekerjaan).subscribe(status => {
-          this.modelTipePekerjaan = status.result;
-          console.warn(this.modelTipePekerjaan);
-        });
+
+        // console.warn(value, index, array);
+
+        // get list Tipe Pekerjaan
+        if (kodeKategoriPekerjaan == 2) {
+          this.dataEntryService.getFetchListTipePekerjaan(kodeKategoriPekerjaan).subscribe(status => {
+            this.modelTipePekerjaanNon = status.result;
+          });
+        } else {
+          this.dataEntryService.getFetchListTipePekerjaan(kodeKategoriPekerjaan).subscribe(status => {
+            this.modelTipePekerjaanFix = status.result;
+          });
+        }
+
+        // Condition Checkbox
+        if (kodeKategoriPekerjaan == 2) this.storeCheckboxCondition = index;
       });
-      console.warn('check ', this.checkboxSegmentasi);
+      // console.warn(this.storeCheckboxCondition);
+      // console.warn('check ', this.checkboxSegmentasi);
     } else {
       // /* unselected */
       const index = this.checkboxSegmentasi.findIndex(list => list === event.target.value);
       this.checkboxSegmentasi.splice(index, 1);
-      this.checkboxSegmentasi.forEach((value: String) => {
+      this.checkboxSegmentasi.forEach((value: String, number: number) => {
         kodeKategoriPekerjaan = value.split('|')[0];
         deskripsiKategoriPekerjaan = value.split('|')[1];
-        this.dataEntryService.getFetchListTipePekerjaan(kodeKategoriPekerjaan).subscribe(status => {
-          this.modelTipePekerjaan = status.result;
-          console.warn(this.modelTipePekerjaan);
-        });
+
+        // get list Tipe Pekerjaan
+        if (kodeKategoriPekerjaan == 2) {
+          this.dataEntryService.getFetchListTipePekerjaan(kodeKategoriPekerjaan).subscribe(status => {
+            this.modelTipePekerjaanNon = status.result;
+          });
+        } else {
+          this.dataEntryService.getFetchListTipePekerjaan(kodeKategoriPekerjaan).subscribe(status => {
+            this.modelTipePekerjaanFix = status.result;
+          });
+        }
+
+        // console.warn('uncheck', value, number);
+        // Condition Checkbox
+        if (kodeKategoriPekerjaan == 1) this.storeCheckboxCondition = undefined;
       });
-      console.warn('uncheck ', this.checkboxSegmentasi);
+      // console.warn('uncheck ', this.checkboxSegmentasi);
     }
   }
 
   onCheckChangeKepegawaian(event: any) {
+    this.kodevalue = [];
+    // const formArray: FormArray = this.createRacForm.get('status_kepegawaian') as FormArray;
     if (event.target.checked) {
       // /* Selected */
       this.checkboxKepegawaian.push(event.target.value);
-      console.warn('check ', this.checkboxKepegawaian);
     } else {
       // /* unselected */
       const index = this.checkboxKepegawaian.findIndex(list => list === event.target.value);
       this.checkboxKepegawaian.splice(index, 1);
-      console.warn('uncheck ', this.checkboxKepegawaian);
+    }
+  }
+
+  onCheckChangePernikahan(event: any) {
+    this.kodevalue = [];
+    if (event.target.checked) {
+      // /* Selected */
+      this.checkboxPernikahan.push(event.target.value);
+
+      // this.thnMinUsia = $('#tahunMinimalUsia' + event.target.value.split('|')[0]).val();
+      // this.kodevalue.push(this.thnMinUsia);
+    } else {
+      // /* unselected */
+      const index = this.checkboxPernikahan.findIndex(list => list === event.target.value);
+      this.checkboxPernikahan.splice(index, 1);
+      // const index1 = this.kodevalue.findIndex(list => {
+      //   list === $('#tahunMinimalUsia' + event.target.value.split('|')[0]).val();
+      // });
+      // this.kodevalue.splice(index1, 1);
     }
   }
 
   onchangefasilitas(valuefasilitas: any): void {
     const pemisahfasilitasmaster = valuefasilitas.split('|');
     this.scoringForm.get('kode_fasilitas')?.setValue(pemisahfasilitasmaster[0]);
+    this.createRacForm.get('fasilitas')?.setValue(pemisahfasilitasmaster[1]);
+    this.createRacForm.get('kode_fasilitas')?.setValue(pemisahfasilitasmaster[0]);
   }
 
   public getLoading(loading: boolean): void {
@@ -239,7 +299,33 @@ export class ParameterRacComponent implements OnInit {
     this.isSpin = loading;
   }
 
-  public clickModals(value: any) {
+  public clickModalsOpen(value: any) {
     this.modalServices.open(value, { size: 'xl', windowClass: 'modal-xl' });
+  }
+
+  public clickModalsClose() {
+    this.modalServices.dismissAll();
+  }
+
+  createRac(): any {
+    console.warn('status', this.scoringForm.get('status')?.value);
+    console.warn('segmentasi fasilitas', this.scoringForm.get('segmentasi_fasilitas')?.value);
+    console.warn('fasilitas', this.createRacForm.get('fasilitas')?.value);
+    console.warn('kode fasilitas', this.createRacForm.get('kode_fasilitas')?.value);
+    console.warn('minimal pendapatan', this.createRacForm.get('min_pendapatan')?.value);
+    console.warn('lama beroperasi', this.createRacForm.get('lama_beroperasi')?.value);
+    console.warn('jumlah karyawan', this.createRacForm.get('jumlah_karyawan')?.value);
+    console.warn('status kepegawaian', this.checkboxKepegawaian);
+    console.warn('status pernikahan', this.checkboxPernikahan);
+    console.warn('segmentasi', this.checkboxSegmentasi);
+
+    this.checkboxPernikahan.filter((value: String) => {
+      this.thnMinUsia = $('#tahunMinimalUsia' + value.split('|')[0]).val();
+
+      this.kodevalue.push(this.thnMinUsia);
+    });
+
+    console.warn('minimal usia', this.kodevalue);
+    console.warn('tipe perusahaan', this.createRacForm.get('tipe_perusahaan')?.value);
   }
 }
