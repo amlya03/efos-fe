@@ -14,7 +14,6 @@ export class parameterrac {
   segmentasi?: string;
   max_usia?: string;
   min_masakerja?: string;
-  jenis_perusahaan?: string;
   lama_beroperasi?: string;
   jumlah_karyawan?: string;
   tipe_pekerjaan?: string;

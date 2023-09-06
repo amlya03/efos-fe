@@ -25,6 +25,8 @@ import { refTipeKepegawaianModel } from 'app/data-entry/services/config/refTipeK
 import { refStatusPerkawinan } from 'app/verification/service/config/refStatusPerkawinan.model';
 import { refJabatan } from 'app/verification/service/config/refJabatan.model';
 import { refTipePerusahaan } from 'app/data-entry/services/config/refTipePerusahaan.model';
+import { SessionStorageService } from 'ngx-webstorage';
+import { any } from 'cypress/types/bluebird';
 
 @Component({
   selector: 'jhi-parameter-rac',
@@ -53,13 +55,28 @@ export class ParameterRacComponent implements OnInit {
   checkboxKepegawaian: String[] = [];
   checkboxPernikahan: String[] = [];
 
+  kepegawaianvalue: String[] = [];
   kodevalue: String[] = [];
-  pekerjaanValue: String[] = [];
+  maxUsiaValue: String[] = [];
+  minimalKerjaValue: String[] = [];
   thnMinUsia: any;
   pekerjaanMaxUsia: any;
+  posisiMaxUsia: any;
+  tahunMaxUsia: any;
+  pekerjaanMinimalKerja: any;
+  tahunMinimalKerja: any;
 
   // /////////////////////
   storeCheckboxCondition: any = undefined;
+  storeTipePekerjaanMaxUsia: String[] = [];
+  storePosisiMaxUsia: String[] = [];
+  storeTahunMaxUsia: String[] = [];
+  storeTipePekerjaanMinKerja: String[] = [];
+  storePosisiMinKerja: String[] = [];
+  storeTahunMinKerja: String[] = [];
+
+  // Save Retrive ID In Model
+  retriveRacModel: parameterrac = new parameterrac();
 
   // Start Data Tables
   @ViewChild(DataTableDirective, { static: true })
@@ -76,7 +93,8 @@ export class ParameterRacComponent implements OnInit {
     private formBuilder: FormBuilder,
     protected scoringServices: InputScoringService,
     protected dataEntryService: DataEntryService,
-    private modalServices: NgbModal
+    private modalServices: NgbModal,
+    private sessionStorageService: SessionStorageService
   ) {
     this.route.queryParams.subscribe(params => {});
   }
@@ -99,23 +117,21 @@ export class ParameterRacComponent implements OnInit {
     });
 
     this.createRacForm = this.formBuilder.group({
+      id: 0,
       fasilitas: { value: '' || null, disabled: true },
       segmentasi_fasilitas: '',
       kode_fasilitas: { value: '' || null, disabled: true },
-      updated_date: '',
-      status_kepegawaian: '' /*this.formBuilder.array([])*/,
+      updated_by: this.sessionStorageService.retrieve('sessionUserName'),
       min_pendapatan: '',
-      status_pernikahan: '',
       min_usia: '',
-      segmentasi: '',
       max_usia: '',
       min_masakerja: '',
-      jenis_perusahaan: '',
       lama_beroperasi: '',
       jumlah_karyawan: '',
       tipe_pekerjaan: '',
       tipe_perusahaan: '',
-      posisi: ''
+      posisi: '',
+      active: ''
     });
 
     this.load();
@@ -180,33 +196,83 @@ export class ParameterRacComponent implements OnInit {
 
   deleteData(id: any): void {
     Swal.fire({
-      title: 'Apakah Yakin Ingin Menghapus Data RAC Ini?',
-      text: 'File akan hilang',
+      title: 'Apakah yakin ingin menghapus parameter RAC "' + this.createRacForm.get('fasilitas')?.value + '"',
+      text: 'Parameter RAC akan hilang',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Ya, Hapus Data RAC!',
-      cancelButtonText: 'Tidak, Simpan Data'
+      confirmButtonText: 'Ya',
+      cancelButtonText: 'Tidak'
     }).then(result => {
       if (result.value) {
         this.scoringServices.getdeleterac(id).subscribe({
           next: racdeleteResponse => {
-            if (racdeleteResponse.result === 'sukses') window.location.reload();
+            if (racdeleteResponse.result === 'sukses') {
+              Swal.fire(
+                'Parameter RAC berhasil dihapus!',
+                'Parameter RAC "' + this.createRacForm.get('fasilitas')?.value + '" Berhasil dihapus',
+                'success'
+              ).then(() => {
+                window.location.reload();
+              });
+            }
           }
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelled', 'File disimpan', 'error');
+        Swal.fire('Cancelled', 'Parameter RAC disimpan', 'error');
       }
     });
   }
 
+  onCheckChangeKepegawaian(event: any) {
+    this.kepegawaianvalue = [];
+
+    if (event.target.checked) {
+      // /* Selected */
+      this.checkboxKepegawaian.push(event.target.value);
+    } else {
+      // /* unselected */
+      const index = this.checkboxKepegawaian.findIndex(list => list === event.target.value);
+      this.checkboxKepegawaian.splice(index, 1);
+    }
+  }
+
+  onCheckChangePernikahan(event: any) {
+    this.kodevalue = [];
+    if (event.target.checked) {
+      // /* Selected */
+      this.checkboxPernikahan.push(event.target.value);
+
+      // this.thnMinUsia = $('#tahunMinimalUsia' + event.target.value.split('|')[0]).val();
+      // this.kodevalue.push(this.thnMinUsia);
+    } else {
+      // /* unselected */
+      const index = this.checkboxPernikahan.findIndex(list => list === event.target.value);
+      this.checkboxPernikahan.splice(index, 1);
+      // const index1 = this.kodevalue.findIndex(list => {
+      //   list === $('#tahunMinimalUsia' + event.target.value.split('|')[0]).val();
+      // });
+      // this.kodevalue.splice(index1, 1);
+    }
+  }
+
+  onchangefasilitas(valuefasilitas: any): void {
+    const pemisahfasilitasmaster = valuefasilitas.split('|');
+    this.scoringForm.get('kode_fasilitas')?.setValue(pemisahfasilitasmaster[0]);
+    this.createRacForm.get('fasilitas')?.setValue(pemisahfasilitasmaster[1]);
+    this.createRacForm.get('kode_fasilitas')?.setValue(pemisahfasilitasmaster[0]);
+  }
+
   onCheckChangeSegmentasi(event: any) {
     // $('#andLabel0').hide();
+    this.maxUsiaValue = [];
+    this.minimalKerjaValue = [];
     let kodeKategoriPekerjaan: any;
     let deskripsiKategoriPekerjaan: any;
     if (event.target.checked) {
       // /* Selected */
       this.checkboxSegmentasi.push(event.target.value);
       this.checkboxSegmentasi.forEach((value: String, index: number) => {
+        console.warn(value);
         kodeKategoriPekerjaan = value.split('|')[0];
         deskripsiKategoriPekerjaan = value.split('|')[1];
 
@@ -255,43 +321,211 @@ export class ParameterRacComponent implements OnInit {
     }
   }
 
-  onCheckChangeKepegawaian(event: any) {
-    this.kodevalue = [];
-    // const formArray: FormArray = this.createRacForm.get('status_kepegawaian') as FormArray;
-    if (event.target.checked) {
-      // /* Selected */
-      this.checkboxKepegawaian.push(event.target.value);
-    } else {
-      // /* unselected */
-      const index = this.checkboxKepegawaian.findIndex(list => list === event.target.value);
-      this.checkboxKepegawaian.splice(index, 1);
+  createRac(): any {
+    // set Value Status Active RAC form
+    this.createRacForm.get('status')?.setValue(this.scoringForm.get('status')?.value);
+
+    // set Value Segmentasi RAC form
+    this.createRacForm.get('segmentasi_fasilitas')?.setValue(this.scoringForm.get('segmentasi_fasilitas')?.value);
+
+    // Insert To Array Minimal USia
+    this.checkboxPernikahan.filter((value: String) => {
+      this.thnMinUsia = $('#tahunMinimalUsia' + value.split('|')[0]).val();
+
+      this.kodevalue.push(this.thnMinUsia);
+    });
+
+    // Insert To Array Maximal Usia dan Maximal Kerja
+    this.checkboxSegmentasi.filter((value_segmentasi: String) => {
+      //console.warn(value_segmentasi.split('|')[1]);
+      if (value_segmentasi.split('|')[0] === '1') {
+        // Save Maksimal usia
+        this.pekerjaanMaxUsia = $('#tipeMaksimalUsia' + value_segmentasi.split('|')[0]).val();
+        this.storeTipePekerjaanMaxUsia.push(this.pekerjaanMaxUsia);
+        this.posisiMaxUsia = $('#posisiMaksimalUsiaFix' + value_segmentasi.split('|')[0]).val();
+        this.storePosisiMaxUsia.push(this.posisiMaxUsia);
+        this.tahunMaxUsia = $('#thnMaksimalUsia' + value_segmentasi.split('|')[0]).val();
+        this.storeTahunMaxUsia.push(this.tahunMaxUsia);
+
+        // Save Minimal Masa Kerja
+        this.pekerjaanMinimalKerja = $('#tipeMinimalkerja' + value_segmentasi.split('|')[0]).val();
+        this.storeTipePekerjaanMinKerja.push(this.pekerjaanMinimalKerja);
+        this.tahunMinimalKerja = $('#thnMinimalKerja' + value_segmentasi.split('|')[0]).val();
+        this.storeTahunMinKerja.push(this.tahunMinimalKerja);
+      } else {
+        // Save Maksimal usia
+        this.pekerjaanMaxUsia = $('#tipeMaksimalUsia' + value_segmentasi.split('|')[0]).val();
+        this.storeTipePekerjaanMaxUsia.push(this.pekerjaanMaxUsia);
+        this.posisiMaxUsia = '';
+        this.storePosisiMaxUsia.push(this.posisiMaxUsia);
+        this.tahunMaxUsia = $('#thnMaksimalUsia' + value_segmentasi.split('|')[0]).val();
+        this.storeTahunMaxUsia.push(this.tahunMaxUsia);
+
+        // Save Minimal Masa Kerja
+        this.pekerjaanMinimalKerja = $('#tipeMinimalkerja' + value_segmentasi.split('|')[0]).val();
+        this.storeTipePekerjaanMinKerja.push(this.pekerjaanMinimalKerja);
+        this.tahunMinimalKerja = $('#thnMinimalKerja' + value_segmentasi.split('|')[0]).val();
+        this.storeTahunMinKerja.push(this.tahunMinimalKerja);
+      }
+    });
+
+    // console.warn('status', this.scoringForm.get('status')?.value);
+    // console.warn('segmentasi fasilitas', this.scoringForm.get('segmentasi_fasilitas')?.value);
+    // console.warn('fasilitas', this.createRacForm.get('fasilitas')?.value);
+    // console.warn('kode fasilitas', this.createRacForm.get('kode_fasilitas')?.value);
+    // console.warn('minimal pendapatan', this.createRacForm.get('min_pendapatan')?.value);
+    // console.warn('lama beroperasi', this.createRacForm.get('lama_beroperasi')?.value);
+    // console.warn('jumlah karyawan', this.createRacForm.get('jumlah_karyawan')?.value);
+    // console.warn('status kepegawaian', this.checkboxKepegawaian);
+    // console.warn('status pernikahan', this.checkboxPernikahan);
+    // console.warn('segmentasi', this.checkboxSegmentasi);
+    // console.warn('minimal usia', this.kodevalue);
+    // console.warn('maksimal usia', this.maxUsiaValue);
+    // console.warn('maksimal masa kerja', this.minimalKerjaValue);
+    // console.warn('tipe perusahaan', this.createRacForm.get('tipe_perusahaan')?.value);
+
+    // For Loop Kepegawaian
+    for (let i = 0; i < this.checkboxKepegawaian.length; i++) {
+      // console.warn(this.checkboxKepegawaian[i]);
+
+      // For Loop Pernikahan
+      for (let j = 0; j < this.checkboxPernikahan.length; j++) {
+        // console.warn(this.checkboxPernikahan[j].split('|')[1]);
+        // console.warn(this.kodevalue[j]);
+
+        // For Loop Segmentasi
+        for (let k = 0; k < this.checkboxSegmentasi.length; k++) {
+          // console.warn(this.checkboxSegmentasi[k].split('|')[1]);
+          // console.warn(this.storeTipePekerjaanMaxUsia[k]);
+          // console.warn(this.storePosisiMaxUsia[k]);
+          // console.warn(this.storeTahunMaxUsia[k]);
+          // console.warn(this.storeTipePekerjaanMinKerja[k]);
+          // console.warn(this.storeTahunMinKerja[k]);
+
+          // ----------------- Post Method ------------------//
+          this.http
+            .post<any>(this.baseUrl + 'v1/efos-ref/create_parameter_rac', {
+              id: this.createRacForm.get('id')?.value,
+              kode_fasilitas: this.createRacForm.get('kode_fasilitas')?.value,
+              jenis_fasilitas: this.createRacForm.get('fasilitas')?.value,
+              created_by: this.createRacForm.get('updated_by')?.value,
+              created_date: '',
+              active: this.createRacForm.get('status')?.value,
+              updated_date: '',
+              updated_by: '',
+              status_kepegawaian: this.checkboxKepegawaian[i],
+              min_pendapatan: this.createRacForm.get('min_pendapatan')?.value,
+              status_pernikahan: this.checkboxPernikahan[j].split('|')[1],
+              min_usia: this.kodevalue[j],
+              segmentasi: this.checkboxSegmentasi[k].split('|')[1],
+              max_usia: this.storeTahunMaxUsia[k],
+              min_masakerja: this.storeTahunMinKerja[k],
+              lama_beroperasi: this.createRacForm.get('lama_beroperasi')?.value,
+              jumlah_karyawan: this.createRacForm.get('jumlah_karyawan')?.value,
+              tipe_pekerjaan: this.storeTipePekerjaanMaxUsia[k],
+              posisi: this.storePosisiMaxUsia[k],
+              segmentasi_fasilitas: this.createRacForm.get('segmentasi_fasilitas')?.value,
+              tipe_perusahaan: this.createRacForm.get('tipe_perusahaan')?.value
+            })
+            .subscribe({
+              next: response => {
+                // untuk menangkap Response Sukses ketika post
+                console.warn(response);
+                if (response.code === '200') this.modalServices.dismissAll();
+              },
+              error: errResponse => {
+                // untuk menangkap error ketika post
+                console.error(errResponse);
+                if (errResponse) this.modalServices.dismissAll();
+              }
+            });
+        }
+      }
     }
   }
 
-  onCheckChangePernikahan(event: any) {
-    this.kodevalue = [];
-    if (event.target.checked) {
-      // /* Selected */
-      this.checkboxPernikahan.push(event.target.value);
+  updateRacByIdOnClick(id: string | number | null | undefined, modals: any): void {
+    this.scoringServices.getParameterRac(id).subscribe({
+      next: response => {
+        this.retriveRacModel = response.result;
 
-      // this.thnMinUsia = $('#tahunMinimalUsia' + event.target.value.split('|')[0]).val();
-      // this.kodevalue.push(this.thnMinUsia);
-    } else {
-      // /* unselected */
-      const index = this.checkboxPernikahan.findIndex(list => list === event.target.value);
-      this.checkboxPernikahan.splice(index, 1);
-      // const index1 = this.kodevalue.findIndex(list => {
-      //   list === $('#tahunMinimalUsia' + event.target.value.split('|')[0]).val();
-      // });
-      // this.kodevalue.splice(index1, 1);
-    }
+        const saveFind = this.modelKategoriPekerjaan.find(
+          (value: refKategoriPekerjaanModel) => value.category_job_deskripsi == response.result.segmentasi
+        );
+        this.checkboxSegmentasi = [saveFind?.category_job_id + '|' + saveFind?.category_job_deskripsi];
+        if (saveFind?.category_job_id != null)
+          this.dataEntryService.getFetchListTipePekerjaan(saveFind.category_job_id).subscribe(status => {
+            this.modelTipePekerjaanFix = status.result;
+            this.modelTipePekerjaanNon = status.result;
+          });
+
+        const retriveRAC = {
+          id: id,
+          fasilitas: response.result.jenis_fasilitas,
+          segmentasi_fasilitas: response.result.segmentasi_fasilitas,
+          kode_fasilitas: response.result.kode_fasilitas,
+          updated_by: response.result.updated_by,
+          min_pendapatan: response.result.min_pendapatan,
+          min_usia: response.result.min_usia,
+          max_usia: response.result.max_usia,
+          min_masakerja: response.result.min_masakerja,
+          lama_beroperasi: response.result.lama_beroperasi,
+          jumlah_karyawan: response.result.jumlah_karyawan,
+          tipe_pekerjaan: response.result.tipe_pekerjaan,
+          tipe_perusahaan: response.result.tipe_perusahaan,
+          posisi: response.result.posisi,
+          active: response.result.active
+        };
+        this.createRacForm.setValue(retriveRAC);
+        this.modalServices.open(modals, { size: 'xl', windowClass: 'modal-xl' });
+      },
+      error: errResponse => {
+        console.error(errResponse);
+      }
+    });
   }
 
-  onchangefasilitas(valuefasilitas: any): void {
-    const pemisahfasilitasmaster = valuefasilitas.split('|');
-    this.scoringForm.get('kode_fasilitas')?.setValue(pemisahfasilitasmaster[0]);
-    this.createRacForm.get('fasilitas')?.setValue(pemisahfasilitasmaster[1]);
-    this.createRacForm.get('kode_fasilitas')?.setValue(pemisahfasilitasmaster[0]);
+  viewIdOnClick(id: string | number | null | undefined, modals: any): void {
+    this.scoringServices.getParameterRac(id).subscribe({
+      next: response => {
+        this.retriveRacModel = response.result;
+
+        const saveFind = this.modelKategoriPekerjaan.find(
+          (value: refKategoriPekerjaanModel) => value.category_job_deskripsi == response.result.segmentasi
+        );
+        this.checkboxSegmentasi = [saveFind?.category_job_id + '|' + saveFind?.category_job_deskripsi];
+        if (saveFind?.category_job_id != null)
+          this.dataEntryService.getFetchListTipePekerjaan(saveFind.category_job_id).subscribe(status => {
+            this.modelTipePekerjaanFix = status.result;
+            this.modelTipePekerjaanNon = status.result;
+          });
+
+        const retriveRAC = {
+          id: id,
+          fasilitas: response.result.jenis_fasilitas,
+          segmentasi_fasilitas: response.result.segmentasi_fasilitas,
+          kode_fasilitas: response.result.kode_fasilitas,
+          updated_by: response.result.updated_by,
+          min_pendapatan: response.result.min_pendapatan,
+          min_usia: response.result.min_usia,
+          max_usia: response.result.max_usia,
+          min_masakerja: response.result.min_masakerja,
+          lama_beroperasi: response.result.lama_beroperasi,
+          jumlah_karyawan: response.result.jumlah_karyawan,
+          tipe_pekerjaan: response.result.tipe_pekerjaan,
+          tipe_perusahaan: response.result.tipe_perusahaan,
+          posisi: response.result.posisi,
+          active: response.result.active
+        };
+        this.createRacForm.setValue(retriveRAC);
+        this.createRacForm.disable();
+        this.modalServices.open(modals, { size: 'xl', windowClass: 'modal-xl' });
+        // $('#tipe_kepegawaian_deskripsi').attr('disable', 'disable');
+      },
+      error: errResponse => {
+        console.error(errResponse);
+      }
+    });
   }
 
   public getLoading(loading: boolean): void {
@@ -305,27 +539,5 @@ export class ParameterRacComponent implements OnInit {
 
   public clickModalsClose() {
     this.modalServices.dismissAll();
-  }
-
-  createRac(): any {
-    console.warn('status', this.scoringForm.get('status')?.value);
-    console.warn('segmentasi fasilitas', this.scoringForm.get('segmentasi_fasilitas')?.value);
-    console.warn('fasilitas', this.createRacForm.get('fasilitas')?.value);
-    console.warn('kode fasilitas', this.createRacForm.get('kode_fasilitas')?.value);
-    console.warn('minimal pendapatan', this.createRacForm.get('min_pendapatan')?.value);
-    console.warn('lama beroperasi', this.createRacForm.get('lama_beroperasi')?.value);
-    console.warn('jumlah karyawan', this.createRacForm.get('jumlah_karyawan')?.value);
-    console.warn('status kepegawaian', this.checkboxKepegawaian);
-    console.warn('status pernikahan', this.checkboxPernikahan);
-    console.warn('segmentasi', this.checkboxSegmentasi);
-
-    this.checkboxPernikahan.filter((value: String) => {
-      this.thnMinUsia = $('#tahunMinimalUsia' + value.split('|')[0]).val();
-
-      this.kodevalue.push(this.thnMinUsia);
-    });
-
-    console.warn('minimal usia', this.kodevalue);
-    console.warn('tipe perusahaan', this.createRacForm.get('tipe_perusahaan')?.value);
   }
 }

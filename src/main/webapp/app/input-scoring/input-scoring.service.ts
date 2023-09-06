@@ -5,6 +5,7 @@ import { ApiResponse } from 'app/entities/book/ApiResponse';
 import { Observable } from 'rxjs';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { environment } from 'environments/environment';
+import { parameterrac } from './parameterrac.model';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +45,10 @@ export class InputScoringService {
   protected parameterrac = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_parameter_rac');
   // /////////////////////////// Reff parameterscoring ////////////////////////////////////////////
 
+  // /////////////////////////// Reff create parameterrac////////////////////////////////////////////
+  protected createparameterrac = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/create_parameter_rac');
+  // /////////////////////////// Reff create parameterrac ////////////////////////////////////////////
+
   // /////////////////////////// Reff kategori pekerjaan////////////////////////////////////////////
   protected kategoripekerjaan = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/list_RefKategoriPekerjaan');
   // /////////////////////////// Reff kategori pekerjaan ////////////////////////////////////////////
@@ -63,7 +68,7 @@ export class InputScoringService {
   // /////////////////////////// Reff getdatascoringbyid ////////////////////////////////////////////
 
   // /////////////////////////// Reff getparameterracbyid////////////////////////////////////////////
-  protected reffgetparameterracbyid = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/getrac?si=');
+  protected reffgetparameterracbyid = this.applicationConfigService.getEndpointFor(this.baseUrl + 'v1/efos-ref/getrac?id=');
   // /////////////////////////// Reff getparameterracbyid ////////////////////////////////////////////
 
   // /////////////////////////// Reff List Akad ////////////////////////////////////////////
@@ -132,6 +137,12 @@ export class InputScoringService {
   }
   // ////////////////////// List listparameterrac \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  // ////////////////////// get createlistparameterrac \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  createlistparameterrac(model: parameterrac): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.createparameterrac, model);
+  }
+  // ////////////////////// List createlistparameterrac \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
   // ////////////////////// get kategori pekerjaan \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   listkategoripekerjaan(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.kategoripekerjaan);
@@ -163,7 +174,7 @@ export class InputScoringService {
   // ////////////////////// get Sub Parameter Scoring BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   // ////////////////////// get Sub Parameter Rac BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  getParameterRac(id: string | null | undefined): Observable<ApiResponse> {
+  getParameterRac(id: string | number | null | undefined): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.reffgetparameterracbyid + id);
   }
   // ////////////////////// get Sub Parameter Rac BY Id \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

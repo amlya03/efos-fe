@@ -29,7 +29,7 @@ import { refJabatan } from 'app/verification/service/config/refJabatan.model';
 @Component({
   selector: 'jhi-input-scoring',
   templateUrl: './input-scoring.component.html',
-  styleUrls: ['./input-scoring.component.scss'],
+  styleUrls: ['./input-scoring.component.scss']
 })
 export class InputScoringComponent implements OnInit {
   @Input() public isLoading: boolean | null = false;
@@ -74,7 +74,7 @@ export class InputScoringComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
-      responsive: true,
+      responsive: true
     };
     this.load();
     // this.scoringForm = this.formBuilder.group({
@@ -154,7 +154,7 @@ export class InputScoringComponent implements OnInit {
         next: ftvResponse => {
           this.modelFtvScore = ftvResponse.result;
           // console.warn(ftvResponse)
-        },
+        }
       });
     }, 27);
 
@@ -560,7 +560,7 @@ export class InputScoringComponent implements OnInit {
         confirmButtonText: 'Updated Data',
         cancelButtonText: 'Cancel',
         focusConfirm: false,
-        allowOutsideClick: false,
+        allowOutsideClick: false
       }).then(result => {
         fasVal = $('#fasilitasOption').val();
         progVal = $('#programffff').val();
@@ -613,14 +613,14 @@ export class InputScoringComponent implements OnInit {
               kode_program: joVal[0],
               deskripsi_program: joVal[1],
               updated_by: '',
-              updated_date: '',
+              updated_date: ''
             })
             .subscribe({
               next() {
                 Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
                   window.location.reload();
                 });
-              },
+              }
             });
         }
         // }
@@ -1252,7 +1252,7 @@ export class InputScoringComponent implements OnInit {
             confirmButtonText: 'Updated Data',
             cancelButtonText: 'Cancel',
             focusConfirm: false,
-            allowOutsideClick: false,
+            allowOutsideClick: false
           }).then(result => {
             fasVal = $('#fasilitasOptions').val();
             progVal = $('#programOptions').val();
@@ -1306,20 +1306,20 @@ export class InputScoringComponent implements OnInit {
                   kode_program: joVal[0],
                   deskripsi_program: joVal[1],
                   updated_by: this.sessionStorageService.retrieve('sessionUserName'),
-                  updated_date: '',
+                  updated_date: ''
                 })
                 .subscribe({
                   next() {
                     Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
                       window.location.reload();
                     });
-                  },
+                  }
                 });
             }
             // }
           });
           // }, id * 10);
-        },
+        }
       });
     }, 17);
   }
@@ -1333,7 +1333,7 @@ export class InputScoringComponent implements OnInit {
             title: 'Apakah anda Yakin ingin menghapus data ini?',
             showDenyButton: true,
             confirmButtonText: 'Ya, Menghapus data!',
-            denyButtonText: `Tidak, Tetap simpan data!`,
+            denyButtonText: `Tidak, Tetap simpan data!`
           }).then(result => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
@@ -1355,21 +1355,21 @@ export class InputScoringComponent implements OnInit {
                   deskripsi_program: this.datascoringbyid.deskripsi_program,
                   updated_by: this.sessionStorageService.retrieve('sessionUserName'),
                   updated_date: '',
-                  active: '0',
+                  active: '0'
                 })
                 .subscribe({
                   next() {
                     Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
                       window.location.reload();
                     });
-                  },
+                  }
                 });
             }
             // else if (result.isDenied) {
             //   Swal.fire('Changes are not saved', '', 'info')
             // }
           });
-        },
+        }
       });
     }, 17);
   }
@@ -1391,7 +1391,7 @@ export class InputScoringComponent implements OnInit {
         '</div>',
       showDenyButton: true,
       confirmButtonText: 'Ya, Tambah data!',
-      denyButtonText: `Tidak!`,
+      denyButtonText: `Tidak!`
     }).then(result => {
       const scoreFtvLess = $('#score_ftv_less').val();
       const scoreFtvEqual = $('#score_ftv_equal').val();
@@ -1406,14 +1406,14 @@ export class InputScoringComponent implements OnInit {
             score_ftv_equal: scoreFtvEqual,
             score_ftv_less: scoreFtvLess,
             updated_by: '' /* this.sessionStorageService.retrieve('sessionUserName') */,
-            updated_date: '',
+            updated_date: ''
           })
           .subscribe({
             next() {
               Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
                 window.location.reload();
               });
-            },
+            }
           });
       }
       // else if (result.isDenied) {
@@ -1446,7 +1446,7 @@ export class InputScoringComponent implements OnInit {
           '</div>',
         showDenyButton: true,
         confirmButtonText: 'Ya, Tambah data!',
-        denyButtonText: `Tidak!`,
+        denyButtonText: `Tidak!`
       }).then(result => {
         const scoreFtvLess = $('#score_ftv_less').val();
         const scoreFtvEqual = $('#score_ftv_equal').val();
@@ -1461,14 +1461,14 @@ export class InputScoringComponent implements OnInit {
               score_ftv_equal: scoreFtvEqual,
               score_ftv_less: scoreFtvLess,
               updated_by: this.sessionStorageService.retrieve('sessionUserName'),
-              updated_date: '',
+              updated_date: ''
             })
             .subscribe({
               next() {
                 Swal.fire('Updated!', 'Data Berhasil di Updated', 'success').then(() => {
                   window.location.reload();
                 });
-              },
+              }
             });
         }
         // else if (result.isDenied) {
