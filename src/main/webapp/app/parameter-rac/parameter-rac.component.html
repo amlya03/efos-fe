@@ -165,9 +165,8 @@
             id="segmentasiFixIncome"
             value="{{ listKategori.category_job_id }}|{{ listKategori.category_job_deskripsi }}"
             (change)="onCheckChangeSegmentasi($event)"
-            [checked]="retriveRacModel.segmentasi === listKategori.category_job_deskripsi"
           />
-          <label class="form-check-label" for="segmentasiFixIncome"> {{ listKategori.category_job_deskripsi }} </label>
+          <label class="form-check-label" for="segmentasiFixIncome"> {{ listKategori.category_job_deskripsi }}</label>
         </div>
       </div>
     </div>
@@ -177,7 +176,7 @@
       <div class="col-sm-8">
         <div class="row" *ngFor="let listFromSegmentasi of checkboxSegmentasi; let ij = index">
           <label class="form-check-label" for="max_usiaFixIncome"> {{ listFromSegmentasi.split('|')[1] }} </label>
-          <div class="col-sm-1"><a class="btn btn-info">+</a></div>
+          <!-- <div class="col-sm-1"><a class="btn btn-info">+</a></div> -->
           <div class="col-sm-3">
             <select
               class="form-control"
@@ -349,8 +348,8 @@
         <td style="text-align: center">{{ i + 1 }}</td>
         <td style="text-align: center">{{ modelparameterrac.kode_fasilitas }}</td>
         <td style="text-align: center">{{ modelparameterrac.jenis_fasilitas }}</td>
-        <td style="text-align: center">{{ modelparameterrac.segmentasi }}</td>
-        <td style="text-align: center">{{ modelparameterrac.updated_date }}</td>
+        <td style="text-align: center">{{ modelparameterrac.segmentasi_fasilitas }}</td>
+        <td style="text-align: center">{{ modelparameterrac.id }}</td>
         <td style="text-align: center">{{ modelparameterrac.active }}</td>
         <td style="text-align: center" class="col-1">
           <a type="button" (click)="viewIdOnClick(modelparameterrac.id, modals)">

@@ -12,7 +12,7 @@ import { DataEntryService } from 'app/data-entry/services/data-entry.service';
 
 @Component({
   selector: 'jhi-main',
-  templateUrl: './main.component.html',
+  templateUrl: './main.component.html'
 })
 export class MainComponent implements OnInit {
   baseUrl: string = environment.baseUrl;
@@ -47,28 +47,28 @@ export class MainComponent implements OnInit {
       this.renderer.setAttribute(document.querySelector('html'), 'lang', langChangeEvent.lang);
     });
     // //////////////// Check Server /////////////////////////
-    const interval = setInterval(() => {
-      this.de.getFetchStatusPerkawinan().subscribe({
-        next() {
-          //
-        },
-        error: () => {
-          clearInterval(interval);
-          this.loginService.logout();
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'Jaringan Terputus',
-            showConfirmButton: false,
-          }).then(() => {
-            window.location.reload();
-            // this.router.navigate(['/login']).then(() => {
-            //   window.location.reload();
-            // });
-          });
-        },
-      });
-    }, 60 * 1000);
+    // const interval = setInterval(() => {
+    //   this.de.getFetchStatusPerkawinan().subscribe({
+    //     next() {
+    //       //
+    //     },
+    //     error: () => {
+    //       clearInterval(interval);
+    //       this.loginService.logout();
+    //       Swal.fire({
+    //         position: 'center',
+    //         icon: 'error',
+    //         title: 'Jaringan Terputus',
+    //         showConfirmButton: false,
+    //       }).then(() => {
+    //         window.location.reload();
+    //         // this.router.navigate(['/login']).then(() => {
+    //         //   window.location.reload();
+    //         // });
+    //       });
+    //     },
+    //   });
+    // }, 60 * 1000);
   }
 
   private getPageTitle(routeSnapshot: ActivatedRouteSnapshot): string {

@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { environment } from 'environments/environment';
 import { parameterrac } from './parameterrac.model';
+import { BeanParameterRac } from './beanParameterrac.model';
 
 @Injectable({
   providedIn: 'root'
@@ -194,4 +195,8 @@ export class InputScoringService {
     return this.http.get<ApiResponse>(this.getFtvScoringUrl + id);
   }
   // /////////////////////////// Get Ftv Scoring ////////////////////////////////////////////
+
+  public saveRac(beanRac: BeanParameterRac): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.parameterrac, beanRac);
+  }
 }
