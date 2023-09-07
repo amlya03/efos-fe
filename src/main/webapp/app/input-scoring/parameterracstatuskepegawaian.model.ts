@@ -5,5 +5,5 @@ export class parameterracstatuskepegawaian {
   created_date?: string;
   updated_date?: string;
   updated_by?: string;
-  status_kepegawaian: any;
+  status_kepegawaian?: any;
 }

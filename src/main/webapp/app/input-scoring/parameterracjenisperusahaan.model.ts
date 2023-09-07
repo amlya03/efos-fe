@@ -9,5 +9,4 @@ export class parameterracjenisperusahaan {
   tipe_perusahaan?: string;
   lama_beroperasi?: string;
   jumlah_karyawan?: string;
-  segmentasi: any;
 }
