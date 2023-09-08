@@ -81,7 +81,11 @@ export class ParameterRacComponent implements OnInit {
   storePosisiMinKerja: String[] = [];
   storeTahunMinKerja: String[] = [];
 
-  addForm: number[] = [];
+  addFormFix: number[] = [];
+  addFormNon: number[] = [];
+  addFormMinKerjaFix: number[] = [];
+  addFormMinKerjaNon: number[] = [];
+  addFormPerusahaan: number[] = [0];
 
   // Save Retrive ID In Model
   retriveRacModel: parameterrac = new parameterrac();
@@ -95,6 +99,10 @@ export class ParameterRacComponent implements OnInit {
   // ---------------------------- Start checked for logic retrive not using form array -------------------------- //
   storeRetriveCheckedSegmentasi: boolean[] = [false, false];
   // ---------------------------- End checked for logic retrive not using form array -------------------------- //
+
+  // ---------------------------- Start Store Disabled Condition -------------------------- //
+  isDisabled: boolean = true;
+  // ---------------------------- Start Store Disabled Condition -------------------------- //
   // Start Data Tables
   @ViewChild(DataTableDirective, { static: true })
   dtElement!: DataTableDirective;
@@ -250,16 +258,55 @@ export class ParameterRacComponent implements OnInit {
     }
   }
 
-  onChangeMaksimalUsia(event: any) {
-    $('#tipeMinimalkerja1').val(event.target.value);
+  onChangeMaksimalUsia(event: any, fix: number) {
+    $('#tipeMaksimalUsia' + fix).val(event.target.value);
+    $('#tipeMinimalkerja' + fix).val(event.target.value);
   }
 
-  onChangeMaksimalUsiaNon(event: any) {
-    $('#tipeMinimalkerjaNon2').val(event.target.value);
+  onChangeMaksimalUsiaNon(event: any, non: number) {
+    $('#tipeMaksimalUsiaNon' + non).val(event.target.value);
+    $('#sdjgkshgjkhdfjk' + non).val(event.target.value);
+    // $('#thnMinimalKerjaNon' + non).val(event.target.value);
   }
 
-  onClickAddMaxUsia(event: any) {
-    this.addForm.push(event);
+  onClickAddMaxUsiaFix(event: number[]) {
+    if (event.length == 0) {
+      this.addFormFix.push(0);
+    } else {
+      this.addFormFix.push(this.addFormFix.length - 1 + 1);
+    }
+  }
+
+  onClickAddMaxUsiaNon(event: number[]) {
+    if (event.length == 0) {
+      this.addFormNon.push(0);
+    } else {
+      this.addFormNon.push(this.addFormNon.length - 1 + 1);
+    }
+  }
+
+  onClickAddMinMasaKerjaFix(event: number[]) {
+    if (event.length == 0) {
+      this.addFormMinKerjaFix.push(0);
+    } else {
+      this.addFormMinKerjaFix.push(this.addFormMinKerjaFix.length - 1 + 1);
+    }
+  }
+
+  onClickAddMinMasaKerjaNon(event: number[]) {
+    if (event.length == 0) {
+      this.addFormMinKerjaNon.push(0);
+    } else {
+      this.addFormMinKerjaNon.push(this.addFormMinKerjaNon.length - 1 + 1);
+    }
+  }
+
+  onClickAddPerusahaan(event: number[]) {
+    if (event.length == 0) {
+      this.addFormPerusahaan.push(0);
+    } else {
+      this.addFormPerusahaan.push(this.addFormPerusahaan.length - 1 + 1);
+    }
   }
 
   onCheckChangePernikahan(event: any) {
@@ -295,6 +342,7 @@ export class ParameterRacComponent implements OnInit {
     let deskripsiKategoriPekerjaan: any;
     if (event.target.checked) {
       // /* Selected */
+
       this.checkboxSegmentasi.push(event.target.value);
       this.checkboxSegmentasi.forEach((value: String, index: number) => {
         // console.warn(value);
@@ -305,11 +353,14 @@ export class ParameterRacComponent implements OnInit {
 
         // get list Tipe Pekerjaan
         if (kodeKategoriPekerjaan == 2) {
+          if (this.addFormNon.length == 0) this.addFormNon.push(0);
+          if (this.addFormMinKerjaNon.length == 0) this.addFormMinKerjaNon.push(0);
           this.dataEntryService.getFetchListTipePekerjaan(kodeKategoriPekerjaan).subscribe(status => {
             this.modelTipePekerjaanNon = status.result;
           });
         } else {
-          this.addForm.push(0);
+          if (this.addFormFix.length == 0) this.addFormFix.push(0);
+          if (this.addFormMinKerjaFix.length == 0) this.addFormMinKerjaFix.push(0);
           this.dataEntryService.getFetchListTipePekerjaan(kodeKategoriPekerjaan).subscribe(status => {
             this.modelTipePekerjaanFix = status.result;
           });
@@ -318,8 +369,6 @@ export class ParameterRacComponent implements OnInit {
         // Condition Checkbox
         if (kodeKategoriPekerjaan == 2) this.storeCheckboxCondition = index;
       });
-      // console.warn(this.storeCheckboxCondition);
-      // console.warn('check ', this.checkboxSegmentasi);
     } else {
       // /* unselected */
       const index = this.checkboxSegmentasi.findIndex(list => list === event.target.value);
@@ -348,6 +397,8 @@ export class ParameterRacComponent implements OnInit {
   }
 
   createRac(): any {
+    // this.storeTipePekerjaanMaxUsia.splice(0);
+    // this.storeTahunMaxUsia.splice(0);
     // set Value Status Active RAC form
     this.createRacForm.get('active')?.setValue(this.scoringForm.get('status')?.value);
 
@@ -362,39 +413,63 @@ export class ParameterRacComponent implements OnInit {
     });
 
     // Insert To Array Maximal Usia dan Maximal Kerja
-    this.checkboxSegmentasi.filter((value_segmentasi: String) => {
-      //console.warn(value_segmentasi.split('|')[1]);
-      if (value_segmentasi.split('|')[0] === '1') {
-        // Save Maksimal usia
-        this.pekerjaanMaxUsia = $('#tipeMaksimalUsia' + value_segmentasi.split('|')[0]).val();
-        this.storeTipePekerjaanMaxUsia.push(this.pekerjaanMaxUsia);
-        this.posisiMaxUsia = $('#posisiMaksimalUsiaFix' + value_segmentasi.split('|')[0]).val();
-        this.storePosisiMaxUsia.push(this.posisiMaxUsia);
-        this.tahunMaxUsia = $('#thnMaksimalUsia' + value_segmentasi.split('|')[0]).val();
-        this.storeTahunMaxUsia.push(this.tahunMaxUsia);
-
-        // Save Minimal Masa Kerja
-        this.pekerjaanMinimalKerja = $('#tipeMinimalkerja' + value_segmentasi.split('|')[0]).val();
-        this.storeTipePekerjaanMinKerja.push(this.pekerjaanMinimalKerja);
-        this.tahunMinimalKerja = $('#thnMinimalKerja' + value_segmentasi.split('|')[0]).val();
-        this.storeTahunMinKerja.push(this.tahunMinimalKerja);
-      } else {
-        // Save Maksimal usia
-        this.pekerjaanMaxUsia = $('#tipeMaksimalUsiaNon' + value_segmentasi.split('|')[0]).val();
-        this.storeTipePekerjaanMaxUsia.push(this.pekerjaanMaxUsia);
-        this.posisiMaxUsia = '';
-        this.storePosisiMaxUsia.push(this.posisiMaxUsia);
-        this.tahunMaxUsia = $('#thnMaksimalUsiaNon' + value_segmentasi.split('|')[0]).val();
-        this.storeTahunMaxUsia.push(this.tahunMaxUsia);
-
-        // Save Minimal Masa Kerja
-        this.pekerjaanMinimalKerja = $('#tipeMinimalkerjaNon' + value_segmentasi.split('|')[0]).val();
-        this.storeTipePekerjaanMinKerja.push(this.pekerjaanMinimalKerja);
-        this.tahunMinimalKerja = $('#thnMinimalKerja' + value_segmentasi.split('|')[0]).val();
-        this.storeTahunMinKerja.push(this.tahunMinimalKerja);
-      }
+    this.addFormFix.forEach((index_add1: number) => {
+      this.pekerjaanMaxUsia = $('#tipeMaksimalUsia' + index_add1).val();
+      this.storeTipePekerjaanMaxUsia.push(this.pekerjaanMaxUsia);
+      this.posisiMaxUsia = $('#posisiMaksimalUsiaFix' + index_add1).val();
+      this.storePosisiMaxUsia.push(this.posisiMaxUsia);
+      this.tahunMaxUsia = $('#thnMaksimalUsiaFix' + index_add1).val();
+      this.storeTahunMaxUsia.push(this.tahunMaxUsia);
     });
+    this.addFormMinKerjaFix.forEach((index_1: number) => {
+      this.pekerjaanMinimalKerja = $('#tipeMinimalkerja' + index_1).val();
+      this.storeTipePekerjaanMinKerja.push(this.pekerjaanMinimalKerja);
+      this.tahunMinimalKerja = $('#thnMinimalKerjaFix' + index_1).val();
+      this.storeTahunMinKerja.push(this.tahunMinimalKerja);
+    });
+    this.addFormNon.forEach((index_add2: number) => {
+      let jadidua: any = $('#tipeMaksimalUsiaNon' + index_add2).val();
+      this.storeTipePekerjaanMaxUsia.push(jadidua);
+      this.posisiMaxUsia = '';
+      this.storePosisiMaxUsia.push(this.posisiMaxUsia);
+      let tahundua: any = $('#thnMaksimalUsiaNon' + index_add2).val();
+      this.storeTahunMaxUsia.push(tahundua);
+    });
+    this.addFormMinKerjaNon.forEach((index_2: number) => {
+      let jaditiga: any = $('#tipeMinimalkerjaNon' + index_2).val();
+      this.storeTipePekerjaanMinKerja.push(jaditiga);
+      let tahuntiga: any = $('#thnMinimalKerjaNon' + index_2).val();
+      this.storeTahunMinKerja.push(tahuntiga);
+    });
+    this.checkboxSegmentasi.forEach((value_segmentasi: String) => {
+      if (value_segmentasi.split('|')[0] === '1') {
+      } else {
+      }
 
+      // if (value_segmentasi.split('|')[0] === '1') {
+
+      //   // Save Minimal Masa Kerja
+      //   this.pekerjaanMinimalKerja = $('#tipeMinimalkerja' + value_segmentasi.split('|')[0]).val();
+      //   this.storeTipePekerjaanMinKerja.push(this.pekerjaanMinimalKerja);
+      //   this.tahunMinimalKerja = $('#thnMinimalKerjaFix' + value_segmentasi.split('|')[0]).val();
+      //   this.storeTahunMinKerja.push(this.tahunMinimalKerja);
+      // } else {
+      //   // Save Maksimal usia
+
+      //   // Save Minimal Masa Kerja
+      //   this.pekerjaanMinimalKerja = $('#tipeMinimalkerjaNon' + value_segmentasi.split('|')[0]).val();
+      //   this.storeTipePekerjaanMinKerja.push(this.pekerjaanMinimalKerja);
+      //   this.tahunMinimalKerja = $('#thnMinimalKerjaNon' + value_segmentasi.split('|')[0]).val();
+      //   this.storeTahunMinKerja.push(this.tahunMinimalKerja);
+      // }
+    });
+    // console.warn(this.storeTipePekerjaanMaxUsia);
+    // console.warn(this.storePosisiMaxUsia);
+    console.warn(this.storeTahunMaxUsia);
+    // console.warn(this.storeTipePekerjaanMinKerja);
+    console.warn(this.storeTahunMinKerja);
+
+    return;
     // For Each Kepegawaian
     let joinKepegawaian: String;
     joinKepegawaian = this.checkboxKepegawaian.join();
@@ -556,11 +631,16 @@ export class ParameterRacComponent implements OnInit {
 
   // Retrive Data On click
   updateRacByIdOnClick(id: string | number | null | undefined, modals: any): void {
+    this.isDisabled = false;
     this.storeRetriveCheckedSegmentasi.splice(0);
     this.checkboxSegmentasi.splice(0);
 
     this.scoringServices.getParameterRac(id).subscribe({
       next: response => {
+        // this.addFormFix = [0];
+        this.addFormNon = [0];
+        this.addFormMinKerjaFix = [0];
+        this.addFormMinKerjaNon = [0];
         this.retriveRacModel = response.result.rac;
         this.retriveListParameterRacStatusKepegawaianModel = response.result.listStatusKepegawaian;
         this.retriveListParameterRacMinimalUsiaModel = response.result.listMinUsia;
@@ -568,6 +648,9 @@ export class ParameterRacComponent implements OnInit {
         this.retriveListParameterRacMaxusiaModel = response.result.listRacMaxUsia;
         this.retriveListParameterRacMinmasakerjaModel = response.result.listRacMinMasaKerja;
         this.retriveListParameterRacJenisperusahaanModel = response.result.listJenisPerusahaan;
+
+        // Loop for insert data to show div Max usia
+        this.retriveListParameterRacMaxusiaModel.forEach((value: parameterracmaxusia, index: number) => this.addFormFix.push(index));
 
         // Start Retrive Checked not using FormArray
         this.retriveListParameterRacSegmentasiModel.forEach((value: parameterracsegmentasi, index: number) => {
@@ -597,26 +680,6 @@ export class ParameterRacComponent implements OnInit {
             this.storeCheckboxCondition = index;
           }
         });
-        console.warn(this.storeCheckboxCondition);
-        // End Retrive Checked not using FormArray
-
-        // this.retriveListParameterRacMaxusiaModel.forEach((value1: parameterracmaxusia, index: number) => {
-        //   const saveFind = this.modelKategoriPekerjaan.find(
-        //     (search: refKategoriPekerjaanModel) => {search.category_job_deskripsi == value1.segmentasi;}
-        //   );
-
-        //   if (saveFind?.category_job_id == '1') {
-        //     this.dataEntryService.getFetchListTipePekerjaan(saveFind.category_job_id).subscribe(status => {
-        //       this.modelTipePekerjaanFix = status.result;
-        //     });
-        //     this.checkboxSegmentasi = [saveFind?.category_job_id + '|' + saveFind?.category_job_deskripsi];
-        //   } else {
-        //     this.checkboxSegmentasi = [saveFind?.category_job_id + '|' + saveFind?.category_job_deskripsi];
-        //     this.dataEntryService.getFetchListTipePekerjaan(saveFind?.category_job_id).subscribe(status => {
-        //       this.modelTipePekerjaanNon = status.result;
-        //     });
-        //   }
-        // });
 
         const retriveRAC = {
           id: id,
@@ -643,6 +706,8 @@ export class ParameterRacComponent implements OnInit {
   }
 
   viewIdOnClick(id: string | number | null | undefined, modals: any): void {
+    this.isDisabled = true;
+    // Disabled Using FormControl
     this.storeRetriveCheckedSegmentasi.splice(0);
     this.checkboxSegmentasi.splice(0);
     this.scoringServices.getParameterRac(id).subscribe({
@@ -707,7 +772,16 @@ export class ParameterRacComponent implements OnInit {
   }
 
   public clickModalsOpen(value: any) {
+    //clear semua isi form saat click button add
+    this.retriveListParameterRacMinimalUsiaModel.splice(0);
+    this.retriveListParameterRacMaxusiaModel.splice(0);
+    this.retriveListParameterRacMinmasakerjaModel.splice(0);
+    this.retriveListParameterRacSegmentasiModel.splice(0);
     this.retriveListParameterRacStatusKepegawaianModel.splice(0);
+    this.retriveListParameterRacJenisperusahaanModel.splice(0);
+    // this.createRacForm.reset();
+    //disable button dan checkbox
+    this.isDisabled = false;
     // Open Modal
     this.modalServices.open(value, { size: 'xl', windowClass: 'modal-xl' });
   }

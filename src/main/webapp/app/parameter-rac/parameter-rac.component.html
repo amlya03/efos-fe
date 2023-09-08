@@ -103,6 +103,7 @@
                 ? false
                 : retriveListParameterRacStatusKepegawaianModel[i]?.status_kepegawaian === listTipePegawai.tipe_kepegawaian_deskripsi
             "
+            [disabled]="isDisabled"
           />
           <label class="form-check-label" for="tipe_kepegawaian_deskripsi">
             {{ listTipePegawai.tipe_kepegawaian_deskripsi }}
@@ -141,6 +142,7 @@
                   : retriveListParameterRacMinimalUsiaModel[indexStatusPerkawinan]?.status_pernikahan === listPernikahan.deskripsi
               "
               (change)="onCheckChangePernikahan($event)"
+              [disabled]="isDisabled"
             />
           </div>
           <div class="col-sm-3">
@@ -157,6 +159,7 @@
                   ? ''
                   : retriveListParameterRacMinimalUsiaModel[indexStatusPerkawinan]?.min_usia
               "
+              [disabled]="isDisabled"
             />
           </div>
           <div class="col-sm-2">
@@ -182,6 +185,7 @@
                 ? false
                 : retriveListParameterRacSegmentasiModel[numberSeg]?.segmentasi == listKategori.category_job_deskripsi
             "
+            [disabled]="isDisabled"
           />
           <label class="form-check-label" for="segmentasiFixIncome"> {{ listKategori.category_job_deskripsi }}</label>
         </div>
@@ -190,19 +194,24 @@
     <br />
     <div class="form-group row">
       <div class="col-sm-4"></div>
-      <div class="col-sm-1"><a class="btn btn-info" (click)="onClickAddMaxUsia(1)">+</a></div>
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-info" (click)="onClickAddMaxUsiaFix(this.addFormFix)" [hidden]="isDisabled">+</button>
+      </div>
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-primary" (click)="onClickAddMaxUsiaNon(this.addFormNon)" [hidden]="isDisabled">+</button>
+      </div>
     </div>
     <div class="form-group row">
       <div class="col-sm-4">Maksimal Usia</div>
       <div class="col-sm-8">
         <div class="row" *ngFor="let listFromSegmentasi of checkboxSegmentasi; let ij = index">
           <label class="form-check-label" for="max_usiaFixIncome"> {{ listFromSegmentasi.split('|')[1] }}</label>
-          <div class="col-sm-3">
-            <div *ngFor="let addTipePekerjaanMaxUsia of addForm; let iw = index">
+          <div class="row" *ngFor="let addTipePekerjaanMaxUsiaFix of addFormFix; let iw = index">
+            <div class="col-sm-3">
               <select
                 class="form-control"
-                (change)="onChangeMaksimalUsia($event)"
-                id="tipeMaksimalUsia{{ listFromSegmentasi.split('|')[0] }}"
+                (change)="onChangeMaksimalUsia($event, iw)"
+                id="tipeMaksimalUsia{{ addTipePekerjaanMaxUsiaFix }}"
                 name="maksimalUsia"
                 [hidden]="this.storeCheckboxCondition == ij"
               >
@@ -218,11 +227,38 @@
                 </option>
               </select>
             </div>
-            <div>
+            <div class="col-sm-1" [hidden]="this.storeCheckboxCondition == ij">
+              <label for="dan">&</label>
+            </div>
+            <div class="col-sm-3" [hidden]="this.storeCheckboxCondition == ij">
+              <select class="form-control" id="posisiMaksimalUsiaFix{{ addTipePekerjaanMaxUsiaFix }}" name="posisi">
+                <option value="">
+                  {{ retriveListParameterRacMaxusiaModel[0] == null ? 'Pilih Posisi' : retriveListParameterRacMaxusiaModel[ij].posisi }}
+                </option>
+                <option *ngFor="let posisi of modelPosisi" value="{{ posisi.jabatan_deskripsi }}">{{ posisi.jabatan_deskripsi }}</option>
+              </select>
+            </div>
+            <div class="col-sm-1" [hidden]="this.storeCheckboxCondition == ij">
+              <h6 class="text-align centre">=</h6>
+            </div>
+            <div class="col-sm-2" [hidden]="this.storeCheckboxCondition == ij">
+              <input
+                type="text"
+                class="form-control"
+                id="thnMaksimalUsiaFix{{ iw }}"
+                value="{{ retriveListParameterRacMaxusiaModel[0] == null ? '' : retriveListParameterRacMaxusiaModel[ij].max_usia }}"
+              />
+            </div>
+            <div class="col-sm-1" [hidden]="this.storeCheckboxCondition == ij">
+              <label class="form-check-label" for=""> Tahun </label>
+            </div>
+          </div>
+          <div class="row" *ngFor="let addTipePekerjaanMaxUsiaNon of addFormNon; let iz = index">
+            <div class="col-sm-3">
               <select
                 class="form-control"
-                (change)="onChangeMaksimalUsiaNon($event)"
-                id="tipeMaksimalUsiaNon{{ listFromSegmentasi.split('|')[0] }}"
+                (change)="onChangeMaksimalUsiaNon($event, iz)"
+                id="tipeMaksimalUsiaNon{{ addTipePekerjaanMaxUsiaNon }}"
                 name="maksimalUsia"
                 [hidden]="this.storeCheckboxCondition != ij"
               >
@@ -245,101 +281,119 @@
                 </option>
               </select>
             </div>
-          </div>
-          <div class="col-sm-1" [hidden]="this.storeCheckboxCondition == ij">
-            <label for="dan">&</label>
-          </div>
-          <div class="col-sm-3" [hidden]="this.storeCheckboxCondition == ij">
-            <select class="form-control" id="posisiMaksimalUsiaFix{{ listFromSegmentasi.split('|')[0] }}" name="posisi">
-              <option value="">
-                {{ retriveListParameterRacMaxusiaModel[0] == null ? 'Pilih Posisi' : retriveListParameterRacMaxusiaModel[ij].posisi }}
-              </option>
-              <option *ngFor="let posisi of modelPosisi" value="{{ posisi.jabatan_deskripsi }}">{{ posisi.jabatan_deskripsi }}</option>
-            </select>
-          </div>
-          <div class="col-sm-1">
-            <h6 class="text-align centre">=</h6>
-          </div>
-          <div class="col-sm-2">
-            <input
-              type="text"
-              class="form-control"
-              id="thnMaksimalUsia{{ listFromSegmentasi.split('|')[0] }}"
-              value="{{ retriveListParameterRacMaxusiaModel[0] == null ? '' : retriveListParameterRacMaxusiaModel[ij].max_usia }}"
-            />
-          </div>
-          <div class="col-sm-1">
-            <label class="form-check-label" for=""> Tahun </label>
+            <div class="col-sm-1" [hidden]="this.storeCheckboxCondition != ij">
+              <h6 class="text-align centre">=</h6>
+            </div>
+            <div class="col-sm-2" [hidden]="this.storeCheckboxCondition != ij">
+              <input
+                type="text"
+                class="form-control"
+                id="thnMaksimalUsiaNon{{ iz }}"
+                value="{{ retriveListParameterRacMaxusiaModel[0] == null ? '' : retriveListParameterRacMaxusiaModel[ij].max_usia }}"
+              />
+            </div>
+            <div class="col-sm-1" [hidden]="this.storeCheckboxCondition != ij">
+              <label class="form-check-label" for=""> Tahun </label>
+            </div>
           </div>
         </div>
         <br />
       </div>
     </div>
     <br />
+    <div class="form-group row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-info" (click)="onClickAddMinMasaKerjaFix(addFormMinKerjaFix)" [hidden]="isDisabled">+</button>
+      </div>
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-primary" (click)="onClickAddMinMasaKerjaNon(addFormMinKerjaNon)" [hidden]="isDisabled">
+          +
+        </button>
+      </div>
+    </div>
     <div class="form-group row">
       <div class="col-sm-4">Minimal Masa Kerja</div>
       <div class="col-sm-8">
         <div class="row" *ngFor="let listFromSegmentasi of checkboxSegmentasi; let ir = index">
           <label class="form-check-label" for="max_usiaFixIncome"> {{ listFromSegmentasi.split('|')[1] }} </label>
-          <div class="col-sm-3">
-            <select
-              class="form-control"
-              id="tipeMinimalkerja{{ listFromSegmentasi.split('|')[0] }}"
-              name="minimalMasaKerja"
-              [hidden]="this.storeCheckboxCondition == ir"
-            >
-              <option value="">
-                {{
-                  retriveListParameterRacMinmasakerjaModel[0] == null
-                    ? 'Pilih Tipe Pekerjaan'
-                    : retriveListParameterRacMinmasakerjaModel[ir].tipe_pekerjaan
-                }}
-              </option>
-              <option value="{{ listTipe.job_desc }}" *ngFor="let listTipe of modelTipePekerjaanFix">
-                {{ listTipe.job_desc }}
-              </option>
-            </select>
-            <select
-              class="form-control"
-              id="tipeMinimalkerjaNon{{ listFromSegmentasi.split('|')[0] }}"
-              name="minimalMasaKerja"
-              [hidden]="this.storeCheckboxCondition != ir"
-            >
-              <option value="">
-                {{
-                  retriveListParameterRacMinmasakerjaModel[0] == null
-                    ? 'Pilih Tipe Pekerjaan'
-                    : retriveListParameterRacMinmasakerjaModel[ir].tipe_pekerjaan
-                }}
-              </option>
-              <option
-                value="{{
-                  retriveListParameterRacMinmasakerjaModel[0] == null
-                    ? listTipe.job_desc
-                    : retriveListParameterRacMinmasakerjaModel[ir].tipe_pekerjaan
-                }}"
-                *ngFor="let listTipe of modelTipePekerjaanNon"
+          <div class="row" *ngFor="let addTipePekerjaanMinMasaKerjaFix of addFormMinKerjaFix; let iw = index">
+            <div class="col-sm-3">
+              <select
+                class="form-control"
+                id="tipeMinimalkerja{{ iw }}"
+                name="minimalMasaKerja"
+                [hidden]="this.storeCheckboxCondition == ir"
               >
-                {{ listTipe.job_desc }}
-              </option>
-            </select>
+                <option value="">
+                  {{
+                    retriveListParameterRacMinmasakerjaModel[0] == null
+                      ? 'Pilih Tipe Pekerjaan'
+                      : retriveListParameterRacMinmasakerjaModel[ir].tipe_pekerjaan
+                  }}
+                </option>
+                <option value="{{ listTipe.job_desc }}" *ngFor="let listTipe of modelTipePekerjaanFix">
+                  {{ listTipe.job_desc }}
+                </option>
+              </select>
+            </div>
+            <div class="col-sm-1" [hidden]="this.storeCheckboxCondition == ir">
+              <label for="samadengan">=</label>
+            </div>
+            <div class="col-sm-2" [hidden]="this.storeCheckboxCondition == ir">
+              <input
+                maxlength="1"
+                type="text"
+                class="form-control"
+                id="thnMinimalKerjaFix{{ iw }}"
+                value="{{
+                  retriveListParameterRacMinmasakerjaModel[0] == null ? '' : retriveListParameterRacMinmasakerjaModel[ir].min_masa_kerja
+                }}"
+              />
+            </div>
+            <div class="col-sm-1" [hidden]="this.storeCheckboxCondition == ir">
+              <label class="form-check-label" for=""> Tahun </label>
+            </div>
           </div>
-          <div class="col-sm-1">
-            <label for="samadengan">=</label>
-          </div>
-          <div class="col-sm-2">
-            <input
-              maxlength="1"
-              type="text"
-              class="form-control"
-              id="thnMinimalKerja{{ listFromSegmentasi.split('|')[0] }}"
-              value="{{
-                retriveListParameterRacMinmasakerjaModel[0] == null ? '' : retriveListParameterRacMinmasakerjaModel[ir].min_masa_kerja
-              }}"
-            />
-          </div>
-          <div class="col-sm-1">
-            <label class="form-check-label" for=""> Tahun </label>
+          <div class="row" *ngFor="let addTipePekerjaanMinMasaKerjaNon of addFormMinKerjaNon; let iz = index">
+            <div class="col-sm-3">
+              <select class="form-control" id="tipeMinimalkerjaNon{{ iz }}" [hidden]="this.storeCheckboxCondition != ir">
+                <option value="">
+                  {{
+                    retriveListParameterRacMinmasakerjaModel[0] == null
+                      ? 'Pilih Tipe Pekerjaan'
+                      : retriveListParameterRacMinmasakerjaModel[ir].tipe_pekerjaan
+                  }}
+                </option>
+                <option
+                  value="{{
+                    retriveListParameterRacMinmasakerjaModel[0] == null
+                      ? listTipe.job_desc
+                      : retriveListParameterRacMinmasakerjaModel[ir].tipe_pekerjaan
+                  }}"
+                  *ngFor="let listTipe of modelTipePekerjaanNon"
+                >
+                  {{ listTipe.job_desc }}
+                </option>
+              </select>
+            </div>
+            <div class="col-sm-1" [hidden]="this.storeCheckboxCondition != ir">
+              <label for="samadengan">=</label>
+            </div>
+            <div class="col-sm-2" [hidden]="this.storeCheckboxCondition != ir">
+              <input
+                maxlength="1"
+                type="text"
+                class="form-control"
+                id="thnMinimalKerjaNon{{ iz }}"
+                value="{{
+                  retriveListParameterRacMinmasakerjaModel[0] == null ? '' : retriveListParameterRacMinmasakerjaModel[ir].min_masa_kerja
+                }}"
+              />
+            </div>
+            <div class="col-sm-1" [hidden]="this.storeCheckboxCondition != ir">
+              <label class="form-check-label" for=""> Tahun </label>
+            </div>
           </div>
         </div>
         <br />
@@ -347,12 +401,23 @@
     </div>
     <br />
     <div class="form-group row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-1">
+        <button class="btn btn-info" (click)="onClickAddPerusahaan(addFormPerusahaan)" [hidden]="isDisabled">+</button>
+      </div>
+    </div>
+    <div class="form-group row">
       <div class="col-sm-4">Ketentuan Jenis Perusahaan</div>
       <div class="col-sm-8">
-        <div class="row">
+        <div class="row" *ngFor="let addTipePekerjaanPerusahaan of addFormPerusahaan; let iw = index">
           <div class="form-group col-sm-4">
             <label for="inputState"> </label>
-            <select class="form-control" id="ketentuanPerusahaan" name="tipe_pekerjaan_perusahaan" formControlName="tipe_perusahaan">
+            <select
+              class="form-control"
+              id="ketentuanPerusahaan{{ iw }}"
+              name="tipe_pekerjaan_perusahaan"
+              formControlName="tipe_perusahaan"
+            >
               <option value="">Pilih Tipe Perusahaan</option>
               <option value="{{ listTipePerusahaan.company_code }}" *ngFor="let listTipePerusahaan of modelTipePerusahaan; let it = index">
                 {{ listTipePerusahaan.company_deskripsi }}
@@ -365,7 +430,7 @@
                 <label class="col-sm-12 col-form-label" for="inputZip">Lama operasional perusahaan</label>
                 <div class="row">
                   <div class="col-sm-4">
-                    <input maxlength="2" type="text" class="form-control" id="inputZip" formControlName="lama_beroperasi" />
+                    <input maxlength="2" type="text" class="form-control" id="lamaBeroperasi{{ iw }}" formControlName="lama_beroperasi" />
                   </div>
                   <div class="col-sm-2">
                     <label class="form-check-label" for="single"> Tahun </label>
@@ -376,7 +441,7 @@
                 <label class="col-sm-12 col-form-label" for="inputZip">Minimal jumlah karyawan</label>
                 <div class="row">
                   <div class="col-sm-4">
-                    <input maxlength="5" type="text" class="form-control" id="inputZip" formControlName="jumlah_karyawan" />
+                    <input maxlength="5" type="text" class="form-control" id="jumlahKaryawan{{ iw }}" formControlName="jumlah_karyawan" />
                   </div>
                   <div class="col-sm-2">
                     <label class="form-check-label" for="single"> Orang </label>
